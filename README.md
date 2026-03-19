@@ -1,17 +1,15 @@
-<div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/logo/omnichunk-logo-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/logo/omnichunk-logo.svg">
-    <img src="assets/logo/omnichunk-logo.svg" alt="omnichunk" width="360">
-  </picture>
-  <br><br>
-  <p>Structure-aware chunking for code, prose, and markup.</p>
+<img src="assets/omnichunk-logo.png" alt="omnichunk" width="360">
 
-  [![PyPI](https://img.shields.io/pypi/v/omnichunk)](https://pypi.org/project/omnichunk/)
-  [![CI](https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml/badge.svg)](https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml)
-  [![Python](https://img.shields.io/pypi/pyversions/omnichunk)](https://pypi.org/project/omnichunk/)
-  [![License](https://img.shields.io/pypi/l/omnichunk)](https://github.com/oguzhankir/omnichunk/blob/main/LICENSE)
-</div>
+<br>
+
+[![PyPI](https://img.shields.io/pypi/v/omnichunk)](https://pypi.org/project/omnichunk/)
+[![CI](https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml/badge.svg)](https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/pypi/pyversions/omnichunk)](https://pypi.org/project/omnichunk/)
+[![License](https://img.shields.io/pypi/l/omnichunk)](https://github.com/oguzhankir/omnichunk/blob/main/LICENSE)
+
+<br>
+
+<p align="center"><strong>Structure-aware chunking for code, prose, and markup.</strong></p>
 
 # omnichunk
 
