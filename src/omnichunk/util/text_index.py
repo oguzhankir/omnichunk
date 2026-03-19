@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from bisect import bisect_right
-from functools import lru_cache
 from typing import Any
 
 _rust_mod: Any | None = None
@@ -55,6 +54,31 @@ class TextIndex:
             self._char_to_byte[len(text)] = byte_cursor
 
         self._newline_bytes = [idx for idx, b in enumerate(self._raw_bytes) if b == 10]
+
+    @classmethod
+    def from_parent_slice(cls, parent: TextIndex, char_start: int, char_end: int) -> TextIndex:
+        """Slice of ``parent._text[char_start:char_end]`` without re-encoding the full string."""
+        if char_end < char_start:
+            char_end = char_start
+        sub_text = parent._text[char_start:char_end]
+        inst = object.__new__(cls)
+        inst._text = sub_text
+        b0 = parent.byte_offset_for_char(char_start)
+        b1 = parent.byte_offset_for_char(char_end)
+        inst._raw_bytes = parent._raw_bytes[b0:b1]
+        n = len(sub_text)
+        inst._char_to_byte = [
+            parent.byte_offset_for_char(char_start + i) - b0 for i in range(n + 1)
+        ]
+        inst._line_starts = [0]
+        for ls in parent._line_starts:
+            if ls <= char_start:
+                continue
+            if ls >= char_end:
+                break
+            inst._line_starts.append(ls - char_start)
+        inst._newline_bytes = [nb - b0 for nb in parent._newline_bytes if b0 <= nb < b1]
+        return inst
 
     @property
     def raw_bytes(self) -> bytes:

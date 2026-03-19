@@ -1,3 +1,5 @@
+"""Structure-aware chunking; :class:`Chunker` adds ``achunk``, ``astream``, and ``abatch``."""
+
 from .chunker import Chunker, chunk, chunk_directory, chunk_file
 from .types import (
     BatchResult,

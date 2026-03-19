@@ -4,6 +4,8 @@ import re
 from collections.abc import Iterator
 from dataclasses import replace
 
+import numpy as np
+
 from omnichunk.engine.code_engine import CodeEngine
 from omnichunk.engine.prose_engine import ProseEngine
 from omnichunk.sizing.nws import preprocess_nws_cumsum
@@ -51,10 +53,20 @@ class HybridEngine:
                 sub_options._precomputed_text_index = text_index
                 sub_options._precomputed_nws_cumsum = options._precomputed_nws_cumsum
             else:
-                sub_options._precomputed_text_index = TextIndex(segment_text)
-                sub_options._precomputed_nws_cumsum = preprocess_nws_cumsum(
-                    segment_text,
-                    backend=options.nws_backend,
+                bs = text_index.byte_offset_for_char(segment_start)
+                be = text_index.byte_offset_for_char(segment_end)
+                pc = options._precomputed_nws_cumsum
+                if isinstance(pc, np.ndarray) and int(pc.size) > be:
+                    sub_options._precomputed_nws_cumsum = pc[bs : be + 1] - pc[bs]
+                else:
+                    sub_options._precomputed_nws_cumsum = preprocess_nws_cumsum(
+                        segment_text,
+                        backend=options.nws_backend,
+                    )
+                sub_options._precomputed_text_index = TextIndex.from_parent_slice(
+                    text_index,
+                    segment_start,
+                    segment_end,
                 )
 
             if segment_kind == "code":

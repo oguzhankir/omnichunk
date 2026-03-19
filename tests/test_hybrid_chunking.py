@@ -20,6 +20,14 @@ def test_python_docstring_heavy_uses_hybrid(fixtures_dir: Path) -> None:
     assert any(c.context.content_type in {ContentType.PROSE, ContentType.CODE} for c in chunks)
 
 
+def test_hybrid_chunking_is_deterministic() -> None:
+    content = '# %% [markdown]\n"""\n# Intro\n"""\n# %%\ndef run():\n    return 1\n'
+    chunker = Chunker(max_chunk_size=55, min_chunk_size=10, size_unit="chars")
+    a = [c.text for c in chunker.chunk("n.py", content)]
+    b = [c.text for c in chunker.chunk("n.py", content)]
+    assert a == b
+
+
 def test_cell_marker_hybrid_split() -> None:
     content = '# %% [markdown]\n"""\n# Intro\n"""\n# %%\ndef run():\n    return 1\n'
     chunker = Chunker(max_chunk_size=60, min_chunk_size=10, size_unit="chars")

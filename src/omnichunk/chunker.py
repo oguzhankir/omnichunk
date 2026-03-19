@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import fnmatch
-from collections.abc import Callable, Iterator, Sequence
+from collections.abc import AsyncIterator, Callable, Iterator, Sequence
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict
 from pathlib import Path
@@ -31,7 +31,11 @@ class Chunker:
         return chunks
 
     def stream(self, filepath: str, content: str, **overrides: object) -> Iterator[Chunk]:
-        """Stream chunks one at a time (total_chunks = -1)."""
+        """Yield chunks one by one without buffering the full result.
+
+        ``total_chunks`` is ``-1`` for every yielded chunk. Token overlap
+        (``overlap=``) is not applied in streaming mode; use :meth:`chunk` for overlap.
+        """
         options = self._build_options(filepath=filepath, overrides=overrides)
         _, stream = route_content_stream(filepath=filepath, content=content, options=options)
         yield from stream
@@ -199,6 +203,74 @@ class Chunker:
         """Compute aggregate chunk statistics."""
         resolved_unit = self._defaults.size_unit if size_unit is None else str(size_unit)
         return compute_chunk_stats(chunks, size_unit=resolved_unit)
+
+    async def achunk(
+        self,
+        filepath: str,
+        content: str,
+        **kwargs: object,
+    ) -> list[Chunk]:
+        """Async version of :meth:`chunk`. Runs chunking in the default thread pool executor."""
+        import asyncio
+
+        loop = asyncio.get_running_loop()
+        return await loop.run_in_executor(
+            None,
+            lambda: self.chunk(filepath, content, **kwargs),
+        )
+
+    async def astream(
+        self,
+        filepath: str,
+        content: str,
+        **kwargs: object,
+    ) -> AsyncIterator[Chunk]:
+        """Async streaming; yields chunks as they are produced (``total_chunks`` is ``-1``).
+
+        Overlap is not applied; see :meth:`stream`.
+        """
+        import asyncio
+
+        loop = asyncio.get_running_loop()
+        queue: asyncio.Queue[Chunk | None] = asyncio.Queue()
+
+        def _produce() -> None:
+            try:
+                for ch in self.stream(filepath, content, **kwargs):
+                    loop.call_soon_threadsafe(queue.put_nowait, ch)
+            finally:
+                loop.call_soon_threadsafe(queue.put_nowait, None)
+
+        loop.run_in_executor(None, _produce)
+        while True:
+            item = await queue.get()
+            if item is None:
+                break
+            yield item
+
+    async def abatch(
+        self,
+        inputs: list[dict],
+        concurrency: int = 8,
+    ) -> list[BatchResult]:
+        """Process many files concurrently (each dict: ``filepath``, ``code``, optional options)."""
+        import asyncio
+
+        semaphore = asyncio.Semaphore(max(1, concurrency))
+
+        async def _process(item: dict) -> BatchResult:
+            async with semaphore:
+                filepath = str(item.get("filepath", ""))
+                code = str(item.get("code", ""))
+                extra = {k: v for k, v in item.items() if k not in ("filepath", "code")}
+                try:
+                    chunks = await self.achunk(filepath, code, **extra)
+                    return BatchResult(filepath=filepath, chunks=chunks)
+                except Exception as exc:
+                    return BatchResult(filepath=filepath, error=str(exc))
+
+        tasks = [asyncio.create_task(_process(item)) for item in inputs]
+        return list(await asyncio.gather(*tasks))
 
     def _build_options(self, filepath: str, overrides: dict[str, object]) -> ChunkOptions:
         data = asdict(self._defaults)

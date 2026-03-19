@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Iterator
 from pathlib import Path
 
 from omnichunk import Chunker, chunk, chunk_directory, chunk_file
+from omnichunk.engine.code_engine import CodeEngine
+from omnichunk.types import Chunk, ChunkOptions
 
 
 def test_chunk_function_simple_python() -> None:
@@ -13,6 +16,46 @@ def test_chunk_function_simple_python() -> None:
     assert chunks
     assert all(c.text for c in chunks)
     assert chunks[0].context.filepath == "example.py"
+
+
+def test_stream_is_lazy(monkeypatch: object) -> None:
+    code = "def f():\n    return 1\n" * 8
+    chunker = Chunker(max_chunk_size=48, min_chunk_size=8, size_unit="chars")
+    yielded_before_second = {"n": 0}
+
+    orig = CodeEngine._iter_base_chunks
+
+    def _counting(
+        self: CodeEngine,
+        filepath: str,
+        content: str,
+        options: ChunkOptions,
+    ) -> Iterator[Chunk]:
+        for i, item in enumerate(orig(self, filepath, content, options)):
+            yielded_before_second["n"] = i + 1
+            yield item
+
+    monkeypatch.setattr(CodeEngine, "_iter_base_chunks", _counting)
+
+    iterator = chunker.stream("lazy.py", code)
+    _ = next(iterator)
+    assert yielded_before_second["n"] == 1
+    _ = next(iterator)
+    assert yielded_before_second["n"] == 2
+
+
+def test_stream_total_chunks_is_minus_one() -> None:
+    chunker = Chunker(max_chunk_size=40, size_unit="chars")
+    text = "def g():\n    return 2\n"
+    for c in chunker.stream("g.py", text):
+        assert c.total_chunks == -1
+
+
+def test_stream_reconstruction() -> None:
+    code = "def foo():\n    return 1\n" * 15
+    chunker = Chunker(max_chunk_size=64, min_chunk_size=10, size_unit="chars")
+    out = "".join(c.text for c in chunker.stream("r.py", code))
+    assert out == code
 
 
 def test_chunker_stream_sets_unknown_total() -> None:

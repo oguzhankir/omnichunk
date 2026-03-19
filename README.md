@@ -93,6 +93,32 @@ chunks = chunker.chunk("api.py", source_code)
 for c in chunker.stream("large.py", large_source):
     consume(c)
 
+### Async API
+
+```python
+import asyncio
+from omnichunk import Chunker
+
+chunker = Chunker(max_chunk_size=1024, size_unit="tokens")
+
+# Single file async
+chunks = asyncio.run(chunker.achunk("api.py", source_code))
+
+# Async streaming
+async def process():
+    async for chunk in chunker.astream("large.py", large_source):
+        consume(chunk)
+
+# Async batch (concurrent)
+results = asyncio.run(chunker.abatch(
+    [
+        {"filepath": "a.py", "code": code_a},
+        {"filepath": "b.ts", "code": code_b},
+    ],
+    concurrency=8,
+))
+```
+
 batch_results = chunker.batch(
     [
         {"filepath": "a.py", "code": code_a},

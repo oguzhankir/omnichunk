@@ -43,12 +43,11 @@ class CodeEngine:
         return _finalize_chunk_indexes(chunks)
 
     def stream(self, filepath: str, content: str, options: ChunkOptions) -> Iterator[Chunk]:
-        """Stream chunks incrementally when token-overlap post-processing is disabled."""
-        if options.overlap is not None:
-            for idx, chunk in enumerate(self.chunk(filepath, content, options)):
-                yield _with_unknown_total(chunk, idx)
-            return
+        """Yield base chunks lazily. ``total_chunks`` is always ``-1``.
 
+        Token overlap (``options.overlap``) is not applied in streaming mode; use
+        :meth:`chunk` when overlap is required.
+        """
         for idx, chunk in enumerate(self._iter_base_chunks(filepath, content, options)):
             yield _with_unknown_total(chunk, idx)
 
