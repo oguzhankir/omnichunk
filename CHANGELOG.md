@@ -13,21 +13,21 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 - Recomputed `is_partial` entity flags against merged overlap ranges instead of reusing the first chunk context
 - Removed dead computation in prose `_windows_to_contiguous_ranges` and now respect each window's actual start offset
 
-## [0.1.2] - 2025-03-19
+## [0.1.2] - 2026-03-19
 
 ### Fixed
 - Fixed Python 3.10/3.11 compatibility by ignoring B905 ruff rule for zip() calls
 - Updated badge cache-buster to v=2 for proper GitHub rendering
 - Fixed CI failures across all Python versions (3.10-3.13)
 
-## [0.1.1] - 2025-03-19
+## [0.1.1] - 2026-03-19
 
 ### Fixed
 - Fixed README logo URL path from `assets/logo/` to `assets/`
 - Added cache-buster parameters to badge URLs for proper GitHub rendering
 - Improved README layout with centered logo and badges
 
-## [0.1.0] - 2025-XX-XX
+## [0.1.0] - 2026-03-19
 
 ### Added
 
