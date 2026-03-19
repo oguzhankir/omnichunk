@@ -30,6 +30,17 @@ def assign_windows_for_ranges(
     return list(greedy_assign_windows(nodes, code=code, cumsum=cumsum, max_size=max_size))
 
 
+def assign_windows_for_nodes(
+    nodes: Sequence[Any],
+    *,
+    cumsum: np.ndarray,
+    max_size: int,
+    code: str,
+) -> list[list[ASTNodeWindowItem]]:
+    """Assign windows for hierarchical nodes (e.g., AST root children)."""
+    return list(greedy_assign_windows(nodes, code=code, cumsum=cumsum, max_size=max_size))
+
+
 def greedy_assign_windows(
     nodes: Iterable[Any],
     *,

@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import replace
-from bisect import bisect_right
-from typing import Any
+from typing import Any, Iterator
 
 from omnichunk.context.entities import enrich_parent_links, extract_entities
 from omnichunk.context.format import format_contextualized_text
@@ -14,15 +13,44 @@ from omnichunk.sizing.counter import make_token_counter
 from omnichunk.sizing.nws import get_nws_count, preprocess_nws_cumsum
 from omnichunk.types import ByteRange, Chunk, ChunkContext, ChunkOptions, ContentType, EntityInfo, LineRange
 from omnichunk.util.detect import detect_language
-from omnichunk.windowing.greedy import assign_windows_for_ranges
+from omnichunk.util.text_index import TextIndex
+from omnichunk.windowing.greedy import assign_windows_for_nodes, assign_windows_for_ranges
 from omnichunk.windowing.merge import merge_adjacent_windows
 from omnichunk.windowing.overlap import apply_token_overlap, build_line_overlap_text
 
 
 class CodeEngine:
     def chunk(self, filepath: str, content: str, options: ChunkOptions) -> list[Chunk]:
+        chunks = list(self._iter_base_chunks(filepath, content, options))
+        chunks = _finalize_chunk_indexes(chunks)
+
+        if options.overlap is not None and chunks:
+            chunks = apply_token_overlap(
+                chunks,
+                overlap=options.overlap,
+                max_chunk_size=max(1, options.max_chunk_size),
+            )
+
+        return _finalize_chunk_indexes(chunks)
+
+    def stream(self, filepath: str, content: str, options: ChunkOptions) -> Iterator[Chunk]:
+        """Stream chunks incrementally when token-overlap post-processing is disabled."""
+        if options.overlap is not None:
+            for idx, chunk in enumerate(self.chunk(filepath, content, options)):
+                yield _with_unknown_total(chunk, idx)
+            return
+
+        for idx, chunk in enumerate(self._iter_base_chunks(filepath, content, options)):
+            yield _with_unknown_total(chunk, idx)
+
+    def _iter_base_chunks(
+        self,
+        filepath: str,
+        content: str,
+        options: ChunkOptions,
+    ) -> Iterator[Chunk]:
         if not content.strip():
-            return []
+            return
 
         language = options.language or detect_language(filepath=filepath, content=content)
         parse_result = parse_code(content, language)
@@ -32,18 +60,29 @@ class CodeEngine:
         import_infos = build_import_infos(entities)
 
         cumsum = preprocess_nws_cumsum(content)
-        raw_bytes = content.encode("utf-8")
+        text_index = TextIndex(content)
+        raw_bytes = text_index.raw_bytes
 
         max_size_nws = _to_internal_nws_limit(options.max_chunk_size, options.size_unit)
         min_size_nws = max(1, _to_internal_nws_limit(options.min_chunk_size, options.size_unit))
 
-        candidate_ranges = _collect_candidate_ranges(entities, parse_result.tree, len(raw_bytes))
-        windows = assign_windows_for_ranges(
-            candidate_ranges,
-            cumsum=cumsum,
-            max_size=max_size_nws,
-            code=content,
-        )
+        ast_nodes = _collect_ast_root_nodes(parse_result.tree)
+        if ast_nodes:
+            windows = assign_windows_for_nodes(
+                ast_nodes,
+                cumsum=cumsum,
+                max_size=max_size_nws,
+                code=content,
+            )
+        else:
+            candidate_ranges = _collect_candidate_ranges(entities, parse_result.tree, len(raw_bytes))
+            windows = assign_windows_for_ranges(
+                candidate_ranges,
+                cumsum=cumsum,
+                max_size=max_size_nws,
+                code=content,
+            )
+
         merged_windows = merge_adjacent_windows(
             windows,
             max_size=max_size_nws,
@@ -52,12 +91,10 @@ class CodeEngine:
 
         chunk_ranges = _windows_to_contiguous_ranges(merged_windows, len(raw_bytes))
         chunk_ranges = _merge_whitespace_only_ranges(chunk_ranges, raw_bytes)
-
-        line_index = _LineIndex(raw_bytes)
         token_counter = make_token_counter(options.tokenizer, chunk_size=options.max_chunk_size)
 
-        chunks: list[Chunk] = []
         previous_text = ""
+        chunk_index = 0
 
         for start, end in chunk_ranges:
             if end <= start:
@@ -69,8 +106,8 @@ class CodeEngine:
 
             byte_range = ByteRange(start=start, end=end)
             line_range = LineRange(
-                start=line_index.line_for_byte(start),
-                end=line_index.line_for_byte(max(start, end - 1)),
+                start=text_index.line_for_byte(start),
+                end=text_index.line_for_byte(max(start, end - 1)),
             )
 
             context = _build_context(
@@ -91,32 +128,21 @@ class CodeEngine:
                 else format_contextualized_text(text, context, overlap_text=overlap_text)
             )
 
-            chunks.append(
-                Chunk(
-                    text=text,
-                    contextualized_text=contextualized_text,
-                    byte_range=byte_range,
-                    line_range=line_range,
-                    index=len(chunks),
-                    total_chunks=-1,
-                    context=context,
-                    token_count=token_counter(text),
-                    char_count=len(text),
-                    nws_count=get_nws_count(cumsum, start, end),
-                )
+            yield Chunk(
+                text=text,
+                contextualized_text=contextualized_text,
+                byte_range=byte_range,
+                line_range=line_range,
+                index=chunk_index,
+                total_chunks=-1,
+                context=context,
+                token_count=token_counter(text),
+                char_count=len(text),
+                nws_count=get_nws_count(cumsum, start, end),
             )
+
             previous_text = text
-
-        chunks = _finalize_chunk_indexes(chunks)
-
-        if options.overlap is not None and chunks:
-            chunks = apply_token_overlap(
-                chunks,
-                overlap=options.overlap,
-                max_chunk_size=max(1, options.max_chunk_size),
-            )
-
-        return _finalize_chunk_indexes(chunks)
+            chunk_index += 1
 
 
 def _build_context(
@@ -245,6 +271,26 @@ def _collect_candidate_ranges(
     return merged
 
 
+def _collect_ast_root_nodes(tree: Any | None) -> list[Any]:
+    if tree is None:
+        return []
+    root = getattr(tree, "root_node", None)
+    if root is None:
+        return []
+
+    candidates = list(getattr(root, "named_children", []) or [])
+    if not candidates:
+        candidates = list(getattr(root, "children", []) or [])
+
+    out: list[Any] = []
+    for node in candidates:
+        start = int(getattr(node, "start_byte", 0))
+        end = int(getattr(node, "end_byte", 0))
+        if end > start:
+            out.append(node)
+    return out
+
+
 def _windows_to_contiguous_ranges(windows: list[list[Any]], total_bytes: int) -> list[tuple[int, int]]:
     if total_bytes <= 0:
         return []
@@ -333,11 +379,16 @@ def _finalize_chunk_indexes(chunks: list[Chunk]) -> list[Chunk]:
     ]
 
 
-class _LineIndex:
-    def __init__(self, raw_bytes: bytes) -> None:
-        self._newlines = [idx for idx, b in enumerate(raw_bytes) if b == 10]
-
-    def line_for_byte(self, byte_offset: int) -> int:
-        if byte_offset <= 0:
-            return 0
-        return bisect_right(self._newlines, byte_offset - 1)
+def _with_unknown_total(chunk: Chunk, index: int) -> Chunk:
+    return Chunk(
+        text=chunk.text,
+        contextualized_text=chunk.contextualized_text,
+        byte_range=chunk.byte_range,
+        line_range=chunk.line_range,
+        index=index,
+        total_chunks=-1,
+        context=chunk.context,
+        token_count=chunk.token_count,
+        char_count=chunk.char_count,
+        nws_count=chunk.nws_count,
+    )

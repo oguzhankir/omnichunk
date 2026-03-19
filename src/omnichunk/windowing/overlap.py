@@ -3,7 +3,8 @@ from __future__ import annotations
 from math import floor
 from typing import Sequence
 
-from omnichunk.types import ByteRange, Chunk
+from omnichunk.context.format import format_contextualized_text
+from omnichunk.types import ByteRange, Chunk, LineRange
 
 
 def build_line_overlap_text(previous_text: str, overlap_lines: int) -> str:
@@ -57,14 +58,17 @@ def apply_token_overlap(
 
         first = group[0]
         last = group[-1]
-        text = "\n".join(c.text for c in group if c.text)
+        text = "".join(c.text for c in group if c.text)
+        contextualized_text = text
+        if first.contextualized_text != first.text:
+            contextualized_text = format_contextualized_text(text, first.context)
 
         out.append(
             Chunk(
                 text=text,
-                contextualized_text=first.contextualized_text,
+                contextualized_text=contextualized_text,
                 byte_range=ByteRange(first.byte_range.start, last.byte_range.end),
-                line_range=first.line_range,
+                line_range=LineRange(first.line_range.start, last.line_range.end),
                 index=len(out),
                 total_chunks=-1,
                 context=first.context,

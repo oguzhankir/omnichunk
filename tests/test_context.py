@@ -49,3 +49,24 @@ def test_filter_imports_option() -> None:
         if chunk.context.imports:
             names = {imp.name for imp in chunk.context.imports}
             assert names <= {"os", "json"}
+
+
+def test_siblings_prefer_same_parent_scope() -> None:
+    code = (
+        "class Service:\n"
+        "    def first(self):\n"
+        "        return 1\n\n"
+        "    def second(self):\n"
+        "        return 2\n\n"
+        "def standalone():\n"
+        "    return 3\n"
+    )
+    chunker = Chunker(max_chunk_size=35, min_chunk_size=5, size_unit="chars", max_siblings=3)
+
+    chunks = chunker.chunk("scope_siblings.py", code)
+
+    target = next((c for c in chunks if "def second" in c.text), None)
+    assert target is not None
+
+    names = {s.name for s in target.context.siblings}
+    assert "first" in names

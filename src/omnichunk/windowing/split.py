@@ -8,6 +8,8 @@ from omnichunk.sizing.nws import get_nws_count
 
 from .models import ASTNodeWindowItem
 
+_SAFE_BOUNDARY_BYTES = {9, 10, 11, 12, 13, 32, 44, 59, 41, 93, 125}
+
 
 def split_oversized_leaf(
     item: ASTNodeWindowItem,
@@ -16,7 +18,7 @@ def split_oversized_leaf(
     cumsum: np.ndarray,
     max_size: int,
 ) -> Iterable[ASTNodeWindowItem]:
-    """Split oversized leaf item at line boundaries first, then hard fallback."""
+    """Split oversized leaf item at line boundaries first, then safe-boundary fallback."""
     if item.end <= item.start:
         return []
 
@@ -35,10 +37,10 @@ def split_oversized_leaf(
             if size <= max_size:
                 yield ASTNodeWindowItem(node=None, start=start, end=end, size=size)
             else:
-                yield from _hard_split(start, end, cumsum, max_size)
+                yield from _hard_split(start, end, cumsum, max_size, text)
         return
 
-    yield from _hard_split(item.start, item.end, cumsum, max_size)
+    yield from _hard_split(item.start, item.end, cumsum, max_size, text)
 
 
 def _build_ranges_from_newlines(start: int, end: int, newline_positions: list[int]) -> list[tuple[int, int]]:
@@ -58,6 +60,7 @@ def _hard_split(
     end: int,
     cumsum: np.ndarray,
     max_size: int,
+    source_bytes: bytes,
 ) -> Iterable[ASTNodeWindowItem]:
     cursor = start
     while cursor < end:
@@ -76,6 +79,27 @@ def _hard_split(
         if best <= cursor:
             best = min(cursor + 1, end)
 
+        best = _adjust_to_safe_boundary(source_bytes, cursor, best, end)
+        if best <= cursor:
+            best = min(cursor + 1, end)
+
         size = get_nws_count(cumsum, cursor, best)
         yield ASTNodeWindowItem(node=None, start=cursor, end=best, size=size)
         cursor = best
+
+
+def _adjust_to_safe_boundary(
+    source_bytes: bytes,
+    start: int,
+    candidate_end: int,
+    hard_end: int,
+) -> int:
+    if candidate_end <= start + 1:
+        return candidate_end
+
+    upper = min(candidate_end, hard_end)
+    for idx in range(upper - 1, start, -1):
+        if source_bytes[idx] in _SAFE_BOUNDARY_BYTES:
+            return idx + 1
+
+    return candidate_end

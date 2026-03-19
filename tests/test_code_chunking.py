@@ -81,3 +81,19 @@ def test_code_languages_minimum(fixtures_dir: Path) -> None:
     assert rs_chunks
     assert "UserService" in "\n".join(c.contextualized_text for c in ts_chunks)
     assert "Config" in "\n".join(c.contextualized_text for c in rs_chunks)
+
+
+def test_oversized_code_split_prefers_safe_boundaries() -> None:
+    expression = " + ".join(f"value_{i}" for i in range(80))
+    code = f"def compute():\n    return {expression}\n"
+    chunker = Chunker(max_chunk_size=48, min_chunk_size=10, size_unit="chars")
+
+    chunks = chunker.chunk("long_line.py", code)
+
+    assert chunks
+    assert "".join(c.text for c in chunks) == code
+
+    for left, right in zip(chunks, chunks[1:]):
+        if not left.text or not right.text:
+            continue
+        assert not (left.text[-1].isalnum() and right.text[0].isalnum())

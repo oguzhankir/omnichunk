@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from dataclasses import replace
+from typing import Iterator
+
 from omnichunk.engine.code_engine import CodeEngine
 from omnichunk.engine.hybrid_engine import HybridEngine
 from omnichunk.engine.markup_engine import MarkupEngine
@@ -22,14 +25,45 @@ def route_content(filepath: str, content: str, options: ChunkOptions) -> tuple[C
         language=language,
     )
 
-    options.filepath = filepath
-    options.language = language
-    options.content_type = content_type
+    effective_options = replace(
+        options,
+        filepath=filepath,
+        language=language,
+        content_type=content_type,
+    )
 
     if content_type == ContentType.CODE:
-        return content_type, _CODE_ENGINE.chunk(filepath, content, options)
+        return content_type, _CODE_ENGINE.chunk(filepath, content, effective_options)
     if content_type == ContentType.MARKUP:
-        return content_type, _MARKUP_ENGINE.chunk(filepath, content, options)
+        return content_type, _MARKUP_ENGINE.chunk(filepath, content, effective_options)
     if content_type == ContentType.HYBRID:
-        return content_type, _HYBRID_ENGINE.chunk(filepath, content, options)
-    return content_type, _PROSE_ENGINE.chunk(filepath, content, options)
+        return content_type, _HYBRID_ENGINE.chunk(filepath, content, effective_options)
+    return content_type, _PROSE_ENGINE.chunk(filepath, content, effective_options)
+
+
+def route_content_stream(
+    filepath: str,
+    content: str,
+    options: ChunkOptions,
+) -> tuple[ContentType, Iterator[Chunk]]:
+    language = options.language or detect_language(filepath=filepath, content=content)
+    content_type = options.content_type or detect_content_type(
+        filepath=filepath,
+        content=content,
+        language=language,
+    )
+
+    effective_options = replace(
+        options,
+        filepath=filepath,
+        language=language,
+        content_type=content_type,
+    )
+
+    if content_type == ContentType.CODE:
+        return content_type, _CODE_ENGINE.stream(filepath, content, effective_options)
+    if content_type == ContentType.MARKUP:
+        return content_type, _MARKUP_ENGINE.stream(filepath, content, effective_options)
+    if content_type == ContentType.HYBRID:
+        return content_type, _HYBRID_ENGINE.stream(filepath, content, effective_options)
+    return content_type, _PROSE_ENGINE.stream(filepath, content, effective_options)

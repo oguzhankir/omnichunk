@@ -4,7 +4,16 @@ from dataclasses import replace
 import re
 from typing import Any, Iterable
 
+from omnichunk.parser.languages import get_language
+from omnichunk.parser.query_patterns import get_query_source
 from omnichunk.types import ByteRange, EntityInfo, EntityType, Language, LineRange
+
+try:
+    from tree_sitter import Query as TSQuery
+    from tree_sitter import QueryCursor as TSQueryCursor
+except Exception:
+    TSQuery = None  # type: ignore[assignment]
+    TSQueryCursor = None  # type: ignore[assignment]
 
 ENTITY_NODE_TYPES: dict[Language, dict[str, EntityType]] = {
     "python": {
@@ -101,6 +110,18 @@ ENTITY_NODE_TYPES: dict[Language, dict[str, EntityType]] = {
     },
 }
 
+_QUERY_CAPTURE_ENTITY_TYPES: dict[str, EntityType] = {
+    "entity.function": EntityType.FUNCTION,
+    "entity.method": EntityType.METHOD,
+    "entity.class": EntityType.CLASS,
+    "entity.interface": EntityType.INTERFACE,
+    "entity.type": EntityType.TYPE,
+    "entity.enum": EntityType.ENUM,
+    "entity.import": EntityType.IMPORT,
+    "entity.export": EntityType.EXPORT,
+    "entity.decorator": EntityType.DECORATOR,
+}
+
 
 def extract_entities(code: str, language: Language, tree: Any | None) -> list[EntityInfo]:
     """Extract entities with iterative AST traversal and graceful fallback."""
@@ -114,11 +135,20 @@ def extract_entities(code: str, language: Language, tree: Any | None) -> list[En
     mapping = ENTITY_NODE_TYPES.get(language, {})
     entities: list[EntityInfo] = []
 
-    for node in _iter_ast_nodes(tree.root_node):
+    query_matches = _collect_query_matches(language=language, tree=tree)
+    if query_matches:
+        matched_nodes: list[tuple[Any, EntityType]] = query_matches
+    else:
+        matched_nodes = []
+        for node in _iter_ast_nodes(tree.root_node):
+            node_type = getattr(node, "type", "")
+            entity_type = mapping.get(node_type)
+            if entity_type is None:
+                continue
+            matched_nodes.append((node, entity_type))
+
+    for node, entity_type in matched_nodes:
         node_type = getattr(node, "type", "")
-        entity_type = mapping.get(node_type)
-        if entity_type is None:
-            continue
 
         effective_node = node
         name_node = node
@@ -171,6 +201,123 @@ def _iter_ast_nodes(root: Any) -> Iterable[Any]:
         children = list(getattr(node, "children", []) or [])
         for child in reversed(children):
             stack.append(child)
+
+
+def _collect_query_matches(language: Language, tree: Any | None) -> list[tuple[Any, EntityType]]:
+    if tree is None:
+        return []
+
+    root = getattr(tree, "root_node", None)
+    if root is None:
+        return []
+
+    query_source = get_query_source(language)
+    if not query_source:
+        return []
+
+    lang_obj = get_language(language)
+    if lang_obj is None:
+        return []
+
+    query = _compile_query(lang_obj, query_source)
+    if query is None:
+        return []
+
+    captures = _run_query_captures(query, root)
+    if not captures:
+        return []
+
+    out: list[tuple[Any, EntityType]] = []
+    seen: set[tuple[str, int, int]] = set()
+    for node, capture_name in captures:
+        entity_type = _QUERY_CAPTURE_ENTITY_TYPES.get(capture_name)
+        if entity_type is None:
+            continue
+
+        start = int(getattr(node, "start_byte", 0))
+        end = int(getattr(node, "end_byte", start))
+        key = (capture_name, start, end)
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append((node, entity_type))
+
+    return out
+
+
+def _compile_query(language_obj: Any, query_source: str) -> Any | None:
+    query_method = getattr(language_obj, "query", None)
+    if callable(query_method):
+        try:
+            return query_method(query_source)
+        except Exception:
+            pass
+
+    if TSQuery is None:
+        return None
+
+    try:
+        return TSQuery(language_obj, query_source)
+    except Exception:
+        return None
+
+
+def _run_query_captures(query: Any, root: Any) -> list[tuple[Any, str]]:
+    captures_method = getattr(query, "captures", None)
+    if callable(captures_method):
+        try:
+            raw = captures_method(root)
+            captures = _normalize_query_captures(raw, query)
+            if captures:
+                return captures
+        except Exception:
+            pass
+
+    if TSQueryCursor is None:
+        return []
+
+    try:
+        cursor = TSQueryCursor()
+    except Exception:
+        return []
+
+    captures_method = getattr(cursor, "captures", None)
+    if callable(captures_method):
+        try:
+            raw = captures_method(query, root)
+            return _normalize_query_captures(raw, query)
+        except Exception:
+            return []
+
+    return []
+
+
+def _normalize_query_captures(raw: Any, query: Any) -> list[tuple[Any, str]]:
+    out: list[tuple[Any, str]] = []
+
+    if isinstance(raw, dict):
+        for capture_name, nodes in raw.items():
+            if not isinstance(nodes, (list, tuple)):
+                continue
+            for node in nodes:
+                out.append((node, str(capture_name)))
+        return out
+
+    capture_names = list(getattr(query, "capture_names", []) or [])
+    if isinstance(raw, (list, tuple)):
+        for item in raw:
+            if not isinstance(item, (list, tuple)) or len(item) != 2:
+                continue
+            node, capture = item
+
+            if isinstance(capture, str):
+                out.append((node, capture))
+                continue
+
+            if isinstance(capture, int) and 0 <= capture < len(capture_names):
+                out.append((node, str(capture_names[capture])))
+
+    return out
 
 
 def _node_byte_range(node: Any) -> ByteRange:

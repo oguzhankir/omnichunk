@@ -118,6 +118,11 @@ Every `Chunk` includes raw content, exact offsets, and rich context:
 - Markdown
 - Plaintext
 
+Markdown fenced blocks are delegated by language:
+
+- fenced code (`python`, `ts`, etc.) routes to `CodeEngine`
+- fenced markup (`json`, `yaml`, `toml`, `html`, `xml`) routes to `MarkupEngine`
+
 ### Markup
 
 - JSON
@@ -187,6 +192,22 @@ Run the test suite:
 pytest -q
 ```
 
+Run benchmark scenarios:
+
+```bash
+python benchmarks/run_benchmarks.py
+python benchmarks/run_comparisons.py
+python benchmarks/run_quality_report.py
+```
+
+Run repository checks:
+
+```bash
+python scripts/check_ai_rules_sync.py
+python scripts/check_benchmarks.py
+python scripts/check_benchmarks.py --run-quality
+```
+
 Current suite covers:
 
 - API usage (`chunk`, `chunk_file`, `Chunker`)
@@ -195,6 +216,26 @@ Current suite covers:
 - Sizing/tokenization/NWS logic
 - Overlap behavior
 - Edge cases (empty input, unicode, malformed syntax, range contiguity)
+
+## Contributing
+
+Contribution and project process files:
+
+- `CONTRIBUTING.md`
+- `CODE_OF_CONDUCT.md`
+- `SECURITY.md`
+- `GOVERNANCE.md`
+- `MAINTAINERS.md`
+- `ROADMAP.md`
+- `ARCHITECTURE.md`
+
+Install dev tooling and run pre-commit hooks:
+
+```bash
+pip install -e .[dev]
+pre-commit install
+pre-commit run --all-files
+```
 
 ## Notes
 

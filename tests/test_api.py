@@ -23,6 +23,26 @@ def test_chunker_stream_sets_unknown_total() -> None:
     assert all(c.total_chunks == -1 for c in streamed)
 
 
+def test_stream_text_matches_chunk_output_across_engines() -> None:
+    chunker = Chunker(max_chunk_size=40, min_chunk_size=8, size_unit="chars")
+    cases = [
+        ("sample.py", "def add(a, b):\n    return a + b\n"),
+        ("doc.md", "# Title\n\nParagraph one.\n\nParagraph two."),
+        ("data.json", '{"a": 1, "b": {"c": 2}}'),
+        (
+            "cells.py",
+            "# %% [markdown]\n\"\"\"\n# Intro\n\"\"\"\n# %%\nprint('hi')\n",
+        ),
+    ]
+
+    for filepath, content in cases:
+        chunked = chunker.chunk(filepath, content)
+        streamed = list(chunker.stream(filepath, content))
+
+        assert [c.text for c in streamed] == [c.text for c in chunked]
+        assert all(c.total_chunks == -1 for c in streamed)
+
+
 def test_chunk_file_reads_disk(tmp_path: Path) -> None:
     file_path = tmp_path / "sample.py"
     file_path.write_text("def ping():\n    return 'pong'\n", encoding="utf-8")

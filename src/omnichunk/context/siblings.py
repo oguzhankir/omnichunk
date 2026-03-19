@@ -10,12 +10,17 @@ def detect_siblings_for_chunk(
     max_siblings: int = 3,
 ) -> list[SiblingInfo]:
     """Detect neighboring entities around a chunk, ordered by distance."""
-    scoped_entities = [
+    all_entities = [
         e
         for e in entities
         if e.byte_range is not None and e.type not in {EntityType.IMPORT, EntityType.EXPORT}
     ]
-    scoped_entities.sort(key=lambda e: e.byte_range.start if e.byte_range else 0)
+    all_entities.sort(key=lambda e: e.byte_range.start if e.byte_range else 0)
+
+    if not all_entities:
+        return []
+
+    scoped_entities = _scope_local_entities(all_entities, chunk_range)
 
     overlapping = [e for e in scoped_entities if _overlaps(e.byte_range, chunk_range)]
     if not overlapping:
@@ -62,6 +67,28 @@ def detect_siblings_for_chunk(
 
     siblings.sort(key=lambda s: (0 if s.position == "before" else 1, s.distance))
     return siblings
+
+
+def _scope_local_entities(entities: list[EntityInfo], chunk_range: ByteRange) -> list[EntityInfo]:
+    overlapping = [e for e in entities if _overlaps(e.byte_range, chunk_range)]
+
+    anchor: EntityInfo | None = None
+    if overlapping:
+        anchor = min(overlapping, key=lambda e: e.byte_range.start if e.byte_range else 0)
+    else:
+        nearest_idx = _nearest_index(entities, chunk_range.start)
+        if 0 <= nearest_idx < len(entities):
+            anchor = entities[nearest_idx]
+
+    if anchor is None or not anchor.parent:
+        return entities
+
+    local = [e for e in entities if e.parent == anchor.parent]
+    if len(local) < 2:
+        return entities
+
+    local.sort(key=lambda e: e.byte_range.start if e.byte_range else 0)
+    return local
 
 
 def _overlaps(a: ByteRange | None, b: ByteRange) -> bool:

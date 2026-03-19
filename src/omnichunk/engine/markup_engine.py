@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import re
-from typing import Any
+from typing import Any, Iterator
 
 from omnichunk.context.format import format_contextualized_text
 from omnichunk.parser.html_parser import parse_html_structure
@@ -10,12 +10,21 @@ from omnichunk.sizing.counter import make_token_counter
 from omnichunk.sizing.nws import get_nws_count, preprocess_nws_cumsum
 from omnichunk.types import ByteRange, Chunk, ChunkContext, ChunkOptions, ContentType, EntityInfo, EntityType, LineRange
 from omnichunk.util.detect import detect_language
+from omnichunk.util.text_index import TextIndex
 
 
 class MarkupEngine:
     def chunk(self, filepath: str, content: str, options: ChunkOptions) -> list[Chunk]:
+        chunks = list(self._iter_chunks(filepath, content, options))
+        return _finalize_chunk_indexes(chunks)
+
+    def stream(self, filepath: str, content: str, options: ChunkOptions) -> Iterator[Chunk]:
+        for idx, chunk in enumerate(self._iter_chunks(filepath, content, options)):
+            yield _with_unknown_total(chunk, idx)
+
+    def _iter_chunks(self, filepath: str, content: str, options: ChunkOptions) -> Iterator[Chunk]:
         if not content.strip():
-            return []
+            return
 
         language = options.language or detect_language(filepath=filepath, content=content)
         ranges = _split_markup(content, language)
@@ -26,17 +35,18 @@ class MarkupEngine:
 
         token_counter = make_token_counter(options.tokenizer, chunk_size=options.max_chunk_size)
         cumsum = preprocess_nws_cumsum(content)
-        chunks: list[Chunk] = []
+        text_index = TextIndex(content)
+        chunk_index = 0
 
         for start, end, breadcrumb in ranges:
             text = content[start:end]
             if not text.strip():
                 continue
 
-            line_start = content.count("\n", 0, start)
-            line_end = content.count("\n", 0, end)
-            byte_start = len(content[:start].encode("utf-8"))
-            byte_end = len(content[:end].encode("utf-8"))
+            line_start = text_index.line_for_char(start)
+            line_end = text_index.line_for_char(max(start, end - 1))
+            byte_start = text_index.byte_offset_for_char(start)
+            byte_end = text_index.byte_offset_for_char(end)
 
             section_type = language
             if language == "json":
@@ -69,37 +79,19 @@ class MarkupEngine:
                 else format_contextualized_text(text, context=context)
             )
 
-            chunks.append(
-                Chunk(
-                    text=text,
-                    contextualized_text=contextualized_text,
-                    byte_range=ByteRange(byte_start, byte_end),
-                    line_range=LineRange(line_start, max(line_start, line_end)),
-                    index=len(chunks),
-                    total_chunks=-1,
-                    context=context,
-                    token_count=token_counter(text),
-                    char_count=len(text),
-                    nws_count=get_nws_count(cumsum, byte_start, byte_end),
-                )
+            yield Chunk(
+                text=text,
+                contextualized_text=contextualized_text,
+                byte_range=ByteRange(byte_start, byte_end),
+                line_range=LineRange(line_start, max(line_start, line_end)),
+                index=chunk_index,
+                total_chunks=-1,
+                context=context,
+                token_count=token_counter(text),
+                char_count=len(text),
+                nws_count=get_nws_count(cumsum, byte_start, byte_end),
             )
-
-        total = len(chunks)
-        return [
-            Chunk(
-                text=chunk.text,
-                contextualized_text=chunk.contextualized_text,
-                byte_range=chunk.byte_range,
-                line_range=chunk.line_range,
-                index=idx,
-                total_chunks=total,
-                context=chunk.context,
-                token_count=chunk.token_count,
-                char_count=chunk.char_count,
-                nws_count=chunk.nws_count,
-            )
-            for idx, chunk in enumerate(chunks)
-        ]
+            chunk_index += 1
 
 
 def _split_markup(content: str, language: str) -> list[tuple[int, int, list[str]]]:
@@ -299,3 +291,37 @@ def _merge_small_ranges(
         idx += 1
 
     return _normalize_ranges(merged, len(content))
+
+
+def _finalize_chunk_indexes(chunks: list[Chunk]) -> list[Chunk]:
+    total = len(chunks)
+    return [
+        Chunk(
+            text=chunk.text,
+            contextualized_text=chunk.contextualized_text,
+            byte_range=chunk.byte_range,
+            line_range=chunk.line_range,
+            index=idx,
+            total_chunks=total,
+            context=chunk.context,
+            token_count=chunk.token_count,
+            char_count=chunk.char_count,
+            nws_count=chunk.nws_count,
+        )
+        for idx, chunk in enumerate(chunks)
+    ]
+
+
+def _with_unknown_total(chunk: Chunk, index: int) -> Chunk:
+    return Chunk(
+        text=chunk.text,
+        contextualized_text=chunk.contextualized_text,
+        byte_range=chunk.byte_range,
+        line_range=chunk.line_range,
+        index=index,
+        total_chunks=-1,
+        context=chunk.context,
+        token_count=chunk.token_count,
+        char_count=chunk.char_count,
+        nws_count=chunk.nws_count,
+    )

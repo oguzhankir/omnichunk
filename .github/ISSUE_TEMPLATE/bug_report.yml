@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a reproducible bug in omnichunk
+title: "bug: "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What is broken?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Minimal input, options, and code snippet
+      placeholder: |
+        from omnichunk import chunk
+        chunks = chunk("example.py", code, max_chunk_size=...)
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      description: Python version, OS, omnichunk version
+    validations:
+      required: true
