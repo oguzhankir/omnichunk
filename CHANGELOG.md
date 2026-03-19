@@ -3,6 +3,22 @@
 All notable changes to omnichunk will be documented here.
 This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/).
 
+## [0.5.0] - 2026-03-21
+
+### Added
+- Async API: `Chunker.achunk()`, `Chunker.astream()`, `Chunker.abatch()`
+- Statement-safe oversized splitting: code chunks no longer split mid-expression
+- True lazy streaming: `Chunker.stream()` and all engine `stream()` methods are now genuine generators
+
+### Fixed
+- Redundant `TextIndex` and NWS cumsum builds in engine delegation paths
+- `Chunker.stream()` now documents that overlap is not applied in streaming mode
+
+### Performance
+- `TextIndex.__init__` Rust acceleration via `build_char_to_byte_index` (5× speedup)
+- `_compile_query` result cached per language (eliminates redundant tree-sitter query compilation)
+- `_find_query_name_capture` O(N) → O(log N) via bisect index
+
 ## [0.4.0] - 2026-03-20
 
 ### Changed
