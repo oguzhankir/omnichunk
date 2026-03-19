@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/oguzhankir/omnichunk/main/assets/logo/omnichunk-logo.png" alt="omnichunk" width="360">
+  <img src="https://raw.githubusercontent.com/oguzhankir/omnichunk/main/assets/omnichunk-logo.png" alt="omnichunk" width="360">
   <br><br>
   <a href="https://pypi.org/project/omnichunk/"><img src="https://img.shields.io/pypi/v/omnichunk?v=1" alt="PyPI"></a>
   <a href="https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml"><img src="https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml/badge.svg?v=1" alt="CI"></a>
