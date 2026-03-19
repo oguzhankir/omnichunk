@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import importlib
 import json
 from collections.abc import Sequence
@@ -115,6 +116,88 @@ def chunks_to_langchain_docs(
     return docs
 
 
+def chunks_to_pinecone_vectors(
+    chunks: Sequence[Chunk],
+    embeddings: Sequence[list[float]],
+    *,
+    namespace: str = "",
+    use_contextualized_text: bool = True,
+) -> list[dict[str, Any]]:
+    """Convert chunks to Pinecone upsert-ready dicts (no Pinecone client required).
+
+    Each dict has ``id``, ``values``, ``metadata``. If ``namespace`` is non-empty, a
+    top-level ``namespace`` key is set on each dict.
+    """
+    if len(embeddings) != len(chunks):
+        raise ValueError(
+            f"embeddings length ({len(embeddings)}) must match chunks length ({len(chunks)})"
+        )
+
+    out: list[dict[str, Any]] = []
+    for chunk, values in zip(chunks, embeddings):
+        row: dict[str, Any] = {
+            "id": _stable_vector_id(chunk),
+            "values": list(values),
+            "metadata": _vectordb_metadata(chunk, use_contextualized_text=use_contextualized_text),
+        }
+        if namespace:
+            row["namespace"] = namespace
+        out.append(row)
+    return out
+
+
+def chunks_to_weaviate_objects(
+    chunks: Sequence[Chunk],
+    embeddings: Sequence[list[float]],
+    *,
+    class_name: str = "OmnichunkDocument",
+    use_contextualized_text: bool = True,
+) -> list[dict[str, Any]]:
+    """Convert chunks to Weaviate batch-import-ready dicts (no Weaviate client required)."""
+    if len(embeddings) != len(chunks):
+        raise ValueError(
+            f"embeddings length ({len(embeddings)}) must match chunks length ({len(chunks)})"
+        )
+
+    return [
+        {
+            "class": class_name,
+            "vector": list(values),
+            "properties": _vectordb_metadata(
+                chunk,
+                use_contextualized_text=use_contextualized_text,
+            ),
+        }
+        for chunk, values in zip(chunks, embeddings)
+    ]
+
+
+def chunks_to_supabase_rows(
+    chunks: Sequence[Chunk],
+    embeddings: Sequence[list[float]],
+    *,
+    use_contextualized_text: bool = True,
+) -> list[dict[str, Any]]:
+    """Convert chunks to Supabase / pgvector INSERT-ready dicts (no client required)."""
+    if len(embeddings) != len(chunks):
+        raise ValueError(
+            f"embeddings length ({len(embeddings)}) must match chunks length ({len(chunks)})"
+        )
+
+    rows: list[dict[str, Any]] = []
+    for chunk, values in zip(chunks, embeddings):
+        meta = _vectordb_metadata(chunk, use_contextualized_text=use_contextualized_text)
+        content = meta.pop("text")
+        rows.append(
+            {
+                "content": content,
+                "embedding": list(values),
+                **meta,
+            }
+        )
+    return rows
+
+
 def chunks_to_llamaindex_docs(
     chunks: Sequence[Chunk],
     *,
@@ -129,6 +212,34 @@ def chunks_to_llamaindex_docs(
         docs.append(document_cls(text=content, metadata=_chunk_metadata(chunk)))
 
     return docs
+
+
+def _stable_vector_id(chunk: Chunk) -> str:
+    raw = (
+        f"{chunk.context.filepath}\0{chunk.index}\0"
+        f"{chunk.byte_range.start}\0{chunk.byte_range.end}"
+    )
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+def _vectordb_metadata(chunk: Chunk, *, use_contextualized_text: bool) -> dict[str, Any]:
+    text = chunk.contextualized_text if use_contextualized_text else chunk.text
+    return {
+        "text": text,
+        "filepath": chunk.context.filepath,
+        "language": chunk.context.language,
+        "content_type": chunk.context.content_type.value,
+        "index": chunk.index,
+        "total_chunks": chunk.total_chunks,
+        "byte_start": chunk.byte_range.start,
+        "byte_end": chunk.byte_range.end,
+        "line_start": chunk.line_range.start,
+        "line_end": chunk.line_range.end,
+        "token_count": chunk.token_count,
+        "char_count": chunk.char_count,
+        "nws_count": chunk.nws_count,
+        "breadcrumb": " > ".join(chunk.context.breadcrumb),
+    }
 
 
 def _chunk_metadata(chunk: Chunk) -> dict[str, Any]:

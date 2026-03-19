@@ -15,6 +15,9 @@ from omnichunk.serialization import (
     chunks_to_jsonl,
     chunks_to_langchain_docs,
     chunks_to_llamaindex_docs,
+    chunks_to_pinecone_vectors,
+    chunks_to_supabase_rows,
+    chunks_to_weaviate_objects,
 )
 from omnichunk.types import BatchResult, Chunk, ChunkOptions, ChunkQualityScore, ChunkStats
 
@@ -176,6 +179,52 @@ class Chunker:
             use_contextualized_text=use_contextualized_text,
         )
 
+    def to_pinecone_vectors(
+        self,
+        chunks: Sequence[Chunk],
+        embeddings: Sequence[list[float]],
+        *,
+        namespace: str = "",
+        use_contextualized_text: bool = True,
+    ) -> list[dict[str, Any]]:
+        """Build Pinecone upsert-ready dicts (caller supplies embeddings)."""
+        return chunks_to_pinecone_vectors(
+            chunks,
+            embeddings,
+            namespace=namespace,
+            use_contextualized_text=use_contextualized_text,
+        )
+
+    def to_weaviate_objects(
+        self,
+        chunks: Sequence[Chunk],
+        embeddings: Sequence[list[float]],
+        *,
+        class_name: str = "OmnichunkDocument",
+        use_contextualized_text: bool = True,
+    ) -> list[dict[str, Any]]:
+        """Build Weaviate batch-import-ready dicts (caller supplies embeddings)."""
+        return chunks_to_weaviate_objects(
+            chunks,
+            embeddings,
+            class_name=class_name,
+            use_contextualized_text=use_contextualized_text,
+        )
+
+    def to_supabase_rows(
+        self,
+        chunks: Sequence[Chunk],
+        embeddings: Sequence[list[float]],
+        *,
+        use_contextualized_text: bool = True,
+    ) -> list[dict[str, Any]]:
+        """Build Supabase/pgvector-ready rows (caller supplies embeddings)."""
+        return chunks_to_supabase_rows(
+            chunks,
+            embeddings,
+            use_contextualized_text=use_contextualized_text,
+        )
+
     def quality_scores(
         self,
         chunks: Sequence[Chunk],
@@ -232,21 +281,28 @@ class Chunker:
         import asyncio
 
         loop = asyncio.get_running_loop()
-        queue: asyncio.Queue[Chunk | None] = asyncio.Queue()
+        queue: asyncio.Queue[Chunk | BaseException | None] = asyncio.Queue()
 
         def _produce() -> None:
             try:
                 for ch in self.stream(filepath, content, **kwargs):
                     loop.call_soon_threadsafe(queue.put_nowait, ch)
+            except BaseException as exc:
+                loop.call_soon_threadsafe(queue.put_nowait, exc)
             finally:
                 loop.call_soon_threadsafe(queue.put_nowait, None)
 
-        loop.run_in_executor(None, _produce)
-        while True:
-            item = await queue.get()
-            if item is None:
-                break
-            yield item
+        producer_future = loop.run_in_executor(None, _produce)
+        try:
+            while True:
+                item = await queue.get()
+                if item is None:
+                    break
+                if isinstance(item, BaseException):
+                    raise item
+                yield item
+        finally:
+            await producer_future
 
     async def abatch(
         self,

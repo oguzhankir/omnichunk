@@ -49,6 +49,20 @@ Run quality invariants report on benchmark scenarios:
 python benchmarks/run_quality_report.py
 ```
 
+Generate a self-contained HTML dashboard (throughput table, Chart.js bar chart, quality PASS/FAIL, raw JSON). Chart.js is loaded from cdnjs; everything else is inline.
+
+```bash
+python benchmarks/run_html_report.py
+python benchmarks/run_html_report.py --output reports/benchmark.html
+python benchmarks/run_html_report.py --scenarios python_complex markdown_doc --repeat 5
+```
+
+From CI helper `scripts/check_benchmarks.py`, optionally emit HTML after other steps:
+
+```bash
+python scripts/check_benchmarks.py --run-quality --html-report reports/ci_benchmark.html
+```
+
 Run large-corpus throughput and slow-file diagnostics:
 
 ```bash

@@ -61,7 +61,7 @@ class CodeEngine:
             return
 
         language = options.language or detect_language(filepath=filepath, content=content)
-        parse_result = parse_code(content, language)
+        parse_result = parse_code(content, language, filepath=filepath)
 
         entities = enrich_parent_links(extract_entities(content, language, parse_result.tree))
         scope_tree = build_scope_tree(entities)

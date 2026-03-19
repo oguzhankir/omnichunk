@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import asyncio
 
+import pytest
+
 from omnichunk import Chunker
+from omnichunk.engine.code_engine import CodeEngine
 
 CODE = "def foo():\n    return 1\n" * 20
 
@@ -13,6 +16,23 @@ def test_achunk_returns_same_as_chunk() -> None:
     async_result = asyncio.run(chunker.achunk("test.py", CODE))
     assert len(sync_result) == len(async_result)
     assert [c.text for c in sync_result] == [c.text for c in async_result]
+
+
+def test_astream_propagates_engine_exception(monkeypatch: pytest.MonkeyPatch) -> None:
+    def _broken(self: CodeEngine, filepath: str, content: str, options: object):
+        raise RuntimeError("injected engine failure")
+
+    monkeypatch.setattr(CodeEngine, "_iter_base_chunks", _broken)
+    chunker = Chunker(max_chunk_size=128, size_unit="chars")
+
+    async def _run() -> list:
+        chunks = []
+        async for ch in chunker.astream("fail.py", "def f(): pass"):
+            chunks.append(ch)
+        return chunks
+
+    with pytest.raises(RuntimeError, match="injected engine failure"):
+        asyncio.run(_run())
 
 
 def test_astream_reconstruction() -> None:

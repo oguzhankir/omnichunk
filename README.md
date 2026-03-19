@@ -42,6 +42,10 @@ pip install omnichunk[llamaindex]      # LlamaIndex Document export support
 pip install omnichunk[profiling]       # py-spy / line-profiler helpers
 pip install omnichunk[rust]            # maturin tooling for Rust backend PoC
 pip install omnichunk[dev]             # Development tools
+pip install omnichunk[pinecone]        # Vector DB adapter extra (no client lib)
+pip install omnichunk[weaviate]        # Vector DB adapter extra (no client lib)
+pip install omnichunk[supabase]        # Vector DB adapter extra (no client lib)
+pip install omnichunk[vectordb]        # Meta-group for all vector export extras (empty deps)
 ```
 
 ## CLI
@@ -92,6 +96,7 @@ chunks = chunker.chunk("api.py", source_code)
 
 for c in chunker.stream("large.py", large_source):
     consume(c)
+```
 
 ### Async API
 
@@ -119,6 +124,7 @@ results = asyncio.run(chunker.abatch(
 ))
 ```
 
+```python
 batch_results = chunker.batch(
     [
         {"filepath": "a.py", "code": code_a},
@@ -150,6 +156,41 @@ quality = chunker.quality_scores(
 
 langchain_docs = chunker.to_langchain_docs(all_chunks)
 llamaindex_docs = chunker.to_llamaindex_docs(all_chunks)
+
+# Vector DB–ready rows (you compute embeddings elsewhere)
+from omnichunk import chunks_to_pinecone_vectors, chunks_to_supabase_rows
+
+emb = [[0.1, 0.2, 0.3] for _ in all_chunks]  # same length as chunks
+pinecone_batch = chunks_to_pinecone_vectors(all_chunks, emb, namespace="my_ns")
+weaviate_batch = chunker.to_weaviate_objects(all_chunks, emb, class_name="Doc")
+supabase_rows = chunks_to_supabase_rows(all_chunks, emb)
+```
+
+## Vector database export (serialization)
+
+Adapters produce plain dicts/lists only—**no** Pinecone, Weaviate, or Supabase client is installed by these extras. You compute embeddings yourself and pass parallel lists:
+
+- `chunks_to_pinecone_vectors` / `Chunker.to_pinecone_vectors` — `id`, `values`, `metadata` (+ optional `namespace` per row)
+- `chunks_to_weaviate_objects` / `Chunker.to_weaviate_objects` — `class`, `vector`, `properties`
+- `chunks_to_supabase_rows` / `Chunker.to_supabase_rows` — `content`, `embedding`, plus flat metadata columns
+
+## Plugin API
+
+Register custom parsers or formatters at import time (no edits to omnichunk core):
+
+```python
+from omnichunk import register_parser, register_formatter, Chunker
+
+def my_parse(filepath: str, content: str):
+    # Return a tree-sitter-like tree, or None to use the built-in parser.
+    return None
+
+register_parser("python", my_parse, overwrite=True)
+
+def my_fmt(chunks):
+    return str(len(chunks))
+
+register_formatter("count", my_fmt)
 ```
 
 ### File API

@@ -214,3 +214,6 @@ benchmarks/results/
 dist-rust/
 rust/omnichunk_rust/target/
 rust/omnichunk_rust/Cargo.lock
+
+# Reports
+reports/

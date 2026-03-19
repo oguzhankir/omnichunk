@@ -54,13 +54,16 @@ _QUERY_SOURCES: dict[Language, str] = {
 """,
     "c": """
 (function_definition declarator: (_) @name) @entity.function
-(declaration declarator: (_) @name) @entity.type
+(struct_specifier name: (_) @name) @entity.class
+(type_definition) @entity.type
 (preproc_include) @entity.import
 """,
     "cpp": """
 (function_definition declarator: (_) @name) @entity.function
 (class_specifier name: (_) @name) @entity.class
 (struct_specifier name: (_) @name) @entity.class
+(namespace_definition name: (_) @name) @entity.class
+(type_definition) @entity.type
 (preproc_include) @entity.import
 """,
     "csharp": """
