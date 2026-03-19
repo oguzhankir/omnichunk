@@ -65,7 +65,7 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
         boundary_points.add(e)
 
     sorted_points = sorted(boundary_points)
-    for left, right in zip(sorted_points, sorted_points[1:], strict=False):
+    for left, right in zip(sorted_points, sorted_points[1:]):
         if right <= left:
             continue
         segment = content[left:right]

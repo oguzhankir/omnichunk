@@ -21,7 +21,7 @@ def test_python_chunking_reconstructs_exactly(fixtures_dir: Path) -> None:
         assert snippet == chunk.text
         assert chunk.text.strip()
 
-    for left, right in zip(chunks, chunks[1:], strict=False):
+    for left, right in zip(chunks, chunks[1:]):
         assert left.byte_range.end == right.byte_range.start
 
 
@@ -99,7 +99,7 @@ def test_oversized_code_split_prefers_safe_boundaries() -> None:
     assert chunks
     assert "".join(c.text for c in chunks) == code
 
-    for left, right in zip(chunks, chunks[1:], strict=False):
+    for left, right in zip(chunks, chunks[1:]):
         if not left.text or not right.text:
             continue
         assert not (left.text[-1].isalnum() and right.text[0].isalnum())

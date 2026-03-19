@@ -3,6 +3,13 @@
 All notable changes to omnichunk will be documented here.
 This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2025-03-19
+
+### Fixed
+- Fixed README logo URL path from `assets/logo/` to `assets/`
+- Added cache-buster parameters to badge URLs for proper GitHub rendering
+- Improved README layout with centered logo and badges
+
 ## [0.1.0] - 2025-XX-XX
 
 ### Added
