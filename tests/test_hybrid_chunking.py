@@ -5,8 +5,7 @@ from pathlib import Path
 from omnichunk import Chunker
 from omnichunk.engine.hybrid_engine import HybridEngine
 from omnichunk.engine.prose_engine import ProseEngine
-from omnichunk.types import ChunkOptions
-from omnichunk.types import ContentType
+from omnichunk.types import ChunkOptions, ContentType
 from omnichunk.util.text_index import TextIndex
 
 
