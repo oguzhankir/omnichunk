@@ -68,8 +68,16 @@ class CodeEngine:
         scope_tree = build_scope_tree(entities)
         import_infos = build_import_infos(entities)
 
-        cumsum = preprocess_nws_cumsum(content)
-        text_index = TextIndex(content)
+        precomputed_text_index = options._precomputed_text_index
+        if isinstance(precomputed_text_index, TextIndex):
+            text_index = precomputed_text_index
+        else:
+            text_index = TextIndex(content)
+
+        cumsum = options._precomputed_nws_cumsum
+        if cumsum is None:
+            cumsum = preprocess_nws_cumsum(content)
+
         raw_bytes = text_index.raw_bytes
 
         max_size_nws = _to_internal_nws_limit(options.max_chunk_size, options.size_unit)

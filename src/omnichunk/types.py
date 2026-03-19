@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Literal
+from typing import Any, Literal
 
 
 class ContentType(Enum):
@@ -148,6 +148,30 @@ class Chunk:
     nws_count: int = 0
 
 
+@dataclass(frozen=True)
+class ChunkQualityScore:
+    """Quality metrics for a chunk."""
+
+    index: int
+    overall: float
+    entity_integrity: float
+    scope_consistency: float
+    size_balance: float
+    size_value: int
+
+
+@dataclass(frozen=True)
+class ChunkStats:
+    """Aggregate statistics for a chunk set."""
+
+    total_chunks: int
+    average_size: float
+    min_size: int
+    max_size: int
+    size_unit: Literal["tokens", "chars", "nws"]
+    entity_distribution: dict[str, int] = field(default_factory=dict)
+
+
 @dataclass
 class ChunkOptions:
     """Configuration for chunking behavior."""
@@ -173,6 +197,9 @@ class ChunkOptions:
     preserve_decorators: bool = True
     preserve_comments: bool = True
     include_header_in_sections: bool = True
+
+    _precomputed_nws_cumsum: Any | None = None
+    _precomputed_text_index: Any | None = None
 
 
 @dataclass(frozen=True)

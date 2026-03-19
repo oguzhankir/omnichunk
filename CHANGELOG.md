@@ -3,6 +3,19 @@
 All notable changes to omnichunk will be documented here.
 This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/).
 
+## [0.3.0] - 2026-03-19
+
+### Added
+- Added first-class CLI (`omnichunk`) with file/directory chunking, JSON/JSONL/CSV outputs, and `--stats` reporting
+- Added `chunk_directory()` API for recursive repository chunking with glob/exclude/concurrency options
+- Added export helpers on `Chunker`: `to_dicts()`, `to_jsonl()`, `to_csv()`, `to_langchain_docs()`, `to_llamaindex_docs()`
+- Added chunk quality metrics and aggregate stats APIs via `quality_scores()` and `chunk_stats()`
+- Added test coverage for CLI flow, directory chunking, export serialization, and quality scoring
+
+### Changed
+- Router now precomputes and reuses `TextIndex` and NWS cumulative sums across engines to reduce repeated full-content scans
+- Tree-sitter parser instances now use per-thread caching to avoid cross-thread parser reuse in concurrent workloads
+
 ## [0.2.0] - 2026-03-19
 
 ### Fixed

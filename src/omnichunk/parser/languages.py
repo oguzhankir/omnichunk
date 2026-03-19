@@ -3,7 +3,7 @@ from __future__ import annotations
 import importlib
 from dataclasses import dataclass
 from functools import lru_cache
-from threading import RLock
+from threading import RLock, local
 from typing import Any
 
 from omnichunk.types import Language
@@ -47,6 +47,7 @@ _GRAMMARS: dict[Language, GrammarSpec] = {
 }
 
 _LOCK = RLock()
+_THREAD_LOCAL = local()
 
 
 @lru_cache(maxsize=64)
@@ -116,14 +117,27 @@ def _new_parser(lang_obj: Any) -> Any:
     return None
 
 
-@lru_cache(maxsize=64)
 def get_parser(language: Language) -> Any | None:
     lang_obj = get_language(language)
     if lang_obj is None:
         return None
 
+    parser_cache = getattr(_THREAD_LOCAL, "parsers", None)
+    if parser_cache is None:
+        parser_cache = {}
+        _THREAD_LOCAL.parsers = parser_cache
+
+    cached = parser_cache.get(language)
+    if cached is not None:
+        return cached
+
     with _LOCK:
-        return _new_parser(lang_obj)
+        parser = _new_parser(lang_obj)
+
+    if parser is not None:
+        parser_cache[language] = parser
+
+    return parser
 
 
 def is_supported_code_language(language: Language) -> bool:

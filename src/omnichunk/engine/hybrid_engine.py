@@ -40,6 +40,8 @@ class HybridEngine:
             sub_options.content_type = (
                 ContentType.CODE if segment[2] == "code" else ContentType.PROSE
             )
+            sub_options._precomputed_text_index = None
+            sub_options._precomputed_nws_cumsum = None
 
             if segment[2] == "code":
                 local_chunks = self._code_engine.stream(filepath, segment_text, sub_options)

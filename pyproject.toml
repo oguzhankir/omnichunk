@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "omnichunk"
-version = "0.2.0"
+version = "0.3.0"
 description = "Structure-aware deterministic chunking for code, prose, and markup."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -43,6 +43,9 @@ dependencies = [
   "tree-sitter-java>=0.23.0",
 ]
 
+[project.scripts]
+omnichunk = "omnichunk.cli:main"
+
 [project.optional-dependencies]
 all-languages = [
   "tree-sitter-c>=0.23.0",
@@ -55,6 +58,8 @@ all-languages = [
 ]
 tiktoken = ["tiktoken>=0.5.0"]
 transformers = ["transformers>=4.30.0"]
+langchain = ["langchain-core>=0.2.0"]
+llamaindex = ["llama-index-core>=0.10.0"]
 dev = [
   "pytest>=8.0.0",
   "pytest-cov>=4.0.0",

@@ -37,7 +37,17 @@ Optional extras:
 pip install omnichunk[tiktoken]        # tiktoken tokenizer support
 pip install omnichunk[transformers]    # HuggingFace tokenizer support
 pip install omnichunk[all-languages]   # Extended language grammars
+pip install omnichunk[langchain]       # LangChain Document export support
+pip install omnichunk[llamaindex]      # LlamaIndex Document export support
 pip install omnichunk[dev]             # Development tools
+```
+
+## CLI
+
+```bash
+omnichunk ./src --glob "**/*.py" --max-size 512 --size-unit chars --format jsonl > chunks.jsonl
+omnichunk app.py --max-size 256 --size-unit chars --stats
+omnichunk README.md --format csv --output chunks.csv
 ```
 
 ## Quick start
@@ -88,6 +98,29 @@ batch_results = chunker.batch(
     ],
     concurrency=8,
 )
+
+directory_results = chunker.chunk_directory(
+    "./src",
+    glob="**/*.py",
+    exclude=["**/tests/**"],
+    concurrency=8,
+)
+
+all_chunks = [chunk for result in directory_results for chunk in result.chunks]
+
+jsonl_payload = chunker.to_jsonl(all_chunks)
+csv_payload = chunker.to_csv(all_chunks)
+
+stats = chunker.chunk_stats(all_chunks, size_unit="chars")
+quality = chunker.quality_scores(
+    all_chunks,
+    min_chunk_size=80,
+    max_chunk_size=1024,
+    size_unit="chars",
+)
+
+langchain_docs = chunker.to_langchain_docs(all_chunks)
+llamaindex_docs = chunker.to_llamaindex_docs(all_chunks)
 ```
 
 ### File API
@@ -96,6 +129,20 @@ batch_results = chunker.batch(
 from omnichunk import chunk_file
 
 chunks = chunk_file("path/to/file.py")
+```
+
+### Directory API
+
+```python
+from omnichunk import chunk_directory
+
+results = chunk_directory("./src", glob="**/*.py", max_chunk_size=512, size_unit="chars")
+
+for result in results:
+    if result.error:
+        print("error", result.filepath, result.error)
+    else:
+        print(result.filepath, len(result.chunks))
 ```
 
 ## Chunk model
@@ -147,6 +194,9 @@ Markdown fenced blocks are delegated by language:
 ```
 src/omnichunk/
 ├── chunker.py
+├── cli.py
+├── quality.py
+├── serialization.py
 ├── types.py
 ├── engine/
 │   ├── router.py

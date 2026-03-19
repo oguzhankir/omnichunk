@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
-from omnichunk import Chunker, chunk, chunk_file
+from omnichunk import Chunker, chunk, chunk_directory, chunk_file
 
 
 def test_chunk_function_simple_python() -> None:
@@ -65,3 +66,60 @@ def test_batch_keeps_input_order() -> None:
     assert [r.filepath for r in results] == ["a.py", "b.md", "c.json"]
     assert all(r.error is None for r in results)
     assert all(r.chunks for r in results)
+
+
+def test_chunk_directory_glob_and_hidden_filters(tmp_path: Path) -> None:
+    src_dir = tmp_path / "src"
+    src_dir.mkdir()
+    (src_dir / "a.py").write_text("def a():\n    return 1\n", encoding="utf-8")
+    (src_dir / "b.md").write_text("# title\n", encoding="utf-8")
+
+    nested = src_dir / "nested"
+    nested.mkdir()
+    (nested / "c.py").write_text("def c():\n    return 3\n", encoding="utf-8")
+    (nested / ".hidden.py").write_text("def hidden():\n    return 0\n", encoding="utf-8")
+
+    results = chunk_directory(
+        str(src_dir),
+        glob="**/*.py",
+        max_chunk_size=40,
+        size_unit="chars",
+    )
+
+    filepaths = [Path(item.filepath).name for item in results]
+    assert filepaths == ["a.py", "c.py"]
+    assert all(item.error is None for item in results)
+    assert all(item.chunks for item in results)
+
+
+def test_chunker_export_and_quality_helpers() -> None:
+    code = "def add(a: int, b: int) -> int:\n    return a + b\n"
+    chunker = Chunker(max_chunk_size=48, min_chunk_size=12, size_unit="chars")
+    chunks = chunker.chunk("calc.py", code)
+
+    payload = chunker.to_dicts(chunks)
+    assert payload
+    assert payload[0]["context"]["filepath"] == "calc.py"
+
+    jsonl = chunker.to_jsonl(chunks)
+    lines = [line for line in jsonl.splitlines() if line.strip()]
+    assert lines
+    decoded = [json.loads(line) for line in lines]
+    assert decoded[0]["context"]["filepath"] == "calc.py"
+
+    csv_payload = chunker.to_csv(chunks)
+    assert "filepath" in csv_payload.splitlines()[0]
+    assert "calc.py" in csv_payload
+
+    stats = chunker.chunk_stats(chunks, size_unit="chars")
+    assert stats.total_chunks == len(chunks)
+    assert stats.average_size > 0
+
+    quality = chunker.quality_scores(
+        chunks,
+        min_chunk_size=12,
+        max_chunk_size=48,
+        size_unit="chars",
+    )
+    assert quality
+    assert all(0.0 <= item.overall <= 1.0 for item in quality)

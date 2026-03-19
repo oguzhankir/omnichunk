@@ -45,8 +45,16 @@ class MarkupEngine:
         )
 
         token_counter = make_token_counter(options.tokenizer, chunk_size=options.max_chunk_size)
-        cumsum = preprocess_nws_cumsum(content)
-        text_index = TextIndex(content)
+        cumsum = options._precomputed_nws_cumsum
+        if cumsum is None:
+            cumsum = preprocess_nws_cumsum(content)
+
+        precomputed_text_index = options._precomputed_text_index
+        if isinstance(precomputed_text_index, TextIndex):
+            text_index = precomputed_text_index
+        else:
+            text_index = TextIndex(content)
+
         chunk_index = 0
 
         for start, end, breadcrumb in ranges:

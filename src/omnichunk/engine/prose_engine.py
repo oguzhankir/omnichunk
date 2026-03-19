@@ -112,7 +112,12 @@ class ProseEngine:
         if not content.strip():
             return
 
-        text_index = TextIndex(content)
+        precomputed_text_index = options._precomputed_text_index
+        if isinstance(precomputed_text_index, TextIndex):
+            text_index = precomputed_text_index
+        else:
+            text_index = TextIndex(content)
+
         language = options.language or detect_language(filepath=filepath, content=content)
         size_counter = make_size_counter(
             options.size_unit,
@@ -141,7 +146,10 @@ class ProseEngine:
         ranges = _windows_to_contiguous_ranges(windows, len(content))
         ranges = _filter_empty_ranges(content, ranges)
 
-        cumsum = preprocess_nws_cumsum(content)
+        cumsum = options._precomputed_nws_cumsum
+        if cumsum is None:
+            cumsum = preprocess_nws_cumsum(content)
+
         previous_text = ""
         chunk_index = 0
 
@@ -254,7 +262,13 @@ class ProseEngine:
         if code_text:
             resolved_language = _resolve_code_fence_language(fence_language, code_text)
             if resolved_language is not None:
-                sub_options = replace(options, content_type=ContentType.CODE, overlap_lines=0)
+                sub_options = replace(
+                    options,
+                    content_type=ContentType.CODE,
+                    overlap_lines=0,
+                    _precomputed_text_index=None,
+                    _precomputed_nws_cumsum=None,
+                )
                 sub_options.language = resolved_language  # type: ignore[assignment]
 
                 code_chunks = list(self._code_engine.stream(filepath, code_text, sub_options))
@@ -290,7 +304,13 @@ class ProseEngine:
             else:
                 resolved_markup_language = _resolve_markup_fence_language(fence_language, code_text)
                 if resolved_markup_language is not None:
-                    sub_options = replace(options, content_type=ContentType.MARKUP, overlap_lines=0)
+                    sub_options = replace(
+                        options,
+                        content_type=ContentType.MARKUP,
+                        overlap_lines=0,
+                        _precomputed_text_index=None,
+                        _precomputed_nws_cumsum=None,
+                    )
                     sub_options.language = resolved_markup_language  # type: ignore[assignment]
 
                     markup_chunks = list(

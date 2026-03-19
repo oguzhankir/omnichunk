@@ -1,13 +1,22 @@
 from __future__ import annotations
 
-from collections.abc import Callable, Iterator
+import fnmatch
+from collections.abc import Callable, Iterator, Sequence
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict
 from pathlib import Path
 from typing import Any
 
 from omnichunk.engine.router import route_content, route_content_stream
-from omnichunk.types import BatchResult, Chunk, ChunkOptions
+from omnichunk.quality import compute_chunk_quality_scores, compute_chunk_stats
+from omnichunk.serialization import (
+    chunk_to_dict,
+    chunks_to_csv,
+    chunks_to_jsonl,
+    chunks_to_langchain_docs,
+    chunks_to_llamaindex_docs,
+)
+from omnichunk.types import BatchResult, Chunk, ChunkOptions, ChunkQualityScore, ChunkStats
 
 
 class Chunker:
@@ -67,6 +76,130 @@ class Chunker:
         text = Path(path).read_text(encoding="utf-8")
         return self.chunk(filepath=path, content=text, **overrides)
 
+    def chunk_directory(
+        self,
+        path: str,
+        *,
+        glob: str = "**/*",
+        exclude: Sequence[str] | None = None,
+        concurrency: int = 10,
+        encoding: str = "utf-8",
+        include_hidden: bool = False,
+        **overrides: object,
+    ) -> list[BatchResult]:
+        """Chunk all matching files inside a directory recursively."""
+        root = Path(path)
+        if not root.exists():
+            raise FileNotFoundError(f"Directory does not exist: {path}")
+
+        if root.is_file():
+            try:
+                chunks = self.chunk_file(str(root), **overrides)
+                return [BatchResult(filepath=str(root), chunks=chunks)]
+            except Exception as exc:
+                return [BatchResult(filepath=str(root), chunks=[], error=str(exc))]
+
+        patterns = list(exclude or [])
+        file_paths = _collect_directory_files(
+            root,
+            glob_pattern=glob,
+            exclude_patterns=patterns,
+            include_hidden=include_hidden,
+        )
+        if not file_paths:
+            return []
+
+        concurrency = max(1, min(concurrency, len(file_paths)))
+        results_by_idx: dict[int, BatchResult] = {}
+
+        def _worker(idx: int, file_path: Path) -> tuple[int, BatchResult]:
+            filepath = str(file_path)
+            try:
+                text = file_path.read_text(encoding=encoding)
+            except Exception as exc:
+                return idx, BatchResult(filepath=filepath, chunks=[], error=f"Read failed: {exc}")
+
+            try:
+                chunks = self.chunk(filepath=filepath, content=text, **overrides)
+                return idx, BatchResult(filepath=filepath, chunks=chunks)
+            except Exception as exc:
+                return idx, BatchResult(filepath=filepath, chunks=[], error=str(exc))
+
+        with ThreadPoolExecutor(max_workers=concurrency) as executor:
+            futures = [
+                executor.submit(_worker, idx, file_path)
+                for idx, file_path in enumerate(file_paths)
+            ]
+            for future in as_completed(futures):
+                idx, result = future.result()
+                results_by_idx[idx] = result
+
+        return [results_by_idx[idx] for idx in range(len(file_paths))]
+
+    def to_dicts(self, chunks: Sequence[Chunk]) -> list[dict[str, Any]]:
+        """Convert chunks into JSON-serializable dictionaries."""
+        return [chunk_to_dict(chunk) for chunk in chunks]
+
+    def to_jsonl(self, chunks: Sequence[Chunk], output_path: str | None = None) -> str:
+        """Export chunks as JSONL text and optionally write to file."""
+        return chunks_to_jsonl(chunks, output_path=output_path)
+
+    def to_csv(self, chunks: Sequence[Chunk], output_path: str | None = None) -> str:
+        """Export chunks as CSV text and optionally write to file."""
+        return chunks_to_csv(chunks, output_path=output_path)
+
+    def to_langchain_docs(
+        self,
+        chunks: Sequence[Chunk],
+        *,
+        use_contextualized_text: bool = True,
+    ) -> list[Any]:
+        """Convert chunks to LangChain Document objects."""
+        return chunks_to_langchain_docs(
+            chunks,
+            use_contextualized_text=use_contextualized_text,
+        )
+
+    def to_llamaindex_docs(
+        self,
+        chunks: Sequence[Chunk],
+        *,
+        use_contextualized_text: bool = True,
+    ) -> list[Any]:
+        """Convert chunks to LlamaIndex Document objects."""
+        return chunks_to_llamaindex_docs(
+            chunks,
+            use_contextualized_text=use_contextualized_text,
+        )
+
+    def quality_scores(
+        self,
+        chunks: Sequence[Chunk],
+        *,
+        min_chunk_size: int | None = None,
+        max_chunk_size: int | None = None,
+        size_unit: str | None = None,
+    ) -> list[ChunkQualityScore]:
+        """Score chunk quality using entity, scope, and size heuristics."""
+        resolved_min = (
+            self._defaults.min_chunk_size if min_chunk_size is None else int(min_chunk_size)
+        )
+        resolved_max = (
+            self._defaults.max_chunk_size if max_chunk_size is None else int(max_chunk_size)
+        )
+        resolved_unit = self._defaults.size_unit if size_unit is None else str(size_unit)
+        return compute_chunk_quality_scores(
+            chunks,
+            min_chunk_size=resolved_min,
+            max_chunk_size=resolved_max,
+            size_unit=resolved_unit,
+        )
+
+    def chunk_stats(self, chunks: Sequence[Chunk], *, size_unit: str | None = None) -> ChunkStats:
+        """Compute aggregate chunk statistics."""
+        resolved_unit = self._defaults.size_unit if size_unit is None else str(size_unit)
+        return compute_chunk_stats(chunks, size_unit=resolved_unit)
+
     def _build_options(self, filepath: str, overrides: dict[str, object]) -> ChunkOptions:
         data = asdict(self._defaults)
         data.update(_coerce_option_dict(overrides))
@@ -80,6 +213,57 @@ def chunk(filepath: str, content: str, **options: object) -> list[Chunk]:
 
 def chunk_file(path: str, **options: object) -> list[Chunk]:
     return Chunker(**options).chunk_file(path)
+
+
+def chunk_directory(
+    path: str,
+    *,
+    glob: str = "**/*",
+    exclude: Sequence[str] | None = None,
+    concurrency: int = 10,
+    encoding: str = "utf-8",
+    include_hidden: bool = False,
+    **options: object,
+) -> list[BatchResult]:
+    return Chunker(**options).chunk_directory(
+        path,
+        glob=glob,
+        exclude=exclude,
+        concurrency=concurrency,
+        encoding=encoding,
+        include_hidden=include_hidden,
+    )
+
+
+def _collect_directory_files(
+    root: Path,
+    *,
+    glob_pattern: str,
+    exclude_patterns: Sequence[str],
+    include_hidden: bool,
+) -> list[Path]:
+    candidates = [path for path in root.glob(glob_pattern) if path.is_file()]
+    out: list[Path] = []
+
+    for file_path in candidates:
+        try:
+            relative = file_path.relative_to(root)
+        except Exception:
+            relative = file_path
+
+        relative_posix = relative.as_posix()
+        if not include_hidden and any(part.startswith(".") for part in relative.parts):
+            continue
+
+        if exclude_patterns and any(
+            fnmatch.fnmatch(relative_posix, pattern) for pattern in exclude_patterns
+        ):
+            continue
+
+        out.append(file_path)
+
+    out.sort(key=lambda item: item.as_posix())
+    return out
 
 
 def _coerce_option_dict(options: dict[str, object]) -> dict[str, Any]:

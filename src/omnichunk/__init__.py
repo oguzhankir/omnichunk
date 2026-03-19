@@ -1,10 +1,12 @@
-from .chunker import Chunker, chunk, chunk_file
+from .chunker import Chunker, chunk, chunk_directory, chunk_file
 from .types import (
     BatchResult,
     ByteRange,
     Chunk,
     ChunkContext,
     ChunkOptions,
+    ChunkQualityScore,
+    ChunkStats,
     ContentType,
     EntityInfo,
     EntityType,
@@ -13,7 +15,7 @@ from .types import (
     SiblingInfo,
 )
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 __all__ = [
     "BatchResult",
@@ -21,6 +23,8 @@ __all__ = [
     "Chunk",
     "ChunkContext",
     "ChunkOptions",
+    "ChunkQualityScore",
+    "ChunkStats",
     "Chunker",
     "ContentType",
     "EntityInfo",
@@ -30,5 +34,6 @@ __all__ = [
     "SiblingInfo",
     "__version__",
     "chunk",
+    "chunk_directory",
     "chunk_file",
 ]
