@@ -296,13 +296,13 @@ def _find_query_name_capture(entity_node: Any, name_nodes: list[Any]) -> Any | N
         return best_node
 
     fallback_node: Any | None = None
-    fallback_key: tuple[int, int] | None = None
+    fallback_key: tuple[int, int, int] | None = None
     for name_node in name_nodes:
         name_start = int(getattr(name_node, "start_byte", 0))
         name_end = int(getattr(name_node, "end_byte", name_start))
         if name_start < entity_start or name_end > entity_end:
             continue
-        key = (abs(name_start - entity_start), name_end - name_start)
+        key = (0, abs(name_start - entity_start), name_end - name_start)
         if fallback_key is None or key < fallback_key:
             fallback_key = key
             fallback_node = name_node
