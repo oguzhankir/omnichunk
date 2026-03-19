@@ -1,20 +1,38 @@
+# ruff: noqa: E402
 from __future__ import annotations
 
-from dataclasses import dataclass
+import argparse
+import contextlib
 import importlib
+import json
+import os
+import shutil
+import sys
+import tempfile
+from collections.abc import Callable
+from dataclasses import dataclass
 from pathlib import Path
 from time import perf_counter
-import sys
-from typing import Any, Callable
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
-if str(SRC) not in sys.path:
-    sys.path.insert(0, str(SRC))
+BENCH_DIR = Path(__file__).resolve().parent
+for _p in (SRC, BENCH_DIR):
+    if str(_p) not in sys.path:
+        sys.path.insert(0, str(_p))
+
+from comparison_format import (
+    aggregate_tool_totals,
+    build_comparison_json_payload,
+    comparison_exit_code,
+    format_comparison_summary_table,
+    format_speedup_lines,
+)
+from run_benchmarks import SCENARIOS, Scenario
+from workloads import collect_corpus_entries
 
 from omnichunk import Chunker
-
-from run_benchmarks import SCENARIOS, Scenario
 
 
 @dataclass(frozen=True)
@@ -94,7 +112,10 @@ def _run_semchunk(text: str, scenario: Scenario, filepath: Path) -> int:
 
     chunkerify = getattr(module, "chunkerify", None)
     if callable(chunkerify):
-        token_counter = lambda s: len(s.split())
+
+        def token_counter(s: str) -> int:
+            return len(s.split())
+
         token_budget = max(32, scenario.max_chunk_size // 4)
         chunker = chunkerify(token_counter, chunk_size=token_budget)
         return len(list(chunker(text)))
@@ -168,6 +189,11 @@ def _benchmark_runner(
     text = scenario.path.read_text(encoding="utf-8")
     data_bytes = len(text.encode("utf-8"))
 
+    # Warmup (not timed): avoids attributing lazy imports / tokenizer init to the first scenario
+    # only (e.g. LangChain first call ~seconds, second ~microseconds on the same process).
+    with contextlib.suppress(Exception):
+        int(runner(text, scenario, scenario.path))
+
     started = perf_counter()
     try:
         chunk_count = int(runner(text, scenario, scenario.path))
@@ -207,34 +233,121 @@ def _benchmark_runner(
         )
 
 
-def run() -> int:
-    include_extra = "--include-extra" in sys.argv
+def _parse_args(argv: list[str] | None) -> argparse.Namespace:
+    p = argparse.ArgumentParser(description="Compare omnichunk vs optional third-party splitters.")
+    p.add_argument(
+        "--corpus",
+        choices=("all", "smoke", "mega-fixture", "mega-python"),
+        default="all",
+        help=(
+            "all: every SCENARIOS entry (small fixtures + mega_python_50x). "
+            "smoke: small fixtures only. mega-fixture: only mega_python_50x on disk. "
+            "mega-python: synthetic corpus (workloads), --repeat, written to a temp file."
+        ),
+    )
+    p.add_argument(
+        "--repeat",
+        type=int,
+        default=50,
+        help="mega-python corpus only: repeat count for python_complex blocks (default 50)",
+    )
+    p.add_argument(
+        "--include-extra",
+        action="store_true",
+        help="Also run astchunk/astchunker (semchunk is included by default)",
+    )
+    p.add_argument(
+        "--save",
+        type=Path,
+        default=None,
+        metavar="PATH",
+        help="Write structured JSON comparison results to PATH",
+    )
+    p.add_argument(
+        "--no-table",
+        action="store_true",
+        help="Suppress ASCII summary table and speedup lines (CSV only)",
+    )
+    return p.parse_args(argv)
+
+
+def _comparison_scenarios(args: argparse.Namespace) -> tuple[list[Scenario], Path | None]:
+    """
+    Returns (scenarios, temp_dir_to_remove). temp_dir is set only for mega-python corpus.
+    """
+    temp_dir: Path | None = None
+    if args.corpus == "all":
+        return list(SCENARIOS), None
+    if args.corpus == "smoke":
+        return [s for s in SCENARIOS if s.name != "mega_python_50x"], None
+    if args.corpus == "mega-fixture":
+        found = [s for s in SCENARIOS if s.name == "mega_python_50x"]
+        if not found:
+            print(
+                "mega-fixture: mega_python_50x not in SCENARIOS "
+                "(missing tests/fixtures/mega_python_50x.py?)",
+                file=sys.stderr,
+            )
+            raise SystemExit(2)
+        return found, None
+    if args.corpus == "mega-python":
+        repeat = max(1, int(args.repeat))
+        entries = collect_corpus_entries(
+            mode="mega-python",
+            repeat=repeat,
+            directory=None,
+            glob_pattern="**/*",
+            max_files=500,
+        )
+        if not entries:
+            print("mega-python: collect_corpus_entries returned no entries", file=sys.stderr)
+            raise SystemExit(2)
+        tmp = Path(tempfile.mkdtemp(prefix="omnichunk_cmp_"))
+        temp_dir = tmp
+        path = tmp / "mega_python.py"
+        path.write_text(entries[0].text, encoding="utf-8")
+        return [
+            Scenario(
+                f"mega_python_r{repeat}",
+                path,
+                max_chunk_size=512,
+                min_chunk_size=128,
+                size_unit="chars",
+            )
+        ], temp_dir
+
+
+def run(argv: list[str] | None = None) -> int:
+    args = _parse_args(argv)
+    scenarios, temp_cmp_dir = _comparison_scenarios(args)
 
     runners: list[tuple[str, Callable[[str, Scenario, Path], int]]] = [
         ("omnichunk", _run_omnichunk),
         ("langchain_recursive", _run_langchain_recursive),
         ("semantic_text_splitter", _run_semantic_text_splitter),
+        ("semchunk", _run_semchunk),
     ]
-    if include_extra:
-        runners.extend(
-            [
-                ("semchunk", _run_semchunk),
-                ("astchunk", _run_astchunk),
-            ]
-        )
+    if args.include_extra:
+        runners.append(("astchunk", _run_astchunk))
+
+    tool_order = [t[0] for t in runners]
 
     print("Tool,Scenario,Bytes,Chunks,Seconds,MBps,Status,Detail")
 
     summary: dict[str, list[ToolResult]] = {}
-    for tool_name, runner in runners:
-        for scenario in SCENARIOS:
-            result = _benchmark_runner(tool_name, runner, scenario)
-            summary.setdefault(tool_name, []).append(result)
-            print(
-                f"{result.tool},{result.scenario},{result.data_bytes},{result.chunks},"
-                f"{result.seconds:.6f},{result.mbps:.3f},{result.status},"
-                f"{result.detail.replace(',', ';')}"
-            )
+    try:
+        for tool_name, runner in runners:
+            for scenario in scenarios:
+                result = _benchmark_runner(tool_name, runner, scenario)
+                summary.setdefault(tool_name, []).append(result)
+                print(
+                    f"{result.tool},{result.scenario},{result.data_bytes},{result.chunks},"
+                    f"{result.seconds:.6f},{result.mbps:.3f},{result.status},"
+                    f"{result.detail.replace(',', ';')}"
+                )
+    finally:
+        if temp_cmp_dir is not None:
+            shutil.rmtree(temp_cmp_dir, ignore_errors=True)
 
     print("Tool,TOTAL,-,-,-,-,Status")
     for tool_name, rows in summary.items():
@@ -252,8 +365,47 @@ def run() -> int:
         else:
             print(f"{tool_name},TOTAL,0,-,0.000000,0.000,error")
 
-    return 0
+    aggregates = aggregate_tool_totals(tool_rows=summary)
+    timed: list[tuple[str, float]] = []
+    for name in tool_order:
+        agg = aggregates.get(name, {})
+        if agg.get("status") in ("ok", "partial") and float(agg.get("total_seconds", 0.0)) > 0:
+            timed.append((name, float(agg["total_seconds"])))
+    winner: str | None = min(timed, key=lambda x: (x[1], x[0]))[0] if timed else None
+
+    if not args.no_table:
+        print()
+        print(format_comparison_summary_table(tool_order=tool_order, aggregates=aggregates))
+        omni_sec = float(aggregates.get("omnichunk", {}).get("total_seconds", 0.0))
+        for line in format_speedup_lines(
+            omnichunk_seconds=omni_sec,
+            aggregates=aggregates,
+            tool_order=tool_order,
+        ):
+            print(line)
+
+    if args.save is not None:
+        payload = build_comparison_json_payload(
+            scenario_names=[s.name for s in scenarios],
+            tool_order=tool_order,
+            aggregates=aggregates,
+            winner=winner,
+        )
+        args.save.parent.mkdir(parents=True, exist_ok=True)
+        args.save.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+
+    return comparison_exit_code(aggregates=aggregates, tool_order=tool_order)
+
+
+def _flush_streams() -> None:
+    for stream in (sys.stdout, sys.stderr):
+        with contextlib.suppress(Exception):
+            stream.flush()
 
 
 if __name__ == "__main__":
-    raise SystemExit(run())
+    # semchunk pulls in `multiprocess`, whose ResourceTracker __del__ can raise on Python 3.12
+    # during normal interpreter shutdown ("Exception ignored in ..."). os._exit skips that path.
+    bench_exit = run()
+    _flush_streams()
+    os._exit(int(bench_exit))

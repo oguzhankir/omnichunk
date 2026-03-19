@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import ast
 import re
-from bisect import bisect_right
+from bisect import bisect_left, bisect_right
 from collections.abc import Iterable
 from dataclasses import replace
+from functools import lru_cache
 from typing import Any
 
 from omnichunk.parser.languages import get_language
@@ -231,11 +232,7 @@ def _collect_query_matches(
     if not query_source:
         return []
 
-    lang_obj = get_language(language)
-    if lang_obj is None:
-        return []
-
-    query = _compile_query(lang_obj, query_source)
+    query = _compile_query(language, query_source)
     if query is None:
         return []
 
@@ -255,6 +252,8 @@ def _collect_query_matches(
             continue
         entity_nodes.append((node, entity_type))
 
+    name_index = _build_name_capture_index(name_nodes)
+
     out: list[tuple[Any, EntityType, Any | None]] = []
     seen: set[tuple[str, int, int]] = set()
     for node, entity_type in entity_nodes:
@@ -265,47 +264,95 @@ def _collect_query_matches(
             continue
         seen.add(key)
 
-        name_node = _find_query_name_capture(node, name_nodes)
+        name_node = _find_query_name_capture(node, name_index)
         out.append((node, entity_type, name_node))
 
     return out
 
 
-def _find_query_name_capture(entity_node: Any, name_nodes: list[Any]) -> Any | None:
-    entity_start = int(getattr(entity_node, "start_byte", 0))
-    entity_end = int(getattr(entity_node, "end_byte", entity_start))
+def _build_name_capture_index(
+    name_nodes: list[Any],
+) -> tuple[list[int], list[tuple[int, int, Any]], dict[int, int]]:
+    """Sort name captures by byte start for bisect; preserve first-seen order for ties."""
+    if not name_nodes:
+        return [], [], {}
 
-    best_node: Any | None = None
-    best_key: tuple[int, int, int] | None = None
+    ga = getattr
+    entries: list[tuple[int, int, Any]] = []
+    first_pos: dict[int, int] = {}
+    for i, name_node in enumerate(name_nodes):
+        oid = id(name_node)
+        if oid not in first_pos:
+            first_pos[oid] = i
+        ns = int(ga(name_node, "start_byte", 0))
+        ne = int(ga(name_node, "end_byte", ns))
+        entries.append((ns, ne, name_node))
 
-    for name_node in name_nodes:
-        name_start = int(getattr(name_node, "start_byte", 0))
-        name_end = int(getattr(name_node, "end_byte", name_start))
-        if name_start < entity_start or name_end > entity_end:
+    entries.sort(key=lambda t: (t[0], t[1], first_pos[id(t[2])]))
+    starts = [t[0] for t in entries]
+    return starts, entries, first_pos
+
+
+def _iter_name_nodes_in_entity_byte_range(
+    starts: list[int],
+    entries: list[tuple[int, int, Any]],
+    entity_start: int,
+    entity_end: int,
+) -> Iterable[tuple[int, int, Any]]:
+    """Yield name nodes with byte span inside the entity span (same filter as the naive loop)."""
+    if not entries:
+        return
+    i = bisect_left(starts, entity_start)
+    for j in range(i, len(entries)):
+        ns, ne, name_node = entries[j]
+        if ns > entity_end:
+            break
+        if ns < entity_start or ne > entity_end:
             continue
+        yield ns, ne, name_node
 
+
+def _find_query_name_capture(
+    entity_node: Any,
+    name_index: tuple[list[int], list[tuple[int, int, Any]], dict[int, int]],
+) -> Any | None:
+    starts, entries, first_pos = name_index
+    if not entries:
+        return None
+
+    ga = getattr
+    entity_start = int(ga(entity_node, "start_byte", 0))
+    entity_end = int(ga(entity_node, "end_byte", entity_start))
+
+    # Tie-break: same as scanning name_nodes in list order — smallest original index wins.
+    best_rank: tuple[tuple[int, int, int], int] | None = None
+    best_node: Any | None = None
+
+    for name_start, name_end, name_node in _iter_name_nodes_in_entity_byte_range(
+        starts, entries, entity_start, entity_end
+    ):
         distance = _distance_to_ancestor(name_node, entity_node)
         if distance is None:
             continue
 
         key = (distance, name_start - entity_start, name_end - name_start)
-        if best_key is None or key < best_key:
-            best_key = key
+        rank = (key, first_pos[id(name_node)])
+        if best_rank is None or rank < best_rank:
+            best_rank = rank
             best_node = name_node
 
     if best_node is not None:
         return best_node
 
+    fallback_rank: tuple[tuple[int, int, int], int] | None = None
     fallback_node: Any | None = None
-    fallback_key: tuple[int, int, int] | None = None
-    for name_node in name_nodes:
-        name_start = int(getattr(name_node, "start_byte", 0))
-        name_end = int(getattr(name_node, "end_byte", name_start))
-        if name_start < entity_start or name_end > entity_end:
-            continue
+    for name_start, name_end, name_node in _iter_name_nodes_in_entity_byte_range(
+        starts, entries, entity_start, entity_end
+    ):
         key = (0, abs(name_start - entity_start), name_end - name_start)
-        if fallback_key is None or key < fallback_key:
-            fallback_key = key
+        rank = (key, first_pos[id(name_node)])
+        if fallback_rank is None or rank < fallback_rank:
+            fallback_rank = rank
             fallback_node = name_node
 
     return fallback_node
@@ -322,7 +369,12 @@ def _distance_to_ancestor(node: Any, ancestor: Any) -> int | None:
     return None
 
 
-def _compile_query(language_obj: Any, query_source: str) -> Any | None:
+@lru_cache(maxsize=64)
+def _compile_query_cached(language: Language, query_source: str) -> Any | None:
+    language_obj = get_language(language)
+    if language_obj is None:
+        return None
+
     if _TSQuery is not None:
         try:
             query_ctor: Any = _TSQuery
@@ -338,6 +390,10 @@ def _compile_query(language_obj: Any, query_source: str) -> Any | None:
             pass
 
     return None
+
+
+def _compile_query(language: Language, query_source: str) -> Any | None:
+    return _compile_query_cached(language, query_source)
 
 
 def _run_query_captures(query: Any, root: Any) -> list[tuple[Any, str]]:

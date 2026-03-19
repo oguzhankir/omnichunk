@@ -1,6 +1,26 @@
 from __future__ import annotations
 
 from bisect import bisect_right
+from functools import lru_cache
+from typing import Any
+
+_rust_mod: Any | None = None
+_rust_tried = False
+
+
+def _get_rust_mod() -> Any | None:
+    global _rust_mod, _rust_tried
+    if _rust_tried:
+        return _rust_mod
+    _rust_tried = True
+    try:
+        import importlib
+        mod = importlib.import_module("omnichunk_rust")
+        if callable(getattr(mod, "build_char_to_byte_index", None)):
+            _rust_mod = mod
+    except Exception:
+        pass
+    return _rust_mod
 
 
 class TextIndex:
@@ -10,16 +30,29 @@ class TextIndex:
         self._text = text
         self._raw_bytes = text.encode("utf-8")
 
-        self._char_to_byte: list[int] = [0] * (len(text) + 1)
-        self._line_starts: list[int] = [0]
-
-        byte_cursor = 0
-        for idx, ch in enumerate(text):
-            self._char_to_byte[idx] = byte_cursor
-            byte_cursor += len(ch.encode("utf-8"))
-            if ch == "\n":
-                self._line_starts.append(idx + 1)
-        self._char_to_byte[len(text)] = byte_cursor
+        rust = _get_rust_mod()
+        if rust is not None:
+            char_to_byte, line_starts = rust.build_char_to_byte_index(self._raw_bytes)
+            self._char_to_byte: list[int] = list(char_to_byte)
+            self._line_starts: list[int] = list(line_starts)
+        else:
+            self._char_to_byte = [0] * (len(text) + 1)
+            self._line_starts = [0]
+            byte_cursor = 0
+            for idx, ch in enumerate(text):
+                self._char_to_byte[idx] = byte_cursor
+                cp = ord(ch)
+                if cp < 0x80:
+                    byte_cursor += 1
+                elif cp < 0x800:
+                    byte_cursor += 2
+                elif cp < 0x10000:
+                    byte_cursor += 3
+                else:
+                    byte_cursor += 4
+                if ch == "\n":
+                    self._line_starts.append(idx + 1)
+            self._char_to_byte[len(text)] = byte_cursor
 
         self._newline_bytes = [idx for idx, b in enumerate(self._raw_bytes) if b == 10]
 

@@ -206,3 +206,11 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 .DS_Store
+
+# Benchmark artifacts
+benchmarks/results/
+
+# Rust extension build artifacts
+dist-rust/
+rust/omnichunk_rust/target/
+rust/omnichunk_rust/Cargo.lock

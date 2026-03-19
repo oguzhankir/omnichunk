@@ -1,17 +1,17 @@
 from __future__ import annotations
 
+import sys
 from dataclasses import dataclass
 from pathlib import Path
-import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from omnichunk import Chunk, Chunker
+from run_benchmarks import SCENARIOS, Scenario  # noqa: E402
 
-from run_benchmarks import SCENARIOS, Scenario
+from omnichunk import Chunk, Chunker  # noqa: E402
 
 
 @dataclass(frozen=True)
