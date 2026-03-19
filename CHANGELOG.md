@@ -3,6 +3,13 @@
 All notable changes to omnichunk will be documented here.
 This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/).
 
+## [0.4.0] - 2026-03-20
+
+### Changed
+- Reuse precomputed `TextIndex` and NWS cumulative sums in HybridEngine to avoid repeated per-segment recomputation
+- Reuse precomputed indices for delegated markdown fence code blocks in ProseEngine to reduce redundant engine setup
+- Added regression tests to verify precomputed index reuse in hybrid and prose markdown delegation paths
+
 ## [0.3.0] - 2026-03-19
 
 ### Added
