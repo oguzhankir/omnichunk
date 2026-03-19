@@ -3,6 +3,13 @@
 All notable changes to omnichunk will be documented here.
 This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/).
 
+## [0.1.2] - 2025-03-19
+
+### Fixed
+- Fixed Python 3.10/3.11 compatibility by ignoring B905 ruff rule for zip() calls
+- Updated badge cache-buster to v=2 for proper GitHub rendering
+- Fixed CI failures across all Python versions (3.10-3.13)
+
 ## [0.1.1] - 2025-03-19
 
 ### Fixed
