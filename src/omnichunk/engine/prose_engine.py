@@ -236,6 +236,8 @@ class ProseEngine:
         prefix_text, code_text, suffix_text, fence_language = parts
         token_counter = make_token_counter(options.tokenizer, chunk_size=options.max_chunk_size)
         chunks: list[Chunk] = []
+        delegated_text_index = TextIndex(code_text) if code_text else None
+        delegated_cumsum = preprocess_nws_cumsum(code_text) if code_text else None
 
         cursor = block_char_start
 
@@ -266,8 +268,8 @@ class ProseEngine:
                     options,
                     content_type=ContentType.CODE,
                     overlap_lines=0,
-                    _precomputed_text_index=None,
-                    _precomputed_nws_cumsum=None,
+                    _precomputed_text_index=delegated_text_index,
+                    _precomputed_nws_cumsum=delegated_cumsum,
                 )
                 sub_options.language = resolved_language  # type: ignore[assignment]
 
@@ -308,8 +310,8 @@ class ProseEngine:
                         options,
                         content_type=ContentType.MARKUP,
                         overlap_lines=0,
-                        _precomputed_text_index=None,
-                        _precomputed_nws_cumsum=None,
+                        _precomputed_text_index=delegated_text_index,
+                        _precomputed_nws_cumsum=delegated_cumsum,
                     )
                     sub_options.language = resolved_markup_language  # type: ignore[assignment]
 

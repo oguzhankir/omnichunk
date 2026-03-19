@@ -6,6 +6,7 @@ from dataclasses import replace
 
 from omnichunk.engine.code_engine import CodeEngine
 from omnichunk.engine.prose_engine import ProseEngine
+from omnichunk.sizing.nws import preprocess_nws_cumsum
 from omnichunk.types import ByteRange, Chunk, ChunkOptions, ContentType, LineRange
 from omnichunk.util.text_index import TextIndex
 
@@ -27,29 +28,39 @@ class HybridEngine:
         if not content.strip():
             return
 
-        text_index = TextIndex(content)
+        precomputed_text_index = options._precomputed_text_index
+        if isinstance(precomputed_text_index, TextIndex):
+            text_index = precomputed_text_index
+        else:
+            text_index = TextIndex(content)
+
         segments = _split_hybrid_segments(content)
         chunk_index = 0
 
         for segment in segments:
-            segment_text = content[segment[0] : segment[1]]
+            segment_start, segment_end, segment_kind = segment
+            segment_text = content[segment_start:segment_end]
             if not segment_text.strip():
                 continue
 
             sub_options = replace(options)
             sub_options.content_type = (
-                ContentType.CODE if segment[2] == "code" else ContentType.PROSE
+                ContentType.CODE if segment_kind == "code" else ContentType.PROSE
             )
-            sub_options._precomputed_text_index = None
-            sub_options._precomputed_nws_cumsum = None
+            if segment_start == 0 and segment_end == len(content):
+                sub_options._precomputed_text_index = text_index
+                sub_options._precomputed_nws_cumsum = options._precomputed_nws_cumsum
+            else:
+                sub_options._precomputed_text_index = TextIndex(segment_text)
+                sub_options._precomputed_nws_cumsum = preprocess_nws_cumsum(segment_text)
 
-            if segment[2] == "code":
+            if segment_kind == "code":
                 local_chunks = self._code_engine.stream(filepath, segment_text, sub_options)
             else:
                 local_chunks = self._prose_engine.stream(filepath, segment_text, sub_options)
 
             for local_chunk in local_chunks:
-                rebased = _rebase_chunk(text_index, segment[0], local_chunk)
+                rebased = _rebase_chunk(text_index, segment_start, local_chunk)
                 yield Chunk(
                     text=rebased.text,
                     contextualized_text=rebased.contextualized_text,
