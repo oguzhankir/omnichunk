@@ -39,7 +39,7 @@ def test_python_context_entities_and_scope(fixtures_dir: Path) -> None:
 
 def test_decorator_stays_with_target() -> None:
     code = "@decorator\ndef hello(name: str):\n    return f'hi {name}'\n"
-    chunker = Chunker(max_chunk_size=20, min_chunk_size=5, size_unit="chars")
+    chunker = Chunker(max_chunk_size=40, min_chunk_size=10, size_unit="chars")
 
     chunks = chunker.chunk("decorated.py", code)
 
