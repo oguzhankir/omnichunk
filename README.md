@@ -1,15 +1,13 @@
-<img src="assets/omnichunk-logo.png" alt="omnichunk" width="360">
-
-<br>
-
-[![PyPI](https://img.shields.io/pypi/v/omnichunk)](https://pypi.org/project/omnichunk/)
-[![CI](https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml/badge.svg)](https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml)
-[![Python](https://img.shields.io/pypi/pyversions/omnichunk)](https://pypi.org/project/omnichunk/)
-[![License](https://img.shields.io/pypi/l/omnichunk)](https://github.com/oguzhankir/omnichunk/blob/main/LICENSE)
-
-<br>
-
-<p align="center"><strong>Structure-aware chunking for code, prose, and markup.</strong></p>
+<div align="center">
+  <img src="https://raw.githubusercontent.com/oguzhankir/omnichunk/main/assets/omnichunk-logo.png" alt="omnichunk" width="360">
+  <br><br>
+  <p><strong>Structure-aware chunking for code, prose, and markup.</strong></p>
+  
+  [![PyPI](https://img.shields.io/pypi/v/omnichunk)](https://pypi.org/project/omnichunk/)
+  [![CI](https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml/badge.svg)](https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml)
+  [![Python](https://img.shields.io/pypi/pyversions/omnichunk)](https://pypi.org/project/omnichunk/)
+  [![License](https://img.shields.io/pypi/l/omnichunk)](https://github.com/oguzhankir/omnichunk/blob/main/LICENSE)
+</div>
 
 # omnichunk
 
