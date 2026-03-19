@@ -1,0 +1,15 @@
+{
+  "app": {
+    "name": "omnichunk",
+    "version": "0.1.0"
+  },
+  "features": {
+    "code": true,
+    "prose": true,
+    "markup": true
+  },
+  "limits": {
+    "max_chunk_size": 1024,
+    "overlap": 128
+  }
+}

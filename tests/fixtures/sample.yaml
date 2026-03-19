@@ -1,0 +1,11 @@
+app:
+  name: omnichunk
+  env: test
+
+database:
+  host: localhost
+  port: 5432
+
+features:
+  chunking: true
+  context: full
