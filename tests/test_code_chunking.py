@@ -116,3 +116,34 @@ def test_python_signature_with_type_annotations() -> None:
     assert "url: str" in func.signature
     assert "timeout: int" in func.signature
     assert func.signature.endswith(":")
+
+
+def test_large_python_file_stress_reconstruction_and_determinism() -> None:
+    parts: list[str] = ["from typing import Any\n\n"]
+    for idx in range(75):
+        parts.append(f"class Service{idx}:\n")
+        parts.append(f"    def run_{idx}(self, value: int) -> int:\n")
+        parts.append("        total = value\n")
+        for step in range(8):
+            parts.append(f"        total += {step}\n")
+        parts.append("        return total\n\n")
+
+    code = "".join(parts)
+    chunker = Chunker(max_chunk_size=420, min_chunk_size=80, size_unit="chars")
+
+    first = chunker.chunk("large_module.py", code)
+    second = chunker.chunk("large_module.py", code)
+
+    assert first
+    assert len(first) > 10
+    assert "".join(chunk.text for chunk in first) == code
+
+    raw = code.encode("utf-8")
+    for chunk in first:
+        snippet = raw[chunk.byte_range.start : chunk.byte_range.end].decode("utf-8")
+        assert snippet == chunk.text
+        assert chunk.text.strip()
+
+    assert [(c.byte_range.start, c.byte_range.end, c.contextualized_text) for c in first] == [
+        (c.byte_range.start, c.byte_range.end, c.contextualized_text) for c in second
+    ]

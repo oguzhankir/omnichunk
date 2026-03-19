@@ -4,92 +4,97 @@ from omnichunk.types import Language
 
 _QUERY_SOURCES: dict[Language, str] = {
     "python": """
-(function_definition) @entity.function
-(class_definition) @entity.class
+(function_definition name: (_) @name) @entity.function
+(class_definition name: (_) @name) @entity.class
 (import_statement) @entity.import
 (import_from_statement) @entity.import
-(decorated_definition) @entity.decorator
+(decorated_definition
+  [
+    (function_definition name: (_) @name)
+    (class_definition name: (_) @name)
+  ]) @entity.decorator
 """,
     "javascript": """
-(function_declaration) @entity.function
-(method_definition) @entity.method
-(class_declaration) @entity.class
+(function_declaration name: (_) @name) @entity.function
+(method_definition name: (_) @name) @entity.method
+(class_declaration name: (_) @name) @entity.class
 (import_statement) @entity.import
 (export_statement) @entity.export
 """,
     "typescript": """
-(function_declaration) @entity.function
-(method_definition) @entity.method
-(class_declaration) @entity.class
-(interface_declaration) @entity.interface
-(type_alias_declaration) @entity.type
-(enum_declaration) @entity.enum
+(function_declaration name: (_) @name) @entity.function
+(method_definition name: (_) @name) @entity.method
+(class_declaration name: (_) @name) @entity.class
+(interface_declaration name: (_) @name) @entity.interface
+(type_alias_declaration name: (_) @name) @entity.type
+(enum_declaration name: (_) @name) @entity.enum
 (import_statement) @entity.import
 (export_statement) @entity.export
 """,
     "rust": """
-(function_item) @entity.function
-(struct_item) @entity.class
-(trait_item) @entity.interface
-(enum_item) @entity.enum
+(function_item name: (_) @name) @entity.function
+(impl_item type: (_) @name) @entity.class
+(struct_item name: (_) @name) @entity.class
+(trait_item name: (_) @name) @entity.interface
+(enum_item name: (_) @name) @entity.enum
 (use_declaration) @entity.import
 """,
     "go": """
-(function_declaration) @entity.function
-(method_declaration) @entity.method
-(type_declaration) @entity.type
+(function_declaration name: (_) @name) @entity.function
+(method_declaration name: (_) @name) @entity.method
+(type_declaration (type_spec name: (_) @name)) @entity.type
 (import_declaration) @entity.import
 """,
     "java": """
-(method_declaration) @entity.method
-(class_declaration) @entity.class
-(interface_declaration) @entity.interface
-(enum_declaration) @entity.enum
+(method_declaration name: (_) @name) @entity.method
+(class_declaration name: (_) @name) @entity.class
+(interface_declaration name: (_) @name) @entity.interface
+(enum_declaration name: (_) @name) @entity.enum
 (import_declaration) @entity.import
 """,
     "c": """
-(function_definition) @entity.function
-(declaration) @entity.type
+(function_definition declarator: (_) @name) @entity.function
+(declaration declarator: (_) @name) @entity.type
 (preproc_include) @entity.import
 """,
     "cpp": """
-(function_definition) @entity.function
-(class_specifier) @entity.class
-(struct_specifier) @entity.class
+(function_definition declarator: (_) @name) @entity.function
+(class_specifier name: (_) @name) @entity.class
+(struct_specifier name: (_) @name) @entity.class
 (preproc_include) @entity.import
 """,
     "csharp": """
-(method_declaration) @entity.method
-(class_declaration) @entity.class
-(interface_declaration) @entity.interface
-(enum_declaration) @entity.enum
+(method_declaration name: (_) @name) @entity.method
+(class_declaration name: (_) @name) @entity.class
+(interface_declaration name: (_) @name) @entity.interface
+(enum_declaration name: (_) @name) @entity.enum
 (using_directive) @entity.import
 """,
     "ruby": """
-(method) @entity.method
-(class) @entity.class
-(module) @entity.class
+(method name: (_) @name) @entity.method
+(class name: (_) @name) @entity.class
+(module name: (_) @name) @entity.class
 """,
     "php": """
-(function_definition) @entity.function
-(method_declaration) @entity.method
-(class_declaration) @entity.class
-(interface_declaration) @entity.interface
-(trait_declaration) @entity.type
+(function_definition name: (_) @name) @entity.function
+(method_declaration name: (_) @name) @entity.method
+(class_declaration name: (_) @name) @entity.class
+(interface_declaration name: (_) @name) @entity.interface
+(trait_declaration name: (_) @name) @entity.type
 (namespace_use_declaration) @entity.import
 """,
     "kotlin": """
-(function_declaration) @entity.function
-(class_declaration) @entity.class
-(object_declaration) @entity.class
-(interface_declaration) @entity.interface
+(function_declaration name: (_) @name) @entity.function
+(class_declaration name: (_) @name) @entity.class
+(object_declaration name: (_) @name) @entity.class
+(interface_declaration name: (_) @name) @entity.interface
 (import_header) @entity.import
 """,
     "swift": """
-(function_declaration) @entity.function
-(class_declaration) @entity.class
-(struct_declaration) @entity.class
-(protocol_declaration) @entity.interface
+(function_declaration name: (_) @name) @entity.function
+(class_declaration name: (_) @name) @entity.class
+(struct_declaration name: (_) @name) @entity.class
+(protocol_declaration name: (_) @name) @entity.interface
 (import_declaration) @entity.import
 """,
 }

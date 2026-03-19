@@ -3,6 +3,16 @@
 All notable changes to omnichunk will be documented here.
 This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] - 2026-03-19
+
+### Fixed
+- Improved tree-sitter entity extraction by adding `@name` captures to language query patterns and mapping captured name nodes before regex fallback
+- Reworked code doc extraction to use AST-positioned logic (Python first-statement docstring, adjacent leading comments for JS/TS and C-like languages)
+- Added language-specific import parsing for Rust (`use ...::{...}` groups), Go (`import (...)` blocks), and Java (static/non-static imports)
+- Recomputed merged chunk context during token-overlap post-processing so entities/imports/siblings are preserved across grouped chunks
+- Recomputed `is_partial` entity flags against merged overlap ranges instead of reusing the first chunk context
+- Removed dead computation in prose `_windows_to_contiguous_ranges` and now respect each window's actual start offset
+
 ## [0.1.2] - 2025-03-19
 
 ### Fixed

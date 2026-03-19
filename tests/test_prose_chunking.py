@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from omnichunk import Chunker
+from omnichunk.engine.prose_engine import _windows_to_contiguous_ranges
 from omnichunk.types import ContentType
 
 
@@ -69,3 +70,16 @@ def test_plaintext_semantic_split() -> None:
     assert len(chunks) >= 2
     assert "".join(c.text for c in chunks) == text
     assert all(c.text.strip() for c in chunks)
+
+
+def test_windows_to_contiguous_ranges_preserves_contiguous_cursor_model() -> None:
+    windows = [
+        [(5, 12, [], "paragraph")],
+        [(12, 20, [], "paragraph")],
+    ]
+
+    ranges = _windows_to_contiguous_ranges(windows, total_len=20)
+
+    assert ranges
+    assert ranges[0][0] == 0
+    assert ranges[-1][1] == 20

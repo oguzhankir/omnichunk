@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import re
 from collections.abc import Iterable
 from dataclasses import replace
@@ -144,7 +145,7 @@ def extract_entities(code: str, language: Language, tree: Any | None) -> list[En
 
     query_matches = _collect_query_matches(language=language, tree=tree)
     if query_matches:
-        matched_nodes: list[tuple[Any, EntityType]] = query_matches
+        matched_nodes: list[tuple[Any, EntityType, Any | None]] = query_matches
     else:
         matched_nodes = []
         for node in _iter_ast_nodes(tree.root_node):
@@ -152,9 +153,9 @@ def extract_entities(code: str, language: Language, tree: Any | None) -> list[En
             entity_type = mapping.get(node_type)
             if entity_type is None:
                 continue
-            matched_nodes.append((node, entity_type))
+            matched_nodes.append((node, entity_type, None))
 
-    for node, entity_type in matched_nodes:
+    for node, entity_type, captured_name_node in matched_nodes:
         node_type = getattr(node, "type", "")
 
         effective_node = node
@@ -172,7 +173,12 @@ def extract_entities(code: str, language: Language, tree: Any | None) -> list[En
             entities.extend(_extract_import_entities(effective_node, source_bytes, language))
             continue
 
-        name = _extract_entity_name(name_node, source_bytes, language)
+        name = _extract_entity_name(
+            name_node,
+            source_bytes,
+            language,
+            explicit_name_node=captured_name_node,
+        )
         if not name:
             continue
 
@@ -210,7 +216,9 @@ def _iter_ast_nodes(root: Any) -> Iterable[Any]:
             stack.append(child)
 
 
-def _collect_query_matches(language: Language, tree: Any | None) -> list[tuple[Any, EntityType]]:
+def _collect_query_matches(
+    language: Language, tree: Any | None
+) -> list[tuple[Any, EntityType, Any | None]]:
     if tree is None:
         return []
 
@@ -234,22 +242,83 @@ def _collect_query_matches(language: Language, tree: Any | None) -> list[tuple[A
     if not captures:
         return []
 
-    out: list[tuple[Any, EntityType]] = []
-    seen: set[tuple[str, int, int]] = set()
+    entity_nodes: list[tuple[Any, EntityType]] = []
+    name_nodes: list[Any] = []
     for node, capture_name in captures:
+        if capture_name == "name":
+            name_nodes.append(node)
+            continue
+
         entity_type = _QUERY_CAPTURE_ENTITY_TYPES.get(capture_name)
         if entity_type is None:
             continue
+        entity_nodes.append((node, entity_type))
 
+    out: list[tuple[Any, EntityType, Any | None]] = []
+    seen: set[tuple[str, int, int]] = set()
+    for node, entity_type in entity_nodes:
         start = int(getattr(node, "start_byte", 0))
         end = int(getattr(node, "end_byte", start))
-        key = (capture_name, start, end)
+        key = (entity_type.value, start, end)
         if key in seen:
             continue
         seen.add(key)
-        out.append((node, entity_type))
+
+        name_node = _find_query_name_capture(node, name_nodes)
+        out.append((node, entity_type, name_node))
 
     return out
+
+
+def _find_query_name_capture(entity_node: Any, name_nodes: list[Any]) -> Any | None:
+    entity_start = int(getattr(entity_node, "start_byte", 0))
+    entity_end = int(getattr(entity_node, "end_byte", entity_start))
+
+    best_node: Any | None = None
+    best_key: tuple[int, int, int] | None = None
+
+    for name_node in name_nodes:
+        name_start = int(getattr(name_node, "start_byte", 0))
+        name_end = int(getattr(name_node, "end_byte", name_start))
+        if name_start < entity_start or name_end > entity_end:
+            continue
+
+        distance = _distance_to_ancestor(name_node, entity_node)
+        if distance is None:
+            continue
+
+        key = (distance, name_start - entity_start, name_end - name_start)
+        if best_key is None or key < best_key:
+            best_key = key
+            best_node = name_node
+
+    if best_node is not None:
+        return best_node
+
+    fallback_node: Any | None = None
+    fallback_key: tuple[int, int] | None = None
+    for name_node in name_nodes:
+        name_start = int(getattr(name_node, "start_byte", 0))
+        name_end = int(getattr(name_node, "end_byte", name_start))
+        if name_start < entity_start or name_end > entity_end:
+            continue
+        key = (abs(name_start - entity_start), name_end - name_start)
+        if fallback_key is None or key < fallback_key:
+            fallback_key = key
+            fallback_node = name_node
+
+    return fallback_node
+
+
+def _distance_to_ancestor(node: Any, ancestor: Any) -> int | None:
+    distance = 0
+    current = node
+    while current is not None:
+        if current is ancestor:
+            return distance
+        current = getattr(current, "parent", None)
+        distance += 1
+    return None
 
 
 def _compile_query(language_obj: Any, query_source: str) -> Any | None:
@@ -368,7 +437,18 @@ def _find_decorated_target(node: Any) -> Any | None:
     return None
 
 
-def _extract_entity_name(node: Any, source_bytes: bytes, language: Language) -> str:
+def _extract_entity_name(
+    node: Any,
+    source_bytes: bytes,
+    language: Language,
+    *,
+    explicit_name_node: Any | None = None,
+) -> str:
+    if explicit_name_node is not None:
+        explicit = _node_text(explicit_name_node, source_bytes).strip()
+        if explicit:
+            return _normalize_name(explicit)
+
     for field_name in ("name", "declarator", "type", "field"):
         child = _child_by_field_name(node, field_name)
         if child is not None:
@@ -465,14 +545,8 @@ def _extract_signature_python(node: Any, source_bytes: bytes) -> str:
 
 
 def _extract_docstring(node: Any, source_bytes: bytes, language: Language) -> str | None:
-    snippet = _node_text(node, source_bytes)
-    if not snippet:
-        return None
-
     if language == "python":
-        match = re.search(r'\A[\s\S]*?:\s*(?:\n\s*)?("""[\s\S]*?"""|\'\'\'[\s\S]*?\'\'\')', snippet)
-        if match:
-            return _strip_quotes(match.group(1))
+        return _extract_python_docstring(node, source_bytes)
 
     if language in {
         "javascript",
@@ -485,37 +559,186 @@ def _extract_docstring(node: Any, source_bytes: bytes, language: Language) -> st
         "kotlin",
         "swift",
     }:
-        doc = _extract_leading_comment(node, source_bytes)
-        if doc:
-            return doc
+        return _extract_leading_comment(node, source_bytes)
 
     if language in {"rust", "go"}:
         doc = _extract_leading_line_comments(node, source_bytes)
         if doc:
             return doc
+        return _extract_leading_comment(node, source_bytes)
 
+    return None
+
+
+def _extract_python_docstring(node: Any, source_bytes: bytes) -> str | None:
+    body = _child_by_field_name(node, "body")
+    if body is None:
+        for child in getattr(node, "children", []) or []:
+            if getattr(child, "type", "") in {"block", "suite"}:
+                body = child
+                break
+
+    if body is None:
+        return None
+
+    first_statement = _first_named_child(body)
+    if first_statement is None:
+        return None
+    if getattr(first_statement, "type", "") != "expression_statement":
+        return None
+
+    literal = _first_descendant_by_type(first_statement, {"string", "concatenated_string"})
+    if literal is not None:
+        parsed = _parse_python_string_literal(_node_text(literal, source_bytes).strip())
+        if parsed:
+            return parsed
+
+    return _parse_python_string_literal(_node_text(first_statement, source_bytes).strip())
+
+
+def _first_named_child(node: Any) -> Any | None:
+    named_children = list(getattr(node, "named_children", []) or [])
+    if named_children:
+        return named_children[0]
+
+    for child in getattr(node, "children", []) or []:
+        if getattr(child, "is_named", True):
+            return child
+
+    return None
+
+
+def _first_descendant_by_type(node: Any, target_types: set[str]) -> Any | None:
+    stack = [node]
+    while stack:
+        current = stack.pop()
+        if getattr(current, "type", "") in target_types:
+            return current
+        children = list(getattr(current, "children", []) or [])
+        for child in reversed(children):
+            stack.append(child)
+    return None
+
+
+def _parse_python_string_literal(value: str) -> str | None:
+    if not value:
+        return None
+
+    try:
+        parsed = ast.parse(value, mode="eval")
+    except SyntaxError:
+        return None
+
+    body = getattr(parsed, "body", None)
+    if isinstance(body, ast.Constant) and isinstance(body.value, str):
+        text = body.value.strip()
+        return text or None
     return None
 
 
 def _extract_leading_comment(node: Any, source_bytes: bytes) -> str | None:
-    start = int(getattr(node, "start_byte", 0))
-    lookback_start = max(0, start - 1200)
-    prefix = source_bytes[lookback_start:start].decode("utf-8", errors="replace")
-    block = re.search(r"/\*\*([\s\S]*?)\*/\s*$", prefix)
-    if block:
-        return " ".join(block.group(1).split())
+    comments = _collect_adjacent_leading_comments(node, source_bytes)
+    if not comments:
+        return None
+
+    for comment in reversed(comments):
+        cleaned = _clean_block_comment(_node_text(comment, source_bytes).strip())
+        if cleaned:
+            return cleaned
+
     return None
 
 
 def _extract_leading_line_comments(node: Any, source_bytes: bytes) -> str | None:
-    start = int(getattr(node, "start_byte", 0))
-    lookback_start = max(0, start - 1000)
-    prefix = source_bytes[lookback_start:start].decode("utf-8", errors="replace")
-    comments = re.findall(r"(?:^|\n)\s*(?:///?\s?.+)", prefix)
+    comments = _collect_adjacent_leading_comments(node, source_bytes)
     if not comments:
         return None
-    joined = "\n".join(c.strip() for c in comments[-6:]).strip()
-    return joined or None
+
+    lines: list[str] = []
+    for comment in comments:
+        cleaned = _clean_line_comment(_node_text(comment, source_bytes).strip())
+        if cleaned:
+            lines.append(cleaned)
+
+    if not lines:
+        return None
+
+    return "\n".join(lines)
+
+
+def _collect_adjacent_leading_comments(node: Any, source_bytes: bytes) -> list[Any]:
+    parent = getattr(node, "parent", None)
+    if parent is None:
+        return []
+
+    siblings = list(getattr(parent, "children", []) or [])
+    if not siblings:
+        return []
+
+    index = next((idx for idx, child in enumerate(siblings) if child is node), -1)
+    if index < 0:
+        return []
+
+    comments: list[Any] = []
+    cursor_start = int(getattr(node, "start_byte", 0))
+
+    for sibling in reversed(siblings[:index]):
+        sibling_start = int(getattr(sibling, "start_byte", 0))
+        sibling_end = int(getattr(sibling, "end_byte", sibling_start))
+
+        if sibling_end > cursor_start:
+            continue
+
+        gap = source_bytes[sibling_end:cursor_start].decode("utf-8", errors="replace")
+        if gap.strip():
+            break
+
+        sibling_type = getattr(sibling, "type", "")
+        if "comment" in sibling_type:
+            comments.append(sibling)
+            cursor_start = sibling_start
+            continue
+
+        sibling_text = _node_text(sibling, source_bytes)
+        if sibling_text.strip():
+            break
+
+        cursor_start = sibling_start
+
+    comments.reverse()
+    return comments
+
+
+def _clean_block_comment(raw: str) -> str | None:
+    value = raw.strip()
+    if not value.startswith("/**") or not value.endswith("*/"):
+        return None
+
+    inner = value[3:-2]
+    lines: list[str] = []
+    for line in inner.splitlines():
+        cleaned = line.strip()
+        if cleaned.startswith("*"):
+            cleaned = cleaned[1:].strip()
+        if cleaned:
+            lines.append(cleaned)
+
+    if lines:
+        return "\n".join(lines)
+
+    single_line = inner.strip()
+    return single_line or None
+
+
+def _clean_line_comment(raw: str) -> str | None:
+    value = raw.strip()
+    if value.startswith("///") or value.startswith("//!"):
+        cleaned = value[3:].strip()
+        return cleaned or None
+    if value.startswith("//"):
+        cleaned = value[2:].strip()
+        return cleaned or None
+    return None
 
 
 def _strip_quotes(value: str) -> str:
@@ -555,48 +778,29 @@ def _extract_import_entities(
     if not snippet.strip():
         return []
 
+    imports: list[tuple[str, str]] = []
+
     if language == "python":
         imports = _parse_python_imports(snippet)
-        if imports:
-            return [
-                EntityInfo(
-                    name=name,
-                    type=EntityType.IMPORT,
-                    signature=f"import {name} from {source}",
-                    byte_range=byte_range,
-                    line_range=line_range,
-                )
-                for name, source in imports
-            ]
-
-    if language in {"javascript", "typescript"}:
+    elif language in {"javascript", "typescript"}:
         imports = _parse_ts_js_imports(snippet)
-        if imports:
-            return [
-                EntityInfo(
-                    name=name,
-                    type=EntityType.IMPORT,
-                    signature=f"import {name} from {source}",
-                    byte_range=byte_range,
-                    line_range=line_range,
-                )
-                for name, source in imports
-            ]
-
-    if language in {"rust", "go", "java", "c", "cpp", "csharp", "php", "kotlin", "swift"}:
+    elif language == "rust":
+        imports = _parse_rust_imports(snippet)
+    elif language == "go":
+        imports = _parse_go_imports(snippet)
+    elif language == "java":
+        imports = _parse_java_imports(snippet)
+    elif language in {"c", "cpp", "csharp", "php", "kotlin", "swift"}:
         source_match = re.search(r"['\"]([^'\"]+)['\"]", snippet)
         source = source_match.group(1) if source_match else ""
         name_match = re.search(r"\b([A-Za-z_][\w]*)\b", snippet)
         if name_match:
-            return [
-                EntityInfo(
-                    name=name_match.group(1),
-                    type=EntityType.IMPORT,
-                    signature=f"import {name_match.group(1)} from {source}".strip(),
-                    byte_range=byte_range,
-                    line_range=line_range,
-                )
-            ]
+            imports = [(name_match.group(1), source)]
+
+    if imports:
+        entities = _build_import_entities(imports, byte_range, line_range)
+        if entities:
+            return entities
 
     return [
         EntityInfo(
@@ -642,6 +846,43 @@ def _parse_python_imports(snippet: str) -> list[tuple[str, str]]:
     return out
 
 
+def _build_import_entities(
+    imports: list[tuple[str, str]],
+    byte_range: ByteRange,
+    line_range: LineRange,
+) -> list[EntityInfo]:
+    entities: list[EntityInfo] = []
+    seen: set[tuple[str, str]] = set()
+
+    for name, source in imports:
+        clean_name = name.strip()
+        clean_source = source.strip()
+        if not clean_name:
+            continue
+
+        key = (clean_name, clean_source)
+        if key in seen:
+            continue
+        seen.add(key)
+
+        signature = (
+            f"import {clean_name} from {clean_source}"
+            if clean_source
+            else f"import {clean_name}"
+        )
+        entities.append(
+            EntityInfo(
+                name=clean_name,
+                type=EntityType.IMPORT,
+                signature=signature,
+                byte_range=byte_range,
+                line_range=line_range,
+            )
+        )
+
+    return entities
+
+
 def _parse_ts_js_imports(snippet: str) -> list[tuple[str, str]]:
     compact = " ".join(snippet.replace("\n", " ").split())
     source_match = re.search(r"from\s+['\"]([^'\"]+)['\"]", compact)
@@ -670,6 +911,177 @@ def _parse_ts_js_imports(snippet: str) -> list[tuple[str, str]]:
 
     if not imports and source:
         imports.append((source.rsplit("/", 1)[-1], source))
+
+    return imports
+
+
+def _parse_rust_imports(snippet: str) -> list[tuple[str, str]]:
+    text = " ".join(snippet.replace("\n", " ").split())
+    use_match = re.match(r"(?:pub\s+)?use\s+(.+?)\s*;?$", text)
+    if not use_match:
+        return []
+
+    expanded = _expand_rust_use_paths(use_match.group(1).strip())
+    imports: list[tuple[str, str]] = []
+
+    for raw_path in expanded:
+        cleaned = raw_path.strip()
+        if not cleaned:
+            continue
+
+        alias_match = re.search(r"\s+as\s+([A-Za-z_][\w]*)$", cleaned)
+        if alias_match:
+            source = cleaned[: alias_match.start()].strip()
+            name = alias_match.group(1)
+        else:
+            source = cleaned
+            leaf = source.split("::")[-1]
+            if leaf == "self":
+                source = "::".join(source.split("::")[:-1])
+                leaf = source.split("::")[-1] if source else ""
+            name = leaf or source
+
+        if source:
+            imports.append((name, source))
+
+    return imports
+
+
+def _expand_rust_use_paths(path_expr: str) -> list[str]:
+    path = path_expr.strip()
+    if not path:
+        return []
+
+    brace_start = path.find("{")
+    if brace_start < 0:
+        return [path]
+
+    brace_end = _find_matching_brace(path, brace_start)
+    if brace_end < 0:
+        return [path]
+
+    prefix = path[:brace_start].strip()
+    inside = path[brace_start + 1 : brace_end]
+    suffix = path[brace_end + 1 :].strip()
+
+    if prefix.endswith("::"):
+        prefix = prefix[:-2]
+    if suffix.startswith("::"):
+        suffix = suffix[2:]
+
+    expanded: list[str] = []
+    for part in _split_top_level_csv(inside):
+        piece = part.strip()
+        if not piece:
+            continue
+
+        combined = _join_rust_path(prefix, piece)
+        if suffix:
+            combined = _join_rust_path(combined, suffix)
+
+        expanded.extend(_expand_rust_use_paths(combined))
+
+    return expanded or [path]
+
+
+def _find_matching_brace(text: str, start: int) -> int:
+    depth = 0
+    for idx in range(start, len(text)):
+        ch = text[idx]
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                return idx
+    return -1
+
+
+def _split_top_level_csv(value: str) -> list[str]:
+    parts: list[str] = []
+    depth = 0
+    start = 0
+
+    for idx, ch in enumerate(value):
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth = max(0, depth - 1)
+        elif ch == "," and depth == 0:
+            parts.append(value[start:idx])
+            start = idx + 1
+
+    parts.append(value[start:])
+    return parts
+
+
+def _join_rust_path(prefix: str, suffix: str) -> str:
+    left = prefix.strip()
+    right = suffix.strip()
+    if not left:
+        return right
+    if not right:
+        return left
+    if left.endswith("::") or right.startswith("::"):
+        return f"{left}{right}"
+    return f"{left}::{right}"
+
+
+def _parse_go_imports(snippet: str) -> list[tuple[str, str]]:
+    text = snippet.strip()
+    if not text:
+        return []
+
+    specs: list[str] = []
+    block_match = re.search(r"import\s*\((?P<body>[\s\S]*?)\)", text)
+    if block_match:
+        specs = [line.strip() for line in block_match.group("body").splitlines()]
+    else:
+        single = re.match(r"import\s+(.+)$", " ".join(text.split()))
+        if single:
+            specs = [single.group(1).strip()]
+
+    imports: list[tuple[str, str]] = []
+    for spec in specs:
+        cleaned = spec.split("//", 1)[0].strip()
+        if not cleaned:
+            continue
+
+        match = re.match(
+            r'(?:(?P<alias>[A-Za-z_\.][\w\.]*)\s+)?(?P<q>["`])(?P<source>[^"`]+)(?P=q)',
+            cleaned,
+        )
+        if not match:
+            continue
+
+        source = match.group("source").strip()
+        alias = (match.group("alias") or "").strip()
+        if not source:
+            continue
+
+        name = alias if alias and alias not in {"_", "."} else source.rsplit("/", 1)[-1]
+
+        imports.append((name, source))
+
+    return imports
+
+
+def _parse_java_imports(snippet: str) -> list[tuple[str, str]]:
+    imports: list[tuple[str, str]] = []
+    pattern = r"import\s+(?:static\s+)?([A-Za-z_][\w$]*(?:\.[A-Za-z_][\w$]*|\.\*)*)\s*;?"
+
+    for match in re.finditer(pattern, snippet):
+        source = match.group(1).strip()
+        if not source:
+            continue
+
+        if source.endswith(".*"):
+            package = source[:-2]
+            name = package.split(".")[-1] if package else source
+        else:
+            name = source.split(".")[-1]
+
+        imports.append((name, source))
 
     return imports
 
