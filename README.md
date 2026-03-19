@@ -1,11 +1,10 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/oguzhankir/omnichunk/main/assets/omnichunk-logo.png" alt="omnichunk" width="360">
+  <img src="https://raw.githubusercontent.com/oguzhankir/omnichunk/main/assets/logo/omnichunk-logo.png" alt="omnichunk" width="360">
   <br><br>
-
-  [![PyPI](https://img.shields.io/pypi/v/omnichunk)](https://pypi.org/project/omnichunk/)
-  [![CI](https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml/badge.svg)](https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml)
-  [![Python](https://img.shields.io/pypi/pyversions/omnichunk)](https://pypi.org/project/omnichunk/)
-  [![License](https://img.shields.io/pypi/l/omnichunk)](https://github.com/oguzhankir/omnichunk/blob/main/LICENSE)
+  <a href="https://pypi.org/project/omnichunk/"><img src="https://img.shields.io/pypi/v/omnichunk?v=1" alt="PyPI"></a>
+  <a href="https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml"><img src="https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml/badge.svg?v=1" alt="CI"></a>
+  <a href="https://pypi.org/project/omnichunk/"><img src="https://img.shields.io/pypi/pyversions/omnichunk?v=1" alt="Python"></a>
+  <a href="https://github.com/oguzhankir/omnichunk/blob/main/LICENSE"><img src="https://img.shields.io/pypi/l/omnichunk?v=1" alt="License"></a>
 </div>
 
 Chunk code, prose, and markup files with structure awareness.
