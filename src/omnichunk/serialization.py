@@ -153,16 +153,20 @@ def _chunk_metadata(chunk: Chunk) -> dict[str, Any]:
 
 def _import_langchain_document_class() -> Any:
     try:
-        from langchain_core.documents import Document
-
-        return Document
+        documents_module = importlib.import_module("langchain_core.documents")
+        document_cls = getattr(documents_module, "Document", None)
+        if document_cls is None:
+            raise AttributeError("Document type not found in langchain_core.documents")
+        return document_cls
     except Exception:
         pass
 
     try:
-        from langchain.schema import Document
-
-        return Document
+        schema_module = importlib.import_module("langchain.schema")
+        document_cls = getattr(schema_module, "Document", None)
+        if document_cls is None:
+            raise AttributeError("Document type not found in langchain.schema")
+        return document_cls
     except Exception as exc:
         raise ImportError(
             "LangChain support requires 'langchain-core' or 'langchain' to be installed."
