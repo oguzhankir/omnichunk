@@ -64,6 +64,13 @@ dev = [
   "pre-commit>=3.7.0",
 ]
 
+[project.urls]
+Homepage = "https://github.com/oguzhankir/omnichunk"
+Documentation = "https://github.com/oguzhankir/omnichunk#readme"
+Issues = "https://github.com/oguzhankir/omnichunk/issues"
+Source = "https://github.com/oguzhankir/omnichunk"
+Changelog = "https://github.com/oguzhankir/omnichunk/blob/main/CHANGELOG.md"
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/omnichunk"]
 

@@ -60,20 +60,20 @@ def build_scope_tree(entities: list[EntityInfo]) -> ScopeTree:
 def find_scope_chain(scope_tree: ScopeTree, byte_range: ByteRange) -> list[EntityInfo]:
     chain: list[EntityInfo] = []
 
-    def descend(node: ScopeNode) -> bool:
-        if node.entity.byte_range is None:
-            return False
-        if not _contains(node.entity.byte_range, byte_range):
-            return False
-
-        chain.append(node.entity)
-        for child in node.children:
-            if descend(child):
-                return True
-        return True
-
-    for root in scope_tree.root:
-        if descend(root):
+    current_level: list[ScopeNode] = scope_tree.root
+    while current_level:
+        found = False
+        for node in current_level:
+            node_range = node.entity.byte_range
+            if node_range is None:
+                continue
+            if not _contains(node_range, byte_range):
+                continue
+            chain.append(node.entity)
+            current_level = node.children
+            found = True
+            break
+        if not found:
             break
 
     return list(reversed(chain))
@@ -84,12 +84,21 @@ def _find_deepest_container(node: ScopeNode, target: ByteRange) -> ScopeNode | N
     if current_range is None or not _contains(current_range, target):
         return None
 
-    for child in node.children:
-        deeper = _find_deepest_container(child, target)
-        if deeper is not None:
-            return deeper
+    result = node
+    children = node.children
+    while children:
+        found = False
+        for child in children:
+            child_range = child.entity.byte_range
+            if child_range is not None and _contains(child_range, target):
+                result = child
+                children = child.children
+                found = True
+                break
+        if not found:
+            break
 
-    return node
+    return result
 
 
 def _contains(outer: ByteRange, inner: ByteRange) -> bool:

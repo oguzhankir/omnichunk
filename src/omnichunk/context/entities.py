@@ -409,10 +409,7 @@ def _extract_signature(node: Any, source_bytes: bytes, language: Language) -> st
         return ""
 
     if language == "python":
-        idx = normalized.find(":")
-        if idx != -1:
-            return normalized[: idx + 1]
-        return normalized[:200]
+        return _extract_signature_python(node, source_bytes)
 
     for marker in ("{", "=>", " where "):
         idx = normalized.find(marker)
@@ -420,6 +417,51 @@ def _extract_signature(node: Any, source_bytes: bytes, language: Language) -> st
             return normalized[:idx].strip()
 
     return normalized[:220]
+
+
+def _extract_signature_python(node: Any, source_bytes: bytes) -> str:
+    body = None
+    for child in getattr(node, "children", []) or []:
+        ctype = getattr(child, "type", "")
+        if ctype in ("block", "body", "suite"):
+            body = child
+            break
+
+    if body is None:
+        for field_name in ("body", "consequence"):
+            candidate = _child_by_field_name(node, field_name)
+            if candidate is not None:
+                body = candidate
+                break
+
+    if body is not None:
+        start = int(getattr(node, "start_byte", 0))
+        body_start = int(getattr(body, "start_byte", start))
+        sig = source_bytes[start:body_start].decode("utf-8", errors="replace")
+        sig = " ".join(sig.strip().rstrip(":").split())
+        if sig:
+            return sig + ":"
+
+    snippet = _node_text(node, source_bytes)
+    if not snippet:
+        return ""
+
+    normalized = " ".join(snippet.strip().split())
+    paren_depth = 0
+    bracket_depth = 0
+    for idx, ch in enumerate(normalized):
+        if ch == "(":
+            paren_depth += 1
+        elif ch == ")":
+            paren_depth -= 1
+        elif ch == "[":
+            bracket_depth += 1
+        elif ch == "]":
+            bracket_depth -= 1
+        elif ch == ":" and paren_depth == 0 and bracket_depth == 0:
+            return normalized[: idx + 1]
+
+    return normalized[:200]
 
 
 def _extract_docstring(node: Any, source_bytes: bytes, language: Language) -> str | None:

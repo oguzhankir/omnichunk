@@ -25,12 +25,11 @@ python benchmarks/run_gutenberg.py
 
 ## Sample output
 
-```
-Tool,Texts,Chars,Tokens,Chunks,Seconds,ThroughputMBps,Status,Detail
-omnichunk,18,11793318,3001260,4562,5.260,2.138,ok,
-langchain_recursive,18,11793318,3001260,6689,7.209,1.560,ok,
-semantic_text_splitter,18,11793318,3001260,29807,18.870,0.596,ok,
-```
+| Tool | Texts | Chars | Tokens | Chunks | Seconds | ThroughputMBps | Status | Detail |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- |
+| omnichunk | 18 | 11793318 | 3001260 | 4562 | 5.260 | 2.138 | ok | |
+| langchain_recursive | 18 | 11793318 | 3001260 | 6689 | 7.209 | 1.560 | ok | |
+| semantic_text_splitter | 18 | 11793318 | 3001260 | 29807 | 18.870 | 0.596 | ok | |
 
 Interpretation:
 - Omnichunk: 4562 chunks, 2.14 MBps throughput

@@ -13,6 +13,8 @@ from .types import (
     SiblingInfo,
 )
 
+__version__ = "0.1.0"
+
 __all__ = [
     "BatchResult",
     "ByteRange",
@@ -26,6 +28,7 @@ __all__ = [
     "ImportInfo",
     "LineRange",
     "SiblingInfo",
+    "__version__",
     "chunk",
     "chunk_file",
 ]

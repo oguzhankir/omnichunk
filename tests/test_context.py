@@ -66,3 +66,32 @@ def test_siblings_prefer_same_parent_scope() -> None:
 
     names = {s.name for s in target.context.siblings}
     assert "first" in names
+
+
+def test_python_entity_signatures_include_full_type_hints() -> None:
+    code = (
+        "from typing import Optional\n\n"
+        "class Service:\n"
+        "    def process(self, data: dict, limit: int = 10) -> Optional[str]:\n"
+        "        return None\n"
+    )
+    chunker = Chunker(max_chunk_size=300, size_unit="chars")
+    chunks = chunker.chunk("service.py", code)
+    all_entities = [e for c in chunks for e in c.context.entities]
+
+    process_entity = next((e for e in all_entities if e.name == "process"), None)
+    assert process_entity is not None
+    assert "data: dict" in process_entity.signature
+    assert "limit: int" in process_entity.signature
+
+
+def test_python_class_signature_with_bases() -> None:
+    code = "class MyService(BaseService, Mixin):\n    pass\n"
+    chunker = Chunker(max_chunk_size=200, size_unit="chars")
+    chunks = chunker.chunk("svc.py", code)
+    all_entities = [e for c in chunks for e in c.context.entities]
+
+    cls = next((e for e in all_entities if e.name == "MyService"), None)
+    assert cls is not None
+    assert "BaseService" in cls.signature
+    assert "Mixin" in cls.signature

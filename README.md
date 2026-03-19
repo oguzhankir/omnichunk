@@ -1,3 +1,18 @@
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo/omnichunk-logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/logo/omnichunk-logo.svg">
+    <img src="assets/logo/omnichunk-logo.svg" alt="omnichunk" width="360">
+  </picture>
+  <br><br>
+  <p>Structure-aware chunking for code, prose, and markup.</p>
+
+  [![PyPI](https://img.shields.io/pypi/v/omnichunk)](https://pypi.org/project/omnichunk/)
+  [![CI](https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml/badge.svg)](https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml)
+  [![Python](https://img.shields.io/pypi/pyversions/omnichunk)](https://pypi.org/project/omnichunk/)
+  [![License](https://img.shields.io/pypi/l/omnichunk)](https://github.com/oguzhankir/omnichunk/blob/main/LICENSE)
+</div>
+
 # omnichunk
 
 Chunk code, prose, and markup files with structure awareness.
@@ -21,16 +36,16 @@ The library is deterministic and works without external APIs.
 ## Installation
 
 ```bash
-pip install -e .
+pip install omnichunk
 ```
 
 Optional extras:
 
 ```bash
-pip install -e .[dev]
-pip install -e .[all-languages]
-pip install -e .[tiktoken]
-pip install -e .[transformers]
+pip install omnichunk[tiktoken]        # tiktoken tokenizer support
+pip install omnichunk[transformers]    # HuggingFace tokenizer support
+pip install omnichunk[all-languages]   # Extended language grammars
+pip install omnichunk[dev]             # Development tools
 ```
 
 ## Quick start

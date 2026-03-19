@@ -564,7 +564,6 @@ def _windows_to_contiguous_ranges(
     cursor = 0
 
     for window in windows:
-        min(item[0] for item in window)
         window_end = max(item[1] for item in window)
         hierarchy = next((item[2] for item in window if item[2]), [])
         section_type = window[0][3] if window else "section"

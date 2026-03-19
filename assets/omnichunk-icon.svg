@@ -1,0 +1,14 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Top row centered: total width=112, starts at x=8 -->
+  <rect x="8" y="10" width="46" height="34" rx="7" fill="#7F77DD"/>
+  <rect x="60" y="10" width="30" height="34" rx="7" fill="#AFA9EC"/>
+  <rect x="96" y="10" width="24" height="34" rx="7" fill="#5DCAA5"/>
+
+  <!-- Bottom row centered: total width=112, starts at x=8 -->
+  <rect x="8" y="50" width="24" height="40" rx="7" fill="#AFA9EC"/>
+  <rect x="38" y="50" width="28" height="40" rx="7" fill="#5DCAA5"/>
+  <rect x="72" y="50" width="48" height="40" rx="7" fill="#7F77DD"/>
+
+  <!-- Monogram centered -->
+  <text x="64" y="116" text-anchor="middle" font-family="Inter, -apple-system, sans-serif" font-size="24" font-weight="600" fill="#7F77DD" letter-spacing="-0.5">oc</text>
+</svg>

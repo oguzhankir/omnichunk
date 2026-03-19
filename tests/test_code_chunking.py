@@ -103,3 +103,16 @@ def test_oversized_code_split_prefers_safe_boundaries() -> None:
         if not left.text or not right.text:
             continue
         assert not (left.text[-1].isalnum() and right.text[0].isalnum())
+
+
+def test_python_signature_with_type_annotations() -> None:
+    code = "def fetch(url: str, timeout: int = 30) -> dict:\n    return {}\n"
+    chunker = Chunker(max_chunk_size=200, size_unit="chars")
+    chunks = chunker.chunk("typed.py", code)
+    assert chunks
+    all_entities = [e for c in chunks for e in c.context.entities]
+    func = next((e for e in all_entities if e.name == "fetch"), None)
+    assert func is not None
+    assert "url: str" in func.signature
+    assert "timeout: int" in func.signature
+    assert func.signature.endswith(":")
