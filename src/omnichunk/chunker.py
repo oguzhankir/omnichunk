@@ -52,12 +52,10 @@ class Chunker:
             futures = [
                 executor.submit(_worker, idx, file_item) for idx, file_item in enumerate(files)
             ]
-            completed = 0
             total = len(futures)
-            for future in as_completed(futures):
+            for completed, future in enumerate(as_completed(futures), start=1):
                 idx, result = future.result()
                 results_by_idx[idx] = result
-                completed += 1
                 if on_progress:
                     on_progress(completed, total, result.filepath)
 
