@@ -3,6 +3,22 @@
 All notable changes to omnichunk will be documented here.
 This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/).
 
+## [0.6.0] - 2026-03-22
+
+### Added
+- Vector DB export adapters: `to_pinecone_vectors()`, `to_weaviate_objects()`, `to_supabase_rows()` (pure dict producers, no client library required)
+- Serialization helpers: `chunks_to_pinecone_vectors`, `chunks_to_weaviate_objects`, `chunks_to_supabase_rows`
+- Plugin API: `register_parser()`, `register_formatter()`, `list_registered_parsers()`, `list_registered_formatters()` in `omnichunk.plugins`
+- HTML benchmark dashboard: `benchmarks/run_html_report.py` and optional `--html-report` on `scripts/check_benchmarks.py`
+- Extended language test coverage: C, C++, C#, Ruby, PHP, Kotlin fixtures and entity/reconstruction tests (requires `all-languages` extra / dev grammars)
+
+### Changed
+- C/C++ tree-sitter query patterns extended (`struct_specifier`, `type_definition`, `namespace_definition` for C++)
+- `parse_code()` accepts optional `filepath` for plugin parsers; `CodeEngine` passes filepath through
+
+### Fixed
+- `tree-sitter-swift` optional dependency uses `>=0.0.1` (PyPI has no `0.23.x` wheel); `pip install omnichunk[dev]` and `omnichunk[all-languages]` resolve again on CI
+
 ## [0.5.0] - 2026-03-21
 
 ### Added
@@ -100,4 +116,6 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 - AI rules synchronization across `.cursorrules`, `.windsurfrules`, `CLAUDE.md`, copilot-instructions
 - Pre-commit hooks for ruff, mypy, pytest, rule sync
 
+[0.6.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.6.0
+[0.5.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.5.0
 [0.1.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.1.0
