@@ -27,6 +27,20 @@ Run quality invariants report on benchmark scenarios:
 python benchmarks/run_quality_report.py
 ```
 
+Run large-corpus throughput and slow-file diagnostics:
+
+```bash
+python benchmarks/run_large_corpus.py --mode mega-python --repeat 120
+python benchmarks/run_large_corpus.py --mode directory --directory ./src --glob "**/*.py"
+```
+
+Run cProfile hotspot analysis:
+
+```bash
+python benchmarks/run_hotspot_profile.py --mode mega-python --repeat 120 --limit 30
+python benchmarks/run_hotspot_profile.py --mode directory --directory ./src --glob "**/*.py" --limit 40
+```
+
 ## Notes
 
 - Benchmarks are deterministic for the same inputs/options.
@@ -36,3 +50,5 @@ python benchmarks/run_quality_report.py
 - `--include-extra` adds `semchunk` and `astchunk` attempts.
 - Comparison runner marks tools as `unavailable` when dependencies are missing or import fails.
 - Quality report verifies reconstruction, contiguity, non-empty chunks, and determinism.
+- `run_large_corpus.py` supports `--nws-backend auto|python|rust` for backend experiments.
+- `run_hotspot_profile.py` highlights likely bottlenecks in `sizing`, `windowing`, and `context` modules.

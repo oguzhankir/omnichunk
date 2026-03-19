@@ -57,3 +57,27 @@ def test_cli_stats_for_directory(tmp_path: Path, capsys) -> None:
     assert payload["total_chunks"] >= 2
     assert payload["size_unit"] == "chars"
     assert payload["failed_files"] == 0
+
+
+def test_cli_accepts_nws_backend_flag(tmp_path: Path, capsys) -> None:
+    file_path = tmp_path / "sample.py"
+    file_path.write_text("def ping():\n    return 'pong'\n", encoding="utf-8")
+
+    exit_code = main(
+        [
+            str(file_path),
+            "--format",
+            "json",
+            "--size-unit",
+            "chars",
+            "--max-size",
+            "40",
+            "--nws-backend",
+            "python",
+        ]
+    )
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    payload = json.loads(captured.out)
+    assert payload

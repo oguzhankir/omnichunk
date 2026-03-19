@@ -4,6 +4,8 @@ from pathlib import Path
 
 from omnichunk import Chunker
 from omnichunk.context import entities as entities_mod
+from omnichunk.context.siblings import build_sibling_index, detect_siblings_for_chunk
+from omnichunk.types import ByteRange, EntityInfo, EntityType, LineRange
 
 
 class _FakeNode:
@@ -250,3 +252,61 @@ def test_java_imports_include_static_and_non_static_symbols() -> None:
     import_names = {name for name, _ in parsed}
 
     assert {"List", "max"} <= import_names
+
+
+def test_sibling_index_matches_list_detection() -> None:
+    entities = [
+        EntityInfo(
+            name="A",
+            type=EntityType.CLASS,
+            byte_range=ByteRange(0, 200),
+            line_range=LineRange(0, 20),
+        ),
+        EntityInfo(
+            name="first",
+            type=EntityType.METHOD,
+            parent="A",
+            byte_range=ByteRange(10, 40),
+            line_range=LineRange(1, 4),
+        ),
+        EntityInfo(
+            name="second",
+            type=EntityType.METHOD,
+            parent="A",
+            byte_range=ByteRange(45, 80),
+            line_range=LineRange(5, 8),
+        ),
+        EntityInfo(
+            name="third",
+            type=EntityType.METHOD,
+            parent="A",
+            byte_range=ByteRange(90, 130),
+            line_range=LineRange(9, 12),
+        ),
+    ]
+    chunk_range = ByteRange(46, 79)
+
+    from_list = detect_siblings_for_chunk(entities, chunk_range, max_siblings=2)
+    sibling_index = build_sibling_index(entities)
+    from_index = detect_siblings_for_chunk(sibling_index, chunk_range, max_siblings=2)
+
+    assert from_index == from_list
+    assert {item.name for item in from_index} == {"first", "third"}
+
+
+def test_find_block_end_respects_next_top_level_definition() -> None:
+    code = (
+        "def alpha():\n"
+        "    if True:\n"
+        "        return 1\n"
+        "\n"
+        "    return 2\n"
+        "\n"
+        "def beta():\n"
+        "    return 3\n"
+    )
+
+    start = code.index("def alpha")
+    end = entities_mod._find_block_end(code, start)
+
+    assert code[end:].startswith("def beta")

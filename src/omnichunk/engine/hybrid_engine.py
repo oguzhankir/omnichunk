@@ -52,7 +52,10 @@ class HybridEngine:
                 sub_options._precomputed_nws_cumsum = options._precomputed_nws_cumsum
             else:
                 sub_options._precomputed_text_index = TextIndex(segment_text)
-                sub_options._precomputed_nws_cumsum = preprocess_nws_cumsum(segment_text)
+                sub_options._precomputed_nws_cumsum = preprocess_nws_cumsum(
+                    segment_text,
+                    backend=options.nws_backend,
+                )
 
             if segment_kind == "code":
                 local_chunks = self._code_engine.stream(filepath, segment_text, sub_options)

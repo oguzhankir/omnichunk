@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from omnichunk.context.entities import extract_entities
-from omnichunk.types import EntityInfo, EntityType
+from omnichunk.context.entities import enrich_parent_links, extract_entities
+from omnichunk.types import ByteRange, EntityInfo, EntityType, LineRange
 
 
 class _FakeNode:
@@ -316,3 +316,39 @@ def test_extract_entities_c_function_and_import() -> None:
 
     function = _find_entity(entities, name="sum", entity_type=EntityType.FUNCTION)
     assert "int sum(int a, int b)" in function.signature
+
+
+def test_enrich_parent_links_picks_nearest_container() -> None:
+    entities = [
+        EntityInfo(
+            name="Outer",
+            type=EntityType.CLASS,
+            byte_range=ByteRange(0, 220),
+            line_range=LineRange(0, 20),
+        ),
+        EntityInfo(
+            name="Inner",
+            type=EntityType.CLASS,
+            byte_range=ByteRange(24, 160),
+            line_range=LineRange(2, 16),
+        ),
+        EntityInfo(
+            name="nested_method",
+            type=EntityType.METHOD,
+            byte_range=ByteRange(40, 70),
+            line_range=LineRange(4, 7),
+        ),
+        EntityInfo(
+            name="outer_function",
+            type=EntityType.FUNCTION,
+            byte_range=ByteRange(170, 205),
+            line_range=LineRange(17, 19),
+        ),
+    ]
+
+    enriched = enrich_parent_links(entities)
+    by_name = {entity.name: entity for entity in enriched}
+
+    assert by_name["Inner"].parent == "Outer"
+    assert by_name["nested_method"].parent == "Inner"
+    assert by_name["outer_function"].parent == "Outer"

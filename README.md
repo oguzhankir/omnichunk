@@ -39,6 +39,8 @@ pip install omnichunk[transformers]    # HuggingFace tokenizer support
 pip install omnichunk[all-languages]   # Extended language grammars
 pip install omnichunk[langchain]       # LangChain Document export support
 pip install omnichunk[llamaindex]      # LlamaIndex Document export support
+pip install omnichunk[profiling]       # py-spy / line-profiler helpers
+pip install omnichunk[rust]            # maturin tooling for Rust backend PoC
 pip install omnichunk[dev]             # Development tools
 ```
 
@@ -47,6 +49,7 @@ pip install omnichunk[dev]             # Development tools
 ```bash
 omnichunk ./src --glob "**/*.py" --max-size 512 --size-unit chars --format jsonl > chunks.jsonl
 omnichunk app.py --max-size 256 --size-unit chars --stats
+omnichunk app.py --max-size 256 --size-unit chars --nws-backend python
 omnichunk README.md --format csv --output chunks.csv
 ```
 
@@ -255,6 +258,8 @@ Run benchmark scenarios:
 python benchmarks/run_benchmarks.py
 python benchmarks/run_comparisons.py
 python benchmarks/run_quality_report.py
+python benchmarks/run_large_corpus.py --mode mega-python --repeat 120
+python benchmarks/run_hotspot_profile.py --mode mega-python --repeat 120 --limit 30
 ```
 
 Run repository checks:

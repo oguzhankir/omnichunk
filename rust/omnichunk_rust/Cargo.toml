@@ -1,0 +1,20 @@
+[package]
+name = "omnichunk_rust"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Rust acceleration primitives for omnichunk"
+
+[lib]
+name = "omnichunk_rust"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.22", features = ["extension-module", "abi3-py310"] }
+
+[package.metadata.maturin]
+name = "omnichunk_rust"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1

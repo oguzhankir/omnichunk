@@ -47,7 +47,7 @@ class MarkupEngine:
         token_counter = make_token_counter(options.tokenizer, chunk_size=options.max_chunk_size)
         cumsum = options._precomputed_nws_cumsum
         if cumsum is None:
-            cumsum = preprocess_nws_cumsum(content)
+            cumsum = preprocess_nws_cumsum(content, backend=options.nws_backend)
 
         precomputed_text_index = options._precomputed_text_index
         if isinstance(precomputed_text_index, TextIndex):

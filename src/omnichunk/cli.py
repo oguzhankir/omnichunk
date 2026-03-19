@@ -33,6 +33,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Chunk size measurement unit",
     )
     parser.add_argument(
+        "--nws-backend",
+        choices=["auto", "python", "rust"],
+        default="auto",
+        help="Backend used for non-whitespace cumulative sizing",
+    )
+    parser.add_argument(
         "--context-mode",
         choices=["none", "minimal", "full"],
         default="full",
@@ -82,6 +88,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         max_chunk_size=args.max_size,
         min_chunk_size=args.min_size,
         size_unit=args.size_unit,
+        nws_backend=args.nws_backend,
         context_mode=args.context_mode,
         overlap=args.overlap,
         overlap_lines=max(0, int(args.overlap_lines)),

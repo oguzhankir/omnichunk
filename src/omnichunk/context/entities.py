@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import ast
 import re
+from bisect import bisect_right
 from collections.abc import Iterable
 from dataclasses import replace
 from typing import Any
@@ -689,7 +690,7 @@ def _collect_adjacent_leading_comments(node: Any, source_bytes: bytes) -> list[A
         if sibling_end > cursor_start:
             continue
 
-        gap = source_bytes[sibling_end:cursor_start].decode("utf-8", errors="replace")
+        gap = source_bytes[sibling_end:cursor_start]
         if gap.strip():
             break
 
@@ -699,8 +700,8 @@ def _collect_adjacent_leading_comments(node: Any, source_bytes: bytes) -> list[A
             cursor_start = sibling_start
             continue
 
-        sibling_text = _node_text(sibling, source_bytes)
-        if sibling_text.strip():
+        sibling_slice = source_bytes[sibling_start:sibling_end]
+        if sibling_slice.strip():
             break
 
         cursor_start = sibling_start
@@ -1107,12 +1108,17 @@ def _fallback_regex_entities(code: str, language: Language) -> list[EntityInfo]:
     if language != "python":
         return []
 
+    newline_offsets = _collect_newline_offsets(code)
+    code_len = len(code)
+
     entities: list[EntityInfo] = []
 
     for match in re.finditer(r"(?m)^\s*(from\s+[A-Za-z0-9_\.]+\s+import\s+.+|import\s+.+)$", code):
         line = match.group(1)
         imports = _parse_python_imports(line)
-        line_start = code.count("\n", 0, match.start())
+        start = match.start()
+        end = match.end()
+        line_start = _line_for_char_offset(newline_offsets, start)
         line_end = line_start
         for name, source in imports:
             entities.append(
@@ -1120,7 +1126,7 @@ def _fallback_regex_entities(code: str, language: Language) -> list[EntityInfo]:
                     name=name,
                     type=EntityType.IMPORT,
                     signature=f"import {name} from {source}",
-                    byte_range=ByteRange(match.start(), match.end()),
+                    byte_range=ByteRange(start, end),
                     line_range=LineRange(line_start, line_end),
                 )
             )
@@ -1129,9 +1135,12 @@ def _fallback_regex_entities(code: str, language: Language) -> list[EntityInfo]:
         name = match.group(1)
         start = match.start()
         end = _find_block_end(code, start)
-        line_start = code.count("\n", 0, start)
-        line_end = code.count("\n", 0, end)
-        signature_line = code[start : code.find("\n", start) if "\n" in code[start:] else len(code)]
+        line_start = _line_for_char_offset(newline_offsets, start)
+        line_end = _line_for_char_offset(newline_offsets, end)
+        signature_end = code.find("\n", start)
+        if signature_end < 0:
+            signature_end = code_len
+        signature_line = code[start:signature_end]
         entities.append(
             EntityInfo(
                 name=name,
@@ -1146,9 +1155,12 @@ def _fallback_regex_entities(code: str, language: Language) -> list[EntityInfo]:
         name = match.group(1)
         start = match.start()
         end = _find_block_end(code, start)
-        line_start = code.count("\n", 0, start)
-        line_end = code.count("\n", 0, end)
-        signature_line = code[start : code.find("\n", start) if "\n" in code[start:] else len(code)]
+        line_start = _line_for_char_offset(newline_offsets, start)
+        line_end = _line_for_char_offset(newline_offsets, end)
+        signature_end = code.find("\n", start)
+        if signature_end < 0:
+            signature_end = code_len
+        signature_line = code[start:signature_end]
         entities.append(
             EntityInfo(
                 name=name,
@@ -1165,25 +1177,59 @@ def _fallback_regex_entities(code: str, language: Language) -> list[EntityInfo]:
 
 
 def _find_block_end(text: str, start: int) -> int:
-    lines = text[start:].splitlines(keepends=True)
-    if not lines:
+    text_len = len(text)
+    if start < 0:
+        start = 0
+    if start >= text_len:
         return start
-    base_indent = len(lines[0]) - len(lines[0].lstrip())
-    offset = start + len(lines[0])
-    for line in lines[1:]:
+
+    first_line_end = text.find("\n", start)
+    if first_line_end < 0:
+        return text_len
+
+    base_indent = _leading_indent(text[start:first_line_end])
+    offset = first_line_end + 1
+
+    cursor = offset
+    while cursor < text_len:
+        line_end = text.find("\n", cursor)
+        if line_end < 0:
+            line_end = text_len
+            next_cursor = text_len
+        else:
+            next_cursor = line_end + 1
+
+        line = text[cursor:line_end]
         stripped = line.strip()
-        if stripped and (len(line) - len(line.lstrip())) <= base_indent:
+        if stripped and _leading_indent(line) <= base_indent:
             break
-        offset += len(line)
+
+        offset = next_cursor
+        cursor = next_cursor
+
     return max(offset, start)
 
 
+def _leading_indent(line: str) -> int:
+    return len(line) - len(line.lstrip(" \t"))
+
+
+def _collect_newline_offsets(text: str) -> list[int]:
+    return [idx for idx, ch in enumerate(text) if ch == "\n"]
+
+
+def _line_for_char_offset(newline_offsets: list[int], offset: int) -> int:
+    if offset <= 0:
+        return 0
+    return bisect_right(newline_offsets, offset - 1)
+
+
 def _dedupe_entities(entities: list[EntityInfo]) -> list[EntityInfo]:
-    seen: set[tuple[str, EntityType, int, int]] = set()
+    seen: set[tuple[str, str, int, int]] = set()
     out: list[EntityInfo] = []
     for entity in entities:
         br = entity.byte_range or ByteRange(0, 0)
-        key = (entity.name, entity.type, br.start, br.end)
+        key = (entity.name, entity.type.value, br.start, br.end)
         if key in seen:
             continue
         seen.add(key)
@@ -1201,29 +1247,42 @@ def enrich_parent_links(entities: list[EntityInfo]) -> list[EntityInfo]:
         ),
     )
     out: list[EntityInfo] = []
+    stack: list[EntityInfo] = []
 
-    for idx, entity in enumerate(sorted_entities):
-        if entity.parent or entity.byte_range is None:
+    for entity in sorted_entities:
+        byte_range = entity.byte_range
+        if byte_range is None:
             out.append(entity)
             continue
 
-        parent_name: str | None = None
-        for candidate in reversed(sorted_entities[:idx]):
-            if candidate.byte_range is None:
+        while stack:
+            top_range = stack[-1].byte_range
+            if top_range is None or top_range.end <= byte_range.start:
+                stack.pop()
                 continue
-            if (
-                candidate.byte_range.start <= entity.byte_range.start
-                and candidate.byte_range.end >= entity.byte_range.end
-                and candidate.name != entity.name
-                and candidate.type not in {EntityType.IMPORT, EntityType.EXPORT}
-            ):
-                parent_name = candidate.name
-                break
+            break
 
-        if parent_name:
-            out.append(replace(entity, parent=parent_name))
-        else:
-            out.append(entity)
+        enriched = entity
+        if not entity.parent:
+            parent_name: str | None = None
+            for candidate in reversed(stack):
+                candidate_range = candidate.byte_range
+                if candidate_range is None:
+                    continue
+                if (
+                    candidate_range.start <= byte_range.start
+                    and candidate_range.end >= byte_range.end
+                    and candidate.name != entity.name
+                    and candidate.type.value not in {"import", "export"}
+                ):
+                    parent_name = candidate.name
+                    break
+
+            if parent_name:
+                enriched = replace(entity, parent=parent_name)
+
+        out.append(enriched)
+        stack.append(enriched)
 
     out.sort(key=lambda e: ((e.byte_range.start if e.byte_range else 0), e.name))
     return out

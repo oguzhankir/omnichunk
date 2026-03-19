@@ -123,3 +123,24 @@ def test_chunker_export_and_quality_helpers() -> None:
     )
     assert quality
     assert all(0.0 <= item.overall <= 1.0 for item in quality)
+
+
+def test_chunker_with_python_nws_backend_keeps_integrity() -> None:
+    content = (
+        "def a(x: int) -> int:\n"
+        "    return x + 1\n\n\n"
+        "def b(y: int) -> int:\n"
+        "    return y + 2\n"
+    )
+    chunker = Chunker(
+        max_chunk_size=42,
+        min_chunk_size=10,
+        size_unit="chars",
+        nws_backend="python",
+    )
+
+    chunks = chunker.chunk("module.py", content)
+    assert chunks
+    assert "".join(chunk.text for chunk in chunks) == content
+    for left, right in zip(chunks, chunks[1:]):
+        assert left.byte_range.end == right.byte_range.start

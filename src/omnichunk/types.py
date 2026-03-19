@@ -180,6 +180,7 @@ class ChunkOptions:
     min_chunk_size: int = 50
     size_unit: Literal["tokens", "chars", "nws"] = "tokens"
     tokenizer: str | Callable[[str], int] | None = None
+    nws_backend: Literal["auto", "python", "rust"] = "auto"
 
     context_mode: Literal["none", "minimal", "full"] = "full"
     sibling_detail: Literal["none", "names", "signatures"] = "signatures"

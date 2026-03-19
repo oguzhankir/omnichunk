@@ -60,6 +60,11 @@ tiktoken = ["tiktoken>=0.5.0"]
 transformers = ["transformers>=4.30.0"]
 langchain = ["langchain-core>=0.2.0"]
 llamaindex = ["llama-index-core>=0.10.0"]
+profiling = [
+  "py-spy>=0.3.14",
+  "line-profiler>=4.1.0",
+]
+rust = ["maturin>=1.7.0"]
 dev = [
   "pytest>=8.0.0",
   "pytest-cov>=4.0.0",
@@ -67,6 +72,7 @@ dev = [
   "mypy>=1.0.0",
   "ruff>=0.4.0",
   "pre-commit>=3.7.0",
+  "maturin>=1.7.0",
 ]
 
 [project.urls]
@@ -83,6 +89,9 @@ packages = ["src/omnichunk"]
 include = [
   "src/omnichunk",
   "tests",
+  "benchmarks",
+  "scripts",
+  "rust",
   "README.md",
   "pyproject.toml",
   "LICENSE",

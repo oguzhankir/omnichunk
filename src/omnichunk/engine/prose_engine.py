@@ -148,7 +148,7 @@ class ProseEngine:
 
         cumsum = options._precomputed_nws_cumsum
         if cumsum is None:
-            cumsum = preprocess_nws_cumsum(content)
+            cumsum = preprocess_nws_cumsum(content, backend=options.nws_backend)
 
         previous_text = ""
         chunk_index = 0
@@ -237,7 +237,9 @@ class ProseEngine:
         token_counter = make_token_counter(options.tokenizer, chunk_size=options.max_chunk_size)
         chunks: list[Chunk] = []
         delegated_text_index = TextIndex(code_text) if code_text else None
-        delegated_cumsum = preprocess_nws_cumsum(code_text) if code_text else None
+        delegated_cumsum = (
+            preprocess_nws_cumsum(code_text, backend=options.nws_backend) if code_text else None
+        )
 
         cursor = block_char_start
 

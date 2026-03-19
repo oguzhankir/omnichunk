@@ -34,7 +34,7 @@ def route_content(
 
     precomputed_nws_cumsum = options._precomputed_nws_cumsum
     if precomputed_nws_cumsum is None:
-        precomputed_nws_cumsum = preprocess_nws_cumsum(content)
+        precomputed_nws_cumsum = preprocess_nws_cumsum(content, backend=options.nws_backend)
 
     effective_options = replace(
         options,
@@ -72,7 +72,7 @@ def route_content_stream(
 
     precomputed_nws_cumsum = options._precomputed_nws_cumsum
     if precomputed_nws_cumsum is None:
-        precomputed_nws_cumsum = preprocess_nws_cumsum(content)
+        precomputed_nws_cumsum = preprocess_nws_cumsum(content, backend=options.nws_backend)
 
     effective_options = replace(
         options,

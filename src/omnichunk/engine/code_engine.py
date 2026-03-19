@@ -8,7 +8,7 @@ from omnichunk.context.entities import enrich_parent_links, extract_entities
 from omnichunk.context.format import format_contextualized_text
 from omnichunk.context.imports import build_import_infos, filter_imports_for_chunk
 from omnichunk.context.scope import build_scope_tree, find_scope_chain
-from omnichunk.context.siblings import detect_siblings_for_chunk
+from omnichunk.context.siblings import SiblingIndex, build_sibling_index, detect_siblings_for_chunk
 from omnichunk.parser.tree_sitter import parse_code
 from omnichunk.sizing.counter import make_token_counter
 from omnichunk.sizing.nws import get_nws_count, preprocess_nws_cumsum
@@ -67,6 +67,7 @@ class CodeEngine:
         entities = enrich_parent_links(extract_entities(content, language, parse_result.tree))
         scope_tree = build_scope_tree(entities)
         import_infos = build_import_infos(entities)
+        sibling_index = build_sibling_index(scope_tree.all_entities)
 
         precomputed_text_index = options._precomputed_text_index
         if isinstance(precomputed_text_index, TextIndex):
@@ -76,7 +77,7 @@ class CodeEngine:
 
         cumsum = options._precomputed_nws_cumsum
         if cumsum is None:
-            cumsum = preprocess_nws_cumsum(content)
+            cumsum = preprocess_nws_cumsum(content, backend=options.nws_backend)
 
         raw_bytes = text_index.raw_bytes
 
@@ -135,6 +136,7 @@ class CodeEngine:
                 chunk_range=byte_range,
                 entities=entities,
                 scope_tree=scope_tree,
+                sibling_index=sibling_index,
                 import_infos=import_infos,
                 options=options,
                 parse_errors=parse_result.errors,
@@ -171,6 +173,7 @@ def _build_context(
     chunk_range: ByteRange,
     entities: list[EntityInfo],
     scope_tree: Any,
+    sibling_index: SiblingIndex,
     import_infos: list[Any],
     options: ChunkOptions,
     parse_errors: list[str],
@@ -190,7 +193,7 @@ def _build_context(
     siblings = []
     if options.context_mode == "full" and options.sibling_detail != "none":
         siblings = detect_siblings_for_chunk(
-            scope_tree.all_entities,
+            sibling_index,
             chunk_range,
             max_siblings=max(0, options.max_siblings),
         )
