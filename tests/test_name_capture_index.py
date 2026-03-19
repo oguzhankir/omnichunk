@@ -4,12 +4,13 @@ from __future__ import annotations
 
 from typing import Any
 
+from test_entity_extraction import _FakeNode
+
 from omnichunk.context.entities import (
     _build_name_capture_index,
     _distance_to_ancestor,
     _find_query_name_capture,
 )
-from test_entity_extraction import _FakeNode
 
 
 def _find_query_name_capture_naive(entity_node: Any, name_nodes: list[Any]) -> Any | None:

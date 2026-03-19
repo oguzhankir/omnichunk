@@ -113,6 +113,10 @@ warn_unused_configs = true
 [tool.ruff]
 line-length = 100
 target-version = "py310"
+extend-exclude = [
+    # Intentionally repetitive stress fixture; not valid as a single linted module.
+    "tests/fixtures/mega_python_50x.py",
+]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
