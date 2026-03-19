@@ -246,6 +246,12 @@ def _collect_query_matches(language: Language, tree: Any | None) -> list[tuple[A
 
 
 def _compile_query(language_obj: Any, query_source: str) -> Any | None:
+    if TSQuery is not None:
+        try:
+            return TSQuery(language_obj, query_source)
+        except Exception:
+            pass
+
     query_method = getattr(language_obj, "query", None)
     if callable(query_method):
         try:
@@ -253,13 +259,7 @@ def _compile_query(language_obj: Any, query_source: str) -> Any | None:
         except Exception:
             pass
 
-    if TSQuery is None:
-        return None
-
-    try:
-        return TSQuery(language_obj, query_source)
-    except Exception:
-        return None
+    return None
 
 
 def _run_query_captures(query: Any, root: Any) -> list[tuple[Any, str]]:
