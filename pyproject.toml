@@ -54,7 +54,8 @@ all-languages = [
   "tree-sitter-ruby>=0.23.0",
   "tree-sitter-php>=0.23.0",
   "tree-sitter-kotlin>=0.23.0",
-  "tree-sitter-swift>=0.23.0",
+  # PyPI ships only 0.0.x (aligned with tree-sitter~=0.23); no 0.23.x wheel yet.
+  "tree-sitter-swift>=0.0.1",
 ]
 pinecone = []
 weaviate = []
@@ -85,7 +86,7 @@ dev = [
   "tree-sitter-ruby>=0.23.0",
   "tree-sitter-php>=0.23.0",
   "tree-sitter-kotlin>=0.23.0",
-  "tree-sitter-swift>=0.23.0",
+  "tree-sitter-swift>=0.0.1",
 ]
 
 [project.urls]
