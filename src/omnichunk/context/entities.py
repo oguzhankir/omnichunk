@@ -10,11 +10,11 @@ from omnichunk.parser.query_patterns import get_query_source
 from omnichunk.types import ByteRange, EntityInfo, EntityType, Language, LineRange
 
 try:
-    from tree_sitter import Query as TSQuery
-    from tree_sitter import QueryCursor as TSQueryCursor
-except Exception:
-    TSQuery = None  # type: ignore[assignment]
-    TSQueryCursor = None  # type: ignore[assignment]
+    from tree_sitter import Query as _TSQuery
+    from tree_sitter import QueryCursor as _TSQueryCursor  # type: ignore[attr-defined]
+except Exception:  # pragma: no cover
+    _TSQuery = None  # type: ignore[misc,assignment]
+    _TSQueryCursor = None
 
 ENTITY_NODE_TYPES: dict[Language, dict[str, EntityType]] = {
     "python": {
@@ -247,9 +247,9 @@ def _collect_query_matches(language: Language, tree: Any | None) -> list[tuple[A
 
 
 def _compile_query(language_obj: Any, query_source: str) -> Any | None:
-    if TSQuery is not None:
+    if _TSQuery is not None:
         try:
-            return TSQuery(language_obj, query_source)
+            return _TSQuery(language_obj, query_source)  # type: ignore[call-arg]
         except Exception:
             pass
 
@@ -274,21 +274,27 @@ def _run_query_captures(query: Any, root: Any) -> list[tuple[Any, str]]:
         except Exception:
             pass
 
-    if TSQueryCursor is None:
+    if _TSQueryCursor is None:
         return []
 
     try:
-        cursor = TSQueryCursor()
+        cursor = _TSQueryCursor(query)
     except Exception:
         return []
 
     captures_method = getattr(cursor, "captures", None)
     if callable(captures_method):
         try:
-            raw = captures_method(query, root)
-            return _normalize_query_captures(raw, query)
+            raw = captures_method(root)
+            captures = _normalize_query_captures(raw, query)
+            if captures:
+                return captures
         except Exception:
-            return []
+            try:
+                raw = captures_method(query, root)
+                return _normalize_query_captures(raw, query)
+            except Exception:
+                return []
 
     return []
 

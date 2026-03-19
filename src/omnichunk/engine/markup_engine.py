@@ -59,7 +59,7 @@ class MarkupEngine:
             byte_start = text_index.byte_offset_for_char(start)
             byte_end = text_index.byte_offset_for_char(end)
 
-            section_type = language
+            section_type: str = language
             if language == "json":
                 section_type = "json_object"
             elif language in {"yaml", "toml"}:
@@ -69,7 +69,7 @@ class MarkupEngine:
 
             context = ChunkContext(
                 filepath=filepath,
-                language=language,  # type: ignore[arg-type]
+                language=language,
                 content_type=ContentType.MARKUP,
                 breadcrumb=breadcrumb,
                 section_type=section_type,

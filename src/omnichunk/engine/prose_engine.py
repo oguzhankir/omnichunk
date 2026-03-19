@@ -19,6 +19,7 @@ from omnichunk.types import (
     ContentType,
     EntityInfo,
     EntityType,
+    Language,
     LineRange,
 )
 from omnichunk.util.detect import detect_language
@@ -174,7 +175,7 @@ class ProseEngine:
             line_end = text_index.line_for_char(max(start, end - 1))
             context = ChunkContext(
                 filepath=filepath,
-                language=language,  # type: ignore[arg-type]
+                language=language,
                 content_type=ContentType.PROSE,
                 heading_hierarchy=hierarchy,
                 section_type=section_type,
@@ -706,7 +707,7 @@ def _rebase_delegated_fence_chunks(
 def _build_markdown_fence_chunk(
     *,
     filepath: str,
-    language: str,
+    language: Language,
     text: str,
     heading_hierarchy: list[str],
     start_char: int,
@@ -724,7 +725,7 @@ def _build_markdown_fence_chunk(
 
     context = ChunkContext(
         filepath=filepath,
-        language=language,  # type: ignore[arg-type]
+        language=language,
         content_type=ContentType.PROSE,
         heading_hierarchy=list(heading_hierarchy),
         section_type=EntityType.CODE_BLOCK.value,

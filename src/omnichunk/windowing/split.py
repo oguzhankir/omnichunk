@@ -20,12 +20,12 @@ def split_oversized_leaf(
 ) -> Iterable[ASTNodeWindowItem]:
     """Split oversized leaf item at line boundaries first, then safe-boundary fallback."""
     if item.end <= item.start:
-        return []
+        return
 
     text = code.encode("utf-8")
     segment = text[item.start : item.end]
     if not segment:
-        return []
+        return
 
     newline_positions = [idx for idx, b in enumerate(segment) if b == 10]
     if newline_positions:

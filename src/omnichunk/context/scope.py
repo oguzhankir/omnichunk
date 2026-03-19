@@ -38,9 +38,12 @@ def build_scope_tree(entities: list[EntityInfo]) -> ScopeTree:
     roots: list[ScopeNode] = []
 
     for entity in scoped:
+        entity_range = entity.byte_range
+        if entity_range is None:
+            continue
         candidate_parent: ScopeNode | None = None
         for root in roots:
-            candidate_parent = _find_deepest_container(root, entity.byte_range)
+            candidate_parent = _find_deepest_container(root, entity_range)
             if candidate_parent is not None:
                 break
 

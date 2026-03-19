@@ -4,6 +4,7 @@ from collections.abc import Callable, Iterator
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict
 from pathlib import Path
+from typing import Any
 
 from omnichunk.engine.router import route_content, route_content_stream
 from omnichunk.types import BatchResult, Chunk, ChunkOptions
@@ -81,6 +82,6 @@ def chunk_file(path: str, **options: object) -> list[Chunk]:
     return Chunker(**options).chunk_file(path)
 
 
-def _coerce_option_dict(options: dict[str, object]) -> dict[str, object]:
+def _coerce_option_dict(options: dict[str, object]) -> dict[str, Any]:
     allowed = set(ChunkOptions.__dataclass_fields__.keys())
     return {key: value for key, value in options.items() if key in allowed}

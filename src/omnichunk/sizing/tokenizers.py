@@ -53,7 +53,7 @@ def resolve_tokenizer(
         name = tokenizer_or_name.strip()
 
         try:
-            import tiktoken  # type: ignore
+            import tiktoken
 
             try:
                 enc = tiktoken.encoding_for_model(name)

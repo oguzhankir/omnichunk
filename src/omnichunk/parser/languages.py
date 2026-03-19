@@ -9,11 +9,11 @@ from typing import Any
 from omnichunk.types import Language
 
 try:
-    from tree_sitter import Language as TSLanguage
-    from tree_sitter import Parser as TSParser
-except Exception:
-    TSLanguage = None  # type: ignore[assignment]
-    TSParser = None  # type: ignore[assignment]
+    from tree_sitter import Language as _TSLanguage
+    from tree_sitter import Parser as _TSParser
+except Exception:  # pragma: no cover
+    _TSLanguage = None  # type: ignore[misc,assignment]
+    _TSParser = None  # type: ignore[misc,assignment]
 
 
 @dataclass(frozen=True)
@@ -49,12 +49,12 @@ def _load_module(module_name: str) -> Any:
 
 
 def _build_language(raw_language: Any) -> Any:
-    if TSLanguage is None:
+    if _TSLanguage is None:
         return raw_language
-    if isinstance(raw_language, TSLanguage):
+    if isinstance(raw_language, _TSLanguage):
         return raw_language
     try:
-        return TSLanguage(raw_language)
+        return _TSLanguage(raw_language)  # type: ignore[call-arg]
     except Exception:
         return raw_language
 
@@ -81,14 +81,14 @@ def get_language(language: Language) -> Any | None:
 
 
 def _new_parser(lang_obj: Any) -> Any:
-    if TSParser is None:
+    if _TSParser is None:
         return None
 
     try:
-        parser = TSParser()
+        parser = _TSParser()
     except Exception:
         try:
-            parser = TSParser(lang_obj)
+            parser = _TSParser(lang_obj)  # type: ignore[call-arg]
             return parser
         except Exception:
             return None
