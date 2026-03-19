@@ -8,12 +8,18 @@ from typing import Any
 
 from omnichunk.types import Language
 
+_tree_sitter: Any | None
 try:
-    from tree_sitter import Language as _TSLanguage
-    from tree_sitter import Parser as _TSParser
+    import tree_sitter as _tree_sitter_mod
+
+    _tree_sitter = _tree_sitter_mod
 except Exception:  # pragma: no cover
-    _TSLanguage = None  # type: ignore[misc,assignment]
-    _TSParser = None  # type: ignore[misc,assignment]
+    _tree_sitter = None
+
+_TSLanguage: Any | None = (
+    getattr(_tree_sitter, "Language", None) if _tree_sitter is not None else None
+)
+_TSParser: Any | None = getattr(_tree_sitter, "Parser", None) if _tree_sitter is not None else None
 
 
 @dataclass(frozen=True)
@@ -54,7 +60,8 @@ def _build_language(raw_language: Any) -> Any:
     if isinstance(raw_language, _TSLanguage):
         return raw_language
     try:
-        return _TSLanguage(raw_language)  # type: ignore[call-arg]
+        language_ctor: Any = _TSLanguage
+        return language_ctor(raw_language)
     except Exception:
         return raw_language
 
@@ -85,10 +92,12 @@ def _new_parser(lang_obj: Any) -> Any:
         return None
 
     try:
-        parser = _TSParser()
+        parser_ctor: Any = _TSParser
+        parser = parser_ctor()
     except Exception:
         try:
-            parser = _TSParser(lang_obj)  # type: ignore[call-arg]
+            parser_ctor_with_lang: Any = _TSParser
+            parser = parser_ctor_with_lang(lang_obj)
             return parser
         except Exception:
             return None

@@ -9,12 +9,18 @@ from omnichunk.parser.languages import get_language
 from omnichunk.parser.query_patterns import get_query_source
 from omnichunk.types import ByteRange, EntityInfo, EntityType, Language, LineRange
 
+_tree_sitter: Any | None
 try:
-    from tree_sitter import Query as _TSQuery
-    from tree_sitter import QueryCursor as _TSQueryCursor  # type: ignore[attr-defined]
+    import tree_sitter as _tree_sitter_mod
+
+    _tree_sitter = _tree_sitter_mod
 except Exception:  # pragma: no cover
-    _TSQuery = None  # type: ignore[misc,assignment]
-    _TSQueryCursor = None
+    _tree_sitter = None
+
+_TSQuery: Any | None = getattr(_tree_sitter, "Query", None) if _tree_sitter is not None else None
+_TSQueryCursor: Any | None = (
+    getattr(_tree_sitter, "QueryCursor", None) if _tree_sitter is not None else None
+)
 
 ENTITY_NODE_TYPES: dict[Language, dict[str, EntityType]] = {
     "python": {
@@ -249,7 +255,8 @@ def _collect_query_matches(language: Language, tree: Any | None) -> list[tuple[A
 def _compile_query(language_obj: Any, query_source: str) -> Any | None:
     if _TSQuery is not None:
         try:
-            return _TSQuery(language_obj, query_source)  # type: ignore[call-arg]
+            query_ctor: Any = _TSQuery
+            return query_ctor(language_obj, query_source)
         except Exception:
             pass
 
