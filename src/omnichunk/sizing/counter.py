@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 from functools import lru_cache
-from typing import Callable, Literal
+from typing import Literal
 
 from .tokenizers import resolve_tokenizer
 

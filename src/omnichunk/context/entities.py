@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from dataclasses import replace
 import re
-from typing import Any, Iterable
+from collections.abc import Iterable
+from dataclasses import replace
+from typing import Any
 
 from omnichunk.parser.languages import get_language
 from omnichunk.parser.query_patterns import get_query_source
@@ -418,7 +419,17 @@ def _extract_docstring(node: Any, source_bytes: bytes, language: Language) -> st
         if match:
             return _strip_quotes(match.group(1))
 
-    if language in {"javascript", "typescript", "java", "c", "cpp", "csharp", "php", "kotlin", "swift"}:
+    if language in {
+        "javascript",
+        "typescript",
+        "java",
+        "c",
+        "cpp",
+        "csharp",
+        "php",
+        "kotlin",
+        "swift",
+    }:
         doc = _extract_leading_comment(node, source_bytes)
         if doc:
             return doc
@@ -479,7 +490,9 @@ def _find_parent_name(node: Any, source_bytes: bytes, language: Language) -> str
     return None
 
 
-def _extract_import_entities(node: Any, source_bytes: bytes, language: Language) -> list[EntityInfo]:
+def _extract_import_entities(
+    node: Any, source_bytes: bytes, language: Language
+) -> list[EntityInfo]:
     snippet = _node_text(node, source_bytes)
     byte_range = _node_byte_range(node)
     line_range = _node_line_range(node)
@@ -596,7 +609,9 @@ def _parse_ts_js_imports(snippet: str) -> list[tuple[str, str]]:
             if not cleaned:
                 continue
             alias_bits = re.split(r"\s+as\s+", cleaned)
-            imports.append(((alias_bits[-1] if len(alias_bits) > 1 else alias_bits[0]).strip(), source))
+            imports.append(
+                ((alias_bits[-1] if len(alias_bits) > 1 else alias_bits[0]).strip(), source)
+            )
 
     if not imports and source:
         imports.append((source.rsplit("/", 1)[-1], source))
@@ -711,7 +726,13 @@ def _dedupe_entities(entities: list[EntityInfo]) -> list[EntityInfo]:
 
 def enrich_parent_links(entities: list[EntityInfo]) -> list[EntityInfo]:
     """Fill missing parent fields based on byte-range nesting."""
-    sorted_entities = sorted(entities, key=lambda e: ((e.byte_range.start if e.byte_range else 0), -(e.byte_range.end if e.byte_range else 0)))
+    sorted_entities = sorted(
+        entities,
+        key=lambda e: (
+            (e.byte_range.start if e.byte_range else 0),
+            -(e.byte_range.end if e.byte_range else 0),
+        ),
+    )
     out: list[EntityInfo] = []
 
     for idx, entity in enumerate(sorted_entities):

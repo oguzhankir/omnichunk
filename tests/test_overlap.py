@@ -4,11 +4,7 @@ from omnichunk import Chunker
 
 
 def test_line_overlap_contextualized_text() -> None:
-    code = (
-        "def a():\n    return 1\n\n"
-        "def b():\n    return 2\n\n"
-        "def c():\n    return 3\n"
-    )
+    code = "def a():\n    return 1\n\ndef b():\n    return 2\n\ndef c():\n    return 3\n"
     chunker = Chunker(max_chunk_size=28, min_chunk_size=8, size_unit="chars", overlap_lines=1)
 
     chunks = chunker.chunk("example.py", code)

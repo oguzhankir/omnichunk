@@ -36,5 +36,5 @@ def test_contiguous_byte_ranges() -> None:
     chunks = chunker.chunk("x.py", code)
 
     assert chunks
-    for left, right in zip(chunks, chunks[1:]):
+    for left, right in zip(chunks, chunks[1:], strict=False):
         assert left.byte_range.end == right.byte_range.start

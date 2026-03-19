@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Iterable
+from collections.abc import Iterable
 
 import numpy as np
 
@@ -43,7 +43,9 @@ def split_oversized_leaf(
     yield from _hard_split(item.start, item.end, cumsum, max_size, text)
 
 
-def _build_ranges_from_newlines(start: int, end: int, newline_positions: list[int]) -> list[tuple[int, int]]:
+def _build_ranges_from_newlines(
+    start: int, end: int, newline_positions: list[int]
+) -> list[tuple[int, int]]:
     ranges: list[tuple[int, int]] = []
     cursor = start
     for pos in newline_positions:

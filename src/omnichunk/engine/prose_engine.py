@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from dataclasses import replace
 import re
-from typing import Any, Callable, Iterator
+from collections.abc import Callable, Iterator
+from dataclasses import replace
+from typing import Any
 
 from omnichunk.context.format import format_contextualized_text
 from omnichunk.engine.code_engine import CodeEngine
@@ -177,7 +178,9 @@ class ProseEngine:
                 content_type=ContentType.PROSE,
                 heading_hierarchy=hierarchy,
                 section_type=section_type,
-                entities=_entities_for_section(section_type, text, start, end, line_start, line_end),
+                entities=_entities_for_section(
+                    section_type, text, start, end, line_start, line_end
+                ),
             )
 
             overlap_text = build_line_overlap_text(previous_text, options.overlap_lines)
@@ -289,7 +292,9 @@ class ProseEngine:
                     sub_options = replace(options, content_type=ContentType.MARKUP, overlap_lines=0)
                     sub_options.language = resolved_markup_language  # type: ignore[assignment]
 
-                    markup_chunks = list(self._markup_engine.stream(filepath, code_text, sub_options))
+                    markup_chunks = list(
+                        self._markup_engine.stream(filepath, code_text, sub_options)
+                    )
                     delegated = _rebase_delegated_fence_chunks(
                         delegated_chunks=markup_chunks,
                         heading_hierarchy=heading_hierarchy,
@@ -468,7 +473,9 @@ def _build_node_windows(
             continue
 
         if idx + 1 < len(windows):
-            if preserve_code_blocks and _window_has_section_type(windows[idx + 1], EntityType.CODE_BLOCK.value):
+            if preserve_code_blocks and _window_has_section_type(
+                windows[idx + 1], EntityType.CODE_BLOCK.value
+            ):
                 idx += 1
                 continue
             windows[idx].extend(windows[idx + 1])
@@ -476,7 +483,9 @@ def _build_node_windows(
             continue
 
         if idx > 0:
-            if preserve_code_blocks and _window_has_section_type(windows[idx - 1], EntityType.CODE_BLOCK.value):
+            if preserve_code_blocks and _window_has_section_type(
+                windows[idx - 1], EntityType.CODE_BLOCK.value
+            ):
                 idx += 1
                 continue
             windows[idx - 1].extend(windows[idx])
@@ -489,7 +498,9 @@ def _build_node_windows(
     return windows
 
 
-def _window_has_section_type(window: list[tuple[int, int, list[str], str]], section_type: str) -> bool:
+def _window_has_section_type(
+    window: list[tuple[int, int, list[str], str]], section_type: str
+) -> bool:
     return any(item[3] == section_type for item in window)
 
 
@@ -552,7 +563,7 @@ def _windows_to_contiguous_ranges(
     cursor = 0
 
     for window in windows:
-        window_start = min(item[0] for item in window)
+        min(item[0] for item in window)
         window_end = max(item[1] for item in window)
         hierarchy = next((item[2] for item in window if item[2]), [])
         section_type = window[0][3] if window else "section"

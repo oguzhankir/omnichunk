@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
 from dataclasses import replace
-from typing import Any, Iterator
+from typing import Any
 
 from omnichunk.context.entities import enrich_parent_links, extract_entities
 from omnichunk.context.format import format_contextualized_text
@@ -11,7 +12,15 @@ from omnichunk.context.siblings import detect_siblings_for_chunk
 from omnichunk.parser.tree_sitter import parse_code
 from omnichunk.sizing.counter import make_token_counter
 from omnichunk.sizing.nws import get_nws_count, preprocess_nws_cumsum
-from omnichunk.types import ByteRange, Chunk, ChunkContext, ChunkOptions, ContentType, EntityInfo, LineRange
+from omnichunk.types import (
+    ByteRange,
+    Chunk,
+    ChunkContext,
+    ChunkOptions,
+    ContentType,
+    EntityInfo,
+    LineRange,
+)
 from omnichunk.util.detect import detect_language
 from omnichunk.util.text_index import TextIndex
 from omnichunk.windowing.greedy import assign_windows_for_nodes, assign_windows_for_ranges
@@ -75,7 +84,9 @@ class CodeEngine:
                 code=content,
             )
         else:
-            candidate_ranges = _collect_candidate_ranges(entities, parse_result.tree, len(raw_bytes))
+            candidate_ranges = _collect_candidate_ranges(
+                entities, parse_result.tree, len(raw_bytes)
+            )
             windows = assign_windows_for_ranges(
                 candidate_ranges,
                 cumsum=cumsum,
@@ -181,7 +192,9 @@ def _build_context(
     imports = []
     if options.include_imports:
         if options.filter_imports:
-            imports = filter_imports_for_chunk(import_infos, [e.signature for e in overlapping_entities if e.signature])
+            imports = filter_imports_for_chunk(
+                import_infos, [e.signature for e in overlapping_entities if e.signature]
+            )
         else:
             imports = import_infos
 
@@ -291,7 +304,9 @@ def _collect_ast_root_nodes(tree: Any | None) -> list[Any]:
     return out
 
 
-def _windows_to_contiguous_ranges(windows: list[list[Any]], total_bytes: int) -> list[tuple[int, int]]:
+def _windows_to_contiguous_ranges(
+    windows: list[list[Any]], total_bytes: int
+) -> list[tuple[int, int]]:
     if total_bytes <= 0:
         return []
     if not windows:

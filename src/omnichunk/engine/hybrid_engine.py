@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from dataclasses import replace
 import re
-from typing import Iterator
+from collections.abc import Iterator
+from dataclasses import replace
 
 from omnichunk.engine.code_engine import CodeEngine
 from omnichunk.engine.prose_engine import ProseEngine
@@ -37,7 +37,9 @@ class HybridEngine:
                 continue
 
             sub_options = replace(options)
-            sub_options.content_type = ContentType.CODE if segment[2] == "code" else ContentType.PROSE
+            sub_options.content_type = (
+                ContentType.CODE if segment[2] == "code" else ContentType.PROSE
+            )
 
             if segment[2] == "code":
                 local_chunks = self._code_engine.stream(filepath, segment_text, sub_options)
@@ -61,14 +63,11 @@ class HybridEngine:
                 chunk_index += 1
 
 
-
 def _split_hybrid_segments(content: str) -> list[tuple[int, int, str]]:
     if "# %%" in content:
         return _split_by_cells(content)
 
-    docstring_matches = list(
-        re.finditer(r'"""[\s\S]*?"""|\'\'\'[\s\S]*?\'\'\'', content)
-    )
+    docstring_matches = list(re.finditer(r'"""[\s\S]*?"""|\'\'\'[\s\S]*?\'\'\'', content))
     doc_chars = sum(m.end() - m.start() for m in docstring_matches)
     if doc_chars / max(1, len(content)) <= 0.4:
         return [(0, len(content), "code")]

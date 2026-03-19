@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 
 def _fallback_counter(text: str) -> int:
@@ -31,7 +32,9 @@ def _normalize_encoder_counter(encoder: Any) -> Callable[[str], int]:
     return counter
 
 
-def resolve_tokenizer(tokenizer_or_name: str | Callable[[str], int] | Any | None) -> Callable[[str], int]:
+def resolve_tokenizer(
+    tokenizer_or_name: str | Callable[[str], int] | Any | None,
+) -> Callable[[str], int]:
     """Resolve tokenizer-like input into a token counting callable.
 
     Supported inputs:

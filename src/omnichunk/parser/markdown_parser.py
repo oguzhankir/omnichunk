@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 import re
+from dataclasses import dataclass, field
 
 from omnichunk.types import ByteRange, EntityType, LineRange
 
@@ -23,7 +23,7 @@ class Section:
     content: str
     byte_range: ByteRange
     line_range: LineRange
-    children: list["Section"] = field(default_factory=list)
+    children: list[Section] = field(default_factory=list)
 
 
 _FENCE_RE = re.compile(r"(?m)^```([\w+-]*)\s*$")
@@ -65,7 +65,7 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
         boundary_points.add(e)
 
     sorted_points = sorted(boundary_points)
-    for left, right in zip(sorted_points, sorted_points[1:]):
+    for left, right in zip(sorted_points, sorted_points[1:], strict=False):
         if right <= left:
             continue
         segment = content[left:right]

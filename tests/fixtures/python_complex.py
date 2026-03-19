@@ -1,10 +1,9 @@
 """A complex Python module for testing chunking quality."""
 
-from typing import Optional, List, Dict
-from dataclasses import dataclass, field
-from abc import ABC, abstractmethod
 import asyncio
 import json
+from abc import ABC, abstractmethod
+from dataclasses import dataclass, field
 
 # Constants
 MAX_RETRIES = 3
@@ -14,10 +13,11 @@ DEFAULT_TIMEOUT = 30.0
 @dataclass
 class Config:
     """Application configuration."""
+
     host: str = "localhost"
     port: int = 8080
     debug: bool = False
-    tags: List[str] = field(default_factory=list)
+    tags: list[str] = field(default_factory=list)
 
 
 class BaseService(ABC):
@@ -30,7 +30,7 @@ class BaseService(ABC):
             config: The service configuration.
         """
         self.config = config
-        self._cache: Dict[str, any] = {}
+        self._cache: dict[str, any] = {}
 
     @abstractmethod
     async def process(self, data: dict) -> dict:

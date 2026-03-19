@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from pathlib import Path
 import re
+from pathlib import Path
 
 from omnichunk.types import ContentType, Language
 
@@ -167,9 +167,7 @@ def _looks_like_markup(content: str) -> bool:
         return True
     if re.search(r"<\/?[a-zA-Z][^>]*>", content):
         return True
-    if re.search(r"^\s*[\w\-\.]+\s*:\s*.+$", content, flags=re.MULTILINE):
-        return True
-    return False
+    return bool(re.search(r"^\s*[\w\-\.]+\s*:\s*.+$", content, flags=re.MULTILINE))
 
 
 def _looks_hybrid_python(content: str) -> bool:

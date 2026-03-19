@@ -26,7 +26,10 @@ def test_yaml_chunking(fixtures_dir: Path) -> None:
 
     assert chunks
     assert "".join(c.text for c in chunks) == content
-    assert any("app" in "/".join(c.context.breadcrumb) or "database" in "/".join(c.context.breadcrumb) for c in chunks)
+    assert any(
+        "app" in "/".join(c.context.breadcrumb) or "database" in "/".join(c.context.breadcrumb)
+        for c in chunks
+    )
 
 
 def test_toml_chunking(fixtures_dir: Path) -> None:

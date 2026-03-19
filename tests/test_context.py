@@ -35,11 +35,7 @@ def test_import_tracking_and_siblings() -> None:
 
 
 def test_filter_imports_option() -> None:
-    code = (
-        "import os\n"
-        "import json\n\n"
-        "def a():\n    return os.getcwd()\n"
-    )
+    code = "import os\nimport json\n\ndef a():\n    return os.getcwd()\n"
     chunker = Chunker(max_chunk_size=80, size_unit="chars", filter_imports=True)
 
     chunks = chunker.chunk("imports.py", code)

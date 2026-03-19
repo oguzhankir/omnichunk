@@ -31,7 +31,7 @@ def test_stream_text_matches_chunk_output_across_engines() -> None:
         ("data.json", '{"a": 1, "b": {"c": 2}}'),
         (
             "cells.py",
-            "# %% [markdown]\n\"\"\"\n# Intro\n\"\"\"\n# %%\nprint('hi')\n",
+            '# %% [markdown]\n"""\n# Intro\n"""\n# %%\nprint(\'hi\')\n',
         ),
     ]
 

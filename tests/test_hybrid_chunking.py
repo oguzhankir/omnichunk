@@ -18,11 +18,7 @@ def test_python_docstring_heavy_uses_hybrid(fixtures_dir: Path) -> None:
 
 
 def test_cell_marker_hybrid_split() -> None:
-    content = (
-        "# %% [markdown]\n\"\"\"\n# Intro\n\"\"\"\n"
-        "# %%\n"
-        "def run():\n    return 1\n"
-    )
+    content = '# %% [markdown]\n"""\n# Intro\n"""\n# %%\ndef run():\n    return 1\n'
     chunker = Chunker(max_chunk_size=60, min_chunk_size=10, size_unit="chars")
 
     chunks = chunker.chunk("cells.py", content)

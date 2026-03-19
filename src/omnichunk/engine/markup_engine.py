@@ -2,13 +2,22 @@ from __future__ import annotations
 
 import json
 import re
-from typing import Any, Iterator
+from collections.abc import Iterator
 
 from omnichunk.context.format import format_contextualized_text
 from omnichunk.parser.html_parser import parse_html_structure
 from omnichunk.sizing.counter import make_token_counter
 from omnichunk.sizing.nws import get_nws_count, preprocess_nws_cumsum
-from omnichunk.types import ByteRange, Chunk, ChunkContext, ChunkOptions, ContentType, EntityInfo, EntityType, LineRange
+from omnichunk.types import (
+    ByteRange,
+    Chunk,
+    ChunkContext,
+    ChunkOptions,
+    ContentType,
+    EntityInfo,
+    EntityType,
+    LineRange,
+)
 from omnichunk.util.detect import detect_language
 from omnichunk.util.text_index import TextIndex
 
@@ -31,7 +40,9 @@ class MarkupEngine:
         if not ranges:
             ranges = [(0, len(content), [])]
 
-        ranges = _merge_small_ranges(content, ranges, options.max_chunk_size, options.min_chunk_size)
+        ranges = _merge_small_ranges(
+            content, ranges, options.max_chunk_size, options.min_chunk_size
+        )
 
         token_counter = make_token_counter(options.tokenizer, chunk_size=options.max_chunk_size)
         cumsum = preprocess_nws_cumsum(content)
@@ -116,7 +127,7 @@ def _split_json(content: str) -> list[tuple[int, int, list[str]]]:
         return [(0, len(content), [])]
 
     out: list[tuple[int, int, list[str]]] = []
-    for key in parsed.keys():
+    for key in parsed:
         pattern = re.compile(rf'"{re.escape(str(key))}"\s*:')
         match = pattern.search(content)
         if not match:
@@ -202,7 +213,19 @@ def _split_html_like(content: str) -> list[tuple[int, int, list[str]]]:
     if not nodes:
         return [(0, len(content), [])]
 
-    semantic_tags = {"section", "article", "main", "div", "body", "h1", "h2", "h3", "h4", "h5", "h6"}
+    semantic_tags = {
+        "section",
+        "article",
+        "main",
+        "div",
+        "body",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+    }
     ranges: list[tuple[int, int, list[str]]] = []
 
     for node in nodes:
@@ -218,7 +241,9 @@ def _split_html_like(content: str) -> list[tuple[int, int, list[str]]]:
     return _normalize_ranges(ranges, len(content))
 
 
-def _normalize_ranges(ranges: list[tuple[int, int, list[str]]], total_len: int) -> list[tuple[int, int, list[str]]]:
+def _normalize_ranges(
+    ranges: list[tuple[int, int, list[str]]], total_len: int
+) -> list[tuple[int, int, list[str]]]:
     ranges.sort(key=lambda t: t[0])
     out: list[tuple[int, int, list[str]]] = []
     cursor = 0

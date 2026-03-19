@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+from collections.abc import Callable, Iterator
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict
 from pathlib import Path
-from typing import Callable, Iterator
 
 from omnichunk.engine.router import route_content, route_content_stream
 from omnichunk.types import BatchResult, Chunk, ChunkOptions
@@ -49,7 +49,9 @@ class Chunker:
                 return idx, BatchResult(filepath=filepath, chunks=[], error=str(exc))
 
         with ThreadPoolExecutor(max_workers=concurrency) as executor:
-            futures = [executor.submit(_worker, idx, file_item) for idx, file_item in enumerate(files)]
+            futures = [
+                executor.submit(_worker, idx, file_item) for idx, file_item in enumerate(files)
+            ]
             completed = 0
             total = len(futures)
             for future in as_completed(futures):

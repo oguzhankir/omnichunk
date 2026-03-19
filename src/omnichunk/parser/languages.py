@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import importlib
 from dataclasses import dataclass
 from functools import lru_cache
-import importlib
 from threading import RLock
 from typing import Any
 
@@ -25,7 +25,9 @@ class GrammarSpec:
 _GRAMMARS: dict[Language, GrammarSpec] = {
     "python": GrammarSpec("tree_sitter_python", ("language",)),
     "javascript": GrammarSpec("tree_sitter_javascript", ("language",)),
-    "typescript": GrammarSpec("tree_sitter_typescript", ("language_typescript", "language", "typescript")),
+    "typescript": GrammarSpec(
+        "tree_sitter_typescript", ("language_typescript", "language", "typescript")
+    ),
     "rust": GrammarSpec("tree_sitter_rust", ("language",)),
     "go": GrammarSpec("tree_sitter_go", ("language",)),
     "java": GrammarSpec("tree_sitter_java", ("language",)),

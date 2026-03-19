@@ -8,8 +8,8 @@ from omnichunk.types import ByteRange, EntityInfo, EntityType
 @dataclass
 class ScopeNode:
     entity: EntityInfo
-    children: list["ScopeNode"] = field(default_factory=list)
-    parent: "ScopeNode | None" = None
+    children: list[ScopeNode] = field(default_factory=list)
+    parent: ScopeNode | None = None
 
 
 @dataclass
@@ -28,7 +28,12 @@ def build_scope_tree(entities: list[EntityInfo]) -> ScopeTree:
         for e in entities
         if e.byte_range is not None and e.type not in {EntityType.IMPORT, EntityType.EXPORT}
     ]
-    scoped.sort(key=lambda e: (e.byte_range.start if e.byte_range else 0, -(e.byte_range.end if e.byte_range else 0)))
+    scoped.sort(
+        key=lambda e: (
+            e.byte_range.start if e.byte_range else 0,
+            -(e.byte_range.end if e.byte_range else 0),
+        )
+    )
 
     roots: list[ScopeNode] = []
 

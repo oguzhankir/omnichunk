@@ -1,14 +1,14 @@
 from __future__ import annotations
 
+from collections.abc import Generator, Iterable, Sequence
 from dataclasses import dataclass
-from typing import Any, Generator, Iterable, Sequence
+from typing import Any
 
 import numpy as np
 
 from omnichunk.sizing.nws import get_nws_count
 
 from .models import ASTNodeWindowItem
-
 from .split import split_oversized_leaf
 
 
@@ -16,7 +16,7 @@ from .split import split_oversized_leaf
 class RangeNode:
     start: int
     end: int
-    children: tuple["RangeNode", ...] = ()
+    children: tuple[RangeNode, ...] = ()
 
 
 def assign_windows_for_ranges(
@@ -73,7 +73,9 @@ def greedy_assign_windows(
 
             children = list(_node_children(node))
             if children:
-                yield from greedy_assign_windows(children, code=code, cumsum=cumsum, max_size=max_size)
+                yield from greedy_assign_windows(
+                    children, code=code, cumsum=cumsum, max_size=max_size
+                )
                 continue
 
             for split_item in split_oversized_leaf(
@@ -97,15 +99,15 @@ def greedy_assign_windows(
 
 def _node_range(node: Any) -> tuple[int, int]:
     if hasattr(node, "start") and hasattr(node, "end"):
-        start = int(getattr(node, "start"))
-        end = int(getattr(node, "end"))
+        start = int(node.start)
+        end = int(node.end)
         return start, end
     return int(getattr(node, "start_byte", 0)), int(getattr(node, "end_byte", 0))
 
 
 def _node_children(node: Any) -> Iterable[Any]:
     if hasattr(node, "children"):
-        return tuple(getattr(node, "children") or ())
+        return tuple(node.children or ())
     children = getattr(node, "named_children", None)
     if children is not None:
         return tuple(children)

@@ -21,7 +21,9 @@ def format_contextualized_text(text: str, context: ChunkContext, overlap_text: s
         if scope_path:
             parts.append(f"# Scope: {scope_path}")
 
-    signatures = [e.signature for e in context.entities if e.signature and e.type != EntityType.IMPORT]
+    signatures = [
+        e.signature for e in context.entities if e.signature and e.type != EntityType.IMPORT
+    ]
     if signatures:
         parts.append(f"# Defines: {', '.join(signatures[:5])}")
 

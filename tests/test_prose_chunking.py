@@ -15,7 +15,10 @@ def test_markdown_chunking_with_heading_context(fixtures_dir: Path) -> None:
     assert len(chunks) > 1
     assert "".join(c.text for c in chunks) == md
     assert any(c.context.heading_hierarchy for c in chunks)
-    assert all(c.context.content_type in {ContentType.PROSE, ContentType.CODE, ContentType.MARKUP} for c in chunks)
+    assert all(
+        c.context.content_type in {ContentType.PROSE, ContentType.CODE, ContentType.MARKUP}
+        for c in chunks
+    )
     assert any(c.context.content_type == ContentType.PROSE for c in chunks)
 
 

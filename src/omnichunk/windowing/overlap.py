@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Sequence
 from math import floor
-from typing import Sequence
 
 from omnichunk.context.format import format_contextualized_text
 from omnichunk.types import ByteRange, Chunk, LineRange
