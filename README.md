@@ -46,6 +46,8 @@ pip install omnichunk[pinecone]        # Vector DB adapter extra (no client lib)
 pip install omnichunk[weaviate]        # Vector DB adapter extra (no client lib)
 pip install omnichunk[supabase]        # Vector DB adapter extra (no client lib)
 pip install omnichunk[vectordb]        # Meta-group for all vector export extras (empty deps)
+pip install omnichunk[semantic]        # Marker extra (semantic stack uses core numpy only)
+pip install omnichunk[graph]           # Marker extra (GraphRAG uses existing chunk entities)
 ```
 
 ## CLI
@@ -164,6 +166,49 @@ emb = [[0.1, 0.2, 0.3] for _ in all_chunks]  # same length as chunks
 pinecone_batch = chunks_to_pinecone_vectors(all_chunks, emb, namespace="my_ns")
 weaviate_batch = chunker.to_weaviate_objects(all_chunks, emb, class_name="Doc")
 supabase_rows = chunks_to_supabase_rows(all_chunks, emb)
+```
+
+### Semantic chunking
+
+Embedding boundaries are **user-supplied** (`semantic_embed_fn`). Omnichunk never calls an external API.
+
+```python
+import numpy as np
+from omnichunk import Chunker
+
+def embed(texts):
+    # Replace with your actual embedding model
+    return np.random.default_rng(0).standard_normal((len(texts), 384))
+
+chunker = Chunker(max_chunk_size=512, size_unit="tokens")
+essay = "Your prose here…"
+chunks = chunker.semantic_chunk("essay.md", essay, embed_fn=embed)
+```
+
+For code and other non-prose content types, structural engines are used even if `semantic=True`.
+
+### Topic shift detection
+
+```python
+from omnichunk.semantic import detect_topic_shifts, split_sentences
+
+text = "Your document…"
+sentences_with_offsets = split_sentences(text)
+sentences = [s for s, _, _ in sentences_with_offsets]
+shifts = detect_topic_shifts(sentences, window=5, threshold=0.4)
+```
+
+### GraphRAG: entity-chunk graph
+
+```python
+from omnichunk import Chunker, build_chunk_graph
+
+source = "class MyClass:\n    pass\n"
+chunks = Chunker().chunk("repo.py", source)
+graph = build_chunk_graph(chunks)
+print(graph.entity_chunks("MyClass"))       # chunk indices containing MyClass
+print(graph.chunk_neighbors(0))             # chunks sharing entities with chunk 0
+data = graph.to_dict()                      # JSON-serializable
 ```
 
 ## Vector database export (serialization)

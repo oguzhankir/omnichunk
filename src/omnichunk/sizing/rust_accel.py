@@ -72,6 +72,32 @@ def nws_backend_status(backend: str | None = None) -> NwsBackendStatus:
     }
 
 
+def batch_cosine_similarity_adjacent_rust(
+    embeddings: np.ndarray,
+) -> np.ndarray | None:
+    """Rust-accelerated adjacent cosine similarity when the extension is built.
+
+    ``embeddings``: shape (N, D), float32 or float64. Returns shape (N-1,) float64,
+    or None if Rust is unavailable.
+    """
+    module, _ = _load_rust_module()
+    if module is None:
+        return None
+    fn = getattr(module, "batch_cosine_similarity_adjacent", None)
+    if not callable(fn):
+        return None
+    arr = np.asarray(embeddings, dtype=np.float32, order="C")
+    if arr.ndim != 2 or arr.shape[1] == 0:
+        return None
+    _n, d = arr.shape
+    flat_list = arr.ravel().tolist()
+    try:
+        result = fn(flat_list, int(d))
+    except Exception:
+        return None
+    return np.asarray(result, dtype=np.float64)
+
+
 def maybe_preprocess_nws_cumsum_rust(
     code: str,
     *,

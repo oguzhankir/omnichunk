@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "omnichunk"
-version = "0.6.0"
+version = "0.7.0"
 description = "Structure-aware deterministic chunking for code, prose, and markup."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -61,6 +61,8 @@ pinecone = []
 weaviate = []
 supabase = []
 vectordb = []
+semantic = []
+graph = []
 tiktoken = ["tiktoken>=0.5.0"]
 transformers = ["transformers>=4.30.0"]
 langchain = ["langchain-core>=0.2.0"]

@@ -253,6 +253,27 @@ class Chunker:
         resolved_unit = self._defaults.size_unit if size_unit is None else str(size_unit)
         return compute_chunk_stats(chunks, size_unit=resolved_unit)
 
+    def semantic_chunk(
+        self,
+        filepath: str,
+        content: str,
+        embed_fn: Callable[[list[str]], Any],
+        *,
+        window: int = 3,
+        threshold: float = 0.3,
+        **overrides: object,
+    ) -> list[Chunk]:
+        """Semantic chunking shortcut — sets semantic=True and semantic_embed_fn."""
+        return self.chunk(
+            filepath,
+            content,
+            semantic=True,
+            semantic_embed_fn=embed_fn,
+            semantic_window=window,
+            semantic_threshold=threshold,
+            **overrides,
+        )
+
     async def achunk(
         self,
         filepath: str,

@@ -3,6 +3,16 @@
 All notable changes to omnichunk will be documented here.
 This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/).
 
+## [0.7.0] - 2026-03-20
+
+### Added
+- Semantic chunking engine: sliding-window cosine similarity boundary detection (`omnichunk.semantic.SemanticSplitter`, `detect_semantic_boundaries`)
+- Topic shift detection: TF-IDF based, numpy-only, no external model required (`omnichunk.semantic.detect_topic_shifts`)
+- GraphRAG: entity→chunk relationship map with cross-chunk entity links (`build_chunk_graph`, `ChunkGraph`, `EntityNode`, `ChunkEdge`)
+- Rust-accelerated adjacent cosine similarity (`batch_cosine_similarity_adjacent`) — falls back to numpy when Rust is not built
+- `Chunker.semantic_chunk()` convenience method
+- `ChunkOptions` extended with `semantic`, `semantic_embed_fn`, `semantic_window`, `semantic_threshold`, `semantic_min_sentences`, `semantic_sentence_splitter` fields
+
 ## [0.6.0] - 2026-03-22
 
 ### Added
@@ -116,6 +126,12 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 - AI rules synchronization across `.cursorrules`, `.windsurfrules`, `CLAUDE.md`, copilot-instructions
 - Pre-commit hooks for ruff, mypy, pytest, rule sync
 
+[0.7.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.7.0
 [0.6.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.6.0
 [0.5.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.5.0
+[0.4.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.4.0
+[0.3.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.3.0
+[0.2.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.2.0
+[0.1.2]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.1.2
+[0.1.1]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.1.1
 [0.1.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.1.0

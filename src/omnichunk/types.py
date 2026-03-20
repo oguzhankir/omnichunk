@@ -202,6 +202,14 @@ class ChunkOptions:
     _precomputed_nws_cumsum: Any | None = None
     _precomputed_text_index: Any | None = None
 
+    # Semantic chunking options
+    semantic: bool = False
+    semantic_embed_fn: object = None
+    semantic_window: int = 3
+    semantic_threshold: float = 0.3
+    semantic_min_sentences: int = 1
+    semantic_sentence_splitter: object = None
+
 
 @dataclass(frozen=True)
 class BatchResult:

@@ -17,6 +17,17 @@ _PROSE_ENGINE = ProseEngine()
 _MARKUP_ENGINE = MarkupEngine()
 _HYBRID_ENGINE = HybridEngine()
 
+_SEMANTIC_ENGINE: object | None = None
+
+
+def _semantic_engine_singleton():
+    global _SEMANTIC_ENGINE
+    if _SEMANTIC_ENGINE is None:
+        from omnichunk.engine.semantic_engine import SemanticEngine
+
+        _SEMANTIC_ENGINE = SemanticEngine()
+    return _SEMANTIC_ENGINE
+
 
 def route_content(
     filepath: str, content: str, options: ChunkOptions
@@ -44,6 +55,15 @@ def route_content(
         _precomputed_text_index=precomputed_text_index,
         _precomputed_nws_cumsum=precomputed_nws_cumsum,
     )
+
+    if (
+        effective_options.semantic
+        and effective_options.semantic_embed_fn is not None
+        and content_type == ContentType.PROSE
+    ):
+        return content_type, _semantic_engine_singleton().chunk(
+            filepath, content, effective_options
+        )
 
     if content_type == ContentType.CODE:
         return content_type, _CODE_ENGINE.chunk(filepath, content, effective_options)
@@ -82,6 +102,15 @@ def route_content_stream(
         _precomputed_text_index=precomputed_text_index,
         _precomputed_nws_cumsum=precomputed_nws_cumsum,
     )
+
+    if (
+        effective_options.semantic
+        and effective_options.semantic_embed_fn is not None
+        and content_type == ContentType.PROSE
+    ):
+        return content_type, _semantic_engine_singleton().stream(
+            filepath, content, effective_options
+        )
 
     if content_type == ContentType.CODE:
         return content_type, _CODE_ENGINE.stream(filepath, content, effective_options)

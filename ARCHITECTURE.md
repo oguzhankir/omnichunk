@@ -17,6 +17,7 @@ Streaming uses the same routing and engine logic but yields chunks incrementally
 - `ProseEngine`: heading/section-aware chunking, fenced block delegation
 - `MarkupEngine`: key/element-aware chunking
 - `HybridEngine`: mixed code/prose segmentation
+- `SemanticEngine` (optional path): embedding-driven prose boundaries when `ChunkOptions.semantic` is set
 
 Markdown fenced blocks are delegated by fence language:
 
@@ -43,3 +44,17 @@ Delegated chunks are rebased to original markdown byte ranges.
 - Chunk ranges are contiguous and non-overlapping
 - No whitespace-only chunks
 - Deterministic results for same input/options
+
+## Semantic layer (v0.7+)
+
+- `semantic/sentences.py`: sentence splitting with character offset tracking
+- `semantic/boundaries.py`: adjacent-window cosine similarity and valley-based boundaries
+- `semantic/tfidf.py`: numpy-only TF-IDF for topic-shift detection
+- `semantic/splitter.py`: `SemanticSplitter` turns boundaries into `Chunk` objects (prose)
+- `engine/semantic_engine.py`: routes prose when `ChunkOptions.semantic` and `semantic_embed_fn` are set
+- `graph/builder.py`: `ChunkGraph` from an inverted entity→chunk index (GraphRAG adjacency)
+
+## GraphRAG (entity–chunk)
+
+- `build_chunk_graph(chunks)` uses existing `Chunk.context.entities` only (no new extractors)
+- Optional extras `semantic` and `graph` are empty dependency groups (markers for docs / tooling)
