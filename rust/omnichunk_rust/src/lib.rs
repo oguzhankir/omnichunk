@@ -72,7 +72,11 @@ fn version() -> &'static str {
 /// Adjacent cosine similarities: output[i] = cosine(embeddings[i], embeddings[i+1])
 /// `embeddings` is a flat f32 row-major buffer of shape (N, D); `dim` is D.
 #[pyfunction]
-fn batch_cosine_similarity_adjacent(embeddings: Vec<f32>, dim: usize) -> PyResult<Vec<f32>> {
+fn batch_cosine_similarity_adjacent(
+    py: Python<'_>,
+    embeddings: Vec<f32>,
+    dim: usize,
+) -> PyResult<Vec<f32>> {
     if dim == 0 {
         return Err(pyo3::exceptions::PyValueError::new_err("dim must be > 0"));
     }
@@ -86,16 +90,19 @@ fn batch_cosine_similarity_adjacent(embeddings: Vec<f32>, dim: usize) -> PyResul
         return Ok(vec![]);
     }
     let data = embeddings;
-    let mut out = Vec::with_capacity(n.saturating_sub(1));
-    for i in 0..n.saturating_sub(1) {
-        let a = &data[i * dim..(i + 1) * dim];
-        let b = &data[(i + 1) * dim..(i + 2) * dim];
-        let dot: f32 = a.iter().zip(b.iter()).map(|(x, y)| x * y).sum();
-        let na: f32 = a.iter().map(|x| x * x).sum::<f32>().sqrt();
-        let nb: f32 = b.iter().map(|x| x * x).sum::<f32>().sqrt();
-        let denom = na * nb;
-        out.push(if denom > 0.0 { dot / denom } else { 0.0 });
-    }
+    let out = py.allow_threads(move || {
+        let mut out = Vec::with_capacity(n.saturating_sub(1));
+        for i in 0..n.saturating_sub(1) {
+            let a = &data[i * dim..(i + 1) * dim];
+            let b = &data[(i + 1) * dim..(i + 2) * dim];
+            let dot: f32 = a.iter().zip(b.iter()).map(|(x, y)| x * y).sum();
+            let na: f32 = a.iter().map(|x| x * x).sum::<f32>().sqrt();
+            let nb: f32 = b.iter().map(|x| x * x).sum::<f32>().sqrt();
+            let denom = na * nb;
+            out.push(if denom > 0.0 { dot / denom } else { 0.0 });
+        }
+        out
+    });
     Ok(out)
 }
 
