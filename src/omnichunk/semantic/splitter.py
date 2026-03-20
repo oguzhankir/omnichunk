@@ -78,7 +78,9 @@ class SemanticSplitter:
         ends = list(boundaries) + [n - 1]
 
         groups: list[tuple[int, int]] = []
-        for s, e in zip(starts, ends, strict=True):
+        if len(starts) != len(ends):
+            raise RuntimeError("semantic splitter: starts/ends length mismatch")
+        for s, e in zip(starts, ends):
             if s <= e:
                 groups.append((s, e))
 

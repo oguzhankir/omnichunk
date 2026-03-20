@@ -58,3 +58,10 @@ Delegated chunks are rebased to original markdown byte ranges.
 
 - `build_chunk_graph(chunks)` uses existing `Chunk.context.entities` only (no new extractors)
 - Optional extras `semantic` and `graph` are empty dependency groups (markers for docs / tooling)
+
+## Production RAG layer (v0.8+)
+
+- `hierarchy/builder.py`: ChunkTree via leaf grouping at coarser sizes
+- `diff/engine.py`: ChunkDiff via stable-ID set operations (O(N+M))
+- `budget/optimizer.py`: TokenBudgetOptimizer (greedy + DP knapsack)
+- stable_chunk_id() in serialization.py: deterministic SHA-256 chunk ID

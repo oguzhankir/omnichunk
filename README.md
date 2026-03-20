@@ -211,6 +211,50 @@ print(graph.chunk_neighbors(0))             # chunks sharing entities with chunk
 data = graph.to_dict()                      # JSON-serializable
 ```
 
+### Hierarchical chunking (multi-level RAG)
+
+```python
+from omnichunk import Chunker
+
+chunker = Chunker(size_unit="chars")
+source = "..."  # your file contents
+tree = chunker.hierarchical_chunk(
+    "service.py", source,
+    levels=[64, 256, 1024],   # leaf → root
+)
+
+small_chunks = tree.leaves()   # embed and index these
+large_chunks = tree.roots()    # pass these to LLM as context
+parent = tree.parent(small_chunks[0])  # navigate up
+```
+
+### Incremental / differential chunking
+
+```python
+from omnichunk import Chunker
+
+chunker = Chunker(max_chunk_size=512, size_unit="chars")
+new_source = "..."  # updated file contents
+diff = chunker.chunk_diff(
+    "api.py",
+    new_source,
+    previous_chunks=old_chunks,
+)
+# diff.added        → upsert to vector DB
+# diff.removed_ids  → delete from vector DB
+# diff.unchanged    → skip re-embedding
+```
+
+### Token budget optimizer
+
+```python
+from omnichunk.budget import TokenBudgetOptimizer
+
+optimizer = TokenBudgetOptimizer(budget=4096, strategy="greedy")
+result = optimizer.select(retrieved_chunks, scores=relevance_scores)
+# result.selected → pass to LLM
+```
+
 ## Vector database export (serialization)
 
 Adapters produce plain dicts/lists only—**no** Pinecone, Weaviate, or Supabase client is installed by these extras. You compute embeddings yourself and pass parallel lists:

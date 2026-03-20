@@ -214,12 +214,19 @@ def chunks_to_llamaindex_docs(
     return docs
 
 
-def _stable_vector_id(chunk: Chunk) -> str:
-    raw = (
-        f"{chunk.context.filepath}\0{chunk.index}\0"
-        f"{chunk.byte_range.start}\0{chunk.byte_range.end}"
-    )
+def stable_chunk_id(chunk: Chunk, filepath: str | None = None) -> str:
+    """Return a stable SHA-256 hex ID for a chunk (same as Pinecone/Weaviate export IDs).
+
+    Uses filepath (from ``chunk.context`` or override), chunk index, and byte range.
+    Identical to :func:`chunks_to_pinecone_vectors` row ``id`` values.
+    """
+    fp = filepath if filepath is not None else chunk.context.filepath
+    raw = f"{fp}\0{chunk.index}\0{chunk.byte_range.start}\0{chunk.byte_range.end}"
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+def _stable_vector_id(chunk: Chunk) -> str:
+    return stable_chunk_id(chunk)
 
 
 def _vectordb_metadata(chunk: Chunk, *, use_contextualized_text: bool) -> dict[str, Any]:

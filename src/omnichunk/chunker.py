@@ -19,7 +19,15 @@ from omnichunk.serialization import (
     chunks_to_supabase_rows,
     chunks_to_weaviate_objects,
 )
-from omnichunk.types import BatchResult, Chunk, ChunkOptions, ChunkQualityScore, ChunkStats
+from omnichunk.types import (
+    BatchResult,
+    Chunk,
+    ChunkDiff,
+    ChunkOptions,
+    ChunkQualityScore,
+    ChunkStats,
+    ChunkTree,
+)
 
 
 class Chunker:
@@ -274,6 +282,65 @@ class Chunker:
             **overrides,
         )
 
+    def hierarchical_chunk(
+        self,
+        filepath: str,
+        content: str,
+        *,
+        levels: Sequence[int],
+        size_unit: str | None = None,
+        **overrides: object,
+    ) -> ChunkTree:
+        """Build a multi-level ChunkTree (finest → coarsest by ascending ``levels``)."""
+        from omnichunk.hierarchy.builder import build_chunk_tree
+
+        resolved_unit = size_unit or self._defaults.size_unit
+        merged = asdict(self._defaults)
+        merged.update(_coerce_option_dict(overrides))
+        skip = frozenset({"max_chunk_size", "min_chunk_size", "filepath", "tokenizer", "size_unit"})
+        opts = {
+            k: v
+            for k, v in merged.items()
+            if k in ChunkOptions.__dataclass_fields__
+            and not str(k).startswith("_")
+            and k not in skip
+        }
+        return build_chunk_tree(
+            filepath,
+            content,
+            levels=list(levels),
+            size_unit=str(resolved_unit),
+            tokenizer=self._defaults.tokenizer,
+            **opts,
+        )
+
+    def chunk_diff(
+        self,
+        filepath: str,
+        new_content: str,
+        *,
+        previous_chunks: Sequence[Chunk],
+        **overrides: object,
+    ) -> ChunkDiff:
+        """Incremental diff for vector DB updates (stable IDs match Pinecone export)."""
+        from omnichunk.diff.engine import chunk_diff as _engine_chunk_diff
+
+        merged = asdict(self._defaults)
+        merged.update(_coerce_option_dict(overrides))
+        clean = {
+            k: v
+            for k, v in merged.items()
+            if k in ChunkOptions.__dataclass_fields__
+            and not str(k).startswith("_")
+        }
+        child = Chunker(**clean)
+        return _engine_chunk_diff(
+            filepath,
+            new_content,
+            previous_chunks=previous_chunks,
+            chunker=child,
+        )
+
     async def achunk(
         self,
         filepath: str,
@@ -381,6 +448,19 @@ def chunk_directory(
         concurrency=concurrency,
         encoding=encoding,
         include_hidden=include_hidden,
+    )
+
+
+def hierarchical_chunk(
+    filepath: str,
+    content: str,
+    *,
+    levels: Sequence[int],
+    size_unit: str = "chars",
+    **options: object,
+) -> ChunkTree:
+    return Chunker(**options).hierarchical_chunk(
+        filepath, content, levels=levels, size_unit=size_unit
     )
 
 

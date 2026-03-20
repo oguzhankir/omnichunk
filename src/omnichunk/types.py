@@ -149,6 +149,104 @@ class Chunk:
 
 
 @dataclass(frozen=True)
+class ChunkNode:
+    """A single node in a ChunkTree — wraps a Chunk with parent/child links."""
+
+    chunk: Chunk
+    level: int
+    """0 = finest granularity (leaves), max_level = coarsest (roots)."""
+    parent_index: int | None
+    """Index into ChunkTree.nodes of this node's parent, or None if root."""
+    child_indices: tuple[int, ...]
+    """Sorted indices into ChunkTree.nodes of this node's children."""
+
+
+@dataclass
+class ChunkTree:
+    """Multi-level chunk hierarchy produced by hierarchical_chunk()."""
+
+    nodes: list[ChunkNode]
+    level_count: int
+
+    def leaves(self) -> list[Chunk]:
+        """Return all level-0 chunks in source order."""
+        return [n.chunk for n in self.nodes if n.level == 0]
+
+    def roots(self) -> list[Chunk]:
+        """Return all top-level (coarsest) chunks in source order."""
+        max_level = self.level_count - 1
+        return [n.chunk for n in self.nodes if n.level == max_level]
+
+    def at_level(self, level: int) -> list[Chunk]:
+        """Return all chunks at a given level in source order."""
+        if level < 0 or level >= self.level_count:
+            raise ValueError(f"level must be in [0, {self.level_count - 1}]")
+        return [n.chunk for n in self.nodes if n.level == level]
+
+    def parent(self, chunk: Chunk) -> Chunk | None:
+        """Return the parent chunk of the given chunk, or None if root."""
+        for node in self.nodes:
+            if node.chunk is chunk and node.parent_index is not None:
+                return self.nodes[node.parent_index].chunk
+        return None
+
+    def children(self, chunk: Chunk) -> list[Chunk]:
+        """Return the children of the given chunk, in source order."""
+        for node in self.nodes:
+            if node.chunk is chunk:
+                ordered = sorted(
+                    node.child_indices,
+                    key=lambda i: self.nodes[i].chunk.byte_range.start,
+                )
+                return [self.nodes[i].chunk for i in ordered]
+        return []
+
+    def to_flat_list(self, level: int | None = None) -> list[Chunk]:
+        """Return all chunks at `level`, or all chunks if level is None."""
+        if level is None:
+            return [n.chunk for n in self.nodes]
+        return self.at_level(level)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Serialize to a JSON-compatible dict for storage/transport."""
+        from omnichunk.serialization import chunk_to_dict
+
+        return {
+            "level_count": self.level_count,
+            "nodes": [
+                {
+                    "level": n.level,
+                    "parent_index": n.parent_index,
+                    "child_indices": list(n.child_indices),
+                    "chunk": chunk_to_dict(n.chunk),
+                }
+                for n in self.nodes
+            ],
+        }
+
+
+@dataclass(frozen=True)
+class ChunkDiff:
+    """Result of incremental re-chunking after a content change."""
+
+    added: list[Chunk]
+    removed_ids: list[str]
+    unchanged: list[Chunk]
+
+    @property
+    def total_added(self) -> int:
+        return len(self.added)
+
+    @property
+    def total_removed(self) -> int:
+        return len(self.removed_ids)
+
+    @property
+    def total_unchanged(self) -> int:
+        return len(self.unchanged)
+
+
+@dataclass(frozen=True)
 class ChunkQualityScore:
     """Quality metrics for a chunk."""
 
