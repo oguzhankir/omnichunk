@@ -3,6 +3,24 @@
 All notable changes to omnichunk will be documented here.
 This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/).
 
+## [0.8.0] - 2026-03-21
+
+### Added
+- Hierarchical / multi-granularity chunking: `Chunker.hierarchical_chunk()`, `ChunkTree`, and `ChunkNode` for leaf→parent retrieval workflows (small chunks for indexing, larger chunks for LLM context windows)
+- Incremental / differential chunking: `Chunker.chunk_diff()` and `ChunkDiff` for add/remove/unchanged detection across file revisions using stable IDs
+- Token budget optimizer: `TokenBudgetOptimizer` and `BudgetResult` with greedy (`O(N log N)`) and DP knapsack (`O(N * budget)`) selection strategies
+- Public `stable_chunk_id()` helper for deterministic vector/document IDs aligned with the existing vector export adapters
+- New packages: `omnichunk.hierarchy`, `omnichunk.diff`, and `omnichunk.budget`
+
+### Changed
+- `Chunker` now includes top-level convenience methods for hierarchical chunking and incremental diff workflows
+- Added module-level convenience function `chunk_diff(...)` alongside `chunk(...)`, `chunk_file(...)`, and `hierarchical_chunk(...)`
+- Distribution now includes `examples/` in source builds (`sdist`) and ships runnable v0.8 feature examples
+
+### Fixed
+- Python 3.8 compatibility in semantic splitter boundary grouping (removed use of `zip(..., strict=True)`)
+- Example scripts now prefer local `src/` imports when run from a repository checkout, avoiding stale site-packages collisions in virtual environments
+
 ## [0.7.0] - 2026-03-20
 
 ### Added
