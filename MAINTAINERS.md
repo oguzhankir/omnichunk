@@ -2,7 +2,7 @@
 
 Current maintainers:
 
-- @oguz
+- @oguzhankir
 
 ## Responsibilities
 
