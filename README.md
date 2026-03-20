@@ -50,6 +50,10 @@ pip install omnichunk[semantic]        # Marker extra (semantic stack uses core 
 pip install omnichunk[graph]           # Marker extra (GraphRAG uses existing chunk entities)
 ```
 
+## Examples
+
+Runnable scripts and Jupyter notebooks live under [`examples/`](examples/). They cover chunking, hierarchical trees, incremental diffs, token budgets, semantic boundaries, GraphRAG, vector export shapes, and the plugin API. See [`examples/README.md`](examples/README.md) for how to run them.
+
 ## CLI
 
 ```bash

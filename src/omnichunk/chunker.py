@@ -464,6 +464,20 @@ def hierarchical_chunk(
     )
 
 
+def chunk_diff(
+    filepath: str,
+    new_content: str,
+    *,
+    previous_chunks: Sequence[Chunk],
+    **options: object,
+) -> ChunkDiff:
+    return Chunker(**options).chunk_diff(
+        filepath,
+        new_content,
+        previous_chunks=previous_chunks,
+    )
+
+
 def _collect_directory_files(
     root: Path,
     *,
