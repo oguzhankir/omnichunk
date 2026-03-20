@@ -4,6 +4,13 @@ Hierarchical ChunkTree: leaves for indexing, roots for LLM context, levels, pare
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+repo_src = Path(__file__).resolve().parents[1] / "src"
+if repo_src.exists():
+    sys.path.insert(0, str(repo_src))
+
 from omnichunk import Chunker
 
 

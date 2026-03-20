@@ -4,6 +4,13 @@ TokenBudgetOptimizer: greedy vs DP, preserve_order, dedup, size units, simulated
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+repo_src = Path(__file__).resolve().parents[1] / "src"
+if repo_src.exists():
+    sys.path.insert(0, str(repo_src))
+
 from omnichunk import Chunker
 from omnichunk.budget import TokenBudgetOptimizer
 from omnichunk.types import ByteRange, Chunk, ChunkContext, LineRange

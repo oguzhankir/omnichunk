@@ -4,7 +4,14 @@ Semantic boundaries, Chunker.semantic_chunk, and TF-IDF topic shifts (numpy only
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
 import numpy as np
+
+repo_src = Path(__file__).resolve().parents[1] / "src"
+if repo_src.exists():
+    sys.path.insert(0, str(repo_src))
 
 from omnichunk import Chunker
 from omnichunk.semantic import (
