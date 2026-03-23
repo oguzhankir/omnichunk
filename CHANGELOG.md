@@ -9,6 +9,21 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 - Minhash dedup: faster signatures (one MD5 per token, deterministic mixing for LSH bands); 32 permutations in 8×4 bands; Jaccard verification on candidates unchanged
 - Benchmark docs (`benchmarks/README.md`): note interpreting simhash vs minhash on the default `run_v09_stress.py` corpus
 
+## [0.10.1] - 2026-03-23
+
+`v0.10.1` is a stability-focused pre-release before `v1.0.0`, where the formal stable public API guarantee begins.
+
+### Added
+- **Documentation site (MkDocs Material)**: `docs/` + `mkdocs.yml`; API stability policy, installation, migration notes (v0.8–v0.10), performance methodology; optional extra `omnichunk[docs]`
+- **PEP 561 marker**: `py.typed` shipped in the wheel for type checkers
+- **Proposition extraction**: `Chunker.extract_propositions(filepath, text, mode="heuristic"|"llm")` with `Proposition` (`text`, `byte_range`, `confidence`, `metadata`); heuristic mode uses sentence split + regex patterns; LLM mode accepts `llm_fn(filepath, text) -> JSON` with verbatim `claims[].text` matched into the source string
+- **Meta-extra `omnichunk[all]`**: bundles most optional integrations (formats, tiktoken, otel, langchain, llamaindex, profiling, all-languages); excludes heavy stacks such as `transformers` and `rust` tooling unless installed explicitly
+
+### Changed
+- **Project URLs**: `Documentation` now points at the published docs site (`https://oguzhankir.github.io/omnichunk/`)
+- **CI**: builds docs with `mkdocs build --strict` and runs `mypy --strict --follow-imports=skip` on `omnichunk.propositions.*`
+- **Versioning policy clarification**: while still in `0.x`, compatibility remains best-effort for documented public APIs; strict stability guarantees start at `v1.0.0`
+
 ## [0.10.0] - 2026-03-23
 
 ### Added

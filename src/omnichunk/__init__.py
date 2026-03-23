@@ -23,6 +23,7 @@ from .plugins import (
     register_formatter,
     register_parser,
 )
+from .propositions import Proposition
 from .semantic import (
     SemanticBoundaryResult,
     SemanticSplitter,
@@ -59,7 +60,7 @@ from .types import (
     UpsertBatch,
 )
 
-__version__ = "0.10.0"
+__version__ = "0.10.1"
 
 __all__ = [
     "BatchResult",
@@ -87,6 +88,7 @@ __all__ = [
     "EntityType",
     "ImportInfo",
     "LineRange",
+    "Proposition",
     "SemanticBoundaryResult",
     "SemanticSplitter",
     "SiblingInfo",

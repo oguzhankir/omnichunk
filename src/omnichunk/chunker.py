@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import fnmatch
 import time
+import warnings
 from collections.abc import AsyncIterator, Callable, Iterator, Sequence
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, replace
@@ -15,6 +16,9 @@ from omnichunk.formats.ipynb import load_ipynb
 from omnichunk.formats.pdf import load_pdf_bytes
 from omnichunk.formats.tex import load_latex
 from omnichunk.otel.util import finalize_chunk_file_span, maybe_span
+from omnichunk.propositions.heuristic import extract_propositions_heuristic
+from omnichunk.propositions.llm_extract import extract_propositions_llm
+from omnichunk.propositions.types import Proposition
 from omnichunk.quality import compute_chunk_quality_scores, compute_chunk_stats
 from omnichunk.serialization import (
     chunk_to_dict,
@@ -413,6 +417,33 @@ class Chunker:
                 continue
         if buffer:
             yield _flush(buffer)
+
+    def extract_propositions(
+        self,
+        filepath: str,
+        text: str,
+        *,
+        mode: Literal["heuristic", "llm"] = "heuristic",
+        llm_fn: Callable[[str, str], str] | None = None,
+        **overrides: object,
+    ) -> list[Proposition]:
+        """Extract atomic factual claims with UTF-8 byte ranges into the source ``text``.
+
+        - ``heuristic``: regex over sentences; no extra dependencies.
+        - ``llm``: ``llm_fn(filepath, text)`` returns JSON with a ``claims`` list of objects
+          containing ``text`` (verbatim quotes from ``text``; unmatched claims are skipped).
+        """
+        _ = self._build_options(filepath=filepath, overrides=overrides)
+        if mode == "heuristic":
+            return extract_propositions_heuristic(filepath, text)
+        if llm_fn is None:
+            raise ValueError(
+                "extract_propositions(mode='llm') requires llm_fn(filepath, text) -> str"
+            )
+        props, warns = extract_propositions_llm(filepath, text, llm_fn=llm_fn)
+        for w in warns:
+            warnings.warn(w, UserWarning, stacklevel=2)
+        return props
 
     def quality_scores(
         self,

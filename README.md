@@ -31,6 +31,9 @@ The library is deterministic and works without external APIs.
 pip install omnichunk
 ```
 
+**Documentation site (MkDocs):** [https://oguzhankir.github.io/omnichunk/](https://oguzhankir.github.io/omnichunk/)  
+Local preview: `pip install -e ".[docs]" && mkdocs serve`
+
 Optional extras:
 
 ```bash
@@ -53,9 +56,13 @@ pip install omnichunk[docx]            # Word documents (python-docx)
 pip install omnichunk[formats]         # pdf + docx
 pip install omnichunk[mcp]             # Reserved marker for future MCP SDK helpers (server uses stdlib only)
 pip install omnichunk[otel]            # OpenTelemetry API for optional tracing
+pip install omnichunk[docs]            # MkDocs + Material (build the documentation site)
+pip install omnichunk[all]             # Most optional integrations (not transformers / rust)
 ```
 
 **v0.10** adds infrastructure pieces: **`ChunkStore`** (SQLite cache + incremental `sync()`), **`Chunker.stream_upsert()`** (batched Pinecone/Weaviate/Supabase dicts without loading all chunks at once), **`omnichunk serve --mcp`** (JSON-RPC tools over HTTP), and optional **`ChunkOptions.otel_tracer`** spans.
+
+**v0.10.1** is a stability-focused pre-release. The formal stable public API guarantee starts at **v1.0.0**.
 
 **v0.9** adds multiformat chunking (`.ipynb`, `.tex`, optional `.pdf` / `.docx`), near-duplicate removal (`dedup_chunks`), and offline evaluation (`evaluate_chunks`). Jupyter and LaTeX need no extra packages; PDF and DOCX use the extras above. `Chunker.chunk_file()` picks loaders by extension. Evaluate saved JSONL with:
 

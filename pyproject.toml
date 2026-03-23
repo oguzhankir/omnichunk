@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "omnichunk"
-version = "0.10.0"
+version = "0.10.1"
 description = "Structure-aware deterministic chunking for code, prose, and markup."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -47,6 +47,24 @@ dependencies = [
 omnichunk = "omnichunk.cli:main"
 
 [project.optional-dependencies]
+# Most optional integrations except heavy ML stacks (install ``transformers`` / ``rust`` separately).
+all = [
+  "pypdf>=3.0",
+  "python-docx>=1.0",
+  "tiktoken>=0.5.0",
+  "opentelemetry-api>=1.21.0",
+  "langchain-core>=0.2.0",
+  "llama-index-core>=0.10.0",
+  "py-spy>=0.3.14",
+  "line-profiler>=4.1.0",
+  "tree-sitter-c>=0.23.0",
+  "tree-sitter-cpp>=0.23.0",
+  "tree-sitter-c-sharp>=0.23.0",
+  "tree-sitter-ruby>=0.23.0",
+  "tree-sitter-php>=0.23.0",
+  "tree-sitter-kotlin>=0.23.0",
+  "tree-sitter-swift>=0.0.1",
+]
 all-languages = [
   "tree-sitter-c>=0.23.0",
   "tree-sitter-cpp>=0.23.0",
@@ -78,6 +96,12 @@ formats = ["pypdf>=3.0", "python-docx>=1.0"]
 # Reserved for future typed MCP SDK bridges; core server uses stdlib only.
 mcp = []
 otel = ["opentelemetry-api>=1.21.0"]
+docs = [
+  "mkdocs>=1.6.0",
+  "mkdocs-material>=9.5.0",
+  "mkdocstrings[python]>=0.25.0",
+  "pymdown-extensions>=10.0",
+]
 dev = [
   "pytest>=8.0.0",
   "pytest-cov>=4.0.0",
@@ -101,7 +125,7 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/oguzhankir/omnichunk"
-Documentation = "https://github.com/oguzhankir/omnichunk#readme"
+Documentation = "https://oguzhankir.github.io/omnichunk/"
 Issues = "https://github.com/oguzhankir/omnichunk/issues"
 Source = "https://github.com/oguzhankir/omnichunk"
 Changelog = "https://github.com/oguzhankir/omnichunk/blob/main/CHANGELOG.md"
@@ -112,6 +136,8 @@ packages = ["src/omnichunk"]
 [tool.hatch.build.targets.sdist]
 include = [
   "src/omnichunk",
+  "docs",
+  "mkdocs.yml",
   "tests",
   "benchmarks",
   "scripts",

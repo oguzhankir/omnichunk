@@ -1,0 +1,51 @@
+site_name: Omnichunk
+site_description: Structure-aware deterministic chunking for code, prose, and markup.
+site_url: https://oguzhankir.github.io/omnichunk/
+repo_url: https://github.com/oguzhankir/omnichunk
+repo_name: oguzhankir/omnichunk
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            members_order: source
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+  - User guide:
+      - Installation: install.md
+      - API stability: api-stability.md
+  - Migrations:
+      - migrations/index.md
+      - "v0.8": migrations/v0.8.md
+      - "v0.9": migrations/v0.9.md
+      - "v0.10": migrations/v0.10.md
+  - Performance: performance/sla.md
+  - Reference:
+      - Chunker: reference/chunker.md
