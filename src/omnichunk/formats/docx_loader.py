@@ -9,11 +9,11 @@ from omnichunk.formats.types import FormatSegment, LoadedDocument
 def load_docx_bytes(raw: bytes) -> LoadedDocument:
     """Extract text from DOCX bytes into prose segments (paragraphs and tables)."""
     try:
-        from docx import Document
-        from docx.oxml.table import CT_Tbl
-        from docx.oxml.text.paragraph import CT_P
-        from docx.table import Table
-        from docx.text.paragraph import Paragraph
+        from docx import Document  # type: ignore[import-not-found]
+        from docx.oxml.table import CT_Tbl  # type: ignore[import-not-found]
+        from docx.oxml.text.paragraph import CT_P  # type: ignore[import-not-found]
+        from docx.table import Table  # type: ignore[import-not-found]
+        from docx.text.paragraph import Paragraph  # type: ignore[import-not-found]
     except ImportError as exc:
         raise ImportError(
             "DOCX support requires python-docx. Install with: pip install omnichunk[docx]"

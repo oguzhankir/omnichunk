@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Iterator
 from dataclasses import replace
+from typing import cast
 
 import numpy as np
 
@@ -9,7 +10,7 @@ from omnichunk.engine.code_engine import CodeEngine
 from omnichunk.engine.prose_engine import ProseEngine
 from omnichunk.formats.types import LoadedDocument
 from omnichunk.sizing.nws import preprocess_nws_cumsum
-from omnichunk.types import ByteRange, Chunk, ChunkOptions, ContentType, LineRange
+from omnichunk.types import ByteRange, Chunk, ChunkOptions, ContentType, Language, LineRange
 from omnichunk.util.text_index import TextIndex
 
 _CODE_ENGINE = CodeEngine()
@@ -51,14 +52,17 @@ def _iter_loaded_chunks(
         sub_options = replace(options)
         if segment.kind == "code":
             sub_options.content_type = ContentType.CODE
-            lang = segment.metadata.get("language")
-            sub_options.language = lang if isinstance(lang, str) else "plaintext"
+            lang_raw = segment.metadata.get("language")
+            sub_options.language = (
+                cast(Language, lang_raw) if isinstance(lang_raw, str) else "plaintext"
+            )
         else:
             sub_options.content_type = ContentType.PROSE
-            lang = segment.metadata.get("language")
-            sub_options.language = (
-                lang if isinstance(lang, str) else (base_lang or "plaintext")
-            )
+            lang_raw = segment.metadata.get("language")
+            if isinstance(lang_raw, str):
+                sub_options.language = cast(Language, lang_raw)
+            else:
+                sub_options.language = cast(Language, base_lang or "plaintext")
 
         if segment.char_start == 0 and segment.char_end == len(content):
             sub_options._precomputed_text_index = text_index

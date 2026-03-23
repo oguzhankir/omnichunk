@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import io
 import re
+from typing import Literal
 
 from omnichunk.formats.types import FormatSegment, LoadedDocument
 
@@ -41,7 +42,7 @@ def load_pdf_bytes(raw: bytes) -> LoadedDocument:
         cursor += len(block)
         if not block.strip():
             continue
-        kind = "code" if _looks_code_like(page_text) else "prose"
+        kind: Literal["prose", "code"] = "code" if _looks_code_like(page_text) else "prose"
         segments.append(
             FormatSegment(
                 char_start=start,
