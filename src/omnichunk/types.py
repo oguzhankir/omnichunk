@@ -60,6 +60,10 @@ Language = Literal[
     "json",
     "toml",
     "plaintext",
+    "latex",
+    "jupyter",
+    "pdf",
+    "docx",
 ]
 
 
@@ -127,6 +131,7 @@ class ChunkContext:
     heading_hierarchy: list[str] = field(default_factory=list)
     section_type: str = ""
     parse_errors: list[str] = field(default_factory=list)
+    format_metadata: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)

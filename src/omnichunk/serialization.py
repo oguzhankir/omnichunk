@@ -9,9 +9,9 @@ from dataclasses import fields, is_dataclass
 from enum import Enum
 from io import StringIO
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
-from omnichunk.types import Chunk
+from omnichunk.types import ByteRange, Chunk, ChunkContext, ContentType, Language, LineRange
 
 
 def chunk_to_dict(chunk: Chunk) -> dict[str, Any]:
@@ -20,6 +20,39 @@ def chunk_to_dict(chunk: Chunk) -> dict[str, Any]:
     if not isinstance(value, dict):
         return {}
     return value
+
+
+def chunk_from_dict(data: dict[str, Any]) -> Chunk:
+    """Rebuild a :class:`Chunk` from :func:`chunk_to_dict` output (minimal context parse)."""
+    ctx_raw = data.get("context") or {}
+    ct_raw = ctx_raw.get("content_type", "prose")
+    if isinstance(ct_raw, str):
+        try:
+            content_type = ContentType(ct_raw)
+        except ValueError:
+            content_type = ContentType.PROSE
+    else:
+        content_type = ContentType.PROSE
+
+    br = data.get("byte_range") or {}
+    lr = data.get("line_range") or {}
+    return Chunk(
+        text=str(data.get("text", "")),
+        contextualized_text=str(data.get("contextualized_text", data.get("text", ""))),
+        byte_range=ByteRange(start=int(br.get("start", 0)), end=int(br.get("end", 0))),
+        line_range=LineRange(start=int(lr.get("start", 0)), end=int(lr.get("end", 0))),
+        index=int(data.get("index", 0)),
+        total_chunks=int(data.get("total_chunks", -1)),
+        context=ChunkContext(
+            filepath=str(ctx_raw.get("filepath", "")),
+            language=cast(Language, ctx_raw.get("language", "plaintext")),
+            content_type=content_type,
+            format_metadata=dict(ctx_raw.get("format_metadata", {})),
+        ),
+        token_count=int(data.get("token_count", 0)),
+        char_count=int(data.get("char_count", 0)),
+        nws_count=int(data.get("nws_count", 0)),
+    )
 
 
 def chunks_to_jsonl(chunks: Sequence[Chunk], *, output_path: str | None = None) -> str:

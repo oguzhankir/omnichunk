@@ -3,6 +3,26 @@
 All notable changes to omnichunk will be documented here.
 This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+- Minhash dedup: faster signatures (one MD5 per token, deterministic mixing for LSH bands); 32 permutations in 8×4 bands; Jaccard verification on candidates unchanged
+- Benchmark docs (`benchmarks/README.md`): note interpreting simhash vs minhash on the default `run_v09_stress.py` corpus
+
+## [0.9.0] - 2026-03-23
+
+### Added
+- **Multiformat document loading** (`omnichunk.formats`): canonical UTF-8 text plus `FormatSegment` lists for Jupyter (`.ipynb`, JSON only), LaTeX (`.tex`, sections + `lstlisting` / `verbatim` / `minted` code blocks), PDF (optional `pypdf` via `omnichunk[pdf]`), and Word (optional `python-docx` via `omnichunk[docx]`); combined extra `omnichunk[formats]` installs both parsers
+- **`chunk_loaded_document()`** routes each segment to `ProseEngine` or `CodeEngine` with HybridEngine-style byte/line rebasing; `Chunker.chunk_file()` / `chunk_directory()` auto-select loaders by extension; `Chunker.chunk()` accepts `.ipynb` / `.tex` strings (`.pdf` / `.docx` require `chunk_file()` because they are binary on disk)
+- **`ChunkContext.format_metadata`** for source hints (cell index, LaTeX env, PDF page, etc.); `Language` extended with `latex`, `jupyter`, `pdf`, `docx`; `.ipynb` maps to `ContentType.HYBRID` in `detect_content_type()`
+- **Chunk deduplication**: `dedup_chunks()` with `exact` (SHA-256), `simhash` (64-bit + banded candidate buckets), and `minhash` (token Jaccard + LSH-style bands); returns `(unique_chunks, duplicate_map)` keyed by `Chunk.index`
+- **Offline evaluation**: `evaluate_chunks()`, `EvalReport`, `ChunkEvalScores`, `eval_report_to_dict()` — metrics include reconstruction (byte slice vs source), density (NWS vs character count), coherence (intra-chunk TF-IDF sentence similarity), boundary_quality (cross-chunk boundary), coverage (tokens vs source when provided)
+- **`chunk_from_dict()`** to rebuild minimal `Chunk` instances from `chunk_to_dict()` JSON (for JSONL workflows)
+- **CLI**: `omnichunk eval <chunks.jsonl> [--metrics all|...] [--source <file>] [--output <file>]` for evaluation reports; default `omnichunk <path>` unchanged; `chunk_file` honors `--encoding` in the programmatic API
+
+### Changed
+- `chunk_file()` module helper and `Chunker.chunk_file()` accept an explicit `encoding` argument (default `utf-8`); directory chunking uses structured loaders for `.ipynb`, `.tex`, `.pdf`, `.docx` without reading them as plain UTF-8 text first
+
 ## [0.8.0] - 2026-03-21
 
 ### Added
@@ -144,6 +164,8 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 - AI rules synchronization across `.cursorrules`, `.windsurfrules`, `CLAUDE.md`, copilot-instructions
 - Pre-commit hooks for ruff, mypy, pytest, rule sync
 
+[0.9.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.9.0
+[0.8.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.8.0
 [0.7.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.7.0
 [0.6.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.6.0
 [0.5.0]: https://github.com/oguzhankir/omnichunk/releases/tag/v0.5.0

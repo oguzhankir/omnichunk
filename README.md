@@ -48,6 +48,15 @@ pip install omnichunk[supabase]        # Vector DB adapter extra (no client lib)
 pip install omnichunk[vectordb]        # Meta-group for all vector export extras (empty deps)
 pip install omnichunk[semantic]        # Marker extra (semantic stack uses core numpy only)
 pip install omnichunk[graph]           # Marker extra (GraphRAG uses existing chunk entities)
+pip install omnichunk[pdf]             # PDF text extraction (pypdf)
+pip install omnichunk[docx]            # Word documents (python-docx)
+pip install omnichunk[formats]         # pdf + docx
+```
+
+**v0.9** adds multiformat chunking (`.ipynb`, `.tex`, optional `.pdf` / `.docx`), near-duplicate removal (`dedup_chunks`), and offline evaluation (`evaluate_chunks`). Jupyter and LaTeX need no extra packages; PDF and DOCX use the extras above. `Chunker.chunk_file()` picks loaders by extension. Evaluate saved JSONL with:
+
+```bash
+omnichunk eval ./chunks.jsonl --metrics all --source ./original.txt
 ```
 
 ## Examples

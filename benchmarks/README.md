@@ -77,6 +77,20 @@ python benchmarks/run_hotspot_profile.py --mode mega-python --repeat 120 --limit
 python benchmarks/run_hotspot_profile.py --mode directory --directory ./src --glob "**/*.py" --limit 40
 ```
 
+### v0.9 stress (dedup + eval + optional multiformat)
+
+Synthetic chunks exercise `dedup_chunks` (`exact` / `simhash` / `minhash`) and `evaluate_chunks` (all metrics) with a reconstruction-friendly concatenated source. No extra dependencies.
+
+```bash
+python benchmarks/run_v09_stress.py
+python benchmarks/run_v09_stress.py --dedup-n 8000 --eval-n 1200 --threshold 0.85
+python benchmarks/run_v09_stress.py --with-ipynb
+```
+
+**CSV columns:** `phase,method,n_input,n_unique,n_dups,seconds`. For `dedup` rows, `n_input` is corpus size, `n_unique` / `n_dups` are dedup outputs. For `eval`, the middle columns are `-`. The line starting with `eval_aggregate` is JSON aggregate scores. With `--with-ipynb`, a `chunk_file` row times `tests/fixtures/sample_v09.ipynb` (`n_input` = file bytes, `n_unique` = chunk count).
+
+**Interpreting `dedup` rows:** The default corpus uses the same code body with a different `# id=k` comment on each chunk. **Simhash** treats most of these as near-duplicates (similar fingerprints). **Minhash** uses token sets; the varying comment tokens often push Jaccard below the default threshold, so you may see **no minhash duplicates** even though simhash collapses many — that is expected for this synthetic text, not a bug. Compare methods on identical-copy corpora if you need aligned duplicate counts.
+
 ## Regenerate `mega_python_50x.py`
 
 The file `tests/fixtures/mega_python_50x.py` is `python_complex.py` repeated 50× (same source as `workloads.mega-python`). Regenerate after changing the base fixture:

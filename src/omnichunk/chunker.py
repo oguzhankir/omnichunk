@@ -3,11 +3,16 @@ from __future__ import annotations
 import fnmatch
 from collections.abc import AsyncIterator, Callable, Iterator, Sequence
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from dataclasses import asdict
+from dataclasses import asdict, replace
 from pathlib import Path
 from typing import Any
 
 from omnichunk.engine.router import route_content, route_content_stream
+from omnichunk.formats.chunk import chunk_loaded_document
+from omnichunk.formats.docx_loader import load_docx_bytes
+from omnichunk.formats.ipynb import load_ipynb
+from omnichunk.formats.pdf import load_pdf_bytes
+from omnichunk.formats.tex import load_latex
 from omnichunk.quality import compute_chunk_quality_scores, compute_chunk_stats
 from omnichunk.serialization import (
     chunk_to_dict,
@@ -28,6 +33,9 @@ from omnichunk.types import (
     ChunkStats,
     ChunkTree,
 )
+from omnichunk.util.detect import detect_language
+
+_STRUCTURED_SUFFIXES = frozenset({".ipynb", ".tex", ".pdf", ".docx"})
 
 
 class Chunker:
@@ -37,6 +45,19 @@ class Chunker:
 
     def chunk(self, filepath: str, content: str, **overrides: object) -> list[Chunk]:
         """Chunk content and return all chunks."""
+        path = Path(filepath)
+        if path.suffix.lower() in _STRUCTURED_SUFFIXES:
+            suf = path.suffix.lower()
+            if suf in (".pdf", ".docx"):
+                raise ValueError(
+                    f"Use chunk_file() for {suf} documents; "
+                    "binary formats cannot be passed as text."
+                )
+            loaded = load_ipynb(content) if suf == ".ipynb" else load_latex(content)
+            options = self._build_options(filepath=filepath, overrides=overrides)
+            lang = detect_language(filepath=filepath, content=loaded.text)
+            options = replace(options, language=lang)
+            return chunk_loaded_document(filepath, loaded, options)
         options = self._build_options(filepath=filepath, overrides=overrides)
         _, chunks = route_content(filepath=filepath, content=content, options=options)
         return chunks
@@ -47,6 +68,10 @@ class Chunker:
         ``total_chunks`` is ``-1`` for every yielded chunk. Token overlap
         (``overlap=``) is not applied in streaming mode; use :meth:`chunk` for overlap.
         """
+        path = Path(filepath)
+        if path.suffix.lower() in _STRUCTURED_SUFFIXES:
+            yield from self.chunk(filepath, content, **overrides)
+            return
         options = self._build_options(filepath=filepath, overrides=overrides)
         _, stream = route_content_stream(filepath=filepath, content=content, options=options)
         yield from stream
@@ -86,10 +111,25 @@ class Chunker:
 
         return [results_by_idx[idx] for idx in range(len(files))]
 
-    def chunk_file(self, path: str, **overrides: object) -> list[Chunk]:
+    def chunk_file(self, path: str, *, encoding: str = "utf-8", **overrides: object) -> list[Chunk]:
         """Read file from disk and chunk it."""
-        text = Path(path).read_text(encoding="utf-8")
-        return self.chunk(filepath=path, content=text, **overrides)
+        file_path = Path(path)
+        if file_path.suffix.lower() in _STRUCTURED_SUFFIXES:
+            suf = file_path.suffix.lower()
+            if suf == ".ipynb":
+                loaded = load_ipynb(file_path.read_text(encoding=encoding))
+            elif suf == ".tex":
+                loaded = load_latex(file_path.read_text(encoding=encoding))
+            elif suf == ".pdf":
+                loaded = load_pdf_bytes(file_path.read_bytes())
+            else:
+                loaded = load_docx_bytes(file_path.read_bytes())
+            options = self._build_options(filepath=str(file_path), overrides=overrides)
+            lang = detect_language(filepath=str(file_path), content=loaded.text)
+            options = replace(options, language=lang)
+            return chunk_loaded_document(str(file_path), loaded, options)
+        text = file_path.read_text(encoding=encoding)
+        return self.chunk(filepath=str(file_path), content=text, **overrides)
 
     def chunk_directory(
         self,
@@ -109,7 +149,7 @@ class Chunker:
 
         if root.is_file():
             try:
-                chunks = self.chunk_file(str(root), **overrides)
+                chunks = self.chunk_file(str(root), encoding=encoding, **overrides)
                 return [BatchResult(filepath=str(root), chunks=chunks)]
             except Exception as exc:
                 return [BatchResult(filepath=str(root), chunks=[], error=str(exc))]
@@ -130,6 +170,9 @@ class Chunker:
         def _worker(idx: int, file_path: Path) -> tuple[int, BatchResult]:
             filepath = str(file_path)
             try:
+                if file_path.suffix.lower() in _STRUCTURED_SUFFIXES:
+                    chunks = self.chunk_file(filepath, encoding=encoding, **overrides)
+                    return idx, BatchResult(filepath=filepath, chunks=chunks)
                 text = file_path.read_text(encoding=encoding)
             except Exception as exc:
                 return idx, BatchResult(filepath=filepath, chunks=[], error=f"Read failed: {exc}")
@@ -427,8 +470,8 @@ def chunk(filepath: str, content: str, **options: object) -> list[Chunk]:
     return Chunker(**options).chunk(filepath, content)
 
 
-def chunk_file(path: str, **options: object) -> list[Chunk]:
-    return Chunker(**options).chunk_file(path)
+def chunk_file(path: str, encoding: str = "utf-8", **options: object) -> list[Chunk]:
+    return Chunker(**options).chunk_file(path, encoding=encoding)
 
 
 def chunk_directory(

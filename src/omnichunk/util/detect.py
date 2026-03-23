@@ -50,6 +50,10 @@ _EXTENSION_LANGUAGE: dict[str, Language] = {
     ".json": "json",
     ".jsonl": "json",
     ".toml": "toml",
+    ".ipynb": "jupyter",
+    ".tex": "latex",
+    ".pdf": "pdf",
+    ".docx": "docx",
 }
 
 _CODE_LANGUAGES: set[Language] = {
@@ -75,7 +79,7 @@ _CODE_LANGUAGES: set[Language] = {
 
 _MARKUP_LANGUAGES: set[Language] = {"html", "xml", "yaml", "json", "toml"}
 
-_PROSE_LANGUAGES: set[Language] = {"markdown", "plaintext"}
+_PROSE_LANGUAGES: set[Language] = {"markdown", "plaintext", "latex", "pdf", "docx"}
 
 
 def detect_language(filepath: str = "", content: str = "") -> Language:
@@ -121,6 +125,10 @@ def detect_content_type(
 ) -> ContentType:
     """Detect high-level content category."""
     lang = language or detect_language(filepath=filepath, content=content)
+
+    path_lower = filepath.lower() if filepath else ""
+    if path_lower.endswith(".ipynb") or lang == "jupyter":
+        return ContentType.HYBRID
 
     if filepath.endswith(".mdx") or "# %%" in content:
         return ContentType.HYBRID

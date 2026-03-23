@@ -9,6 +9,8 @@ from typing import Any
 
 from omnichunk import __version__
 from omnichunk.chunker import Chunker
+from omnichunk.eval import eval_report_to_dict, evaluate_chunks
+from omnichunk.serialization import chunk_from_dict
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -76,8 +78,73 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    argv_list = list(argv if argv is not None else sys.argv[1:])
+    if argv_list and argv_list[0] == "eval":
+        return eval_main(argv_list[1:])
+    return chunk_main(argv_list)
+
+
+def eval_main(argv: Sequence[str]) -> int:
+    parser = argparse.ArgumentParser(
+        prog="omnichunk eval",
+        description=(
+            "Evaluate chunk quality metrics from JSONL "
+            "(from chunk_to_dict / omnichunk export)."
+        ),
+    )
+    parser.add_argument(
+        "chunks_jsonl",
+        type=Path,
+        help="Path to JSONL file with one chunk dict per line",
+    )
+    parser.add_argument(
+        "--metrics",
+        default="all",
+        help=(
+            "Comma-separated metric names or 'all' "
+            "(reconstruction,density,coherence,boundary_quality,coverage)"
+        ),
+    )
+    parser.add_argument(
+        "--source",
+        default=None,
+        type=Path,
+        help="Original source text file for reconstruction and coverage metrics",
+    )
+    parser.add_argument("--output", default=None, help="Write JSON report to this path")
+    args = parser.parse_args(list(argv))
+
+    path = args.chunks_jsonl
+    if not path.exists():
+        print(f"File does not exist: {path}", file=sys.stderr)
+        return 2
+
+    chunks = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        chunks.append(chunk_from_dict(json.loads(line)))
+
+    source_text = None
+    if args.source is not None:
+        source_text = args.source.read_text(encoding="utf-8")
+
+    m = args.metrics.strip()
+    if m == "all":
+        metrics_any: Any = "all"
+    else:
+        metrics_any = [x.strip() for x in m.split(",") if x.strip()]
+
+    report = evaluate_chunks(chunks, source=source_text, metrics=metrics_any)
+    payload = json.dumps(eval_report_to_dict(report), ensure_ascii=False, indent=2) + "\n"
+    _write_text(payload, args.output)
+    return 0
+
+
+def chunk_main(argv: Sequence[str]) -> int:
     parser = build_parser()
-    args = parser.parse_args(list(argv) if argv is not None else None)
+    args = parser.parse_args(list(argv))
 
     target = Path(args.target)
     if not target.exists():
@@ -112,7 +179,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 errors.append({"filepath": result.filepath, "error": result.error})
     else:
         try:
-            chunks = chunker.chunk_file(str(target))
+            chunks = chunker.chunk_file(str(target), encoding=args.encoding)
         except Exception as exc:
             errors.append({"filepath": str(target), "error": str(exc)})
 

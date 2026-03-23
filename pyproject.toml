@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "omnichunk"
-version = "0.8.0"
+version = "0.9.0"
 description = "Structure-aware deterministic chunking for code, prose, and markup."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -72,6 +72,9 @@ profiling = [
   "line-profiler>=4.1.0",
 ]
 rust = ["maturin>=1.7.0"]
+pdf = ["pypdf>=3.0"]
+docx = ["python-docx>=1.0"]
+formats = ["pypdf>=3.0", "python-docx>=1.0"]
 dev = [
   "pytest>=8.0.0",
   "pytest-cov>=4.0.0",
@@ -89,6 +92,8 @@ dev = [
   "tree-sitter-php>=0.23.0",
   "tree-sitter-kotlin>=0.23.0",
   "tree-sitter-swift>=0.0.1",
+  "pypdf>=3.0",
+  "python-docx>=1.0",
 ]
 
 [project.urls]

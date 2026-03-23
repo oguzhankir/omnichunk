@@ -3,7 +3,18 @@
 from . import plugins
 from .budget import BudgetResult, TokenBudgetOptimizer
 from .chunker import Chunker, chunk, chunk_directory, chunk_file, hierarchical_chunk
+from .dedup import dedup_chunks
 from .diff import chunk_diff
+from .eval import ChunkEvalScores, EvalReport, eval_report_to_dict, evaluate_chunks
+from .formats import (
+    FormatSegment,
+    LoadedDocument,
+    chunk_loaded_document,
+    load_docx_bytes,
+    load_ipynb,
+    load_latex,
+    load_pdf_bytes,
+)
 from .graph import ChunkEdge, ChunkGraph, EntityNode, build_chunk_graph
 from .plugins import (
     list_registered_formatters,
@@ -20,6 +31,7 @@ from .semantic import (
     split_sentences,
 )
 from .serialization import (
+    chunk_from_dict,
     chunks_to_pinecone_vectors,
     chunks_to_supabase_rows,
     chunks_to_weaviate_objects,
@@ -44,7 +56,7 @@ from .types import (
     SiblingInfo,
 )
 
-__version__ = "0.8.0"
+__version__ = "0.9.0"
 
 __all__ = [
     "BatchResult",
@@ -52,6 +64,7 @@ __all__ = [
     "ByteRange",
     "Chunk",
     "ChunkContext",
+    "ChunkEvalScores",
     "ChunkDiff",
     "ChunkEdge",
     "ChunkGraph",
@@ -62,6 +75,9 @@ __all__ = [
     "ChunkTree",
     "Chunker",
     "ContentType",
+    "EvalReport",
+    "FormatSegment",
+    "LoadedDocument",
     "EntityInfo",
     "EntityNode",
     "EntityType",
@@ -76,11 +92,20 @@ __all__ = [
     "build_tfidf_matrix",
     "chunk",
     "chunk_diff",
+    "chunk_from_dict",
+    "chunk_loaded_document",
+    "dedup_chunks",
+    "evaluate_chunks",
+    "eval_report_to_dict",
     "chunk_directory",
     "chunk_file",
     "detect_semantic_boundaries",
     "detect_topic_shifts",
     "hierarchical_chunk",
+    "load_docx_bytes",
+    "load_ipynb",
+    "load_latex",
+    "load_pdf_bytes",
     "split_sentences",
     "stable_chunk_id",
     "chunks_to_pinecone_vectors",
