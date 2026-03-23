@@ -9,6 +9,17 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 - Minhash dedup: faster signatures (one MD5 per token, deterministic mixing for LSH bands); 32 permutations in 8×4 bands; Jaccard verification on candidates unchanged
 - Benchmark docs (`benchmarks/README.md`): note interpreting simhash vs minhash on the default `run_v09_stress.py` corpus
 
+## [0.10.0] - 2026-03-23
+
+### Added
+- **Persistent chunk cache**: `omnichunk.store.ChunkStore` (SQLite, stdlib only) with `index()`, `sync()`, `query()`; incremental updates use mtime, size, and SHA-256; `SyncResult` reports per-file `ChunkDiff`-style removals for vector DB deletes
+- **Streaming vector export**: `Chunker.stream_upsert()` yields `UpsertBatch` (Pinecone / Weaviate / Supabase row dicts) with O(batch_size) memory; `UpsertBatch` in `omnichunk.types`
+- **MCP-style HTTP server**: `omnichunk serve --mcp --port 3333` — JSON-RPC 2.0 POST over stdlib `http.server`; tools: `chunk_file`, `chunk_directory`, `build_graph`, `semantic_chunk` (with `embed_backend=mock` for deterministic embeddings); optional `--config` JSON for default `Chunker` options; extra `omnichunk[mcp]` reserved for future SDK bridges
+- **OpenTelemetry hooks**: `ChunkOptions.otel_tracer` — spans on `chunk_file` (`omnichunk.chunk_file`) with `omnichunk.filepath`, `omnichunk.file_size_bytes`, `omnichunk.chunk_count`, `omnichunk.chunking_duration_ms`, `omnichunk.parse_errors`; directory chunking instruments plain-text files per worker; `omnichunk.otel.maybe_span`; optional extra `omnichunk[otel]` installs `opentelemetry-api`
+
+### Changed
+- **`Chunker._build_options`** uses `dataclasses.replace()` instead of `asdict()` so `otel_tracer`, `semantic_embed_fn`, and other callables are not deep-copied
+
 ## [0.9.0] - 2026-03-23
 
 ### Added

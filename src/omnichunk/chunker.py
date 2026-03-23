@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import fnmatch
+import time
 from collections.abc import AsyncIterator, Callable, Iterator, Sequence
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, replace
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from omnichunk.engine.router import route_content, route_content_stream
 from omnichunk.formats.chunk import chunk_loaded_document
@@ -13,6 +14,7 @@ from omnichunk.formats.docx_loader import load_docx_bytes
 from omnichunk.formats.ipynb import load_ipynb
 from omnichunk.formats.pdf import load_pdf_bytes
 from omnichunk.formats.tex import load_latex
+from omnichunk.otel.util import finalize_chunk_file_span, maybe_span
 from omnichunk.quality import compute_chunk_quality_scores, compute_chunk_stats
 from omnichunk.serialization import (
     chunk_to_dict,
@@ -32,6 +34,7 @@ from omnichunk.types import (
     ChunkQualityScore,
     ChunkStats,
     ChunkTree,
+    UpsertBatch,
 )
 from omnichunk.util.detect import detect_language
 
@@ -114,22 +117,42 @@ class Chunker:
     def chunk_file(self, path: str, *, encoding: str = "utf-8", **overrides: object) -> list[Chunk]:
         """Read file from disk and chunk it."""
         file_path = Path(path)
-        if file_path.suffix.lower() in _STRUCTURED_SUFFIXES:
-            suf = file_path.suffix.lower()
-            if suf == ".ipynb":
-                loaded = load_ipynb(file_path.read_text(encoding=encoding))
-            elif suf == ".tex":
-                loaded = load_latex(file_path.read_text(encoding=encoding))
-            elif suf == ".pdf":
-                loaded = load_pdf_bytes(file_path.read_bytes())
-            else:
-                loaded = load_docx_bytes(file_path.read_bytes())
-            options = self._build_options(filepath=str(file_path), overrides=overrides)
-            lang = detect_language(filepath=str(file_path), content=loaded.text)
-            options = replace(options, language=lang)
-            return chunk_loaded_document(str(file_path), loaded, options)
-        text = file_path.read_text(encoding=encoding)
-        return self.chunk(filepath=str(file_path), content=text, **overrides)
+        opts = self._build_options(filepath=str(file_path), overrides=overrides)
+        tracer = opts.otel_tracer
+        t0 = time.perf_counter()
+        try:
+            sz = int(file_path.stat().st_size)
+        except OSError:
+            sz = 0
+        with maybe_span(
+            tracer,
+            "omnichunk.chunk_file",
+            filepath=str(file_path.resolve()),
+            omnichunk_file_size_bytes=sz,
+        ) as span:
+            try:
+                if file_path.suffix.lower() in _STRUCTURED_SUFFIXES:
+                    suf = file_path.suffix.lower()
+                    if suf == ".ipynb":
+                        loaded = load_ipynb(file_path.read_text(encoding=encoding))
+                    elif suf == ".tex":
+                        loaded = load_latex(file_path.read_text(encoding=encoding))
+                    elif suf == ".pdf":
+                        loaded = load_pdf_bytes(file_path.read_bytes())
+                    else:
+                        loaded = load_docx_bytes(file_path.read_bytes())
+                    options = self._build_options(filepath=str(file_path), overrides=overrides)
+                    lang = detect_language(filepath=str(file_path), content=loaded.text)
+                    options = replace(options, language=lang)
+                    out = chunk_loaded_document(str(file_path), loaded, options)
+                else:
+                    text = file_path.read_text(encoding=encoding)
+                    out = self.chunk(filepath=str(file_path), content=text, **overrides)
+            except BaseException as exc:
+                finalize_chunk_file_span(span, chunk_count=0, t0=t0, error=str(exc))
+                raise
+            finalize_chunk_file_span(span, chunk_count=len(out), t0=t0)
+            return out
 
     def chunk_directory(
         self,
@@ -169,19 +192,44 @@ class Chunker:
 
         def _worker(idx: int, file_path: Path) -> tuple[int, BatchResult]:
             filepath = str(file_path)
-            try:
-                if file_path.suffix.lower() in _STRUCTURED_SUFFIXES:
+            if file_path.suffix.lower() in _STRUCTURED_SUFFIXES:
+                try:
                     chunks = self.chunk_file(filepath, encoding=encoding, **overrides)
                     return idx, BatchResult(filepath=filepath, chunks=chunks)
-                text = file_path.read_text(encoding=encoding)
-            except Exception as exc:
-                return idx, BatchResult(filepath=filepath, chunks=[], error=f"Read failed: {exc}")
+                except Exception as exc:
+                    return idx, BatchResult(filepath=filepath, chunks=[], error=str(exc))
 
+            opts_w = self._build_options(filepath=filepath, overrides=overrides)
+            tracer = opts_w.otel_tracer
+            t0 = time.perf_counter()
             try:
-                chunks = self.chunk(filepath=filepath, content=text, **overrides)
+                sz = int(file_path.stat().st_size)
+            except OSError:
+                sz = 0
+            with maybe_span(
+                tracer,
+                "omnichunk.chunk_file",
+                filepath=filepath,
+                omnichunk_file_size_bytes=sz,
+            ) as span:
+                try:
+                    text = file_path.read_text(encoding=encoding)
+                except Exception as exc:
+                    finalize_chunk_file_span(
+                        span,
+                        chunk_count=0,
+                        t0=t0,
+                        error=f"Read failed: {exc}",
+                    )
+                    err_read = f"Read failed: {exc}"
+                    return idx, BatchResult(filepath=filepath, chunks=[], error=err_read)
+                try:
+                    chunks = self.chunk(filepath=filepath, content=text, **overrides)
+                except Exception as exc:
+                    finalize_chunk_file_span(span, chunk_count=0, t0=t0, error=str(exc))
+                    return idx, BatchResult(filepath=filepath, chunks=[], error=str(exc))
+                finalize_chunk_file_span(span, chunk_count=len(chunks), t0=t0)
                 return idx, BatchResult(filepath=filepath, chunks=chunks)
-            except Exception as exc:
-                return idx, BatchResult(filepath=filepath, chunks=[], error=str(exc))
 
         with ThreadPoolExecutor(max_workers=concurrency) as executor:
             futures = [
@@ -275,6 +323,96 @@ class Chunker:
             embeddings,
             use_contextualized_text=use_contextualized_text,
         )
+
+    def stream_upsert(
+        self,
+        path: str,
+        *,
+        embed_fn: Callable[[Sequence[str]], Sequence[Sequence[float]]],
+        adapter: Literal["pinecone", "weaviate", "supabase"] = "pinecone",
+        batch_size: int = 100,
+        glob: str = "**/*",
+        exclude: Sequence[str] | None = None,
+        include_hidden: bool = False,
+        encoding: str = "utf-8",
+        namespace: str = "",
+        class_name: str = "OmnichunkDocument",
+        use_contextualized_text: bool = True,
+        **overrides: object,
+    ) -> Iterator[UpsertBatch]:
+        """Yield embedding batches and adapter-ready rows without buffering all chunks.
+
+        Memory use is O(batch_size) for chunk objects plus one batch of embeddings.
+        """
+        if batch_size < 1:
+            raise ValueError("batch_size must be at least 1")
+
+        root = Path(path)
+        if not root.exists():
+            raise FileNotFoundError(f"Path does not exist: {path}")
+
+        def _flush(buf: list[Chunk]) -> UpsertBatch:
+            texts = [
+                c.contextualized_text if use_contextualized_text else c.text for c in buf
+            ]
+            emb_seq = embed_fn(texts)
+            embeddings = [list(row) for row in emb_seq]
+            if len(embeddings) != len(buf):
+                raise ValueError(
+                    f"embed_fn returned {len(embeddings)} vectors for {len(buf)} chunks"
+                )
+            if adapter == "pinecone":
+                rows = chunks_to_pinecone_vectors(
+                    buf,
+                    embeddings,
+                    namespace=namespace,
+                    use_contextualized_text=use_contextualized_text,
+                )
+            elif adapter == "weaviate":
+                rows = chunks_to_weaviate_objects(
+                    buf,
+                    embeddings,
+                    class_name=class_name,
+                    use_contextualized_text=use_contextualized_text,
+                )
+            else:
+                rows = chunks_to_supabase_rows(
+                    buf,
+                    embeddings,
+                    use_contextualized_text=use_contextualized_text,
+                )
+            return UpsertBatch(adapter=adapter, rows=rows, chunks=tuple(buf))
+
+        buffer: list[Chunk] = []
+
+        def _push(ch: Chunk) -> Iterator[UpsertBatch]:
+            buffer.append(ch)
+            while len(buffer) >= batch_size:
+                batch = buffer[:batch_size]
+                del buffer[:batch_size]
+                yield _flush(batch)
+
+        if root.is_file():
+            for ch in self.chunk_file(str(root), encoding=encoding, **overrides):
+                yield from _push(ch)
+            if buffer:
+                yield _flush(buffer)
+            return
+
+        file_paths = _collect_directory_files(
+            root,
+            glob_pattern=glob,
+            exclude_patterns=list(exclude or []),
+            include_hidden=include_hidden,
+        )
+        for fp in file_paths:
+            try:
+                for ch in self.chunk_file(str(fp), encoding=encoding, **overrides):
+                    yield from _push(ch)
+            except (OSError, UnicodeDecodeError):
+                continue
+        if buffer:
+            yield _flush(buffer)
 
     def quality_scores(
         self,
@@ -460,10 +598,9 @@ class Chunker:
         return list(await asyncio.gather(*tasks))
 
     def _build_options(self, filepath: str, overrides: dict[str, object]) -> ChunkOptions:
-        data = asdict(self._defaults)
-        data.update(_coerce_option_dict(overrides))
-        data["filepath"] = filepath
-        return ChunkOptions(**data)
+        # Use replace(), not asdict(), so callables (otel_tracer, embed_fn) are not deep-copied.
+        merged = _coerce_option_dict(overrides)
+        return replace(self._defaults, filepath=filepath, **merged)
 
 
 def chunk(filepath: str, content: str, **options: object) -> list[Chunk]:

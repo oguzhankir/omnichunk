@@ -16,6 +16,7 @@ from .formats import (
     load_pdf_bytes,
 )
 from .graph import ChunkEdge, ChunkGraph, EntityNode, build_chunk_graph
+from .otel import maybe_span
 from .plugins import (
     list_registered_formatters,
     list_registered_parsers,
@@ -37,6 +38,7 @@ from .serialization import (
     chunks_to_weaviate_objects,
     stable_chunk_id,
 )
+from .store import ChunkStore, SyncResult
 from .types import (
     BatchResult,
     ByteRange,
@@ -54,9 +56,10 @@ from .types import (
     ImportInfo,
     LineRange,
     SiblingInfo,
+    UpsertBatch,
 )
 
-__version__ = "0.9.0"
+__version__ = "0.10.0"
 
 __all__ = [
     "BatchResult",
@@ -73,6 +76,7 @@ __all__ = [
     "ChunkQualityScore",
     "ChunkStats",
     "ChunkTree",
+    "ChunkStore",
     "Chunker",
     "ContentType",
     "EvalReport",
@@ -86,7 +90,9 @@ __all__ = [
     "SemanticBoundaryResult",
     "SemanticSplitter",
     "SiblingInfo",
+    "SyncResult",
     "TokenBudgetOptimizer",
+    "UpsertBatch",
     "__version__",
     "build_chunk_graph",
     "build_tfidf_matrix",
@@ -108,6 +114,7 @@ __all__ = [
     "load_pdf_bytes",
     "split_sentences",
     "stable_chunk_id",
+    "maybe_span",
     "chunks_to_pinecone_vectors",
     "chunks_to_supabase_rows",
     "chunks_to_weaviate_objects",

@@ -313,6 +313,18 @@ class ChunkOptions:
     semantic_min_sentences: int = 1
     semantic_sentence_splitter: object = None
 
+    # Optional OpenTelemetry tracer (opentelemetry-api Tracer); None disables spans.
+    otel_tracer: object | None = None
+
+
+@dataclass(frozen=True)
+class UpsertBatch:
+    """One batch of vector-DB rows produced by :meth:`Chunker.stream_upsert`."""
+
+    adapter: Literal["pinecone", "weaviate", "supabase"]
+    rows: list[dict[str, Any]]
+    chunks: tuple[Chunk, ...] = ()
+
 
 @dataclass(frozen=True)
 class BatchResult:

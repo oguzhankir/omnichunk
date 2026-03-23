@@ -81,7 +81,42 @@ def main(argv: Sequence[str] | None = None) -> int:
     argv_list = list(argv if argv is not None else sys.argv[1:])
     if argv_list and argv_list[0] == "eval":
         return eval_main(argv_list[1:])
+    if argv_list and argv_list[0] == "serve":
+        return serve_main(argv_list[1:])
     return chunk_main(argv_list)
+
+
+def serve_main(argv: Sequence[str]) -> int:
+    parser = argparse.ArgumentParser(
+        prog="omnichunk serve",
+        description="Run JSON-RPC HTTP server (MCP-style tools; stdlib only).",
+    )
+    parser.add_argument(
+        "--mcp",
+        action="store_true",
+        help="Required flag: start the MCP-style JSON-RPC server",
+    )
+    parser.add_argument("--host", default="127.0.0.1", help="Bind address")
+    parser.add_argument("--port", type=int, default=3333, help="TCP port")
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=None,
+        help="Optional JSON file merged into default Chunker options for each request",
+    )
+    args = parser.parse_args(list(argv))
+    if not args.mcp:
+        print("serve requires --mcp (JSON-RPC tools over HTTP)", file=sys.stderr)
+        return 2
+    from omnichunk.mcp.server import run_mcp_server
+
+    tools = "chunk_file, chunk_directory, build_graph, semantic_chunk"
+    print(
+        f"omnichunk MCP JSON-RPC — POST http://{args.host}:{args.port}/ ({tools})",
+        flush=True,
+    )
+    run_mcp_server(args.host, args.port, config_path=args.config)
+    return 0
 
 
 def eval_main(argv: Sequence[str]) -> int:

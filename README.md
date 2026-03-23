@@ -51,7 +51,11 @@ pip install omnichunk[graph]           # Marker extra (GraphRAG uses existing ch
 pip install omnichunk[pdf]             # PDF text extraction (pypdf)
 pip install omnichunk[docx]            # Word documents (python-docx)
 pip install omnichunk[formats]         # pdf + docx
+pip install omnichunk[mcp]             # Reserved marker for future MCP SDK helpers (server uses stdlib only)
+pip install omnichunk[otel]            # OpenTelemetry API for optional tracing
 ```
+
+**v0.10** adds infrastructure pieces: **`ChunkStore`** (SQLite cache + incremental `sync()`), **`Chunker.stream_upsert()`** (batched Pinecone/Weaviate/Supabase dicts without loading all chunks at once), **`omnichunk serve --mcp`** (JSON-RPC tools over HTTP), and optional **`ChunkOptions.otel_tracer`** spans.
 
 **v0.9** adds multiformat chunking (`.ipynb`, `.tex`, optional `.pdf` / `.docx`), near-duplicate removal (`dedup_chunks`), and offline evaluation (`evaluate_chunks`). Jupyter and LaTeX need no extra packages; PDF and DOCX use the extras above. `Chunker.chunk_file()` picks loaders by extension. Evaluate saved JSONL with:
 
@@ -70,6 +74,7 @@ omnichunk ./src --glob "**/*.py" --max-size 512 --size-unit chars --format jsonl
 omnichunk app.py --max-size 256 --size-unit chars --stats
 omnichunk app.py --max-size 256 --size-unit chars --nws-backend python
 omnichunk README.md --format csv --output chunks.csv
+omnichunk serve --mcp --port 3333   # JSON-RPC: chunk_file, chunk_directory, build_graph, semantic_chunk
 ```
 
 ## Quick start

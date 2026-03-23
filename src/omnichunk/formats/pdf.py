@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib
 import io
 import re
 from typing import Literal
@@ -10,7 +11,7 @@ from omnichunk.formats.types import FormatSegment, LoadedDocument
 def load_pdf_bytes(raw: bytes) -> LoadedDocument:
     """Extract text from PDF bytes; one segment per page (full text coverage)."""
     try:
-        from pypdf import PdfReader
+        PdfReader = importlib.import_module("pypdf").PdfReader
     except ImportError as exc:
         raise ImportError(
             "PDF support requires pypdf. Install with: pip install omnichunk[pdf]"
