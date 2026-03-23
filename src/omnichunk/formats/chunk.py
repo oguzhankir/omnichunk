@@ -62,7 +62,7 @@ def _iter_loaded_chunks(
             if isinstance(lang_raw, str):
                 sub_options.language = cast(Language, lang_raw)
             else:
-                sub_options.language = cast(Language, base_lang or "plaintext")
+                sub_options.language = base_lang or "plaintext"
 
         if segment.char_start == 0 and segment.char_end == len(content):
             sub_options._precomputed_text_index = text_index
