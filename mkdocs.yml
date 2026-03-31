@@ -47,5 +47,7 @@ nav:
       - "v0.9": migrations/v0.9.md
       - "v0.10": migrations/v0.10.md
   - Performance: performance/sla.md
+  - Contributing:
+      - Mutation testing: contributing/mutation-testing.md
   - Reference:
       - Chunker: reference/chunker.md

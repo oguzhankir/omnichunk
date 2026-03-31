@@ -31,7 +31,7 @@ def merge_adjacent_windows(
         else:
             merged.append(list(window))
 
-    if len(merged) <= 1:
+    if len(merged) < 1:
         return merged
 
     idx = 0

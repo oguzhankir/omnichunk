@@ -110,6 +110,7 @@ dev = [
   "semchunk>=2.0.0",
   "nltk>=3.8.1",
   "mypy>=1.0.0",
+  "mutmut>=2.4.4,<3.0.0",
   "ruff>=0.4.0",
   "pre-commit>=3.7.0",
   "maturin>=1.7.0",
