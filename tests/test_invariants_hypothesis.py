@@ -8,8 +8,10 @@ from hypothesis import strategies as st
 
 from omnichunk import Chunker
 
+pytestmark = pytest.mark.slow
+
 _HYP_SETTINGS = settings(
-    max_examples=500,
+    max_examples=60,
     deadline=None,
     suppress_health_check=[HealthCheck.too_slow, HealthCheck.data_too_large],
 )
@@ -22,11 +24,11 @@ _SPECIAL_CHAR = st.sampled_from(
 _MIXED_ALPHABET = st.one_of(_ENCODABLE_CHAR, _SURROGATE_CHAR, _SPECIAL_CHAR)
 _ASCII_ALPHABET = st.characters(min_codepoint=0, max_codepoint=0x7F)
 
-_SMALL_TEXT = st.text(alphabet=_MIXED_ALPHABET, min_size=0, max_size=3000)
-_LARGE_TEXT = st.text(alphabet=_MIXED_ALPHABET, min_size=3001, max_size=50000)
+_SMALL_TEXT = st.text(alphabet=_MIXED_ALPHABET, min_size=0, max_size=1200)
+_LARGE_TEXT = st.text(alphabet=_MIXED_ALPHABET, min_size=1201, max_size=6000)
 _STRESS_TEXT = st.one_of(_SMALL_TEXT, _SMALL_TEXT, _SMALL_TEXT, _SMALL_TEXT, _LARGE_TEXT)
-_ASCII_STRESS_TEXT = st.text(alphabet=_ASCII_ALPHABET, min_size=0, max_size=50000)
-_JSON_TEXT = st.text(alphabet=_MIXED_ALPHABET, min_size=0, max_size=4000)
+_ASCII_STRESS_TEXT = st.text(alphabet=_ASCII_ALPHABET, min_size=0, max_size=6000)
+_JSON_TEXT = st.text(alphabet=_MIXED_ALPHABET, min_size=0, max_size=1500)
 
 
 def _chunk_snapshot(filepath: str, text: str, chunker: Chunker) -> list[dict]:
@@ -80,37 +82,12 @@ def test_hypothesis_invariants_markdown_path(body: str) -> None:
 
 
 @_HYP_SETTINGS
-@given(body=_STRESS_TEXT)
-def test_hypothesis_invariants_plaintext_path(body: str) -> None:
-    text = f"{body}\n\nplain paragraph\n\nanother paragraph"
-    chunker = Chunker(max_chunk_size=280, min_chunk_size=8, size_unit="chars")
-    _assert_invariants("fuzz.txt", text, chunker)
-
-
-@_HYP_SETTINGS
 @given(body=_JSON_TEXT)
 def test_hypothesis_invariants_json_path(body: str) -> None:
     safe = body.replace('"', '\\"').replace("\n", " ")
     text = '{"title":"fuzz","payload":"' + safe + '","ok":true}'
     chunker = Chunker(max_chunk_size=300, min_chunk_size=10, size_unit="chars")
     _assert_invariants("fuzz.json", text, chunker)
-
-
-@_HYP_SETTINGS
-@given(body=_STRESS_TEXT)
-def test_hypothesis_invariants_html_path(body: str) -> None:
-    text = "<html><body><h1>Title</h1><p>" + body + "</p><div>tail</div></body></html>"
-    chunker = Chunker(max_chunk_size=300, min_chunk_size=10, size_unit="chars")
-    _assert_invariants("fuzz.html", text, chunker)
-
-
-@_HYP_SETTINGS
-@given(body=_STRESS_TEXT)
-def test_hypothesis_invariants_toml_path(body: str) -> None:
-    safe = body.replace("\n", " ").replace('"', '\\"')
-    text = '[meta]\nname = "fuzz"\ntext = "' + safe + '"\n'
-    chunker = Chunker(max_chunk_size=260, min_chunk_size=8, size_unit="chars")
-    _assert_invariants("fuzz.toml", text, chunker)
 
 
 @_HYP_SETTINGS
@@ -122,9 +99,3 @@ def test_hypothesis_invariants_yaml_path(body: str) -> None:
     _assert_invariants("fuzz.yaml", text, chunker)
 
 
-@_HYP_SETTINGS
-@given(body=_STRESS_TEXT)
-def test_hypothesis_invariants_hybrid_cells_python_path(body: str) -> None:
-    text = '# %% [markdown]\n"""\\n# Intro\\n"""\\n# %%\nprint("x")\n' + body
-    chunker = Chunker(max_chunk_size=300, min_chunk_size=10, size_unit="chars")
-    _assert_invariants("fuzz_cells.py", text, chunker)

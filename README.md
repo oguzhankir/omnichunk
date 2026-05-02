@@ -3,6 +3,7 @@
   <br><br>
   <a href="https://pypi.org/project/omnichunk/"><img src="https://img.shields.io/pypi/v/omnichunk?v=3" alt="PyPI"></a>
   <a href="https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml"><img src="https://github.com/oguzhankir/omnichunk/actions/workflows/ci.yml/badge.svg?v=3" alt="CI"></a>
+  <a href="https://codecov.io/gh/oguzhankir/omnichunk"><img src="https://codecov.io/gh/oguzhankir/omnichunk/branch/main/graph/badge.svg?precision=2" alt="Codecov (Cobertura includes branch data from pytest --cov-branch)"></a>
   <a href="https://pypi.org/project/omnichunk/"><img src="https://img.shields.io/pypi/pyversions/omnichunk?v=3" alt="Python"></a>
   <a href="https://github.com/oguzhankir/omnichunk/blob/main/LICENSE"><img src="https://img.shields.io/pypi/l/omnichunk?v=3" alt="License"></a>
 </div>

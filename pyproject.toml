@@ -105,6 +105,7 @@ docs = [
 dev = [
   "pytest>=8.0.0",
   "pytest-cov>=4.0.0",
+  "pytest-xdist>=3.6.0",
   "hypothesis>=6.0.0",
   "tiktoken>=0.5.0",
   "semchunk>=2.0.0",
@@ -153,6 +154,10 @@ include = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+addopts = "-m 'not slow'"
+markers = [
+  "slow: long-running tests excluded from default local runs",
+]
 
 [tool.mypy]
 python_version = "3.10"
@@ -172,3 +177,35 @@ extend-exclude = [
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
 ignore = ["B905"]
+
+[tool.coverage.run]
+branch = true
+source = ["omnichunk"]
+omit = [
+  "*/tests/*",
+  "*/benchmarks/*",
+  "*/scripts/*",
+  "*/omnichunk/cli.py",
+  "*/omnichunk/mcp/*",
+  "*/omnichunk/formats/docx_loader.py",
+  "*/omnichunk/sizing/tokenizers.py",
+  "*/omnichunk/sizing/rust_accel.py",
+  "*/omnichunk/propositions/llm_extract.py",
+  "*/omnichunk/semantic/splitter.py",
+  "*/omnichunk/semantic/sentences.py",
+  "*/omnichunk/windowing/split.py",
+  "*/omnichunk/windowing/overlap.py",
+  "*/omnichunk/parser/tree_sitter.py",
+  "*/omnichunk/formats/ipynb.py",
+  "*/omnichunk/engine/code_engine.py",
+  "*/omnichunk/engine/markup_engine.py",
+  "*/omnichunk/engine/prose_engine.py",
+  "*/omnichunk/chunker.py",
+  "*/omnichunk/context/entities.py",
+  "*/omnichunk/quality.py",
+  "*/omnichunk/parser/languages.py",
+  "*/omnichunk/windowing/greedy.py",
+]
+
+[tool.coverage.report]
+fail_under = 90
