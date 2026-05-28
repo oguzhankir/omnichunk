@@ -316,6 +316,11 @@ class ChunkOptions:
     preserve_comments: bool = True
     include_header_in_sections: bool = True
 
+    # When True, Jupyter notebook (.ipynb) cell outputs (stdout/stderr/rich
+    # display) are appended after each code cell. Default False excludes
+    # outputs entirely so chunk text mirrors only the source cells.
+    include_notebook_outputs: bool = False
+
     _precomputed_nws_cumsum: Any | None = None
     _precomputed_text_index: Any | None = None
 

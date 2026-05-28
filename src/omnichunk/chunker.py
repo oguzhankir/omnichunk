@@ -61,13 +61,15 @@ class Chunker:
                     f"Use chunk_file() for {suf} documents; "
                     "binary formats cannot be passed as text."
                 )
+            options = self._build_options(filepath=filepath, overrides=overrides)
             if suf == ".ipynb":
-                loaded = load_ipynb(content)
+                loaded = load_ipynb(
+                    content, include_outputs=options.include_notebook_outputs
+                )
             elif suf == ".rst":
                 loaded = load_rst(content)
             else:
                 loaded = load_latex(content)
-            options = self._build_options(filepath=filepath, overrides=overrides)
             lang = detect_language(filepath=filepath, content=loaded.text)
             options = replace(options, language=lang)
             return chunk_loaded_document(filepath, loaded, options)
@@ -152,8 +154,12 @@ class Chunker:
             try:
                 if file_path.suffix.lower() in _STRUCTURED_SUFFIXES:
                     suf = file_path.suffix.lower()
+                    options = self._build_options(filepath=str(file_path), overrides=overrides)
                     if suf == ".ipynb":
-                        loaded = load_ipynb(file_path.read_text(encoding=encoding))
+                        loaded = load_ipynb(
+                            file_path.read_text(encoding=encoding),
+                            include_outputs=opts.include_notebook_outputs,
+                        )
                     elif suf == ".tex":
                         loaded = load_latex(file_path.read_text(encoding=encoding))
                     elif suf == ".rst":
@@ -162,7 +168,6 @@ class Chunker:
                         loaded = load_pdf_bytes(file_path.read_bytes())
                     else:
                         loaded = load_docx_bytes(file_path.read_bytes())
-                    options = self._build_options(filepath=str(file_path), overrides=overrides)
                     lang = detect_language(filepath=str(file_path), content=loaded.text)
                     options = replace(options, language=lang)
                     out = chunk_loaded_document(str(file_path), loaded, options)
