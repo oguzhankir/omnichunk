@@ -48,6 +48,7 @@ ENTITY_NODE_TYPES: dict[Language, dict[str, EntityType]] = {
         "interface_declaration": EntityType.INTERFACE,
         "type_alias_declaration": EntityType.TYPE,
         "enum_declaration": EntityType.ENUM,
+        "module": EntityType.MODULE,
         "import_statement": EntityType.IMPORT,
         "export_statement": EntityType.EXPORT,
     },

@@ -252,3 +252,72 @@ def test_python_typealias_without_annotation_is_not_captured() -> None:
     code = "Name = str\n"
     ents = _entities(code)
     assert all(t != "type_alias" for _, t in ents)
+
+
+# ---------------------------------------------------------------------------
+# Phase 2 — TypeScript modern patterns (Commit 17)
+# ---------------------------------------------------------------------------
+
+
+def _ts_chunks(fixtures_dir: Path) -> list:
+    code = (fixtures_dir / "typescript_modern.ts").read_text(encoding="utf-8")
+    return Chunker(max_chunk_size=500, min_chunk_size=30, size_unit="chars").chunk(
+        "modern.ts", code
+    )
+
+
+def test_typescript_modern_reconstruction(fixtures_dir: Path) -> None:
+    code = (fixtures_dir / "typescript_modern.ts").read_text(encoding="utf-8")
+    chunks = _ts_chunks(fixtures_dir)
+    assert "".join(c.text for c in chunks) == code
+    raw = code.encode("utf-8")
+    for ch in chunks:
+        assert raw[ch.byte_range.start : ch.byte_range.end].decode("utf-8") == ch.text
+    for left, right in zip(chunks, chunks[1:]):
+        assert left.byte_range.end == right.byte_range.start
+
+
+def test_typescript_generic_function_captured(fixtures_dir: Path) -> None:
+    chunks = _ts_chunks(fixtures_dir)
+    fn_names = {e.name for c in chunks for e in c.context.entities if e.type.value == "function"}
+    assert {"identity", "pickBy"} <= fn_names
+
+
+def test_typescript_class_decorators_attached_in_chunk(fixtures_dir: Path) -> None:
+    chunks = _ts_chunks(fixtures_dir)
+    user_chunk = next(c for c in chunks if "class UserService" in c.text)
+    assert "@Injectable" in user_chunk.text
+    app_chunk = next(c for c in chunks if "class AppComponent" in c.text)
+    assert "@Component" in app_chunk.text
+
+
+def test_typescript_satisfies_does_not_break_parser(fixtures_dir: Path) -> None:
+    chunks = _ts_chunks(fixtures_dir)
+    # 'satisfies' constant must end up in a chunk without producing parse errors
+    has_satisfies = any("satisfies Point" in c.text for c in chunks)
+    assert has_satisfies
+
+
+def test_typescript_module_declaration_captured(fixtures_dir: Path) -> None:
+    chunks = _ts_chunks(fixtures_dir)
+    modules = {e.name for c in chunks for e in c.context.entities if e.type.value == "module"}
+    assert "LegacyMod" in modules
+
+
+def test_typescript_enum_declaration_captured(fixtures_dir: Path) -> None:
+    chunks = _ts_chunks(fixtures_dir)
+    enums = {e.name for c in chunks for e in c.context.entities if e.type.value == "enum"}
+    assert "Color" in enums
+
+
+def test_typescript_interface_with_generics_captured(fixtures_dir: Path) -> None:
+    chunks = _ts_chunks(fixtures_dir)
+    interfaces = {
+        e.name for c in chunks for e in c.context.entities if e.type.value == "interface"
+    }
+    assert "Serializer" in interfaces
+
+
+def test_typescript_as_const_assertion_preserved(fixtures_dir: Path) -> None:
+    chunks = _ts_chunks(fixtures_dir)
+    assert any("as const" in c.text for c in chunks)

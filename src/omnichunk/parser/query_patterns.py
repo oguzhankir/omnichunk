@@ -39,6 +39,7 @@ _QUERY_SOURCES: dict[Language, str] = {
 (interface_declaration name: (_) @name) @entity.interface
 (type_alias_declaration name: (_) @name) @entity.type
 (enum_declaration name: (_) @name) @entity.enum
+(module name: (_) @name) @entity.module
 (import_statement) @entity.import
 (export_statement) @entity.export
 """,
