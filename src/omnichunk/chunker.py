@@ -85,7 +85,7 @@ class Chunker:
 
     def batch(
         self,
-        files: list[dict],
+        files: list[dict[str, Any]],
         concurrency: int = 10,
         on_progress: Callable[[int, int, str], None] | None = None,
     ) -> list[BatchResult]:
@@ -96,7 +96,7 @@ class Chunker:
         concurrency = max(1, min(concurrency, len(files)))
         results_by_idx: dict[int, BatchResult] = {}
 
-        def _worker(idx: int, item: dict) -> tuple[int, BatchResult]:
+        def _worker(idx: int, item: dict[str, Any]) -> tuple[int, BatchResult]:
             filepath = str(item.get("filepath", ""))
             code = str(item.get("code", ""))
             try:
@@ -606,7 +606,7 @@ class Chunker:
 
     async def abatch(
         self,
-        inputs: list[dict],
+        inputs: list[dict[str, Any]],
         concurrency: int = 8,
     ) -> list[BatchResult]:
         """Process many files concurrently (each dict: ``filepath``, ``code``, optional options)."""
@@ -614,7 +614,7 @@ class Chunker:
 
         semaphore = asyncio.Semaphore(max(1, concurrency))
 
-        async def _process(item: dict) -> BatchResult:
+        async def _process(item: dict[str, Any]) -> BatchResult:
             async with semaphore:
                 filepath = str(item.get("filepath", ""))
                 code = str(item.get("code", ""))

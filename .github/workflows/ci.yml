@@ -48,15 +48,8 @@ jobs:
       - name: Run Ruff
         run: ruff check src tests
 
-      - name: Run mypy
-        run: mypy src/omnichunk
-
-      - name: Run mypy strict (propositions modules)
-        run: |
-          mypy --strict --follow-imports=skip \
-            src/omnichunk/propositions/types.py \
-            src/omnichunk/propositions/heuristic.py \
-            src/omnichunk/propositions/llm_extract.py
+      - name: Run mypy (strict, full package)
+        run: mypy --strict src/omnichunk
 
       - name: Build documentation (MkDocs)
         run: mkdocs build --strict

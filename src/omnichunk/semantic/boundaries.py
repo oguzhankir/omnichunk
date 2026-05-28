@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
+from typing import cast
 
 import numpy as np
 
@@ -31,7 +32,7 @@ def _batch_cosine_similarity(
     norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
     norms = np.where(norms == 0, 1.0, norms)
     normalized = embeddings / norms
-    return np.einsum("id,id->i", normalized[:-1], normalized[1:])
+    return cast("np.ndarray", np.einsum("id,id->i", normalized[:-1], normalized[1:]))
 
 
 def detect_semantic_boundaries(

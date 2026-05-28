@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Iterator
 from dataclasses import replace
+from typing import TYPE_CHECKING
 
 from omnichunk.engine.code_engine import CodeEngine
 from omnichunk.engine.hybrid_engine import HybridEngine
@@ -17,15 +18,18 @@ _PROSE_ENGINE = ProseEngine()
 _MARKUP_ENGINE = MarkupEngine()
 _HYBRID_ENGINE = HybridEngine()
 
-_SEMANTIC_ENGINE: object | None = None
+if TYPE_CHECKING:
+    from omnichunk.engine.semantic_engine import SemanticEngine
+
+_SEMANTIC_ENGINE: SemanticEngine | None = None
 
 
-def _semantic_engine_singleton():
+def _semantic_engine_singleton() -> SemanticEngine:
     global _SEMANTIC_ENGINE
     if _SEMANTIC_ENGINE is None:
-        from omnichunk.engine.semantic_engine import SemanticEngine
+        from omnichunk.engine.semantic_engine import SemanticEngine as _SE
 
-        _SEMANTIC_ENGINE = SemanticEngine()
+        _SEMANTIC_ENGINE = _SE()
     return _SEMANTIC_ENGINE
 
 
