@@ -45,10 +45,11 @@ _QUERY_SOURCES: dict[Language, str] = {
 """,
     "rust": """
 (function_item name: (_) @name) @entity.function
-(impl_item type: (_) @name) @entity.class
+(impl_item type: (_) @name) @entity.impl_block
 (struct_item name: (_) @name) @entity.class
 (trait_item name: (_) @name) @entity.interface
 (enum_item name: (_) @name) @entity.enum
+(macro_definition name: (_) @name) @entity.macro
 (use_declaration) @entity.import
 """,
     "go": """

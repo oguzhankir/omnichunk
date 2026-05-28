@@ -54,10 +54,11 @@ ENTITY_NODE_TYPES: dict[Language, dict[str, EntityType]] = {
     },
     "rust": {
         "function_item": EntityType.FUNCTION,
-        "impl_item": EntityType.CLASS,
+        "impl_item": EntityType.IMPL_BLOCK,
         "struct_item": EntityType.CLASS,
         "trait_item": EntityType.INTERFACE,
         "enum_item": EntityType.ENUM,
+        "macro_definition": EntityType.MACRO,
         "use_declaration": EntityType.IMPORT,
     },
     "go": {

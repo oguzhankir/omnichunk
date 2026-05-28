@@ -321,3 +321,80 @@ def test_typescript_interface_with_generics_captured(fixtures_dir: Path) -> None
 def test_typescript_as_const_assertion_preserved(fixtures_dir: Path) -> None:
     chunks = _ts_chunks(fixtures_dir)
     assert any("as const" in c.text for c in chunks)
+
+
+# ---------------------------------------------------------------------------
+# Phase 2 — Rust modern patterns (Commit 18)
+# ---------------------------------------------------------------------------
+
+
+def _rust_chunks(fixtures_dir: Path) -> list:
+    code = (fixtures_dir / "rust_modern.rs").read_text(encoding="utf-8")
+    return Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
+        "modern.rs", code
+    )
+
+
+def test_rust_modern_reconstruction(fixtures_dir: Path) -> None:
+    code = (fixtures_dir / "rust_modern.rs").read_text(encoding="utf-8")
+    chunks = _rust_chunks(fixtures_dir)
+    assert "".join(c.text for c in chunks) == code
+    for left, right in zip(chunks, chunks[1:]):
+        assert left.byte_range.end == right.byte_range.start
+
+
+def test_rust_macro_rules_captured_as_macro() -> None:
+    code = "macro_rules! say_hi { () => { println!(\"hi\"); } }\n"
+    chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
+        "x.rs", code
+    )
+    kinds = [(e.name, e.type.value) for c in chunks for e in c.context.entities]
+    assert ("say_hi", "macro") in kinds
+
+
+def test_rust_impl_for_trait_yields_impl_block(fixtures_dir: Path) -> None:
+    chunks = _rust_chunks(fixtures_dir)
+    impl_blocks = [
+        e for c in chunks for e in c.context.entities if e.type.value == "impl_block"
+    ]
+    assert len(impl_blocks) >= 3  # impl Greeter, impl Renderable for Greeter, impl Display for Greeter
+    names = {e.name for e in impl_blocks}
+    assert "Greeter" in names
+
+
+def test_rust_inherent_impl_block_yields_impl_block_for_type() -> None:
+    code = "struct Foo;\nimpl Foo { fn a(&self) {} }\n"
+    chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
+        "x.rs", code
+    )
+    types = {e.type.value for c in chunks for e in c.context.entities}
+    assert "impl_block" in types
+
+
+def test_rust_lifetimes_do_not_create_extra_entities(fixtures_dir: Path) -> None:
+    """Lifetime parameters in signatures must NOT appear as separate entities."""
+    chunks = _rust_chunks(fixtures_dir)
+    entity_names = {e.name for c in chunks for e in c.context.entities}
+    assert "'a" not in entity_names
+    assert "a" not in entity_names or "merge" in entity_names
+
+
+def test_rust_visibility_modifiers_preserved_in_chunk(fixtures_dir: Path) -> None:
+    chunks = _rust_chunks(fixtures_dir)
+    code = "".join(c.text for c in chunks)
+    assert "pub(crate)" in code
+    assert "pub(super)" in code
+
+
+def test_rust_macro_definition_kept_with_arms_intact() -> None:
+    code = (
+        "macro_rules! multi {\n"
+        "    () => { 1 };\n"
+        "    ($x:expr) => { $x };\n"
+        "}\n"
+    )
+    chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
+        "x.rs", code
+    )
+    macro_chunk = next(c for c in chunks if "macro_rules!" in c.text)
+    assert "($x:expr)" in macro_chunk.text
