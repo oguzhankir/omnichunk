@@ -158,14 +158,19 @@ pythonpath = ["src"]
 addopts = "-m 'not slow'"
 markers = [
   "slow: long-running tests excluded from default local runs",
+  "no_xdist: tests that must not run under pytest-xdist (process-global state)",
 ]
 
 [tool.mypy]
 python_version = "3.10"
-strict = false
+strict = true
 warn_unused_ignores = true
 warn_redundant_casts = true
 warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = ["tiktoken"]
+ignore_missing_imports = true
 
 [tool.ruff]
 line-length = 100

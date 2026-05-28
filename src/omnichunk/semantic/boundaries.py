@@ -2,8 +2,10 @@ from __future__ import annotations
 
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
+from typing import Any, cast
 
 import numpy as np
+from numpy.typing import NDArray
 
 from omnichunk.sizing.rust_accel import batch_cosine_similarity_adjacent_rust
 
@@ -22,8 +24,8 @@ class SemanticBoundaryResult:
 
 
 def _batch_cosine_similarity(
-    embeddings: np.ndarray,
-) -> np.ndarray:
+    embeddings: NDArray[Any],
+) -> NDArray[Any]:
     """Adjacent cosine similarities. Tries Rust backend; falls back to numpy."""
     rust_result = batch_cosine_similarity_adjacent_rust(embeddings)
     if rust_result is not None:
@@ -31,13 +33,13 @@ def _batch_cosine_similarity(
     norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
     norms = np.where(norms == 0, 1.0, norms)
     normalized = embeddings / norms
-    return np.einsum("id,id->i", normalized[:-1], normalized[1:])
+    return cast("NDArray[Any]", np.einsum("id,id->i", normalized[:-1], normalized[1:]))
 
 
 def detect_semantic_boundaries(
     sentences: Sequence[str],
     *,
-    embed_fn: Callable[[list[str]], np.ndarray],
+    embed_fn: Callable[[list[str]], NDArray[Any]],
     window: int = 3,
     threshold: float = 0.3,
     min_chunk_sentences: int = 1,

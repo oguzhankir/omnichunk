@@ -6,6 +6,7 @@ from functools import lru_cache
 from typing import Any, Literal, TypedDict
 
 import numpy as np
+from numpy.typing import NDArray
 
 NwsBackend = Literal["auto", "python", "rust"]
 
@@ -73,8 +74,8 @@ def nws_backend_status(backend: str | None = None) -> NwsBackendStatus:
 
 
 def batch_cosine_similarity_adjacent_rust(
-    embeddings: np.ndarray,
-) -> np.ndarray | None:
+    embeddings: NDArray[Any],
+) -> NDArray[Any] | None:
     """Rust-accelerated adjacent cosine similarity when the extension is built.
 
     ``embeddings``: shape (N, D), float32 or float64. Returns shape (N-1,) float64,
@@ -102,7 +103,7 @@ def maybe_preprocess_nws_cumsum_rust(
     code: str,
     *,
     backend: str | None = None,
-) -> np.ndarray | None:
+) -> NDArray[Any] | None:
     selected = resolve_nws_backend(backend)
     if selected == "python":
         return None

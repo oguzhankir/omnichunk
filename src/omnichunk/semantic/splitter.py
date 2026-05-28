@@ -2,8 +2,9 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
+from typing import Any
 
-import numpy as np
+from numpy.typing import NDArray
 
 from omnichunk.sizing.counter import make_size_counter, make_token_counter
 from omnichunk.sizing.nws import get_nws_count
@@ -33,7 +34,7 @@ class SemanticSplitter:
     sentence_splitter_fn: optional custom sentence splitter.
     """
 
-    embed_fn: Callable[[list[str]], np.ndarray]
+    embed_fn: Callable[[list[str]], NDArray[Any]]
     window: int = 3
     threshold: float = 0.3
     min_chunk_sentences: int = 1

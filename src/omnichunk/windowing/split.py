@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
+from typing import Any
 
-import numpy as np
+from numpy.typing import NDArray
 
 from omnichunk.sizing.nws import get_nws_count
 
@@ -133,7 +134,7 @@ def split_oversized_leaf(
     item: ASTNodeWindowItem,
     *,
     code: str,
-    cumsum: np.ndarray,
+    cumsum: NDArray[Any],
     max_size: int,
 ) -> Iterable[ASTNodeWindowItem]:
     """Split oversized leaf item at line boundaries first, then safe-boundary fallback."""
@@ -178,7 +179,7 @@ def _build_ranges_from_newlines(
 def _hard_split(
     start: int,
     end: int,
-    cumsum: np.ndarray,
+    cumsum: NDArray[Any],
     max_size: int,
     source_bytes: bytes,
 ) -> Iterable[ASTNodeWindowItem]:

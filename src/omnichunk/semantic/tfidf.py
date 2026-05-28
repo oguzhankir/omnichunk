@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import re
 from collections.abc import Sequence
+from typing import Any, cast
 
 import numpy as np
+from numpy.typing import NDArray
 
 
 def _tokenize(text: str) -> list[str]:
@@ -16,7 +18,7 @@ def build_tfidf_matrix(
     *,
     max_vocab: int = 4096,
     min_df: int = 1,
-) -> np.ndarray:
+) -> NDArray[Any]:
     """Build TF-IDF matrix of shape (N, V) for N documents, V vocab terms."""
     n_docs = len(documents)
     if n_docs == 0:
@@ -63,8 +65,7 @@ def build_tfidf_matrix(
 
     norms = np.linalg.norm(out, axis=1, keepdims=True)
     norms = np.where(norms == 0, 1.0, norms)
-    out = out / norms
-    return out
+    return cast("NDArray[Any]", out / norms)
 
 
 def detect_topic_shifts(

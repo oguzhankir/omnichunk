@@ -1,6 +1,7 @@
 # ruff: noqa: E402
 from __future__ import annotations
 
+import statistics
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -63,6 +64,47 @@ SCENARIOS: list[Scenario] = [
         size_unit="chars",
     ),
 ]
+
+
+def measure_python_complex_mbps(*, repeat: int = 3) -> float:
+    """Median MB/s for the python_complex fixture over ``repeat`` runs (plus warmup).
+
+    Used by the throughput regression gate. Reads the fixture once, then runs
+    ``repeat + 1`` chunking iterations with the same ``Chunker`` instance and
+    drops the first (warmup) iteration before taking the median across per-run
+    MB/s values.
+    """
+    if repeat < 1:
+        raise ValueError("repeat must be >= 1")
+
+    scenario = SCENARIOS[0]
+    if scenario.name != "python_complex":
+        raise RuntimeError(
+            "SCENARIOS[0] is no longer python_complex; "
+            "update measure_python_complex_mbps to look up by name."
+        )
+
+    text = scenario.path.read_text(encoding="utf-8")
+    data_bytes = len(text.encode("utf-8"))
+    chunker = Chunker()
+
+    samples: list[float] = []
+    for i in range(repeat + 1):
+        started = perf_counter()
+        chunker.chunk(
+            str(scenario.path),
+            text,
+            max_chunk_size=scenario.max_chunk_size,
+            min_chunk_size=scenario.min_chunk_size,
+            size_unit=scenario.size_unit,
+        )
+        elapsed = perf_counter() - started
+        if i == 0:
+            continue  # warmup
+        mbps = (data_bytes / (1024 * 1024)) / elapsed if elapsed > 0 else 0.0
+        samples.append(mbps)
+
+    return statistics.median(samples)
 
 
 def run() -> int:

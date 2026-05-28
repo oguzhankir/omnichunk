@@ -13,8 +13,15 @@ pip install -e .[dev]
 2. Run tests:
 
 ```bash
-pytest -q
+pytest -q                 # sequential, fastest for a few targeted tests
+pytest -n auto -q         # parallel via pytest-xdist (CI uses this)
 ```
+
+The full suite is parallel-safe. If you add a test that mutates
+process-global state (env vars, singletons, module-level caches) and
+cannot be isolated with `tmp_path` / `monkeypatch`, mark it with
+`@pytest.mark.no_xdist` and run with `pytest -n auto -m "not no_xdist"`
+plus a follow-up `pytest -m no_xdist` in series.
 
 3. Run lint/type checks (if installed):
 

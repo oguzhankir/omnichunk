@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
+from typing import Any
 
 import numpy as np
+from numpy.typing import NDArray
 
 from omnichunk.sizing.rust_accel import (
     NwsBackendStatus,
@@ -15,7 +17,7 @@ _WHITESPACE_LOOKUP = np.zeros(256, dtype=np.bool_)
 _WHITESPACE_LOOKUP[_WHITESPACE_BYTES] = True
 
 
-def preprocess_nws_cumsum(code: str, *, backend: str | None = None) -> np.ndarray:
+def preprocess_nws_cumsum(code: str, *, backend: str | None = None) -> NDArray[Any]:
     """Build cumulative non-whitespace byte counts for O(1) range queries."""
     rust_result = maybe_preprocess_nws_cumsum_rust(code, backend=backend)
     if rust_result is not None:
@@ -24,7 +26,7 @@ def preprocess_nws_cumsum(code: str, *, backend: str | None = None) -> np.ndarra
     return preprocess_nws_cumsum_python(code)
 
 
-def preprocess_nws_cumsum_python(code: str) -> np.ndarray:
+def preprocess_nws_cumsum_python(code: str) -> NDArray[Any]:
     """Pure-Python/Numpy NWS preprocessing used when Rust backend is unavailable."""
     if not code:
         return np.array([0], dtype=np.int64)
@@ -42,7 +44,7 @@ def get_nws_backend_status(backend: str | None = None) -> NwsBackendStatus:
     return nws_backend_status(backend)
 
 
-def get_nws_count(cumsum: Sequence[int] | np.ndarray, start: int, end: int) -> int:
+def get_nws_count(cumsum: Sequence[int] | NDArray[Any], start: int, end: int) -> int:
     """Return non-whitespace count for [start, end) byte range."""
     if start < 0:
         start = 0
