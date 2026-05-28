@@ -58,12 +58,9 @@ def test_html_chunking(fixtures_dir: Path) -> None:
 # ---------------------------------------------------------------------------
 
 
-from omnichunk import Chunker as _Chunker
-
-
 def test_markdown_frontmatter_parsed_into_metadata() -> None:
     src = "---\ntitle: My Doc\nauthor: Ada\ntags: rag, chunking\n---\n\n# Body\n\nText.\n"
-    chunks = _Chunker(max_chunk_size=200, min_chunk_size=10, size_unit="chars").chunk(
+    chunks = Chunker(max_chunk_size=200, min_chunk_size=10, size_unit="chars").chunk(
         "doc.md", src
     )
     fm_chunk = next(c for c in chunks if c.context.section_type == "frontmatter")
@@ -76,7 +73,7 @@ def test_markdown_frontmatter_parsed_into_metadata() -> None:
 
 def test_markdown_no_frontmatter_no_metadata_key() -> None:
     src = "# Heading\n\nNo frontmatter at all.\n"
-    chunks = _Chunker(max_chunk_size=200, min_chunk_size=10, size_unit="chars").chunk(
+    chunks = Chunker(max_chunk_size=200, min_chunk_size=10, size_unit="chars").chunk(
         "doc.md", src
     )
     for ch in chunks:
@@ -85,7 +82,7 @@ def test_markdown_no_frontmatter_no_metadata_key() -> None:
 
 def test_markdown_gfm_note_callout_detected() -> None:
     src = "# Title\n\n> [!NOTE]\n> Important info.\n\nRegular paragraph.\n"
-    chunks = _Chunker(max_chunk_size=80, min_chunk_size=5, size_unit="chars").chunk(
+    chunks = Chunker(max_chunk_size=80, min_chunk_size=5, size_unit="chars").chunk(
         "doc.md", src
     )
     callout_chunks = [c for c in chunks if c.context.format_metadata.get("callout") == "note"]
@@ -95,7 +92,7 @@ def test_markdown_gfm_note_callout_detected() -> None:
 
 def test_markdown_gfm_warning_callout_detected() -> None:
     src = "# Title\n\n> [!WARNING]\n> Watch out.\n\nMore text.\n"
-    chunks = _Chunker(max_chunk_size=80, min_chunk_size=5, size_unit="chars").chunk(
+    chunks = Chunker(max_chunk_size=80, min_chunk_size=5, size_unit="chars").chunk(
         "doc.md", src
     )
     callouts = {c.context.format_metadata.get("callout") for c in chunks}
@@ -104,7 +101,7 @@ def test_markdown_gfm_warning_callout_detected() -> None:
 
 def test_markdown_obsidian_lowercase_callout_detected() -> None:
     src = "> [!info]\n> Obsidian-style callout.\n\nBody.\n"
-    chunks = _Chunker(max_chunk_size=80, min_chunk_size=5, size_unit="chars").chunk(
+    chunks = Chunker(max_chunk_size=80, min_chunk_size=5, size_unit="chars").chunk(
         "doc.md", src
     )
     info_callouts = [c for c in chunks if c.context.format_metadata.get("callout") == "info"]
@@ -113,7 +110,7 @@ def test_markdown_obsidian_lowercase_callout_detected() -> None:
 
 def test_markdown_frontmatter_reconstruction_intact() -> None:
     src = "---\nfoo: bar\n---\n\n# Heading\n\nBody.\n"
-    chunks = _Chunker(max_chunk_size=200, min_chunk_size=10, size_unit="chars").chunk(
+    chunks = Chunker(max_chunk_size=200, min_chunk_size=10, size_unit="chars").chunk(
         "doc.md", src
     )
     assert "".join(c.text for c in chunks) == src
@@ -123,7 +120,7 @@ def test_markdown_callout_type_is_lowercased() -> None:
     """[!TIP] / [!Tip] / [!tip] all surface as 'tip'."""
     for marker in ("TIP", "Tip", "tip"):
         src = f"> [!{marker}]\n> Hello\n"
-        chunks = _Chunker(max_chunk_size=80, min_chunk_size=5, size_unit="chars").chunk(
+        chunks = Chunker(max_chunk_size=80, min_chunk_size=5, size_unit="chars").chunk(
             "doc.md", src
         )
         assert any(c.context.format_metadata.get("callout") == "tip" for c in chunks)
@@ -131,7 +128,7 @@ def test_markdown_callout_type_is_lowercased() -> None:
 
 def test_markdown_plain_blockquote_not_marked_callout() -> None:
     src = "> Just a regular quote without callout marker.\n"
-    chunks = _Chunker(max_chunk_size=80, min_chunk_size=5, size_unit="chars").chunk(
+    chunks = Chunker(max_chunk_size=80, min_chunk_size=5, size_unit="chars").chunk(
         "doc.md", src
     )
     for ch in chunks:

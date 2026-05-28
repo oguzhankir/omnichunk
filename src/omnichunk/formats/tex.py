@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from typing import Literal
 
 from omnichunk.formats.types import FormatSegment, LoadedDocument
 
@@ -47,7 +48,8 @@ def load_latex(content: str) -> LoadedDocument:
         warnings.append("possible_unbalanced_begin_end")
 
     # Collect all atomic regions in one pass: code envs + math envs + display/inline math.
-    atomic: list[tuple[int, int, str, dict[str, object]]] = []
+    SegKind = Literal["prose", "code"]
+    atomic: list[tuple[int, int, SegKind, dict[str, object]]] = []
 
     for match in _CODE_ENV_PATTERN.finditer(text):
         env = match.group(1)
@@ -60,7 +62,12 @@ def load_latex(content: str) -> LoadedDocument:
 
     for match in _MATH_ENV_PATTERN.finditer(text):
         atomic.append(
-            (match.start(), match.end(), "prose", {"latex_math": match.group(1)})
+            (
+                match.start(),
+                match.end(),
+                "prose",
+                {"latex_math": match.group(1)},
+            )
         )
 
     for math_re, label in (
@@ -69,11 +76,13 @@ def load_latex(content: str) -> LoadedDocument:
         (_MATH_INLINE_PAREN, "inline_paren"),
     ):
         for match in math_re.finditer(text):
-            atomic.append((match.start(), match.end(), "prose", {"latex_math": label}))
+            atomic.append(
+                (match.start(), match.end(), "prose", {"latex_math": label})
+            )
 
     # Resolve overlaps deterministically: keep the longest, drop the rest.
     atomic.sort(key=lambda x: (x[0], -(x[1] - x[0])))
-    deduped: list[tuple[int, int, str, dict[str, object]]] = []
+    deduped: list[tuple[int, int, Literal["prose", "code"], dict[str, object]]] = []
     last_end = -1
     for s, e, kind, meta in atomic:
         if s < last_end:

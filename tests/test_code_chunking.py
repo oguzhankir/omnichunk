@@ -357,7 +357,8 @@ def test_rust_impl_for_trait_yields_impl_block(fixtures_dir: Path) -> None:
     impl_blocks = [
         e for c in chunks for e in c.context.entities if e.type.value == "impl_block"
     ]
-    assert len(impl_blocks) >= 3  # impl Greeter, impl Renderable for Greeter, impl Display for Greeter
+    # impl Greeter + impl Renderable for Greeter + impl Display for Greeter = 3
+    assert len(impl_blocks) >= 3
     names = {e.name for e in impl_blocks}
     assert "Greeter" in names
 
