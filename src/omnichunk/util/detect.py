@@ -37,11 +37,16 @@ _EXTENSION_LANGUAGE: dict[str, Language] = {
     ".zig": "zig",
     ".ex": "elixir",
     ".exs": "elixir",
+    ".sql": "sql",
+    ".sh": "bash",
+    ".bash": "bash",
+    ".zsh": "bash",
+    ".fish": "bash",
     ".md": "markdown",
     ".markdown": "markdown",
     ".mdx": "markdown",
     ".txt": "plaintext",
-    ".rst": "plaintext",
+    ".rst": "rst",
     ".html": "html",
     ".htm": "html",
     ".xml": "xml",
@@ -75,11 +80,13 @@ _CODE_LANGUAGES: set[Language] = {
     "lua",
     "zig",
     "elixir",
+    "sql",
+    "bash",
 }
 
 _MARKUP_LANGUAGES: set[Language] = {"html", "xml", "yaml", "json", "toml"}
 
-_PROSE_LANGUAGES: set[Language] = {"markdown", "plaintext", "latex", "pdf", "docx"}
+_PROSE_LANGUAGES: set[Language] = {"markdown", "plaintext", "latex", "pdf", "docx", "rst"}
 
 
 def detect_language(filepath: str = "", content: str = "") -> Language:

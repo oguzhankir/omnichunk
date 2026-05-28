@@ -118,6 +118,12 @@ ENTITY_NODE_TYPES: dict[Language, dict[str, EntityType]] = {
         "protocol_declaration": EntityType.INTERFACE,
         "import_declaration": EntityType.IMPORT,
     },
+    "sql": {
+        "create_table": EntityType.SQL_OBJECT,
+        "create_view": EntityType.SQL_OBJECT,
+        "create_function": EntityType.FUNCTION,
+        "create_index": EntityType.SQL_OBJECT,
+    },
 }
 
 _QUERY_CAPTURE_ENTITY_TYPES: dict[str, EntityType] = {
@@ -130,6 +136,19 @@ _QUERY_CAPTURE_ENTITY_TYPES: dict[str, EntityType] = {
     "entity.import": EntityType.IMPORT,
     "entity.export": EntityType.EXPORT,
     "entity.decorator": EntityType.DECORATOR,
+    # Phase 2 additions
+    "entity.sql_object": EntityType.SQL_OBJECT,
+    "entity.macro": EntityType.MACRO,
+    "entity.impl_block": EntityType.IMPL_BLOCK,
+    "entity.record": EntityType.RECORD,
+    "entity.sealed_interface": EntityType.SEALED_INTERFACE,
+    "entity.annotation": EntityType.ANNOTATION,
+    "entity.protocol": EntityType.PROTOCOL,
+    "entity.type_alias": EntityType.TYPE_ALIAS,
+    "entity.module_export": EntityType.MODULE_EXPORT,
+    "entity.directive": EntityType.DIRECTIVE,
+    "entity.constant": EntityType.CONSTANT,
+    "entity.module": EntityType.MODULE,
 }
 
 

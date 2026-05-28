@@ -100,6 +100,12 @@ _QUERY_SOURCES: dict[Language, str] = {
 (protocol_declaration name: (_) @name) @entity.interface
 (import_declaration) @entity.import
 """,
+    "sql": """
+(create_table (object_reference) @name) @entity.sql_object
+(create_view (object_reference) @name) @entity.sql_object
+(create_function (object_reference) @name) @entity.function
+(create_index (identifier) @name) @entity.sql_object
+""",
 }
 
 
