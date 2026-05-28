@@ -11,7 +11,16 @@ from io import StringIO
 from pathlib import Path
 from typing import Any, cast
 
-from omnichunk.types import ByteRange, Chunk, ChunkContext, ContentType, Language, LineRange
+from omnichunk.types import (
+    ByteRange,
+    Chunk,
+    ChunkContext,
+    ContentType,
+    EntityInfo,
+    EntityType,
+    Language,
+    LineRange,
+)
 
 
 def chunk_to_dict(chunk: Chunk) -> dict[str, Any]:
@@ -22,8 +31,27 @@ def chunk_to_dict(chunk: Chunk) -> dict[str, Any]:
     return value
 
 
+def _entity_info_from_dict(d: dict[str, Any]) -> EntityInfo:
+    br = d.get("byte_range") or {}
+    lr = d.get("line_range") or {}
+    try:
+        etype = EntityType(str(d.get("type", "function")))
+    except ValueError:
+        etype = EntityType.FUNCTION
+    return EntityInfo(
+        name=str(d.get("name", "")),
+        type=etype,
+        signature=str(d.get("signature", "")),
+        docstring=d.get("docstring"),
+        byte_range=ByteRange(int(br["start"]), int(br["end"])) if br else None,
+        line_range=LineRange(int(lr["start"]), int(lr["end"])) if lr else None,
+        is_partial=bool(d.get("is_partial", False)),
+        parent=d.get("parent"),
+    )
+
+
 def chunk_from_dict(data: dict[str, Any]) -> Chunk:
-    """Rebuild a :class:`Chunk` from :func:`chunk_to_dict` output (minimal context parse)."""
+    """Rebuild a :class:`Chunk` from :func:`chunk_to_dict` output."""
     ctx_raw = data.get("context") or {}
     ct_raw = ctx_raw.get("content_type", "prose")
     if isinstance(ct_raw, str):
@@ -33,6 +61,12 @@ def chunk_from_dict(data: dict[str, Any]) -> Chunk:
             content_type = ContentType.PROSE
     else:
         content_type = ContentType.PROSE
+
+    entities = [
+        _entity_info_from_dict(e)
+        for e in ctx_raw.get("entities") or []
+        if isinstance(e, dict)
+    ]
 
     br = data.get("byte_range") or {}
     lr = data.get("line_range") or {}
@@ -47,6 +81,7 @@ def chunk_from_dict(data: dict[str, Any]) -> Chunk:
             filepath=str(ctx_raw.get("filepath", "")),
             language=cast(Language, ctx_raw.get("language", "plaintext")),
             content_type=content_type,
+            entities=entities,
             format_metadata=dict(ctx_raw.get("format_metadata", {})),
         ),
         token_count=int(data.get("token_count", 0)),
