@@ -6,8 +6,12 @@ from typing import Any
 from omnichunk.formats.types import FormatSegment, LoadedDocument
 
 
-def load_ipynb(content: str) -> LoadedDocument:
-    """Parse a Jupyter notebook JSON string into canonical text and segments."""
+def load_ipynb(content: str, *, include_outputs: bool = False) -> LoadedDocument:
+    """Parse a Jupyter notebook JSON string into canonical text and segments.
+
+    ``include_outputs`` (default False) controls whether stdout / stderr /
+    error / rich-display output cells are appended after each code cell.
+    """
     warnings: list[str] = []
     try:
         data: dict[str, Any] = json.loads(content)
@@ -41,6 +45,8 @@ def load_ipynb(content: str) -> LoadedDocument:
         src = cell.get("source", "")
         cell_text = "".join(str(x) for x in src) if isinstance(src, list) else str(src)
 
+        cell_meta = _cell_metadata(cell)
+
         if ctype == "markdown":
             if cell_text:
                 start = cursor
@@ -51,7 +57,7 @@ def load_ipynb(content: str) -> LoadedDocument:
                         char_start=start,
                         char_end=cursor,
                         kind="prose",
-                        metadata={"cell": idx, "cell_type": "markdown"},
+                        metadata={"cell": idx, "cell_type": "markdown", **cell_meta},
                     )
                 )
         elif ctype == "code":
@@ -65,23 +71,33 @@ def load_ipynb(content: str) -> LoadedDocument:
                         char_start=start,
                         char_end=cursor,
                         kind="code",
-                        metadata={"cell": idx, "cell_type": "code", "language": lang},
+                        metadata={
+                            "cell": idx,
+                            "cell_type": "code",
+                            "language": lang,
+                            **cell_meta,
+                        },
                     )
                 )
-            out_text = _extract_cell_outputs(cell)
-            if out_text.strip():
-                start = cursor
-                parts.append(out_text)
-                cursor += len(out_text)
-                segments.append(
-                    FormatSegment(
-                        char_start=start,
-                        char_end=cursor,
-                        kind="prose",
-                        metadata={"cell": idx, "cell_type": "output"},
+            # Skip outputs entirely when include_outputs is False, even if
+            # present in the notebook JSON.
+            if include_outputs:
+                out_text = _extract_cell_outputs(cell)
+                if out_text.strip():
+                    start = cursor
+                    parts.append(out_text)
+                    cursor += len(out_text)
+                    segments.append(
+                        FormatSegment(
+                            char_start=start,
+                            char_end=cursor,
+                            kind="prose",
+                            metadata={"cell": idx, "cell_type": "output", **cell_meta},
+                        )
                     )
-                )
         elif ctype == "raw":
+            # Raw cells are plain text per nbformat — surface as prose with
+            # a 'raw' marker in metadata so consumers can disambiguate.
             if cell_text:
                 start = cursor
                 parts.append(cell_text)
@@ -91,7 +107,7 @@ def load_ipynb(content: str) -> LoadedDocument:
                         char_start=start,
                         char_end=cursor,
                         kind="prose",
-                        metadata={"cell": idx, "cell_type": "raw"},
+                        metadata={"cell": idx, "cell_type": "raw", **cell_meta},
                     )
                 )
         else:
@@ -104,6 +120,21 @@ def load_ipynb(content: str) -> LoadedDocument:
         format_name="ipynb",
         warnings=tuple(warnings),
     )
+
+
+def _cell_metadata(cell: dict[str, Any]) -> dict[str, Any]:
+    """Surface common nbformat cell metadata (tags, collapsed, scrolled)."""
+    meta = cell.get("metadata")
+    if not isinstance(meta, dict):
+        return {}
+    out: dict[str, Any] = {}
+    tags = meta.get("tags")
+    if isinstance(tags, list) and tags:
+        out["tags"] = [str(t) for t in tags]
+    for key in ("collapsed", "scrolled", "execution_count", "id"):
+        if key in meta:
+            out[key] = meta[key]
+    return out
 
 
 def _code_language(cell: dict[str, Any]) -> str:

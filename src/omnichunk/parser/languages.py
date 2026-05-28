@@ -44,6 +44,10 @@ _GRAMMARS: dict[Language, GrammarSpec] = {
     "php": GrammarSpec("tree_sitter_php", ("language", "language_php", "language_php_only")),
     "swift": GrammarSpec("tree_sitter_swift", ("language",)),
     "kotlin": GrammarSpec("tree_sitter_kotlin", ("language",)),
+    "sql": GrammarSpec("tree_sitter_sql", ("language",)),
+    "bash": GrammarSpec("tree_sitter_bash", ("language",)),
+    "scala": GrammarSpec("tree_sitter_scala", ("language",)),
+    "elixir": GrammarSpec("tree_sitter_elixir", ("language",)),
 }
 
 _LOCK = RLock()

@@ -48,21 +48,24 @@ ENTITY_NODE_TYPES: dict[Language, dict[str, EntityType]] = {
         "interface_declaration": EntityType.INTERFACE,
         "type_alias_declaration": EntityType.TYPE,
         "enum_declaration": EntityType.ENUM,
+        "module": EntityType.MODULE,
         "import_statement": EntityType.IMPORT,
         "export_statement": EntityType.EXPORT,
     },
     "rust": {
         "function_item": EntityType.FUNCTION,
-        "impl_item": EntityType.CLASS,
+        "impl_item": EntityType.IMPL_BLOCK,
         "struct_item": EntityType.CLASS,
         "trait_item": EntityType.INTERFACE,
         "enum_item": EntityType.ENUM,
+        "macro_definition": EntityType.MACRO,
         "use_declaration": EntityType.IMPORT,
     },
     "go": {
         "function_declaration": EntityType.FUNCTION,
         "method_declaration": EntityType.METHOD,
         "type_declaration": EntityType.TYPE,
+        "type_alias": EntityType.TYPE_ALIAS,
         "import_declaration": EntityType.IMPORT,
     },
     "java": {
@@ -70,6 +73,8 @@ ENTITY_NODE_TYPES: dict[Language, dict[str, EntityType]] = {
         "class_declaration": EntityType.CLASS,
         "interface_declaration": EntityType.INTERFACE,
         "enum_declaration": EntityType.ENUM,
+        "record_declaration": EntityType.RECORD,
+        "annotation_type_declaration": EntityType.ANNOTATION,
         "import_declaration": EntityType.IMPORT,
     },
     "c": {
@@ -118,6 +123,27 @@ ENTITY_NODE_TYPES: dict[Language, dict[str, EntityType]] = {
         "protocol_declaration": EntityType.INTERFACE,
         "import_declaration": EntityType.IMPORT,
     },
+    "sql": {
+        "create_table": EntityType.SQL_OBJECT,
+        "create_view": EntityType.SQL_OBJECT,
+        "create_function": EntityType.FUNCTION,
+        "create_index": EntityType.SQL_OBJECT,
+    },
+    "bash": {
+        "function_definition": EntityType.FUNCTION,
+    },
+    "scala": {
+        "object_definition": EntityType.CLASS,
+        "class_definition": EntityType.CLASS,
+        "trait_definition": EntityType.INTERFACE,
+        "function_definition": EntityType.FUNCTION,
+        "import_declaration": EntityType.IMPORT,
+    },
+    "elixir": {
+        # Query-based extraction handles the actual entity nodes;
+        # this fallback fires only when tree-sitter Query is unavailable.
+        "call": EntityType.FUNCTION,
+    },
 }
 
 _QUERY_CAPTURE_ENTITY_TYPES: dict[str, EntityType] = {
@@ -130,6 +156,19 @@ _QUERY_CAPTURE_ENTITY_TYPES: dict[str, EntityType] = {
     "entity.import": EntityType.IMPORT,
     "entity.export": EntityType.EXPORT,
     "entity.decorator": EntityType.DECORATOR,
+    # Phase 2 additions
+    "entity.sql_object": EntityType.SQL_OBJECT,
+    "entity.macro": EntityType.MACRO,
+    "entity.impl_block": EntityType.IMPL_BLOCK,
+    "entity.record": EntityType.RECORD,
+    "entity.sealed_interface": EntityType.SEALED_INTERFACE,
+    "entity.annotation": EntityType.ANNOTATION,
+    "entity.protocol": EntityType.PROTOCOL,
+    "entity.type_alias": EntityType.TYPE_ALIAS,
+    "entity.module_export": EntityType.MODULE_EXPORT,
+    "entity.directive": EntityType.DIRECTIVE,
+    "entity.constant": EntityType.CONSTANT,
+    "entity.module": EntityType.MODULE,
 }
 
 

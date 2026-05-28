@@ -74,6 +74,10 @@ all-languages = [
   "tree-sitter-kotlin>=0.23.0",
   # PyPI ships only 0.0.x (aligned with tree-sitter~=0.23); no 0.23.x wheel yet.
   "tree-sitter-swift>=0.0.1",
+  "tree-sitter-sql>=0.3.0",
+  "tree-sitter-bash>=0.23.0",
+  "tree-sitter-scala>=0.23.0",
+  "tree-sitter-elixir>=0.3.0",
 ]
 pinecone = []
 weaviate = []

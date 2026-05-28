@@ -32,6 +32,17 @@ class EntityType(Enum):
     TABLE = "table"
     CODE_BLOCK = "code_block"
     FRONTMATTER = "frontmatter"
+    # Phase 2 additions
+    SQL_OBJECT = "sql_object"
+    MACRO = "macro"
+    IMPL_BLOCK = "impl_block"
+    RECORD = "record"
+    SEALED_INTERFACE = "sealed_interface"
+    ANNOTATION = "annotation"
+    PROTOCOL = "protocol"
+    TYPE_ALIAS = "type_alias"
+    MODULE_EXPORT = "module_export"
+    DIRECTIVE = "directive"
 
 
 Language = Literal[
@@ -53,6 +64,9 @@ Language = Literal[
     "lua",
     "zig",
     "elixir",
+    "sql",
+    "bash",
+    "rst",
     "markdown",
     "html",
     "xml",
@@ -301,6 +315,11 @@ class ChunkOptions:
     preserve_decorators: bool = True
     preserve_comments: bool = True
     include_header_in_sections: bool = True
+
+    # When True, Jupyter notebook (.ipynb) cell outputs (stdout/stderr/rich
+    # display) are appended after each code cell. Default False excludes
+    # outputs entirely so chunk text mirrors only the source cells.
+    include_notebook_outputs: bool = False
 
     _precomputed_nws_cumsum: Any | None = None
     _precomputed_text_index: Any | None = None

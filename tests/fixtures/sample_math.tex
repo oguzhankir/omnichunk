@@ -1,0 +1,33 @@
+\documentclass{article}
+\begin{document}
+
+\section{Introduction}
+
+Some intro prose. See equation \ref{eq:main} below.
+
+\begin{equation}
+E = mc^2 \label{eq:main}
+\end{equation}
+
+Inline math like $a^2 + b^2 = c^2$ should stay together.
+
+\begin{align}
+x &= y + z \\
+y &= 2x
+\end{align}
+
+A display block: \[ \int_0^1 x^2 \, dx = \frac{1}{3} \]
+
+\section{Code Example}
+
+\begin{lstlisting}[language=Python]
+def hello():
+    return 42
+\end{lstlisting}
+
+\footnote{This is a footnote that shouldn't split chunks.}
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}

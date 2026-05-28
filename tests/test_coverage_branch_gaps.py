@@ -401,7 +401,7 @@ def test_load_ipynb_raw_outputs_and_unknown_cell() -> None:
             },
         ]
     }
-    loaded = load_ipynb(json.dumps(payload))
+    loaded = load_ipynb(json.dumps(payload), include_outputs=True)
     assert "rawline" in loaded.text
     assert "[output]" in loaded.text
     assert any(w.startswith("unknown_cell_type") for w in loaded.warnings)
