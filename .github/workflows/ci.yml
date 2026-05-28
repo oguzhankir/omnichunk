@@ -31,6 +31,9 @@ jobs:
       - name: Run benchmark regression gate
         run: python scripts/check_benchmarks.py --run-quality
 
+      - name: Throughput regression gate
+        run: python scripts/check_benchmarks.py --run-regression-gate
+
       - name: Run tests
         run: pytest -q --cov=omnichunk --cov-branch --cov-report=term-missing --cov-report=xml --cov-fail-under=90
 
