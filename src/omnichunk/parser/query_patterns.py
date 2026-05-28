@@ -13,6 +13,17 @@ _QUERY_SOURCES: dict[Language, str] = {
     (function_definition name: (_) @name)
     (class_definition name: (_) @name)
   ]) @entity.decorator
+(assignment
+  left: (identifier) @name
+  (#eq? @name "__all__")) @entity.module_export
+(assignment
+  left: (identifier) @name
+  type: (type) @ann
+  (#eq? @ann "TypeAlias")) @entity.type_alias
+(class_definition
+  name: (_) @name
+  superclasses: (argument_list (identifier) @base
+                               (#eq? @base "Protocol"))) @entity.protocol
 """,
     "javascript": """
 (function_declaration name: (_) @name) @entity.function

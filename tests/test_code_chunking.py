@@ -147,3 +147,108 @@ def test_large_python_file_stress_reconstruction_and_determinism() -> None:
     assert [(c.byte_range.start, c.byte_range.end, c.contextualized_text) for c in first] == [
         (c.byte_range.start, c.byte_range.end, c.contextualized_text) for c in second
     ]
+
+
+# ---------------------------------------------------------------------------
+# Phase 2 — Python entity-extraction extensions (Commit 16)
+# ---------------------------------------------------------------------------
+
+
+def _entities(code: str, filepath: str = "x.py") -> list[tuple[str, str]]:
+    chunks = Chunker(max_chunk_size=600, min_chunk_size=20, size_unit="chars").chunk(
+        filepath, code
+    )
+    return [(e.name, e.type.value) for c in chunks for e in c.context.entities]
+
+
+def test_python_dunder_all_captured_as_module_export() -> None:
+    code = '__all__ = ["User", "Admin"]\n\nclass User:\n    pass\n'
+    ents = _entities(code)
+    assert ("__all__", "module_export") in ents
+
+
+def test_python_typealias_captured() -> None:
+    code = "from typing import TypeAlias\n\nUserId: TypeAlias = int\nName: TypeAlias = str\n"
+    ents = _entities(code)
+    aliases = {n for n, t in ents if t == "type_alias"}
+    assert aliases == {"UserId", "Name"}
+
+
+def test_python_protocol_class_captured_as_protocol() -> None:
+    code = (
+        "from typing import Protocol\n\n"
+        "class Renderable(Protocol):\n"
+        "    def render(self) -> str: ...\n"
+    )
+    ents = _entities(code)
+    protocols = {n for n, t in ents if t == "protocol"}
+    assert "Renderable" in protocols
+
+
+def test_python_plain_class_not_tagged_as_protocol() -> None:
+    code = "class User:\n    pass\n"
+    ents = _entities(code)
+    assert all(t != "protocol" for _, t in ents)
+
+
+def test_python_dataclass_decorated_class_signature_includes_decorator() -> None:
+    code = (
+        "from dataclasses import dataclass\n\n"
+        "@dataclass(frozen=True)\n"
+        "class Point:\n"
+        "    x: int\n"
+        "    y: int\n"
+    )
+    chunks = Chunker(max_chunk_size=600, min_chunk_size=20, size_unit="chars").chunk(
+        "x.py", code
+    )
+    all_entities = [e for c in chunks for e in c.context.entities]
+    point = next((e for e in all_entities if e.name == "Point"), None)
+    assert point is not None
+    # The chunk should contain the decorator line attached to the class definition.
+    container = next(c for c in chunks if "class Point" in c.text)
+    assert "@dataclass" in container.text
+
+
+def test_python_stacked_decorators_stay_attached_to_function() -> None:
+    code = (
+        "@staticmethod\n"
+        "@property\n"
+        "def helper():\n"
+        "    return 1\n"
+    )
+    chunks = Chunker(max_chunk_size=600, min_chunk_size=20, size_unit="chars").chunk(
+        "x.py", code
+    )
+    helper_chunk = next(c for c in chunks if "def helper" in c.text)
+    assert "@staticmethod" in helper_chunk.text
+    assert "@property" in helper_chunk.text
+
+
+def test_python_typealias_does_not_also_produce_constant() -> None:
+    code = "from typing import TypeAlias\n\nUserId: TypeAlias = int\n"
+    ents = _entities(code)
+    type_alias_count = sum(1 for n, t in ents if n == "UserId" and t == "type_alias")
+    assert type_alias_count == 1
+
+
+def test_python_protocol_and_class_coexist_on_same_decl() -> None:
+    """Protocol subclass yields BOTH the class entity and the protocol entity."""
+    code = "from typing import Protocol\n\nclass X(Protocol):\n    pass\n"
+    ents = _entities(code)
+    assert ("X", "class") in ents
+    assert ("X", "protocol") in ents
+
+
+def test_python_module_export_value_is_dunder_all() -> None:
+    code = '__all__ = ["A", "B", "C"]\n'
+    ents = _entities(code)
+    exports = [n for n, t in ents if t == "module_export"]
+    assert exports == ["__all__"]
+
+
+def test_python_typealias_without_annotation_is_not_captured() -> None:
+    """Regular assignment without TypeAlias annotation must not produce type_alias."""
+    code = "Name = str\n"
+    ents = _entities(code)
+    assert all(t != "type_alias" for _, t in ents)
