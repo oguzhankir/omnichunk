@@ -4,7 +4,7 @@ from collections.abc import Generator, Iterable, Sequence
 from dataclasses import dataclass
 from typing import Any
 
-import numpy as np
+from numpy.typing import NDArray
 
 from omnichunk.sizing.nws import get_nws_count
 
@@ -22,7 +22,7 @@ class RangeNode:
 def assign_windows_for_ranges(
     ranges: Sequence[tuple[int, int]],
     *,
-    cumsum: np.ndarray,
+    cumsum: NDArray[Any],
     max_size: int,
     code: str,
 ) -> list[list[ASTNodeWindowItem]]:
@@ -33,7 +33,7 @@ def assign_windows_for_ranges(
 def assign_windows_for_nodes(
     nodes: Sequence[Any],
     *,
-    cumsum: np.ndarray,
+    cumsum: NDArray[Any],
     max_size: int,
     code: str,
 ) -> list[list[ASTNodeWindowItem]]:
@@ -45,7 +45,7 @@ def greedy_assign_windows(
     nodes: Iterable[Any],
     *,
     code: str,
-    cumsum: np.ndarray,
+    cumsum: NDArray[Any],
     max_size: int,
 ) -> Generator[list[ASTNodeWindowItem], None, None]:
     """Assign nodes into windows greedily using NWS size."""
