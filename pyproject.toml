@@ -124,6 +124,7 @@ dev = [
   "tree-sitter-swift>=0.0.1",
   "pypdf>=3.0",
   "python-docx>=1.0",
+  "opentelemetry-sdk>=1.21.0",
 ]
 
 [project.urls]

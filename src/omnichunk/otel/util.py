@@ -16,6 +16,30 @@ def _span_set(span: object | None, key: str, value: Any) -> None:
         setter(key, value)
 
 
+# Public alias — preferred in new code.
+span_set = _span_set
+
+
+def record_span_error(span: object | None, exc: BaseException) -> None:
+    """Record an exception event and set ERROR status on a span (duck-typed)."""
+    if span is None:
+        return
+    with suppress(Exception):
+        record = getattr(span, "record_exception", None)
+        if callable(record):
+            record(exc)
+    with suppress(Exception):
+        set_status = getattr(span, "set_status", None)
+        if not callable(set_status):
+            return
+        try:
+            from opentelemetry.trace import Status, StatusCode  # noqa: PLC0415
+
+            set_status(Status(StatusCode.ERROR, str(exc)))
+        except ImportError:
+            pass
+
+
 @contextmanager
 def maybe_span(tracer: object | None, name: str, **initial_attrs: Any) -> Iterator[Any]:
     """OpenTelemetry span context manager; no-op when ``tracer`` is None."""
