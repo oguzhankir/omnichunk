@@ -125,6 +125,70 @@ def test_sql_entities_extracted(fixtures_dir: Path) -> None:
     assert types <= {"sql_object", "function"}, f"unexpected types: {types}"
 
 
+def _has_tree_sitter_bash() -> bool:
+    try:
+        __import__("tree_sitter_bash")
+    except ImportError:
+        return False
+    return True
+
+
+skip_if_no_bash = pytest.mark.skipif(
+    not _has_tree_sitter_bash(), reason="tree-sitter-bash not installed"
+)
+
+
+@skip_if_no_bash
+def test_bash_chunking_reconstruction(fixtures_dir: Path) -> None:
+    code = (fixtures_dir / "bash_complex.sh").read_text(encoding="utf-8")
+    chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
+        "deploy.sh", code
+    )
+    assert chunks
+    assert "".join(c.text for c in chunks) == code
+    for left, right in zip(chunks, chunks[1:]):
+        assert left.byte_range.end == right.byte_range.start
+
+
+@skip_if_no_bash
+def test_bash_function_entities(fixtures_dir: Path) -> None:
+    code = (fixtures_dir / "bash_complex.sh").read_text(encoding="utf-8")
+    chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
+        "deploy.sh", code
+    )
+    fn_names = {
+        e.name for c in chunks for e in c.context.entities if e.type.value == "function"
+    }
+    assert {"deploy", "main", "usage"} <= fn_names
+
+
+@skip_if_no_bash
+def test_bash_heredocs_never_split(fixtures_dir: Path) -> None:
+    """No chunk may contain an opening <<MARKER without the closing MARKER."""
+    import re as _re
+
+    code = (fixtures_dir / "bash_complex.sh").read_text(encoding="utf-8")
+    chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
+        "deploy.sh", code
+    )
+    for ch in chunks:
+        markers = _re.findall(r"<<\-?\s*(\w+)", ch.text)
+        for marker in markers:
+            # Closing marker appears at line start in the same chunk
+            assert _re.search(rf"^\s*{marker}\s*$", ch.text, _re.MULTILINE), (
+                f"heredoc marker {marker!r} opened but not closed in chunk: {ch.text[:80]!r}"
+            )
+
+
+@skip_if_no_bash
+def test_bash_extension_variants_routed(tmp_path: Path) -> None:
+    """All four bash-family extensions route to the bash language."""
+    chunker = Chunker(max_chunk_size=200, min_chunk_size=10, size_unit="chars")
+    for ext in (".sh", ".bash", ".zsh", ".fish"):
+        chunks = chunker.chunk(f"script{ext}", "echo hello\n")
+        assert chunks[0].context.language == "bash"
+
+
 @skip_if_no_sql
 def test_sql_at_least_one_complete_statement_per_chunk(fixtures_dir: Path) -> None:
     code = (fixtures_dir / "sql_complex.sql").read_text(encoding="utf-8")

@@ -106,6 +106,9 @@ _QUERY_SOURCES: dict[Language, str] = {
 (create_function (object_reference) @name) @entity.function
 (create_index (identifier) @name) @entity.sql_object
 """,
+    "bash": """
+(function_definition name: (_) @name) @entity.function
+""",
 }
 
 

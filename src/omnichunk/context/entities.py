@@ -124,6 +124,9 @@ ENTITY_NODE_TYPES: dict[Language, dict[str, EntityType]] = {
         "create_function": EntityType.FUNCTION,
         "create_index": EntityType.SQL_OBJECT,
     },
+    "bash": {
+        "function_definition": EntityType.FUNCTION,
+    },
 }
 
 _QUERY_CAPTURE_ENTITY_TYPES: dict[str, EntityType] = {
