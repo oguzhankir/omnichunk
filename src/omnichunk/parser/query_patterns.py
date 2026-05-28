@@ -55,7 +55,10 @@ _QUERY_SOURCES: dict[Language, str] = {
     "go": """
 (function_declaration name: (_) @name) @entity.function
 (method_declaration name: (_) @name) @entity.method
+(type_declaration (type_spec name: (_) @name type: (interface_type))) @entity.interface
 (type_declaration (type_spec name: (_) @name)) @entity.type
+(type_declaration (type_alias name: (_) @name)) @entity.type_alias
+((comment) @entity.directive (#match? @entity.directive "go:generate"))
 (import_declaration) @entity.import
 """,
     "java": """

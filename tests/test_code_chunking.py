@@ -398,3 +398,59 @@ def test_rust_macro_definition_kept_with_arms_intact() -> None:
     )
     macro_chunk = next(c for c in chunks if "macro_rules!" in c.text)
     assert "($x:expr)" in macro_chunk.text
+
+
+# ---------------------------------------------------------------------------
+# Phase 2 — Go modern patterns (Commit 19)
+# ---------------------------------------------------------------------------
+
+
+def _go_chunks(fixtures_dir: Path) -> list:
+    code = (fixtures_dir / "go_modern.go").read_text(encoding="utf-8")
+    return Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
+        "modern.go", code
+    )
+
+
+def test_go_modern_reconstruction(fixtures_dir: Path) -> None:
+    code = (fixtures_dir / "go_modern.go").read_text(encoding="utf-8")
+    chunks = _go_chunks(fixtures_dir)
+    assert "".join(c.text for c in chunks) == code
+    for left, right in zip(chunks, chunks[1:]):
+        assert left.byte_range.end == right.byte_range.start
+
+
+def test_go_interface_extraction(fixtures_dir: Path) -> None:
+    chunks = _go_chunks(fixtures_dir)
+    interfaces = {
+        e.name for c in chunks for e in c.context.entities if e.type.value == "interface"
+    }
+    assert {"Comparable", "Renderer"} <= interfaces
+
+
+def test_go_type_alias_extraction(fixtures_dir: Path) -> None:
+    chunks = _go_chunks(fixtures_dir)
+    aliases = {
+        e.name for c in chunks for e in c.context.entities if e.type.value == "type_alias"
+    }
+    assert {"Alias", "StringPair"} <= aliases
+
+
+def test_go_init_function_captured(fixtures_dir: Path) -> None:
+    chunks = _go_chunks(fixtures_dir)
+    fns = {e.name for c in chunks for e in c.context.entities if e.type.value == "function"}
+    assert "init" in fns
+
+
+def test_go_generic_function_signature_preserved(fixtures_dir: Path) -> None:
+    chunks = _go_chunks(fixtures_dir)
+    map_chunk = next(c for c in chunks if "func Map[" in c.text)
+    assert "[T, U any]" in map_chunk.text
+
+
+def test_go_generate_directive_preserved(fixtures_dir: Path) -> None:
+    """//go:generate directives must appear verbatim in chunk content."""
+    chunks = _go_chunks(fixtures_dir)
+    full = "".join(c.text for c in chunks)
+    assert "//go:generate stringer -type=Color" in full
+    assert "//go:generate mockgen -source=service.go" in full

@@ -65,6 +65,7 @@ ENTITY_NODE_TYPES: dict[Language, dict[str, EntityType]] = {
         "function_declaration": EntityType.FUNCTION,
         "method_declaration": EntityType.METHOD,
         "type_declaration": EntityType.TYPE,
+        "type_alias": EntityType.TYPE_ALIAS,
         "import_declaration": EntityType.IMPORT,
     },
     "java": {
