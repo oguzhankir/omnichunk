@@ -14,6 +14,7 @@ from omnichunk.formats.chunk import chunk_loaded_document
 from omnichunk.formats.docx_loader import load_docx_bytes
 from omnichunk.formats.ipynb import load_ipynb
 from omnichunk.formats.pdf import load_pdf_bytes
+from omnichunk.formats.rst import load_rst
 from omnichunk.formats.tex import load_latex
 from omnichunk.otel.util import finalize_chunk_file_span, maybe_span, record_span_error, span_set
 from omnichunk.propositions.heuristic import extract_propositions_heuristic
@@ -42,7 +43,7 @@ from omnichunk.types import (
 )
 from omnichunk.util.detect import detect_language
 
-_STRUCTURED_SUFFIXES = frozenset({".ipynb", ".tex", ".pdf", ".docx"})
+_STRUCTURED_SUFFIXES = frozenset({".ipynb", ".tex", ".pdf", ".docx", ".rst"})
 
 
 class Chunker:
@@ -60,7 +61,12 @@ class Chunker:
                     f"Use chunk_file() for {suf} documents; "
                     "binary formats cannot be passed as text."
                 )
-            loaded = load_ipynb(content) if suf == ".ipynb" else load_latex(content)
+            if suf == ".ipynb":
+                loaded = load_ipynb(content)
+            elif suf == ".rst":
+                loaded = load_rst(content)
+            else:
+                loaded = load_latex(content)
             options = self._build_options(filepath=filepath, overrides=overrides)
             lang = detect_language(filepath=filepath, content=loaded.text)
             options = replace(options, language=lang)
@@ -150,6 +156,8 @@ class Chunker:
                         loaded = load_ipynb(file_path.read_text(encoding=encoding))
                     elif suf == ".tex":
                         loaded = load_latex(file_path.read_text(encoding=encoding))
+                    elif suf == ".rst":
+                        loaded = load_rst(file_path.read_text(encoding=encoding))
                     elif suf == ".pdf":
                         loaded = load_pdf_bytes(file_path.read_bytes())
                     else:
