@@ -15,7 +15,7 @@ from omnichunk.formats.docx_loader import load_docx_bytes
 from omnichunk.formats.ipynb import load_ipynb
 from omnichunk.formats.pdf import load_pdf_bytes
 from omnichunk.formats.tex import load_latex
-from omnichunk.otel.util import finalize_chunk_file_span, maybe_span
+from omnichunk.otel.util import finalize_chunk_file_span, maybe_span, record_span_error, span_set
 from omnichunk.propositions.heuristic import extract_propositions_heuristic
 from omnichunk.propositions.llm_extract import extract_propositions_llm
 from omnichunk.propositions.types import Proposition
@@ -66,7 +66,16 @@ class Chunker:
             options = replace(options, language=lang)
             return chunk_loaded_document(filepath, loaded, options)
         options = self._build_options(filepath=filepath, overrides=overrides)
-        _, chunks = route_content(filepath=filepath, content=content, options=options)
+        with maybe_span(
+            options.otel_tracer,
+            "omnichunk.engine.route",
+            filepath=filepath,
+        ) as route_span:
+            content_type, chunks = route_content(
+                filepath=filepath, content=content, options=options
+            )
+            span_set(route_span, "omnichunk.engine_name", content_type.value)
+            span_set(route_span, "omnichunk.size_unit", options.size_unit)
         return chunks
 
     def stream(self, filepath: str, content: str, **overrides: object) -> Iterator[Chunk]:
@@ -153,8 +162,10 @@ class Chunker:
                     text = file_path.read_text(encoding=encoding)
                     out = self.chunk(filepath=str(file_path), content=text, **overrides)
             except BaseException as exc:
+                record_span_error(span, exc)
                 finalize_chunk_file_span(span, chunk_count=0, t0=t0, error=str(exc))
                 raise
+            span_set(span, "omnichunk.size_unit", opts.size_unit)
             finalize_chunk_file_span(span, chunk_count=len(out), t0=t0)
             return out
 
