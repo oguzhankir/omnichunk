@@ -189,6 +189,78 @@ def test_bash_extension_variants_routed(tmp_path: Path) -> None:
         assert chunks[0].context.language == "bash"
 
 
+def _has_grammar(name: str) -> bool:
+    try:
+        __import__(name)
+    except ImportError:
+        return False
+    return True
+
+
+skip_if_no_scala = pytest.mark.skipif(
+    not _has_grammar("tree_sitter_scala"), reason="tree-sitter-scala not installed"
+)
+skip_if_no_elixir = pytest.mark.skipif(
+    not _has_grammar("tree_sitter_elixir"), reason="tree-sitter-elixir not installed"
+)
+
+
+@pytest.mark.parametrize(
+    ("filepath", "fixture", "expected_language", "expected_kinds"),
+    [
+        ("hello.scala", "scala_complex.scala", "scala", {"class", "interface", "function"}),
+        ("calc.ex", "elixir_complex.ex", "elixir", {"class", "function", "macro"}),
+    ],
+)
+def test_scala_elixir_chunking(
+    filepath: str,
+    fixture: str,
+    expected_language: str,
+    expected_kinds: set[str],
+    fixtures_dir: Path,
+) -> None:
+    if expected_language == "scala" and not _has_grammar("tree_sitter_scala"):
+        pytest.skip("tree-sitter-scala not installed")
+    if expected_language == "elixir" and not _has_grammar("tree_sitter_elixir"):
+        pytest.skip("tree-sitter-elixir not installed")
+
+    code = (fixtures_dir / fixture).read_text(encoding="utf-8")
+    chunker = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars")
+    chunks = chunker.chunk(filepath, code)
+    assert chunks
+    assert "".join(c.text for c in chunks) == code
+    for left, right in zip(chunks, chunks[1:]):
+        assert left.byte_range.end == right.byte_range.start
+    assert chunks[0].context.language == expected_language
+
+    kinds = {e.type.value for c in chunks for e in c.context.entities}
+    assert expected_kinds <= kinds, f"missing kinds: {expected_kinds - kinds} in {kinds}"
+
+
+@skip_if_no_scala
+def test_scala_nested_object_detected(fixtures_dir: Path) -> None:
+    code = (fixtures_dir / "scala_complex.scala").read_text(encoding="utf-8")
+    chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
+        "hello.scala", code
+    )
+    names = {e.name for c in chunks for e in c.context.entities}
+    # Nested Hello.Inner object must be visible alongside top-level Hello/Math.
+    assert {"Hello", "Inner", "Math"} <= names
+
+
+@skip_if_no_elixir
+def test_elixir_defmodule_name_captured(fixtures_dir: Path) -> None:
+    code = (fixtures_dir / "elixir_complex.ex").read_text(encoding="utf-8")
+    chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
+        "calc.ex", code
+    )
+    class_names = {
+        e.name for c in chunks for e in c.context.entities if e.type.value == "class"
+    }
+    assert "Inventory" in class_names
+    assert "Inventory.Item" in class_names
+
+
 @skip_if_no_sql
 def test_sql_at_least_one_complete_statement_per_chunk(fixtures_dir: Path) -> None:
     code = (fixtures_dir / "sql_complex.sql").read_text(encoding="utf-8")

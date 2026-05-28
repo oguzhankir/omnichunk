@@ -109,6 +109,24 @@ _QUERY_SOURCES: dict[Language, str] = {
     "bash": """
 (function_definition name: (_) @name) @entity.function
 """,
+    "scala": """
+(object_definition name: (_) @name) @entity.class
+(class_definition name: (_) @name) @entity.class
+(trait_definition name: (_) @name) @entity.interface
+(function_definition name: (_) @name) @entity.function
+(import_declaration) @entity.import
+""",
+    "elixir": """
+(call target: (identifier) @kind
+      (arguments (alias) @name)
+      (#eq? @kind "defmodule")) @entity.class
+(call target: (identifier) @kind
+      (#match? @kind "^(def|defp)$")) @entity.function
+(call target: (identifier) @kind
+      (#match? @kind "^(defmacro|defmacrop)$")) @entity.macro
+(call target: (identifier) @kind
+      (#match? @kind "^(use|import|alias|require)$")) @entity.import
+""",
 }
 
 

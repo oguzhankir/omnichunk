@@ -127,6 +127,18 @@ ENTITY_NODE_TYPES: dict[Language, dict[str, EntityType]] = {
     "bash": {
         "function_definition": EntityType.FUNCTION,
     },
+    "scala": {
+        "object_definition": EntityType.CLASS,
+        "class_definition": EntityType.CLASS,
+        "trait_definition": EntityType.INTERFACE,
+        "function_definition": EntityType.FUNCTION,
+        "import_declaration": EntityType.IMPORT,
+    },
+    "elixir": {
+        # Query-based extraction handles the actual entity nodes;
+        # this fallback fires only when tree-sitter Query is unavailable.
+        "call": EntityType.FUNCTION,
+    },
 }
 
 _QUERY_CAPTURE_ENTITY_TYPES: dict[str, EntityType] = {
