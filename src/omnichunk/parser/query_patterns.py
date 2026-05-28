@@ -64,8 +64,14 @@ _QUERY_SOURCES: dict[Language, str] = {
     "java": """
 (method_declaration name: (_) @name) @entity.method
 (class_declaration name: (_) @name) @entity.class
+(interface_declaration
+  (modifiers) @mods
+  name: (_) @name
+  (#match? @mods "sealed")) @entity.sealed_interface
 (interface_declaration name: (_) @name) @entity.interface
 (enum_declaration name: (_) @name) @entity.enum
+(record_declaration name: (_) @name) @entity.record
+(annotation_type_declaration name: (_) @name) @entity.annotation
 (import_declaration) @entity.import
 """,
     "c": """

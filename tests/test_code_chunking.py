@@ -454,3 +454,64 @@ def test_go_generate_directive_preserved(fixtures_dir: Path) -> None:
     full = "".join(c.text for c in chunks)
     assert "//go:generate stringer -type=Color" in full
     assert "//go:generate mockgen -source=service.go" in full
+
+
+# ---------------------------------------------------------------------------
+# Phase 2 — Java modern patterns (Commit 20)
+# ---------------------------------------------------------------------------
+
+
+def _java_chunks(fixtures_dir: Path) -> list:
+    code = (fixtures_dir / "java_modern.java").read_text(encoding="utf-8")
+    return Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
+        "Modern.java", code
+    )
+
+
+def test_java_modern_reconstruction(fixtures_dir: Path) -> None:
+    code = (fixtures_dir / "java_modern.java").read_text(encoding="utf-8")
+    chunks = _java_chunks(fixtures_dir)
+    assert "".join(c.text for c in chunks) == code
+    for left, right in zip(chunks, chunks[1:]):
+        assert left.byte_range.end == right.byte_range.start
+
+
+def test_java_annotation_type_declaration(fixtures_dir: Path) -> None:
+    chunks = _java_chunks(fixtures_dir)
+    annotations = {
+        e.name for c in chunks for e in c.context.entities if e.type.value == "annotation"
+    }
+    assert "Loggable" in annotations
+
+
+def test_java_record_declarations(fixtures_dir: Path) -> None:
+    chunks = _java_chunks(fixtures_dir)
+    records = {
+        e.name for c in chunks for e in c.context.entities if e.type.value == "record"
+    }
+    assert {"Point", "User"} <= records
+
+
+def test_java_sealed_interface_extraction(fixtures_dir: Path) -> None:
+    chunks = _java_chunks(fixtures_dir)
+    sealed = {
+        e.name
+        for c in chunks
+        for e in c.context.entities
+        if e.type.value == "sealed_interface"
+    }
+    assert "Shape" in sealed
+
+
+def test_java_method_decorators_preserved_in_chunk(fixtures_dir: Path) -> None:
+    chunks = _java_chunks(fixtures_dir)
+    circle_chunk = next(c for c in chunks if "class Circle" in c.text)
+    assert "@Override" in circle_chunk.text
+    assert "@Deprecated" in circle_chunk.text
+
+
+def test_java_static_initializer_preserved_in_class(fixtures_dir: Path) -> None:
+    chunks = _java_chunks(fixtures_dir)
+    circle_chunk = next(c for c in chunks if "class Circle" in c.text)
+    assert "static {" in circle_chunk.text
+    assert 'System.out.println("Circle loaded")' in circle_chunk.text

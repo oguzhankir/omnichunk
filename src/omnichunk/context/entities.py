@@ -73,6 +73,8 @@ ENTITY_NODE_TYPES: dict[Language, dict[str, EntityType]] = {
         "class_declaration": EntityType.CLASS,
         "interface_declaration": EntityType.INTERFACE,
         "enum_declaration": EntityType.ENUM,
+        "record_declaration": EntityType.RECORD,
+        "annotation_type_declaration": EntityType.ANNOTATION,
         "import_declaration": EntityType.IMPORT,
     },
     "c": {
