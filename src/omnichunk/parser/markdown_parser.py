@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
+from typing import Any
 
 from omnichunk.types import ByteRange, EntityType, LineRange
 
@@ -13,7 +14,41 @@ class ProseNode:
     byte_range: ByteRange
     line_range: LineRange
     heading_hierarchy: list[str] = field(default_factory=list)
-    metadata: dict[str, str] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+
+_CALLOUT_RE = re.compile(
+    r"(?m)^\s*>\s*\[!(?P<kind>[a-zA-Z]+)\]",
+)
+
+
+def _parse_yaml_frontmatter(raw: str) -> dict[str, str]:
+    """Parse minimal YAML front matter (top-level key: value lines only).
+
+    Designed to avoid a hard PyYAML dependency. Lists and nested objects
+    are returned as their raw string value; the caller may post-process.
+    """
+    out: dict[str, str] = {}
+    for line in raw.splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        if ":" not in stripped:
+            continue
+        key, _, val = stripped.partition(":")
+        key = key.strip()
+        val = val.strip().strip('"').strip("'")
+        if key:
+            out[key] = val
+    return out
+
+
+def _detect_callout_kind(text: str) -> str | None:
+    """Detect a GFM / Obsidian callout marker at the start of a blockquote."""
+    m = _CALLOUT_RE.search(text)
+    if not m:
+        return None
+    return m.group("kind").lower()
 
 
 @dataclass
@@ -44,12 +79,15 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
     if front:
         start = front.start()
         end = front.end()
+        body = front.group(1)
+        parsed = _parse_yaml_frontmatter(body)
         nodes.append(
             ProseNode(
                 kind=EntityType.FRONTMATTER,
                 text=content[start:end],
                 byte_range=ByteRange(start, end),
                 line_range=_line_range(content, start, end),
+                metadata={"front_matter": parsed},
             )
         )
 
@@ -112,6 +150,11 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
         elif _LIST_RE.search(segment):
             kind = EntityType.LIST
 
+        metadata: dict[str, Any] = {}
+        callout_kind = _detect_callout_kind(segment)
+        if callout_kind is not None:
+            metadata["callout"] = callout_kind
+
         nodes.append(
             ProseNode(
                 kind=kind,
@@ -119,6 +162,7 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
                 byte_range=ByteRange(left, right),
                 line_range=_line_range(content, left, right),
                 heading_hierarchy=hierarchy,
+                metadata=metadata,
             )
         )
 

@@ -181,15 +181,35 @@ class ProseEngine:
 
             line_start = text_index.line_for_char(start)
             line_end = text_index.line_for_char(max(start, end - 1))
+
+            format_metadata: dict[str, object] = {}
+            effective_section_type = section_type
+            if language == "markdown":
+                if section_type == EntityType.FRONTMATTER.value:
+                    from omnichunk.parser.markdown_parser import _parse_yaml_frontmatter
+
+                    body = text.strip().strip("-").strip()
+                    parsed = _parse_yaml_frontmatter(body)
+                    if parsed:
+                        format_metadata["front_matter"] = parsed
+                else:
+                    from omnichunk.parser.markdown_parser import _detect_callout_kind
+
+                    callout = _detect_callout_kind(text)
+                    if callout is not None:
+                        effective_section_type = f"callout/{callout}"
+                        format_metadata["callout"] = callout
+
             context = ChunkContext(
                 filepath=filepath,
                 language=language,
                 content_type=ContentType.PROSE,
                 heading_hierarchy=hierarchy,
-                section_type=section_type,
+                section_type=effective_section_type,
                 entities=_entities_for_section(
                     section_type, text, start, end, line_start, line_end
                 ),
+                format_metadata=format_metadata,
             )
 
             overlap_text = build_line_overlap_text(previous_text, options.overlap_lines)
