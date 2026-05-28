@@ -118,7 +118,11 @@ def _handle_tool(method: str, params: dict[str, Any]) -> Any:
         )
         return [chunk_to_dict(c) for c in out]
 
-    raise ValueError(f"unknown method: {method}")
+    raise _MethodNotFoundError(method)
+
+
+class _MethodNotFoundError(Exception):
+    """Raised by _handle_tool when the method name is not recognised."""
 
 
 class _MCPHandler(BaseHTTPRequestHandler):
@@ -126,6 +130,12 @@ class _MCPHandler(BaseHTTPRequestHandler):
 
     def log_message(self, format: str, *args: Any) -> None:
         return
+
+    def do_GET(self) -> None:
+        if self.path not in ("/", "/health"):
+            self.send_error(404)
+            return
+        self._write_json(200, {"status": "ok"})
 
     def do_POST(self) -> None:
         if self.path not in ("/", "/rpc", "/mcp"):
@@ -165,6 +175,15 @@ class _MCPHandler(BaseHTTPRequestHandler):
                 raise ValueError("missing method")
             result = _handle_tool(str(method), merged)
             self._write_json(200, {"jsonrpc": "2.0", "result": result, "id": req_id})
+        except _MethodNotFoundError as e:
+            self._write_json(
+                200,
+                {
+                    "jsonrpc": "2.0",
+                    "error": {"code": -32601, "message": f"method not found: {e}"},
+                    "id": req_id,
+                },
+            )
         except Exception as e:
             self._write_json(
                 200,
