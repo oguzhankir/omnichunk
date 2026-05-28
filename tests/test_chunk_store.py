@@ -203,7 +203,7 @@ def test_sync_modified_only_reindexes_changed_file(tmp_path: Path) -> None:
 
 
 def test_concurrent_reads_eight_threads_same_db_file(tmp_path: Path) -> None:
-    """Multiple connections read the same SQLite file (stdlib sqlite is not thread-safe per conn)."""
+    """Multiple connections read the same SQLite file (sqlite connections are not thread-safe)."""
     d = tmp_path / "proj"
     d.mkdir()
     (d / "x.py").write_text("x = 1\n" * 40, encoding="utf-8")
