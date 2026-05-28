@@ -157,6 +157,7 @@ pythonpath = ["src"]
 addopts = "-m 'not slow'"
 markers = [
   "slow: long-running tests excluded from default local runs",
+  "no_xdist: tests that must not run under pytest-xdist (process-global state)",
 ]
 
 [tool.mypy]

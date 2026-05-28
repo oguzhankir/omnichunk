@@ -35,7 +35,7 @@ jobs:
         run: python scripts/check_benchmarks.py --run-regression-gate
 
       - name: Run tests
-        run: pytest -q --cov=omnichunk --cov-branch --cov-report=term-missing --cov-report=xml --cov-fail-under=90
+        run: pytest -n auto -q --cov=omnichunk --cov-branch --cov-report=term-missing --cov-report=xml --cov-fail-under=90
 
       - name: Upload branch coverage to Codecov
         if: matrix.python-version == '3.12'
