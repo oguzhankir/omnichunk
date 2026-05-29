@@ -331,6 +331,12 @@ class ChunkOptions:
     semantic_threshold: float = 0.3
     semantic_min_sentences: int = 1
     semantic_sentence_splitter: object = None
+    # Per-Chunker LRU cache of sentence/window embeddings (0 disables caching).
+    semantic_embed_cache_size: int = 4096
+    # Adaptive boundary detection: threshold = mean(sims) - k * std(sims).
+    semantic_threshold_k: float = 1.0
+    # Sliding-window smoothing width for coherence scoring (sentences each side).
+    semantic_window_size: int = 3
 
     # Optional OpenTelemetry tracer (opentelemetry-api Tracer); None disables spans.
     otel_tracer: object | None = None

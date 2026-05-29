@@ -21,6 +21,7 @@ from omnichunk.propositions.heuristic import extract_propositions_heuristic
 from omnichunk.propositions.llm_extract import extract_propositions_llm
 from omnichunk.propositions.types import Proposition
 from omnichunk.quality import compute_chunk_quality_scores, compute_chunk_stats
+from omnichunk.semantic.cache import EmbeddingCache
 from omnichunk.serialization import (
     chunk_to_dict,
     chunks_to_csv,
@@ -50,6 +51,18 @@ class Chunker:
     def __init__(self, **options: object) -> None:
         """Create reusable chunker with default options."""
         self._defaults = ChunkOptions(**_coerce_option_dict(options))
+        self._embedding_cache: EmbeddingCache | None = None
+
+    def semantic_cache_stats(self) -> dict[str, int]:
+        """Return embedding cache ``{"hits", "misses", "size"}`` for this Chunker.
+
+        The cache is per-instance and starts empty; a freshly constructed
+        :class:`Chunker` always reports all-zero stats until semantic chunking
+        runs at least once.
+        """
+        if self._embedding_cache is None:
+            return {"hits": 0, "misses": 0, "size": 0}
+        return self._embedding_cache.stats()
 
     def chunk(self, filepath: str, content: str, **overrides: object) -> list[Chunk]:
         """Chunk content and return all chunks."""
@@ -655,7 +668,25 @@ class Chunker:
     def _build_options(self, filepath: str, overrides: dict[str, object]) -> ChunkOptions:
         # Use replace(), not asdict(), so callables (otel_tracer, embed_fn) are not deep-copied.
         merged = _coerce_option_dict(overrides)
-        return replace(self._defaults, filepath=filepath, **merged)
+        options = replace(self._defaults, filepath=filepath, **merged)
+        return self._with_cached_embed_fn(options)
+
+    def _with_cached_embed_fn(self, options: ChunkOptions) -> ChunkOptions:
+        """Wrap ``semantic_embed_fn`` with this Chunker's per-instance LRU cache.
+
+        No-op unless semantic chunking is requested with a callable embed_fn
+        and a positive cache size. The wrapper is idempotent because it stores
+        the wrapped function back on the options it returns.
+        """
+        if not options.semantic:
+            return options
+        embed_fn = options.semantic_embed_fn
+        if not callable(embed_fn) or int(options.semantic_embed_cache_size) <= 0:
+            return options
+        if self._embedding_cache is None:
+            self._embedding_cache = EmbeddingCache(options.semantic_embed_cache_size)
+        cached = self._embedding_cache.wrap(embed_fn)
+        return replace(options, semantic_embed_fn=cached)
 
 
 def chunk(filepath: str, content: str, **options: object) -> list[Chunk]:
