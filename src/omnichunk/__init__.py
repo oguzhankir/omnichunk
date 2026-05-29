@@ -15,7 +15,15 @@ from .formats import (
     load_latex,
     load_pdf_bytes,
 )
-from .graph import ChunkEdge, ChunkGraph, EntityNode, build_chunk_graph
+from .graph import (
+    ChunkEdge,
+    ChunkGraph,
+    EntityNode,
+    build_chunk_graph,
+    compute_centrality,
+    find_communities,
+    to_networkx_dict,
+)
 from .otel import maybe_span
 from .plugins import (
     list_registered_formatters,
@@ -98,6 +106,9 @@ __all__ = [
     "__version__",
     "build_chunk_graph",
     "build_tfidf_matrix",
+    "compute_centrality",
+    "find_communities",
+    "to_networkx_dict",
     "chunk",
     "chunk_diff",
     "chunk_from_dict",
