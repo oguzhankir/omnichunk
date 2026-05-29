@@ -6,6 +6,10 @@ from enum import Enum
 from typing import Any, Literal
 
 
+class ChunkingError(RuntimeError):
+    """Raised when chunking cannot proceed due to invalid inputs or configuration."""
+
+
 class ContentType(Enum):
     CODE = "code"
     PROSE = "prose"
