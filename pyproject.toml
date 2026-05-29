@@ -87,6 +87,7 @@ semantic = []
 graph = []
 tiktoken = ["tiktoken>=0.5.0"]
 transformers = ["transformers>=4.30.0"]
+sentence-transformers = ["sentence-transformers>=2.2.0"]
 langchain = ["langchain-core>=0.2.0"]
 llamaindex = ["llama-index-core>=0.10.0"]
 profiling = [
@@ -173,7 +174,7 @@ warn_redundant_casts = true
 warn_unused_configs = true
 
 [[tool.mypy.overrides]]
-module = ["tiktoken"]
+module = ["tiktoken", "sentence_transformers"]
 ignore_missing_imports = true
 
 [tool.ruff]
