@@ -13,59 +13,144 @@ def _tokenize(text: str) -> list[str]:
     return re.findall(r"[a-zA-Z][a-zA-Z0-9]*", text.lower())
 
 
-def build_tfidf_matrix(
+def _scipy_sparse() -> Any | None:
+    """Return ``scipy.sparse`` if importable, else ``None`` (dense fallback)."""
+    try:
+        import scipy.sparse as sp
+    except ImportError:
+        return None
+    return sp
+
+
+def _vocab_and_idf(
     documents: Sequence[str],
     *,
-    max_vocab: int = 4096,
-    min_df: int = 1,
-) -> NDArray[Any]:
-    """Build TF-IDF matrix of shape (N, V) for N documents, V vocab terms."""
-    n_docs = len(documents)
-    if n_docs == 0:
-        return np.zeros((0, 1), dtype=np.float64)
-
+    max_vocab: int,
+    min_df: int,
+) -> tuple[list[list[str]], dict[str, int], NDArray[Any]]:
+    """Shared front-end: tokenize, pick vocab by document frequency, compute IDF."""
     doc_tokens: list[list[str]] = [_tokenize(d) for d in documents]
     df: dict[str, int] = {}
     for tokens in doc_tokens:
-        seen: set[str] = set()
-        for t in tokens:
-            if t not in seen:
-                seen.add(t)
-                df[t] = df.get(t, 0) + 1
+        for t in set(tokens):
+            df[t] = df.get(t, 0) + 1
 
     candidates = sorted(
         ((t, c) for t, c in df.items() if c >= min_df),
         key=lambda x: (-x[1], x[0]),
     )
     vocab = [t for t, _ in candidates[:max_vocab]]
-    if not vocab:
-        return np.zeros((n_docs, 1), dtype=np.float64)
-
     t2i = {t: i for i, t in enumerate(vocab)}
-    v = len(vocab)
-    tf_mat = np.zeros((n_docs, v), dtype=np.float64)
+    nd = float(len(documents))
+    idf = np.array(
+        [np.log((1.0 + nd) / (1.0 + float(df[t]))) + 1.0 for t in vocab],
+        dtype=np.float64,
+    )
+    return doc_tokens, t2i, idf
+
+
+def _coo_tf(
+    doc_tokens: list[list[str]], t2i: dict[str, int]
+) -> tuple[list[int], list[int], list[float]]:
+    """Build COO (row, col, count) triples of raw term frequencies."""
+    counts: dict[tuple[int, int], float] = {}
     for i, tokens in enumerate(doc_tokens):
         for tok in tokens:
             j = t2i.get(tok)
             if j is not None:
-                tf_mat[i, j] += 1.0
+                counts[(i, j)] = counts.get((i, j), 0.0) + 1.0
+    rows = [r for (r, _c) in counts]
+    cols = [c for (_r, c) in counts]
+    data = list(counts.values())
+    return rows, cols, data
 
-    idf = np.zeros(v, dtype=np.float64)
-    nd = float(n_docs)
-    for j, term in enumerate(vocab):
-        dfi = float(df[term])
-        idf[j] = np.log((1.0 + nd) / (1.0 + dfi)) + 1.0
 
-    out = np.zeros((n_docs, v), dtype=np.float64)
-    for i in range(n_docs):
-        for j in range(v):
-            tf = tf_mat[i, j]
-            if tf > 0:
-                out[i, j] = (1.0 + np.log(tf)) * idf[j]
+def build_tfidf_matrix(
+    documents: Sequence[str],
+    *,
+    max_vocab: int = 4096,
+    min_df: int = 1,
+) -> NDArray[Any]:
+    """Build a dense, L2-normalized TF-IDF matrix of shape ``(N, V)``.
+
+    API is unchanged from earlier releases: callers always receive a dense
+    ``numpy`` array. For large corpora prefer :func:`build_tfidf_sparse`,
+    which avoids materializing the (mostly zero) dense matrix.
+    """
+    n_docs = len(documents)
+    if n_docs == 0:
+        return np.zeros((0, 1), dtype=np.float64)
+
+    doc_tokens, t2i, idf = _vocab_and_idf(
+        documents, max_vocab=max_vocab, min_df=min_df
+    )
+    v = len(t2i)
+    if v == 0:
+        return np.zeros((n_docs, 1), dtype=np.float64)
+
+    tf_mat = np.zeros((n_docs, v), dtype=np.float64)
+    rows, cols, data = _coo_tf(doc_tokens, t2i)
+    if data:
+        np.add.at(tf_mat, (np.asarray(rows), np.asarray(cols)), np.asarray(data))
+
+    # TF weighting: (1 + log(tf)) * idf, vectorized over nonzero entries only.
+    out = np.zeros_like(tf_mat)
+    mask = tf_mat > 0
+    out[mask] = 1.0 + np.log(tf_mat[mask])
+    out *= idf[None, :]
 
     norms = np.linalg.norm(out, axis=1, keepdims=True)
     norms = np.where(norms == 0, 1.0, norms)
     return cast("NDArray[Any]", out / norms)
+
+
+def build_tfidf_sparse(
+    documents: Sequence[str],
+    *,
+    max_vocab: int = 4096,
+    min_df: int = 1,
+) -> Any:
+    """Build an L2-normalized TF-IDF matrix as a ``scipy.sparse.csr_matrix``.
+
+    Logically identical to :func:`build_tfidf_matrix` but stores only nonzero
+    entries, which is dramatically smaller for large documents where each
+    sentence touches a tiny slice of the vocabulary.
+
+    Falls back to the dense :func:`build_tfidf_matrix` (returning an
+    ``ndarray``) when ``scipy`` is not installed, so callers must accept either
+    a CSR matrix or a dense array.
+    """
+    sp = _scipy_sparse()
+    if sp is None:
+        return build_tfidf_matrix(documents, max_vocab=max_vocab, min_df=min_df)
+
+    n_docs = len(documents)
+    if n_docs == 0:
+        return sp.csr_matrix((0, 1), dtype=np.float64)
+
+    doc_tokens, t2i, idf = _vocab_and_idf(
+        documents, max_vocab=max_vocab, min_df=min_df
+    )
+    v = len(t2i)
+    if v == 0:
+        return sp.csr_matrix((n_docs, 1), dtype=np.float64)
+
+    rows, cols, data = _coo_tf(doc_tokens, t2i)
+    tf = sp.coo_matrix(
+        (np.asarray(data, dtype=np.float64), (np.asarray(rows), np.asarray(cols))),
+        shape=(n_docs, v),
+    ).tocsr()
+
+    # (1 + log(tf)) on stored entries, then scale columns by idf.
+    weighted = tf.copy()
+    weighted.data = 1.0 + np.log(weighted.data)
+    weighted = weighted @ sp.diags(idf)
+
+    norms = np.sqrt(weighted.multiply(weighted).sum(axis=1))
+    norms = np.asarray(norms).reshape(-1)
+    norms[norms == 0] = 1.0
+    inv = sp.diags(1.0 / norms)
+    return (inv @ weighted).tocsr()
 
 
 def _coherence_scores(
