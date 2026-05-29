@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from collections.abc import Sequence
-from typing import Any, cast
+from typing import Any, Literal, cast, overload
 
 import numpy as np
 from numpy.typing import NDArray
@@ -68,40 +68,136 @@ def build_tfidf_matrix(
     return cast("NDArray[Any]", out / norms)
 
 
+def _coherence_scores(
+    sentences: Sequence[str],
+    *,
+    window_size: int,
+    max_vocab: int,
+) -> NDArray[Any]:
+    """Per-gap TF-IDF cosine similarity using sliding window means.
+
+    Builds the sentence TF-IDF matrix once (no re-embedding), then for every
+    gap ``g`` between ``sentences[g]`` and ``sentences[g+1]`` compares the mean
+    vector of up to ``window_size`` sentences on each side. Window means are
+    derived from a prefix-sum so the whole pass is O(N * V), independent of the
+    window width. Returns an array of length ``N - 1``.
+    """
+    n = len(sentences)
+    if n < 2:
+        return np.zeros(0, dtype=np.float64)
+    w = max(1, int(window_size))
+
+    mat = build_tfidf_matrix(sentences, max_vocab=max_vocab)
+    v = mat.shape[1]
+    if v == 0:
+        return np.zeros(n - 1, dtype=np.float64)
+
+    # cum[i] == sum of mat[:i]; shape (n + 1, V).
+    cum = np.zeros((n + 1, v), dtype=np.float64)
+    cum[1:] = np.cumsum(mat, axis=0)
+
+    gaps = np.arange(n - 1)
+    lo_b = np.maximum(0, gaps - w + 1)
+    cnt_b = (gaps + 1) - lo_b
+    before = (cum[gaps + 1] - cum[lo_b]) / cnt_b[:, None]
+
+    hi_a = np.minimum(n, gaps + 2 + (w - 1))
+    cnt_a = hi_a - (gaps + 1)
+    after = (cum[hi_a] - cum[gaps + 1]) / cnt_a[:, None]
+
+    nb = np.linalg.norm(before, axis=1)
+    na = np.linalg.norm(after, axis=1)
+    denom = nb * na
+    dots = np.einsum("id,id->i", before, after)
+    sims = np.where(denom > 0, dots / np.where(denom == 0, 1.0, denom), 0.0)
+    result: NDArray[Any] = sims.astype(np.float64)
+    return result
+
+
+@overload
+def detect_topic_shifts(
+    sentences: Sequence[str],
+    *,
+    window: int = ...,
+    window_size: int | None = ...,
+    threshold: float = ...,
+    method: str = ...,
+    k: float = ...,
+    min_shift_gap: int = ...,
+    max_vocab: int = ...,
+    return_scores: Literal[False] = ...,
+) -> tuple[int, ...]: ...
+
+
+@overload
+def detect_topic_shifts(
+    sentences: Sequence[str],
+    *,
+    window: int = ...,
+    window_size: int | None = ...,
+    threshold: float = ...,
+    method: str = ...,
+    k: float = ...,
+    min_shift_gap: int = ...,
+    max_vocab: int = ...,
+    return_scores: Literal[True],
+) -> tuple[tuple[int, ...], list[float]]: ...
+
+
 def detect_topic_shifts(
     sentences: Sequence[str],
     *,
     window: int = 5,
+    window_size: int | None = None,
     threshold: float = 0.5,
+    method: str = "fixed",
+    k: float = 1.0,
     min_shift_gap: int = 3,
     max_vocab: int = 2048,
-) -> tuple[int, ...]:
-    """Detect topic shifts using TF-IDF cosine similarity over sliding windows."""
-    n = len(sentences)
-    w = int(window)
-    if n < 2 * w:
-        return ()
+    return_scores: bool = False,
+) -> tuple[int, ...] | tuple[tuple[int, ...], list[float]]:
+    """Detect topic shifts from TF-IDF coherence over sliding windows.
+
+    Each gap between adjacent sentences is scored by the cosine similarity of
+    the mean TF-IDF vectors of the ``window_size`` sentences on each side
+    (smoothing out single-sentence noise). A gap becomes a boundary when its
+    score falls below the threshold.
+
+    ``method="fixed"`` (default): use ``threshold`` directly.
+    ``method="adaptive"``: ``threshold = mean(scores) - k * std(scores)``,
+    making detection relative to the document's own similarity distribution —
+    far more robust on homogeneous (all-code / all-prose) documents.
+
+    ``window`` is retained for backward compatibility and is used as the
+    window width when ``window_size`` is not given.
+
+    With ``return_scores=True`` returns ``(shift_indices, scores)`` where
+    ``scores[g]`` is the coherence score at the gap after ``sentences[g]``
+    (``len(scores) == max(0, len(sentences) - 1)``), for plotting/debugging.
+    """
+    w = window if window_size is None else window_size
+    scores = _coherence_scores(sentences, window_size=max(1, int(w)), max_vocab=max_vocab)
+
+    if scores.size == 0:
+        return ((), []) if return_scores else ()
+
+    if method == "adaptive":
+        thr = float(np.mean(scores) - float(k) * np.std(scores))
+    elif method == "fixed":
+        thr = float(threshold)
+    else:
+        raise ValueError(f"method must be 'fixed' or 'adaptive', got {method!r}")
 
     last_shift_after: int | None = None
     out: list[int] = []
-
-    for i in range(w, n - w + 1):
-        before = "".join(sentences[i - w : i])
-        after = "".join(sentences[i : i + w])
-        mat = build_tfidf_matrix([before, after], max_vocab=max_vocab)
-        if mat.shape[1] == 0:
-            sim = 0.0
-        else:
-            v0, v1 = mat[0], mat[1]
-            denom = float(np.linalg.norm(v0) * np.linalg.norm(v1))
-            sim = float(np.dot(v0, v1) / denom) if denom > 0 else 0.0
-
-        boundary_after = i - 1
-        if sim < threshold and (
-            last_shift_after is None
-            or boundary_after - last_shift_after >= min_shift_gap
+    for g in range(scores.size):
+        if float(scores[g]) < thr and (
+            last_shift_after is None or g - last_shift_after >= min_shift_gap
         ):
-            out.append(boundary_after)
-            last_shift_after = boundary_after
+            out.append(g)
+            last_shift_after = g
 
-    return tuple(out)
+    shifts = tuple(out)
+    if return_scores:
+        return shifts, [float(x) for x in scores.tolist()]
+    return shifts
