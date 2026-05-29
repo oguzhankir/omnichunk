@@ -4,10 +4,10 @@ from collections.abc import Callable, Iterator
 from typing import Any
 
 import numpy as np
-from numpy.typing import NDArray
+from numpy.typing import NDArray  # noqa: TCH002
 
 from omnichunk.semantic.splitter import SemanticSplitter
-from omnichunk.types import Chunk, ChunkOptions, ChunkingError
+from omnichunk.types import Chunk, ChunkingError, ChunkOptions
 
 
 class SemanticEngine:
@@ -81,7 +81,7 @@ def _validated_embed_fn(
                 "embed_fn returned embeddings containing NaN or Inf values"
             )
 
-        return arr  # type: ignore[return-value]
+        return arr
 
     return wrapper
 

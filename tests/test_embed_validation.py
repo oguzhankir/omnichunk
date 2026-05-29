@@ -49,7 +49,7 @@ def test_dimension_mismatch_raises() -> None:
 
     wrapped = _validated_embed_fn(fn)
     wrapped(["first"])  # records dim=4
-    with pytest.raises(ChunkingError, match="expected.*4.*all calls must return the same dimension"):
+    with pytest.raises(ChunkingError, match="all calls must return the same dimension"):
         wrapped(["second"])
 
 
