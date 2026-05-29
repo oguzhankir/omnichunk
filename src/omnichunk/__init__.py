@@ -15,7 +15,15 @@ from .formats import (
     load_latex,
     load_pdf_bytes,
 )
-from .graph import ChunkEdge, ChunkGraph, EntityNode, build_chunk_graph
+from .graph import (
+    ChunkEdge,
+    ChunkGraph,
+    EntityNode,
+    build_chunk_graph,
+    compute_centrality,
+    find_communities,
+    to_networkx_dict,
+)
 from .otel import maybe_span
 from .plugins import (
     list_registered_formatters,
@@ -28,8 +36,10 @@ from .semantic import (
     SemanticBoundaryResult,
     SemanticSplitter,
     build_tfidf_matrix,
+    build_tfidf_sparse,
     detect_semantic_boundaries,
     detect_topic_shifts,
+    rerank_chunks,
     split_sentences,
 )
 from .serialization import (
@@ -46,6 +56,7 @@ from .types import (
     Chunk,
     ChunkContext,
     ChunkDiff,
+    ChunkingError,
     ChunkNode,
     ChunkOptions,
     ChunkQualityScore,
@@ -71,6 +82,7 @@ __all__ = [
     "ChunkEvalScores",
     "ChunkDiff",
     "ChunkEdge",
+    "ChunkingError",
     "ChunkGraph",
     "ChunkNode",
     "ChunkOptions",
@@ -98,6 +110,11 @@ __all__ = [
     "__version__",
     "build_chunk_graph",
     "build_tfidf_matrix",
+    "build_tfidf_sparse",
+    "compute_centrality",
+    "find_communities",
+    "rerank_chunks",
+    "to_networkx_dict",
     "chunk",
     "chunk_diff",
     "chunk_from_dict",

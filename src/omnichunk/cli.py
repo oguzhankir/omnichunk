@@ -70,11 +70,34 @@ def build_parser() -> argparse.ArgumentParser:
         help="Number of trailing lines to include in contextualized overlap",
     )
     parser.add_argument(
+        "--semantic-debug",
+        action="store_true",
+        help=(
+            "Print TF-IDF topic-shift boundary scores to stderr "
+            "(adaptive thresholding) before emitting chunks"
+        ),
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"omnichunk {__version__}",
     )
     return parser
+
+
+def _emit_semantic_debug(text: str) -> None:
+    """Print per-gap coherence scores and detected boundaries to stderr."""
+    from omnichunk.semantic.sentences import split_sentences
+    from omnichunk.semantic.tfidf import detect_topic_shifts
+
+    sentences = [s for s, _, _ in split_sentences(text)]
+    shifts, scores = detect_topic_shifts(sentences, method="adaptive", return_scores=True)
+    boundary_set = set(shifts)
+    print("# omnichunk semantic-debug (TF-IDF adaptive boundary scores)", file=sys.stderr)
+    print(f"# sentences={len(sentences)} boundaries={list(shifts)}", file=sys.stderr)
+    for gap, score in enumerate(scores):
+        marker = " <-- boundary" if gap in boundary_set else ""
+        print(f"gap[{gap:>4}] score={score:.4f}{marker}", file=sys.stderr)
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -213,6 +236,11 @@ def chunk_main(argv: Sequence[str]) -> int:
             if result.error:
                 errors.append({"filepath": result.filepath, "error": result.error})
     else:
+        if args.semantic_debug:
+            try:
+                _emit_semantic_debug(target.read_text(encoding=args.encoding))
+            except Exception as exc:
+                print(f"[semantic-debug] {exc}", file=sys.stderr)
         try:
             chunks = chunker.chunk_file(str(target), encoding=args.encoding)
         except Exception as exc:

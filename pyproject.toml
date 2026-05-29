@@ -87,6 +87,8 @@ semantic = []
 graph = []
 tiktoken = ["tiktoken>=0.5.0"]
 transformers = ["transformers>=4.30.0"]
+sentence-transformers = ["sentence-transformers>=2.2.0"]
+scipy = ["scipy>=1.10.0"]
 langchain = ["langchain-core>=0.2.0"]
 llamaindex = ["llama-index-core>=0.10.0"]
 profiling = [
@@ -129,6 +131,7 @@ dev = [
   "pypdf>=3.0",
   "python-docx>=1.0",
   "opentelemetry-sdk>=1.21.0",
+  "scipy>=1.10.0",
 ]
 
 [project.urls]
@@ -173,7 +176,7 @@ warn_redundant_casts = true
 warn_unused_configs = true
 
 [[tool.mypy.overrides]]
-module = ["tiktoken"]
+module = ["tiktoken", "sentence_transformers", "scipy", "scipy.*"]
 ignore_missing_imports = true
 
 [tool.ruff]
