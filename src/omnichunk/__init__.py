@@ -36,8 +36,10 @@ from .semantic import (
     SemanticBoundaryResult,
     SemanticSplitter,
     build_tfidf_matrix,
+    build_tfidf_sparse,
     detect_semantic_boundaries,
     detect_topic_shifts,
+    rerank_chunks,
     split_sentences,
 )
 from .serialization import (
@@ -106,8 +108,10 @@ __all__ = [
     "__version__",
     "build_chunk_graph",
     "build_tfidf_matrix",
+    "build_tfidf_sparse",
     "compute_centrality",
     "find_communities",
+    "rerank_chunks",
     "to_networkx_dict",
     "chunk",
     "chunk_diff",
