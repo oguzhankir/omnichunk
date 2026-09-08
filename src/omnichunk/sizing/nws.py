@@ -28,10 +28,10 @@ def preprocess_nws_cumsum_python(code: str) -> Any:
     raw = code.encode("utf-8")
     if np is None:
         return list(accumulate((b not in b" \t\n\r\v\f" for b in raw), initial=0))
-    lookup = np.ones(256, dtype=np.bool_)
+    lookup: Any = np.ones(256, dtype=np.bool_)
     lookup[[9, 10, 11, 12, 13, 32]] = False
     mask = lookup[np.frombuffer(raw, dtype=np.uint8)]
-    result = np.empty(len(raw) + 1, dtype=np.int64)
+    result: Any = np.empty(len(raw) + 1, dtype=np.int64)
     result[0] = 0
     np.cumsum(mask, out=result[1:])
     return result

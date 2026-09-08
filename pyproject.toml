@@ -216,7 +216,11 @@ warn_redundant_casts = true
 warn_unused_configs = true
 
 [[tool.mypy.overrides]]
-module = ["tiktoken", "sentence_transformers", "scipy", "scipy.*"]
+module = ["numpy", "numpy.*", "tiktoken", "sentence_transformers", "scipy", "scipy.*"]
+# Check Omnichunk's annotations rather than parsing implementation details of
+# optional dependencies. New NumPy releases use syntax newer than Python 3.10,
+# which is still a supported Omnichunk runtime.
+follow_imports = "skip"
 ignore_missing_imports = true
 
 [tool.ruff]

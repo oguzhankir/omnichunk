@@ -86,7 +86,7 @@ def build_tfidf_matrix(
     if v == 0:
         return np.zeros((n_docs, 1), dtype=np.float64)
 
-    tf_mat = np.zeros((n_docs, v), dtype=np.float64)
+    tf_mat: NDArray[Any] = np.zeros((n_docs, v), dtype=np.float64)
     rows, cols, data = _coo_tf(doc_tokens, t2i)
     if data:
         np.add.at(tf_mat, (np.asarray(rows), np.asarray(cols)), np.asarray(data))

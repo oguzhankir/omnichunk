@@ -3,7 +3,7 @@ from __future__ import annotations
 import importlib
 import os
 from functools import lru_cache
-from typing import TYPE_CHECKING, Any, Literal, TypedDict
+from typing import TYPE_CHECKING, Any, Literal, TypedDict, cast
 
 if TYPE_CHECKING:
     from numpy.typing import NDArray
@@ -124,5 +124,5 @@ def maybe_preprocess_nws_cumsum_rust(
     try:
         import numpy as np
     except ImportError:
-        return values  # type: ignore[no-any-return]
+        return cast("NDArray[Any]", values)
     return np.asarray(values, dtype=np.int64)
