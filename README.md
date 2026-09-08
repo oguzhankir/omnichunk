@@ -16,7 +16,7 @@ helpers for indexing and retrieval workflows.
 
 **Development status:** Omnichunk’s 2.0 foundation work and the 2.1 milestone
 were implemented in **v2.1.0**, and the latest maintenance line is tracked from
-there through **2.1.2**. Read the
+there through **2.1.4**. Read the
 [migration guide](docs/migrations/v2.md) before upgrading existing indexes.
 The [roadmap](ROADMAP.md) tracks verification, compatible additions through 3.0,
 and the 4.0 vision.
