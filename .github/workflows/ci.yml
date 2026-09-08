@@ -52,7 +52,10 @@ jobs:
         run: ruff format --check src tests
 
       - name: Run mypy (strict, full package)
-        run: mypy --strict src/omnichunk
+        # NumPy selects type syntax based on mypy's target version. Use the
+        # interpreter represented by this matrix job rather than the package's
+        # minimum supported Python version for every job.
+        run: mypy --strict --python-version ${{ matrix.python-version }} src/omnichunk
 
       - name: Build documentation (MkDocs)
         run: mkdocs build --strict
