@@ -14,12 +14,12 @@ Structure-aware chunking for code, prose and mixed documents. Chunks carry sourc
 ranges and context such as scopes, imports, headings and notebook cells, with
 helpers for indexing and retrieval workflows.
 
-**Development status:** the 2.0 foundation changes and 2.1 code-quality milestone
-are implemented in this checkout for the next **2.1.0** release. Read the
+**Development status:** Omnichunk’s 2.0 foundation work and the 2.1 milestone
+were implemented in **v2.1.0**, and the latest maintenance line is tracked from
+there through **2.1.2**. Read the
 [migration guide](docs/migrations/v2.md) before upgrading existing indexes.
 The [roadmap](ROADMAP.md) tracks verification, compatible additions through 3.0,
-and the 4.0 vision. This is unreleased work; the maintainer sets the release version
-in `src/omnichunk/_version.py` after validation.
+and the 4.0 vision.
 
 [Documentation](https://oguzhankir.github.io/omnichunk/) ·
 [Architecture](ARCHITECTURE.md) · [Examples](examples/README.md) ·
