@@ -1,3 +1,3 @@
-from .engine import chunk_diff
+from .engine import chunk_diff, diff_chunks
 
-__all__ = ["chunk_diff"]
+__all__ = ["chunk_diff", "diff_chunks"]

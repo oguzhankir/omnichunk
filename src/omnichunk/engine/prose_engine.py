@@ -6,6 +6,7 @@ from dataclasses import replace
 from typing import Any
 
 from omnichunk.context.format import format_contextualized_text
+from omnichunk.context.rebase import rebase_chunk
 from omnichunk.engine.code_engine import CodeEngine
 from omnichunk.engine.markup_engine import MarkupEngine
 from omnichunk.parser.markdown_parser import ProseNode, parse_markdown
@@ -200,6 +201,8 @@ class ProseEngine:
                         effective_section_type = f"callout/{callout}"
                         format_metadata["callout"] = callout
 
+            byte_start = text_index.byte_offset_for_char(start)
+            byte_end = text_index.byte_offset_for_char(end)
             context = ChunkContext(
                 filepath=filepath,
                 language=language,
@@ -207,7 +210,7 @@ class ProseEngine:
                 heading_hierarchy=hierarchy,
                 section_type=effective_section_type,
                 entities=_entities_for_section(
-                    section_type, text, start, end, line_start, line_end
+                    section_type, text, byte_start, byte_end, line_start, line_end
                 ),
                 format_metadata=format_metadata,
             )
@@ -293,7 +296,7 @@ class ProseEngine:
                     _precomputed_text_index=delegated_text_index,
                     _precomputed_nws_cumsum=delegated_cumsum,
                 )
-                sub_options.language = resolved_language  # type: ignore[assignment]
+                sub_options = replace(sub_options, language=resolved_language)  # type: ignore[arg-type]
 
                 code_chunks = list(self._code_engine.stream(filepath, code_text, sub_options))
                 delegated = _rebase_delegated_fence_chunks(
@@ -335,7 +338,7 @@ class ProseEngine:
                         _precomputed_text_index=delegated_text_index,
                         _precomputed_nws_cumsum=delegated_cumsum,
                     )
-                    sub_options.language = resolved_markup_language  # type: ignore[assignment]
+                    sub_options = replace(sub_options, language=resolved_markup_language)  # type: ignore[arg-type]
 
                     markup_chunks = list(
                         self._markup_engine.stream(filepath, code_text, sub_options)
@@ -645,26 +648,27 @@ def _filter_empty_ranges(
 
 def _split_fenced_code_block(block_text: str) -> tuple[str, str, str, str] | None:
     lines = block_text.splitlines(keepends=True)
-    if len(lines) < 2:
+    if not lines:
         return None
-    opening = lines[0]
-    if not opening.strip().startswith("```"):
+    opening_index = next((i for i, line in enumerate(lines) if line.strip()), 0)
+    opening = lines[opening_index]
+    match = re.fullmatch(r"(`{3,}|~{3,})([^\r\n]*)", opening.strip())
+    if match is None:
         return None
+    fence, info = match.groups()
 
     close_idx: int | None = None
-    for idx in range(len(lines) - 1, 0, -1):
-        if lines[idx].strip().startswith("```"):
+    for idx in range(opening_index + 1, len(lines)):
+        candidate = lines[idx].strip()
+        if len(candidate) >= len(fence) and set(candidate) == {fence[0]}:
             close_idx = idx
             break
 
-    if close_idx is None:
-        return None
+    prefix = "".join(lines[: opening_index + 1])
+    code = "".join(lines[opening_index + 1 : close_idx])
+    suffix = "".join(lines[close_idx:]) if close_idx is not None else ""
 
-    prefix = opening
-    code = "".join(lines[1:close_idx])
-    suffix = "".join(lines[close_idx:])
-
-    fence_language = opening.strip()[3:].strip().lower()
+    fence_language = info.strip().split(maxsplit=1)[0].lower() if info.strip() else ""
     if code and not code.strip():
         prefix = prefix + code
         code = ""
@@ -712,8 +716,9 @@ def _rebase_delegated_fence_chunks(
 ) -> list[Chunk]:
     out: list[Chunk] = []
     for chunk in delegated_chunks:
-        byte_start = byte_offset + chunk.byte_range.start
-        byte_end = byte_offset + chunk.byte_range.end
+        chunk = rebase_chunk(chunk, text_index, byte_offset)
+        byte_start = chunk.byte_range.start
+        byte_end = chunk.byte_range.end
 
         context = replace(
             chunk.context,
@@ -727,8 +732,8 @@ def _rebase_delegated_fence_chunks(
         )
 
         out.append(
-            Chunk(
-                text=chunk.text,
+            replace(
+                chunk,
                 contextualized_text=contextualized_text,
                 byte_range=ByteRange(byte_start, byte_end),
                 line_range=LineRange(
@@ -738,7 +743,6 @@ def _rebase_delegated_fence_chunks(
                 index=start_index + len(out),
                 total_chunks=-1,
                 context=context,
-                token_count=chunk.token_count,
                 char_count=len(chunk.text),
                 nws_count=get_nws_count(cumsum, byte_start, byte_end),
             )

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "omnichunk"
-version = "1.0.0"
+dynamic = ["version"]
 description = "Structure-aware deterministic chunking for code, prose, and markup."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -32,8 +32,13 @@ classifiers = [
   "Topic :: Software Development :: Libraries :: Python Modules",
   "Typing :: Typed",
 ]
-dependencies = [
-  "numpy>=1.24.0",
+dependencies = []
+
+[project.scripts]
+omnichunk = "omnichunk.cli:main"
+
+[project.optional-dependencies]
+code = [
   "tree-sitter>=0.23.0",
   "tree-sitter-python>=0.23.0",
   "tree-sitter-javascript>=0.23.0",
@@ -42,13 +47,18 @@ dependencies = [
   "tree-sitter-go>=0.23.0",
   "tree-sitter-java>=0.23.0",
 ]
-
-[project.scripts]
-omnichunk = "omnichunk.cli:main"
-
-[project.optional-dependencies]
 # Most optional integrations except heavy ML stacks (install ``transformers`` / ``rust`` separately).
 all = [
+  "numpy>=1.24.0",
+
+  "tree-sitter>=0.23.0",
+  "tree-sitter-python>=0.23.0",
+  "tree-sitter-javascript>=0.23.0",
+  "tree-sitter-typescript>=0.23.0",
+  "tree-sitter-rust>=0.23.0",
+  "tree-sitter-go>=0.23.0",
+  "tree-sitter-java>=0.23.0",
+
   "pypdf>=3.0",
   "python-docx>=1.0",
   "tiktoken>=0.5.0",
@@ -64,8 +74,19 @@ all = [
   "tree-sitter-php>=0.23.0",
   "tree-sitter-kotlin>=0.23.0",
   "tree-sitter-swift>=0.0.1",
+  "tree-sitter-sql>=0.3.0",
+  "tree-sitter-bash>=0.23.0",
+  "tree-sitter-scala>=0.23.0",
+  "tree-sitter-elixir>=0.3.0",
 ]
 all-languages = [
+  "tree-sitter>=0.23.0",
+  "tree-sitter-python>=0.23.0",
+  "tree-sitter-javascript>=0.23.0",
+  "tree-sitter-typescript>=0.23.0",
+  "tree-sitter-rust>=0.23.0",
+  "tree-sitter-go>=0.23.0",
+  "tree-sitter-java>=0.23.0",
   "tree-sitter-c>=0.23.0",
   "tree-sitter-cpp>=0.23.0",
   "tree-sitter-c-sharp>=0.23.0",
@@ -83,7 +104,7 @@ pinecone = []
 weaviate = []
 supabase = []
 vectordb = []
-semantic = []
+semantic = ["numpy>=1.24.0"]
 graph = []
 tiktoken = ["tiktoken>=0.5.0"]
 transformers = ["transformers>=4.30.0"]
@@ -109,6 +130,16 @@ docs = [
   "pymdown-extensions>=10.0",
 ]
 dev = [
+  "numpy>=1.24.0",
+
+  "tree-sitter>=0.23.0",
+  "tree-sitter-python>=0.23.0",
+  "tree-sitter-javascript>=0.23.0",
+  "tree-sitter-typescript>=0.23.0",
+  "tree-sitter-rust>=0.23.0",
+  "tree-sitter-go>=0.23.0",
+  "tree-sitter-java>=0.23.0",
+
   "pytest>=8.0.0",
   "pytest-cov>=4.0.0",
   "pytest-xdist>=3.6.0",
@@ -116,9 +147,9 @@ dev = [
   "tiktoken>=0.5.0",
   "semchunk>=2.0.0",
   "nltk>=3.8.1",
-  "mypy>=1.0.0",
+  "mypy==1.20.2",
   "mutmut>=2.4.4,<3.0.0",
-  "ruff>=0.4.0",
+  "ruff==0.15.12",
   "pre-commit>=3.7.0",
   "maturin>=1.7.0",
   "tree-sitter-c>=0.23.0",
@@ -141,6 +172,9 @@ Issues = "https://github.com/oguzhankir/omnichunk/issues"
 Source = "https://github.com/oguzhankir/omnichunk"
 Changelog = "https://github.com/oguzhankir/omnichunk/blob/main/CHANGELOG.md"
 
+[tool.hatch.version]
+path = "src/omnichunk/_version.py"
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/omnichunk"]
 
@@ -155,6 +189,12 @@ include = [
   "examples",
   "rust",
   "README.md",
+  "ROADMAP.md",
+  "ARCHITECTURE.md",
+  "CHANGELOG.md",
+  "CONTRIBUTING.md",
+  "SECURITY.md",
+  "CODE_OF_CONDUCT.md",
   "pyproject.toml",
   "LICENSE",
 ]
@@ -185,6 +225,8 @@ target-version = "py310"
 extend-exclude = [
     # Intentionally repetitive stress fixture; not valid as a single linted module.
     "tests/fixtures/mega_python_50x.py",
+    # Notebook fixtures are source data, not formatter inputs.
+    "tests/fixtures/*.ipynb",
 ]
 
 [tool.ruff.lint]
@@ -194,31 +236,7 @@ ignore = ["B905"]
 [tool.coverage.run]
 branch = true
 source = ["omnichunk"]
-omit = [
-  "*/tests/*",
-  "*/benchmarks/*",
-  "*/scripts/*",
-  "*/omnichunk/cli.py",
-  "*/omnichunk/mcp/*",
-  "*/omnichunk/formats/docx_loader.py",
-  "*/omnichunk/sizing/tokenizers.py",
-  "*/omnichunk/sizing/rust_accel.py",
-  "*/omnichunk/propositions/llm_extract.py",
-  "*/omnichunk/semantic/splitter.py",
-  "*/omnichunk/semantic/sentences.py",
-  "*/omnichunk/windowing/split.py",
-  "*/omnichunk/windowing/overlap.py",
-  "*/omnichunk/parser/tree_sitter.py",
-  "*/omnichunk/formats/ipynb.py",
-  "*/omnichunk/engine/code_engine.py",
-  "*/omnichunk/engine/markup_engine.py",
-  "*/omnichunk/engine/prose_engine.py",
-  "*/omnichunk/chunker.py",
-  "*/omnichunk/context/entities.py",
-  "*/omnichunk/quality.py",
-  "*/omnichunk/parser/languages.py",
-  "*/omnichunk/windowing/greedy.py",
-]
+
 
 [tool.coverage.report]
 fail_under = 90

@@ -9,8 +9,10 @@ from omnichunk.types import ChunkingError
 
 def _make_fn(arr: np.ndarray):
     """Return an embed_fn that always yields the given array."""
+
     def fn(texts: list[str]) -> np.ndarray:
         return arr
+
     return fn
 
 
@@ -19,6 +21,7 @@ def _good(n: int, d: int = 4) -> np.ndarray:
 
 
 # --- 1. wrong shape (1D) -------------------------------------------------------
+
 
 def test_wrong_shape_raises() -> None:
     fn = _make_fn(np.ones(4, dtype=np.float32))
@@ -29,6 +32,7 @@ def test_wrong_shape_raises() -> None:
 
 # --- 2. non-float dtype ---------------------------------------------------------
 
+
 def test_non_float_dtype_raises() -> None:
     fn = _make_fn(np.ones((2, 4), dtype=np.int32))
     wrapped = _validated_embed_fn(fn)
@@ -37,6 +41,7 @@ def test_non_float_dtype_raises() -> None:
 
 
 # --- 3. inconsistent dimension on second call ----------------------------------
+
 
 def test_dimension_mismatch_raises() -> None:
     call_count = 0
@@ -55,6 +60,7 @@ def test_dimension_mismatch_raises() -> None:
 
 # --- 4. NaN values --------------------------------------------------------------
 
+
 def test_nan_values_raise() -> None:
     arr = np.ones((2, 4), dtype=np.float32)
     arr[0, 1] = float("nan")
@@ -65,6 +71,7 @@ def test_nan_values_raise() -> None:
 
 
 # --- 5. Inf values --------------------------------------------------------------
+
 
 def test_inf_values_raise() -> None:
     arr = np.ones((3, 4), dtype=np.float64)
@@ -77,6 +84,7 @@ def test_inf_values_raise() -> None:
 
 # --- 6. valid embedding passes without error -----------------------------------
 
+
 def test_valid_embedding_passes() -> None:
     wrapped = _validated_embed_fn(lambda texts: _good(len(texts)))
     result = wrapped(["hello", "world"])
@@ -85,6 +93,7 @@ def test_valid_embedding_passes() -> None:
 
 
 # --- 7. dimension is recorded correctly and re-used ----------------------------
+
 
 def test_consistent_dimension_passes_second_call() -> None:
     wrapped = _validated_embed_fn(lambda texts: _good(len(texts), d=16))

@@ -71,18 +71,12 @@ class TokenBudgetOptimizer:
         working_scores: list[float] = list(effective_scores)
 
         if self.deduplicate_overlap:
-            working, working_scores = _deduplicate(
-                working, working_scores, self.overlap_threshold
-            )
+            working, working_scores = _deduplicate(working, working_scores, self.overlap_threshold)
 
         if self.strategy == "greedy":
-            selected_indices = _greedy_select(
-                working, working_scores, self.budget, self.size_unit
-            )
+            selected_indices = _greedy_select(working, working_scores, self.budget, self.size_unit)
         else:
-            selected_indices = _dp_select(
-                working, working_scores, self.budget, self.size_unit
-            )
+            selected_indices = _dp_select(working, working_scores, self.budget, self.size_unit)
 
         selected = [working[i] for i in selected_indices]
         if self.preserve_order:

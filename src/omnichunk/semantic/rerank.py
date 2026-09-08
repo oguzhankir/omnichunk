@@ -49,9 +49,7 @@ def rerank_chunks(
         return []
     emb = np.asarray(chunk_embeddings, dtype=np.float64)
     if emb.ndim != 2 or emb.shape[0] != n:
-        raise ValueError(
-            f"chunk_embeddings must be 2D with shape ({n}, D), got {emb.shape}"
-        )
+        raise ValueError(f"chunk_embeddings must be 2D with shape ({n}, D), got {emb.shape}")
     query = np.asarray(query_embedding, dtype=np.float64).reshape(-1)
 
     normalized = _l2_normalize(emb)

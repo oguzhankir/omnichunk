@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "algorithm_version": "2.1",
+  "entries": [
+    {
+      "path": "tests/fixtures/python_complex.py",
+      "sha256": "030af661ce0e45b7b8d724e6c86b81ee6bcc70ec0fac188c26450e22d9146e37",
+      "license": "MIT (repository fixture)"
+    },
+    {
+      "path": "tests/fixtures/typescript_complex.ts",
+      "sha256": "44b77c9527b99b764faadd48f32cad5632531e737128208bb0f2b64a5224b071",
+      "license": "MIT (repository fixture)"
+    },
+    {
+      "path": "tests/fixtures/rust_complex.rs",
+      "sha256": "1fe2cd6461de7efc125db7a40dbf341206f0328b02f22baa4d18c6df282ea7c9",
+      "license": "MIT (repository fixture)"
+    },
+    {
+      "path": "tests/fixtures/go_modern.go",
+      "sha256": "60dbc5d4bb1fdd8f202bb82f604b91efec4bafb9daf28d12f93fad45f7804ab5",
+      "license": "MIT (repository fixture)"
+    },
+    {
+      "path": "tests/fixtures/java_modern.java",
+      "sha256": "1cfec2dfee1a42a31836552994ba997bd685c5f58878a0fd766270fd4a8e906f",
+      "license": "MIT (repository fixture)"
+    },
+    {
+      "path": "tests/fixtures/markdown_doc.md",
+      "sha256": "b1a3503ba04abfe268a4e4b449b90c53a8da92b3e7674b1572c833baef7246dd",
+      "license": "MIT (repository fixture)"
+    },
+    {
+      "path": "tests/fixtures/sample.json",
+      "sha256": "09158c6373f601e6cc5d2565062195fc9793adb98fafc295223ef09f525fea94",
+      "license": "MIT (repository fixture)"
+    },
+    {
+      "path": "tests/fixtures/sample_v09.ipynb",
+      "sha256": "4178536d240f272940f8fa89a2b58feceb111878a7aa241dc154dcd9652e293b",
+      "license": "MIT (repository fixture)"
+    },
+    {
+      "path": "tests/fixtures/v2_multilingual.txt",
+      "sha256": "7ecd298b12c511adadab953452e0fe0c8d9a1ea5f7ce094ff6f1fd9ed28d2f24",
+      "license": "MIT (repository fixture)"
+    }
+  ]
+}

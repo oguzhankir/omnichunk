@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Iterator
+from dataclasses import replace
 from typing import Any
 
 import numpy as np
@@ -15,7 +16,7 @@ class SemanticEngine:
 
     def chunk(self, filepath: str, content: str, options: ChunkOptions) -> list[Chunk]:
         splitter = self._build_splitter(options)
-        return splitter.split(filepath, content, options)
+        return list(splitter._candidates(filepath, content, options))
 
     def stream(self, filepath: str, content: str, options: ChunkOptions) -> Iterator[Chunk]:
         chunks = self.chunk(filepath, content, options)
@@ -26,8 +27,7 @@ class SemanticEngine:
         embed_fn = options.semantic_embed_fn
         if embed_fn is None or not callable(embed_fn):
             raise ValueError(
-                "semantic=True requires semantic_embed_fn: "
-                "Callable[[list[str]], np.ndarray]"
+                "semantic=True requires semantic_embed_fn: Callable[[list[str]], np.ndarray]"
             )
         ss = options.semantic_sentence_splitter
         sentence_fn = ss if callable(ss) else None
@@ -62,11 +62,12 @@ def _validated_embed_fn(
 
         if not np.issubdtype(arr.dtype, np.floating):
             raise ChunkingError(
-                f"embed_fn must return a float array (float32 or float64); "
-                f"got dtype {arr.dtype!r}"
+                f"embed_fn must return a float array (float32 or float64); got dtype {arr.dtype!r}"
             )
 
         dim = arr.shape[1]
+        if dim < 1:
+            raise ChunkingError("embed_fn must return a positive embedding dimension")
         if expected_dim:
             if dim != expected_dim[0]:
                 raise ChunkingError(
@@ -77,9 +78,7 @@ def _validated_embed_fn(
             expected_dim.append(dim)
 
         if not np.all(np.isfinite(arr)):
-            raise ChunkingError(
-                "embed_fn returned embeddings containing NaN or Inf values"
-            )
+            raise ChunkingError("embed_fn returned embeddings containing NaN or Inf values")
 
         return arr
 
@@ -87,15 +86,4 @@ def _validated_embed_fn(
 
 
 def _with_unknown_total(chunk: Chunk, index: int) -> Chunk:
-    return Chunk(
-        text=chunk.text,
-        contextualized_text=chunk.contextualized_text,
-        byte_range=chunk.byte_range,
-        line_range=chunk.line_range,
-        index=index,
-        total_chunks=-1,
-        context=chunk.context,
-        token_count=chunk.token_count,
-        char_count=chunk.char_count,
-        nws_count=chunk.nws_count,
-    )
+    return replace(chunk, index=index, total_chunks=-1)

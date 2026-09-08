@@ -27,8 +27,8 @@ def _reference_char_to_byte_and_lines(text: str) -> tuple[list[int], list[int]]:
         "caf\u00e9\n",
         "euro \u20ac and newline\n",
         "CJK \u4e2d\u6587\n",
-        "emoji \U0001F600 \U0001F4A9\n",
-        "mixed \n \u00e9 \u0800 \U0001F680 end",
+        "emoji \U0001f600 \U0001f4a9\n",
+        "mixed \n \u00e9 \u0800 \U0001f680 end",
     ],
 )
 def test_text_index_char_to_byte_matches_encode_reference(text: str) -> None:
@@ -36,4 +36,3 @@ def test_text_index_char_to_byte_matches_encode_reference(text: str) -> None:
     idx = TextIndex(text)
     assert idx._char_to_byte == ref_cb
     assert idx._line_starts == ref_lines
-

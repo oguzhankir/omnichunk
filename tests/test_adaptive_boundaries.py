@@ -102,9 +102,7 @@ def test_window_smoothing_more_accurate_than_w1() -> None:
 
 
 def test_performance_1000_sentences_under_2s() -> None:
-    sents = (["alpha beta gamma delta term."] * 500) + (
-        ["zeta eta theta iota lemma."] * 500
-    )
+    sents = (["alpha beta gamma delta term."] * 500) + (["zeta eta theta iota lemma."] * 500)
     started = time.perf_counter()
     shifts = detect_topic_shifts(sents, window_size=5, method="adaptive")
     elapsed = time.perf_counter() - started

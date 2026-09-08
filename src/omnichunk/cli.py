@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from collections.abc import Sequence
 from pathlib import Path
@@ -9,7 +10,6 @@ from typing import Any
 
 from omnichunk import __version__
 from omnichunk.chunker import Chunker
-from omnichunk.eval import eval_report_to_dict, evaluate_chunks
 from omnichunk.serialization import chunk_from_dict
 
 
@@ -27,12 +27,19 @@ def build_parser() -> argparse.ArgumentParser:
         help="Exclude pattern for directory mode (repeatable)",
     )
     parser.add_argument("--max-size", type=int, default=1500, help="Maximum chunk size")
-    parser.add_argument("--min-size", type=int, default=50, help="Minimum chunk size")
+    parser.add_argument(
+        "--min-size", type=int, default=None, help="Minimum chunk size (default: min(50, max-size))"
+    )
     parser.add_argument(
         "--size-unit",
         choices=["tokens", "chars", "nws"],
-        default="tokens",
+        default="chars",
         help="Chunk size measurement unit",
+    )
+    parser.add_argument(
+        "--tokenizer",
+        default=None,
+        help="Tokenizer name for --size-unit tokens; 'approximate' explicitly estimates words",
     )
     parser.add_argument(
         "--nws-backend",
@@ -112,15 +119,35 @@ def main(argv: Sequence[str] | None = None) -> int:
 def serve_main(argv: Sequence[str]) -> int:
     parser = argparse.ArgumentParser(
         prog="omnichunk serve",
-        description="Run JSON-RPC HTTP server (MCP-style tools; stdlib only).",
+        description="Run the experimental JSON-RPC HTTP service (not MCP).",
     )
+    parser.add_argument("--rpc", action="store_true", help="Start the JSON-RPC service")
     parser.add_argument(
         "--mcp",
         action="store_true",
-        help="Required flag: start the MCP-style JSON-RPC server",
+        help="Deprecated alias for --rpc; this service does not implement MCP",
     )
     parser.add_argument("--host", default="127.0.0.1", help="Bind address")
     parser.add_argument("--port", type=int, default=3333, help="TCP port")
+    parser.add_argument(
+        "--allowed-root",
+        type=Path,
+        default=Path.cwd(),
+        help="Only read files within this directory (default: current directory)",
+    )
+    parser.add_argument(
+        "--allowed-host",
+        action="append",
+        default=None,
+        help="Accepted Host header hostname (repeatable)",
+    )
+    parser.add_argument(
+        "--token-env",
+        default="OMNICHUNK_RPC_TOKEN",
+        help="Environment variable holding the bearer token; required for non-loopback",
+    )
+    parser.add_argument("--max-body-bytes", type=int, default=1_048_576)
+    parser.add_argument("--request-timeout", type=float, default=10.0)
     parser.add_argument(
         "--config",
         type=Path,
@@ -128,26 +155,45 @@ def serve_main(argv: Sequence[str]) -> int:
         help="Optional JSON file merged into default Chunker options for each request",
     )
     args = parser.parse_args(list(argv))
-    if not args.mcp:
-        print("serve requires --mcp (JSON-RPC tools over HTTP)", file=sys.stderr)
+    if not (args.rpc or args.mcp):
+        print("serve requires --rpc (experimental JSON-RPC over HTTP)", file=sys.stderr)
         return 2
-    from omnichunk.mcp.server import run_mcp_server
+    if args.mcp:
+        print(
+            "Warning: --mcp is deprecated; use --rpc. This service is JSON-RPC, not MCP.",
+            file=sys.stderr,
+        )
+    from omnichunk.mcp.server import run_rpc_server
 
     tools = "chunk_file, chunk_directory, build_graph, semantic_chunk"
     print(
-        f"omnichunk MCP JSON-RPC — POST http://{args.host}:{args.port}/ ({tools})",
+        f"omnichunk experimental JSON-RPC — POST http://{args.host}:{args.port}/rpc ({tools})",
         flush=True,
     )
-    run_mcp_server(args.host, args.port, config_path=args.config)
+    try:
+        run_rpc_server(
+            args.host,
+            args.port,
+            config_path=args.config,
+            allowed_root=args.allowed_root,
+            allowed_hosts=args.allowed_host,
+            auth_token=os.environ.get(args.token_env),
+            max_body_bytes=args.max_body_bytes,
+            request_timeout=args.request_timeout,
+        )
+    except (ValueError, OSError) as exc:
+        print(f"RPC startup failed: {exc}", file=sys.stderr)
+        return 2
     return 0
 
 
 def eval_main(argv: Sequence[str]) -> int:
+    from omnichunk.eval import eval_report_to_dict, evaluate_chunks
+
     parser = argparse.ArgumentParser(
         prog="omnichunk eval",
         description=(
-            "Evaluate chunk quality metrics from JSONL "
-            "(from chunk_to_dict / omnichunk export)."
+            "Evaluate chunk quality metrics from JSONL (from chunk_to_dict / omnichunk export)."
         ),
     )
     parser.add_argument(
@@ -209,15 +255,28 @@ def chunk_main(argv: Sequence[str]) -> int:
         print(f"Target does not exist: {target}", file=sys.stderr)
         return 2
 
-    chunker = Chunker(
-        max_chunk_size=args.max_size,
-        min_chunk_size=args.min_size,
-        size_unit=args.size_unit,
-        nws_backend=args.nws_backend,
-        context_mode=args.context_mode,
-        overlap=args.overlap,
-        overlap_lines=max(0, int(args.overlap_lines)),
-    )
+    if args.size_unit == "tokens" and args.tokenizer is None:
+        print(
+            "--size-unit tokens requires --tokenizer (or --tokenizer approximate)", file=sys.stderr
+        )
+        return 2
+
+    if args.min_size is None:
+        args.min_size = min(50, args.max_size)
+    try:
+        chunker = Chunker(
+            max_chunk_size=args.max_size,
+            min_chunk_size=args.min_size,
+            size_unit=args.size_unit,
+            tokenizer=args.tokenizer,
+            nws_backend=args.nws_backend,
+            context_mode=args.context_mode,
+            overlap=args.overlap,
+            overlap_lines=args.overlap_lines,
+        )
+    except (TypeError, ValueError) as exc:
+        print(f"Invalid chunk options: {exc}", file=sys.stderr)
+        return 2
 
     errors: list[dict[str, str]] = []
     chunks = []

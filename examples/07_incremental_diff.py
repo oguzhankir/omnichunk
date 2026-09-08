@@ -31,8 +31,8 @@ def main() -> None:
     print("v2 -> v3")
     print(f"  added={d23.total_added} removed={d23.total_removed} unchanged={d23.total_unchanged}")
 
-    # Vector DB workflow: upsert added, delete removed_ids, skip unchanged embeddings
-    print("workflow: upsert diff.added, delete diff.removed_ids, skip re-embed for diff.unchanged")
+    # Same-ID payload updates appear in removals and additions: delete first.
+    print("workflow: delete diff.removed_ids, upsert diff.added, refresh unchanged metadata")
 
     ids_a = [stable_chunk_id(x) for x in c1]
     ids_b = [stable_chunk_id(x) for x in c1]

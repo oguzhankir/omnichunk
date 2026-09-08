@@ -5,11 +5,7 @@ from omnichunk.graph import ChunkGraph
 
 
 def test_build_chunk_graph_basic() -> None:
-    code = (
-        "def alpha():\n    return 1\n\n"
-        "def beta():\n    alpha()\n\n"
-        "def gamma():\n    alpha()\n"
-    )
+    code = "def alpha():\n    return 1\n\ndef beta():\n    alpha()\n\ndef gamma():\n    alpha()\n"
     chunker = Chunker(max_chunk_size=64, size_unit="chars")
     chunks = chunker.chunk("m.py", code)
     graph = build_chunk_graph(chunks, min_entity_occurrences=1)

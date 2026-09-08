@@ -20,15 +20,18 @@ def load_pdf_bytes(raw: bytes) -> LoadedDocument:
     warnings: list[str] = []
     reader = PdfReader(io.BytesIO(raw))
     page_texts: list[str] = []
-    for page in reader.pages:
+    for page_number, page in enumerate(reader.pages, start=1):
         extracted = ""
         try:
             extracted = page.extract_text(extraction_mode="layout")
-        except (TypeError, Exception):
+        except Exception:
             try:
                 extracted = page.extract_text()
-            except Exception:
+            except Exception as exc:
+                warnings.append(f"page_{page_number}_extract_failed:{type(exc).__name__}")
                 extracted = ""
+        if not extracted:
+            warnings.append(f"page_{page_number}_empty_text")
         page_texts.append(extracted or "")
 
     parts: list[str] = []
@@ -89,9 +92,7 @@ def _looks_code_like(text: str) -> bool:
         return True
     lines = [ln for ln in t.split("\n") if ln.strip()]
     if len(lines) < 2:
-        return bool(
-            re.search(r"\b(def|class|import|from|return|const|let|function|fn|impl)\b", t)
-        )
+        return bool(re.search(r"\b(def|class|import|from|return|const|let|function|fn|impl)\b", t))
     if t.count(";") >= 2 or (t.count("{") + t.count("}") >= 4):
         return True
     indented = sum(1 for ln in lines if re.match(r"^ {2,}\S", ln) or re.match(r"^\t+\S", ln))

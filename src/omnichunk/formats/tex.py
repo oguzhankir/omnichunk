@@ -76,9 +76,7 @@ def load_latex(content: str) -> LoadedDocument:
         (_MATH_INLINE_PAREN, "inline_paren"),
     ):
         for match in math_re.finditer(text):
-            atomic.append(
-                (match.start(), match.end(), "prose", {"latex_math": label})
-            )
+            atomic.append((match.start(), match.end(), "prose", {"latex_math": label}))
 
     # Resolve overlaps deterministically: keep the longest, drop the rest.
     atomic.sort(key=lambda x: (x[0], -(x[1] - x[0])))
@@ -94,9 +92,7 @@ def load_latex(content: str) -> LoadedDocument:
     for s, e, kind, meta in deduped:
         if s > last:
             _append_tex_prose_segments(text[last:s], last, segments, text)
-        segments.append(
-            FormatSegment(char_start=s, char_end=e, kind=kind, metadata=meta)
-        )
+        segments.append(FormatSegment(char_start=s, char_end=e, kind=kind, metadata=meta))
         last = e
 
     if last < len(text):
@@ -223,4 +219,3 @@ def _append_tex_prose_segments(
                     metadata={"latex": "post_section"},
                 )
             )
-

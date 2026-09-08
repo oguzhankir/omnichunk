@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import numpy as np
+import pytest
 
 from omnichunk import Chunker
 from omnichunk.semantic.cache import EmbeddingCache
@@ -90,9 +91,7 @@ def test_cache_disabled_when_size_zero() -> None:
     counter = {"calls": 0, "texts": 0}
     embed = _counting_embed(counter)
     text = "One sentence. Two sentence.\n\nThree sentence. Four sentence."
-    chunker = Chunker(
-        max_chunk_size=120, size_unit="chars", semantic_embed_cache_size=0
-    )
+    chunker = Chunker(max_chunk_size=120, size_unit="chars", semantic_embed_cache_size=0)
     chunker.semantic_chunk("doc.md", text, embed_fn=embed)
     embeds_first = counter["texts"]
     chunker.semantic_chunk("doc.md", text, embed_fn=embed)
@@ -116,3 +115,101 @@ def test_dedup_within_single_batch() -> None:
     # Three identical inputs -> embed_fn sees the distinct text once.
     assert calls["texts"] == 1
     assert cache.stats()["misses"] == 1
+
+
+def test_cache_isolates_embedding_providers() -> None:
+    cache = EmbeddingCache()
+    first = cache.wrap(lambda texts: np.ones((len(texts), 2)))
+    second = cache.wrap(lambda texts: np.full((len(texts), 3), 7.0))
+    assert first(["same source"]).shape == (1, 2)
+    assert np.array_equal(second(["same source"]), [[7.0, 7.0, 7.0]])
+
+
+def test_cache_revision_and_preprocessing_are_part_of_namespace() -> None:
+    cache = EmbeddingCache()
+    calls = []
+
+    def embed(texts):
+        calls.append(texts)
+        return np.ones((len(texts), 2))
+
+    for revision, preprocessing in [("r1", "p1"), ("r2", "p1"), ("r2", "p2")]:
+        cache.wrap(
+            embed, namespace="local/model", model_revision=revision, preprocessing=preprocessing
+        )(["same source"])
+    assert len(calls) == 3
+
+
+def test_concurrent_cache_misses_are_computed_once() -> None:
+    import time
+    from concurrent.futures import ThreadPoolExecutor
+
+    cache = EmbeddingCache()
+    calls = []
+
+    def embed(texts):
+        calls.append(texts)
+        time.sleep(0.02)
+        return np.ones((len(texts), 2))
+
+    cached = cache.wrap(embed)
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        results = list(pool.map(lambda _: cached(["same"]), range(8)))
+    assert len(calls) == 1
+    assert all(np.array_equal(result, [[1.0, 1.0]]) for result in results)
+
+
+@pytest.mark.parametrize("bad", [np.array([[np.nan]]), np.array([[1]]), np.empty((1, 0))])
+def test_invalid_embeddings_do_not_enter_cache(bad) -> None:
+    cache = EmbeddingCache()
+    with pytest.raises(ValueError):
+        cache.wrap(lambda texts: bad)(["source"])
+    assert cache.stats()["size"] == 0
+
+
+def test_embedding_dimension_consistent_across_batches() -> None:
+    cache = EmbeddingCache()
+
+    def embed(texts):
+        return np.ones((len(texts), len(texts[0])))
+
+    cached = cache.wrap(embed)
+    cached(["a"])
+    with pytest.raises(ValueError, match="dimension"):
+        cached(["bb"])
+    assert cache.stats()["size"] == 1
+
+
+def test_cache_clear_empty_bound_method_and_copy_isolation() -> None:
+    cache = EmbeddingCache()
+
+    class Provider:
+        def __init__(self):
+            self.calls = 0
+            self.buffer = np.ones((1, 2))
+
+        def embed(self, texts):
+            self.calls += 1
+            return self.buffer
+
+    provider = Provider()
+    first = cache.wrap(provider.embed)
+    assert first([]).shape == (0, 0)
+    first(["text"])[0, 0] = 100
+    provider.buffer[0, 0] = 200
+    assert np.array_equal(cache.wrap(provider.embed)(["text"]), [[1.0, 1.0]])
+    assert provider.calls == 1
+    assert first([]).shape == (0, 2)
+    cache.clear()
+    assert cache.stats() == {"hits": 0, "misses": 0, "size": 0}
+    assert first(["text"])[0, 0] == 200
+    assert provider.calls == 2
+
+
+def test_wrong_shape_not_cached_and_provider_can_recover() -> None:
+    cache = EmbeddingCache()
+    outputs = iter([np.ones(1), np.ones((1, 2))])
+    cached = cache.wrap(lambda texts: next(outputs))
+    with pytest.raises(ValueError, match="2D array"):
+        cached(["text"])
+    assert cached(["text"]).shape == (1, 2)

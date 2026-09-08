@@ -143,9 +143,7 @@ def test_completely_replaced_all_added_all_removed(old_body: str, new_body: str)
         ("0123456789\n" * 3, 3, "π"),
     ],
 )
-def test_single_character_insertion_mid_file(
-    base: str, insert_at: int, insert_char: str
-) -> None:
+def test_single_character_insertion_mid_file(base: str, insert_at: int, insert_char: str) -> None:
     assert len(insert_char) == 1
     new_content = base[:insert_at] + insert_char + base[insert_at:]
     chunker = Chunker(max_chunk_size=48, size_unit="chars", min_chunk_size=1)
@@ -166,7 +164,7 @@ def test_single_character_insertion_mid_file(
     ],
 )
 def test_line_reorder_without_changing_multiset(lines: tuple[str, ...]) -> None:
-    """Same multiset of lines; order differs enough that chunk byte windows shift."""
+    """Reordered identical blocks retain identity; changed packing invalidates it."""
     ordered = "".join(lines)
     reordered = "".join(reversed(lines))
     assert sorted(ordered.splitlines()) == sorted(reordered.splitlines())
@@ -176,8 +174,11 @@ def test_line_reorder_without_changing_multiset(lines: tuple[str, ...]) -> None:
     fresh = chunker.chunk(fp, reordered)
     diff = chunker.chunk_diff(fp, reordered, previous_chunks=prev)
     assert ordered != reordered
-    assert _ids(prev) != _ids(fresh)
-    assert diff.total_removed >= 1 and diff.total_added >= 1
+    if sorted(c.text for c in prev) == sorted(c.text for c in fresh):
+        assert _ids(prev) == _ids(fresh)
+    else:
+        assert diff.total_removed >= 1 and diff.total_added >= 1
+    assert _ids(diff.added) | _ids(diff.unchanged) == _ids(fresh)
 
 
 @pytest.mark.parametrize(
@@ -208,9 +209,7 @@ def test_emoji_and_multibyte_unicode_changes(old_t: str, new_t: str) -> None:
         ("# t\n" + "body\n" * 12, "# t\n" + "body\n" * 11 + "tail\n", 28),
     ],
 )
-def test_diff_then_ids_match_fresh_chunk(
-    content_a: str, content_b: str, max_size: int
-) -> None:
+def test_diff_then_ids_match_fresh_chunk(content_a: str, content_b: str, max_size: int) -> None:
     fp = "fresh.py"
     chunker = Chunker(max_chunk_size=max_size, size_unit="chars", min_chunk_size=1)
     prev = chunker.chunk(fp, content_a)

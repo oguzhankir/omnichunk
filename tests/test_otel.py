@@ -206,7 +206,7 @@ def test_otel_error_recorded_on_parser_exception(tmp_path: Path) -> None:
 
     c = Chunker(otel_tracer=tracer)
     with (
-        patch("omnichunk.chunker.route_content", side_effect=RuntimeError("parse exploded")),
+        patch("omnichunk.chunker.route_content_stream", side_effect=RuntimeError("parse exploded")),
         pytest.raises(RuntimeError, match="parse exploded"),
     ):
         c.chunk_file(str(f))

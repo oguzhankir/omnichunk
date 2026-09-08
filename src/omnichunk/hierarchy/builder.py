@@ -12,6 +12,7 @@ from collections.abc import Sequence
 from dataclasses import replace
 
 from omnichunk.chunker import Chunker
+from omnichunk.sizing.counter import make_size_counter, make_token_counter
 from omnichunk.types import (
     ByteRange,
     Chunk,
@@ -63,7 +64,11 @@ def _chunk_at_level(
     tokenizer: object,
     chunker_options: dict[str, object],
 ) -> list[Chunk]:
-    opts = {k: v for k, v in chunker_options.items() if k in ChunkOptions.__dataclass_fields__}
+    opts = {
+        k: v
+        for k, v in chunker_options.items()
+        if k in ChunkOptions.__dataclass_fields__ or k == "registry"
+    }
     chunker = Chunker(
         max_chunk_size=max_size,
         min_chunk_size=max(1, max_size // 4),
@@ -101,20 +106,35 @@ def _build_parent_chunk_from_leaf_slice(
     leaves: list[Chunk],
     leaf_lo: int,
     leaf_hi: int,
-    content: str,
+    raw: bytes,
     filepath: str,
+    max_size: int,
+    size_unit: str,
+    tokenizer: object,
 ) -> Chunk:
     first_leaf = leaves[leaf_lo]
     last_leaf = leaves[leaf_hi]
     child_slice = leaves[leaf_lo : leaf_hi + 1]
     byte_start = first_leaf.byte_range.start
     byte_end = last_leaf.byte_range.end
-    raw = content.encode("utf-8")
     text = raw[byte_start:byte_end].decode("utf-8")
     line_start = first_leaf.line_range.start
     line_end = last_leaf.line_range.end
     context = _merge_parent_context(child_slice, filepath)
-    return Chunk(
+    count = make_size_counter(size_unit, tokenizer)  # type: ignore[arg-type]
+    token_count = make_token_counter(tokenizer)
+    measured = count(text)
+    metadata = dict(first_leaf.metadata)
+    metadata["budget"] = dict(
+        first_leaf.metadata.get("budget", {}),
+        limit=max_size,
+        size=measured,
+        raw_size=measured,
+        rendered_token_count=token_count(text),
+        overflow=max(0, measured - max_size),
+    )
+    return replace(
+        first_leaf,
         text=text,
         contextualized_text=text,
         byte_range=ByteRange(byte_start, byte_end),
@@ -122,9 +142,10 @@ def _build_parent_chunk_from_leaf_slice(
         index=0,
         total_chunks=-1,
         context=context,
-        token_count=sum(c.token_count for c in child_slice),
-        char_count=sum(c.char_count for c in child_slice),
-        nws_count=sum(c.nws_count for c in child_slice),
+        token_count=token_count(text),
+        char_count=len(text),
+        nws_count=sum(not c.isspace() for c in text),
+        metadata=metadata,
     )
 
 
@@ -217,6 +238,12 @@ def build_chunk_tree(
     lv = _validate_levels(levels)
     L = len(lv)
     opts = dict(chunker_options)
+    if opts.get("overlap") or opts.get("overlap_lines"):
+        raise ValueError(
+            "Hierarchy requires non-overlapping children; expand context after retrieval"
+        )
+    raw = content.encode("utf-8")
+    size_counter = make_size_counter(size_unit, tokenizer)  # type: ignore[arg-type]
     leaves = _chunk_at_level(filepath, content, lv[0], size_unit, tokenizer, opts)
     if not leaves:
         return ChunkTree(nodes=[], level_count=L)
@@ -243,8 +270,21 @@ def build_chunk_tree(
         else:
             groups = _group_prev_level_nodes(mnodes, prev_level_indices, max_sz, size_unit)
 
+        # Token counts are not additive. Validate merged spans and bisect
+        # oversized groups at child boundaries without re-parsing the source.
+        checked: list[list[int]] = []
+        pending = list(reversed(groups))
+        while pending:
+            group = pending.pop()
+            children = [leaves[j] for j in group] if ell == 1 else [mnodes[j].chunk for j in group]
+            text = raw[children[0].byte_range.start : children[-1].byte_range.end].decode("utf-8")
+            if size_counter(text) > max_sz and len(group) > 1:
+                mid = len(group) // 2
+                pending.extend([group[mid:], group[:mid]])
+            else:
+                checked.append(group)
         new_level_indices: list[int] = []
-        for group in groups:
+        for group in checked:
             if ell == 1:
                 child_global = tuple(sorted(prev_level_indices[j] for j in group))
                 lo, hi = min(group), max(group)
@@ -254,7 +294,7 @@ def build_chunk_tree(
                 hi = max(mnodes[gi].leaf_hi for gi in group)
 
             pchunk = _build_parent_chunk_from_leaf_slice(
-                leaves, lo, hi, content, filepath
+                leaves, lo, hi, raw, filepath, max_sz, size_unit, tokenizer
             )
             parent_idx = len(mnodes)
             mnodes.append(

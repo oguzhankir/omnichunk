@@ -19,9 +19,7 @@ from omnichunk.types import (
 
 
 def _chunk(index: int, entity_names: list[str]) -> Chunk:
-    entities = [
-        EntityInfo(name=name, type=EntityType.FUNCTION) for name in entity_names
-    ]
+    entities = [EntityInfo(name=name, type=EntityType.FUNCTION) for name in entity_names]
     return Chunk(
         text=f"chunk {index}",
         contextualized_text=f"chunk {index}",
@@ -111,8 +109,12 @@ def test_centrality_star_center_highest() -> None:
 
 def test_two_disconnected_triangles_two_communities() -> None:
     edges = [
-        (0, 1, 1.0), (1, 2, 1.0), (0, 2, 1.0),
-        (3, 4, 1.0), (4, 5, 1.0), (3, 5, 1.0),
+        (0, 1, 1.0),
+        (1, 2, 1.0),
+        (0, 2, 1.0),
+        (3, 4, 1.0),
+        (4, 5, 1.0),
+        (3, 5, 1.0),
     ]
     graph = _graph(6, edges)
     communities = find_communities(graph)

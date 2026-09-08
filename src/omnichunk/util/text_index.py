@@ -14,6 +14,7 @@ def _get_rust_mod() -> Any | None:
     _rust_tried = True
     try:
         import importlib
+
         mod = importlib.import_module("omnichunk_rust")
         if callable(getattr(mod, "build_char_to_byte_index", None)):
             _rust_mod = mod

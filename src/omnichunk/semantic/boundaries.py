@@ -52,17 +52,16 @@ def detect_semantic_boundaries(
         return SemanticBoundaryResult((), ())
     w = int(window)
     windows: list[str] = []
-    half = w // 2
+    left = w // 2
+    right = w - left - 1
     for i in range(n):
-        lo = max(0, i - half)
-        hi = min(n, i + half + 1)
+        lo = max(0, i - left)
+        hi = min(n, i + right + 1)
         windows.append("".join(sentences[lo:hi]))
 
     arr = np.asarray(embed_fn(windows))
     if arr.ndim != 2 or arr.shape[0] != n:
-        raise ValueError(
-            f"embed_fn must return 2D array with shape ({n}, D), got {arr.shape}"
-        )
+        raise ValueError(f"embed_fn must return 2D array with shape ({n}, D), got {arr.shape}")
     if n == 1:
         return SemanticBoundaryResult((), ())
 
@@ -72,14 +71,15 @@ def detect_semantic_boundaries(
     last_boundary = -1
     boundaries: list[int] = []
     for k in range(len(sims)):
-        is_valley = (
-            0 < k < len(sims) - 1
-            and sims[k] < sims[k - 1]
-            and sims[k] < sims[k + 1]
-        )
+        is_valley = 0 < k < len(sims) - 1 and sims[k] < sims[k - 1] and sims[k] < sims[k + 1]
         is_low = sims[k] < threshold
         span = k - last_boundary
-        if (is_low or is_valley) and span >= min_chunk_sentences:
+        remaining = n - k - 1
+        if (
+            (is_low or is_valley)
+            and span >= min_chunk_sentences
+            and remaining >= min_chunk_sentences
+        ):
             boundaries.append(k)
             last_boundary = k
 

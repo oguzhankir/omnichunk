@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from bisect import bisect_right
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -9,6 +10,12 @@ from omnichunk.types import ByteRange, EntityType, LineRange
 
 @dataclass
 class ProseNode:
+    """Internal parser node: ``byte_range`` historically contains character offsets.
+
+    The prose engine converts these to UTF-8 byte ranges only when emitting public
+    Chunk and EntityInfo objects. Keep string slicing in this parser in characters.
+    """
+
     kind: EntityType
     text: str
     byte_range: ByteRange
@@ -61,7 +68,7 @@ class Section:
     children: list[Section] = field(default_factory=list)
 
 
-_FENCE_RE = re.compile(r"(?m)^```([\w+-]*)\s*$")
+_FENCE_RE = re.compile(r"(?m)^[ \t]{0,3}(`{3,}|~{3,})([^\r\n]*)(?:\r?\n|$)")
 _HEADING_RE = re.compile(r"(?m)^(#{1,6})\s+(.+?)\s*$")
 _TABLE_RE = re.compile(r"(?m)^\|.+\|\s*$")
 _LIST_RE = re.compile(r"(?m)^\s*[-*+]\s+.+$")
@@ -73,7 +80,15 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
         return [], []
 
     nodes: list[ProseNode] = []
-    sections = _build_section_tree(content)
+    fence_ranges = _collect_fences(content)
+    fence_starts = [start for start, _, _ in fence_ranges]
+    heading_matches = []
+    for match in _HEADING_RE.finditer(content):
+        fence_index = bisect_right(fence_starts, match.start()) - 1
+        if fence_index >= 0 and match.start() < fence_ranges[fence_index][1]:
+            continue
+        heading_matches.append(match)
+    sections = _build_section_tree(content, heading_matches)
 
     front = _FRONTMATTER_RE.match(content)
     if front:
@@ -91,8 +106,7 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
             )
         )
 
-    fence_ranges = _collect_fences(content)
-    heading_ranges = _collect_headings(content)
+    heading_ranges = [(m.start(), m.end(), m.group(1)) for m in heading_matches]
 
     boundary_points = {0, len(content)}
     for s, e, _ in fence_ranges:
@@ -171,15 +185,25 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
 
 
 def _collect_fences(content: str) -> list[tuple[int, int, str]]:
-    matches = list(_FENCE_RE.finditer(content))
     out: list[tuple[int, int, str]] = []
-    idx = 0
-    while idx + 1 < len(matches):
-        start = matches[idx].start()
-        lang = (matches[idx].group(1) or "").strip().lower()
-        end = matches[idx + 1].end()
-        out.append((start, end, lang))
-        idx += 2
+    opening: re.Match[str] | None = None
+    for match in _FENCE_RE.finditer(content):
+        fence, info = match.group(1), match.group(2)
+        if opening is None:
+            if fence[0] == "`" and "`" in info:
+                continue
+            opening = match
+        elif (
+            fence[0] == opening.group(1)[0]
+            and len(fence) >= len(opening.group(1))
+            and not info.strip()
+        ):
+            language = opening.group(2).strip().split(maxsplit=1)
+            out.append((opening.start(), match.end(), language[0].lower() if language else ""))
+            opening = None
+    if opening is not None:
+        language = opening.group(2).strip().split(maxsplit=1)
+        out.append((opening.start(), len(content), language[0].lower() if language else ""))
     return out
 
 
@@ -198,8 +222,9 @@ def _match_range(
     return None
 
 
-def _build_section_tree(content: str) -> list[Section]:
-    headings = list(_HEADING_RE.finditer(content))
+def _build_section_tree(content: str, headings: list[re.Match[str]] | None = None) -> list[Section]:
+    if headings is None:
+        headings = list(_HEADING_RE.finditer(content))
     if not headings:
         return []
 

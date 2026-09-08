@@ -23,9 +23,7 @@ class _FakeNode:
         self.start_point = (0, 0)
         self.end_point = (0, 0)
         self.children = children or []
-        self.named_children = [
-            child for child in self.children if getattr(child, "is_named", True)
-        ]
+        self.named_children = [child for child in self.children if getattr(child, "is_named", True)]
         self._fields = fields or {}
         self.is_named = is_named
         self.parent: _FakeNode | None = None
@@ -49,9 +47,7 @@ def _find_span(text: str, snippet: str, *, start: int = 0) -> tuple[int, int]:
     return idx, idx + len(snippet)
 
 
-def _find_entity(
-    entities: list[EntityInfo], *, name: str, entity_type: EntityType
-) -> EntityInfo:
+def _find_entity(entities: list[EntityInfo], *, name: str, entity_type: EntityType) -> EntityInfo:
     return next(e for e in entities if e.name == name and e.type == entity_type)
 
 
@@ -228,13 +224,7 @@ def test_extract_entities_java_names_imports_signatures_and_parent() -> None:
 
 
 def test_extract_entities_cpp_names_imports_signatures_and_parent() -> None:
-    code = (
-        "#include <vector>\n\n"
-        "class Service {\n"
-        "public:\n"
-        "    int run() { return 1; }\n"
-        "};\n"
-    )
+    code = "#include <vector>\n\nclass Service {\npublic:\n    int run() { return 1; }\n};\n"
 
     import_start, import_end = _find_span(code, "#include <vector>")
     class_start, class_end = _find_span(
@@ -280,12 +270,7 @@ def test_extract_entities_cpp_names_imports_signatures_and_parent() -> None:
 
 
 def test_extract_entities_c_function_and_import() -> None:
-    code = (
-        "#include <stdio.h>\n\n"
-        "int sum(int a, int b) {\n"
-        "    return a + b;\n"
-        "}\n"
-    )
+    code = "#include <stdio.h>\n\nint sum(int a, int b) {\n    return a + b;\n}\n"
 
     import_start, import_end = _find_span(code, "#include <stdio.h>")
     function_start, function_end = _find_span(

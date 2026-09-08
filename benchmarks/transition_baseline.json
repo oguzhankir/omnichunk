@@ -1,0 +1,86 @@
+{
+  "baseline_revision": "7daf92e2e4afa8d7503a88a94ed6f313f7677070",
+  "candidate_source_sha256": "3bbfde9dcb4f333f6cac22e289c2d2ac08a519340c7bde50d2a8187998db6a37",
+  "project_config_sha256": "6dd011c7d76567933c4757719cc4214b472a36cd0ea092fbcef8b2576f7c46b5",
+  "fixture_sha256": "030af661ce0e45b7b8d724e6c86b81ee6bcc70ec0fac188c26450e22d9146e37",
+  "harness_sha256": "e2b9875a799e9e555d10d7db3db407199e3dee182ee472c302c3111042c05f1d",
+  "settings": {
+    "size_unit": "chars",
+    "max_size": 512,
+    "context": "none",
+    "overlap": 0,
+    "samples": 7,
+    "iterations_per_sample": 20
+  },
+  "schema_version": 1,
+  "rationale": "The v1.0.0 baseline emits 768 characters under a 512-character request. This first 2.x transition establishes a measured baseline for exact final budgets and canonical-source reconstruction; it makes no speed-parity claim against invalid legacy output. Subsequent 2.x releases compare their previous valid 2.x tag on the same runner.",
+  "recorded_at": "2026-09-08T07:43:41.278837+00:00",
+  "contract": "canonical-source-exact-character-budget-v2",
+  "speed_parity_claimed": false,
+  "measurement": {
+    "schema_version": 2,
+    "status": "invalid_output",
+    "baseline_revision": "7daf92e2e4afa8d7503a88a94ed6f313f7677070",
+    "candidate_source_sha256": "3bbfde9dcb4f333f6cac22e289c2d2ac08a519340c7bde50d2a8187998db6a37",
+    "project_config_sha256": "6dd011c7d76567933c4757719cc4214b472a36cd0ea092fbcef8b2576f7c46b5",
+    "fixture": "tests/fixtures/python_complex.py",
+    "fixture_sha256": "030af661ce0e45b7b8d724e6c86b81ee6bcc70ec0fac188c26450e22d9146e37",
+    "harness_sha256": "e2b9875a799e9e555d10d7db3db407199e3dee182ee472c302c3111042c05f1d",
+    "python": "3.12.0 (main, Aug 14 2025, 00:21:05) [Clang 17.0.0 (clang-1700.0.13.5)]",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "same_runner": true,
+    "settings": {
+      "size_unit": "chars",
+      "max_size": 512,
+      "context": "none",
+      "overlap": 0,
+      "samples": 7,
+      "iterations_per_sample": 20
+    },
+    "minimum_throughput_ratio": 0.9,
+    "baseline": {
+      "version": "0.10.1",
+      "bytes_per_second": 2143282.2092977013,
+      "samples": [
+        1953290.7128791302,
+        1987115.9357382325,
+        2110943.84795921,
+        2143282.2092977013,
+        2178841.081145864,
+        2162529.786773901,
+        2166409.0888526617
+      ],
+      "chunks": 6,
+      "dependencies": {
+        "numpy": "2.4.3",
+        "tree-sitter": "0.25.2",
+        "tree-sitter-python": "0.25.0",
+        "tiktoken": "0.12.0"
+      },
+      "max_chars": 768,
+      "reconstruction": true
+    },
+    "candidate": {
+      "version": "1.0.0",
+      "bytes_per_second": 1638869.7876440696,
+      "samples": [
+        1578456.5667045468,
+        1622031.588112254,
+        1603345.1971059877,
+        1643168.3707961037,
+        1644629.464955936,
+        1638869.7876440696,
+        1649162.7651060307
+      ],
+      "chunks": 8,
+      "dependencies": {
+        "numpy": "2.4.3",
+        "tree-sitter": "0.25.2",
+        "tree-sitter-python": "0.25.0",
+        "tiktoken": "0.12.0"
+      },
+      "max_chars": 501,
+      "reconstruction": true
+    }
+  }
+}

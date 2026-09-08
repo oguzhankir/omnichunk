@@ -40,9 +40,7 @@ def test_rst_chunk_byte_ranges_contiguous(fixtures_dir: Path) -> None:
 def test_rst_extension_routed_to_loader() -> None:
     """A .rst file goes through the load_rst path, not the markdown engine."""
     src = "Title\n=====\n\nBody text.\n"
-    chunks = Chunker(max_chunk_size=200, min_chunk_size=10, size_unit="chars").chunk(
-        "x.rst", src
-    )
+    chunks = Chunker(max_chunk_size=200, min_chunk_size=10, size_unit="chars").chunk("x.rst", src)
     assert chunks
     assert "".join(c.text for c in chunks) == src
 

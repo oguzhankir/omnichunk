@@ -4,8 +4,6 @@ from collections.abc import Generator, Iterable, Sequence
 from dataclasses import dataclass
 from typing import Any
 
-from numpy.typing import NDArray
-
 from omnichunk.sizing.nws import get_nws_count
 
 from .models import ASTNodeWindowItem
@@ -22,7 +20,7 @@ class RangeNode:
 def assign_windows_for_ranges(
     ranges: Sequence[tuple[int, int]],
     *,
-    cumsum: NDArray[Any],
+    cumsum: Any,
     max_size: int,
     code: str,
 ) -> list[list[ASTNodeWindowItem]]:
@@ -33,7 +31,7 @@ def assign_windows_for_ranges(
 def assign_windows_for_nodes(
     nodes: Sequence[Any],
     *,
-    cumsum: NDArray[Any],
+    cumsum: Any,
     max_size: int,
     code: str,
 ) -> list[list[ASTNodeWindowItem]]:
@@ -45,56 +43,44 @@ def greedy_assign_windows(
     nodes: Iterable[Any],
     *,
     code: str,
-    cumsum: NDArray[Any],
+    cumsum: Any,
     max_size: int,
 ) -> Generator[list[ASTNodeWindowItem], None, None]:
     """Assign nodes into windows greedily using NWS size."""
-    current_window: list[ASTNodeWindowItem] = []
-    current_size = 0
-
-    for node in nodes:
+    # Frames preserve recursive grouping semantics without Python recursion.
+    frames: list[tuple[Any, list[ASTNodeWindowItem], int]] = [(iter(nodes), [], 0)]
+    while frames:
+        iterator, window, window_size = frames[-1]
+        node = next(iterator, None)
+        if node is None:
+            if window:
+                yield window
+            frames.pop()
+            continue
         start, end = _node_range(node)
         if end <= start:
             continue
-
         node_size = get_nws_count(cumsum, start, end)
         wrapped = ASTNodeWindowItem(node=node, start=start, end=end, size=node_size)
-
-        if current_size + node_size <= max_size:
-            current_window.append(wrapped)
-            current_size += node_size
-            continue
-
-        if node_size > max_size:
-            if current_window:
-                yield current_window
-                current_window = []
-                current_size = 0
-
-            children = list(_node_children(node))
+        if window_size + node_size <= max_size:
+            window.append(wrapped)
+            frames[-1] = (iterator, window, window_size + node_size)
+        elif node_size > max_size:
+            if window:
+                yield window
+            frames[-1] = (iterator, [], 0)
+            children = tuple(_node_children(node))
             if children:
-                yield from greedy_assign_windows(
-                    children, code=code, cumsum=cumsum, max_size=max_size
-                )
-                continue
-
-            for split_item in split_oversized_leaf(
-                wrapped,
-                code=code,
-                cumsum=cumsum,
-                max_size=max_size,
-            ):
-                yield [split_item]
-            continue
-
-        if current_window:
-            yield current_window
-
-        current_window = [wrapped]
-        current_size = node_size
-
-    if current_window:
-        yield current_window
+                frames.append((iter(children), [], 0))
+            else:
+                for part in split_oversized_leaf(
+                    wrapped, code=code, cumsum=cumsum, max_size=max_size
+                ):
+                    yield [part]
+        else:
+            if window:
+                yield window
+            frames[-1] = (iterator, [wrapped], node_size)
 
 
 def _node_range(node: Any) -> tuple[int, int]:

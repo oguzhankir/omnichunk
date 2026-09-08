@@ -41,7 +41,8 @@ def test_stream_is_lazy(monkeypatch: object) -> None:
     _ = next(iterator)
     assert yielded_before_second["n"] == 1
     _ = next(iterator)
-    assert yielded_before_second["n"] == 2
+    # Finalization can split one proposed span into multiple bounded outputs.
+    assert yielded_before_second["n"] <= 2
 
 
 def test_stream_total_chunks_is_minus_one() -> None:
@@ -170,10 +171,7 @@ def test_chunker_export_and_quality_helpers() -> None:
 
 def test_chunker_with_python_nws_backend_keeps_integrity() -> None:
     content = (
-        "def a(x: int) -> int:\n"
-        "    return x + 1\n\n\n"
-        "def b(y: int) -> int:\n"
-        "    return y + 2\n"
+        "def a(x: int) -> int:\n    return x + 1\n\n\ndef b(y: int) -> int:\n    return y + 2\n"
     )
     chunker = Chunker(
         max_chunk_size=42,

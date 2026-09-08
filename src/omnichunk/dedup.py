@@ -130,9 +130,7 @@ def _dedup_minhash(
         if not toks:
             return [0] * n_perm
         items = sorted(toks)
-        token_hashes = [
-            int(hashlib.md5(t.encode("utf-8")).hexdigest()[:8], 16) for t in items
-        ]
+        token_hashes = [int(hashlib.md5(t.encode("utf-8")).hexdigest()[:8], 16) for t in items]
         out: list[int] = []
         for k in range(n_perm):
             m = min((_perm_mixed(th, k) for th in token_hashes), default=0)

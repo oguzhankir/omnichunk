@@ -1,27 +1,42 @@
 from __future__ import annotations
 
 import fnmatch
+import hashlib
+import json
 import time
 import warnings
 from collections.abc import AsyncIterator, Callable, Iterator, Sequence
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from dataclasses import asdict, replace
+from dataclasses import replace
 from pathlib import Path
-from typing import Any, Literal
+from threading import RLock
+from typing import TYPE_CHECKING, Any, Literal
 
-from omnichunk.engine.router import route_content, route_content_stream
-from omnichunk.formats.chunk import chunk_loaded_document
+from omnichunk.config import (
+    coerce_options,
+    configuration_fingerprint,
+    public_options,
+    validate_options,
+)
+from omnichunk.engine.router import route_content_stream
+from omnichunk.finalize import finalize_chunks, skipped_ranges, source_descriptor
+from omnichunk.formats.chunk import _iter_loaded_chunks
 from omnichunk.formats.docx_loader import load_docx_bytes
 from omnichunk.formats.ipynb import load_ipynb
 from omnichunk.formats.pdf import load_pdf_bytes
 from omnichunk.formats.rst import load_rst
 from omnichunk.formats.tex import load_latex
+from omnichunk.formats.types import LoadedDocument
 from omnichunk.otel.util import finalize_chunk_file_span, maybe_span, record_span_error, span_set
+from omnichunk.plugins import PluginRegistry
 from omnichunk.propositions.heuristic import extract_propositions_heuristic
 from omnichunk.propositions.llm_extract import extract_propositions_llm
 from omnichunk.propositions.types import Proposition
 from omnichunk.quality import compute_chunk_quality_scores, compute_chunk_stats
-from omnichunk.semantic.cache import EmbeddingCache
+from omnichunk.util.text_index import TextIndex
+
+if TYPE_CHECKING:
+    from omnichunk.semantic.cache import EmbeddingCache
 from omnichunk.serialization import (
     chunk_to_dict,
     chunks_to_csv,
@@ -38,6 +53,7 @@ from omnichunk.types import (
     ChunkDiff,
     ChunkOptions,
     ChunkQualityScore,
+    ChunkResult,
     ChunkStats,
     ChunkTree,
     UpsertBatch,
@@ -48,10 +64,18 @@ _STRUCTURED_SUFFIXES = frozenset({".ipynb", ".tex", ".pdf", ".docx", ".rst"})
 
 
 class Chunker:
-    def __init__(self, **options: object) -> None:
+    def __init__(self, *, registry: object = None, **options: object) -> None:
         """Create reusable chunker with default options."""
-        self._defaults = ChunkOptions(**_coerce_option_dict(options))
+        if registry is not None and not isinstance(registry, PluginRegistry):
+            raise TypeError("registry must be a PluginRegistry")
+        self.registry = registry if registry is not None else PluginRegistry.from_global()
+        coerced = _coerce_option_dict(options)
+        if "max_chunk_size" in coerced and "min_chunk_size" not in coerced:
+            coerced["min_chunk_size"] = min(50, int(coerced["max_chunk_size"]))
+        self._defaults = ChunkOptions(**coerced)
+        validate_options(self._defaults)
         self._embedding_cache: EmbeddingCache | None = None
+        self._embedding_cache_lock = RLock()
 
     def semantic_cache_stats(self) -> dict[str, int]:
         """Return embedding cache ``{"hits", "misses", "size"}`` for this Chunker.
@@ -64,54 +88,116 @@ class Chunker:
             return {"hits": 0, "misses": 0, "size": 0}
         return self._embedding_cache.stats()
 
+    def config_fingerprint(self) -> str:
+        """Fingerprint of options and installed parser/tokenizer versions."""
+        return self._configuration_fingerprint(self._defaults)
+
+    def _configuration_fingerprint(self, options: ChunkOptions) -> str:
+        payload = {
+            "options": configuration_fingerprint(options),
+            "plugins": self.registry.fingerprint,
+        }
+        return hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
+
     def chunk(self, filepath: str, content: str, **overrides: object) -> list[Chunk]:
-        """Chunk content and return all chunks."""
-        path = Path(filepath)
-        if path.suffix.lower() in _STRUCTURED_SUFFIXES:
-            suf = path.suffix.lower()
-            if suf in (".pdf", ".docx"):
-                raise ValueError(
-                    f"Use chunk_file() for {suf} documents; "
-                    "binary formats cannot be passed as text."
-                )
-            options = self._build_options(filepath=filepath, overrides=overrides)
-            if suf == ".ipynb":
-                loaded = load_ipynb(
-                    content, include_outputs=options.include_notebook_outputs
-                )
-            elif suf == ".rst":
+        """Chunk canonical content through the same finalization as stream()."""
+        chunks = list(self.stream(filepath, content, **overrides))
+        return [replace(c, total_chunks=len(chunks)) for c in chunks]
+
+    def _finalize_loaded(
+        self, filepath: str, loaded: LoadedDocument, options: ChunkOptions, encoding: str = "utf-8"
+    ) -> Iterator[Chunk]:
+        index = TextIndex(loaded.text)
+        source = source_descriptor(
+            filepath,
+            index,
+            options,
+            format_name=loaded.format_name,
+            encoding=encoding,
+            metadata={"warnings": list(loaded.warnings)},
+        )
+        engine_options = replace(options, overlap=None, overlap_lines=0)
+        proposed = self.registry.iterate(_loaded_candidates(filepath, loaded, engine_options))
+        yield from finalize_chunks(
+            filepath,
+            loaded.text,
+            proposed,
+            options,
+            index=index,
+            source=source,
+            fingerprint=self._configuration_fingerprint(options),
+        )
+
+    def stream(self, filepath: str, content: str, **overrides: object) -> Iterator[Chunk]:
+        """Yield measured chunks with total_chunks=-1; source/AST stay resident.
+
+        All engines share overlap and payload policies. Structured loaders and
+        semantic boundary discovery may buffer their per-document candidates.
+        """
+        options = self._build_options(filepath=filepath, overrides=overrides)
+        suffix = Path(filepath).suffix.lower()
+        if suffix in (".pdf", ".docx"):
+            raise ValueError(
+                f"Use chunk_file() for {suffix} documents; binary formats cannot be passed as text."
+            )
+        if suffix in _STRUCTURED_SUFFIXES:
+            if suffix == ".ipynb":
+                loaded = load_ipynb(content, include_outputs=options.include_notebook_outputs)
+            elif suffix == ".rst":
                 loaded = load_rst(content)
             else:
                 loaded = load_latex(content)
-            lang = detect_language(filepath=filepath, content=loaded.text)
-            options = replace(options, language=lang)
-            return chunk_loaded_document(filepath, loaded, options)
-        options = self._build_options(filepath=filepath, overrides=overrides)
+            yield from self._finalize_loaded(filepath, loaded, options)
+            return
+        index = TextIndex(content)
+        engine_options = replace(
+            options, overlap=None, overlap_lines=0, _precomputed_text_index=index
+        )
         with maybe_span(
-            options.otel_tracer,
-            "omnichunk.engine.route",
-            filepath=filepath,
+            options.otel_tracer, "omnichunk.engine.route", filepath=filepath
         ) as route_span:
-            content_type, chunks = route_content(
-                filepath=filepath, content=content, options=options
-            )
+            content_type, proposed = route_content_stream(filepath, content, engine_options)
             span_set(route_span, "omnichunk.engine_name", content_type.value)
             span_set(route_span, "omnichunk.size_unit", options.size_unit)
-        return chunks
+            yield from finalize_chunks(
+                filepath,
+                content,
+                self.registry.iterate(proposed),
+                options,
+                index=index,
+                fingerprint=self._configuration_fingerprint(options),
+            )
 
-    def stream(self, filepath: str, content: str, **overrides: object) -> Iterator[Chunk]:
-        """Yield chunks one by one without buffering the full result.
+    def chunk_with_manifest(self, filepath: str, content: str, **overrides: object) -> ChunkResult:
+        """Return chunks plus source-span omissions, even for whitespace-only input.
 
-        ``total_chunks`` is ``-1`` for every yielded chunk. Token overlap
-        (``overlap=``) is not applied in streaming mode; use :meth:`chunk` for overlap.
+        This text API takes canonical text. Use format loaders explicitly when
+        inspecting a binary/document container's canonical extraction.
         """
-        path = Path(filepath)
-        if path.suffix.lower() in _STRUCTURED_SUFFIXES:
-            yield from self.chunk(filepath, content, **overrides)
-            return
-        options = self._build_options(filepath=filepath, overrides=overrides)
-        _, stream = route_content_stream(filepath=filepath, content=content, options=options)
-        yield from stream
+        if Path(filepath).suffix.lower() in _STRUCTURED_SUFFIXES:
+            raise ValueError(
+                "chunk_with_manifest accepts canonical text; use a text filepath after loading"
+            )
+        options = self._build_options(filepath, overrides)
+        chunks = self.chunk(filepath, content, **overrides)
+        index = TextIndex(content)
+        source = source_descriptor(filepath, index, options)
+        diagnostics = tuple(dict.fromkeys(e for c in chunks for e in c.context.parse_errors))
+        return ChunkResult(
+            source, tuple(chunks), skipped_ranges(chunks, len(index.raw_bytes)), diagnostics
+        )
+
+    def stream_file(
+        self, path: str, *, encoding: str = "utf-8", **overrides: object
+    ) -> Iterator[Chunk]:
+        """Iterate one file without collecting ordinary-text chunk objects."""
+        file_path = Path(path)
+        if file_path.suffix.lower() in (".pdf", ".docx"):
+            for c in self.chunk_file(path, encoding=encoding, **overrides):
+                yield replace(c, total_chunks=-1)
+        else:
+            for c in self.stream(str(file_path), _read_text(file_path, encoding), **overrides):
+                yield _with_encoding(c, encoding)
 
     def batch(
         self,
@@ -170,23 +256,25 @@ class Chunker:
                     options = self._build_options(filepath=str(file_path), overrides=overrides)
                     if suf == ".ipynb":
                         loaded = load_ipynb(
-                            file_path.read_text(encoding=encoding),
+                            _read_text(file_path, encoding),
                             include_outputs=opts.include_notebook_outputs,
                         )
                     elif suf == ".tex":
-                        loaded = load_latex(file_path.read_text(encoding=encoding))
+                        loaded = load_latex(_read_text(file_path, encoding))
                     elif suf == ".rst":
-                        loaded = load_rst(file_path.read_text(encoding=encoding))
+                        loaded = load_rst(_read_text(file_path, encoding))
                     elif suf == ".pdf":
                         loaded = load_pdf_bytes(file_path.read_bytes())
                     else:
                         loaded = load_docx_bytes(file_path.read_bytes())
                     lang = detect_language(filepath=str(file_path), content=loaded.text)
                     options = replace(options, language=lang)
-                    out = chunk_loaded_document(str(file_path), loaded, options)
+                    out = list(self._finalize_loaded(str(file_path), loaded, options, encoding))
+                    out = [replace(c, total_chunks=len(out)) for c in out]
                 else:
-                    text = file_path.read_text(encoding=encoding)
+                    text = _read_text(file_path, encoding)
                     out = self.chunk(filepath=str(file_path), content=text, **overrides)
+                    out = [_with_encoding(c, encoding) for c in out]
             except BaseException as exc:
                 record_span_error(span, exc)
                 finalize_chunk_file_span(span, chunk_count=0, t0=t0, error=str(exc))
@@ -254,7 +342,7 @@ class Chunker:
                 omnichunk_file_size_bytes=sz,
             ) as span:
                 try:
-                    text = file_path.read_text(encoding=encoding)
+                    text = _read_text(file_path, encoding)
                 except Exception as exc:
                     finalize_chunk_file_span(
                         span,
@@ -274,14 +362,20 @@ class Chunker:
 
         with ThreadPoolExecutor(max_workers=concurrency) as executor:
             futures = [
-                executor.submit(_worker, idx, file_path)
-                for idx, file_path in enumerate(file_paths)
+                executor.submit(_worker, idx, file_path) for idx, file_path in enumerate(file_paths)
             ]
             for future in as_completed(futures):
                 idx, result = future.result()
                 results_by_idx[idx] = result
 
         return [results_by_idx[idx] for idx in range(len(file_paths))]
+
+    def format(self, chunks: Sequence[Chunk], name: str) -> str:
+        """Export using a formatter registered on this instance's registry."""
+        formatter = self.registry.formatters.get(name)
+        if formatter is None:
+            raise ValueError(f"Unknown formatter: {name}")
+        return formatter(chunks)
 
     def to_dicts(self, chunks: Sequence[Chunk]) -> list[dict[str, Any]]:
         """Convert chunks into JSON-serializable dictionaries."""
@@ -383,19 +477,20 @@ class Chunker:
     ) -> Iterator[UpsertBatch]:
         """Yield embedding batches and adapter-ready rows without buffering all chunks.
 
-        Memory use is O(batch_size) for chunk objects plus one batch of embeddings.
+        Output buffering is O(batch_size). Source text/AST and structured or
+        semantic candidates may remain resident for the current document.
         """
         if batch_size < 1:
             raise ValueError("batch_size must be at least 1")
+        if adapter not in ("pinecone", "weaviate", "supabase"):
+            raise ValueError("Unknown vector adapter")
 
         root = Path(path)
         if not root.exists():
             raise FileNotFoundError(f"Path does not exist: {path}")
 
         def _flush(buf: list[Chunk]) -> UpsertBatch:
-            texts = [
-                c.contextualized_text if use_contextualized_text else c.text for c in buf
-            ]
+            texts = [c.contextualized_text if use_contextualized_text else c.text for c in buf]
             emb_seq = embed_fn(texts)
             embeddings = [list(row) for row in emb_seq]
             if len(embeddings) != len(buf):
@@ -434,7 +529,7 @@ class Chunker:
                 yield _flush(batch)
 
         if root.is_file():
-            for ch in self.chunk_file(str(root), encoding=encoding, **overrides):
+            for ch in self.stream_file(str(root), encoding=encoding, **overrides):
                 yield from _push(ch)
             if buffer:
                 yield _flush(buffer)
@@ -448,10 +543,10 @@ class Chunker:
         )
         for fp in file_paths:
             try:
-                for ch in self.chunk_file(str(fp), encoding=encoding, **overrides):
+                for ch in self.stream_file(str(fp), encoding=encoding, **overrides):
                     yield from _push(ch)
             except (OSError, UnicodeDecodeError):
-                continue
+                raise
         if buffer:
             yield _flush(buffer)
 
@@ -543,8 +638,12 @@ class Chunker:
         """Build a multi-level ChunkTree (finest → coarsest by ascending ``levels``)."""
         from omnichunk.hierarchy.builder import build_chunk_tree
 
+        if Path(filepath).suffix.lower() in _STRUCTURED_SUFFIXES:
+            raise ValueError(
+                "hierarchical_chunk accepts canonical text; load structured documents first"
+            )
         resolved_unit = size_unit or self._defaults.size_unit
-        merged = asdict(self._defaults)
+        merged = public_options(self._defaults)
         merged.update(_coerce_option_dict(overrides))
         skip = frozenset({"max_chunk_size", "min_chunk_size", "filepath", "tokenizer", "size_unit"})
         opts = {
@@ -559,7 +658,8 @@ class Chunker:
             content,
             levels=list(levels),
             size_unit=str(resolved_unit),
-            tokenizer=self._defaults.tokenizer,
+            tokenizer=merged["tokenizer"],
+            registry=self.registry,
             **opts,
         )
 
@@ -574,15 +674,14 @@ class Chunker:
         """Incremental diff for vector DB updates (stable IDs match Pinecone export)."""
         from omnichunk.diff.engine import chunk_diff as _engine_chunk_diff
 
-        merged = asdict(self._defaults)
+        merged = public_options(self._defaults)
         merged.update(_coerce_option_dict(overrides))
         clean = {
             k: v
             for k, v in merged.items()
-            if k in ChunkOptions.__dataclass_fields__
-            and not str(k).startswith("_")
+            if k in ChunkOptions.__dataclass_fields__ and not str(k).startswith("_")
         }
-        child = Chunker(**clean)
+        child = Chunker(registry=self.registry, **clean)
         return _engine_chunk_diff(
             filepath,
             new_content,
@@ -606,30 +705,47 @@ class Chunker:
         )
 
     async def astream(
-        self,
-        filepath: str,
-        content: str,
-        **kwargs: object,
+        self, filepath: str, content: str, *, buffer_size: int = 8, **kwargs: object
     ) -> AsyncIterator[Chunk]:
-        """Async streaming; yields chunks as they are produced (``total_chunks`` is ``-1``).
-
-        Overlap is not applied; see :meth:`stream`.
-        """
+        """Bounded async output with backpressure and cooperative cancellation."""
         import asyncio
+        from concurrent.futures import TimeoutError as FutureTimeout
+        from threading import Event
 
+        if buffer_size < 1:
+            raise ValueError("buffer_size must be positive")
         loop = asyncio.get_running_loop()
-        queue: asyncio.Queue[Chunk | BaseException | None] = asyncio.Queue()
+        queue: asyncio.Queue[Chunk | BaseException | None] = asyncio.Queue(maxsize=buffer_size)
+        stopped = Event()
 
-        def _produce() -> None:
+        def put(item: Chunk | BaseException | None) -> bool:
+            future = asyncio.run_coroutine_threadsafe(queue.put(item), loop)
+            while not stopped.is_set():
+                try:
+                    future.result(timeout=0.05)
+                    return True
+                except FutureTimeout:
+                    continue
+            future.cancel()
+            return False
+
+        def produce() -> None:
+            iterator = self.stream(filepath, content, **kwargs)
             try:
-                for ch in self.stream(filepath, content, **kwargs):
-                    loop.call_soon_threadsafe(queue.put_nowait, ch)
+                for item in iterator:
+                    if stopped.is_set() or not put(item):
+                        break
             except BaseException as exc:
-                loop.call_soon_threadsafe(queue.put_nowait, exc)
+                if not stopped.is_set():
+                    put(exc)
             finally:
-                loop.call_soon_threadsafe(queue.put_nowait, None)
+                close = getattr(iterator, "close", None)
+                if close is not None:
+                    close()
+                if not stopped.is_set():
+                    put(None)
 
-        producer_future = loop.run_in_executor(None, _produce)
+        producer = loop.run_in_executor(None, produce)
         try:
             while True:
                 item = await queue.get()
@@ -639,7 +755,8 @@ class Chunker:
                     raise item
                 yield item
         finally:
-            await producer_future
+            stopped.set()
+            await asyncio.shield(producer)
 
     async def abatch(
         self,
@@ -668,7 +785,13 @@ class Chunker:
     def _build_options(self, filepath: str, overrides: dict[str, object]) -> ChunkOptions:
         # Use replace(), not asdict(), so callables (otel_tracer, embed_fn) are not deep-copied.
         merged = _coerce_option_dict(overrides)
-        options = replace(self._defaults, filepath=filepath, **merged)
+        merged["filepath"] = filepath
+        if "max_chunk_size" in merged and "min_chunk_size" not in merged:
+            merged["min_chunk_size"] = min(
+                self._defaults.min_chunk_size, int(merged["max_chunk_size"])
+            )
+        options = replace(self._defaults, **merged)
+        validate_options(options)
         return self._with_cached_embed_fn(options)
 
     def _with_cached_embed_fn(self, options: ChunkOptions) -> ChunkOptions:
@@ -683,9 +806,20 @@ class Chunker:
         embed_fn = options.semantic_embed_fn
         if not callable(embed_fn) or int(options.semantic_embed_cache_size) <= 0:
             return options
-        if self._embedding_cache is None:
-            self._embedding_cache = EmbeddingCache(options.semantic_embed_cache_size)
-        cached = self._embedding_cache.wrap(embed_fn)
+        with self._embedding_cache_lock:
+            if (
+                self._embedding_cache is None
+                or self._embedding_cache._max != options.semantic_embed_cache_size
+            ):
+                from omnichunk.semantic.cache import EmbeddingCache
+
+                self._embedding_cache = EmbeddingCache(options.semantic_embed_cache_size)
+            cached = self._embedding_cache.wrap(
+                embed_fn,
+                namespace=options.semantic_cache_namespace,
+                model_revision=options.semantic_model_revision,
+                preprocessing=options.semantic_preprocessing,
+            )
         return replace(options, semantic_embed_fn=cached)
 
 
@@ -776,5 +910,30 @@ def _collect_directory_files(
 
 
 def _coerce_option_dict(options: dict[str, object]) -> dict[str, Any]:
-    allowed = set(ChunkOptions.__dataclass_fields__.keys())
-    return {key: value for key, value in options.items() if key in allowed}
+    return coerce_options(options)
+
+
+def _loaded_candidates(
+    filepath: str, loaded: LoadedDocument, options: ChunkOptions
+) -> Iterator[Chunk]:
+    yield from _iter_loaded_chunks(filepath, loaded, options)
+
+
+def _read_text(path: Path, encoding: str) -> str:
+    with path.open(encoding=encoding, newline="") as handle:
+        return handle.read()
+
+
+def _with_encoding(chunk: Chunk, encoding: str) -> Chunk:
+    if chunk.source is None:
+        return chunk
+    return replace(
+        chunk,
+        source=replace(
+            chunk.source,
+            encoding=encoding,
+            normalization="none"
+            if encoding.lower().replace("_", "-") == "utf-8"
+            else f"decoded:{encoding}",
+        ),
+    )

@@ -156,9 +156,7 @@ def test_bash_function_entities(fixtures_dir: Path) -> None:
     chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
         "deploy.sh", code
     )
-    fn_names = {
-        e.name for c in chunks for e in c.context.entities if e.type.value == "function"
-    }
+    fn_names = {e.name for c in chunks for e in c.context.entities if e.type.value == "function"}
     assert {"deploy", "main", "usage"} <= fn_names
 
 
@@ -254,9 +252,7 @@ def test_elixir_defmodule_name_captured(fixtures_dir: Path) -> None:
     chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
         "calc.ex", code
     )
-    class_names = {
-        e.name for c in chunks for e in c.context.entities if e.type.value == "class"
-    }
+    class_names = {e.name for c in chunks for e in c.context.entities if e.type.value == "class"}
     assert "Inventory" in class_names
     assert "Inventory.Item" in class_names
 

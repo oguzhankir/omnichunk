@@ -15,7 +15,13 @@ from omnichunk.windowing.overlap import apply_token_overlap
 
 def test_line_overlap_contextualized_text() -> None:
     code = "def a():\n    return 1\n\ndef b():\n    return 2\n\ndef c():\n    return 3\n"
-    chunker = Chunker(max_chunk_size=28, min_chunk_size=8, size_unit="chars", overlap_lines=1)
+    chunker = Chunker(
+        max_chunk_size=28,
+        min_chunk_size=8,
+        size_unit="chars",
+        overlap_lines=1,
+        overflow_policy="preserve",
+    )
 
     chunks = chunker.chunk("example.py", code)
 

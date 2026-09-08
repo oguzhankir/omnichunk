@@ -229,9 +229,9 @@ def test_dp_total_score_same_or_better_than_greedy() -> None:
     chunks = _make_chunks(texts)
     scores = [3.0, 3.0, 5.0]
     budget = 6
-    greedy_res = TokenBudgetOptimizer(
-        budget=budget, strategy="greedy", size_unit="chars"
-    ).select(chunks, scores=scores)
+    greedy_res = TokenBudgetOptimizer(budget=budget, strategy="greedy", size_unit="chars").select(
+        chunks, scores=scores
+    )
     dp_res = TokenBudgetOptimizer(budget=budget, strategy="dp", size_unit="chars").select(
         chunks, scores=scores
     )
@@ -272,9 +272,7 @@ def test_preserve_order_false_skips_sort() -> None:
     high_second = _make_chunk("high", byte_start=100, index=1, total=2, char_count=3)
     chunks = [low_first, high_second]
     scores = [1.0, 10.0]
-    opt = TokenBudgetOptimizer(
-        budget=3, strategy="greedy", preserve_order=False, size_unit="chars"
-    )
+    opt = TokenBudgetOptimizer(budget=3, strategy="greedy", preserve_order=False, size_unit="chars")
     result = opt.select(chunks, scores=scores)
     assert len(result.selected) == 1
     assert result.selected[0] is high_second
@@ -306,9 +304,7 @@ def test_dp_falls_back_to_greedy_when_state_space_too_large(
 
     monkeypatch.setattr(optimizer_mod, "_greedy_select", spy_greedy)
     chunks = _make_chunks(["p", "q"])
-    opt = TokenBudgetOptimizer(
-        budget=25_000_001, strategy="dp", size_unit="chars"
-    )
+    opt = TokenBudgetOptimizer(budget=25_000_001, strategy="dp", size_unit="chars")
     opt.select(chunks, scores=[1.0, 2.0])
     assert greedy_calls == ["greedy"]
 

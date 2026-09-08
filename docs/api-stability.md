@@ -1,44 +1,58 @@
 # API stability
 
-Omnichunk follows [Semantic Versioning](https://semver.org/) for **documented public APIs**.
+Omnichunk uses semantic versioning for documented public APIs. The working tree
+implements the major 2.0 contract transition and additive 2.1 code-quality work;
+implementation and package publication are separate milestones. Package metadata,
+runtime `__version__` and CLI output use `src/omnichunk/_version.py` as their single
+version source. Release checks compare the selected tag with built artifacts.
 
-`v0.10.1` is a **stability-focused pre-release**. The formal stable public API guarantee starts at `v1.0.0`.
+## Compatibility boundary
 
-## What is stable
+The public surface includes documented exports in `omnichunk.__all__`, their
+methods, and explicitly documented APIs such as `omnichunk.store.migrate_legacy_store`.
+Internal engine/windowing/util helpers are not stable extension points. Prefer
+the public `Chunker`, loader and registry APIs.
 
-The primary stability boundary is the **export list** in `omnichunk.__all__` (see package `__init__.py`). Symbols listed there are intended to remain compatible within the same **major** version (for `0.x`, treat **minor** bumps as the main compatibility signal).
+Within 2.x, minor versions add compatible functionality and patch versions fix
+compatible behavior. The major transition changes default sizing, validation,
+source/budget contracts, identity, dependency extras and persistence schemas.
+The [migration guide](migrations/v2.md) documents actual replacements, index
+rebuilding and rollback; the [roadmap](https://github.com/oguzhankir/omnichunk/blob/main/ROADMAP.md)
+tracks future additions and any announced removals for 3.0.
 
-### Version `0.x` note
+`algorithm_version="2.1"` records the current chunking behavior; it does not provide
+an implementation of older algorithms. Reproducible output assumes the same source,
+options, parser/tokenizer versions and callback results. Keep the old package
+runtime when reproducing a previous index generation.
 
-While `0 < major < 1`, minor releases may add features and may include targeted breaking changes when required for correctness. Patch releases are expected to remain backward compatible for the documented public API surface.
+Persisted chunk JSON has an explicit schema version and reads legacy records.
+SQLite schema migration requires a separate destination and preserves its source.
+Schema readability does not make old boundaries or embeddings equivalent to the
+new output. IDs and embedding invalidation have separate contracts.
 
-### Version `1.x` note
+## Source and execution behavior
 
-Starting from `v1.0.0`, compatibility guarantees become strict for documented public symbols:
+The [contracts reference](reference/contracts.md) defines final payload budgets,
+UTF-8 byte coordinates, canonical extracted sources, coverage modes, overlap,
+iterator parity, identity and synchronization. `contextualized_text` is derived
+text; `Chunk.text` is the verifiable source slice.
 
-- Breaking changes require a major version bump.
-- Minor versions add backward-compatible functionality.
-- Patch versions contain backward-compatible fixes only.
+Iterator APIs retain document text and parser state. Async queue backpressure
+bounds queued output, not total process memory. External callbacks can introduce
+latency or nondeterminism and cannot be forcibly cancelled by Python wrappers.
 
-## What is not guaranteed
+The experimental `serve --rpc` service uses custom JSON-RPC. Its deprecated
+`--mcp` alias does not implement MCP initialization or standard tool discovery.
+This explicit experimental boundary does not retroactively classify other
+established public APIs as experimental.
 
-Internal modules used for implementation (e.g. `omnichunk.engine.*`, many `omnichunk.util.*` helpers) may change without a major bump. Prefer importing from the top-level `omnichunk` package.
+## Type checking
 
-## Experimental APIs
-
-If a feature is experimental, it will be documented as such in release notes and/or docstrings. Experimental APIs may change or move (for example under a dedicated namespace) in future releases.
-
-## Type checking policy
-
-CI runs `mypy` on the full `src/omnichunk` tree with the repository defaults.
-
-For newly introduced public modules that are intended to be **strict-friendly**, CI also runs:
+CI checks the full package with strict mypy and ships the PEP 561 `py.typed` marker:
 
 ```bash
-mypy --strict --follow-imports=skip \
-  src/omnichunk/propositions/types.py \
-  src/omnichunk/propositions/heuristic.py \
-  src/omnichunk/propositions/llm_extract.py
+mypy --strict src/omnichunk
 ```
 
-`--follow-imports=skip` keeps this check focused on those modules without requiring the entire dependency graph to satisfy `--strict` yet.
+Behavioral and property tests separately validate source fidelity, budget limits
+and persistence safety; types alone do not prove those properties.

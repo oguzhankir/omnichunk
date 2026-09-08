@@ -8,7 +8,91 @@ permissions:
   contents: read
 
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install validation dependencies
+        run: pip install -e ".[dev,docs,langchain,llamaindex]"
+      - name: Verify source, behavior and documentation
+        run: |
+          python scripts/check_ai_rules_sync.py
+          ruff check src tests
+          ruff format --check src tests
+          mypy --strict src/omnichunk
+          pytest -n auto -q --cov=omnichunk --cov-branch --cov-report=term-missing --cov-fail-under=90
+          python scripts/check_benchmarks.py --run-quality
+          mkdocs build --strict
+
+  wheel-smoke:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build and validate a dependency-free installed wheel
+        run: |
+          python -m pip install build twine
+          python -m build
+          python scripts/check_release.py
+
+  artifacts:
+    needs: [validate, wheel-smoke]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install build and benchmark dependencies
+        run: pip install -e ".[dev]" build twine
+      - name: Establish previous release baseline
+        shell: bash
+        run: |
+          set -euo pipefail
+          baseline_ref=$(git describe --tags --abbrev=0 "${GITHUB_SHA}^")
+          printf 'BASELINE_REF=%s\n' "$baseline_ref" >> "$GITHUB_ENV"
+      - name: Require equivalent same-runner performance evidence
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: >-
+          python scripts/check_benchmarks.py --compare-ref "$BASELINE_REF" --require-baseline
+          --comparison-report reports/release-benchmark.json
+          --transition-manifest benchmarks/transition_baseline.json --release-tag "$RELEASE_TAG"
+      - name: Preserve benchmark evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-benchmark
+          path: reports/release-benchmark.json
+          if-no-files-found: warn
+      - name: Build distributions
+        run: python -m build
+      - name: Verify tag, wheel, sdist and isolated runtime
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: python scripts/check_release.py --tag "$RELEASE_TAG"
+      - name: Upload validated distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: distributions
+          path: dist/
+          if-no-files-found: error
+
   publish:
+    needs: artifacts
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -16,17 +100,9 @@ jobs:
       name: pypi
       url: https://pypi.org/project/omnichunk/
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
+      - uses: actions/download-artifact@v4
         with:
-          python-version: "3.12"
-
-      - name: Install build tools
-        run: pip install build
-
-      - name: Build package
-        run: python -m build
-
-      - name: Publish to PyPI
+          name: distributions
+          path: dist/
+      - name: Publish validated artifacts to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
