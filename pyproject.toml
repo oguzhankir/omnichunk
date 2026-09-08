@@ -217,6 +217,8 @@ warn_unused_configs = true
 
 [[tool.mypy.overrides]]
 module = ["numpy", "numpy.*", "tiktoken", "sentence_transformers", "scipy", "scipy.*"]
+# NumPy type stubs can contain `type` alias statements (Py 3.12+ syntax).
+python_version = "3.12"
 # Check Omnichunk's annotations rather than parsing implementation details of
 # optional dependencies. New NumPy releases use syntax newer than Python 3.10,
 # which is still a supported Omnichunk runtime.
