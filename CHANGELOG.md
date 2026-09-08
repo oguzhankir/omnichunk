@@ -7,6 +7,17 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 
 No unreleased changes are staged yet for a new release.
 
+## [2.1.4] - 2026-09-08
+
+### Fixed
+- Bumped package runtime version to `2.1.4`.
+- Publication metadata and changelog maintenance wording were aligned for post-
+  2.1.x release tracking.
+
+### Compatibility
+- No API/runtime behavior changes.
+- Backward-compatible maintenance release.
+
 ## [2.1.1] - 2026-09-08
 
 This release stabilizes metadata consistency after the 2.1.0 milestone work
