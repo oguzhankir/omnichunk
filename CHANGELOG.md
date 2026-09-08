@@ -5,10 +5,12 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 
 ## [Unreleased]
 
-This checkout implements the 2.0 foundation transition and 2.1 code-quality
-milestone together for the next **2.1.0** release. The maintainer will set the
-version in `src/omnichunk/_version.py`; no tag or package has been published by
-these changes. See [migration instructions](docs/migrations/v2.md).
+No unreleased changes are staged yet for a new release.
+
+## [2.1.1] - 2026-09-08
+
+This release stabilizes metadata consistency after the 2.1.0 milestone work
+and includes a small packaging/release maintenance fix.
 
 ### Added
 - Canonical source descriptors, revision/configuration fingerprints and explicit
@@ -45,6 +47,8 @@ these changes. See [migration instructions](docs/migrations/v2.md).
 - Minhash dedup: faster signatures (one MD5 per token, deterministic mixing for LSH bands); 32 permutations in 8×4 bands; Jaccard verification on candidates unchanged
 
 ### Fixed
+- Synchronize release bookkeeping after 2.1.0 by updating runtime/package version to `2.1.1`
+  and replacing the stale placeholder release metadata in the top changelog section.
 - Same-length edits, duplicate chunks, context/configuration changes and scoped
   deletion no longer retain stale indexing state. Failed syncs preserve last good data.
 - Embedding caches isolate providers/revisions/preprocessing, validate cached
