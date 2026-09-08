@@ -63,13 +63,15 @@ def test_plaintext_semantic_split() -> None:
         "Second paragraph has more sentences. It should split cleanly, not mid-word.\n\n"
         "Third paragraph is here for extra length."
     )
-    chunker = Chunker(max_chunk_size=70, min_chunk_size=15, size_unit="chars")
+    chunker = Chunker(
+        max_chunk_size=70, min_chunk_size=15, size_unit="chars", coverage_policy="lossless"
+    )
 
     chunks = chunker.chunk("notes.txt", text)
 
     assert len(chunks) >= 2
     assert "".join(c.text for c in chunks) == text
-    assert all(c.text.strip() for c in chunks)
+    assert all(c.text for c in chunks)  # lossless mode may retain trivia-only spans
 
 
 def test_windows_to_contiguous_ranges_preserves_contiguous_cursor_model() -> None:

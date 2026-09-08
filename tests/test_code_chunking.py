@@ -155,9 +155,7 @@ def test_large_python_file_stress_reconstruction_and_determinism() -> None:
 
 
 def _entities(code: str, filepath: str = "x.py") -> list[tuple[str, str]]:
-    chunks = Chunker(max_chunk_size=600, min_chunk_size=20, size_unit="chars").chunk(
-        filepath, code
-    )
+    chunks = Chunker(max_chunk_size=600, min_chunk_size=20, size_unit="chars").chunk(filepath, code)
     return [(e.name, e.type.value) for c in chunks for e in c.context.entities]
 
 
@@ -199,9 +197,7 @@ def test_python_dataclass_decorated_class_signature_includes_decorator() -> None
         "    x: int\n"
         "    y: int\n"
     )
-    chunks = Chunker(max_chunk_size=600, min_chunk_size=20, size_unit="chars").chunk(
-        "x.py", code
-    )
+    chunks = Chunker(max_chunk_size=600, min_chunk_size=20, size_unit="chars").chunk("x.py", code)
     all_entities = [e for c in chunks for e in c.context.entities]
     point = next((e for e in all_entities if e.name == "Point"), None)
     assert point is not None
@@ -211,15 +207,8 @@ def test_python_dataclass_decorated_class_signature_includes_decorator() -> None
 
 
 def test_python_stacked_decorators_stay_attached_to_function() -> None:
-    code = (
-        "@staticmethod\n"
-        "@property\n"
-        "def helper():\n"
-        "    return 1\n"
-    )
-    chunks = Chunker(max_chunk_size=600, min_chunk_size=20, size_unit="chars").chunk(
-        "x.py", code
-    )
+    code = "@staticmethod\n@property\ndef helper():\n    return 1\n"
+    chunks = Chunker(max_chunk_size=600, min_chunk_size=20, size_unit="chars").chunk("x.py", code)
     helper_chunk = next(c for c in chunks if "def helper" in c.text)
     assert "@staticmethod" in helper_chunk.text
     assert "@property" in helper_chunk.text
@@ -312,9 +301,7 @@ def test_typescript_enum_declaration_captured(fixtures_dir: Path) -> None:
 
 def test_typescript_interface_with_generics_captured(fixtures_dir: Path) -> None:
     chunks = _ts_chunks(fixtures_dir)
-    interfaces = {
-        e.name for c in chunks for e in c.context.entities if e.type.value == "interface"
-    }
+    interfaces = {e.name for c in chunks for e in c.context.entities if e.type.value == "interface"}
     assert "Serializer" in interfaces
 
 
@@ -344,19 +331,15 @@ def test_rust_modern_reconstruction(fixtures_dir: Path) -> None:
 
 
 def test_rust_macro_rules_captured_as_macro() -> None:
-    code = "macro_rules! say_hi { () => { println!(\"hi\"); } }\n"
-    chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
-        "x.rs", code
-    )
+    code = 'macro_rules! say_hi { () => { println!("hi"); } }\n'
+    chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk("x.rs", code)
     kinds = [(e.name, e.type.value) for c in chunks for e in c.context.entities]
     assert ("say_hi", "macro") in kinds
 
 
 def test_rust_impl_for_trait_yields_impl_block(fixtures_dir: Path) -> None:
     chunks = _rust_chunks(fixtures_dir)
-    impl_blocks = [
-        e for c in chunks for e in c.context.entities if e.type.value == "impl_block"
-    ]
+    impl_blocks = [e for c in chunks for e in c.context.entities if e.type.value == "impl_block"]
     # impl Greeter + impl Renderable for Greeter + impl Display for Greeter = 3
     assert len(impl_blocks) >= 3
     names = {e.name for e in impl_blocks}
@@ -365,9 +348,7 @@ def test_rust_impl_for_trait_yields_impl_block(fixtures_dir: Path) -> None:
 
 def test_rust_inherent_impl_block_yields_impl_block_for_type() -> None:
     code = "struct Foo;\nimpl Foo { fn a(&self) {} }\n"
-    chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
-        "x.rs", code
-    )
+    chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk("x.rs", code)
     types = {e.type.value for c in chunks for e in c.context.entities}
     assert "impl_block" in types
 
@@ -388,15 +369,8 @@ def test_rust_visibility_modifiers_preserved_in_chunk(fixtures_dir: Path) -> Non
 
 
 def test_rust_macro_definition_kept_with_arms_intact() -> None:
-    code = (
-        "macro_rules! multi {\n"
-        "    () => { 1 };\n"
-        "    ($x:expr) => { $x };\n"
-        "}\n"
-    )
-    chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk(
-        "x.rs", code
-    )
+    code = "macro_rules! multi {\n    () => { 1 };\n    ($x:expr) => { $x };\n}\n"
+    chunks = Chunker(max_chunk_size=400, min_chunk_size=20, size_unit="chars").chunk("x.rs", code)
     macro_chunk = next(c for c in chunks if "macro_rules!" in c.text)
     assert "($x:expr)" in macro_chunk.text
 
@@ -423,17 +397,13 @@ def test_go_modern_reconstruction(fixtures_dir: Path) -> None:
 
 def test_go_interface_extraction(fixtures_dir: Path) -> None:
     chunks = _go_chunks(fixtures_dir)
-    interfaces = {
-        e.name for c in chunks for e in c.context.entities if e.type.value == "interface"
-    }
+    interfaces = {e.name for c in chunks for e in c.context.entities if e.type.value == "interface"}
     assert {"Comparable", "Renderer"} <= interfaces
 
 
 def test_go_type_alias_extraction(fixtures_dir: Path) -> None:
     chunks = _go_chunks(fixtures_dir)
-    aliases = {
-        e.name for c in chunks for e in c.context.entities if e.type.value == "type_alias"
-    }
+    aliases = {e.name for c in chunks for e in c.context.entities if e.type.value == "type_alias"}
     assert {"Alias", "StringPair"} <= aliases
 
 
@@ -487,19 +457,14 @@ def test_java_annotation_type_declaration(fixtures_dir: Path) -> None:
 
 def test_java_record_declarations(fixtures_dir: Path) -> None:
     chunks = _java_chunks(fixtures_dir)
-    records = {
-        e.name for c in chunks for e in c.context.entities if e.type.value == "record"
-    }
+    records = {e.name for c in chunks for e in c.context.entities if e.type.value == "record"}
     assert {"Point", "User"} <= records
 
 
 def test_java_sealed_interface_extraction(fixtures_dir: Path) -> None:
     chunks = _java_chunks(fixtures_dir)
     sealed = {
-        e.name
-        for c in chunks
-        for e in c.context.entities
-        if e.type.value == "sealed_interface"
+        e.name for c in chunks for e in c.context.entities if e.type.value == "sealed_interface"
     }
     assert "Shape" in sealed
 

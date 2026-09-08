@@ -252,21 +252,9 @@ def test_stream_upsert_adapter_row_shapes(tmp_path: Path) -> None:
     f.write_text("hello 🌍 café line one\n" * 6, encoding="utf-8")
     chunker = Chunker(max_chunk_size=50, size_unit="chars", min_chunk_size=8)
 
-    pine = list(
-        chunker.stream_upsert(
-            str(f), embed_fn=embed, adapter="pinecone", batch_size=2
-        )
-    )
-    weav = list(
-        chunker.stream_upsert(
-            str(f), embed_fn=embed, adapter="weaviate", batch_size=2
-        )
-    )
-    supa = list(
-        chunker.stream_upsert(
-            str(f), embed_fn=embed, adapter="supabase", batch_size=2
-        )
-    )
+    pine = list(chunker.stream_upsert(str(f), embed_fn=embed, adapter="pinecone", batch_size=2))
+    weav = list(chunker.stream_upsert(str(f), embed_fn=embed, adapter="weaviate", batch_size=2))
+    supa = list(chunker.stream_upsert(str(f), embed_fn=embed, adapter="supabase", batch_size=2))
     assert pine and weav and supa
 
     for batch in pine:

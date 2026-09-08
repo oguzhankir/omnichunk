@@ -114,7 +114,7 @@ def test_parse_go_import_block_and_alias() -> None:
     assert ("f", "fmt") in got
     assert any(name == "embed" for name, _ in got)
 
-    single = 'import `example.com/foo/bar`'
+    single = "import `example.com/foo/bar`"
     got2 = _parse_go_imports(single)
     assert got2 and got2[0][0]
 
@@ -272,7 +272,7 @@ def test_eval_metrics_branches_and_report_dict() -> None:
         source="ab",
         metrics=("coverage",),
     )
-    assert cov.per_chunk[0].coverage == 1.0
+    assert cov.per_chunk[0].coverage == 0.0
 
 
 def test_dedup_simhash_finds_duplicate() -> None:
@@ -411,9 +411,7 @@ def test_load_ipynb_raw_outputs_and_unknown_cell() -> None:
 
 def test_chunk_loaded_document_merges_segments() -> None:
     seg_a = FormatSegment(char_start=0, char_end=4, kind="prose", metadata={})
-    seg_b = FormatSegment(
-        char_start=4, char_end=8, kind="code", metadata={"language": "python"}
-    )
+    seg_b = FormatSegment(char_start=4, char_end=8, kind="code", metadata={"language": "python"})
     doc = LoadedDocument(
         text="aaaaBBBB",
         segments=(seg_a, seg_b),
@@ -479,7 +477,7 @@ def test_detect_language_and_content_type_branches() -> None:
 
     assert detect_content_type("x.ipynb", "", language="jupyter") == ContentType.HYBRID
     assert detect_content_type("file.mdx", "text") == ContentType.HYBRID
-    assert detect_content_type("c.py", '# %%\nx=1\n') == ContentType.HYBRID
+    assert detect_content_type("c.py", "# %%\nx=1\n") == ContentType.HYBRID
     ds = '"""' + ("x" * 50) + '"""\n' + "y" * 30
     assert detect_content_type("h.py", ds, language="python") == ContentType.HYBRID
     assert detect_content_type("j.json", "", language="json") == ContentType.MARKUP

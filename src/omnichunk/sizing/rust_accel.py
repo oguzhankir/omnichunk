@@ -3,10 +3,10 @@ from __future__ import annotations
 import importlib
 import os
 from functools import lru_cache
-from typing import Any, Literal, TypedDict
+from typing import TYPE_CHECKING, Any, Literal, TypedDict, cast
 
-import numpy as np
-from numpy.typing import NDArray
+if TYPE_CHECKING:
+    from numpy.typing import NDArray
 
 NwsBackend = Literal["auto", "python", "rust"]
 
@@ -87,6 +87,8 @@ def batch_cosine_similarity_adjacent_rust(
     fn = getattr(module, "batch_cosine_similarity_adjacent", None)
     if not callable(fn):
         return None
+    import numpy as np
+
     arr = np.asarray(embeddings, dtype=np.float32, order="C")
     if arr.ndim != 2 or arr.shape[1] == 0:
         return None
@@ -119,4 +121,8 @@ def maybe_preprocess_nws_cumsum_rust(
 
     raw = code.encode("utf-8")
     values = module.preprocess_nws_cumsum_bytes(raw)
+    try:
+        import numpy as np
+    except ImportError:
+        return cast("NDArray[Any]", values)
     return np.asarray(values, dtype=np.int64)

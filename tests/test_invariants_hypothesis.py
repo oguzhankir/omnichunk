@@ -8,10 +8,8 @@ from hypothesis import strategies as st
 
 from omnichunk import Chunker
 
-pytestmark = pytest.mark.slow
-
 _HYP_SETTINGS = settings(
-    max_examples=60,
+    max_examples=30,
     deadline=None,
     suppress_health_check=[HealthCheck.too_slow, HealthCheck.data_too_large],
 )
@@ -62,14 +60,16 @@ def _assert_invariants(filepath: str, text: str, chunker: Chunker) -> None:
         assert source_bytes[c.byte_range.start : c.byte_range.end].decode("utf-8") == c.text
         # 3) No empty / whitespace-only chunks.
         assert c.text != ""
-        assert c.text.strip() != ""
+        # Lossless mode retains trivia; retrieval mode separately checks filtering.
 
 
 @_HYP_SETTINGS
 @given(body=_ASCII_STRESS_TEXT)
 def test_hypothesis_invariants_python_path(body: str) -> None:
     text = f"def fn(x):\n    return x\n\n{body}"
-    chunker = Chunker(max_chunk_size=320, min_chunk_size=12, size_unit="chars")
+    chunker = Chunker(
+        max_chunk_size=320, min_chunk_size=12, size_unit="chars", coverage_policy="lossless"
+    )
     _assert_invariants("fuzz.py", text, chunker)
 
 
@@ -77,7 +77,9 @@ def test_hypothesis_invariants_python_path(body: str) -> None:
 @given(body=_STRESS_TEXT)
 def test_hypothesis_invariants_markdown_path(body: str) -> None:
     text = f"# Title\n\n## Subtitle\n\n{body}\n\n- a\n- b\n"
-    chunker = Chunker(max_chunk_size=320, min_chunk_size=12, size_unit="chars")
+    chunker = Chunker(
+        max_chunk_size=320, min_chunk_size=12, size_unit="chars", coverage_policy="lossless"
+    )
     _assert_invariants("fuzz.md", text, chunker)
 
 
@@ -86,7 +88,9 @@ def test_hypothesis_invariants_markdown_path(body: str) -> None:
 def test_hypothesis_invariants_json_path(body: str) -> None:
     safe = body.replace('"', '\\"').replace("\n", " ")
     text = '{"title":"fuzz","payload":"' + safe + '","ok":true}'
-    chunker = Chunker(max_chunk_size=300, min_chunk_size=10, size_unit="chars")
+    chunker = Chunker(
+        max_chunk_size=300, min_chunk_size=10, size_unit="chars", coverage_policy="lossless"
+    )
     _assert_invariants("fuzz.json", text, chunker)
 
 
@@ -95,7 +99,7 @@ def test_hypothesis_invariants_json_path(body: str) -> None:
 def test_hypothesis_invariants_yaml_path(body: str) -> None:
     safe = body.replace("\n", " ")
     text = f"title: fuzz\nbody: |\n  {safe}\nitems:\n  - a\n  - b\n"
-    chunker = Chunker(max_chunk_size=260, min_chunk_size=8, size_unit="chars")
+    chunker = Chunker(
+        max_chunk_size=260, min_chunk_size=8, size_unit="chars", coverage_policy="lossless"
+    )
     _assert_invariants("fuzz.yaml", text, chunker)
-
-

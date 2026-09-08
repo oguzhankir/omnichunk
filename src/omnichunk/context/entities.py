@@ -11,6 +11,7 @@ from typing import Any
 from omnichunk.parser.languages import get_language
 from omnichunk.parser.query_patterns import get_query_source
 from omnichunk.types import ByteRange, EntityInfo, EntityType, Language, LineRange
+from omnichunk.util.text_index import TextIndex
 
 _tree_sitter: Any | None
 try:
@@ -401,7 +402,7 @@ def _distance_to_ancestor(node: Any, ancestor: Any) -> int | None:
     distance = 0
     current = node
     while current is not None:
-        if current is ancestor:
+        if current is ancestor or current == ancestor:
             return distance
         current = getattr(current, "parent", None)
         distance += 1
@@ -771,7 +772,7 @@ def _collect_adjacent_leading_comments(node: Any, source_bytes: bytes) -> list[A
     if not siblings:
         return []
 
-    index = next((idx for idx, child in enumerate(siblings) if child is node), -1)
+    index = next((idx for idx, child in enumerate(siblings) if child is node or child == node), -1)
     if index < 0:
         return []
 
@@ -962,9 +963,7 @@ def _build_import_entities(
         seen.add(key)
 
         signature = (
-            f"import {clean_name} from {clean_source}"
-            if clean_source
-            else f"import {clean_name}"
+            f"import {clean_name} from {clean_source}" if clean_source else f"import {clean_name}"
         )
         entities.append(
             EntityInfo(
@@ -1208,7 +1207,9 @@ def _fallback_regex_entities(code: str, language: Language) -> list[EntityInfo]:
 
     entities: list[EntityInfo] = []
 
-    for match in re.finditer(r"(?m)^\s*(from\s+[A-Za-z0-9_\.]+\s+import\s+.+|import\s+.+)$", code):
+    for match in re.finditer(
+        r"(?m)^[ \t]*(from\s+[A-Za-z0-9_\.]+\s+import\s+.+|import\s+.+)$", code
+    ):
         line = match.group(1)
         imports = _parse_python_imports(line)
         start = match.start()
@@ -1226,7 +1227,7 @@ def _fallback_regex_entities(code: str, language: Language) -> list[EntityInfo]:
                 )
             )
 
-    for match in re.finditer(r"(?m)^\s*(?:async\s+)?def\s+([A-Za-z_][\w]*)\s*\(", code):
+    for match in re.finditer(r"(?m)^[ \t]*(?:async\s+)?def\s+([A-Za-z_][\w]*)\s*\(", code):
         name = match.group(1)
         start = match.start()
         end = _find_block_end(code, start)
@@ -1246,7 +1247,7 @@ def _fallback_regex_entities(code: str, language: Language) -> list[EntityInfo]:
             )
         )
 
-    for match in re.finditer(r"(?m)^\s*class\s+([A-Za-z_][\w]*)\b", code):
+    for match in re.finditer(r"(?m)^[ \t]*class\s+([A-Za-z_][\w]*)\b", code):
         name = match.group(1)
         start = match.start()
         end = _find_block_end(code, start)
@@ -1266,9 +1267,28 @@ def _fallback_regex_entities(code: str, language: Language) -> list[EntityInfo]:
             )
         )
 
-    entities = _dedupe_entities(entities)
-    entities.sort(key=lambda e: ((e.byte_range.start if e.byte_range else 0), e.name))
-    return entities
+    # Regex match offsets are characters; public metadata and code windows use bytes.
+    index = TextIndex(code)
+    converted: list[EntityInfo] = []
+    for entity in entities:
+        br = entity.byte_range
+        if br is None:
+            converted.append(entity)
+            continue
+        converted.append(
+            replace(
+                entity,
+                byte_range=ByteRange(
+                    index.byte_offset_for_char(br.start), index.byte_offset_for_char(br.end)
+                ),
+                line_range=LineRange(
+                    index.line_for_char(br.start), index.line_for_char(max(br.start, br.end - 1))
+                ),
+            )
+        )
+    converted = _dedupe_entities(converted)
+    converted.sort(key=lambda e: ((e.byte_range.start if e.byte_range else 0), e.name))
+    return converted
 
 
 def _find_block_end(text: str, start: int) -> int:

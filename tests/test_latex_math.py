@@ -7,9 +7,7 @@ from omnichunk.formats.tex import load_latex
 
 
 def _chunks(src: str) -> list:
-    return Chunker(max_chunk_size=200, min_chunk_size=20, size_unit="chars").chunk(
-        "doc.tex", src
-    )
+    return Chunker(max_chunk_size=200, min_chunk_size=20, size_unit="chars").chunk("doc.tex", src)
 
 
 def _math_balanced(text: str, env: str) -> bool:
@@ -35,9 +33,7 @@ def test_latex_align_block_atomic(fixtures_dir: Path) -> None:
     src = (fixtures_dir / "sample_math.tex").read_text(encoding="utf-8")
     chunks = _chunks(src)
     for ch in chunks:
-        assert _math_balanced(ch.text, "align"), (
-            f"align env split: {ch.text[:60]!r}"
-        )
+        assert _math_balanced(ch.text, "align"), f"align env split: {ch.text[:60]!r}"
 
 
 def test_latex_display_bracket_math_kept_together() -> None:
@@ -71,10 +67,7 @@ def test_latex_footnote_does_not_force_split() -> None:
 
 
 def test_latex_bibliography_commands_preserved() -> None:
-    src = (
-        "Intro\n\n\\bibliographystyle{plain}\n\\bibliography{refs}\n\n"
-        "More text.\n"
-    )
+    src = "Intro\n\n\\bibliographystyle{plain}\n\\bibliography{refs}\n\nMore text.\n"
     chunks = _chunks(src)
     full = "".join(c.text for c in chunks)
     assert "\\bibliographystyle{plain}" in full
@@ -91,9 +84,7 @@ def test_latex_label_inside_equation_preserved() -> None:
 def test_latex_load_segments_have_math_metadata(fixtures_dir: Path) -> None:
     src = (fixtures_dir / "sample_math.tex").read_text(encoding="utf-8")
     doc = load_latex(src)
-    math_metas = {
-        s.metadata.get("latex_math") for s in doc.segments if "latex_math" in s.metadata
-    }
+    math_metas = {s.metadata.get("latex_math") for s in doc.segments if "latex_math" in s.metadata}
     assert "equation" in math_metas
     assert "align" in math_metas
     assert "display_bracket" in math_metas

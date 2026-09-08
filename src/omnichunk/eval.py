@@ -5,13 +5,10 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Any, Literal
 
-import numpy as np
-
 from omnichunk.semantic.sentences import split_sentences
-from omnichunk.semantic.tfidf import build_tfidf_matrix
 from omnichunk.types import Chunk
 
-_TOKEN = re.compile(r"[a-zA-Z][a-zA-Z0-9]*")
+_TOKEN = re.compile(r"[^\W_]+", re.UNICODE)
 
 
 @dataclass(frozen=True)
@@ -38,23 +35,31 @@ def evaluate_chunks(
 ) -> EvalReport:
     """Offline metrics for chunk quality (no embeddings)."""
     if metrics == "all":
-        want = frozenset(
-            {"reconstruction", "density", "coherence", "boundary_quality", "coverage"}
-        )
+        want = frozenset({"reconstruction", "density", "coherence", "boundary_quality", "coverage"})
     else:
         want = frozenset(metrics)
 
+    allowed = {"reconstruction", "density", "coherence", "boundary_quality", "coverage"}
+    if want - allowed:
+        raise ValueError(f"Unknown evaluation metrics: {sorted(want - allowed)}")
+    raw_source = source.encode("utf-8") if source is not None else None
     n = len(chunks)
     per: list[ChunkEvalScores] = []
 
     for i, ch in enumerate(chunks):
-        rec = _metric_reconstruction(ch, source) if "reconstruction" in want else None
+        rec = (
+            _metric_reconstruction(ch, source, raw_source=raw_source)
+            if "reconstruction" in want
+            else None
+        )
         dens = _metric_density(ch) if "density" in want else None
         coh = _metric_coherence(ch) if "coherence" in want else None
-        bq = (
-            _metric_boundary(chunks, i) if "boundary_quality" in want and n > 1 else None
+        bq = _metric_boundary(chunks, i) if "boundary_quality" in want and n > 1 else None
+        cov = (
+            _metric_coverage_chunk(chunks, i, source, raw_source=raw_source)
+            if "coverage" in want
+            else None
         )
-        cov = _metric_coverage_chunk(chunks, i, source) if "coverage" in want else None
         per.append(
             ChunkEvalScores(
                 index=ch.index,
@@ -75,13 +80,26 @@ def evaluate_chunks(
         nums = [v for v in vals if v is not None]
         agg[name] = float(sum(nums) / len(nums)) if nums else None
 
+    if "coverage" in want and raw_source is not None:
+        intervals = sorted(
+            (c.byte_range.start, c.byte_range.end)
+            for c in chunks
+            if _metric_reconstruction(c, source, raw_source=raw_source) == 1.0
+        )
+        covered, end = 0, 0
+        for start, finish in intervals:
+            covered += max(0, finish - max(start, end))
+            end = max(end, finish)
+        agg["coverage"] = covered / len(raw_source) if raw_source else 1.0
     return EvalReport(per_chunk=tuple(per), aggregate=agg)
 
 
-def _metric_reconstruction(chunk: Chunk, source: str | None) -> float | None:
+def _metric_reconstruction(
+    chunk: Chunk, source: str | None, *, raw_source: bytes | None = None
+) -> float | None:
     if source is None:
         return None
-    raw = source.encode("utf-8")
+    raw = raw_source if raw_source is not None else source.encode("utf-8")
     start, end = chunk.byte_range.start, chunk.byte_range.end
     if start < 0 or end > len(raw) or start > end:
         return 0.0
@@ -95,6 +113,10 @@ def _metric_density(chunk: Chunk) -> float | None:
 
 
 def _metric_coherence(chunk: Chunk) -> float | None:
+    import numpy as np
+
+    from omnichunk.semantic.tfidf import build_tfidf_matrix
+
     sents = [t[0] for t in split_sentences(chunk.text) if t[0].strip()]
     if len(sents) < 2:
         return 1.0
@@ -110,6 +132,10 @@ def _metric_coherence(chunk: Chunk) -> float | None:
 
 
 def _metric_boundary(chunks: Sequence[Chunk], index: int) -> float | None:
+    import numpy as np
+
+    from omnichunk.semantic.tfidf import build_tfidf_matrix
+
     if index <= 0:
         return None
     prev_t = chunks[index - 1].text
@@ -133,14 +159,16 @@ def _metric_coverage_chunk(
     chunks: Sequence[Chunk],
     index: int,
     source: str | None,
+    *,
+    raw_source: bytes | None = None,
 ) -> float | None:
     if source is None:
         return None
-    st = _token_set(source)
-    ct = _token_set(chunks[index].text)
-    if not ct:
-        return 1.0
-    return len(ct & st) / len(ct)
+    raw = raw_source if raw_source is not None else source.encode("utf-8")
+    chunk = chunks[index]
+    if _metric_reconstruction(chunk, source, raw_source=raw) != 1.0:
+        return 0.0
+    return (chunk.byte_range.end - chunk.byte_range.start) / len(raw) if raw else 1.0
 
 
 def _token_set(text: str) -> set[str]:

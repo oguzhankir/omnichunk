@@ -67,9 +67,7 @@ def test_batch_byte_ranges_relative_to_each_chunk() -> None:
 def test_stream_yields_in_order() -> None:
     chunks = ["One fact here.", "Two fact here.", "Three fact here."]
     streamed = list(
-        extract_propositions_stream(
-            chunks, llm_fn=_make_batch_llm({"calls": 0}), batch_size=1
-        )
+        extract_propositions_stream(chunks, llm_fn=_make_batch_llm({"calls": 0}), batch_size=1)
     )
     assert [p.text for p in streamed] == [
         "One fact here.",

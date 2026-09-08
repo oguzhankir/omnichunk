@@ -25,9 +25,7 @@ class _FakeNode:
         self.start_point = (0, 0)
         self.end_point = (0, 0)
         self.children = children or []
-        self.named_children = [
-            child for child in self.children if getattr(child, "is_named", True)
-        ]
+        self.named_children = [child for child in self.children if getattr(child, "is_named", True)]
         self._fields = fields or {}
         self.is_named = is_named
         self.parent: _FakeNode | None = None
@@ -43,7 +41,9 @@ class _FakeNode:
 
 def test_contextualized_text_contains_metadata(fixtures_dir: Path) -> None:
     code = (fixtures_dir / "python_complex.py").read_text(encoding="utf-8")
-    chunker = Chunker(max_chunk_size=240, size_unit="chars", context_mode="full")
+    chunker = Chunker(
+        max_chunk_size=240, size_unit="chars", context_mode="full", overflow_policy="preserve"
+    )
 
     chunks = chunker.chunk("src/services/user_service.py", code)
 

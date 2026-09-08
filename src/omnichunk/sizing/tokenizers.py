@@ -1,20 +1,33 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+from numbers import Integral
 from typing import Any
 
 
 def _fallback_counter(text: str) -> int:
-    if not text:
-        return 0
+    """Whitespace estimate, never an exact model-token count."""
     return len(text.split())
 
 
+def _validated_counter(counter_fn: Callable[[str], Any]) -> Callable[[str], int]:
+    def counter(text: str) -> int:
+        value = counter_fn(text)
+        if isinstance(value, bool) or not isinstance(value, Integral) or value < 0:
+            raise ValueError("tokenizer counter must return a non-negative integer")
+        return int(value)
+
+    return counter
+
+
 def _normalize_encoder_counter(encoder: Any) -> Callable[[str], int]:
+    truncation = getattr(encoder, "truncation", None)
+    if truncation is not None and truncation is not False:
+        raise ValueError("Disable tokenizer truncation before using it for exact token counting")
+
     def counter(text: str) -> int:
         if not text:
             return 0
-
         try:
             encoded = encoder.encode(text, disallowed_special=())
         except TypeError:
@@ -22,11 +35,8 @@ def _normalize_encoder_counter(encoder: Any) -> Callable[[str], int]:
                 encoded = encoder.encode(text, add_special_tokens=False)
             except TypeError:
                 encoded = encoder.encode(text)
-
         if hasattr(encoded, "ids"):
             return len(encoded.ids)
-        if isinstance(encoded, list):
-            return len(encoded)
         return len(list(encoded))
 
     return counter
@@ -35,45 +45,44 @@ def _normalize_encoder_counter(encoder: Any) -> Callable[[str], int]:
 def resolve_tokenizer(
     tokenizer_or_name: str | Callable[[str], int] | Any | None,
 ) -> Callable[[str], int]:
-    """Resolve tokenizer-like input into a token counting callable.
+    """Resolve a counter or encoder; named providers fail instead of estimating.
 
-    Supported inputs:
-    - str: tiktoken model/encoding name, then transformers tokenizer id (local only)
-    - callable: treated as counter directly
-    - tokenizer-like object with .encode(...)
-    - None: fallback whitespace-token counter
+    Names use tiktoken first, then a locally installed Hugging Face tokenizer.
+    ``approximate`` explicitly selects whitespace estimation. ``None`` retains
+    the same estimate for internal informational metadata; token-budget APIs
+    must require an explicitly selected tokenizer.
     """
     if tokenizer_or_name is None:
         return _fallback_counter
-
-    if callable(tokenizer_or_name):
-        return tokenizer_or_name
-
     if isinstance(tokenizer_or_name, str):
         name = tokenizer_or_name.strip()
-
+        if not name:
+            raise ValueError("tokenizer name must not be empty")
+        if name == "approximate":
+            return _fallback_counter
         try:
             import tiktoken
 
             try:
-                enc = tiktoken.encoding_for_model(name)
-                return _normalize_encoder_counter(enc)
-            except Exception:
-                enc = tiktoken.get_encoding(name)
-                return _normalize_encoder_counter(enc)
-        except Exception:
+                encoder = tiktoken.encoding_for_model(name)
+            except KeyError:
+                encoder = tiktoken.get_encoding(name)
+            return _normalize_encoder_counter(encoder)
+        except (ImportError, ValueError, KeyError, OSError):
             pass
-
         try:
-            from transformers import AutoTokenizer  # type: ignore
+            from transformers import AutoTokenizer  # type: ignore[import-not-found]
 
-            hf_tokenizer = AutoTokenizer.from_pretrained(name, local_files_only=True)
-            return _normalize_encoder_counter(hf_tokenizer)
-        except Exception:
-            return _fallback_counter
-
-    encode = getattr(tokenizer_or_name, "encode", None)
-    if callable(encode):
+            encoder = AutoTokenizer.from_pretrained(name, local_files_only=True)
+        except (ImportError, ValueError, OSError) as exc:
+            raise ValueError(
+                f"Cannot resolve tokenizer {name!r}. Install omnichunk[tiktoken] or "
+                "omnichunk[transformers] and make the tokenizer available locally, "
+                "pass an encoder/counter, or explicitly select 'approximate'."
+            ) from exc
+        return _normalize_encoder_counter(encoder)
+    if callable(getattr(tokenizer_or_name, "encode", None)):
         return _normalize_encoder_counter(tokenizer_or_name)
-
-    return _fallback_counter
+    if callable(tokenizer_or_name):
+        return _validated_counter(tokenizer_or_name)
+    raise TypeError("tokenizer must be a name, encoder object, or token-counting callable")

@@ -43,11 +43,12 @@ nav:
       - API stability: api-stability.md
   - Migrations:
       - migrations/index.md
-      - "v0.8": migrations/v0.8.md
-      - "v0.9": migrations/v0.9.md
-      - "v0.10": migrations/v0.10.md
+      - 2.0 / 2.1 transition: migrations/v2.md
+  - Roadmap: https://github.com/oguzhankir/omnichunk/blob/main/ROADMAP.md
+  - Architecture: https://github.com/oguzhankir/omnichunk/blob/main/ARCHITECTURE.md
   - Performance: performance/sla.md
   - Contributing:
       - Mutation testing: contributing/mutation-testing.md
   - Reference:
+      - Contracts: reference/contracts.md
       - Chunker: reference/chunker.md

@@ -81,14 +81,12 @@ def build_tfidf_matrix(
     if n_docs == 0:
         return np.zeros((0, 1), dtype=np.float64)
 
-    doc_tokens, t2i, idf = _vocab_and_idf(
-        documents, max_vocab=max_vocab, min_df=min_df
-    )
+    doc_tokens, t2i, idf = _vocab_and_idf(documents, max_vocab=max_vocab, min_df=min_df)
     v = len(t2i)
     if v == 0:
         return np.zeros((n_docs, 1), dtype=np.float64)
 
-    tf_mat = np.zeros((n_docs, v), dtype=np.float64)
+    tf_mat: NDArray[Any] = np.zeros((n_docs, v), dtype=np.float64)
     rows, cols, data = _coo_tf(doc_tokens, t2i)
     if data:
         np.add.at(tf_mat, (np.asarray(rows), np.asarray(cols)), np.asarray(data))
@@ -128,9 +126,7 @@ def build_tfidf_sparse(
     if n_docs == 0:
         return sp.csr_matrix((0, 1), dtype=np.float64)
 
-    doc_tokens, t2i, idf = _vocab_and_idf(
-        documents, max_vocab=max_vocab, min_df=min_df
-    )
+    doc_tokens, t2i, idf = _vocab_and_idf(documents, max_vocab=max_vocab, min_df=min_df)
     v = len(t2i)
     if v == 0:
         return sp.csr_matrix((n_docs, 1), dtype=np.float64)

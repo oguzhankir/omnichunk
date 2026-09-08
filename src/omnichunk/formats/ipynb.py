@@ -23,7 +23,7 @@ def load_ipynb(content: str, *, include_outputs: bool = False) -> LoadedDocument
             warnings=(f"invalid_json: {exc}",),
         )
 
-    cells = data.get("cells")
+    cells = data.get("cells") if isinstance(data, dict) else None
     if not isinstance(cells, list):
         return LoadedDocument(
             text="",

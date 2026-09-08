@@ -6,12 +6,14 @@ Runnable Python scripts that demonstrate the main APIs. **No external APIs** are
 
 ```bash
 pip install omnichunk
+pip install "omnichunk[code,semantic]"  # AST and NumPy examples
 ```
 
-Token-based sizing (optional, for examples that mention tokens):
+The examples use character sizing or an explicitly labelled token estimate.
+For exact model tokens, install the matching tokenizer and configure it explicitly:
 
 ```bash
-pip install omnichunk[tiktoken]
+pip install "omnichunk[tiktoken]"
 ```
 
 From a git checkout, install in editable mode so `import omnichunk` works without `PYTHONPATH`:
@@ -44,35 +46,7 @@ python examples/01_quickstart.py
 # … through 12
 ```
 
-## Sample output (captured)
-
-**`01_quickstart.py`** (excerpt):
-
-```
-one-shot chunk count: 2
-Chunker chunk count: 2
---- first chunk ---
-text (first 120 chars): 'import os\n\n'
-byte_range: ByteRange(start=0, end=11)
-line_range: LineRange(start=0, end=1)
-breadcrumb: []
-contextualized_text (first 120 chars): "# example.py\n# Language: python\n# Uses: os\n# ParseErrors: No tree-sitter parser available for 'python'\n\nimport os\n\n"
-token_count: 2 char_count: 11 nws_count: 8
-chunk_file count: 2
-batch files: 2
-  a.py: 1 chunks
-  b.py: 1 chunks
-```
-
-**`06_hierarchical_chunking.py`**:
-
-```
-level_count=3
-leaves=2 roots=1
-at_level(1): 1 chunks
-first root byte_range: ByteRange(start=0, end=93)
-  children of first root: 1
-parent(leaves[0]) is None? False
-invariant OK: each parent byte_range spans exactly its children
-to_dict: level_count=3 nodes=4
-```
+Output depends on installed grammars, tokenizer and documented chunking options.
+The scripts assert source and hierarchy properties instead of relying on old
+captured chunk counts. For persisted data, follow the
+[2.x migration examples](../docs/migrations/v2.md); apply diff removals before additions.

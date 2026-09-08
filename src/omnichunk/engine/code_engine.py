@@ -7,6 +7,7 @@ from typing import Any
 from omnichunk.context.entities import enrich_parent_links, extract_entities
 from omnichunk.context.format import format_contextualized_text
 from omnichunk.context.imports import build_import_infos, filter_imports_for_chunk
+from omnichunk.context.range_index import EntityRangeSweep
 from omnichunk.context.scope import build_scope_tree, find_scope_chain
 from omnichunk.context.siblings import SiblingIndex, build_sibling_index, detect_siblings_for_chunk
 from omnichunk.parser.tree_sitter import parse_code
@@ -64,6 +65,7 @@ class CodeEngine:
         parse_result = parse_code(content, language, filepath=filepath)
 
         entities = enrich_parent_links(extract_entities(content, language, parse_result.tree))
+        entity_sweep = EntityRangeSweep(entities)
         scope_tree = build_scope_tree(entities)
         import_infos = build_import_infos(entities)
         sibling_index = build_sibling_index(scope_tree.all_entities)
@@ -133,12 +135,16 @@ class CodeEngine:
                 filepath=filepath,
                 language=language,
                 chunk_range=byte_range,
-                entities=entities,
+                entities=entity_sweep.overlapping(byte_range),
                 scope_tree=scope_tree,
                 sibling_index=sibling_index,
                 import_infos=import_infos,
                 options=options,
                 parse_errors=parse_result.errors,
+            )
+            context = replace(
+                context,
+                format_metadata={**context.format_metadata, "parser_backend": parse_result.backend},
             )
 
             overlap_text = build_line_overlap_text(previous_text, options.overlap_lines)

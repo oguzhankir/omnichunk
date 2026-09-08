@@ -37,9 +37,11 @@ def x():
             f"section_type={c.context.section_type!r}"
         )
 
-    c_tok = Chunker(max_chunk_size=64, size_unit="tokens", min_chunk_size=8)
+    c_tok = Chunker(
+        max_chunk_size=64, size_unit="tokens", tokenizer="approximate", min_chunk_size=8
+    )
     plain_chunks = c_tok.chunk("notes.txt", plain)
-    print(f"Plaintext chunks (tokens): {len(plain_chunks)}")
+    print(f"Plaintext chunks (explicit token estimate): {len(plain_chunks)}")
 
 
 if __name__ == "__main__":

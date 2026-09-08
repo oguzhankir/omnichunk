@@ -20,9 +20,7 @@ from omnichunk.semantic import (
     detect_topic_shifts,
     split_sentences,
 )
-from omnichunk.sizing.nws import preprocess_nws_cumsum
 from omnichunk.types import ChunkOptions, ContentType
-from omnichunk.util.text_index import TextIndex
 
 
 def embed(texts: list[str]) -> np.ndarray:
@@ -60,8 +58,6 @@ def main() -> None:
         filepath="p.md",
         language="plaintext",
         content_type=ContentType.PROSE,
-        _precomputed_text_index=TextIndex(text),
-        _precomputed_nws_cumsum=preprocess_nws_cumsum(text, backend="python"),
     )
     splitter = SemanticSplitter(embed_fn=embed, window=2, threshold=0.25)
     direct = splitter.split("p.md", text, opts)

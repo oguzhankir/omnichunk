@@ -52,14 +52,7 @@ def test_split_oversized_leaf_reconstruction_and_determinism() -> None:
 def test_no_chunk_ends_inside_quoted_region_when_newlines_outside() -> None:
     """Triple-quoted block: no chunk boundary may fall inside the literal."""
     filler = "word " * 30
-    code = (
-        "def outer():\n"
-        '    s = """\n'
-        f"{filler}\n"
-        f"{filler}\n"
-        '    """\n'
-        "    return s\n"
-    )
+    code = f'def outer():\n    s = """\n{filler}\n{filler}\n    """\n    return s\n'
     chunker = Chunker(max_chunk_size=80, min_chunk_size=5, size_unit="chars")
     chunks = chunker.chunk("m.py", code)
     assert "".join(c.text for c in chunks) == code

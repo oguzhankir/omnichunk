@@ -9,8 +9,8 @@ import os
 import shutil
 import sys
 import tempfile
-from collections.abc import Callable
-from dataclasses import dataclass
+from collections.abc import Callable, Iterable
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from time import perf_counter
 from typing import Any
@@ -25,8 +25,6 @@ for _p in (SRC, BENCH_DIR):
 from comparison_format import (
     aggregate_tool_totals,
     build_comparison_json_payload,
-    comparison_exit_code,
-    format_comparison_summary_table,
     format_speedup_lines,
 )
 from run_benchmarks import SCENARIOS, Scenario
@@ -54,7 +52,34 @@ def _optional_import(module_name: str) -> Any | None:
         return None
 
 
+def _size_counter(scenario: Scenario) -> Callable[[str], int]:
+    if scenario.size_unit == "chars":
+        return len
+    if scenario.size_unit == "tokens":
+        import tiktoken
+
+        tokenizer = tiktoken.get_encoding("cl100k_base")
+        return lambda text: len(tokenizer.encode(text))
+    raise ImportError(f"Unsupported comparison budget unit: {scenario.size_unit}")
+
+
+def _validated_count(
+    chunks: Iterable[str], scenario: Scenario, counter: Callable[[str], int]
+) -> int:
+    count = 0
+    for text in chunks:
+        size = counter(text)
+        if size > scenario.max_chunk_size:
+            raise ValueError(
+                f"Output exceeds shared {scenario.size_unit} budget: "
+                f"{size} > {scenario.max_chunk_size}"
+            )
+        count += 1
+    return count
+
+
 def _run_omnichunk(text: str, scenario: Scenario, filepath: Path) -> int:
+    counter = _size_counter(scenario)
     chunker = Chunker()
     chunks = chunker.chunk(
         str(filepath),
@@ -62,8 +87,11 @@ def _run_omnichunk(text: str, scenario: Scenario, filepath: Path) -> int:
         max_chunk_size=scenario.max_chunk_size,
         min_chunk_size=scenario.min_chunk_size,
         size_unit=scenario.size_unit,
+        tokenizer="cl100k_base" if scenario.size_unit == "tokens" else None,
+        context_mode="none",
+        overlap=0,
     )
-    return len(chunks)
+    return _validated_count((chunk.contextualized_text for chunk in chunks), scenario, counter)
 
 
 def _run_langchain_recursive(text: str, scenario: Scenario, filepath: Path) -> int:
@@ -81,13 +109,15 @@ def _run_langchain_recursive(text: str, scenario: Scenario, filepath: Path) -> i
     if splitter_cls is None:
         raise ImportError("langchain RecursiveCharacterTextSplitter is unavailable")
 
+    counter = _size_counter(scenario)
     splitter = splitter_cls(
         chunk_size=scenario.max_chunk_size,
         chunk_overlap=0,
+        length_function=counter,
         separators=["\n\n", "\n", " ", ""],
     )
     chunks = splitter.split_text(text)
-    return len(chunks)
+    return _validated_count(chunks, scenario, counter)
 
 
 def _run_semantic_text_splitter(text: str, scenario: Scenario, filepath: Path) -> int:
@@ -95,14 +125,21 @@ def _run_semantic_text_splitter(text: str, scenario: Scenario, filepath: Path) -
     if module is None:
         raise ImportError("semantic_text_splitter is unavailable")
 
-    suffix = filepath.suffix.lower()
-    if suffix in {".md", ".markdown"}:
-        splitter = module.MarkdownSplitter(scenario.max_chunk_size)
+    counter = _size_counter(scenario)
+    splitter_cls = (
+        module.MarkdownSplitter
+        if filepath.suffix.lower() in {".md", ".markdown"}
+        else module.TextSplitter
+    )
+    if scenario.size_unit == "chars":
+        splitter = splitter_cls(scenario.max_chunk_size, overlap=0)
     else:
-        splitter = module.TextSplitter(scenario.max_chunk_size)
-
+        factory = getattr(splitter_cls, "from_callback", None)
+        if not callable(factory):
+            raise ImportError("semantic_text_splitter lacks an explicit tokenizer callback API")
+        splitter = factory(counter, scenario.max_chunk_size, overlap=0)
     chunks = splitter.chunks(text)
-    return len(chunks)
+    return _validated_count(chunks, scenario, counter)
 
 
 def _run_semchunk(text: str, scenario: Scenario, filepath: Path) -> int:
@@ -111,32 +148,11 @@ def _run_semchunk(text: str, scenario: Scenario, filepath: Path) -> int:
         raise ImportError("semchunk is unavailable")
 
     chunkerify = getattr(module, "chunkerify", None)
-    if callable(chunkerify):
-
-        def token_counter(s: str) -> int:
-            return len(s.split())
-
-        token_budget = max(32, scenario.max_chunk_size // 4)
-        chunker = chunkerify(token_counter, chunk_size=token_budget)
-        return len(list(chunker(text)))
-
-    for candidate in ("split", "chunk_text", "chunk"):
-        fn = getattr(module, candidate, None)
-        if not callable(fn):
-            continue
-
-        for kwargs in (
-            {"chunk_size": scenario.max_chunk_size},
-            {"max_chunk_size": scenario.max_chunk_size},
-            {},
-        ):
-            try:
-                output = fn(text, **kwargs)
-                return len(list(output))
-            except TypeError:
-                continue
-
-    raise RuntimeError("semchunk integration is unavailable for this version")
+    if not callable(chunkerify):
+        raise ImportError("semchunk lacks an explicit counter/budget API")
+    counter = _size_counter(scenario)
+    chunker = chunkerify(counter, chunk_size=scenario.max_chunk_size)
+    return _validated_count(chunker(text, overlap=0), scenario, counter)
 
 
 def _run_astchunk(text: str, scenario: Scenario, filepath: Path) -> int:
@@ -146,39 +162,10 @@ def _run_astchunk(text: str, scenario: Scenario, filepath: Path) -> int:
     if module is None:
         raise ImportError("astchunk/astchunker module is unavailable")
 
-    for candidate in ("chunk_text", "chunk"):
-        fn = getattr(module, candidate, None)
-        if not callable(fn):
-            continue
-
-        for kwargs in (
-            {"max_chunk_size": scenario.max_chunk_size},
-            {"chunk_size": scenario.max_chunk_size},
-            {},
-        ):
-            try:
-                output = fn(text, **kwargs)
-                return len(list(output))
-            except TypeError:
-                continue
-
-    chunker_cls = getattr(module, "ASTChunker", None) or getattr(module, "Chunker", None)
-    if chunker_cls is not None:
-        for kwargs in (
-            {"max_chunk_size": scenario.max_chunk_size},
-            {"chunk_size": scenario.max_chunk_size},
-            {},
-        ):
-            try:
-                chunker = chunker_cls(**kwargs)
-                run_fn = getattr(chunker, "chunk", None)
-                if callable(run_fn):
-                    output = run_fn(text)
-                    return len(list(output))
-            except TypeError:
-                continue
-
-    raise RuntimeError("astchunk integration is unavailable for this version")
+    raise ImportError(
+        "astchunk excluded: shared budget unit, tokenizer and zero-overlap semantics "
+        "are not verified for this adapter"
+    )
 
 
 def _benchmark_runner(
@@ -266,7 +253,7 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
     p.add_argument(
         "--no-table",
         action="store_true",
-        help="Suppress ASCII summary table and speedup lines (CSV only)",
+        help="Suppress descriptive summary and same-scenario timing ratios (CSV only)",
     )
     return p.parse_args(argv)
 
@@ -366,20 +353,22 @@ def run(argv: list[str] | None = None) -> int:
             print(f"{tool_name},TOTAL,0,-,0.000000,0.000,error")
 
     aggregates = aggregate_tool_totals(tool_rows=summary)
-    timed: list[tuple[str, float]] = []
-    for name in tool_order:
-        agg = aggregates.get(name, {})
-        if agg.get("status") in ("ok", "partial") and float(agg.get("total_seconds", 0.0)) > 0:
-            timed.append((name, float(agg["total_seconds"])))
-    winner: str | None = min(timed, key=lambda x: (x[1], x[0]))[0] if timed else None
+    eligible = {
+        name: aggregate
+        for name, aggregate in aggregates.items()
+        if aggregate.get("status") == "ok" and len(summary[name]) == len(scenarios)
+    }
+    # Partial runs cover different input and cannot supply a comparison denominator.
+    omni_sec = float(eligible.get("omnichunk", {}).get("total_seconds", 0.0))
 
     if not args.no_table:
         print()
-        print(format_comparison_summary_table(tool_order=tool_order, aggregates=aggregates))
-        omni_sec = float(aggregates.get("omnichunk", {}).get("total_seconds", 0.0))
+        print(
+            "Descriptive timings for this workload; no library ranking or retrieval-quality claim."
+        )
         for line in format_speedup_lines(
             omnichunk_seconds=omni_sec,
-            aggregates=aggregates,
+            aggregates=eligible,
             tool_order=tool_order,
         ):
             print(line)
@@ -389,12 +378,32 @@ def run(argv: list[str] | None = None) -> int:
             scenario_names=[s.name for s in scenarios],
             tool_order=tool_order,
             aggregates=aggregates,
-            winner=winner,
+            winner=None,
         )
+        payload["speedup"] = {
+            f"omnichunk_vs_{name}": round(float(row["total_seconds"]) / omni_sec, 4)
+            for name, row in eligible.items()
+            if name != "omnichunk" and omni_sec > 0 and float(row["total_seconds"]) > 0
+        }
+        payload["configuration"] = {
+            "context_mode": "none",
+            "overlap": 0,
+            "tokenizer_for_token_scenarios": "cl100k_base",
+            "scenarios": [
+                {
+                    "name": item.name,
+                    "size_unit": item.size_unit,
+                    "max_chunk_size": item.max_chunk_size,
+                }
+                for item in scenarios
+            ],
+        }
+        payload["results"] = [asdict(row) for rows in summary.values() for row in rows]
+        payload["interpretation"] = "Descriptive same-workload timing only; no library ranking."
         args.save.parent.mkdir(parents=True, exist_ok=True)
         args.save.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 
-    return comparison_exit_code(aggregates=aggregates, tool_order=tool_order)
+    return int(any(row.status == "error" for rows in summary.values() for row in rows))
 
 
 def _flush_streams() -> None:

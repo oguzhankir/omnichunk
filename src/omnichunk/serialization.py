@@ -18,17 +18,26 @@ from omnichunk.types import (
     ContentType,
     EntityInfo,
     EntityType,
+    ImportInfo,
     Language,
     LineRange,
+    SiblingInfo,
+    SourceDescriptor,
 )
+
+CHUNK_SCHEMA_VERSION = 2
 
 
 def chunk_to_dict(chunk: Chunk) -> dict[str, Any]:
-    """Convert a Chunk dataclass into a serializable dictionary."""
+    """Convert every chunk field to the versioned JSON representation.
+
+    Unversioned v1 dictionaries remain readable with :func:`chunk_from_dict`.
+    Unknown schema versions are rejected rather than silently losing fields.
+    """
     value = _to_serializable(chunk)
     if not isinstance(value, dict):
         return {}
-    return value
+    return {"schema_version": CHUNK_SCHEMA_VERSION, **value}
 
 
 def _entity_info_from_dict(d: dict[str, Any]) -> EntityInfo:
@@ -51,7 +60,10 @@ def _entity_info_from_dict(d: dict[str, Any]) -> EntityInfo:
 
 
 def chunk_from_dict(data: dict[str, Any]) -> Chunk:
-    """Rebuild a :class:`Chunk` from :func:`chunk_to_dict` output."""
+    """Read v2 or legacy v1/unversioned chunks, including all context fields."""
+    schema = data.get("schema_version", 1)
+    if type(schema) is not int or schema not in (1, CHUNK_SCHEMA_VERSION):
+        raise ValueError(f"Unsupported chunk schema version: {schema!r}")
     ctx_raw = data.get("context") or {}
     ct_raw = ctx_raw.get("content_type", "prose")
     if isinstance(ct_raw, str):
@@ -63,10 +75,22 @@ def chunk_from_dict(data: dict[str, Any]) -> Chunk:
         content_type = ContentType.PROSE
 
     entities = [
-        _entity_info_from_dict(e)
-        for e in ctx_raw.get("entities") or []
-        if isinstance(e, dict)
+        _entity_info_from_dict(e) for e in ctx_raw.get("entities") or [] if isinstance(e, dict)
     ]
+    scope = [_entity_info_from_dict(e) for e in ctx_raw.get("scope") or []]
+    siblings = [
+        SiblingInfo(
+            name=str(s["name"]),
+            type=EntityType(s["type"]),
+            position=s["position"],
+            distance=int(s["distance"]),
+            signature=str(s.get("signature", "")),
+        )
+        for s in ctx_raw.get("siblings") or []
+    ]
+    imports = [ImportInfo(**i) for i in ctx_raw.get("imports") or []]
+    source_raw = data.get("source")
+    source = SourceDescriptor(**source_raw) if source_raw is not None else None
 
     br = data.get("byte_range") or {}
     lr = data.get("line_range") or {}
@@ -81,20 +105,30 @@ def chunk_from_dict(data: dict[str, Any]) -> Chunk:
             filepath=str(ctx_raw.get("filepath", "")),
             language=cast(Language, ctx_raw.get("language", "plaintext")),
             content_type=content_type,
+            scope=scope,
+            breadcrumb=list(ctx_raw.get("breadcrumb") or []),
             entities=entities,
+            siblings=siblings,
+            imports=imports,
+            heading_hierarchy=list(ctx_raw.get("heading_hierarchy") or []),
+            section_type=str(ctx_raw.get("section_type", "")),
+            parse_errors=list(ctx_raw.get("parse_errors") or []),
             format_metadata=dict(ctx_raw.get("format_metadata", {})),
         ),
         token_count=int(data.get("token_count", 0)),
         char_count=int(data.get("char_count", 0)),
         nws_count=int(data.get("nws_count", 0)),
+        source=source,
+        config_fingerprint=str(data.get("config_fingerprint", "")),
+        occurrence=int(data.get("occurrence", 0)),
+        metadata=dict(data.get("metadata") or {}),
     )
 
 
 def chunks_to_jsonl(chunks: Sequence[Chunk], *, output_path: str | None = None) -> str:
     """Serialize chunks into JSONL. Optionally write output to a file path."""
     lines = [
-        json.dumps(chunk_to_dict(chunk), ensure_ascii=False, sort_keys=True)
-        for chunk in chunks
+        json.dumps(chunk_to_dict(chunk), ensure_ascii=False, sort_keys=True) for chunk in chunks
     ]
     payload = "\n".join(lines)
     if lines:
@@ -283,13 +317,50 @@ def chunks_to_llamaindex_docs(
 
 
 def stable_chunk_id(chunk: Chunk, filepath: str | None = None) -> str:
-    """Return a stable SHA-256 hex ID for a chunk (same as Pinecone/Weaviate export IDs).
+    """Identify a content-anchored occurrence within a logical document.
 
-    Uses filepath (from ``chunk.context`` or override), chunk index, and byte range.
-    Identical to :func:`chunks_to_pinecone_vectors` row ``id`` values.
+    V2 identity excludes byte offsets, chunk index, configuration and rendered
+    context, so an unchanged block can move without changing its ID. Equal raw
+    blocks are disambiguated by their source-order ``occurrence``. A rename
+    preserves identity only when the caller preserves ``source.source_id``.
+    Legacy/manual chunks without a source descriptor use ``index`` to distinguish
+    repeats. Rebuild old vector indexes; the v1 positional ID is not reused.
     """
-    fp = filepath if filepath is not None else chunk.context.filepath
-    raw = f"{fp}\0{chunk.index}\0{chunk.byte_range.start}\0{chunk.byte_range.end}"
+    source_id = (
+        filepath
+        if filepath is not None
+        else (chunk.source.source_id if chunk.source is not None else chunk.context.filepath)
+    )
+    occurrence = chunk.occurrence if chunk.source is not None else chunk.index
+    return _fingerprint(
+        ["omnichunk-occurrence-v2", source_id, chunk_content_fingerprint(chunk), occurrence]
+    )
+
+
+def chunk_content_fingerprint(chunk: Chunk) -> str:
+    """SHA-256 of the exact raw UTF-8 text, independent of its location."""
+    return hashlib.sha256(chunk.text.encode("utf-8")).hexdigest()
+
+
+def chunk_embedding_fingerprint(chunk: Chunk) -> str:
+    """Fingerprint payload and configuration for embedding invalidation.
+
+    Source revision and offsets are deliberately excluded: an unrelated edit
+    must not invalidate a byte-identical payload. External embedding model
+    versioning must additionally be tracked by the embedding/indexing client.
+    """
+    return _fingerprint(
+        [
+            "omnichunk-embedding-v2",
+            chunk_content_fingerprint(chunk),
+            chunk.contextualized_text,
+            chunk.config_fingerprint,
+        ]
+    )
+
+
+def _fingerprint(value: object) -> str:
+    raw = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
 
 
@@ -301,6 +372,12 @@ def _vectordb_metadata(chunk: Chunk, *, use_contextualized_text: bool) -> dict[s
     text = chunk.contextualized_text if use_contextualized_text else chunk.text
     return {
         "text": text,
+        "chunk_id": stable_chunk_id(chunk),
+        "content_fingerprint": chunk_content_fingerprint(chunk),
+        "embedding_fingerprint": chunk_embedding_fingerprint(chunk),
+        "config_fingerprint": chunk.config_fingerprint,
+        "source_id": chunk.source.source_id if chunk.source else chunk.context.filepath,
+        "source_revision": chunk.source.revision if chunk.source else "",
         "filepath": chunk.context.filepath,
         "language": chunk.context.language,
         "content_type": chunk.context.content_type.value,
@@ -319,6 +396,12 @@ def _vectordb_metadata(chunk: Chunk, *, use_contextualized_text: bool) -> dict[s
 
 def _chunk_metadata(chunk: Chunk) -> dict[str, Any]:
     return {
+        "chunk_id": stable_chunk_id(chunk),
+        "content_fingerprint": chunk_content_fingerprint(chunk),
+        "embedding_fingerprint": chunk_embedding_fingerprint(chunk),
+        "config_fingerprint": chunk.config_fingerprint,
+        "source_id": chunk.source.source_id if chunk.source else chunk.context.filepath,
+        "source_revision": chunk.source.revision if chunk.source else "",
         "filepath": chunk.context.filepath,
         "language": chunk.context.language,
         "content_type": chunk.context.content_type.value,
@@ -377,10 +460,7 @@ def _to_serializable(value: Any) -> Any:
         return value.value
 
     if is_dataclass(value):
-        return {
-            field.name: _to_serializable(getattr(value, field.name))
-            for field in fields(value)
-        }
+        return {field.name: _to_serializable(getattr(value, field.name)) for field in fields(value)}
 
     if isinstance(value, dict):
         return {str(key): _to_serializable(item) for key, item in value.items()}

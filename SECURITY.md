@@ -15,4 +15,11 @@ We will acknowledge receipt and investigate as quickly as possible.
 
 ## Supported versions
 
-Until 1.0, only the latest `main` is considered supported.
+Security maintenance focuses on the latest stable release and the current `main`
+development branch. Older releases are reviewed at maintainer discretion; there
+is no separate long-term support commitment. Planned roadmap versions are not
+supported releases until they are published.
+
+When reporting an issue, include the installed package version and, for a checkout,
+the Git commit. These help identify the affected code even when package and runtime
+version metadata differ.

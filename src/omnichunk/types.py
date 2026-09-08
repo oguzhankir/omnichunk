@@ -153,6 +153,18 @@ class ChunkContext:
 
 
 @dataclass(frozen=True)
+class SourceDescriptor:
+    """Identity and revision of canonical UTF-8 text, not its binary container."""
+
+    source_id: str
+    revision: str
+    encoding: str = "utf-8"
+    normalization: str = "none"
+    format_name: str = "text"
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
 class Chunk:
     """A single chunk with full context."""
 
@@ -169,6 +181,20 @@ class Chunk:
     token_count: int = 0
     char_count: int = 0
     nws_count: int = 0
+    source: SourceDescriptor | None = None
+    config_fingerprint: str = ""
+    occurrence: int = 0
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class ChunkResult:
+    """Chunk output with source coverage, including empty retrieval results."""
+
+    source: SourceDescriptor
+    chunks: tuple[Chunk, ...]
+    skipped_ranges: tuple[ByteRange, ...] = ()
+    diagnostics: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -255,6 +281,11 @@ class ChunkDiff:
     added: list[Chunk]
     removed_ids: list[str]
     unchanged: list[Chunk]
+    updated: list[Chunk] = field(default_factory=list)
+
+    @property
+    def total_updated(self) -> int:
+        return len(self.updated)
 
     @property
     def total_added(self) -> int:
@@ -293,13 +324,13 @@ class ChunkStats:
     entity_distribution: dict[str, int] = field(default_factory=dict)
 
 
-@dataclass
+@dataclass(frozen=True)
 class ChunkOptions:
     """Configuration for chunking behavior."""
 
     max_chunk_size: int = 1500
     min_chunk_size: int = 50
-    size_unit: Literal["tokens", "chars", "nws"] = "tokens"
+    size_unit: Literal["tokens", "chars", "nws"] = "chars"
     tokenizer: str | Callable[[str], int] | None = None
     nws_backend: Literal["auto", "python", "rust"] = "auto"
 
@@ -315,6 +346,11 @@ class ChunkOptions:
     language: Language | None = None
     content_type: ContentType | None = None
     filepath: str = ""
+    source_id: str | None = None
+    coverage_policy: Literal["retrieval", "lossless"] = "retrieval"
+    overflow_policy: Literal["split", "error", "preserve"] = "split"
+    context_overflow: Literal["omit", "error"] = "omit"
+    algorithm_version: str = "2.1"
 
     preserve_decorators: bool = True
     preserve_comments: bool = True
@@ -338,9 +374,9 @@ class ChunkOptions:
     # Per-Chunker LRU cache of sentence/window embeddings (0 disables caching).
     semantic_embed_cache_size: int = 4096
     # Adaptive boundary detection: threshold = mean(sims) - k * std(sims).
-    semantic_threshold_k: float = 1.0
-    # Sliding-window smoothing width for coherence scoring (sentences each side).
-    semantic_window_size: int = 3
+    semantic_cache_namespace: str | None = None
+    semantic_model_revision: str = ""
+    semantic_preprocessing: str = ""
 
     # Optional OpenTelemetry tracer (opentelemetry-api Tracer); None disables spans.
     otel_tracer: object | None = None

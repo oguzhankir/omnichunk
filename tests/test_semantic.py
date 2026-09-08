@@ -128,3 +128,58 @@ def test_semantic_engine_falls_back_for_code() -> None:
     chunks = chunker.chunk("test.py", code)
     assert chunks
     assert "".join(c.text for c in chunks) == code
+
+
+def test_semantic_even_window_uses_exact_requested_width() -> None:
+    observed = []
+
+    def embed(texts):
+        observed.extend(texts)
+        return np.ones((len(texts), 2))
+
+    detect_semantic_boundaries(["a", "b", "c", "d"], embed_fn=embed, window=2)
+    assert max(map(len, observed)) == 2
+
+
+def test_semantic_boundaries_respect_minimum_tail_sentences() -> None:
+    result = detect_semantic_boundaries(
+        ["a", "b", "c"],
+        embed_fn=lambda texts: np.eye(len(texts)),
+        window=1,
+        threshold=0.5,
+        min_chunk_sentences=2,
+    )
+    assert result.boundary_indices == ()
+
+
+@pytest.mark.parametrize("sentences", [[], [""], ["", ""]])
+def test_custom_sentence_splitter_handles_empty_document(sentences) -> None:
+    assert split_sentences("", splitter_fn=lambda text: sentences) == [("", 0, 0)]
+
+
+def test_custom_sentence_splitter_merges_empty_segments_and_keeps_unicode_offsets() -> None:
+    text = "😀 Alpha.\nİkinci."
+    sentences = split_sentences(
+        text, splitter_fn=lambda text: ["", "😀 Alpha.\n", "", "İkinci.", ""]
+    )
+    assert [s for s, _, _ in sentences] == ["😀 Alpha.\n", "İkinci."]
+    assert "".join(s for s, _, _ in sentences) == text
+    assert all(text[start:end] == sentence for sentence, start, end in sentences)
+    assert all(left[2] == right[1] for left, right in zip(sentences, sentences[1:]))
+
+
+@pytest.mark.parametrize(
+    ("text", "sentences", "message"),
+    [
+        ("Alpha. Bravo.", ["Bravo.", "Alpha."], "not found in order"),
+        ("Alpha. Bravo.", ["Alpha."], "do not cover"),
+        ("Alpha. Bravo.", ["Alpha.", "Bravo."], "reconstruction"),
+        ("Alpha.", ["missing"], "not found in order"),
+        ("Alpha.", [], "do not cover"),
+    ],
+)
+def test_custom_sentence_splitter_rejects_lossy_or_reordered_output(
+    text, sentences, message
+) -> None:
+    with pytest.raises(ValueError, match=message):
+        split_sentences(text, splitter_fn=lambda text: sentences)

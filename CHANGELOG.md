@@ -5,9 +5,55 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 
 ## [Unreleased]
 
+This checkout implements the 2.0 foundation transition and 2.1 code-quality
+milestone together for the next **2.1.0** release. The maintainer will set the
+version in `src/omnichunk/_version.py`; no tag or package has been published by
+these changes. See [migration instructions](docs/migrations/v2.md).
+
+### Added
+- Canonical source descriptors, revision/configuration fingerprints and explicit
+  retrieval/lossless coverage; `chunk_with_manifest()` reports skipped spans.
+- Shared final payload budgeting across public chunking paths, including context
+  and overlap; explicit split/error/preserve and context omit/error policies.
+- Versioned complete JSON serialization, content/occurrence chunk identity,
+  rendered-payload invalidation, atomic named-collection stores and non-destructive
+  legacy store migration with separate-index rebuild/rollback examples.
+- `language_capabilities()` distinguishes detection, installed grammar, extraction
+  queries and fallback; improved decorator/comment/generic/nested-scope fixtures,
+  mixed backtick/tilde fences and parser diagnostics.
+- Per-instance `PluginRegistry` and registered formatter export, bounded async
+  queues with cooperative cleanup, frozen corpus and normal-CI property tests.
+- A roadmap through 3.0 with a research vision toward 4.0, strict artifact checks
+  and equivalent-budget benchmark validation.
+- Implemented since the local `v1.0.0` tag: per-Chunker LRU embedding cache, adaptive semantic boundaries and debug information, local sentence-transformers helper, sparse/vectorized TF-IDF, richer heuristic and batched/streaming callback-based proposition extraction, graph centrality/community analysis, MMR reranking, and embedding shape/dtype/finite-value validation.
+
 ### Changed
+- **Breaking:** default sizing is characters; token mode requires an explicit
+  tokenizer/counter. Named-provider failures no longer fall back to word estimates.
+  Unknown/internal/no-op options and unsupported combinations are rejected.
+- **Breaking:** core has no mandatory dependencies; AST grammars use `code` or
+  `all-languages`, NumPy utilities use `semantic`. Configuration is immutable.
+- **Breaking:** persisted IDs/schema and source coverage differ from 1.x;
+  rebuild vector indexes and apply removals before additions. `updated` is an
+  advisory subset of `added`, not an additional upsert list.
+- `serve --rpc` is the explicit custom JSON-RPC interface. The deprecated `--mcp`
+  alias remains; filesystem roots, symlinks, Host/Origin, request sizes and binding
+  authentication now have validation and regression tests.
+- Package metadata and runtime version derive from one source. Coverage includes
+  every Python module; Ruff/mypy versions are aligned across local tooling and CI.
+- Consolidated maintainer/governance guidance into `CONTRIBUTING.md` and historical migration notes into one page; removed duplicate release and obsolete benchmark reports.
 - Minhash dedup: faster signatures (one MD5 per token, deterministic mixing for LSH bands); 32 permutations in 8×4 bands; Jaccard verification on candidates unchanged
-- Benchmark docs (`benchmarks/README.md`): note interpreting simhash vs minhash on the default `run_v09_stress.py` corpus
+
+### Fixed
+- Same-length edits, duplicate chunks, context/configuration changes and scoped
+  deletion no longer retain stale indexing state. Failed syncs preserve last good data.
+- Embedding caches isolate providers/revisions/preprocessing, validate cached
+  vector shape and protect shared mutable state.
+- UTF-8/CRLF source fidelity, nested entity/scope rebasing, loader warnings, strict
+  rendered budgets with nonmonotonic token counters and stream/collected parity.
+- Coverage evaluation measures canonical byte-span union, detecting missing suffixes
+  and avoiding overlap inflation. Entity range sweeps and iterative tree traversal
+  reduce repeated scanning and recursion-depth failures.
 
 ## [0.10.1] - 2026-03-23
 

@@ -1,21 +1,14 @@
 from __future__ import annotations
 
-from collections.abc import Callable
-from dataclasses import dataclass
+from collections.abc import Callable, Iterator
+from dataclasses import dataclass, replace
 from typing import Any
 
 from numpy.typing import NDArray
 
-from omnichunk.sizing.counter import make_size_counter, make_token_counter
-from omnichunk.sizing.nws import get_nws_count
-from omnichunk.types import (
-    ByteRange,
-    Chunk,
-    ChunkContext,
-    ChunkOptions,
-    ContentType,
-    LineRange,
-)
+from omnichunk.config import validate_options
+from omnichunk.finalize import finalize_chunks
+from omnichunk.types import ByteRange, Chunk, ChunkContext, ChunkOptions, ContentType, LineRange
 from omnichunk.util.detect import detect_language
 from omnichunk.util.text_index import TextIndex
 
@@ -25,13 +18,12 @@ from .sentences import split_sentences
 
 @dataclass(frozen=True)
 class SemanticSplitter:
-    """Splits prose text into semantically coherent chunks.
+    """Propose semantic boundaries and finalize source spans using shared policies.
 
-    embed_fn must accept list[str] and return np.ndarray of shape (N, D).
-    window: number of sentences per context window for boundary detection.
-    threshold: cosine similarity below which a boundary is placed.
-    min_chunk_sentences: minimum sentences per output chunk.
-    sentence_splitter_fn: optional custom sentence splitter.
+    ``embed_fn`` returns a floating array with one row per input. ``window`` is
+    the number of sentences in an embedding window, ``threshold`` controls low
+    similarities, and ``min_chunk_sentences`` constrains semantic boundaries.
+    The size budget can force a further split within a semantic group.
     """
 
     embed_fn: Callable[[list[str]], NDArray[Any]]
@@ -40,158 +32,69 @@ class SemanticSplitter:
     min_chunk_sentences: int = 1
     sentence_splitter_fn: Callable[[str], list[str]] | None = None
 
-    def split(
-        self,
-        filepath: str,
-        text: str,
-        options: ChunkOptions,
-    ) -> list[Chunk]:
+    def split(self, filepath: str, text: str, options: ChunkOptions) -> list[Chunk]:
+        """Return final chunks without requiring any private precomputed indices."""
+        from omnichunk.engine.semantic_engine import _validated_embed_fn
+
+        effective = replace(
+            options,
+            filepath=filepath,
+            semantic=True,
+            semantic_embed_fn=self.embed_fn,
+            semantic_window=self.window,
+            semantic_threshold=self.threshold,
+            semantic_min_sentences=self.min_chunk_sentences,
+            semantic_sentence_splitter=self.sentence_splitter_fn,
+        )
+        validate_options(effective)
+        index = TextIndex(text)
+        effective = replace(effective, _precomputed_text_index=index)
+        validated = replace(self, embed_fn=_validated_embed_fn(self.embed_fn))
+        chunks = list(
+            finalize_chunks(
+                filepath,
+                text,
+                validated._candidates(filepath, text, effective),
+                effective,
+                index=index,
+            )
+        )
+        return [replace(chunk, total_chunks=len(chunks)) for chunk in chunks]
+
+    def _candidates(self, filepath: str, text: str, options: ChunkOptions) -> Iterator[Chunk]:
+        """Internal engine input: source spans only; no duplicate budget enforcement."""
         if not text.strip():
-            return []
-
-        text_index = options._precomputed_text_index
-        if text_index is None:
-            text_index = TextIndex(text)
-        cumsum = options._precomputed_nws_cumsum
-        if cumsum is None:
-            raise RuntimeError("SemanticSplitter requires precomputed NWS cumsum on options")
-
+            return
+        index = options._precomputed_text_index or TextIndex(text)
         language = options.language or detect_language(filepath=filepath, content=text)
-
-        triples = split_sentences(text, splitter_fn=self.sentence_splitter_fn)
-        sentence_texts = [t for t, _, _ in triples]
-        if not sentence_texts:
-            return []
-
-        boundary_res = detect_semantic_boundaries(
-            sentence_texts,
+        sentences = split_sentences(text, splitter_fn=self.sentence_splitter_fn)
+        if not sentences:
+            return
+        boundaries = detect_semantic_boundaries(
+            [sentence for sentence, _, _ in sentences],
             embed_fn=self.embed_fn,
             window=self.window,
             threshold=self.threshold,
-            min_chunk_sentences=max(1, self.min_chunk_sentences),
-        )
-        boundaries = list(boundary_res.boundary_indices)
-        n = len(triples)
-
-        starts = [0]
-        for b in boundaries:
-            starts.append(b + 1)
-        ends = list(boundaries) + [n - 1]
-
-        groups: list[tuple[int, int]] = []
-        if len(starts) != len(ends):
-            raise RuntimeError("semantic splitter: starts/ends length mismatch")
-        for s, e in zip(starts, ends):
-            if s <= e:
-                groups.append((s, e))
-
-        size_counter = make_size_counter(
-            options.size_unit,
-            options.tokenizer,
-            max_token_chars=256,
-            chunk_size=options.max_chunk_size,
-        )
-        token_counter = make_token_counter(
-            options.tokenizer,
-            max_token_chars=256,
-            chunk_size=options.max_chunk_size,
-        )
-
-        def piece_size(sub: str) -> int:
-            return int(size_counter(sub))
-
-        def subdivide_sentence_indices(s: int, e: int) -> list[tuple[int, int]]:
-            stack = [(s, e)]
-            final: list[tuple[int, int]] = []
-            while stack:
-                a, b = stack.pop()
-                chunk_str = "".join(triples[i][0] for i in range(a, b + 1))
-                if piece_size(chunk_str) <= options.max_chunk_size:
-                    final.append((a, b))
-                    continue
-                if a < b:
-                    mid = (a + b + 1) // 2
-                    stack.append((mid, b))
-                    stack.append((a, mid - 1))
-                    continue
-                final.append((a, b))
-            final.sort(key=lambda x: (x[0], x[1]))
-            return final
-
-        def char_piece_ranges(c0: int, c1: int) -> list[tuple[int, int]]:
-            """Split [c0, c1) char range until each piece fits max_chunk_size."""
-            stack = [(c0, c1)]
-            parts: list[tuple[int, int]] = []
-            while stack:
-                a, b = stack.pop()
-                if a >= b:
-                    continue
-                sub = text[a:b]
-                if piece_size(sub) <= options.max_chunk_size:
-                    parts.append((a, b))
-                    continue
-                if b - a <= 1:
-                    parts.append((a, b))
-                    continue
-                mid = (a + b) // 2
-                stack.append((mid, b))
-                stack.append((a, mid))
-            parts.sort(key=lambda x: (x[0], x[1]))
-            return parts
-
-        expanded_chars: list[tuple[int, int]] = []
-        for s, e in groups:
-            for a, b in subdivide_sentence_indices(s, e):
-                chunk_str = "".join(triples[i][0] for i in range(a, b + 1))
-                c0, c1 = triples[a][1], triples[b][2]
-                if piece_size(chunk_str) <= options.max_chunk_size:
-                    expanded_chars.append((c0, c1))
-                else:
-                    expanded_chars.extend(char_piece_ranges(c0, c1))
-
-        chunks: list[Chunk] = []
-        for idx, (c_start, c_end) in enumerate(expanded_chars):
-            chunk_text = text[c_start:c_end]
-            if not chunk_text.strip():
-                continue
-            byte_start = text_index.byte_offset_for_char(c_start)
-            byte_end = text_index.byte_offset_for_char(c_end)
-            line_start = text_index.line_for_char(c_start)
-            line_end = text_index.line_for_char(max(c_start, c_end - 1))
-
-            context = ChunkContext(
-                filepath=filepath,
-                language=language,
-                content_type=ContentType.PROSE,
+            min_chunk_sentences=self.min_chunk_sentences,
+        ).boundary_indices
+        start_sentence = 0
+        for position, end_sentence in enumerate((*boundaries, len(sentences) - 1)):
+            start = sentences[start_sentence][1]
+            end = sentences[end_sentence][2]
+            byte_start = index.byte_offset_for_char(start)
+            byte_end = index.byte_offset_for_char(end)
+            chunk_text = text[start:end]
+            yield Chunk(
+                text=chunk_text,
+                contextualized_text=chunk_text,
+                byte_range=ByteRange(byte_start, byte_end),
+                line_range=LineRange(
+                    index.line_for_char(start), index.line_for_char(max(start, end - 1))
+                ),
+                index=position,
+                total_chunks=-1,
+                context=ChunkContext(
+                    filepath=filepath, language=language, content_type=ContentType.PROSE
+                ),
             )
-            chunks.append(
-                Chunk(
-                    text=chunk_text,
-                    contextualized_text=chunk_text,
-                    byte_range=ByteRange(byte_start, byte_end),
-                    line_range=LineRange(line_start, max(line_start, line_end)),
-                    index=idx,
-                    total_chunks=-1,
-                    context=context,
-                    token_count=int(token_counter(chunk_text)),
-                    char_count=len(chunk_text),
-                    nws_count=get_nws_count(cumsum, byte_start, byte_end),
-                )
-            )
-
-        total = len(chunks)
-        return [
-            Chunk(
-                text=c.text,
-                contextualized_text=c.contextualized_text,
-                byte_range=c.byte_range,
-                line_range=c.line_range,
-                index=i,
-                total_chunks=total,
-                context=c.context,
-                token_count=c.token_count,
-                char_count=c.char_count,
-                nws_count=c.nws_count,
-            )
-            for i, c in enumerate(chunks)
-        ]
+            start_sentence = end_sentence + 1

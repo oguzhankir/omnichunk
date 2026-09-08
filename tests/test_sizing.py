@@ -99,3 +99,98 @@ def test_make_size_counter_variants() -> None:
     assert token_size(text) == 3
     assert char_size(text) == len(text)
     assert nws_size(text) == 3
+
+
+def test_invalid_tokenizer_never_silently_estimates() -> None:
+    with pytest.raises(TypeError):
+        resolve_tokenizer(object())
+    with pytest.raises(ValueError):
+        resolve_tokenizer("")
+    with pytest.raises(ValueError, match="tokenizer"):
+        resolve_tokenizer("omnichunk-this-model-does-not-exist-794621")
+
+
+def test_encoder_object_takes_precedence_over_callable_interface() -> None:
+    class Tokenizer:
+        def __call__(self, text):
+            return {"input_ids": [1, 2]}
+
+        def encode(self, text, **kwargs):
+            return [1, 2]
+
+    assert resolve_tokenizer(Tokenizer())("hello") == 2
+
+
+@pytest.mark.parametrize("value", [-1, 1.2, True])
+def test_invalid_counter_result_rejected(value) -> None:
+    with pytest.raises(ValueError):
+        resolve_tokenizer(lambda text: value)("hello")
+
+
+def test_explicit_approximate_tokenizer() -> None:
+    assert resolve_tokenizer("approximate")("hello world") == 2
+
+
+def test_encoder_signature_fallbacks_and_encoding_objects() -> None:
+    from types import SimpleNamespace
+
+    class PlainEncoder:
+        def encode(self, text):
+            return (1, 2, 3)
+
+    class HuggingFaceEncoder:
+        def encode(self, text, *, add_special_tokens):
+            assert add_special_tokens is False
+            return SimpleNamespace(ids=[3, 4])
+
+    assert resolve_tokenizer(PlainEncoder())("source") == 3
+    assert resolve_tokenizer(HuggingFaceEncoder())("source") == 2
+    assert resolve_tokenizer(HuggingFaceEncoder())("") == 0
+
+
+def test_named_tiktoken_and_local_huggingface_resolution(monkeypatch) -> None:
+    import sys
+    from types import SimpleNamespace
+
+    encoder = SimpleNamespace(encode=lambda text, **kwargs: [1, 2])
+
+    def missing(name):
+        raise KeyError(name)
+
+    monkeypatch.setitem(
+        sys.modules,
+        "tiktoken",
+        SimpleNamespace(encoding_for_model=lambda name: encoder, get_encoding=missing),
+    )
+    assert resolve_tokenizer("model-name")("source") == 2
+    monkeypatch.setitem(
+        sys.modules,
+        "tiktoken",
+        SimpleNamespace(encoding_for_model=missing, get_encoding=lambda name: encoder),
+    )
+    assert resolve_tokenizer("encoding-name")("source") == 2
+    monkeypatch.setitem(
+        sys.modules, "tiktoken", SimpleNamespace(encoding_for_model=missing, get_encoding=missing)
+    )
+
+    def local_only(name, *, local_files_only):
+        assert local_files_only is True
+        return encoder
+
+    monkeypatch.setitem(
+        sys.modules,
+        "transformers",
+        SimpleNamespace(AutoTokenizer=SimpleNamespace(from_pretrained=local_only)),
+    )
+    assert resolve_tokenizer("local-model")("source") == 2
+
+
+def test_configured_truncation_is_rejected_for_exact_counting() -> None:
+    class TruncatingEncoder:
+        truncation = {"max_length": 1}
+
+        def encode(self, text, **kwargs):
+            return [1]
+
+    with pytest.raises(ValueError, match="truncation"):
+        resolve_tokenizer(TruncatingEncoder())

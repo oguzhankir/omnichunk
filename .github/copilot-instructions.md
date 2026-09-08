@@ -11,7 +11,7 @@ These rules apply to ALL AI assistants (Cursor, Windsurf, Claude, Copilot) and h
 ## 1) Core Engineering Principles
 - **Determinism is absolute:** The same input with the same options MUST yield the exact same chunks, byte-for-byte, every single time.
 - **Fail loud, or degrade gracefully:** Do not hide failures silently. If a structure cannot be parsed, degrade to a deterministic fallback (e.g., regex or prose engine) and expose the fallback reason in the chunk metadata.
-- **Dependency discipline:** Keep the core engine dependency-free (except `tree-sitter`). Tokenizers (`tiktoken`, `transformers`) are optional extras. Do not import them in the critical path without `try/except` blocks.
+- **Dependency discipline:** Keep the text core dependency-free. Tree-sitter/grammars live in the `code` extra and NumPy in `semantic`; optional acceleration must preserve Python output. Tokenizers (`tiktoken`, `transformers`) are optional extras. Do not import them in the critical path without `try/except` blocks.
 
 ## 2) Token Optimization & Chunk Boundaries (NEW)
 - **Token counting is expensive:** Do not run an LLM tokenizer (like `tiktoken`) on every single AST node or line during the tree traversal.
@@ -26,12 +26,16 @@ These rules apply to ALL AI assistants (Cursor, Windsurf, Claude, Copilot) and h
 - **Hash primitive values:** Do not use `Enum` objects as dictionary keys or in `set()` lookups in hot paths. Use their primitive values (`enum.value`) to avoid Python's slow enum hashing overhead.
 
 ## 4) Mandatory Chunking Invariants
-- **Reconstruction:** `original[chunk.byte_range.start:chunk.byte_range.end] == chunk.text` MUST hold true natively.
-- **Contiguity:** Chunk ranges must be contiguous in sorted order. No silent gaps, no overlaps (unless overlapping windows are explicitly enabled in settings).
-- **No empty yields:** Do not emit empty, whitespace-only, or comment-only chunks.
-- **Semantic attachment:** Decorators, docstrings, and function signatures must stay strictly attached to their target definition bodies. Do not split code mid-expression when structural boundaries exist.
+- **Reconstruction:** `canonical_text.encode("utf-8")[chunk.byte_range.start:chunk.byte_range.end].decode("utf-8") == chunk.text` MUST hold. Document loaders declare their canonical extracted text; never claim offsets into original binary containers.
+- **Contiguity:** Lossless mode must cover every canonical source byte in source order. Retrieval mode may omit trivia; `chunk_with_manifest()` reports skipped ranges. Numeric overlap may overlap raw spans; line overlap is derived context. Compute coverage from the union of source spans.
+- **No empty yields:** Never emit empty chunks. Retrieval mode filters whitespace-only output; lossless mode retains all trivia, including whitespace-only input. Preserve code comments with their definitions where the strict budget permits.
+- **Semantic attachment:** Decorators, docstrings, and function signatures must stay strictly attached to their target definition bodies. Prefer structural boundaries. A unit larger than a strict budget must split safely or raise according to `overflow_policy`; explicit `preserve` may overflow with reported size and reason.
 
 ## 5) Context and Metadata Rules
+- Validate immutable public options and reject unknown/unsupported flags. Exact token mode requires an explicit tokenizer; estimates must be labeled.
+- Validate the final rendered payload against the selected budget. Context omission and structural overflow must appear in metadata.
+- Keep source identity, content, configuration and rendered-payload fingerprints distinct. Persist all documented context fields and version the schema.
+- Failed or partial store scans must never delete unrelated sources or replace last good data. Commit revision/chunks/status atomically.
 - Keep `contextualized_text` logically aligned with the final chunk content. It should contain necessary context (like class names or parent imports) so the chunk makes sense to an LLM in isolation.
 - Include only valid metadata derived from parsed or deterministic logic.
 - Keep formatting (JSONL, CSV, LangChain Document) consistent and easy to parse for downstream tools.

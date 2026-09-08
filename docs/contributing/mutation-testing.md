@@ -42,7 +42,11 @@ Add or strengthen tests when a mutant survives for behavior that should be prote
 
 ## Quality target
 
-For the scoped modules above, the expected baseline is **>85% kill rate**.
+The target for the scoped modules is **at least 85% kill rate**. This is a target,
+not a measured repository baseline or an enforced CI release gate. The current
+workflows do not run mutation testing or enforce that percentage.
 
-- Below 85%: strengthen tests before merging
-- 85% or above: acceptable for release gating
+Record the commit, command, mutation counts and tool version with each result.
+Investigate surviving mutants and report equivalent mutants, timeouts and skipped
+cases separately. Establish a reproducible baseline before making this a release
+gate; meeting the percentage alone does not prove the chunk invariants are correct.

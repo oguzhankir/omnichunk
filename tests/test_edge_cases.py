@@ -31,7 +31,9 @@ def test_no_whitespace_only_chunks() -> None:
 
 def test_contiguous_byte_ranges() -> None:
     code = "def a():\n    return 1\n\ndef b():\n    return 2\n"
-    chunker = Chunker(max_chunk_size=22, min_chunk_size=5, size_unit="chars")
+    chunker = Chunker(
+        max_chunk_size=22, min_chunk_size=5, size_unit="chars", coverage_policy="lossless"
+    )
 
     chunks = chunker.chunk("x.py", code)
 

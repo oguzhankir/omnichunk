@@ -35,15 +35,9 @@ def test_stream_upsert_directory_adapters(tmp_path: Path) -> None:
     (d / "a.py").write_text("x = 1\n", encoding="utf-8")
     (d / "b.py").write_text("y = 2\n", encoding="utf-8")
     chunker = Chunker(max_chunk_size=500, size_unit="chars")
-    pine = list(
-        chunker.stream_upsert(str(d), glob="**/*.py", embed_fn=_embed, adapter="pinecone")
-    )
-    weav = list(
-        chunker.stream_upsert(str(d), glob="**/*.py", embed_fn=_embed, adapter="weaviate")
-    )
-    supa = list(
-        chunker.stream_upsert(str(d), glob="**/*.py", embed_fn=_embed, adapter="supabase")
-    )
+    pine = list(chunker.stream_upsert(str(d), glob="**/*.py", embed_fn=_embed, adapter="pinecone"))
+    weav = list(chunker.stream_upsert(str(d), glob="**/*.py", embed_fn=_embed, adapter="weaviate"))
+    supa = list(chunker.stream_upsert(str(d), glob="**/*.py", embed_fn=_embed, adapter="supabase"))
     assert pine[0].rows[0].get("class") is None
     assert weav[0].rows[0].get("class") == "OmnichunkDocument"
     assert "embedding" in supa[0].rows[0]

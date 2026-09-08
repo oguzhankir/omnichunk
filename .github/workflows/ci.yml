@@ -31,7 +31,7 @@ jobs:
       - name: Run benchmark regression gate
         run: python scripts/check_benchmarks.py --run-quality
 
-      - name: Throughput regression gate
+      - name: Historical throughput check (explicitly skips absent baseline)
         run: python scripts/check_benchmarks.py --run-regression-gate
 
       - name: Run tests
@@ -48,8 +48,30 @@ jobs:
       - name: Run Ruff
         run: ruff check src tests
 
+      - name: Check formatting
+        run: ruff format --check src tests
+
       - name: Run mypy (strict, full package)
-        run: mypy --strict src/omnichunk
+        # NumPy selects type syntax based on mypy's target version. Use the
+        # interpreter represented by this matrix job rather than the package's
+        # minimum supported Python version for every job.
+        run: mypy --strict --python-version ${{ matrix.python-version }} src/omnichunk
 
       - name: Build documentation (MkDocs)
         run: mkdocs build --strict
+
+  wheel-smoke:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build and validate a dependency-free installed wheel
+        run: |
+          python -m pip install build twine
+          python -m build
+          python scripts/check_release.py

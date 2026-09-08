@@ -1,126 +1,121 @@
 # Benchmarks
 
-This folder contains reproducible benchmark scripts for `omnichunk`.
+These scripts measure declared workloads and configurations. They do not establish
+library leadership or retrieval quality. Record the commit, dependency versions,
+corpus hash/license, platform and optional acceleration with results.
 
-## Goals
-
-- Track latency and throughput across representative workloads
-- Catch performance regressions over time
-- Compare configuration changes with stable scenarios
-
-## Run
+## Core and structural checks
 
 ```bash
 python benchmarks/run_benchmarks.py
+python benchmarks/run_quality_report.py
+python scripts/check_benchmarks.py --run-quality
 ```
 
-Run optional tool comparisons (if competitor packages are installed):
+`SCENARIOS` in `run_benchmarks.py` defines local fixtures. Quality checks validate
+source reconstruction, coverage and deterministic output; retrieval quality needs
+a separate labeled evaluation corpus. Timing varies between runs even when the
+chunks are deterministic.
+
+## Optional tool comparisons
 
 ```bash
-python benchmarks/run_comparisons.py
+python benchmarks/run_comparisons.py --corpus smoke --save reports/comparison.json
 python benchmarks/run_comparisons.py --corpus mega-fixture --no-table
 python benchmarks/run_comparisons.py --corpus mega-python --repeat 50
-python benchmarks/run_comparisons.py --corpus smoke
-python benchmarks/run_comparisons.py --include-extra   # adds astchunk
+python benchmarks/run_comparisons.py --include-extra
 ```
 
-**Interpreting `run_comparisons.py`:** The default `--corpus all` includes both **tiny** fixtures (~5 KB total) and **`mega_python_50x`** (~150 KB synthetic Python). On tiny inputs, generic splitters finish in tens of microseconds (often dominated by interpreter overhead); **omnichunk** still pays tree-sitter parse, entity extraction, and scope work every call — so **sub-1× “speedup” lines on smoke-sized data are expected, not a bug**. For apples-to-apples throughput, prefer **`--corpus mega-fixture`** or **`--corpus mega-python`**, or run prose at scale with Gutenberg (below).
+The default `all` corpus includes small fixtures and synthetic Python repeated 50
+times. `smoke` excludes the large fixture; `mega-fixture` uses only that on-disk
+file; `mega-python` generates a temporary corpus with the chosen repeat count.
 
-**Prose / multi-MB comparison (realistic throughput):**
+All supported adapters receive the same character capacity, zero overlap and no
+derived context. Token scenarios instead use the same explicit `cl100k_base`
+counting function. Semchunk uses the actual requested counter/budget; it no longer
+substitutes a quarter-sized word budget. Output sizes are checked for every tool.
+
+Missing dependencies or unsupported APIs report `unavailable`. `--include-extra`
+reports ASTChunk as excluded until its units and overlap contract are verified;
+the adapter does not guess parameter names and silently accept defaults. Each
+scenario has one untimed warmup. Partial scenario totals cannot produce a timing
+ratio. The JSON includes per-scenario diagnostics and configuration. Its retained
+`winner` field is empty; results are descriptive, and exit status indicates
+execution or output-validation failure rather than a speed contest.
+
+Ratios divide competitor elapsed time by Omnichunk elapsed time over the same
+complete scenario set. They measure these workloads only. Small fixtures include
+substantial call/parse overhead; report larger workloads and repeated samples when
+investigating throughput. Parsing structure and producing metadata involve more
+work than splitting strings.
+
+## Gutenberg prose
 
 ```bash
 python benchmarks/run_gutenberg.py
 ```
 
-Requires NLTK data (`nltk.download("gutenberg")`) and optional competitor deps plus `tiktoken` where used.
+Requires NLTK, an already installed Gutenberg corpus, tiktoken vocabulary assets,
+and whichever optional comparator packages are used. The script does not download
+the corpus. Record corpus provenance/license when distributing results.
 
-Example output (from this machine; 18 Gutenberg texts, ~11.79M chars):
+Every supported tool uses 512 `cl100k_base` tokens and zero overlap; Omnichunk
+renders no derived context. The semantic-text-splitter adapter uses its tokenizer
+callback API. Input/output token auditing is outside the splitting timer.
 
-| Tool | Chunks | Avg tokens/chunk | Seconds | MB/s |
-|---|---:|---:|---:|---:|
-| omnichunk | 4,562 | 657.883 | 4.930 | 2.281 |
-| langchain_recursive | 6,689 | 448.686 | 5.187 | 2.168 |
-| semantic_text_splitter | 29,807 | 100.690 | 3.548 | 3.170 |
-| semchunk | 7,390 | 406.124 | 7.596 | 1.481 |
+CSV reports source characters, UTF-8 bytes, input tokens, total/mean/maximum output
+chunk tokens, overflow count and elapsed time. Throughput uses UTF-8 MiB/s.
+`overflow` or `error` produces a nonzero exit code. Unavailable tools are explicit.
+Old results from mixed token/character capacities and source-token averages do not
+constitute equivalent-budget evidence for this runner.
 
-Run quality invariants report on benchmark scenarios:
-
-```bash
-python benchmarks/run_quality_report.py
-```
-
-Generate a self-contained HTML dashboard (throughput table, Chart.js bar chart, quality PASS/FAIL, raw JSON). Chart.js is loaded from cdnjs; everything else is inline.
-
-```bash
-python benchmarks/run_html_report.py
-python benchmarks/run_html_report.py --output reports/benchmark.html
-python benchmarks/run_html_report.py --scenarios python_complex markdown_doc --repeat 5
-```
-
-From CI helper `scripts/check_benchmarks.py`, optionally emit HTML after other steps:
-
-```bash
-python scripts/check_benchmarks.py --run-quality --html-report reports/ci_benchmark.html
-```
-
-Run large-corpus throughput and slow-file diagnostics:
+## Profiling and larger workloads
 
 ```bash
 python benchmarks/run_large_corpus.py --mode mega-python --repeat 120
 python benchmarks/run_large_corpus.py --mode directory --directory ./src --glob "**/*.py"
-```
-
-Run cProfile hotspot analysis:
-
-```bash
 python benchmarks/run_hotspot_profile.py --mode mega-python --repeat 120 --limit 30
-python benchmarks/run_hotspot_profile.py --mode directory --directory ./src --glob "**/*.py" --limit 40
-```
-
-### v0.9 stress (dedup + eval + optional multiformat)
-
-Synthetic chunks exercise `dedup_chunks` (`exact` / `simhash` / `minhash`) and `evaluate_chunks` (all metrics) with a reconstruction-friendly concatenated source. No extra dependencies.
-
-```bash
-python benchmarks/run_v09_stress.py
-python benchmarks/run_v09_stress.py --dedup-n 8000 --eval-n 1200 --threshold 0.85
+python benchmarks/bench_tfidf_memory.py
 python benchmarks/run_v09_stress.py --with-ipynb
+python benchmarks/run_html_report.py --output reports/benchmark.html
 ```
 
-**CSV columns:** `phase,method,n_input,n_unique,n_dups,seconds`. For `dedup` rows, `n_input` is corpus size, `n_unique` / `n_dups` are dedup outputs. For `eval`, the middle columns are `-`. The line starting with `eval_aggregate` is JSON aggregate scores. With `--with-ipynb`, a `chunk_file` row times `tests/fixtures/sample_v09.ipynb` (`n_input` = file bytes, `n_unique` = chunk count).
+The HTML report loads Chart.js from a CDN. Other runners include dedup/evaluation
+stress and optional format cases. Use `--nws-backend auto|python|rust` on the large
+corpus runner to inspect acceleration; prefer Python algorithm fixes before native
+rewrites. The historical profiling report remains in Git history.
 
-**Interpreting `dedup` rows:** The default corpus uses the same code body with a different `# id=k` comment on each chunk. **Simhash** treats most of these as near-duplicates (similar fingerprints). **Minhash** uses token sets; the varying comment tokens often push Jaccard below the default threshold, so you may see **no minhash duplicates** even though simhash collapses many — that is expected for this synthetic text, not a bug. Compare methods on identical-copy corpora if you need aligned duplicate counts.
-
-## Regenerate `mega_python_50x.py`
-
-The file `tests/fixtures/mega_python_50x.py` is `python_complex.py` repeated 50× (same source as `workloads.mega-python`). Regenerate after changing the base fixture:
+## Prior-release regression gate
 
 ```bash
-.venv/bin/python -c "
-import sys
-from pathlib import Path
-ROOT = Path('.').resolve()
-sys.path.insert(0, str(ROOT / 'benchmarks'))
-from workloads import collect_corpus_entries
-e = collect_corpus_entries(
-    mode='mega-python', repeat=50, directory=None, glob_pattern='**/*', max_files=500,
-)
-(ROOT / 'tests/fixtures/mega_python_50x.py').write_text(e[0].text, encoding='utf-8')
-"
+python scripts/check_benchmarks.py --compare-ref v1.0.0 \
+  --comparison-report reports/reference.json
 ```
 
-## Notes
+The gate archives previous source read-only and runs both revisions using one
+interpreter, dependency environment, fixture and harness. It uses a 512-character
+budget, no context, zero overlap and Python NWS, and records repeated samples,
+actual maximum payload sizes and complete reconstruction. Invalid output or
+incompatible dependencies fails the comparison instead of asserting speed parity.
+Valid comparable baselines allow at most a 10% regression.
 
-- Benchmarks are deterministic for the same inputs/options.
-- The script prints per-scenario timings and aggregate throughput.
-- Add new scenarios by extending the `SCENARIOS` list in `run_benchmarks.py`.
-- Default comparison includes `omnichunk`, `langchain_recursive`, `semantic_text_splitter`, and `semchunk`.
-- **`--corpus`:** `all` (default) = every `SCENARIOS` row; `smoke` = small fixtures only (excludes `mega_python_50x`); `mega-fixture` = only on-disk mega file; `mega-python` = synthetic mega from `workloads` + temp file, use `--repeat`.
-- `--include-extra` adds `astchunk` / `astchunker` attempts.
-- Comparison runner marks tools as `unavailable` when dependencies are missing or import fails.
-- Each tool×scenario run does one **untimed warmup** call before `perf_counter`, so heavy first-import / init (notably LangChain) is not charged only to the first scenario in the CSV.
-- **Speedup lines** use `competitor_total_seconds / omnichunk_total_seconds`: above **1×** means omnichunk was faster on aggregate for this run; below **1×** means a competitor was faster (tiny fixtures often favor trivial splitters).
-- `run_comparisons.py` exits via `os._exit` after a stream flush so Python 3.12 does not print a spurious `multiprocess.resource_tracker` traceback when **semchunk** has been loaded (upstream `ResourceTracker.__del__` bug).
-- Quality report verifies reconstruction, contiguity, non-empty chunks, and determinism.
-- `run_large_corpus.py` supports `--nws-backend auto|python|rust` for backend experiments.
-- `run_hotspot_profile.py` highlights likely bottlenecks in `sizing`, `windowing`, and `context` modules.
+For the first 2.x contract transition, the known legacy reference violates the
+requested budget. A reviewed transition manifest can establish the new valid
+baseline without a speed-parity claim:
+
+```bash
+python scripts/check_benchmarks.py --compare-ref v1.0.0 \
+  --record-transition-baseline benchmarks/transition_baseline.json \
+  --transition-rationale "Describe why the previous contract is not comparable."
+python scripts/check_benchmarks.py --compare-ref v1.0.0 --require-baseline \
+  --transition-manifest benchmarks/transition_baseline.json --release-tag v2.1.0 \
+  --comparison-report reports/release-benchmark.json
+```
+
+The manifest binds the specific old revision, corpus/harness/settings and new
+behavior source. It is not a general regression bypass; later 2.x releases use a
+valid predecessor. Ordinary CI's historical `--run-regression-gate` still explicitly
+skips an absent machine-local `baseline.json`; release validation uses the separate
+reference gate. Do not commit arbitrary laptop measurements as a universal SLA.
+See [performance methodology](../docs/performance/sla.md) and the
+[roadmap](../ROADMAP.md) for the remaining evaluation and release criteria.

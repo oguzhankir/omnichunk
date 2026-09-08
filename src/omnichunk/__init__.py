@@ -1,5 +1,7 @@
 """Structure-aware chunking; :class:`Chunker` adds ``achunk``, ``astream``, and ``abatch``."""
 
+from typing import TYPE_CHECKING, Any
+
 from . import plugins
 from .budget import BudgetResult, TokenBudgetOptimizer
 from .chunker import Chunker, chunk, chunk_directory, chunk_file, hierarchical_chunk
@@ -25,23 +27,29 @@ from .graph import (
     to_networkx_dict,
 )
 from .otel import maybe_span
+from .parser.languages import LanguageCapability, language_capabilities
 from .plugins import (
+    PluginRegistry,
     list_registered_formatters,
     list_registered_parsers,
     register_formatter,
     register_parser,
 )
 from .propositions import Proposition
-from .semantic import (
-    SemanticBoundaryResult,
-    SemanticSplitter,
-    build_tfidf_matrix,
-    build_tfidf_sparse,
-    detect_semantic_boundaries,
-    detect_topic_shifts,
-    rerank_chunks,
-    split_sentences,
-)
+
+if TYPE_CHECKING:
+    from .semantic import (
+        SemanticBoundaryResult,
+        SemanticSplitter,
+        build_tfidf_matrix,
+        build_tfidf_sparse,
+        detect_semantic_boundaries,
+        detect_topic_shifts,
+        rerank_chunks,
+        split_sentences,
+    )
+
+from ._version import __version__
 from .serialization import (
     chunk_from_dict,
     chunks_to_pinecone_vectors,
@@ -60,6 +68,7 @@ from .types import (
     ChunkNode,
     ChunkOptions,
     ChunkQualityScore,
+    ChunkResult,
     ChunkStats,
     ChunkTree,
     ContentType,
@@ -68,10 +77,9 @@ from .types import (
     ImportInfo,
     LineRange,
     SiblingInfo,
+    SourceDescriptor,
     UpsertBatch,
 )
-
-__version__ = "0.10.1"
 
 __all__ = [
     "BatchResult",
@@ -85,7 +93,12 @@ __all__ = [
     "ChunkingError",
     "ChunkGraph",
     "ChunkNode",
+    "LanguageCapability",
+    "language_capabilities",
     "ChunkOptions",
+    "ChunkResult",
+    "SourceDescriptor",
+    "PluginRegistry",
     "ChunkQualityScore",
     "ChunkStats",
     "ChunkTree",
@@ -143,3 +156,22 @@ __all__ = [
     "register_formatter",
     "register_parser",
 ]
+
+
+def __getattr__(name: str) -> Any:
+    if name in {
+        "build_tfidf_matrix",
+        "build_tfidf_sparse",
+        "rerank_chunks",
+        "detect_semantic_boundaries",
+        "SemanticSplitter",
+        "detect_topic_shifts",
+        "split_sentences",
+        "SemanticBoundaryResult",
+    }:
+        from importlib import import_module
+
+        value = getattr(import_module("omnichunk.semantic"), name)
+        globals()[name] = value
+        return value
+    raise AttributeError(name)

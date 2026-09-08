@@ -4,7 +4,7 @@ import importlib
 from dataclasses import dataclass
 from functools import lru_cache
 from threading import RLock, local
-from typing import Any
+from typing import Any, Literal
 
 from omnichunk.types import Language
 
@@ -26,6 +26,60 @@ _TSParser: Any | None = getattr(_tree_sitter, "Parser", None) if _tree_sitter is
 class GrammarSpec:
     module_name: str
     callables: tuple[str, ...] = ("language",)
+
+
+@dataclass(frozen=True)
+class LanguageCapability:
+    """Code-language support in this environment, independently of filename detection."""
+
+    language: Language
+    extensions: tuple[str, ...]
+    grammar_registered: bool
+    grammar_available: bool
+    parser_available: bool
+    query_available: bool
+    extraction: Literal["ast", "regex", "none"]
+    grammar_module: str | None = None
+
+
+def language_capabilities() -> tuple[LanguageCapability, ...]:
+    """Return the deterministic code-language matrix for installed optional grammars.
+
+    ``query_available`` reports a bundled query, not exhaustive syntax coverage.
+    ``grammar_available`` means the grammar loaded, while ``parser_available``
+    also verifies parser construction. Input syntax diagnostics remain in context.
+    """
+    from omnichunk.parser.query_patterns import get_query_source
+    from omnichunk.util.detect import _CODE_LANGUAGES, _EXTENSION_LANGUAGE
+
+    rows: list[LanguageCapability] = []
+    for language in sorted(_CODE_LANGUAGES):
+        grammar = _GRAMMARS.get(language)
+        available = grammar is not None and get_language(language) is not None
+        parser_available = available and get_parser(language) is not None
+        rows.append(
+            LanguageCapability(
+                language=language,
+                extensions=tuple(
+                    sorted(
+                        extension
+                        for extension, detected in _EXTENSION_LANGUAGE.items()
+                        if detected == language
+                    )
+                ),
+                grammar_registered=grammar is not None,
+                grammar_available=available,
+                parser_available=parser_available,
+                query_available=get_query_source(language) is not None,
+                extraction="ast"
+                if parser_available
+                else "regex"
+                if language == "python"
+                else "none",
+                grammar_module=grammar.module_name if grammar else None,
+            )
+        )
+    return tuple(rows)
 
 
 _GRAMMARS: dict[Language, GrammarSpec] = {

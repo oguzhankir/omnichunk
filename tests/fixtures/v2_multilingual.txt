@@ -1,0 +1,5 @@
+İstanbul'da bir kütüphane geliştiriyoruz. Kaynak konumları doğru kalmalı.
+
+中文句子不依赖空格。第二句话用于验证切分。日本語の文章も含みます。
+
+مرحبا بالعالم. Exact UTF-8 offsets preserve citations: café, naïve, 😀.

@@ -26,9 +26,7 @@ _CODE_DIRECTIVE_RE = re.compile(
 )
 
 # .. note:: / .. warning:: / .. tip:: / .. toctree:: — non-code directives we surface as prose.
-_GENERIC_DIRECTIVE_RE = re.compile(
-    r"(?m)^\.\.\s+(?P<name>[A-Za-z][\w-]*)::"
-)
+_GENERIC_DIRECTIVE_RE = re.compile(r"(?m)^\.\.\s+(?P<name>[A-Za-z][\w-]*)::")
 
 # Section underline characters per Sphinx docs convention.
 _SECTION_UNDERLINE_RE = re.compile(r"(?m)^(?P<chars>([=\-~`:'\"^_*+#<>])\2{2,})\s*$")
@@ -68,9 +66,7 @@ def load_rst(content: str) -> LoadedDocument:
     )
 
 
-def _append_prose(
-    content: str, start: int, end: int, segments: list[FormatSegment]
-) -> None:
+def _append_prose(content: str, start: int, end: int, segments: list[FormatSegment]) -> None:
     if end <= start:
         return
     text = content[start:end]
