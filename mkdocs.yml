@@ -37,18 +37,16 @@ markdown_extensions:
   - pymdownx.superfences
 
 nav:
-  - Home: index.md
+  - Start here: index.md
   - User guide:
       - Installation: install.md
+      - Index, retrieve and synchronize: indexing.md
+      - Source and budget contracts: reference/contracts.md
       - API stability: api-stability.md
-  - Migrations:
-      - migrations/index.md
-      - 2.0 / 2.1 transition: migrations/v2.md
+      - Migrating an existing index: migrations/v2.md
   - Roadmap: https://github.com/oguzhankir/omnichunk/blob/main/ROADMAP.md
-  - Architecture: https://github.com/oguzhankir/omnichunk/blob/main/ARCHITECTURE.md
   - Performance: performance/sla.md
   - Contributing:
       - Mutation testing: contributing/mutation-testing.md
   - Reference:
-      - Contracts: reference/contracts.md
-      - Chunker: reference/chunker.md
+      - Python API: reference/chunker.md

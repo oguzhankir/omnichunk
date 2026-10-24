@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from omnichunk import Chunker
 from omnichunk.engine.prose_engine import _windows_to_contiguous_ranges
 from omnichunk.types import ContentType
@@ -85,3 +87,42 @@ def test_windows_to_contiguous_ranges_preserves_contiguous_cursor_model() -> Non
     assert ranges
     assert ranges[0][0] == 0
     assert ranges[-1][1] == 20
+
+
+@pytest.mark.parametrize("filepath", ["document.txt", "document.md"])
+@pytest.mark.parametrize("unit", ["chars", "nws", "tokens"])
+def test_unbroken_prose_uses_budget_without_single_character_fragmentation(filepath, unit):
+    # CJK text, identifiers and encoded data often have no ASCII delimiters.
+    text = "資料😀" * 333 + "末"
+    chunker = Chunker(
+        max_chunk_size=256,
+        min_chunk_size=0,
+        size_unit=unit,
+        tokenizer=len if unit == "tokens" else None,
+        context_mode="none",
+        coverage_policy="lossless",
+    )
+
+    chunks = chunker.chunk(filepath, text)
+
+    assert [len(c.text) for c in chunks] == [256, 256, 256, 232]
+    assert "".join(c.text for c in chunks) == text
+    raw = text.encode()
+    assert all(raw[c.byte_range.start : c.byte_range.end].decode() == c.text for c in chunks)
+
+
+def test_prose_hard_split_can_complete_a_multichar_token():
+    def count(text):
+        return 1 if text in {"ab", "cd", "ef"} else len(text) * 2
+
+    chunks = Chunker(
+        max_chunk_size=1,
+        min_chunk_size=0,
+        size_unit="tokens",
+        tokenizer=count,
+        context_mode="none",
+        coverage_policy="lossless",
+    ).chunk("document.txt", "abcdef")
+
+    assert [c.text for c in chunks] == ["ab", "cd", "ef"]
+    assert all(c.metadata["budget"]["size"] <= 1 for c in chunks)

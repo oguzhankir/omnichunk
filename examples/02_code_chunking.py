@@ -20,13 +20,13 @@ class Greeter:
         pass
 '''
 
-    ts_src = '''\
+    ts_src = """\
 interface User { id: number; name: string; }
 
 export function greet(u: User): string {
   return `Hello ${u.name}`;
 }
-'''
+"""
 
     chunker = Chunker(
         max_chunk_size=120,

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import threading
 import urllib.error
 import urllib.request
@@ -366,6 +367,21 @@ def test_rpc_denies_symlink_escape(tmp_path: Path, mcp_url: str) -> None:
         assert "error" in json.dumps(response)
 
 
+@pytest.mark.skipif(not hasattr(os, "mkfifo"), reason="named pipes require Unix")
+def test_rpc_rejects_named_pipe_before_opening(tmp_path: Path, monkeypatch) -> None:
+    from omnichunk.mcp.server import _handle_tool
+
+    pipe = tmp_path / "input.txt"
+    os.mkfifo(pipe)
+
+    def unexpected_read(*args, **kwargs):
+        pytest.fail("RPC must reject a named pipe before attempting a blocking read")
+
+    monkeypatch.setattr("omnichunk.mcp.server.Chunker.chunk_file", unexpected_read)
+    with pytest.raises(ValueError, match="regular file"):
+        _handle_tool("chunk_file", {"path": str(pipe)}, allowed_root=tmp_path)
+
+
 @pytest.mark.parametrize(
     "headers", [{"Host": "evil.example"}, {"Origin": "https://evil.example"}, {"Origin": "null"}]
 )
@@ -499,7 +515,12 @@ def test_rpc_authentication_and_same_origin(tmp_path: Path) -> None:
 def test_rpc_server_configuration_validation(tmp_path: Path) -> None:
     from omnichunk.mcp.server import create_rpc_server
 
-    for options in ({"max_body_bytes": 0}, {"request_timeout": 0}):
+    for options in (
+        {"max_body_bytes": 0},
+        {"request_timeout": 0},
+        {"request_timeout": float("inf")},
+        {"request_timeout": float("nan")},
+    ):
         with pytest.raises(ValueError, match="positive"):
             create_rpc_server(port=0, **options)
     config = tmp_path / "config.json"
@@ -554,10 +575,23 @@ def test_rpc_unknown_endpoint(mcp_url: str) -> None:
 
 @pytest.mark.parametrize(
     "raw",
-    [b'{"jsonrpc":"2.0","method":"missing","id":NaN}', b"[" * 10000 + b"]" * 10000],
-    ids=["nonfinite", "deep-json"],
+    [
+        b'{"jsonrpc":"2.0","method":"missing","id":NaN}',
+        b'{"jsonrpc":"2.0","method":"missing","id":1e309}',
+        b'{"jsonrpc":"2.0","method":"missing","params":{"threshold":-1e309}}',
+        b"[" * 10000 + b"]" * 10000,
+    ],
+    ids=["nonfinite", "overflowed-id", "overflowed-param", "deep-json"],
 )
 def test_rpc_nonstandard_or_excessively_nested_json_is_parse_error(
     mcp_url: str, raw: bytes
 ) -> None:
     assert _raw_post(mcp_url, raw)["error"]["code"] == -32700
+
+
+def test_rpc_echoes_unpaired_surrogate_id_without_dropping_connection(mcp_url: str) -> None:
+    response = _raw_post(
+        mcp_url, b'{"jsonrpc":"2.0","method":"build_graph","params":{"chunks":[]},"id":"\\ud800"}'
+    )
+    assert response["id"] == "\ud800"
+    assert response["result"]["chunk_count"] == 0

@@ -1,4 +1,4 @@
-## Cursor Cloud specific instructions
+# Repository instructions
 
 This is a pure Python library with no external service dependencies. All state is in-process or file-based (SQLite via stdlib).
 
@@ -6,17 +6,21 @@ This is a pure Python library with no external service dependencies. All state i
 
 | Task | Command |
 |------|---------|
-| Install dev deps | `pip install -e ".[dev]"` |
+| Install dev deps | `pip install -e ".[dev,docs,langchain,llamaindex]"` |
 | Lint | `ruff check src tests` |
 | Format check | `ruff format --check src tests` |
-| Type check | `mypy src/omnichunk` |
+| Type check (Python 3.12 environment) | `mypy --python-version 3.12 src/omnichunk` |
 | Tests | `pytest -q` |
 | Tests with coverage | `pytest -q --cov=omnichunk --cov-branch --cov-report=term-missing --cov-fail-under=90` |
+| Documentation | `mkdocs build --strict` |
+| Quality gate | `python scripts/check_benchmarks.py --run-quality` |
 | CLI demo | `omnichunk <file_or_dir> --max-size 256 --size-unit chars --stats` |
 
 ### Gotchas
 
 - `pytest` runs with `-m 'not slow'` by default (configured in `pyproject.toml`). Slow benchmarks are skipped unless you pass `-m slow` explicitly.
-- Pre-commit hooks include a `pytest -q` run and an AI rules sync check (`scripts/check_ai_rules_sync.py`). The five rule files (`AI_RULES.md`, `.cursorrules`, `.windsurfrules`, `CLAUDE.md`, `.github/copilot-instructions.md`) must be kept identical.
+- This file is the single source of repository instructions for coding agents. Keep product documentation in the MkDocs site and planning in `ROADMAP.md`.
+- Pre-commit hooks run Ruff, mypy and `pytest -q`.
+- Match mypy's `--python-version` to the installed interpreter when optional dependency stubs use newer syntax; CI checks every supported Python version.
 - The Rust extension (`rust/omnichunk_rust/`) is optional and requires `maturin`. Core tests pass without it.
 - Tree-sitter Kotlin grammar triggers a `DeprecationWarning` on `query()` — this is harmless.

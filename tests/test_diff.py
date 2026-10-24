@@ -293,8 +293,24 @@ def test_content_exceeding_max_chunk_size_by_one_char(filler: str, max_size: int
     fp = "wide.txt"
     prev = chunker.chunk(fp, filler)
     diff = chunker.chunk_diff(fp, one_long, previous_chunks=prev)
-    assert len(chunker.chunk(fp, one_long)) >= 1
-    assert diff.total_added >= 1 and diff.total_removed >= 1
+    fresh = chunker.chunk(fp, one_long)
+
+    assert [chunk.text for chunk in diff.unchanged] == [filler]
+    assert _ids(diff.unchanged) == _ids(prev)
+    assert [chunk.text for chunk in diff.added] == ["X"]
+    assert diff.removed_ids == []
+    assert diff.updated == []
+
+    # Apply deletes before upserts, and refresh location/revision metadata for
+    # unchanged payloads. The resulting index must exactly match a fresh run.
+    indexed = {stable_chunk_id(chunk): chunk for chunk in prev}
+    for chunk_id in diff.removed_ids:
+        indexed.pop(chunk_id)
+    for chunk in [*diff.added, *diff.unchanged]:
+        indexed[stable_chunk_id(chunk)] = chunk
+    rebuilt = sorted(indexed.values(), key=lambda chunk: chunk.index)
+    assert rebuilt == fresh
+    assert "".join(chunk.text for chunk in rebuilt) == one_long
 
 
 @pytest.mark.parametrize(

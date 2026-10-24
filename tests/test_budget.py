@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+from dataclasses import replace
+
 import pytest
 
+from omnichunk import Chunker
 from omnichunk.budget import BudgetResult, TokenBudgetOptimizer
 from omnichunk.budget import optimizer as optimizer_mod
 from omnichunk.dedup import dedup_chunks
@@ -272,7 +275,7 @@ def test_preserve_order_false_skips_sort() -> None:
     high_second = _make_chunk("high", byte_start=100, index=1, total=2, char_count=3)
     chunks = [low_first, high_second]
     scores = [1.0, 10.0]
-    opt = TokenBudgetOptimizer(budget=3, strategy="greedy", preserve_order=False, size_unit="chars")
+    opt = TokenBudgetOptimizer(budget=4, strategy="greedy", preserve_order=False, size_unit="chars")
     result = opt.select(chunks, scores=scores)
     assert len(result.selected) == 1
     assert result.selected[0] is high_second
@@ -285,6 +288,59 @@ def test_size_unit_tokens_and_nws() -> None:
     nws_chunk = _make_chunk(" x ", byte_start=0, index=0, total=1, nws_count=1)
     opt_n = TokenBudgetOptimizer(budget=1, size_unit="nws")
     assert opt_n.select([nws_chunk], scores=[1.0]).total_tokens == 1
+
+
+@pytest.mark.parametrize("strategy", ["greedy", "dp"])
+@pytest.mark.parametrize("size_unit", ["tokens", "chars", "nws"])
+def test_budget_accounts_for_rendered_context(strategy: str, size_unit: str) -> None:
+    chunk = replace(
+        _make_chunks(["body"])[0],
+        contextualized_text="heading body",
+        metadata={"budget": {"rendered_token_count": 2}},
+    )
+    rendered_size = {"tokens": 2, "chars": 12, "nws": 11}[size_unit]
+    too_small = TokenBudgetOptimizer(
+        budget=rendered_size - 1, strategy=strategy, size_unit=size_unit
+    ).select([chunk])
+    assert too_small.selected == []
+    assert too_small.dropped == [chunk]
+    exact = TokenBudgetOptimizer(
+        budget=rendered_size, strategy=strategy, size_unit=size_unit
+    ).select([chunk])
+    assert exact.selected == [chunk]
+    assert exact.total_tokens == rendered_size
+
+
+def test_contextualized_token_budget_requires_rendered_count() -> None:
+    chunk = replace(_make_chunks(["body"])[0], contextualized_text="heading body")
+    with pytest.raises(ValueError, match="rendered_token_count"):
+        TokenBudgetOptimizer(budget=100).select([chunk])
+
+
+@pytest.mark.parametrize("strategy", ["greedy", "dp"])
+def test_token_budget_uses_real_chunker_rendered_metadata(strategy: str) -> None:
+    chunks = Chunker(
+        max_chunk_size=256,
+        context_mode="full",
+        tokenizer=lambda text: len(text.split()),
+    ).chunk("guide.md", "# Deployment\n\nKeep the current index for rollback.\n")
+    contextualized = next(chunk for chunk in chunks if chunk.contextualized_text != chunk.text)
+    rendered_count = len(contextualized.contextualized_text.split())
+    assert rendered_count > contextualized.token_count
+    result = TokenBudgetOptimizer(budget=rendered_count, strategy=strategy).select([contextualized])
+    assert result.selected == [contextualized]
+    assert result.total_tokens == rendered_count
+    assert (
+        TokenBudgetOptimizer(budget=rendered_count - 1, strategy=strategy)
+        .select([contextualized])
+        .selected
+        == []
+    )
+
+
+def test_invalid_size_unit_is_rejected() -> None:
+    with pytest.raises(ValueError, match="size_unit"):
+        TokenBudgetOptimizer(budget=100, size_unit="bytes")
 
 
 def test_dp_falls_back_to_greedy_when_state_space_too_large(

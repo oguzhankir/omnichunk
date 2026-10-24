@@ -39,6 +39,25 @@ def test_prose_entity_ranges_are_utf8_bytes(suffix: str) -> None:
     _assert_entity_coordinates(chunks, text)
 
 
+@pytest.mark.parametrize("text", ['value = "' + "😀" * 30 + '"', "# " + "中" * 30])
+@pytest.mark.parametrize("budget", [1, 2, 5, 10, 20])
+@pytest.mark.parametrize("unit", ["chars", "nws", "tokens"])
+def test_code_hard_splits_preserve_unicode_at_small_budgets(text, budget, unit):
+    chunks = Chunker(
+        max_chunk_size=budget,
+        min_chunk_size=0,
+        size_unit=unit,
+        tokenizer=len if unit == "tokens" else None,
+        context_mode="none",
+        coverage_policy="lossless",
+    ).chunk("unicode.py", text)
+
+    assert "".join(c.text for c in chunks) == text
+    raw = text.encode()
+    assert all(raw[c.byte_range.start : c.byte_range.end].decode() == c.text for c in chunks)
+    assert all(c.metadata["budget"]["size"] <= budget for c in chunks)
+
+
 def test_notebook_rebases_nested_entities_and_scopes() -> None:
     notebook = json.dumps(
         {

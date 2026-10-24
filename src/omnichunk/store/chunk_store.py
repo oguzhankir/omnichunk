@@ -163,7 +163,7 @@ class ChunkStore:
                 "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'"
             ).fetchall()
             version = self._conn.execute("PRAGMA user_version").fetchone()[0]
-            if tables and version != STORE_SCHEMA_VERSION:
+            if version not in (0, STORE_SCHEMA_VERSION) or (tables and version == 0):
                 raise LegacyStoreError(
                     f"Unsupported store schema {version}; use migrate_legacy_store(old, new) "
                     "with a separate destination or rebuild a new index. "

@@ -4,12 +4,15 @@ import csv
 import hashlib
 import importlib
 import json
+import math
 from collections.abc import Sequence
 from dataclasses import fields, is_dataclass
 from enum import Enum
 from io import StringIO
+from numbers import Real
 from pathlib import Path
 from typing import Any, cast
+from uuid import NAMESPACE_URL, uuid5
 
 from omnichunk.types import (
     ByteRange,
@@ -210,6 +213,7 @@ def chunks_to_langchain_docs(
         content = chunk.contextualized_text if use_contextualized_text else chunk.text
         docs.append(
             document_cls(
+                id=stable_chunk_id(chunk),
                 page_content=content,
                 metadata=_chunk_metadata(chunk),
             )
@@ -230,10 +234,7 @@ def chunks_to_pinecone_vectors(
     Each dict has ``id``, ``values``, ``metadata``. If ``namespace`` is non-empty, a
     top-level ``namespace`` key is set on each dict.
     """
-    if len(embeddings) != len(chunks):
-        raise ValueError(
-            f"embeddings length ({len(embeddings)}) must match chunks length ({len(chunks)})"
-        )
+    embeddings = _validated_vectors(chunks, embeddings)
 
     out: list[dict[str, Any]] = []
     for chunk, values in zip(chunks, embeddings):
@@ -255,15 +256,19 @@ def chunks_to_weaviate_objects(
     class_name: str = "OmnichunkDocument",
     use_contextualized_text: bool = True,
 ) -> list[dict[str, Any]]:
-    """Convert chunks to Weaviate batch-import-ready dicts (no Weaviate client required)."""
-    if len(embeddings) != len(chunks):
-        raise ValueError(
-            f"embeddings length ({len(embeddings)}) must match chunks length ({len(chunks)})"
-        )
+    """Convert chunks to Weaviate REST batch objects with deterministic UUIDs.
+
+    Retries address the same object. Convert removal IDs with
+    :func:`weaviate_object_id` before deleting from Weaviate. For the Python v4
+    client, pass ``id`` as ``uuid`` and ``properties``/``vector`` explicitly.
+    Existing objects imported without IDs require a one-time rebuild.
+    """
+    embeddings = _validated_vectors(chunks, embeddings)
 
     return [
         {
             "class": class_name,
+            "id": weaviate_object_id(stable_chunk_id(chunk)),
             "vector": list(values),
             "properties": _vectordb_metadata(
                 chunk,
@@ -281,10 +286,7 @@ def chunks_to_supabase_rows(
     use_contextualized_text: bool = True,
 ) -> list[dict[str, Any]]:
     """Convert chunks to Supabase / pgvector INSERT-ready dicts (no client required)."""
-    if len(embeddings) != len(chunks):
-        raise ValueError(
-            f"embeddings length ({len(embeddings)}) must match chunks length ({len(chunks)})"
-        )
+    embeddings = _validated_vectors(chunks, embeddings)
 
     rows: list[dict[str, Any]] = []
     for chunk, values in zip(chunks, embeddings):
@@ -311,9 +313,48 @@ def chunks_to_llamaindex_docs(
 
     for chunk in chunks:
         content = chunk.contextualized_text if use_contextualized_text else chunk.text
-        docs.append(document_cls(text=content, metadata=_chunk_metadata(chunk)))
+        docs.append(
+            document_cls(id_=stable_chunk_id(chunk), text=content, metadata=_chunk_metadata(chunk))
+        )
 
     return docs
+
+
+def _validated_vectors(
+    chunks: Sequence[Chunk], embeddings: Sequence[Sequence[float]]
+) -> list[list[float]]:
+    """Validate a complete batch before returning any adapter payload."""
+    if len(embeddings) != len(chunks):
+        raise ValueError(
+            f"embeddings length ({len(embeddings)}) must match chunks length ({len(chunks)})"
+        )
+    dimension: int | None = None
+    validated: list[list[float]] = []
+    for index, vector in enumerate(embeddings):
+        if not len(vector):
+            raise ValueError(f"Embedding {index} must have a positive dimension")
+        if dimension is None:
+            dimension = len(vector)
+        elif len(vector) != dimension:
+            raise ValueError(f"Embedding {index} has dimension {len(vector)}; expected {dimension}")
+        row: list[float] = []
+        for value in vector:
+            if isinstance(value, bool) or not isinstance(value, Real):
+                raise ValueError(f"Embedding {index} must contain finite real numbers")
+            try:
+                number = float(value)
+            except (ValueError, OverflowError) as exc:
+                raise ValueError(f"Embedding {index} must contain finite real numbers") from exc
+            if not math.isfinite(number):
+                raise ValueError(f"Embedding {index} must contain finite real numbers")
+            row.append(number)
+        validated.append(row)
+    return validated
+
+
+def weaviate_object_id(chunk_id: str) -> str:
+    """Map a stable chunk ID to its Weaviate UUID, also for incremental deletions."""
+    return str(uuid5(NAMESPACE_URL, f"omnichunk:{chunk_id}"))
 
 
 def stable_chunk_id(chunk: Chunk, filepath: str | None = None) -> str:

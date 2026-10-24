@@ -7,7 +7,7 @@ Thanks for contributing.
 1. Create a virtualenv and install dev dependencies:
 
 ```bash
-pip install -e ".[dev]"
+pip install -e ".[dev,docs,langchain,llamaindex]"
 ```
 
 2. Run tests:
@@ -28,8 +28,12 @@ plus a follow-up `pytest -m no_xdist` in series.
 ```bash
 ruff check src tests
 ruff format --check src tests
-mypy src/omnichunk
+mypy --python-version 3.12 src/omnichunk
 ```
+
+Use your installed interpreter's version as the mypy target. Optional dependency
+stubs can require newer syntax than the package's minimum Python version; CI runs
+the supported Python 3.10–3.13 matrix in matching environments.
 
 ## Development rules
 
@@ -62,7 +66,7 @@ reconstruct the original binary container or notebook JSON.
 - [ ] Verified lint, formatting, and type checks
 - [ ] Updated docs/README if behavior changed
 - [ ] Preserved chunk invariants
-- [ ] Kept rule files synchronized (`AI_RULES.md`, `.cursorrules`, `.windsurfrules`, `CLAUDE.md`, `.github/copilot-instructions.md`)
+- [ ] Verified `mkdocs build --strict` if documentation or public APIs changed
 
 ## Commit style
 
@@ -88,7 +92,7 @@ release quality and roadmap priorities.
 - Set the version only in `src/omnichunk/_version.py`; Hatch derives package
   metadata from it. The release tag must match that version.
 - Run the full line-and-branch coverage gate (90%, no core exclusions), strict
-  MkDocs build, rule sync and benchmark checks. Validate the built wheel/sdist
+  MkDocs build and benchmark checks. Validate the built wheel/sdist
   with `python scripts/check_release.py --help` for the supported arguments.
 - Build and validate separate indexes before switching consumers across the
   [2.x migration](docs/migrations/v2.md); retain the old index for rollback.

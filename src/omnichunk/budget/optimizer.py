@@ -23,7 +23,12 @@ class BudgetResult:
 
 
 class TokenBudgetOptimizer:
-    """Select the best subset of chunks that fits within a token budget."""
+    """Select chunks whose rendered payloads fit within the selected size budget.
+
+    Reserve space separately for prompts, separators and citation labels. Token
+    counts use the tokenizer recorded when chunking; approximate counts remain
+    estimates. ``BudgetResult.total_tokens`` uses the selected ``size_unit``.
+    """
 
     def __init__(
         self,
@@ -39,6 +44,8 @@ class TokenBudgetOptimizer:
             raise ValueError("budget must be > 0")
         if strategy not in ("greedy", "dp"):
             raise ValueError("strategy must be 'greedy' or 'dp'")
+        if size_unit not in ("tokens", "chars", "nws"):
+            raise ValueError("size_unit must be 'tokens', 'chars' or 'nws'")
         if not (0 < overlap_threshold <= 1):
             raise ValueError("overlap_threshold must be in (0, 1]")
         self.budget = budget
@@ -98,10 +105,23 @@ class TokenBudgetOptimizer:
 
 def _chunk_size(chunk: Chunk, size_unit: str) -> int:
     if size_unit == "tokens":
+        budget_metadata = chunk.metadata.get("budget", {})
+        rendered_count = (
+            budget_metadata.get("rendered_token_count")
+            if isinstance(budget_metadata, dict)
+            else None
+        )
+        if rendered_count is not None:
+            return max(1, int(rendered_count))
+        if chunk.contextualized_text != chunk.text:
+            raise ValueError(
+                "Token budgeting contextualized chunks requires rendered_token_count metadata; "
+                "create chunks with Chunker or use size_unit='chars' or 'nws'"
+            )
         return max(1, int(chunk.token_count))
     if size_unit == "nws":
-        return max(1, int(chunk.nws_count))
-    return max(1, int(chunk.char_count))
+        return max(1, sum(not char.isspace() for char in chunk.contextualized_text))
+    return max(1, len(chunk.contextualized_text))
 
 
 def _greedy_select(

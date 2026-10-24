@@ -15,8 +15,7 @@ from typing import Any
 
 from omnichunk.config import configuration_fingerprint
 from omnichunk.context.format import format_contextualized_text
-from omnichunk.protocols import SizeCounter
-from omnichunk.sizing.counter import make_size_counter, make_token_counter
+from omnichunk.sizing.counter import find_fitting_prefix, make_size_counter, make_token_counter
 from omnichunk.types import (
     ByteRange,
     Chunk,
@@ -71,24 +70,6 @@ def _entities(entities: list[EntityInfo], start: int, end: int) -> list[EntityIn
         for e in entities
         if e.byte_range is None or (e.byte_range.start < end and e.byte_range.end > start)
     ]
-
-
-def _fit_end(text: str, start: int, end: int, limit: int, count: SizeCounter) -> int:
-    """Find a verified fitting Unicode boundary; no tokenizer monotonicity promise."""
-    lo, hi, best = start + 1, end, start
-    while lo <= hi:
-        mid = (lo + hi) // 2
-        if count(text[start:mid]) <= limit:
-            best, lo = mid, mid + 1
-        else:
-            hi = mid - 1
-    if best == start:
-        # Token counts can fall when another character completes a token.
-        # A failed binary search is not proof that no prefix fits.
-        for candidate in range(start + 1, end + 1):
-            if count(text[start:candidate]) <= limit:
-                return candidate
-    return best
 
 
 def finalize_chunks(
@@ -149,11 +130,11 @@ def finalize_chunks(
                     f"Chunk exceeds {limit} {options.size_unit}; choose split or preserve"
                 )
             if overflow and options.overflow_policy == "split":
-                end = _fit_end(content, start, stop, limit, size)
+                end = find_fitting_prefix(content, start, stop, limit, size)
                 if end <= start or end <= fresh_start:
                     # Avoid emitting a chunk consisting solely of requested overlap.
                     start = max(start, fresh_start)
-                    end = _fit_end(content, start, stop, limit, size)
+                    end = find_fitting_prefix(content, start, stop, limit, size)
                 if end <= start:
                     raise ChunkingError("A single Unicode character cannot fit the selected budget")
                 verified_end = end

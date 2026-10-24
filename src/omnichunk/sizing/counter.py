@@ -7,6 +7,33 @@ from typing import Literal
 from .tokenizers import resolve_tokenizer
 
 
+def find_fitting_prefix(
+    text: str, start: int, end: int, limit: int, count: Callable[[str], int]
+) -> int:
+    """Find a verified fitting Unicode boundary without assuming token monotonicity.
+
+    Return ``start`` if no nonempty prefix fits. Character budgets need no
+    probing; other counters use binary search with an exhaustive recovery when
+    partial tokens prevent any probe from fitting.
+    """
+    if count is len:
+        return min(end, start + limit)
+    lo, hi, best = start + 1, end, start
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if count(text[start:mid]) <= limit:
+            best, lo = mid, mid + 1
+        else:
+            hi = mid - 1
+    if best == start:
+        # Completing a token can reduce its count. Failed binary probes alone
+        # cannot establish that every prefix exceeds the budget.
+        for candidate in range(start + 1, end + 1):
+            if count(text[start:candidate]) <= limit:
+                return candidate
+    return best
+
+
 def make_token_counter(
     tokenizer: str | Callable[[str], int] | object | None,
     *,

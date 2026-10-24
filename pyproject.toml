@@ -63,7 +63,7 @@ all = [
   "python-docx>=1.0",
   "tiktoken>=0.5.0",
   "opentelemetry-api>=1.21.0",
-  "langchain-core>=0.2.0",
+  "langchain-core>=0.2.11",
   "llama-index-core>=0.10.0",
   "py-spy>=0.3.14",
   "line-profiler>=4.1.0",
@@ -110,7 +110,7 @@ tiktoken = ["tiktoken>=0.5.0"]
 transformers = ["transformers>=4.30.0"]
 sentence-transformers = ["sentence-transformers>=2.2.0"]
 scipy = ["scipy>=1.10.0"]
-langchain = ["langchain-core>=0.2.0"]
+langchain = ["langchain-core>=0.2.11"]
 llamaindex = ["llama-index-core>=0.10.0"]
 profiling = [
   "py-spy>=0.3.14",
@@ -127,7 +127,9 @@ docs = [
   "mkdocs>=1.6.0",
   "mkdocs-material>=9.5.0",
   "mkdocstrings[python]>=0.25.0",
-  "pymdown-extensions>=10.0",
+  # Python 3.10's last mkdocstrings release (1.0.6) uses the pre-12.2 highlighter API.
+  "pymdown-extensions>=10.0,<12.2; python_version < '3.11'",
+  "pymdown-extensions>=10.0; python_version >= '3.11'",
 ]
 dev = [
   "numpy>=1.24.0",
@@ -190,7 +192,6 @@ include = [
   "rust",
   "README.md",
   "ROADMAP.md",
-  "ARCHITECTURE.md",
   "CHANGELOG.md",
   "CONTRIBUTING.md",
   "SECURITY.md",

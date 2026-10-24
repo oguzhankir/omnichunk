@@ -9,6 +9,7 @@ from __future__ import annotations
 import hmac
 import ipaddress
 import json
+import math
 import socket
 import warnings
 from collections.abc import Callable, Sequence
@@ -78,6 +79,8 @@ def _handle_tool(method: str, params: dict[str, Any], *, allowed_root: Path | No
         if not params.get("path"):
             raise ValueError("chunk_file requires path")
         path = _safe_path(str(params["path"]), allowed_root)
+        if not path.is_file():
+            raise ValueError("chunk_file requires a regular file")
         chunks = _chunker_from_params(params).chunk_file(
             str(path), encoding=str(params.get("encoding", "utf-8"))
         )
@@ -153,6 +156,13 @@ def _is_loopback(host: str) -> bool:
 
 def _invalid_json_constant(value: str) -> None:
     raise ValueError(f"Non-finite JSON number: {value}")
+
+
+def _finite_json_float(value: str) -> float:
+    number = float(value)
+    if not math.isfinite(number):
+        raise ValueError("JSON number exceeds the finite floating-point range")
+    return number
 
 
 class _RPCHandler(BaseHTTPRequestHandler):
@@ -261,7 +271,11 @@ class _RPCHandler(BaseHTTPRequestHandler):
             self._error(408, -32600, "Request body timed out")
             return
         try:
-            body = json.loads(raw.decode("utf-8"), parse_constant=_invalid_json_constant)
+            body = json.loads(
+                raw.decode("utf-8"),
+                parse_constant=_invalid_json_constant,
+                parse_float=_finite_json_float,
+            )
         except (ValueError, RecursionError):
             self._error(400, -32700, "Invalid JSON body")
             return
@@ -300,7 +314,9 @@ class _RPCHandler(BaseHTTPRequestHandler):
         self._write_json(200, {"jsonrpc": "2.0", "result": result, "id": req_id})
 
     def _write_json(self, status: int, payload: dict[str, Any]) -> None:
-        data = json.dumps(payload, ensure_ascii=False, allow_nan=False).encode("utf-8")
+        # Escape strings so even a request ID containing an unpaired surrogate
+        # can be echoed as JSON without failing UTF-8 encoding.
+        data = json.dumps(payload, ensure_ascii=True, allow_nan=False).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(data)))
@@ -327,8 +343,10 @@ def create_rpc_server(
     """Construct a bounded HTTP server without starting its request loop."""
     if not _is_loopback(host) and not auth_token:
         raise ValueError("Non-loopback RPC requires an authentication token")
-    if max_body_bytes < 1 or request_timeout <= 0:
-        raise ValueError("Body size and request timeout must be positive")
+    if max_body_bytes < 1 or request_timeout <= 0 or not math.isfinite(request_timeout):
+        raise ValueError(
+            "Body size must be positive and request timeout must be finite and positive"
+        )
     root = (allowed_root if allowed_root is not None else Path.cwd()).resolve(strict=True)
     if not root.is_dir():
         raise ValueError("allowed_root must be a directory")

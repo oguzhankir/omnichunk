@@ -22,10 +22,9 @@ jobs:
         run: pip install -e ".[dev,docs,langchain,llamaindex]"
       - name: Verify source, behavior and documentation
         run: |
-          python scripts/check_ai_rules_sync.py
           ruff check src tests
           ruff format --check src tests
-          mypy --strict --python-version 3.12 src/omnichunk
+          mypy --strict --python-version ${{ matrix.python-version }} src/omnichunk
           pytest -n auto -q --cov=omnichunk --cov-branch --cov-report=term-missing --cov-fail-under=90
           python scripts/check_benchmarks.py --run-quality
           mkdocs build --strict

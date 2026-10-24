@@ -200,8 +200,15 @@ def _hard_split(
 
         best = find_statement_boundary(source_bytes, cursor, best, end)
         best = _adjust_to_safe_boundary(source_bytes, cursor, best, end)
+        # The internal NWS index counts bytes, so its fitting boundary may
+        # bisect a multibyte character. Engines must propose valid UTF-8 spans;
+        # finalization enforces the caller's character/token/NWS budget.
+        while best > cursor and best < end and source_bytes[best] & 0xC0 == 0x80:
+            best -= 1
         if best <= cursor:
             best = min(cursor + 1, end)
+            while best < end and source_bytes[best] & 0xC0 == 0x80:
+                best += 1
 
         size = get_nws_count(cumsum, cursor, best)
         yield ASTNodeWindowItem(node=None, start=cursor, end=best, size=size)

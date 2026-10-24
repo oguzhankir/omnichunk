@@ -56,6 +56,7 @@ from .serialization import (
     chunks_to_supabase_rows,
     chunks_to_weaviate_objects,
     stable_chunk_id,
+    weaviate_object_id,
 )
 from .store import ChunkStore, SyncResult
 from .types import (
@@ -146,6 +147,7 @@ __all__ = [
     "load_pdf_bytes",
     "split_sentences",
     "stable_chunk_id",
+    "weaviate_object_id",
     "maybe_span",
     "chunks_to_pinecone_vectors",
     "chunks_to_supabase_rows",
