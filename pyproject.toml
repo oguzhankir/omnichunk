@@ -127,7 +127,9 @@ docs = [
   "mkdocs>=1.6.0",
   "mkdocs-material>=9.5.0",
   "mkdocstrings[python]>=0.25.0",
-  "pymdown-extensions>=10.0",
+  # Python 3.10's last mkdocstrings release (1.0.6) uses the pre-12.2 highlighter API.
+  "pymdown-extensions>=10.0,<12.2; python_version < '3.11'",
+  "pymdown-extensions>=10.0; python_version >= '3.11'",
 ]
 dev = [
   "numpy>=1.24.0",

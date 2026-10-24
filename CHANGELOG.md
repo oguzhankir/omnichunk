@@ -19,6 +19,8 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 - JSON-RPC validates finite numbers/timeouts, safely serializes malformed Unicode
   request IDs and refuses nonregular file inputs.
 - Release type checking now targets each interpreter in the validation matrix.
+- Python 3.10 documentation dependencies retain the highlighter API required by
+  its supported mkdocstrings release; newer Python versions remain unconstrained.
 
 ### Documentation
 - Replaced the historical roadmap with an evidence-based enterprise plan,
