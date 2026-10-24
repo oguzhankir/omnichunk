@@ -4,13 +4,6 @@ TokenBudgetOptimizer: greedy vs DP, preserve_order, dedup, size units, simulated
 
 from __future__ import annotations
 
-import sys
-from pathlib import Path
-
-repo_src = Path(__file__).resolve().parents[1] / "src"
-if repo_src.exists():
-    sys.path.insert(0, str(repo_src))
-
 from omnichunk import Chunker
 from omnichunk.budget import TokenBudgetOptimizer
 from omnichunk.types import ByteRange, Chunk, ChunkContext, LineRange
@@ -40,15 +33,22 @@ def _synthetic_chunks(texts: list[str]) -> list[Chunk]:
 
 
 def main() -> None:
-    chunker = Chunker(max_chunk_size=80, size_unit="chars")
+    # The optimizer uses raw chunk counts. Omit added context so selected text
+    # matches those counts, and reserve prompt/separator space separately.
+    chunker = Chunker(max_chunk_size=80, size_unit="chars", context_mode="none")
     prose = "\n\n".join(f"Section {i}. " + "word " * 30 for i in range(10))
     chunks = chunker.chunk("retrieval.txt", prose)
-    scores = [float(10 - i) for i in range(len(chunks))]
+    scores = [1.0 / (i + 1) for i in range(len(chunks))]
 
     for strategy in ("greedy", "dp"):
         opt = TokenBudgetOptimizer(budget=512, strategy=strategy, size_unit="chars")
         r = opt.select(chunks, scores=scores)
-        print(f"{strategy}: selected={len(r.selected)} total_tokens={r.total_tokens} dropped={len(r.dropped)}")
+        assert r.total_tokens <= 512
+        # The result field is named total_tokens for every size unit.
+        print(
+            f"{strategy}: selected={len(r.selected)} total_chars={r.total_tokens} "
+            f"dropped={len(r.dropped)}"
+        )
 
     r2 = TokenBudgetOptimizer(budget=200, preserve_order=False, size_unit="chars").select(
         chunks, scores=scores
@@ -64,9 +64,10 @@ def main() -> None:
     rd = TokenBudgetOptimizer(
         budget=500,
         deduplicate_overlap=True,
-        overlap_threshold=0.85,
+        overlap_threshold=0.8,
         size_unit="chars",
     ).select(dup_chunks, scores=dup_scores)
+    assert len(rd.selected) == 2
     print(f"deduplicate_overlap: selected={len(rd.selected)}")
 
     nws_chunks = _synthetic_chunks(["a " * 20, "b " * 20])

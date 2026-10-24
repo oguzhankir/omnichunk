@@ -1,31 +1,25 @@
-"""
-Entity–chunk graph: build_chunk_graph, neighbors, entity_chunks, dict round-trip.
+"""Entity–chunk graph: neighbors, entity_chunks, and dictionary round-trip.
+
+This inspects extracted entities and shared-entity links. It is a building block
+for retrieval, not a full GraphRAG pipeline or semantic relationship extractor.
 """
 
 from __future__ import annotations
-
-import sys
-from pathlib import Path
-
-repo_src = Path(__file__).resolve().parents[1] / "src"
-if repo_src.exists():
-    sys.path.insert(0, str(repo_src))
 
 from omnichunk import Chunker, build_chunk_graph
 from omnichunk.graph import ChunkGraph
 
 
 def main() -> None:
-    code = (
-        "def alpha():\n    return 1\n\n"
-        "def beta():\n    alpha()\n\n"
-        "def gamma():\n    alpha()\n"
-    )
+    code = "def alpha():\n    return 1\n\ndef beta():\n    alpha()\n\ndef gamma():\n    alpha()\n"
     chunker = Chunker(max_chunk_size=64, size_unit="chars")
     chunks = chunker.chunk("repo.py", code)
     graph = build_chunk_graph(chunks, min_entity_occurrences=1)
 
-    print(f"entities (nodes): {len(graph.nodes)} edges: {len(graph.edges)} chunk_count={graph.chunk_count}")
+    print(
+        f"entities (nodes): {len(graph.nodes)} edges: {len(graph.edges)} "
+        f"chunk_count={graph.chunk_count}"
+    )
 
     if "alpha" in graph.nodes:
         print(f"entity_chunks('alpha'): {graph.entity_chunks('alpha')}")

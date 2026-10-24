@@ -1,5 +1,8 @@
 """
 Streaming and async: stream(), achunk(), astream(), abatch() with asyncio.run().
+
+These iterators retain source text and parser state; queue backpressure limits
+queued output, not total document memory.
 """
 
 from __future__ import annotations
@@ -28,6 +31,7 @@ def main() -> None:
         n_ast = 0
         async for c in chunker.astream("a.py", src):
             n_ast += 1
+            assert raw[c.byte_range.start : c.byte_range.end].decode("utf-8") == c.text
         print(f"astream yielded: {n_ast}")
 
         batch = await chunker.abatch(
@@ -39,6 +43,8 @@ def main() -> None:
         )
         print(f"abatch results: {len(batch)}")
         for br in batch:
+            if br.error is not None:
+                raise RuntimeError(f"Chunking failed for {br.filepath}: {br.error}")
             print(f"  {br.filepath}: {len(br.chunks)} chunks err={br.error!r}")
 
     asyncio.run(run_async())

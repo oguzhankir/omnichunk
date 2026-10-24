@@ -30,7 +30,10 @@ port = 9000
         ("HTML", "page.html", html_src),
     ]:
         chunks = chunker.chunk(fp, src)
-        print(f"{label}: language={chunks[0].context.language if chunks else '?'} chunks={len(chunks)}")
+        print(
+            f"{label}: language={chunks[0].context.language if chunks else '?'} "
+            f"chunks={len(chunks)}"
+        )
         for c in chunks:
             print(f"  breadcrumb: {' > '.join(c.context.breadcrumb) or '(root)'}")
 

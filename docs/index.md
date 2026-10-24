@@ -1,42 +1,78 @@
 # Omnichunk
 
-**Omnichunk** splits source files and documents into structure-aware chunks for
-RAG, embeddings, and LLM context windows.
+Build retrieval chunks with verifiable source locations, explicit size limits and
+enough structure to preserve the meaning of code and documents. Omnichunk is a
+Python library for the chunking stage of a RAG pipeline. Your application chooses
+the embedding model, retrieval backend and answer generator.
 
-## Features
+## First chunks
 
-- Code, prose, and markup routing with tree-sitter where available
-- Chunk text with byte/line ranges, entities, scopes, imports and heading context
-- Notebook, LaTeX and RST loaders; PDF/DOCX text extraction with optional extras
-- Semantic boundaries, embedding caching, topic shifts and MMR reranking
-- Hierarchical chunks, chunk diffs, deduplication, entity graphs and token budgets
-- Vector export helpers (Pinecone / Weaviate / Supabase shapes) without vendor SDKs
-- `ChunkStore` for SQLite-backed incremental indexing
-- `omnichunk serve --rpc` for constrained custom HTTP JSON-RPC tools
+```bash
+pip install omnichunk
+```
 
-Offsets refer to the declared canonical text, including extracted text for
-document loaders. They do not reconstruct original binary documents or notebook
-JSON. Public chunking paths share measured payload limits, explicit lossless or
-retrieval coverage, versioned metadata and configuration-aware identity. Source
-and AST state remain in memory even when chunk output is streamed. See the
-[contract reference](reference/contracts.md) and [API policy](api-stability.md).
+The examples on this site describe the repository's current API. For unreleased
+changes, install a checkout with `pip install -e .`; use the
+[migration guide](migrations/v2.md) when upgrading an existing index.
 
-## Development direction
+```python
+from omnichunk import Chunker
 
-The [2.0–4.0 roadmap](https://github.com/oguzhankir/omnichunk/blob/main/ROADMAP.md)
-records the original audit, implemented 2.0 foundations and 2.1 code-quality
-changes, subsequent compatible features, and longer-term research. The combined
-changes target the next **2.1.0** release; publication and the maintainer's version
-bump are separate. See the [migration guide](migrations/v2.md).
+source = "# Retention policy\n\nCustomer backups expire after 30 days.\n"
+chunker = Chunker(max_chunk_size=256, size_unit="chars")
+chunks = chunker.chunk("policies/retention.md", source)
 
-## Quick links
+for chunk in chunks:
+    # Embed this payload; its rendered context also fits the configured limit.
+    assert len(chunk.contextualized_text) <= 256
+    print(chunk.contextualized_text)
 
-- [Installation](install.md)
-- [API stability policy](api-stability.md)
-- [Upgrade notes](migrations/index.md)
-- [Performance methodology](performance/sla.md)
+    # Cite the original text, with zero-based, half-open UTF-8 byte coordinates.
+    start, end = chunk.byte_range.start, chunk.byte_range.end
+    assert source.encode("utf-8")[start:end].decode("utf-8") == chunk.text
+```
 
-## Project
+Character sizing is the default. For a model token limit, install a compatible
+tokenizer and configure it explicitly:
 
-- [Source on GitHub](https://github.com/oguzhankir/omnichunk)
-- [Changelog](https://github.com/oguzhankir/omnichunk/blob/main/CHANGELOG.md)
+```bash
+pip install "omnichunk[tiktoken]"
+```
+
+```python
+chunker = Chunker(max_chunk_size=512, size_unit="tokens", tokenizer="cl100k_base")
+```
+
+Choose the tokenizer used by your embedding model. Reserve additional space for
+prompt instructions, citation labels and separators when assembling LLM context.
+See the [source and budget contracts](reference/contracts.md) for overlap,
+lossless reconstruction, overflow and token accuracy.
+
+## Choose a workflow
+
+| You need | Start with |
+| --- | --- |
+| A local retrieval pipeline with updates, deletions and citations | [Index, retrieve and synchronize](indexing.md) |
+| AST boundaries and code entities | Install `omnichunk[code]`; inspect `language_capabilities()` for actual parser support. |
+| PDF, DOCX or notebooks | [Install format extras](install.md), use `chunk_file()`, and retain canonical extracted text for citations. |
+| Semantic boundaries | Supply an embedding callback; see the [runnable examples](https://github.com/oguzhankir/omnichunk/tree/main/examples). |
+| Parent context, diffs, framework conversion or vector export | [Python API](reference/chunker.md) and [examples](https://github.com/oguzhankir/omnichunk/tree/main/examples) |
+| Reproducible evaluation | [Performance methodology](performance/sla.md) |
+| A safe upgrade of a persisted index | [Migration guide](migrations/v2.md) |
+
+## What to evaluate before adoption
+
+The base install has no mandatory third-party dependencies. Optional parsers,
+tokenizers and loaders affect capabilities and output; pin them with the chunking
+configuration for reproducible index generations. Streaming yields chunks but
+still retains source and parser state. SQLite synchronization is atomic locally;
+delivery to an external vector database is the application's responsibility.
+
+Retrieval quality depends on your corpus, queries, embedding model and retriever.
+Omnichunk does not currently establish a cross-corpus quality lead or universal
+throughput SLA. The [roadmap](https://github.com/oguzhankir/omnichunk/blob/main/ROADMAP.md)
+defines the evidence and production capabilities needed to earn that position.
+
+[API stability](api-stability.md) ·
+[Changelog](https://github.com/oguzhankir/omnichunk/blob/main/CHANGELOG.md) ·
+[Source and issues](https://github.com/oguzhankir/omnichunk)

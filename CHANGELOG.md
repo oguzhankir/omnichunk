@@ -5,7 +5,36 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 
 ## [Unreleased]
 
-No unreleased changes are staged yet for a new release.
+### Fixed
+- Batch inputs now apply per-document options, matching asynchronous batch behavior.
+- Unbroken prose uses measured hard splits instead of producing hundreds of tiny
+  chunks; code hard splits preserve UTF-8 character boundaries.
+- Retrieval budget selection counts rendered context, rejects unknown size units
+  and refuses token budgeting for contextualized chunks without rendered counts.
+- Vector exports reject empty, inconsistent or non-finite embeddings. Streaming
+  exports detect dimension changes between batches.
+- LangChain/LlamaIndex exports carry native document IDs. Weaviate exports use
+  deterministic UUIDs; `weaviate_object_id()` maps chunk IDs for deletions.
+- Stores reject unknown SQLite schemas without overwriting their version marker.
+- JSON-RPC validates finite numbers/timeouts, safely serializes malformed Unicode
+  request IDs and refuses nonregular file inputs.
+- Release type checking now targets each interpreter in the validation matrix.
+
+### Documentation
+- Replaced the historical roadmap with an evidence-based enterprise plan,
+  competitor gaps, ordered milestones and measurable release criteria.
+- Kept the generated MkDocs API site, simplified navigation and improved runnable
+  examples for retrieval and the incremental indexing lifecycle.
+- Removed duplicate agent rule files and their synchronization tooling;
+  `AGENTS.md` is the sole agent instruction file. Removed `ARCHITECTURE.md`.
+
+### Compatibility
+- Exported native IDs change record identity for integrations that previously
+  generated random IDs. Rebuild or reconcile those external indexes before reuse.
+- Corrected splitting can change chunk boundaries and IDs; reindex affected
+  documents and apply removals. Exact chunk layouts are not a compatibility promise.
+- Invalid embeddings and incomplete rendered token metadata now fail explicitly.
+- No package version bump or release publication is included in these changes.
 
 ## [2.1.4] - 2026-09-08
 

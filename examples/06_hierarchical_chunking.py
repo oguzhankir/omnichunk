@@ -4,18 +4,11 @@ Hierarchical ChunkTree: leaves for indexing, roots for LLM context, levels, pare
 
 from __future__ import annotations
 
-import sys
-from pathlib import Path
-
-repo_src = Path(__file__).resolve().parents[1] / "src"
-if repo_src.exists():
-    sys.path.insert(0, str(repo_src))
-
 from omnichunk import Chunker
 
 
 def main() -> None:
-    src = '''\
+    src = """\
 def outer():
     def inner():
         return 42
@@ -23,7 +16,7 @@ def outer():
 
 class Box:
     value = 1
-'''
+"""
     chunker = Chunker(size_unit="chars", min_chunk_size=8)
     tree = chunker.hierarchical_chunk("mod.py", src, levels=[64, 256, 1024])
 

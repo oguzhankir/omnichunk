@@ -36,7 +36,9 @@ def greet(name: str) -> str:
         print("line_range:", c0.line_range)
         print("breadcrumb:", c0.context.breadcrumb)
         print("contextualized_text (first 120 chars):", repr(c0.contextualized_text[:120]))
-        print("token_count:", c0.token_count, "char_count:", c0.char_count, "nws_count:", c0.nws_count)
+        print(
+            "token_count:", c0.token_count, "char_count:", c0.char_count, "nws_count:", c0.nws_count
+        )
 
     # chunk_file() via tempfile (no repo paths)
     with tempfile.TemporaryDirectory() as tmp:
@@ -53,6 +55,8 @@ def greet(name: str) -> str:
     results = chunker.batch(batch_in, concurrency=2)
     print(f"batch files: {len(results)}")
     for br in results:
+        if br.error is not None:
+            raise RuntimeError(f"Chunking failed for {br.filepath}: {br.error}")
         print(f"  {br.filepath}: {len(br.chunks)} chunks")
 
 

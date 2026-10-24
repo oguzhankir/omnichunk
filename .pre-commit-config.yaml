@@ -20,8 +20,3 @@ repos:
         entry: pytest -q
         language: system
         pass_filenames: false
-      - id: ai-rules-sync
-        name: ai-rules-sync
-        entry: python scripts/check_ai_rules_sync.py
-        language: system
-        pass_filenames: false

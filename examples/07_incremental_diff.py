@@ -4,13 +4,6 @@ Incremental chunk_diff across three synthetic versions; stable_chunk_id stabilit
 
 from __future__ import annotations
 
-import sys
-from pathlib import Path
-
-repo_src = Path(__file__).resolve().parents[1] / "src"
-if repo_src.exists():
-    sys.path.insert(0, str(repo_src))
-
 from omnichunk import Chunker, chunk_diff, stable_chunk_id
 
 
@@ -35,7 +28,7 @@ def main() -> None:
     print("workflow: delete diff.removed_ids, upsert diff.added, refresh unchanged metadata")
 
     ids_a = [stable_chunk_id(x) for x in c1]
-    ids_b = [stable_chunk_id(x) for x in c1]
+    ids_b = [stable_chunk_id(x) for x in chunker.chunk("doc.txt", v1)]
     assert ids_a == ids_b
     print("stable_chunk_id deterministic for same chunks:", ids_a[0][:16] + "…")
 
@@ -46,7 +39,10 @@ def main() -> None:
     prev = chunker2.chunk("append.txt", base)
     d_app = chunk_diff("append.txt", new, previous_chunks=prev, chunker=chunker2)
     print("append-only (illustrative):")
-    print(f"  added={d_app.total_added} removed={d_app.total_removed} unchanged={d_app.total_unchanged}")
+    print(
+        f"  added={d_app.total_added} removed={d_app.total_removed} "
+        f"unchanged={d_app.total_unchanged}"
+    )
 
 
 if __name__ == "__main__":
