@@ -39,8 +39,8 @@ lossless/retrieval policies, versioned serialization, hierarchy, scoped SQLite
 storage, diffs, semantic utilities, async output and exports. MkDocs builds a real
 API/user documentation site and should remain.
 
-The immediate audit also found defects in important existing flows. This change
-addresses them before adding another family of algorithms:
+The foundation audit found defects in important existing flows.
+[PR #27](https://github.com/oguzhankir/omnichunk/pull/27) addressed them:
 
 | Finding | Required behavior | Implementation area |
 | --- | --- | --- |
@@ -106,7 +106,8 @@ linked tests, reports and migration evidence.
 
 ### M0 — Repair and simplify the current product
 
-**Status:** implementation in this change; merge/release gates still apply.
+**Status:** implemented and merged in [PR #27](https://github.com/oguzhankir/omnichunk/pull/27);
+publication remains subject to the release gates.
 **Dependency:** none.
 
 - Fix the batch, splitting, budgeting, export, store and RPC defects above with
@@ -124,7 +125,15 @@ the foundation; enterprise readiness still requires M1–M4.
 
 ### M1 — Prove retrieval value and make tuning reproducible
 
-**Status:** next. **Dependency:** M0. **Owner role:** evaluation/core maintainer.
+**Status:** in progress. **Dependency:** M0. **Owner role:** evaluation/core maintainer.
+
+The first delivery adds a versioned, original synthetic corpus with 300
+evidence-labeled queries, document-disjoint development/test splits, ranking and
+source-evidence metrics, equivalent-budget adapters and an offline tuning/report
+runner. See [benchmark commands](benchmarks/README.md#retrieval-evaluation-and-tuning).
+Its fixed lexical retriever and authored labels provide a reproducible baseline;
+independently validated corpora, frozen dense-model comparisons and production
+design-partner evidence remain open before this milestone can be completed.
 
 - Publish a licensed, versioned corpus with code, Markdown/manuals, tables and
   mixed documents. Start with **300 evidence-labeled queries** across the user

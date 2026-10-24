@@ -136,6 +136,13 @@ For reconstruction evaluation, `--source` must name the same canonical source
 that produced the chunks; combining unrelated files with one source is invalid.
 Current offline coherence/coverage metrics are heuristics, not retrieval scores.
 
+For source-labeled retrieval evaluation, use the
+[retrieval benchmark](benchmarks/README.md#retrieval-evaluation-and-tuning). It
+compares chunking settings under shared budgets and reports ranking/evidence
+metrics on a versioned, multilingual synthetic corpus. Tune on the development
+split before evaluating held-out documents; the initial offline lexical baseline
+does not establish production retrieval quality.
+
 ## Source ranges and context
 
 Each `Chunk` contains `text`, `contextualized_text`, `byte_range`, `line_range`,

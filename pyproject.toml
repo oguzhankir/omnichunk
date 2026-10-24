@@ -202,7 +202,7 @@ include = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]
+pythonpath = ["src", "."]
 addopts = "-m 'not slow'"
 markers = [
   "slow: long-running tests excluded from default local runs",
@@ -228,6 +228,8 @@ ignore_missing_imports = true
 line-length = 100
 target-version = "py310"
 extend-exclude = [
+    # Frozen benchmark source data; formatting would invalidate evidence offsets.
+    "benchmarks/retrieval/corpus_v1",
     # Intentionally repetitive stress fixture; not valid as a single linted module.
     "tests/fixtures/mega_python_50x.py",
     # Notebook fixtures are source data, not formatter inputs.

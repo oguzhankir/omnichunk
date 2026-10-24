@@ -5,6 +5,16 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 
 ## [Unreleased]
 
+### Added
+- Dependency-free public retrieval ranking metrics (Recall@k, MRR@k and nDCG@k)
+  and canonical source-byte evidence precision, recall and IoU.
+- A versioned MIT-licensed synthetic retrieval corpus: 30 documents and 300
+  exact-span questions across English, Turkish and Japanese, with document-level
+  development/test separation and integrity validation.
+- A reproducible retrieval comparison runner with seven optional/built-in
+  chunkers, shared budgets, fixed lexical retrieval, per-query/slice diagnostics
+  and source/runtime fingerprints. CI preserves the full development report.
+
 ### Fixed
 - Batch inputs now apply per-document options, matching asynchronous batch behavior.
 - Unbroken prose uses measured hard splits instead of producing hundreds of tiny

@@ -1,8 +1,76 @@
 # Benchmarks
 
-These scripts measure declared workloads and configurations. They do not establish
-library leadership or retrieval quality. Record the commit, dependency versions,
-corpus hash/license, platform and optional acceleration with results.
+These scripts measure declared workloads and configurations. Record the commit,
+dependency versions, corpus hash/license, platform and optional acceleration with
+results. Structural checks and throughput do not establish retrieval quality.
+
+## Retrieval evaluation and tuning
+
+Run the offline baseline from a checkout:
+
+```bash
+pip install -e .
+python benchmarks/run_retrieval.py --split dev --tools omnichunk,fixed \
+  --chunk-sizes 128 256 --unit chars --retrieval-budget 1024 --top-k 5 \
+  --repeats 3 --output reports/retrieval-dev.json
+```
+
+`benchmarks/retrieval/corpus_v1` contains 30 original synthetic documents and
+300 evidence-labeled queries across English, Turkish and Japanese, covering code,
+Markdown and tables. Its MIT license, provenance, document hashes and exact UTF-8
+evidence spans are recorded with the corpus. Development and test documents are
+disjoint. Tune on `--split dev`, freeze the configuration, then run `--split test`
+once for the held-out report. Repeatedly choosing settings on test results turns
+that split into another development set.
+
+The retriever is a fixed offline character-ngram TF-IDF lexical baseline. Its IDF
+is fitted on source documents, keeping it independent of candidate chunk counts.
+It performs no embedding-provider calls or model downloads. The authored questions
+and answers have not had independent human review; this corpus exercises the
+evaluation machinery and does not represent production demand or establish
+semantic retrieval quality.
+
+Install optional comparator packages explicitly and select them with `--tools`:
+
+```bash
+pip install -r benchmarks/retrieval/requirements.txt  # tested on Python 3.12
+python benchmarks/run_retrieval.py --split dev \
+  --tools omnichunk,fixed,semchunk,langchain,semantic-text-splitter,chonkie,llamaindex \
+  --chunk-sizes 128 256 --output reports/retrieval-comparison.json
+```
+
+Every candidate uses the same counter, size capacity, zero overlap and no derived
+context. Missing dependencies or unsupported APIs are reported as `unavailable`;
+execution failures and invalid output remain visible. An incomplete candidate
+cannot contribute a successful aggregate. Actual source slices and emitted
+payload sizes are checked before retrieval. Token mode requires an explicit
+tokenizer, for example `--unit tokens --tokenizer cl100k_base` after installing
+`omnichunk[tiktoken]`; tokenizer assets may need to be cached before an offline run.
+
+Reports include Recall@k, MRR@k and nDCG@k, source-evidence precision/recall/IoU,
+fixed-budget evidence retrieval, language/category slices and per-query rankings.
+The fixed-budget selection retains a rank prefix, measures the complete joined
+context with separators, and stops at the first passage that does not fit.
+Chunk-level relevance depends on each candidate's boundaries, so compare it
+alongside source-evidence scores rather than treating it as a common set of
+retrievable items. Span metrics union overlapping UTF-8 byte intervals per source;
+duplicate retrieval does not create additional evidence.
+
+The JSON preserves configuration and corpus/source/dependency fingerprints,
+index size, actual payload sizes, repeated timing samples and memory diagnostics.
+Python allocation measurements exclude native allocator memory; process peak RSS
+is cumulative for the process, not an isolated per-candidate measurement. Compare
+repeated runs on the same runner and retain the raw reports. The tool does not
+select a universal winning library. See the
+[evaluation methodology](../docs/performance/sla.md#retrieval-quality) for metric
+interpretation and the remaining M1 acceptance criteria.
+
+CI runs the development comparison on Python 3.12 and uploads its full JSON as
+the `retrieval-evaluation` artifact. It validates the experiment rather than
+requiring OmniChunk to beat a competing tool. Named tokenizer assets must be
+available for a token experiment; their download failure is never replaced with
+an approximate counter. Chonkie's count-only token adapter is explicitly
+unavailable because its encode/decode contract cannot be inferred from counts.
 
 ## Core and structural checks
 
