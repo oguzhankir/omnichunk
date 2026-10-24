@@ -205,7 +205,11 @@ class Chunker:
         concurrency: int = 10,
         on_progress: Callable[[int, int, str], None] | None = None,
     ) -> list[BatchResult]:
-        """Process multiple files concurrently. Each dict has 'filepath' and 'code' keys."""
+        """Process files concurrently with per-item options, in input order.
+
+        Each dict has ``filepath`` and ``code`` keys; remaining keys override
+        this chunker's defaults, matching :meth:`abatch`.
+        """
         if not files:
             return []
 
@@ -215,8 +219,9 @@ class Chunker:
         def _worker(idx: int, item: dict[str, Any]) -> tuple[int, BatchResult]:
             filepath = str(item.get("filepath", ""))
             code = str(item.get("code", ""))
+            extra = {k: v for k, v in item.items() if k not in ("filepath", "code")}
             try:
-                chunks = self.chunk(filepath=filepath, content=code)
+                chunks = self.chunk(filepath=filepath, content=code, **extra)
                 return idx, BatchResult(filepath=filepath, chunks=chunks)
             except Exception as exc:
                 return idx, BatchResult(filepath=filepath, chunks=[], error=str(exc))
@@ -489,13 +494,22 @@ class Chunker:
         if not root.exists():
             raise FileNotFoundError(f"Path does not exist: {path}")
 
+        embedding_dimension: int | None = None
+
         def _flush(buf: list[Chunk]) -> UpsertBatch:
+            nonlocal embedding_dimension
             texts = [c.contextualized_text if use_contextualized_text else c.text for c in buf]
             emb_seq = embed_fn(texts)
             embeddings = [list(row) for row in emb_seq]
             if len(embeddings) != len(buf):
                 raise ValueError(
                     f"embed_fn returned {len(embeddings)} vectors for {len(buf)} chunks"
+                )
+            dimension = len(embeddings[0])
+            if embedding_dimension is not None and dimension != embedding_dimension:
+                raise ValueError(
+                    f"embed_fn returned dimension {dimension}; expected {embedding_dimension} "
+                    "across all batches"
                 )
             if adapter == "pinecone":
                 rows = chunks_to_pinecone_vectors(
@@ -517,6 +531,7 @@ class Chunker:
                     embeddings,
                     use_contextualized_text=use_contextualized_text,
                 )
+            embedding_dimension = dimension
             return UpsertBatch(adapter=adapter, rows=rows, chunks=tuple(buf))
 
         buffer: list[Chunk] = []

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from bisect import bisect_right
 from collections.abc import Callable, Iterator
 from dataclasses import replace
 from typing import Any
@@ -10,7 +11,7 @@ from omnichunk.context.rebase import rebase_chunk
 from omnichunk.engine.code_engine import CodeEngine
 from omnichunk.engine.markup_engine import MarkupEngine
 from omnichunk.parser.markdown_parser import ProseNode, parse_markdown
-from omnichunk.sizing.counter import make_size_counter, make_token_counter
+from omnichunk.sizing.counter import find_fitting_prefix, make_size_counter, make_token_counter
 from omnichunk.sizing.nws import get_nws_count, preprocess_nws_cumsum
 from omnichunk.types import (
     ByteRange,
@@ -569,18 +570,21 @@ def _split_oversized_text(
     chunks: list[tuple[int, int]] = []
     cursor = 0
     while cursor < len(text):
-        best_end = cursor + 1
-        for point in splits:
-            if point <= cursor:
-                continue
+        best_end = cursor
+        for split_index in range(bisect_right(splits, cursor), len(splits)):
+            point = splits[split_index]
             candidate = text[cursor:point]
             if size_counter(candidate) <= max_size:
                 best_end = point
             else:
                 break
 
-        if best_end <= cursor:
-            best_end = min(len(text), cursor + max_size)
+        if best_end == cursor:
+            best_end = find_fitting_prefix(text, cursor, len(text), max_size, size_counter)
+            if best_end == cursor:
+                # Let finalization apply the configured overflow policy when
+                # even a complete Unicode character cannot fit the budget.
+                best_end = cursor + 1
 
         chunks.append((base_start + cursor, base_start + best_end))
         cursor = best_end

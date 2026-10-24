@@ -24,6 +24,39 @@ def test_batch_reports_errors_in_input_order_and_progress():
     assert chunker.batch([]) == []
 
 
+def test_sync_and_async_batch_apply_per_document_options_and_report_invalid_options():
+    text = "Searchable documentation. " * 5
+    inputs = [
+        {
+            "filepath": "document.txt",
+            "code": text,
+            "source_id": "tenant-a/document",
+            "max_chunk_size": 20,
+            "context_mode": "none",
+        },
+        {
+            "filepath": "document.txt",
+            "code": text,
+            "source_id": "tenant-b/document",
+            "max_chunk_size": 40,
+            "context_mode": "none",
+        },
+        {"filepath": "invalid.txt", "code": text, "unknown_option": True},
+    ]
+    chunker = Chunker(max_chunk_size=100)
+
+    results = chunker.batch(inputs, concurrency=2)
+    assert results == asyncio.run(chunker.abatch(inputs, concurrency=2))
+    for result, source_id, budget in zip(
+        results, ["tenant-a/document", "tenant-b/document"], [20, 40]
+    ):
+        assert result.chunks and not result.error
+        assert all(c.source.source_id == source_id for c in result.chunks)
+        assert all(len(c.contextualized_text) <= budget for c in result.chunks)
+    assert "Unknown" in results[2].error
+    assert not results[2].chunks
+
+
 def test_directory_keeps_valid_results_and_reports_decode_or_parse_failures(tmp_path):
     (tmp_path / "good.txt").write_text("good source")
     (tmp_path / "invalid.txt").write_bytes(b"\xff")
