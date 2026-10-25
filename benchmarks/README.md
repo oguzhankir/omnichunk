@@ -98,6 +98,12 @@ numbers and Unicode/whitespace-equivalent documents or questions crossing splits
 The independent corpus covers English prose; synthetic code/table/multilingual
 fixtures remain separate. Neither dataset establishes a production-wide ranking.
 
+Frozen full external reports are in `retrieval/reports/squad-lexical-{dev,test}-v1.json.gz`.
+They were measured from clean source commit `a8216af`, retain all per-query ranks
+and passages, and can be opened with Python's `gzip.open` and `json.load`. Source
+passages reproduced inside these reports retain the external corpus's
+CC-BY-SA-4.0 license and attribution; the benchmark software remains MIT licensed.
+
 ### Frozen dense retrieval
 
 Use `--retriever dense --dense-embeddings /path/to/vectors.json` with the same
