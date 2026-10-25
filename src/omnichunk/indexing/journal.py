@@ -36,7 +36,6 @@ from .models import (
 
 _APPLICATION_ID = 0x4F43494A
 _SCHEMA = f"""
-BEGIN IMMEDIATE;
 CREATE TABLE collections (
  name TEXT PRIMARY KEY, target_id TEXT NOT NULL, generation INTEGER NOT NULL DEFAULT 0,
  model TEXT NOT NULL, preprocessing TEXT NOT NULL, contextualized INTEGER NOT NULL,
@@ -71,7 +70,6 @@ CREATE TABLE embeddings (
 );
 PRAGMA application_id = {_APPLICATION_ID};
 PRAGMA user_version = 1;
-COMMIT;
 """
 
 
@@ -147,32 +145,51 @@ class IndexJournal:
         self._conn = sqlite3.connect(str(path), isolation_level=None, timeout=30.0)
         self._conn.row_factory = sqlite3.Row
         try:
-            tables = {
-                row[0]
-                for row in self._conn.execute(
-                    "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
-                )
-            }
-            version = self._conn.execute("PRAGMA user_version").fetchone()[0]
-            application = self._conn.execute("PRAGMA application_id").fetchone()[0]
-            required = {
-                "collections",
-                "sources",
-                "records",
-                "scopes",
-                "plans",
-                "operations",
-                "embeddings",
-            }
-            if not tables and version == 0 and application == 0:
-                self._conn.executescript(_SCHEMA)
-            elif version != 1 or application != _APPLICATION_ID or tables != required:
-                raise JournalSchemaError(
-                    "Unsupported journal database; use a new journal and reconcile the target"
-                )
+            # Existing journals can open while another worker delivers under a
+            # write lock. Read all schema fields from one consistent snapshot.
+            with self._transaction():
+                fresh = self._check_schema()
+            if fresh:
+                with self._transaction(write=True):
+                    # Another constructor may have initialized the database
+                    # while this connection was waiting for the writer lock.
+                    if self._check_schema():
+                        for statement in _SCHEMA.split(";"):
+                            if statement.strip():
+                                # executescript() would commit our lock before
+                                # executing the schema. These are static DDL and
+                                # PRAGMA statements with no embedded semicolons.
+                                self._conn.execute(statement)
         except BaseException:
             self._conn.close()
             raise
+
+    def _check_schema(self) -> bool:
+        """Inspect one transaction snapshot; return True for a fresh database."""
+        tables = {
+            row[0]
+            for row in self._conn.execute(
+                "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
+            )
+        }
+        version = self._conn.execute("PRAGMA user_version").fetchone()[0]
+        application = self._conn.execute("PRAGMA application_id").fetchone()[0]
+        required = {
+            "collections",
+            "sources",
+            "records",
+            "scopes",
+            "plans",
+            "operations",
+            "embeddings",
+        }
+        if not tables and version == 0 and application == 0:
+            return True
+        if version != 1 or application != _APPLICATION_ID or tables != required:
+            raise JournalSchemaError(
+                "Unsupported journal database; use a new journal and reconcile the target"
+            )
+        return False
 
     def close(self) -> None:
         self._conn.close()

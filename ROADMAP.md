@@ -166,7 +166,8 @@ is a methodology reference, not evidence about OmniChunk.
 
 ### M2 — Make indexing and framework adoption dependable
 
-**Status:** implemented; PR verification and release publication are separate gates.
+**Status:** implemented in [PR #31](https://github.com/oguzhankir/omnichunk/pull/31);
+PR verification and release publication are separate gates.
 **Dependency:** M0; use M1 for retrieval decisions.
 **Owner role:** integration/indexing maintainer.
 

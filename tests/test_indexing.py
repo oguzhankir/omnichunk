@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
+import threading
 from dataclasses import replace
 
 import pytest
@@ -350,3 +351,77 @@ def test_imported_complete_scope_cannot_orphan_stale_source_records(tmp_path):
         journal.enqueue(cleanup)
         journal.deliver(sink)
         assert not journal.records() and not sink.rows
+
+
+def test_concurrent_constructors_recheck_schema_after_acquiring_writer_lock(tmp_path, monkeypatch):
+    """Force the first constructor's empty snapshot to overlap another initializer."""
+    path = tmp_path / "fresh.db"
+    first_inspected = threading.Event()
+    release_first = threading.Event()
+    second_at_commit = threading.Event()
+    original_connect = sqlite3.connect
+    failures = []
+    opened = []
+
+    class GatedConnection(sqlite3.Connection):
+        paused = False
+        creating = False
+
+        def execute(self, sql, *args):
+            second = threading.current_thread().name == "initializer-second"
+            if second and sql.lstrip().startswith("CREATE TABLE"):
+                self.creating = True
+            if second and self.creating and sql == "COMMIT":
+                # The fixed constructor holds its writer transaction here. Its
+                # commit waits for the first constructor's read snapshot to end.
+                second_at_commit.set()
+            cursor = super().execute(sql, *args)
+            if (
+                threading.current_thread().name == "initializer-first"
+                and not self.paused
+                and sql.startswith("SELECT name FROM sqlite_master")
+            ):
+                self.paused = True
+                rows = list(cursor)
+                first_inspected.set()
+                assert release_first.wait(10), "first constructor was not released"
+                return rows
+            return cursor
+
+        def executescript(self, sql):
+            # The old constructor committed its schema through executescript,
+            # so release the first reader only after that competing commit.
+            result = super().executescript(sql)
+            if threading.current_thread().name == "initializer-second":
+                second_at_commit.set()
+            return result
+
+    def connect(*args, **kwargs):
+        return original_connect(*args, **kwargs, factory=GatedConnection)
+
+    def open_journal():
+        try:
+            with IndexJournal(path) as journal:
+                opened.append(journal.status().generation)
+        except BaseException as exc:
+            failures.append(exc)
+
+    monkeypatch.setattr(sqlite3, "connect", connect)
+    first = threading.Thread(target=open_journal, name="initializer-first")
+    second = threading.Thread(target=open_journal, name="initializer-second")
+    first.start()
+    try:
+        assert first_inspected.wait(10), "first constructor did not inspect the schema"
+        second.start()
+        assert second_at_commit.wait(10), "second constructor did not reach schema commit"
+    finally:
+        release_first.set()
+        first.join(10)
+        if second.ident is not None:
+            second.join(10)
+    assert not first.is_alive() and not second.is_alive()
+    assert failures == []
+    assert opened == [0, 0]
+    with IndexJournal(path) as journal:
+        journal.enqueue(plan(journal, [source()]))
+        assert journal.deliver(Sink(), embed).completed
