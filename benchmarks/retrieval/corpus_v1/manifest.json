@@ -1,0 +1,4162 @@
+{
+  "schema_version": 1,
+  "corpus_id": "omnichunk-retrieval-v1",
+  "license": "MIT",
+  "provenance": {
+    "kind": "original-synthetic",
+    "authors": "OpenAI Codex, prepared for the OmniChunk project",
+    "created": "2026-10-24",
+    "method": "Coding-assistant-authored developer policies and code with explicit evidence questions. No external source documents or generated questions from third-party corpora.",
+    "human_audited": false,
+    "limitations": [
+      "Small synthetic starter corpus; not representative of production retrieval.",
+      "Questions authored alongside evidence have lexical and topic-selection bias.",
+      "Document-disjoint dev/test labels support configuration discipline; the published test split is not sealed or independently evaluated.",
+      "No extraction/OCR or learned embedding quality is established by these fixtures."
+    ]
+  },
+  "documents": [
+    {
+      "source_id": "en/retry_client",
+      "path": "documents/en/retry_client.py",
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "sha256": "4b1ab5132ba8e3f640d1ef913ecd422e5d8aa864ad825c5941bd71f7c3df3727"
+    },
+    {
+      "source_id": "en/task_lease",
+      "path": "documents/en/task_lease.py",
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "sha256": "0ff4f1f342684a57e9fa98d586a36a79967487022d435b7e67787d3e9e57cd8a"
+    },
+    {
+      "source_id": "en/file_reader",
+      "path": "documents/en/file_reader.py",
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "sha256": "37c2fe54c11063aaa1dc633427bd4777d99e0ae6c6c696f5f561692ebd2d7e75"
+    },
+    {
+      "source_id": "en/log_filter",
+      "path": "documents/en/log_filter.py",
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "sha256": "6f1e65049be25dfd88165376441e0b92701200aed57bc602c11f42f39d88a8e7"
+    },
+    {
+      "source_id": "en/incident_playbook",
+      "path": "documents/en/incident_playbook.md",
+      "language": "en",
+      "category": "markdown",
+      "split": "dev",
+      "sha256": "84c2f11349a7d5b78a5dfac87f647f139f2a2a7bfbd44c4bf68a6be4103af8a0"
+    },
+    {
+      "source_id": "en/model_rollout",
+      "path": "documents/en/model_rollout.md",
+      "language": "en",
+      "category": "markdown",
+      "split": "dev",
+      "sha256": "4b93d1657f86f232c1cf1b971761ee2c05b0449c6b35837b42278aa579674f82"
+    },
+    {
+      "source_id": "en/signed_release",
+      "path": "documents/en/signed_release.md",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "sha256": "44ea0dd8cb172bbdb15ddd10d59c90f1ec10ee0adcf8e7b80f04058f92555853"
+    },
+    {
+      "source_id": "en/plan_entitlements",
+      "path": "documents/en/plan_entitlements.md",
+      "language": "en",
+      "category": "table",
+      "split": "dev",
+      "sha256": "dc3107bcd0bcd085665a87a3b6ca87165ad72b3732fa5de2876aa4b1d5eb91fd"
+    },
+    {
+      "source_id": "en/retention_matrix",
+      "path": "documents/en/retention_matrix.md",
+      "language": "en",
+      "category": "table",
+      "split": "test",
+      "sha256": "bb7cc39c3696cecb2c391fc2600dbe016a64e6b3cdb7dd1a5408392b6f464aec"
+    },
+    {
+      "source_id": "en/connector_matrix",
+      "path": "documents/en/connector_matrix.md",
+      "language": "en",
+      "category": "table",
+      "split": "test",
+      "sha256": "3612bcc020f3f9750b4f7b037bcfb66b23663b6ad4ad6ba62a4312e53835d3f0"
+    },
+    {
+      "source_id": "tr/stock_reservation",
+      "path": "documents/tr/stock_reservation.py",
+      "language": "tr",
+      "category": "code",
+      "split": "dev",
+      "sha256": "ac7296a8a4faf3c5deef9e7c14cc4c9a94dc11ed078604f71ba495f1defb2a82"
+    },
+    {
+      "source_id": "tr/invoice_rounding",
+      "path": "documents/tr/invoice_rounding.py",
+      "language": "tr",
+      "category": "code",
+      "split": "dev",
+      "sha256": "9fd62be5dc91e5ba586a32d77bd50682798d637f8540cd91944a9c5da6cbca7d"
+    },
+    {
+      "source_id": "tr/report_filter",
+      "path": "documents/tr/report_filter.py",
+      "language": "tr",
+      "category": "code",
+      "split": "dev",
+      "sha256": "f5ce729a7bb1be0969e1be0a45570381d686141fb4bc5aba82cc389ed9e040d7"
+    },
+    {
+      "source_id": "tr/catalog_alias",
+      "path": "documents/tr/catalog_alias.py",
+      "language": "tr",
+      "category": "code",
+      "split": "test",
+      "sha256": "232662598d7a1108b8e9174f0685bf57c75331d6d78fd3607113e3d35ae39f0f"
+    },
+    {
+      "source_id": "tr/knowledge_approval",
+      "path": "documents/tr/knowledge_approval.md",
+      "language": "tr",
+      "category": "markdown",
+      "split": "dev",
+      "sha256": "632804438bfd7dbd21f6f7b472e9d5ad1837d4845736a75fbb681df9be5a7410"
+    },
+    {
+      "source_id": "tr/import_workflow",
+      "path": "documents/tr/import_workflow.md",
+      "language": "tr",
+      "category": "markdown",
+      "split": "dev",
+      "sha256": "139bf8580915590753353f38582331764694c007dc84dc3741efaf102a5d7157"
+    },
+    {
+      "source_id": "tr/org_invitation",
+      "path": "documents/tr/org_invitation.md",
+      "language": "tr",
+      "category": "markdown",
+      "split": "test",
+      "sha256": "30b2fea0f8db2aa3cc357e3e2f07b032226d4a3f92ac024fce4725d7aa608e24"
+    },
+    {
+      "source_id": "tr/approval_matrix",
+      "path": "documents/tr/approval_matrix.md",
+      "language": "tr",
+      "category": "table",
+      "split": "dev",
+      "sha256": "380f15fb99eef64a0c7551b347e121369c1a572458a8b3e07048d366ac68a5b5"
+    },
+    {
+      "source_id": "tr/accessibility_matrix",
+      "path": "documents/tr/accessibility_matrix.md",
+      "language": "tr",
+      "category": "table",
+      "split": "test",
+      "sha256": "a4a1e50a68892bbc444ec98ce75914eeb9998b2a31afd21f4a7ca97d24de8d26"
+    },
+    {
+      "source_id": "tr/batch_status_matrix",
+      "path": "documents/tr/batch_status_matrix.md",
+      "language": "tr",
+      "category": "table",
+      "split": "test",
+      "sha256": "aaccdb72c1986ea90f79896ccfaa1b1d3f9fe6928ba2013d55cba58ab5469bfb"
+    },
+    {
+      "source_id": "ja/webhook-receipts",
+      "path": "documents/ja/webhook-receipts.py",
+      "language": "ja",
+      "category": "code",
+      "split": "dev",
+      "sha256": "bb28c5aeb012f8278d611ef18c56732c2eadfdc2f9bea6e6cc1d002dab8ba038"
+    },
+    {
+      "source_id": "ja/snapshot-pinning",
+      "path": "documents/ja/snapshot-pinning.py",
+      "language": "ja",
+      "category": "code",
+      "split": "dev",
+      "sha256": "996fbc1e8dba61f4ed5b7b76d3e2799ae80854ba0ae4d82d242bc46daf13f399"
+    },
+    {
+      "source_id": "ja/image-tile-assembly",
+      "path": "documents/ja/image-tile-assembly.py",
+      "language": "ja",
+      "category": "code",
+      "split": "test",
+      "sha256": "9a54df5996d9225d363ff77fce5e51816e9f604e5e7bf624b5f5c5414322f7f7"
+    },
+    {
+      "source_id": "ja/staged-schema-migration",
+      "path": "documents/ja/staged-schema-migration.py",
+      "language": "ja",
+      "category": "code",
+      "split": "test",
+      "sha256": "c0638ab7d878d97e85b452030310ad705a71e925a80e437805b3e7fec37e6677"
+    },
+    {
+      "source_id": "ja/accessibility-release-review",
+      "path": "documents/ja/accessibility-release-review.md",
+      "language": "ja",
+      "category": "markdown",
+      "split": "dev",
+      "sha256": "31cb7b39834310832946eb49df27dadc194c88c9722af495aee86e5dc91c7808"
+    },
+    {
+      "source_id": "ja/glossary-governance",
+      "path": "documents/ja/glossary-governance.md",
+      "language": "ja",
+      "category": "markdown",
+      "split": "dev",
+      "sha256": "5363b342e34853739e098d485e235821c990336bfced7844586feaeafd89959e"
+    },
+    {
+      "source_id": "ja/tenant-export-appeal",
+      "path": "documents/ja/tenant-export-appeal.md",
+      "language": "ja",
+      "category": "markdown",
+      "split": "test",
+      "sha256": "cec63c45a9e673e36551e39a09496cdfdfa8e11bfa209882314b59716c2ffdf7"
+    },
+    {
+      "source_id": "ja/media-transform",
+      "path": "documents/ja/media-transform.md",
+      "language": "ja",
+      "category": "table",
+      "split": "dev",
+      "sha256": "32d51b76d4e5941e506d73e9ba7ddea08a5e1ae986af76e9191339e1a810db53"
+    },
+    {
+      "source_id": "ja/edge-cache-purge",
+      "path": "documents/ja/edge-cache-purge.md",
+      "language": "ja",
+      "category": "table",
+      "split": "dev",
+      "sha256": "5d362dbfdf6e87e89bd04ad83af7cef3f37c3c0e987b17bfb22fdc6c5d97a380"
+    },
+    {
+      "source_id": "ja/search-visibility",
+      "path": "documents/ja/search-visibility.md",
+      "language": "ja",
+      "category": "table",
+      "split": "test",
+      "sha256": "a4a3e44f1d7e0680b48211facad34051413f3994a972497332c52cb33923991e"
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "en/retry_client/q01",
+      "text": "What happens to a payment submission that lacks an idempotency key?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/retry_client",
+          "start": 75,
+          "end": 201,
+          "quote": "# A payment submission without an idempotency key is rejected before the network callback runs.\nREQUIRE_IDEMPOTENCY_KEY = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retry_client/q02",
+      "text": "Which timed-out payment operations can enter the retry queue?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/retry_client",
+          "start": 203,
+          "end": 347,
+          "quote": "# A transport timeout enters the retry queue only when the caller marked the payment operation as replayable.\nRETRY_TIMEOUT_IF_REPLAYABLE = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retry_client/q03",
+      "text": "How does the payment client choose a delay when Retry-After is present?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/retry_client",
+          "start": 349,
+          "end": 485,
+          "quote": "# The payment client honors a valid Retry-After header instead of replacing it with the local backoff interval.\nHONOR_RETRY_AFTER = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retry_client/q04",
+      "text": "Are authentication failures retried by the payment client?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/retry_client",
+          "start": 487,
+          "end": 637,
+          "quote": "# Authentication failures close the payment attempt immediately because another retry cannot repair credentials.\nRETRY_AUTHENTICATION_FAILURES = False"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retry_client/q05",
+      "text": "Does redirecting a payment to standby reset its retry budget?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/retry_client",
+          "start": 639,
+          "end": 784,
+          "quote": "# A retry budget is shared by all attempts of one logical payment, including redirects to the standby endpoint.\nSHARE_PAYMENT_RETRY_BUDGET = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retry_client/q06",
+      "text": "What happens when a payment is cancelled while waiting for backoff?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/retry_client",
+          "start": 786,
+          "end": 934,
+          "quote": "# When cancellation arrives during backoff, the payment client drops the pending retry without invoking the transport.\nCANCEL_PENDING_BACKOFF = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retry_client/q07",
+      "text": "How does the payment client handle a duplicate success receipt?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/retry_client",
+          "start": 936,
+          "end": 1084,
+          "quote": "# Duplicate success receipts resolve to the first accepted payment result and do not trigger another ledger write.\nKEEP_FIRST_SUCCESS_RECEIPT = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retry_client/q08",
+      "text": "Which identifier is retained when payment validation fails?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/retry_client",
+          "start": 1086,
+          "end": 1232,
+          "quote": "# Validation errors are returned with the original request identifier so support can trace the rejected payment.\nKEEP_VALIDATION_REQUEST_ID = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retry_client/q09",
+      "text": "What must happen before retrying a payment after a conflict?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/retry_client",
+          "start": 1234,
+          "end": 1393,
+          "quote": "# A server conflict requires a receipt lookup before any payment retry; the client never assumes the original attempt failed.\nLOOKUP_RECEIPT_ON_CONFLICT = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retry_client/q10",
+      "text": "How many concurrent payment probes are permitted during circuit recovery?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/retry_client",
+          "start": 1395,
+          "end": 1529,
+          "quote": "# Circuit recovery permits one payment probe at a time; concurrent callers wait for that probe's outcome.\nSINGLE_RECOVERY_PROBE = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/task_lease/q01",
+      "text": "How does storage prevent an expired task owner from writing?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/task_lease",
+          "start": 80,
+          "end": 226,
+          "quote": "# Each task lease includes a monotonically increasing fencing token that storage validates on every protected write.\nVALIDATE_FENCING_TOKEN = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/task_lease/q02",
+      "text": "Can a superseded worker renew a background task lease?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/task_lease",
+          "start": 228,
+          "end": 364,
+          "quote": "# Heartbeats renew only the current task owner's lease; a heartbeat from a superseded worker is ignored.\nRENEW_CURRENT_OWNER_ONLY = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/task_lease/q03",
+      "text": "When must a worker recheck ownership after a long callback?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/task_lease",
+          "start": 366,
+          "end": 511,
+          "quote": "# A worker checks its task lease again after a long model callback and before committing the callback's output.\nCHECK_LEASE_AFTER_CALLBACK = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/task_lease/q04",
+      "text": "Does a task lease expiring guarantee the previous worker has stopped?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/task_lease",
+          "start": 513,
+          "end": 664,
+          "quote": "# Lease expiration makes the task eligible for reassignment, but it does not prove that the old worker has stopped.\nEXPIRED_WORKER_MAY_STILL_RUN = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/task_lease/q05",
+      "text": "Which background task changes must be committed together on success?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/task_lease",
+          "start": 666,
+          "end": 809,
+          "quote": "# Successful task completion records the output reference and closes the lease in one storage transaction.\nCOMPLETE_AND_CLOSE_ATOMICALLY = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/task_lease/q06",
+      "text": "May a worker publish completion after a heartbeat failure?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/task_lease",
+          "start": 811,
+          "end": 970,
+          "quote": "# A failed heartbeat marks the task worker uncertain and prevents it from emitting externally visible completion events.\nBLOCK_EVENTS_ON_UNCERTAIN_LEASE = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/task_lease/q07",
+      "text": "What happens to unstarted leased tasks during worker shutdown?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/task_lease",
+          "start": 972,
+          "end": 1101,
+          "quote": "# Task shutdown drains acknowledged work first and returns unstarted leased tasks to the scheduler.\nRETURN_UNSTARTED_TASKS = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/task_lease/q08",
+      "text": "Which task identifier remains stable when work is reassigned?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/task_lease",
+          "start": 1103,
+          "end": 1254,
+          "quote": "# A task attempt identifier changes on reassignment while the logical task identifier remains stable for deduplication.\nPRESERVE_LOGICAL_TASK_ID = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/task_lease/q09",
+      "text": "Does task lease inspection expose callback credentials?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/task_lease",
+          "start": 1256,
+          "end": 1405,
+          "quote": "# Lease inspection exposes owner and expiration metadata without returning credentials used by the worker's callback.\nREDACT_LEASE_CREDENTIALS = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/task_lease/q10",
+      "text": "What must an operator provide when manually recovering a task?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/task_lease",
+          "start": 1407,
+          "end": 1543,
+          "quote": "# Manual task recovery requires an operator reason, which is stored beside the new lease's fencing token.\nREQUIRE_RECOVERY_REASON = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/file_reader/q01",
+      "text": "How does the source reader handle paths that resolve outside the allowed root?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/file_reader",
+          "start": 81,
+          "end": 232,
+          "quote": "# The source reader resolves an allowed root before opening input and rejects paths whose resolved target leaves that root.\nENFORCE_ALLOWED_ROOT = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/file_reader/q02",
+      "text": "Why does the source reader reject named pipes before reading?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/file_reader",
+          "start": 234,
+          "end": 370,
+          "quote": "# Named pipes are rejected before reading because a source-size cap cannot bound how long a pipe writer waits.\nREJECT_NAMED_PIPES = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/file_reader/q03",
+      "text": "How does the source reader treat malformed UTF-8 bytes?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/file_reader",
+          "start": 372,
+          "end": 517,
+          "quote": "# UTF-8 decoding is strict; invalid source bytes produce a file error instead of replacement characters and shifted citations.\nSTRICT_UTF8 = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/file_reader/q04",
+      "text": "Can a growing source file bypass the initial size check?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/file_reader",
+          "start": 519,
+          "end": 672,
+          "quote": "# The source reader rechecks the size while reading so an input growing after its initial stat cannot evade the byte limit.\nCHECK_SIZE_DURING_READ = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/file_reader/q05",
+      "text": "Does cancellation return a partially read source document?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/file_reader",
+          "start": 674,
+          "end": 827,
+          "quote": "# A caller cancellation is checked between read blocks and returns no partial source document to the chunking stage.\nDROP_CANCELLED_PARTIAL_SOURCE = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/file_reader/q06",
+      "text": "Why are CRLF newlines preserved by the source reader?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/file_reader",
+          "start": 829,
+          "end": 970,
+          "quote": "# Newline normalization is disabled so source offsets refer to the exact CRLF or LF bytes supplied by the file.\nPRESERVE_NEWLINE_BYTES = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/file_reader/q07",
+      "text": "When is a source symlink permitted within an immutable root?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/file_reader",
+          "start": 972,
+          "end": 1130,
+          "quote": "# Symbolic links inside an immutable allowed-root tree may be read only when their resolved target also stays inside the root.\nALLOW_CONTAINED_SYMLINKS = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/file_reader/q08",
+      "text": "Are empty source files considered reader failures?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/file_reader",
+          "start": 1132,
+          "end": 1276,
+          "quote": "# Empty source files produce an empty canonical document and a successful read status, rather than a decoding failure.\nALLOW_EMPTY_SOURCE = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/file_reader/q09",
+      "text": "What does the reader retain to detect changed citation sources?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/file_reader",
+          "start": 1278,
+          "end": 1424,
+          "quote": "# The source reader records the content hash alongside the canonical text so citations can detect later file changes.\nHASH_CANONICAL_SOURCE = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/file_reader/q10",
+      "text": "Is the source descriptor closed after a parser callback fails?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/file_reader",
+          "start": 1426,
+          "end": 1560,
+          "quote": "# File descriptor cleanup runs even when a downstream parser callback raises while processing the source.\nCLOSE_ON_PARSER_ERROR = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/log_filter/q01",
+      "text": "At which stage are token fields removed from structured diagnostics?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/log_filter",
+          "start": 86,
+          "end": 231,
+          "quote": "# Diagnostic fields named access_token or refresh_token are replaced before structured logs reach any configured sink.\nFILTER_TOKEN_FIELDS = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/log_filter/q02",
+      "text": "Are dictionaries inside diagnostic lists checked for sensitive fields?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/log_filter",
+          "start": 233,
+          "end": 384,
+          "quote": "# Nested diagnostic dictionaries are traversed recursively, including dictionaries embedded inside list-valued fields.\nFILTER_NESTED_DIAGNOSTICS = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/log_filter/q03",
+      "text": "Does filtering change the application's original diagnostic event?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/log_filter",
+          "start": 386,
+          "end": 530,
+          "quote": "# The original application event is never mutated by filtering; sinks receive a separate sanitized diagnostic copy.\nCOPY_BEFORE_FILTERING = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/log_filter/q04",
+      "text": "How does the diagnostic filter treat an unknown nonsecret field?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/log_filter",
+          "start": 532,
+          "end": 683,
+          "quote": "# Unknown diagnostic field names are preserved unless they match a configured secret pattern; empty values remain empty.\nPRESERVE_UNKNOWN_FIELDS = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/log_filter/q05",
+      "text": "What is emitted when diagnostic filtering itself fails?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/log_filter",
+          "start": 685,
+          "end": 853,
+          "quote": "# Filter failures produce a minimal event containing the request identifier and error category, with the original payload omitted.\nOMIT_PAYLOAD_ON_FILTER_FAILURE = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/log_filter/q06",
+      "text": "Do exception messages pass through diagnostic secret filtering?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/log_filter",
+          "start": 855,
+          "end": 1005,
+          "quote": "# Exception messages are sanitized with the same secret patterns as ordinary diagnostic values before being exported.\nFILTER_EXCEPTION_MESSAGES = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/log_filter/q07",
+      "text": "Which correlation fields survive diagnostic filtering?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/log_filter",
+          "start": 1007,
+          "end": 1159,
+          "quote": "# Trace correlation identifiers survive diagnostic filtering because they identify execution rather than user credentials.\nKEEP_TRACE_CORRELATION = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/log_filter/q08",
+      "text": "Is diagnostic secret field matching sensitive to capitalization?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/log_filter",
+          "start": 1161,
+          "end": 1308,
+          "quote": "# Diagnostic field matching is case-insensitive, so ACCESS_TOKEN receives the same treatment as access_token.\nCASE_INSENSITIVE_SECRET_FIELDS = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/log_filter/q09",
+      "text": "How are binary payloads represented in filtered diagnostics?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/log_filter",
+          "start": 1310,
+          "end": 1465,
+          "quote": "# Byte payloads are summarized by length and digest instead of being decoded into potentially sensitive diagnostic strings.\nSUMMARIZE_BINARY_PAYLOAD = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/log_filter/q10",
+      "text": "How can an audit identify the policy used for a sanitized diagnostic batch?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/log_filter",
+          "start": 1467,
+          "end": 1609,
+          "quote": "# A filter configuration revision is attached to each sanitized batch so audit tooling can reproduce its policy.\nRECORD_FILTER_REVISION = True"
+        }
+      ]
+    },
+    {
+      "query_id": "en/incident_playbook/q01",
+      "text": "What must the regional incident coordinator record before assigning investigation tasks?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/incident_playbook",
+          "start": 34,
+          "end": 176,
+          "quote": "The regional incident coordinator declares one incident channel and records the customer-visible symptom before assigning investigation tasks."
+        }
+      ]
+    },
+    {
+      "query_id": "en/incident_playbook/q02",
+      "text": "How does the incident scribe distinguish facts from hypotheses?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/incident_playbook",
+          "start": 178,
+          "end": 332,
+          "quote": "The incident scribe keeps a timeline in UTC with observed facts and hypotheses in separate fields so uncertain theories do not become customer statements."
+        }
+      ]
+    },
+    {
+      "query_id": "en/incident_playbook/q03",
+      "text": "Which checks are required before shifting incident traffic to another region?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/incident_playbook",
+          "start": 334,
+          "end": 466,
+          "quote": "Traffic may move to another region only after its capacity and data replication lag have been checked by the on-call database owner."
+        }
+      ]
+    },
+    {
+      "query_id": "en/incident_playbook/q04",
+      "text": "What compatibility check precedes a regional incident rollback?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/incident_playbook",
+          "start": 468,
+          "end": 607,
+          "quote": "During a regional incident, a rollback candidate is evaluated against the current database schema before the deployment operator starts it."
+        }
+      ]
+    },
+    {
+      "query_id": "en/incident_playbook/q05",
+      "text": "What should the communications owner publish when the root cause is still unknown?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/incident_playbook",
+          "start": 609,
+          "end": 751,
+          "quote": "The communications owner publishes the next update time even when the team has no verified root cause, and avoids promising a repair deadline."
+        }
+      ]
+    },
+    {
+      "query_id": "en/incident_playbook/q06",
+      "text": "Is a quiet alert stream enough to downgrade a regional incident?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/incident_playbook",
+          "start": 753,
+          "end": 886,
+          "quote": "An incident severity downgrade requires evidence that customer operations have recovered; a quiet alert stream alone is insufficient."
+        }
+      ]
+    },
+    {
+      "query_id": "en/incident_playbook/q07",
+      "text": "What request information may customer support attach to the incident record?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/incident_playbook",
+          "start": 888,
+          "end": 1034,
+          "quote": "Customer support can attach affected request identifiers to the incident record but must not paste authentication headers into the shared channel."
+        }
+      ]
+    },
+    {
+      "query_id": "en/incident_playbook/q08",
+      "text": "Which delayed-work signal is watched after incident mitigation?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/incident_playbook",
+          "start": 1036,
+          "end": 1170,
+          "quote": "After mitigation, the team watches both error rate and reconciliation backlog to ensure successful requests did not hide delayed work."
+        }
+      ]
+    },
+    {
+      "query_id": "en/incident_playbook/q09",
+      "text": "What must every corrective action contain in the post-incident review?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/incident_playbook",
+          "start": 1172,
+          "end": 1325,
+          "quote": "The post-incident review assigns each corrective action an owner and a verification condition instead of accepting a ticket title as completion evidence."
+        }
+      ]
+    },
+    {
+      "query_id": "en/incident_playbook/q10",
+      "text": "Which records are retained when a regional incident closes?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/incident_playbook",
+          "start": 1327,
+          "end": 1482,
+          "quote": "Closing the regional incident preserves links to the rollback, communication log and validation queries so another on-call engineer can audit the recovery."
+        }
+      ]
+    },
+    {
+      "query_id": "en/model_rollout/q01",
+      "text": "Where are vectors for an embedding model rollout stored?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/model_rollout",
+          "start": 27,
+          "end": 165,
+          "quote": "An embedding model rollout builds a separate index generation; it does not mix new model vectors with the active generation's old vectors."
+        }
+      ]
+    },
+    {
+      "query_id": "en/model_rollout/q02",
+      "text": "Why does the model rollout record more than vector dimensions?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/model_rollout",
+          "start": 167,
+          "end": 327,
+          "quote": "The rollout manifest records model revision, tokenizer revision and preprocessing digest so identical vector dimensions cannot disguise incompatible embeddings."
+        }
+      ]
+    },
+    {
+      "query_id": "en/model_rollout/q03",
+      "text": "Which nonordinary cases belong in the frozen model rollout evaluation set?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/model_rollout",
+          "start": 329,
+          "end": 476,
+          "quote": "The evaluation set is frozen before model tuning and includes deletion, multilingual and ambiguous-query cases alongside ordinary answer retrieval."
+        }
+      ]
+    },
+    {
+      "query_id": "en/model_rollout/q04",
+      "text": "Which generation answers customers during model rollout shadow queries?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/model_rollout",
+          "start": 478,
+          "end": 603,
+          "quote": "A shadow query sends traffic to both generations for measurement while only the current generation supplies customer answers."
+        }
+      ]
+    },
+    {
+      "query_id": "en/model_rollout/q05",
+      "text": "How is context length controlled during model rollout recall comparison?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/model_rollout",
+          "start": 605,
+          "end": 755,
+          "quote": "The model rollout compares relevant-source recall at a fixed retrieved token budget to avoid rewarding a candidate that simply returns longer context."
+        }
+      ]
+    },
+    {
+      "query_id": "en/model_rollout/q06",
+      "text": "Can improved average latency compensate for unacceptable model rollout tail latency?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/model_rollout",
+          "start": 757,
+          "end": 901,
+          "quote": "A rollout candidate with lower average latency can still be rejected when its tail latency makes interactive queries miss the declared deadline."
+        }
+      ]
+    },
+    {
+      "query_id": "en/model_rollout/q07",
+      "text": "What does the model rollout cutover record retain for rollback?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/model_rollout",
+          "start": 903,
+          "end": 1034,
+          "quote": "The cutover record names both the new generation and the prior generation retained for rollback, with the validation report linked."
+        }
+      ]
+    },
+    {
+      "query_id": "en/model_rollout/q08",
+      "text": "What happens if an embedding provider changes behavior without updating its revision?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/model_rollout",
+          "start": 1036,
+          "end": 1178,
+          "quote": "If the embedding provider changes model behavior without a revision update, the rollout pauses and invalidates the reproducibility assumption."
+        }
+      ]
+    },
+    {
+      "query_id": "en/model_rollout/q09",
+      "text": "How are source deletions handled during an embedding model rollout?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/model_rollout",
+          "start": 1180,
+          "end": 1326,
+          "quote": "A source deletion observed during model rollout is applied to both the active and candidate generations before either can serve that source again."
+        }
+      ]
+    },
+    {
+      "query_id": "en/model_rollout/q10",
+      "text": "When may the prior embedding index generation be removed?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/model_rollout",
+          "start": 1328,
+          "end": 1463,
+          "quote": "After the observation window, the owner removes the old generation only after confirming no worker or query router still references it."
+        }
+      ]
+    },
+    {
+      "query_id": "en/signed_release/q01",
+      "text": "What checkout state is required to build a signed release candidate?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/signed_release",
+          "start": 31,
+          "end": 181,
+          "quote": "A signed release candidate is built from a clean tagged checkout; uncommitted source changes invalidate the relationship between the tag and artifact."
+        }
+      ]
+    },
+    {
+      "query_id": "en/signed_release/q02",
+      "text": "Which identities does release provenance bind to the artifact?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/signed_release",
+          "start": 183,
+          "end": 346,
+          "quote": "Release provenance names the exact builder workflow and source commit, allowing the verifier to compare the artifact with the repository's accepted build identity."
+        }
+      ]
+    },
+    {
+      "query_id": "en/signed_release/q03",
+      "text": "Why is any valid signature insufficient for release verification?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/signed_release",
+          "start": 348,
+          "end": 493,
+          "quote": "The release verifier checks the signature against the expected project identity, not merely whether any cryptographically valid signature exists."
+        }
+      ]
+    },
+    {
+      "query_id": "en/signed_release/q04",
+      "text": "Which versions must agree before a signed release is published?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/signed_release",
+          "start": 495,
+          "end": 621,
+          "quote": "The source archive and installed wheel must expose the same runtime version as the release tag before publication can proceed."
+        }
+      ]
+    },
+    {
+      "query_id": "en/signed_release/q05",
+      "text": "Why does the release smoke test run away from the checkout import path?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/signed_release",
+          "start": 623,
+          "end": 754,
+          "quote": "An isolated release smoke test installs the built wheel without the checkout on the import path to detect missing packaged modules."
+        }
+      ]
+    },
+    {
+      "query_id": "en/signed_release/q06",
+      "text": "What evidence is required for a schema-changing release?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/signed_release",
+          "start": 756,
+          "end": 903,
+          "quote": "A release containing a schema change includes a migration rehearsal and rollback evidence before the publication job receives permission to upload."
+        }
+      ]
+    },
+    {
+      "query_id": "en/signed_release/q07",
+      "text": "What does the release dependency inventory distinguish?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/signed_release",
+          "start": 905,
+          "end": 1051,
+          "quote": "The dependency inventory is generated from the resolved build environment and distinguishes bundled components from optional runtime integrations."
+        }
+      ]
+    },
+    {
+      "query_id": "en/signed_release/q08",
+      "text": "What happens when release signature verification cannot reach the trust service?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/signed_release",
+          "start": 1053,
+          "end": 1202,
+          "quote": "When signature verification cannot reach a trust service, the release stays unverified; the pipeline does not silently treat the artifact as trusted."
+        }
+      ]
+    },
+    {
+      "query_id": "en/signed_release/q09",
+      "text": "What information does the advisory retain for a compromised release?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/signed_release",
+          "start": 1204,
+          "end": 1360,
+          "quote": "A compromised release is withdrawn from the recommended installation path while its advisory preserves artifact hashes for operators investigating exposure."
+        }
+      ]
+    },
+    {
+      "query_id": "en/signed_release/q10",
+      "text": "When does the release publication job receive its upload credential?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/signed_release",
+          "start": 1362,
+          "end": 1484,
+          "quote": "The publication credential is available only to the final upload job after tests and artifact verification have succeeded."
+        }
+      ]
+    },
+    {
+      "query_id": "en/plan_entitlements/q01",
+      "text": "Can a Starter workspace enable vector retrieval without upgrading?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/plan_entitlements",
+          "start": 80,
+          "end": 211,
+          "quote": "| Starter search | Shared lexical index only | Vector retrieval must be enabled by an administrator after the workspace upgrades. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/plan_entitlements/q02",
+      "text": "May a suspended Team member start an export from an existing session?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/plan_entitlements",
+          "start": 212,
+          "end": 361,
+          "quote": "| Team exports | Workspace owners may request JSON exports | A suspended member cannot start an export even if an old browser session remains open. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/plan_entitlements/q03",
+      "text": "Is search query text included by default in the Business audit feed?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/plan_entitlements",
+          "start": 362,
+          "end": 527,
+          "quote": "| Business audit | Audit records retain actor and action metadata | Search query text is excluded from the audit feed unless content logging is explicitly enabled. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/plan_entitlements/q04",
+      "text": "What happens when an Enterprise customer-managed key endpoint is unreachable?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/plan_entitlements",
+          "start": 528,
+          "end": 698,
+          "quote": "| Enterprise keys | Customer-managed keys require a verified key endpoint | An unreachable endpoint pauses new encrypted writes instead of falling back to a vendor key. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/plan_entitlements/q05",
+      "text": "Do existing documents become unreadable when the Trial import quota is reached?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/plan_entitlements",
+          "start": 699,
+          "end": 855,
+          "quote": "| Trial connectors | Trial imports stop at the declared source quota | Existing indexed documents remain readable after the trial import quota is reached. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/plan_entitlements/q06",
+      "text": "Can an Education guest discover every workspace collection?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/plan_entitlements",
+          "start": 856,
+          "end": 997,
+          "quote": "| Education guests | Invited guests read explicitly shared collections | Guest membership never grants workspace-wide collection discovery. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/plan_entitlements/q07",
+      "text": "Does selecting a new Enterprise region immediately move stored data?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/plan_entitlements",
+          "start": 998,
+          "end": 1147,
+          "quote": "| Enterprise regions | Region changes create a reviewed migration request | Region selection in the UI alone does not move persisted customer data. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/plan_entitlements/q08",
+      "text": "Does Business billing administrator status grant document access?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/plan_entitlements",
+          "start": 1148,
+          "end": 1302,
+          "quote": "| Business billing | Billing administrators see invoices and payment state | Billing privileges do not grant access to the underlying document contents. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/plan_entitlements/q09",
+      "text": "Can ordinary Team collection restoration override a legal deletion request?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/plan_entitlements",
+          "start": 1303,
+          "end": 1465,
+          "quote": "| Team restoration | Deleted collections use the documented restoration window | A legal deletion request bypasses ordinary collection restoration availability. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/plan_entitlements/q10",
+      "text": "Does an Enterprise support plan automatically authorize staff collection access?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "en/plan_entitlements",
+          "start": 1466,
+          "end": 1630,
+          "quote": "| Enterprise support | Support access is time-bounded and customer-approved | Support entitlement does not authorize staff to browse collections without approval. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retention_matrix/q01",
+      "text": "What happens to a raw upload when canonical extraction fails?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/retention_matrix",
+          "start": 78,
+          "end": 232,
+          "quote": "| Raw upload | Removed after successful canonical extraction | Extraction failure retains the quarantined input until an operator records a disposition. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retention_matrix/q02",
+      "text": "When may superseded canonical text remain after a revision changes?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/retention_matrix",
+          "start": 233,
+          "end": 382,
+          "quote": "| Canonical text | Retained while its source revision is active | Superseded text remains only when a pinned citation snapshot still references it. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retention_matrix/q03",
+      "text": "Can a search cache wait for expiry after source permission revocation?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/retention_matrix",
+          "start": 383,
+          "end": 514,
+          "quote": "| Search cache | Invalidated when source permission changes | Time-to-live expiry alone is insufficient for a revoked permission. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retention_matrix/q04",
+      "text": "What must happen after restoring a backup before customers regain access?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/retention_matrix",
+          "start": 515,
+          "end": 654,
+          "quote": "| Backups | Expire under the backup schedule | Restoring a backup must replay completed deletion requests before customer access resumes. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retention_matrix/q05",
+      "text": "What must be recorded before applying a legal retention hold?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/retention_matrix",
+          "start": 655,
+          "end": 806,
+          "quote": "| Legal hold | Suspends ordinary expiration for named records | The hold reference and approving authority must be recorded before retention changes. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retention_matrix/q06",
+      "text": "May short-lived diagnostic samples retain raw authentication headers?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/retention_matrix",
+          "start": 807,
+          "end": 951,
+          "quote": "| Diagnostic sample | Stores sanitized technical fields | Raw authentication headers are prohibited even when the sample is kept only briefly. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retention_matrix/q07",
+      "text": "When can a failed-delivery retry plan be removed?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/retention_matrix",
+          "start": 952,
+          "end": 1096,
+          "quote": "| Failed delivery | Keeps the acknowledged retry plan | Removing the retry plan requires confirmed remote completion or explicit cancellation. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retention_matrix/q08",
+      "text": "Do reidentifiable user event trails qualify as anonymous metrics?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/retention_matrix",
+          "start": 1097,
+          "end": 1250,
+          "quote": "| Anonymous metrics | Retains aggregate counts without document text | Reidentifiable per-user event trails do not qualify for this retention category. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retention_matrix/q09",
+      "text": "Can a preview URL remain usable after its parent share is revoked?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/retention_matrix",
+          "start": 1251,
+          "end": 1396,
+          "quote": "| Temporary preview | Expires when the sharing session ends | An embedded preview URL must not extend access after the parent share is revoked. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/retention_matrix/q10",
+      "text": "Which storage classes are tracked when a workspace is deleted?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/retention_matrix",
+          "start": 1397,
+          "end": 1546,
+          "quote": "| Deleted workspace | Blocks all new processing immediately | The deletion workflow separately tracks primary storage, derived indexes and backups. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/connector_matrix/q01",
+      "text": "Does a failed object-listing page imply unseen objects were deleted?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/connector_matrix",
+          "start": 81,
+          "end": 236,
+          "quote": "| Object storage | Listing continuation tokens belong to one scan | A failed page restarts from the saved token and does not mark unseen objects deleted. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/connector_matrix/q02",
+      "text": "Can matching filenames in separate repositories share indexing state?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/connector_matrix",
+          "start": 237,
+          "end": 397,
+          "quote": "| Source control | File identity includes repository and revision | Identical filenames in separate repositories cannot overwrite each other's indexing state. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/connector_matrix/q03",
+      "text": "Does unchanged shared-drive text permit stale reader permissions?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/connector_matrix",
+          "start": 398,
+          "end": 540,
+          "quote": "| Shared drive | Permission changes emit metadata-only updates | Unchanged document text does not excuse retaining stale reader permissions. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/connector_matrix/q04",
+      "text": "What changes when a wiki page moves but its content stays unchanged?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/connector_matrix",
+          "start": 541,
+          "end": 700,
+          "quote": "| Wiki pages | A move preserves the logical page identifier | The connector updates citation location without unnecessarily recomputing unchanged embeddings. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/connector_matrix/q05",
+      "text": "May support ticket private notes be merged into a public chunk?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/connector_matrix",
+          "start": 701,
+          "end": 865,
+          "quote": "| Support tickets | Private notes retain their visibility boundary | Combining public comments and private notes into one universally visible chunk is prohibited. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/connector_matrix/q06",
+      "text": "Which lineage must mail attachment text preserve?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/connector_matrix",
+          "start": 866,
+          "end": 1008,
+          "quote": "| Mail archives | Attachments carry the parent message lineage | Detached attachment text must preserve its source and permission reference. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/connector_matrix/q07",
+      "text": "Can a partial database scan advance its committed watermark?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/connector_matrix",
+          "start": 1009,
+          "end": 1167,
+          "quote": "| Database rows | Snapshot reads use a recorded transaction boundary | A partially completed incremental scan cannot advance the committed source watermark. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/connector_matrix/q08",
+      "text": "When can an event connector advance consumer progress?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/connector_matrix",
+          "start": 1168,
+          "end": 1322,
+          "quote": "| Event streams | Consumer progress advances after index acknowledgement | A published but unacknowledged batch stays eligible for replay after restart. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/connector_matrix/q09",
+      "text": "Does a crawler redirect bypass the source allowlist?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/connector_matrix",
+          "start": 1323,
+          "end": 1474,
+          "quote": "| Web crawler | Canonical URLs are normalized before identity assignment | Redirect targets remain subject to the source allowlist and robots policy. |"
+        }
+      ]
+    },
+    {
+      "query_id": "en/connector_matrix/q10",
+      "text": "How does the calendar connector handle cancelled events?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "en/connector_matrix",
+          "start": 1475,
+          "end": 1635,
+          "quote": "| Calendar source | Cancelled events create explicit removal work | Hiding a cancelled event in the source UI alone cannot remove its stale retrieval vectors. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/stock_reservation/q01",
+      "text": "Aynı siparişin stok rezervasyonu tekrar gönderilirse miktar yeniden azalır mı?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/stock_reservation",
+          "start": 77,
+          "end": 252,
+          "quote": "# Stok rezervasyonu, sipariş kimliği ve ürün koduyla tanımlanır; aynı isteğin tekrarı ikinci kez kullanılabilir miktarı azaltmaz.\nTEKRAR_REZERVASYON_AZALTMAZ = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/stock_reservation/q02",
+      "text": "Kalite kontrolündeki ürünler satılabilir stok hesabına dahil midir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/stock_reservation",
+          "start": 254,
+          "end": 419,
+          "quote": "# Satılabilir stok hesabında kalite kontrolünde bekleyen ürünler yer almaz; fiziksel rafta bulunmaları satışa yeterli değildir.\nKARANTINA_STOGU_HARIC = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/stock_reservation/q03",
+      "text": "Süresi dolan fakat tahsilatı tamamlanan rezervasyona ne olur?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/stock_reservation",
+          "start": 421,
+          "end": 593,
+          "quote": "# Rezervasyon süresi dolduğunda ürün yeniden satışa açılır, ancak tahsilatın tamamlandığı siparişler otomatik serbest bırakılmaz.\nTAHSIL_EDILENI_KORU = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/stock_reservation/q04",
+      "text": "Parçalı sevkiyatta hangi miktar stoktan düşülür?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/stock_reservation",
+          "start": 595,
+          "end": 758,
+          "quote": "# Parçalı sevkiyatın stok düşümü yalnızca fiilen paketlenen ürün miktarı için yapılır; kalan miktar rezervasyonda kalır.\nPAKETLENEN_KADAR_DUS = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/stock_reservation/q05",
+      "text": "İade edilen ürün ne zaman yeniden satılabilir hale gelir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/stock_reservation",
+          "start": 760,
+          "end": 911,
+          "quote": "# İade edilen ürün, inceleme tamamlanmadan satılabilir stoka dönmez; kabul kararı ayrı bir stok hareketi üretir.\nIADE_INCELEMESI_GEREKLI = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/stock_reservation/q06",
+      "text": "Depolar arası gönderim hedef depoda ne zaman satılabilir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/stock_reservation",
+          "start": 913,
+          "end": 1067,
+          "quote": "# Depolar arası aktarımda çıkış kaydı tek başına hedef depoda satış hakkı oluşturmaz; teslim alma onayı gerekir.\nHEDEF_KABULU_GEREKLI = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/stock_reservation/q07",
+      "text": "Negatif stok düzeltmesinde hangi bilgiler birlikte saklanır?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/stock_reservation",
+          "start": 1069,
+          "end": 1232,
+          "quote": "# Negatif stok düzeltmesi, yetkili kullanıcının açıklamasını ve sayım referansını aynı işlemde saklamak zorundadır.\nDUZELTME_GEREKCESI_GEREKLI = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/stock_reservation/q08",
+      "text": "Tekrar gelen rezervasyon iptali stoğu şişirir mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/stock_reservation",
+          "start": 1234,
+          "end": 1386,
+          "quote": "# Rezervasyon iptal edilirken daha önce serbest bırakılmış miktar yeniden eklenmez; işlem kimliğiyle tekrarlar elenir.\nIPTAL_TEKRARINI_ELE = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/stock_reservation/q09",
+      "text": "Sepette görünmek ürün için stok garantisi sağlar mı?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/stock_reservation",
+          "start": 1388,
+          "end": 1531,
+          "quote": "# Sepetteki ürün, rezervasyon başarıyla tamamlanana kadar müşteriye stok garantisi olarak gösterilmez.\nSEPET_STOK_GARANTISI_DEGIL = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/stock_reservation/q10",
+      "text": "Son ürün için eşzamanlı iki sipariş geldiğinde ne olur?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/stock_reservation",
+          "start": 1533,
+          "end": 1682,
+          "quote": "# Eşzamanlı son ürün taleplerinde stok kontrolü ve rezervasyon kaydı atomiktir; yalnızca bir sipariş başarılı olur.\nSON_URUN_ATOMIK = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/invoice_rounding/q01",
+      "text": "Fatura tutarları neden kuruş tabanlı tam sayılarla hesaplanır?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/invoice_rounding",
+          "start": 82,
+          "end": 234,
+          "quote": "# Fatura hesaplaması ikili kayan nokta yerine kuruş tabanlı tam sayılar kullanır; sunum biçimi hesap değerini değiştirmez.\nKURUS_TAMSAYI = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/invoice_rounding/q02",
+      "text": "Satır indirimi vergi matrahından önce mi uygulanır?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/invoice_rounding",
+          "start": 236,
+          "end": 386,
+          "quote": "# Vergi matrahı, satır indirimi uygulandıktan sonra belirlenir; genel belge indirimi dağıtımı ayrıca kaydedilir.\nINDIRIM_SONRASI_MATRAH = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/invoice_rounding/q03",
+      "text": "Fatura yuvarlama farkı nasıl gösterilir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/invoice_rounding",
+          "start": 388,
+          "end": 536,
+          "quote": "# Yuvarlama farkı, son satırın fiyatını gizlice değiştirmek yerine ayrı bir düzeltme kalemi olarak gösterilir.\nYUVARLAMA_AYRI_KALEM = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/invoice_rounding/q04",
+      "text": "İptal edilen fatura numarası yeniden kullanılabilir mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/invoice_rounding",
+          "start": 538,
+          "end": 682,
+          "quote": "# İptal edilmiş faturanın seri numarası yeni belgede kullanılamaz; numara dizisinin denetim izi korunur.\nIPTAL_NUMARASI_TEKRARLANMAZ = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/invoice_rounding/q05",
+      "text": "Döviz kuru değişince eski fatura tutarı güncellenir mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/invoice_rounding",
+          "start": 684,
+          "end": 831,
+          "quote": "# Dövizli faturada kur tarihi belgeyle saklanır; daha sonraki piyasa hareketi geçmiş belgenin tutarını değiştirmez.\nKUR_TARIHI_SABIT = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/invoice_rounding/q06",
+      "text": "Kısmi iade için hangi satır kimliği ve miktar sınırı kullanılır?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/invoice_rounding",
+          "start": 833,
+          "end": 981,
+          "quote": "# Kısmi iade belgesi, özgün faturanın satır kimliğine bağlanır ve daha önce iade edilen miktarı aşamaz.\nIADE_ORIJINAL_SATIRA_BAGLI = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/invoice_rounding/q07",
+      "text": "Onaylanmış faturadaki vergi numarası nasıl düzeltilir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/invoice_rounding",
+          "start": 983,
+          "end": 1154,
+          "quote": "# Fatura taslağı onaylanana kadar vergi numarası düzeltilebilir; onay sonrası değişiklik yeni bir düzeltme belgesi gerektirir.\nONAY_SONRASI_DUZELTME_BELGESI = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/invoice_rounding/q08",
+      "text": "Ödenmemiş fatura kendiliğinden geçersiz olur mu?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/invoice_rounding",
+          "start": 1156,
+          "end": 1311,
+          "quote": "# Tahsilat durumu ile belgenin hukuki geçerliliği farklı alanlardır; ödenmemiş fatura otomatik olarak geçersiz sayılmaz.\nTAHSILAT_AYRI_DURUM = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/invoice_rounding/q09",
+      "text": "Fatura toplamında hangi kalemler yer alır?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/invoice_rounding",
+          "start": 1313,
+          "end": 1452,
+          "quote": "# Fatura özetinde görünen toplam, indirimi, vergiyi ve yuvarlama kalemini içerir; gizli masraf satırı eklenemez.\nTOPLAM_SEFFAF = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/invoice_rounding/q10",
+      "text": "Aynı faturalama komutu tekrarlandığında yeni seri numarası alınır mı?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/invoice_rounding",
+          "start": 1454,
+          "end": 1593,
+          "quote": "# Aynı faturalama komutunun tekrarında mevcut belge kimliği döner; ikinci bir seri numarası ayrılmaz.\nKOMUT_TEKRARI_AYNI_BELGE = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/report_filter/q01",
+      "text": "İstek gövdesine başka kuruluş yazmak raporun kapsamını değiştirir mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/report_filter",
+          "start": 84,
+          "end": 240,
+          "quote": "# Rapor sorgusu kuruluş kimliğini oturumdan alır; istek gövdesindeki başka kuruluş değeri yetki sınırını değiştiremez.\nKURULUS_OTURUMDAN = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/report_filter/q02",
+      "text": "Rapor tarih filtresi boşsa hangi dönem seçilir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/report_filter",
+          "start": 242,
+          "end": 403,
+          "quote": "# Boş tarih filtresi tüm geçmişi açmak yerine tanımlı raporlama dönemini seçer ve seçilen dönemi yanıtta gösterir.\nBOS_TARIH_VARSAYILAN_DONEM = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/report_filter/q03",
+      "text": "Dönem sınırındaki kayıt iki raporda birden sayılır mı?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/report_filter",
+          "start": 405,
+          "end": 555,
+          "quote": "# Rapor bitiş zamanı hariç tutulur; sonraki dönemin başlangıç anındaki kayıt iki dönem sonucunda birden sayılmaz.\nBITIS_ZAMANI_HARIC = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/report_filter/q04",
+      "text": "Silinmiş müşterinin kimlik bilgisi raporda yeniden görünür mü?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/report_filter",
+          "start": 557,
+          "end": 732,
+          "quote": "# Silinmiş müşteri kayıtları kimlik bilgileriyle rapora dönmez; zorunlu finansal toplamlar anonim muhasebe referansıyla tutulur.\nSILINMIS_MUSTERI_KIMLIGINI_GIZLE = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/report_filter/q05",
+      "text": "Kullanıcı rapor sıralamasında keyfi veritabanı alanı kullanabilir mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/report_filter",
+          "start": 734,
+          "end": 889,
+          "quote": "# Sıralama alanı izin verilen listeden seçilir; kullanıcı girdisi doğrudan veritabanı alan adı olarak birleştirilmez.\nSIRALAMA_IZIN_LISTESI = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/report_filter/q06",
+      "text": "Rapor filtresi değişince önceki sayfalama imleci kullanılabilir mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/report_filter",
+          "start": 891,
+          "end": 1040,
+          "quote": "# Sayfalama imleci filtre özetiyle bağlıdır; filtre değiştirilirse eski imleç reddedilir ve baştan sorgu istenir.\nIMLEC_FILTREYE_BAGLI = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/report_filter/q07",
+      "text": "Çok sayfalı rapora sonradan oluşan kayıtlar karışır mı?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/report_filter",
+          "start": 1042,
+          "end": 1194,
+          "quote": "# Kaynak rapor hazırlanırken değişirse aynı anlık görüntü korunur; sonraki sayfalarda yeni kayıtlar araya girmez.\nRAPOR_ANLIK_GORUNTUSU = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/report_filter/q08",
+      "text": "Rapor sonuç sınırı aşılırsa kullanıcıya ne bildirilir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/report_filter",
+          "start": 1196,
+          "end": 1345,
+          "quote": "# Sonuç sınırı aşıldığında rapor kesildiğini açıkça bildirir; eksik toplamlar tam sonuçmuş gibi sunulmaz.\nKESILEN_RAPORU_BILDIR = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/report_filter/q09",
+      "text": "Rapor indirme bağlantısını bilen herkes dosyaya erişebilir mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/report_filter",
+          "start": 1347,
+          "end": 1513,
+          "quote": "# İndirme bağlantısı raporu başlatan kullanıcıya bağlanır; bağlantıyı bilen başka kullanıcı otomatik erişim kazanmaz.\nINDIRME_KULLANICIYA_BAGLI = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/report_filter/q10",
+      "text": "Yaklaşık rapor sayımı muhasebe mutabakatı için kullanılabilir mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/report_filter",
+          "start": 1515,
+          "end": 1669,
+          "quote": "# Önizleme sayımı ile kesin finansal toplam ayrı etiketlenir; yaklaşık sayım muhasebe mutabakatında kullanılamaz.\nYAKLASIK_SAYIMI_ETIKETLE = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/catalog_alias/q01",
+      "text": "Aynı katalog eş adı iki kuruluşta kullanılabilir mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/catalog_alias",
+          "start": 89,
+          "end": 247,
+          "quote": "# Katalog eş adları kuruluş kapsamında benzersizdir; aynı kısa adın başka kuruluşta kullanılması çakışma yaratmaz.\nES_AD_KURULUS_KAPSAMLI = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/catalog_alias/q02",
+      "text": "Ürün eş adı kendisine yönlendirilirse ne olur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/catalog_alias",
+          "start": 249,
+          "end": 399,
+          "quote": "# Bir ürün eş adı kendi kendisine yönlendirilemez; kaydetme anında döngü denetimi yapılır ve istek reddedilir.\nKENDINE_YONLENME_YASAK = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/catalog_alias/q03",
+      "text": "Eş ad zinciri çok uzunsa katalog hangi sonucu döndürür?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/catalog_alias",
+          "start": 401,
+          "end": 561,
+          "quote": "# Eş ad zinciri izin verilen çözüm derinliğini aşarsa ilk ürüne düşülmez; açık bir çözümleme hatası döndürülür.\nDERINLIK_HATASI_ACIK = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/catalog_alias/q04",
+      "text": "Katalog eş adlarında Türkçe i ve ı ayrımı nasıl ele alınır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/catalog_alias",
+          "start": 563,
+          "end": 729,
+          "quote": "# Büyük küçük harf eşlemesi yerel ayara göre yapılır; Türkçe noktalı ve noktasız i ayrımı katalog politikasında korunur.\nTURKCE_HARF_POLITIKASI = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/catalog_alias/q05",
+      "text": "Arşivlenmiş ürünün eş adı otomatik olarak başka ürüne aktarılır mı?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/catalog_alias",
+          "start": 731,
+          "end": 905,
+          "quote": "# Arşivlenmiş ürünün eş adı satışa açık başka ürüne sessizce geçirilmez; yönlendirme için ayrı yetkili onayı gerekir.\nARSIV_ES_ADI_OTOMATIK_TASINMAZ = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/catalog_alias/q06",
+      "text": "Eş ad değişince geçmiş siparişlerin ürün kimliği değişir mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/catalog_alias",
+          "start": 907,
+          "end": 1075,
+          "quote": "# Eş ad değişikliği arama önbelleğini geçersiz kılar, ancak özgün ürün kimliğini ve sipariş geçmişini değiştirmez.\nES_AD_DEGISINCE_KIMLIK_SABIT = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/catalog_alias/q07",
+      "text": "İçe aktarmada iki ürün aynı eş adı isterse dosya sırası kazananı belirler mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/catalog_alias",
+          "start": 1077,
+          "end": 1244,
+          "quote": "# Katalog içe aktarmasında çakışan eş adlar satır hatası oluşturur; dosya sırası kazanan ürünü belirlemek için kullanılmaz.\nCAKISAN_ES_AD_HATASI = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/catalog_alias/q08",
+      "text": "Yalnızca boşluklardan oluşan katalog eş adı kabul edilir mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/catalog_alias",
+          "start": 1246,
+          "end": 1379,
+          "quote": "# Boşluk kırpma eş ad denetiminden önce uygulanır; yalnızca boşluklardan oluşan eş ad kaydedilemez.\nBOS_ES_ADI_REDDET = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/catalog_alias/q09",
+      "text": "Eş ad silindiğinde doğrudan ürün bağlantıları çalışır mı?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/catalog_alias",
+          "start": 1381,
+          "end": 1528,
+          "quote": "# Eş ad silme işlemi ürünü silmez; doğrudan ürün kimliğini kullanan bağlantılar çalışmaya devam eder.\nES_AD_SILME_URUNU_SILMEZ = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/catalog_alias/q10",
+      "text": "Katalog eş adı gizli ürünlere erişmek için kullanılabilir mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/catalog_alias",
+          "start": 1530,
+          "end": 1680,
+          "quote": "# Birincil ürün adı ile eş ad araması aynı yetki filtresini kullanır; eş ad üzerinden gizli ürün keşfedilemez.\nES_AD_YETKI_FILTRESI = True"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/knowledge_approval/q01",
+      "text": "Bilgi bankası taslağını kimler okuyabilir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/knowledge_approval",
+          "start": 32,
+          "end": 180,
+          "quote": "Bilgi bankası taslağı yalnızca yazar ve atanan inceleyici tarafından okunabilir. Taslağın aranabilir olması yayın onayının yerini tutmaz."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/knowledge_approval/q02",
+      "text": "Onaylanmış bilgi bankası yazısı değiştirilirse ne gerekir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/knowledge_approval",
+          "start": 182,
+          "end": 318,
+          "quote": "Yayın onayı, metnin gözden geçirilen sürümüne bağlanır. Yazar onay sonrasında içerik değiştirirse yeniden inceleme gerekir."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/knowledge_approval/q03",
+      "text": "Hukuki bilgi içeren maddelerde genel editör onayı yeterli midir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/knowledge_approval",
+          "start": 320,
+          "end": 453,
+          "quote": "Hukuki bilgi içeren maddelerde konu uzmanının onayı zorunludur. Genel editörün biçim denetimi bu uzman onayını karşılamaz."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/knowledge_approval/q04",
+      "text": "Gelecek tarihli bilgi bankası yazısının önizlemesi yayını başlatır mı?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/knowledge_approval",
+          "start": 455,
+          "end": 587,
+          "quote": "Yayın tarihi gelecekte olan bir yazı planlama kuyruğunda bekler. Önizleme bağlantısının açılması onu herkese yayımlamaz."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/knowledge_approval/q05",
+      "text": "Bilgi bankası yazısı geri çekilince hangi türetilmiş içerikler kaldırılır?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/knowledge_approval",
+          "start": 589,
+          "end": 745,
+          "quote": "Bir yazı geri çekildiğinde arama sonuçları ve türetilmiş özetler de kaldırma kuyruğuna alınır. Yalnızca başlığı gizlemek yeterli sayılmaz."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/knowledge_approval/q06",
+      "text": "Yazar ekipten ayrıldığında yayımlanmış yazıya ne olur?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/knowledge_approval",
+          "start": 747,
+          "end": 892,
+          "quote": "Yazarın ekipten ayrılması yayımlanmış yazıyı otomatik silmez. İçerik sahipliği yeni bir sorumluya denetlenebilir kayıtla aktarılır."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/knowledge_approval/q07",
+      "text": "Özgün yazı onayı çeviriyi de onaylanmış yapar mı?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/knowledge_approval",
+          "start": 894,
+          "end": 1032,
+          "quote": "Çeviri sürümleri ayrı inceleme durumuna sahiptir. Özgün dildeki onay, çevirideki anlamın doğrulandığı şeklinde kullanılamaz."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/knowledge_approval/q08",
+      "text": "Bilgi bankasında süresi dolan uyarı kutusu nasıl ele alınır?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/knowledge_approval",
+          "start": 1034,
+          "end": 1170,
+          "quote": "Süreli uyarı kutuları geçerlilik tarihiyle saklanır. Tarihi geçen uyarı kaybolmak yerine içerik sahibine inceleme görevi açar."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/knowledge_approval/q09",
+      "text": "Tartışmalı bilgi bankası değişikliğinde hangi kayıt gerekir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/knowledge_approval",
+          "start": 1172,
+          "end": 1330,
+          "quote": "İnceleyici çekişmeli bir değişiklikte karar gerekçesini kaydeder. Sadece kabul düğmesine basılması itiraz sürecini izlemek için yeterli değildir."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/knowledge_approval/q10",
+      "text": "Acil bilgi bankası yayını hangi ek kayıtları gerektirir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/knowledge_approval",
+          "start": 1332,
+          "end": 1477,
+          "quote": "Acil yayın yetkisi olan kişi normal incelemeyi erteleyebilir, ancak gerekçe ve sonradan inceleme sorumlusunu kayıt altına almak zorundadır."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/import_workflow/q01",
+      "text": "Kolon eşlemesi onaylanmadan toplu yükleme verisi kaydedilir mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/import_workflow",
+          "start": 32,
+          "end": 177,
+          "quote": "Toplu yüklemenin ilk adımı dosyanın önizlemesidir. Kullanıcı kolon eşlemesini onaylamadan hiçbir satır kalıcı iş verisine yazılmaz."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/import_workflow/q02",
+      "text": "Sorunsuz içe aktarma önizlemesi tüm dosyanın geçerli olduğunu kanıtlar mı?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/import_workflow",
+          "start": 179,
+          "end": 346,
+          "quote": "İçe aktarma önizlemesi örnek satırlar gösterir ve örnek sayısını belirtir. Önizlemenin temiz görünmesi bütün dosyanın hatasız olduğunu garanti etmez."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/import_workflow/q03",
+      "text": "Belirsiz tarih biçimiyle karşılaşan yükleme akışı ne yapar?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/import_workflow",
+          "start": 348,
+          "end": 506,
+          "quote": "Tarih kolonundaki belirsiz değer için kullanıcıdan açık biçim seçimi istenir. Sistem gün ve ay yerini tahmin ederek müşteri verisini değiştirmez."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/import_workflow/q04",
+      "text": "Eksik zorunlu alan içeren satır için hangi tanı bilgisi korunur?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/import_workflow",
+          "start": 508,
+          "end": 663,
+          "quote": "Zorunlu alanı eksik satır hata raporuna alınır ve satır numarası korunur. Hata metni tam müşteri kaydını paylaşılabilir bağlantıya taşımaz."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/import_workflow/q05",
+      "text": "Kısmi başarılı yüklemede atlanan satırlar nasıl bildirilir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/import_workflow",
+          "start": 665,
+          "end": 798,
+          "quote": "Kullanıcı geçerli satırlarla devam etmeyi seçerse atlanan hatalı satırların sayısı sonuç ekranında açıkça gösterilir."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/import_workflow/q06",
+      "text": "Kolon eşlemesi değişince eski içe aktarma onayı kullanılabilir mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/import_workflow",
+          "start": 800,
+          "end": 946,
+          "quote": "Önizlemeden sonra eşleme değişirse daha önce verilen onay geçersiz olur. Yeni eşleme için güncel örneklerin yeniden incelenmesi gerekir."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/import_workflow/q07",
+      "text": "Toplu yükleme ekranını kapatmak işi iptal eder mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/import_workflow",
+          "start": 948,
+          "end": 1085,
+          "quote": "Yükleme ekranından çıkmak arka plandaki işi otomatik iptal etmez. İş listesi ayrı iptal düğmesi ve güncel durum bilgisi sunar."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/import_workflow/q08",
+      "text": "İçe aktarma iptali önceden yazılmış satırları otomatik geri alır mı?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/import_workflow",
+          "start": 1087,
+          "end": 1256,
+          "quote": "İptal isteği, henüz uygulanmamış satırların işlenmesini durdurur. Önceden kaydedilmiş satırların geri alınması ayrı düzeltme işlemi olarak açıklanır."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/import_workflow/q09",
+      "text": "Aynı işlem anahtarıyla tekrar yüklenen dosya yeni iş açar mı?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/import_workflow",
+          "start": 1258,
+          "end": 1417,
+          "quote": "Tekrarlanan dosya yüklemesinde aynı işlem anahtarı mevcut işi gösterir. Kullanıcı yeni bir iş istediğinde bilinçli olarak yeni anahtar oluşturulur."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/import_workflow/q10",
+      "text": "İçe aktarma sonuç dosyası hangi sürüm bilgilerini taşır?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/import_workflow",
+          "start": 1419,
+          "end": 1584,
+          "quote": "Sonuç dosyası, kaynak dosya özeti ve kullanılan eşleme sürümünü içerir. Böylece kullanıcı hangi yüklemenin hatalarını düzelttiğini doğrulayabilir."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/org_invitation/q01",
+      "text": "Davet bağlantısı farklı hesapla açılırsa hangi adım uygulanır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/org_invitation",
+          "start": 36,
+          "end": 196,
+          "quote": "Kuruluş daveti belirtilen e-posta adresine bağlanır. Davet bağlantısını farklı hesapla açan kişi kabul işleminden önce doğru hesaba yönlendirilir."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/org_invitation/q02",
+      "text": "Davet eden kişinin yetkisi değişmişse rol ne zaman yeniden doğrulanır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/org_invitation",
+          "start": 198,
+          "end": 360,
+          "quote": "Davet hazırlanırken seçilen rol, kabul anında daveti oluşturanın halen atayabildiği rollerle yeniden doğrulanır. Eski yetki kalıcı atama hakkı vermez."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/org_invitation/q03",
+      "text": "Daveti iptal etmek kabul etmiş üyenin erişimini de kaldırır mı?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/org_invitation",
+          "start": 362,
+          "end": 515,
+          "quote": "Daveti iptal etmek kabul edilmemiş bağlantıyı geçersiz kılar. Daha önce üye olmuş kişinin erişimi ayrıca üyelik yönetiminden kaldırılır."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/org_invitation/q04",
+      "text": "Kimlik sağlayıcısı zorunluyken yerel parolayla davet kabul edilebilir mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/org_invitation",
+          "start": 517,
+          "end": 668,
+          "quote": "Kuruluşun zorunlu kimlik sağlayıcısı etkinse davet kabulü sağlayıcı oturumuyla tamamlanır. Yerel parola daveti güvenlik kuralını atlatmaz."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/org_invitation/q05",
+      "text": "Süresi dolmuş davet bağlantısı nasıl yenilenir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/org_invitation",
+          "start": 670,
+          "end": 800,
+          "quote": "Davet süresi dolduğunda eski bağlantı yeniden etkinleştirilmez. Yeni davet gönderimi yeni bir geçerlilik kaydı oluşturur."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/org_invitation/q06",
+      "text": "Aynı kişiye ikinci davet göndermek yinelenen üyelik yaratır mı?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/org_invitation",
+          "start": 802,
+          "end": 950,
+          "quote": "Aynı adrese bekleyen ikinci davet göndermek mevcut üyeyi çoğaltmaz. Yeni mesajın rolü ve davet geçmişi kullanıcıya açıkça gösterilir."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/org_invitation/q07",
+      "text": "Davette koleksiyon listesi boşsa kullanıcı neye otomatik erişir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/org_invitation",
+          "start": 952,
+          "end": 1101,
+          "quote": "Davetin varsayılan koleksiyon erişimi açık bir listeyle tanımlanır. Boş liste hiçbir koleksiyona otomatik erişim vermediği anlamına gelir."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/org_invitation/q08",
+      "text": "Kuruluş kotası doluyken davet kabulü hangi sonucu verir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/org_invitation",
+          "start": 1103,
+          "end": 1242,
+          "quote": "Kuruluş kotası doluysa davet kabulü üyelik oluşturmadan durdurulur. Davet edilen kullanıcıya başka üyelerin kimliği açıklanmaz."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/org_invitation/q09",
+      "text": "Kuruluş daveti denetim kaydında hangi gizli bilgi tutulmaz?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/org_invitation",
+          "start": 1244,
+          "end": 1376,
+          "quote": "Davet denetim kaydı göndereni, hedef adresi ve seçilen rolü tutar. Gizli davet belirtecinin açık değeri günlüğe yazılmaz."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/org_invitation/q10",
+      "text": "Çıkarılan üye eski davet bağlantısıyla tekrar katılabilir mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/org_invitation",
+          "start": 1378,
+          "end": 1537,
+          "quote": "Bir kişi kuruluş üyeliğinden çıkarıldıktan sonra eski kabul bağlantısı tekrar kullanılarak üyeliğini geri kazanamaz. Yeni yetkili daveti gerekir."
+        }
+      ]
+    },
+    {
+      "query_id": "tr/approval_matrix/q01",
+      "text": "Donanım talebini açan kişi son onayı verebilir mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/approval_matrix",
+          "start": 77,
+          "end": 195,
+          "quote": "| Donanım talebi | Ekip yöneticisi bütçeyi doğrular | Talebi açan kişi kendi talebinin son onayını veremez. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/approval_matrix/q02",
+      "text": "Ücretsiz yazılım denemesinde veri aktarımı incelemesi atlanabilir mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/approval_matrix",
+          "start": 196,
+          "end": 344,
+          "quote": "| Yazılım aboneliği | Güvenlik incelemesi sözleşmeden önce tamamlanır | Ücretsiz deneme, veri aktarımı kontrolünü ortadan kaldırmaz. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/approval_matrix/q03",
+      "text": "Acil bakımın geçici onayı hangi sonraki yükümlülükleri kaldırmaz?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/approval_matrix",
+          "start": 345,
+          "end": 476,
+          "quote": "| Acil bakım | Geçici onay bakım kesintisini gidermek için verilir | Sonradan mali kontrol ve gerekçe kaydı zorunlu kalır. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/approval_matrix/q04",
+      "text": "Danışmanlıkta çalışma saati bildirimi teslim kabulü için yeterli midir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/approval_matrix",
+          "start": 477,
+          "end": 605,
+          "quote": "| Danışmanlık | Teslim ölçütleri siparişe eklenir | Yalnızca çalışma saati bildirimi teslim kabulü yerine geçmez. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/approval_matrix/q05",
+      "text": "Seyahatte başka ekibin bütçesi hangi koşulla kullanılabilir?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/approval_matrix",
+          "start": 606,
+          "end": 725,
+          "quote": "| Seyahat | Proje kodu harcamanın amacını gösterir | Başka ekibin bütçesi yazılı onay olmadan kullanılamaz. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/approval_matrix/q06",
+      "text": "Önceki sözleşme onayı yenilemedeki yeni fiyatı kapsar mı?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/approval_matrix",
+          "start": 726,
+          "end": 855,
+          "quote": "| Yenileme | Otomatik yenileme tarihi önceden incelenir | Eski sözleşmenin onayı yeni fiyatı kabul etmek anlamına gelmez. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/approval_matrix/q07",
+      "text": "Ürünün fiziksel iadesi fatura düzeltmesini tamamlar mı?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/approval_matrix",
+          "start": 856,
+          "end": 986,
+          "quote": "| İade | Kabul edilmeyen ürünün satıcıya dönüşü kaydedilir | Fiziksel iade tek başına fatura düzeltmesini kapatmaz. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/approval_matrix/q08",
+      "text": "Onay sınırının altında kalmak için sipariş bölünebilir mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/approval_matrix",
+          "start": 987,
+          "end": 1128,
+          "quote": "| Bölünmüş talep | Bağlantılı siparişler birlikte değerlendirilir | Onay sınırını aşmamak için talebi bölmek kabul edilmez. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/approval_matrix/q09",
+      "text": "Satın alma vekaleti bitince bekleyen onaylar kime döner?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/approval_matrix",
+          "start": 1129,
+          "end": 1269,
+          "quote": "| Yetki devri | Süreli vekil yalnızca belirtilen kapsamda karar verir | Vekalet süresi bitince bekleyen onaylar asıl sorumluya döner. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/approval_matrix/q10",
+      "text": "Uyuşmazlık varken satın alma siparişi kapanmış sayılabilir mi?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "tr/approval_matrix",
+          "start": 1270,
+          "end": 1397,
+          "quote": "| Kapanış | Teslim ve ödeme eşleştirmesi tamamlanır | Çözümlenmemiş uyuşmazlık varsa sipariş kapandı sayılmaz. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/accessibility_matrix/q01",
+      "text": "İletişim kutusu kapatıldığında klavye odağı nereye döner?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/accessibility_matrix",
+          "start": 88,
+          "end": 211,
+          "quote": "| Klavye odağı | Açılan iletişim kutusu odağı içine alır | Kapatılınca odak kutuyu açan denetime geri döner. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/accessibility_matrix/q02",
+      "text": "Yalnızca renk değiştirerek form hatası bildirilebilir mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/accessibility_matrix",
+          "start": 212,
+          "end": 332,
+          "quote": "| Hata mesajı | Hatalı alan metinle tanımlanır | Renk değişimi tek başına doğrulama hatası bildirimi olamaz. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/accessibility_matrix/q03",
+      "text": "Azaltılmış hareket tercihinde temel görev animasyona bağlı olabilir mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/accessibility_matrix",
+          "start": 333,
+          "end": 486,
+          "quote": "| Hareket tercihi | Azaltılmış hareket isteği geçişlere uygulanır | Kullanıcının temel görevi tamamlaması animasyona bağlı bırakılamaz. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/accessibility_matrix/q04",
+      "text": "Asenkron arama sonuçları ekran okuyucuya nasıl bildirilir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/accessibility_matrix",
+          "start": 487,
+          "end": 622,
+          "quote": "| Ekran okuyucu | Asenkron sonuç durumu uygun canlı bölgeyle duyurulur | Her tuş vuruşunda tüm sonuç listesi tekrar okutulmaz. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/accessibility_matrix/q05",
+      "text": "Yakınlaştırmada kritik eylem düğmesi görünüm dışında kalabilir mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/accessibility_matrix",
+          "start": 623,
+          "end": 751,
+          "quote": "| Yakınlaştırma | Dar görünümde içerik akışı korunur | Kritik eylem düğmesi yatay kaydırma dışında kaybolamaz. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/accessibility_matrix/q06",
+      "text": "Oturum süresi bitmeden kullanıcıya hangi seçenek sunulur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/accessibility_matrix",
+          "start": 752,
+          "end": 894,
+          "quote": "| Oturum süresi | Süre dolmadan uzatma seçeneği sunulur | Güvenlik kuralı gerektirmedikçe kaydedilmemiş içerik uyarısız silinmez. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/accessibility_matrix/q07",
+      "text": "İşlevsel simgenin erişilebilir adı neyi anlatmalıdır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/accessibility_matrix",
+          "start": 895,
+          "end": 1038,
+          "quote": "| Görsel açıklama | İşlevsel simgenin erişilebilir adı görevini anlatır | Dosya adı anlamlı alternatif metin yerine kullanılamaz. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/accessibility_matrix/q08",
+      "text": "Tablo hücrelerinde yalnızca görsel hizalama yeterli midir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/accessibility_matrix",
+          "start": 1039,
+          "end": 1189,
+          "quote": "| Tablo başlığı | Veri hücreleri ilgili başlıklarla ilişkilendirilir | Görsel hizalama başlık ilişkisini yardımcı teknolojiye iletmez. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/accessibility_matrix/q09",
+      "text": "Küçük simgenin dokunma alanı simgeden büyük olabilir mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/accessibility_matrix",
+          "start": 1190,
+          "end": 1337,
+          "quote": "| Dokunma hedefi | Yakın eylemler yanlış seçimi azaltacak şekilde ayrılır | Küçük simge daha geniş etkileşim alanına sahip olabilir. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/accessibility_matrix/q10",
+      "text": "Başka dildeki alıntı için genel sayfa dili yeterli midir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/accessibility_matrix",
+          "start": 1338,
+          "end": 1491,
+          "quote": "| Dil değişimi | İçerikteki farklı dil bölümü açıkça işaretlenir | Sayfanın genel dili başka dildeki alıntının telaffuzunu belirlemez. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/batch_status_matrix/q01",
+      "text": "Hazır toplu işlem durumu raporun yayımlandığını gösterir mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/batch_status_matrix",
+          "start": 81,
+          "end": 215,
+          "quote": "| Hazır | Bütün kaynak dilimleri doğrulanmıştır | Hazır durumu henüz müşteri raporunun yayımlandığı anlamına gelmez. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/batch_status_matrix/q02",
+      "text": "Çalışan toplu işlem ekranında hangi ilerleme bilgisi güvenilirdir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/batch_status_matrix",
+          "start": 216,
+          "end": 387,
+          "quote": "| Çalışıyor | İşçi sahipliği ve ilerleme noktası kaydedilir | Yönetim ekranı son başarılı adımı gösterir, tahmini tamamlanmayı kesin süre gibi sunmaz. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/batch_status_matrix/q03",
+      "text": "Yeni işçi başlatmak toplu işlem bekleme kuralını aşar mı?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/batch_status_matrix",
+          "start": 388,
+          "end": 531,
+          "quote": "| Beklemede | Dış bağımlılık için tekrar zamanı belirlenmiştir | Yeni işçi açmak bağımlılığın bekleme kuralını atlatamaz. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/batch_status_matrix/q04",
+      "text": "Kısmi toplu işlem tam başarı olarak gösterilebilir mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/batch_status_matrix",
+          "start": 532,
+          "end": 670,
+          "quote": "| Kısmi | Bazı dilimler sonuç üretmiş ve hatalar ayrılmıştır | Tüm veri tamamlanmış gibi tek başarı işareti gösterilmez. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/batch_status_matrix/q05",
+      "text": "Toplu hesaplamanın bitmesi yayın onayını otomatik verir mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/batch_status_matrix",
+          "start": 671,
+          "end": 816,
+          "quote": "| Doğrulamada | Üretilen toplamlar kaynakla karşılaştırılır | Hesaplama bitmesi yayın onayının otomatik verildiği anlamına gelmez. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/batch_status_matrix/q06",
+      "text": "Yayımlanan toplu işlemden sonra önceki sonuç kuşağı ne kadar korunur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/batch_status_matrix",
+          "start": 817,
+          "end": 952,
+          "quote": "| Yayımlandı | Doğrulanmış sonuç kuşağı etkinleştirilmiştir | Önceki kuşak geri dönüş penceresi bitene kadar korunur. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/batch_status_matrix/q07",
+      "text": "Toplu işlem iptalinde tamamlanmış dış yazmalar nasıl ele alınır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/batch_status_matrix",
+          "start": 953,
+          "end": 1085,
+          "quote": "| İptal isteği | Henüz başlanmamış dilimler durdurulur | Tamamlanmış dış yazmaların telafisi ayrı kayıtlarda izlenir. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/batch_status_matrix/q08",
+      "text": "Bozuk girdi yüzünden hatalı toplu işlem sınırsız tekrar edilir mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/batch_status_matrix",
+          "start": 1086,
+          "end": 1218,
+          "quote": "| Hatalı | Hata sınıfı ve tekrar edilebilirlik bilgisi kaydedilir | Girdi bozukluğunda sınırsız otomatik tekrar yapılmaz. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/batch_status_matrix/q09",
+      "text": "Arşivlenen toplu işlem yeni kaynak değişikliklerini işler mi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/batch_status_matrix",
+          "start": 1219,
+          "end": 1363,
+          "quote": "| Arşiv | Sonuç kuşağı salt okunur denetim için tutulur | Arşive alınmış iş yeni kaynak değişikliklerini kendiliğinden işlemez. |"
+        }
+      ]
+    },
+    {
+      "query_id": "tr/batch_status_matrix/q10",
+      "text": "Toplu işlem geri alındığında aday kuşağın tanı bilgilerine ne olur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "tr/batch_status_matrix",
+          "start": 1364,
+          "end": 1516,
+          "quote": "| Geri alındı | Önceki doğrulanmış sonuç kuşağı yeniden etkinleşir | Başarısız aday kuşağın tanı bilgileri inceleme için saklanır. |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/webhook-receipts/q01",
+      "text": "異なる契約の通知を誤って重複扱いしない受領キーは何を組み合わせますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/webhook-receipts",
+          "start": 82,
+          "end": 377,
+          "quote": "# 受領キーはテナント識別子と配信識別子の組で作る。配信識別子だけを共有キーにすると、別契約の通知が重複として誤って捨てられるため、受付処理は必ず契約の境界を含める。\nRECEIPT_KEY_FIELDS = (\"tenant_id\", \"delivery_id\")"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/webhook-receipts/q02",
+      "text": "通知本文を署名検証するとき、解析済みの辞書ではなく何を使いますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/webhook-receipts",
+          "start": 379,
+          "end": 653,
+          "quote": "# 署名検証には解析前の本文バイト列を使う。空白の整形や文字の正規化を先に行うと送信側の署名対象と一致しなくなるため、解析した辞書から本文を再構成してはならない。\nSIGNATURE_INPUT = \"raw_body_bytes\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/webhook-receipts/q03",
+      "text": "署名が正しくても通知時刻のずれが大きいときの許容幅はどの程度ですか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/webhook-receipts",
+          "start": 655,
+          "end": 932,
+          "quote": "# 通知時刻の許容ずれは前後四分とする。上限を超えた通知は署名が正しくても受付を止め、時計のずれを示す理由コードを返して、古い通信の再利用と運用上の時計不良を区別する。\nTIMESTAMP_SKEW_SECONDS = 240"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/webhook-receipts/q04",
+      "text": "鍵の切替中に通知の署名検証で試せる鍵はどれですか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/webhook-receipts",
+          "start": 934,
+          "end": 1233,
+          "quote": "# 鍵の切替中は有効な現行鍵と明示的に登録された直前鍵だけを試す。直前鍵の猶予期限を過ぎたら候補から外し、鍵が見つからないことを理由に署名検証を省略してはならない。\nSECRET_CANDIDATES = (\"current\", \"previous_within_grace\")"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/webhook-receipts/q05",
+      "text": "送信元への受付成功は受領台帳のどの段階の後に返しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/webhook-receipts",
+          "start": 1235,
+          "end": 1506,
+          "quote": "# 受領台帳への保存を確定してから受付成功を返す。保存前に成功を返すと、その直後の停止で送信元の再送も内部の仕事も失われるため、通信応答は台帳の確定を待つ。\nACK_AFTER = \"receipt_transaction_commit\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/webhook-receipts/q06",
+      "text": "同じ通知識別子で本文が変わった再送を受けた場合、台帳はどう扱いますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/webhook-receipts",
+          "start": 1508,
+          "end": 1798,
+          "quote": "# 同じ受領キーの再送は本文のダイジェストも照合する。既存本文と異なる場合は上書きせず競合として隔離し、単なる再試行と識別子の使い回しを監査上区別できるようにする。\nDUPLICATE_BODY_MISMATCH = \"quarantine_conflict\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/webhook-receipts/q07",
+      "text": "通知本文を削除した後も遅い再送を防ぐ墓標は何日残しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/webhook-receipts",
+          "start": 1800,
+          "end": 2051,
+          "quote": "# 削除済み通知の墓標は通常の本文とは別に七日残す。この間は遅れて届いた再送を復活させず、保存期間を短縮した本文が消えても重複判定の履歴だけを維持する。\nRECEIPT_TOMBSTONE_DAYS = 7"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/webhook-receipts/q08",
+      "text": "通知の後続処理は受付ハンドラから直接開始せず、何を起点にしますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/webhook-receipts",
+          "start": 2053,
+          "end": 2345,
+          "quote": "# 後続処理の開始は受領トランザクションと同じ確定番号の送信待ち記録から行う。受付ハンドラが直接仕事を投げる方式は使わず、未送信の記録を再起動後に回収できるようにする。\nDISPATCH_SOURCE = \"committed_outbox_record\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/webhook-receipts/q09",
+      "text": "調査用の追跡識別子を通知の重複判定キーに使用できますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/webhook-receipts",
+          "start": 2347,
+          "end": 2633,
+          "quote": "# 追跡識別子は調査用の補助情報であり受領キーの代用ではない。クライアントが任意に変えられる追跡値を重複判定に使うと同じ通知が別件として処理されるため、台帳索引に含めない。\nTRACE_ID_IS_RECEIPT_KEY = False"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/webhook-receipts/q10",
+      "text": "通知本文の容量制限は文字数や圧縮後サイズではなく何を基準にしますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/webhook-receipts",
+          "start": 2635,
+          "end": 2917,
+          "quote": "# 本文上限は圧縮を解いた後のバイト数で判定する。文字数だけを見たり圧縮された大きさだけを見たりせず、上限を超える通知は台帳へ書く前に拒否して受付メモリを保護する。\nBODY_LIMIT_BASIS = \"decompressed_bytes\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/snapshot-pinning/q01",
+      "text": "同じ応答に異なる改訂が混ざらないよう、読取セッションは何を先に固定しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/snapshot-pinning",
+          "start": 100,
+          "end": 423,
+          "quote": "# 読取セッションは最初に不変マニフェストの世代を固定し、その参照を使って本文を取得する。取得途中で最新世代を再解決すると同じ応答に異なる改訂の断片が混ざるため、世代を固定してから読む。\nREAD_ORDER = (\"pin_manifest\", \"fetch_segments\")"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/snapshot-pinning/q02",
+      "text": "新しい世代を公開した後も掃除から除外する必要があるのはどの世代ですか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/snapshot-pinning",
+          "start": 425,
+          "end": 709,
+          "quote": "# 固定参照が存在する世代は通常の掃除から除外する。新しい公開世代ができても読取中のファイルは削除せず、参照の解放または明示的な失効を待ってから回収の候補に戻す。\nGC_EXCLUDES = \"generations_with_active_pins\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/snapshot-pinning/q03",
+      "text": "長い読み取りで固定参照を延長するとき、どの改訂を指定しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/snapshot-pinning",
+          "start": 711,
+          "end": 999,
+          "quote": "# 固定参照を延長するときは元と同じ改訂の識別子を送る。延長要求を最新改訂への付け替えとして扱ってはならず、長い読取が継続しても引用先の内容が変わらないようにする。\nRENEWAL_REVISION = \"original_pinned_revision\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/snapshot-pinning/q04",
+      "text": "通信失敗後に固定参照の解放を再試行するとき、照合する二つの識別子は何ですか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/snapshot-pinning",
+          "start": 1001,
+          "end": 1300,
+          "quote": "# 参照の解放は何度呼んでも同じ結果になる。通信切断後の再試行で別セッションの固定を解放しないように、解放処理は固定識別子と所有セッションの両方を照合してから実行する。\nRELEASE_MATCH_FIELDS = (\"pin_id\", \"owner_session\")"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/snapshot-pinning/q05",
+      "text": "読み取り中の固定参照が失効した場合、処理をどう継続しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/snapshot-pinning",
+          "start": 1302,
+          "end": 1602,
+          "quote": "# 固定参照の失効が確認されたら、続きの本文取得を中断する。黙って最新世代へ乗り換えると既に表示した引用と続きが別の内容になるため、クライアントに読取のやり直しを通知する。\nEXPIRED_PIN_ACTION = \"abort_read_and_restart\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/snapshot-pinning/q06",
+      "text": "新しいスナップショットの公開は検証後にどの操作で切り替えますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/snapshot-pinning",
+          "start": 1604,
+          "end": 1920,
+          "quote": "# 公開先の切替は新世代の検証が終わった後に参照ポインタを一度だけ更新して行う。本文ファイルを少しずつ上書きする方式を避け、切替前後のどちらでも完全な世代を読めるようにする。\nCUTOVER_OPERATION = \"atomic_pointer_swap_after_validation\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/snapshot-pinning/q07",
+      "text": "利用者セッション終了後も調査資料を残す保留はどの所有種別で管理しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/snapshot-pinning",
+          "start": 1922,
+          "end": 2209,
+          "quote": "# 管理者の長期保留は利用者の固定参照と別の所有種別にする。利用者セッションが終了しても調査対象が消えないように、保留の解除には監査理由と保留所有者の確認を要求する。\nHOLD_OWNER_KIND = \"administrative_review\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/snapshot-pinning/q08",
+      "text": "固定参照が古くなった警告は作成から何時間で出し、自動削除しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/snapshot-pinning",
+          "start": 2211,
+          "end": 2481,
+          "quote": "# 古い固定参照は作成から六時間で警告対象にするが、警告だけで強制削除はしない。長時間処理を調査する信号とデータ回収の権限を分け、運用者が所有者に確認してから処置する。\nPIN_WARNING_HOURS = 6"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/snapshot-pinning/q09",
+      "text": "要求した世代が契約内にないとき、他契約や既定世代へ代替できますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/snapshot-pinning",
+          "start": 2483,
+          "end": 2779,
+          "quote": "# 契約内に要求世代が存在しない場合は見つからない結果を返す。他契約の同名世代や公開用の既定世代を代わりに使わず、読取の便宜を理由に契約境界を越えないようにする。\nMISSING_TENANT_GENERATION = \"not_found_without_fallback\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/snapshot-pinning/q10",
+      "text": "スナップショットへの引用を後日正しく開くため、本文位置と一緒に何を保存しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/snapshot-pinning",
+          "start": 2781,
+          "end": 3105,
+          "quote": "# 引用には本文の位置だけでなく固定した世代番号も残す。後日同じ位置を最新本文で開いて違う説明が出る事故を防ぐため、引用の解決処理は保存された世代の本文を使って位置を解釈する。\nCITATION_IDENTITY = (\"generation_id\", \"byte_start\", \"byte_end\")"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/image-tile-assembly/q01",
+      "text": "画像ピラミッドの要求した解像度段がない場合、近い段で代用せずどう扱いますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/image-tile-assembly",
+          "start": 91,
+          "end": 402,
+          "quote": "# 画像ピラミッドの解像度段は原画像の縮小率から明示的に選ぶ。要求寸法に近い段へ黙って丸めず、指定した段がなければ生成待ちとして返して、拡大された低解像度画像を完成品にしない。\nMISSING_PYRAMID_LEVEL = \"wait_for_requested_level\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/image-tile-assembly/q02",
+      "text": "タイルの位置が同じでも色処理の変更を検出するため、再利用キーに何の版を含めますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/image-tile-assembly",
+          "start": 404,
+          "end": 733,
+          "quote": "# タイルの再利用キーには原画像の改訂と色変換の版を含める。同じ位置のタイルでも色処理が変われば一致とせず、別の変換で作った画像片が一つの画面に混ざらないようにする。\nTILE_CACHE_KEY = (\"source_revision\", \"level\", \"x\", \"y\", \"color_transform_revision\")"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/image-tile-assembly/q03",
+      "text": "画像端のタイルで原画像の外にはみ出す領域は、どの画素で埋めますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/image-tile-assembly",
+          "start": 735,
+          "end": 1016,
+          "quote": "# 画面端のタイルは原画像の有効範囲だけを使い、はみ出す領域を透明として合成する。存在しない画素を端の画素で繰り返し埋めることはせず、切抜き境界の外へ絵を伸ばさない。\nOUTSIDE_SOURCE_FILL = \"transparent\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/image-tile-assembly/q04",
+      "text": "一部のタイルが読込待ちのとき、格子模様を含む合成画像を永続保存できますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/image-tile-assembly",
+          "start": 1018,
+          "end": 1316,
+          "quote": "# 欠けたタイルの代替表示は一時的な画面状態として扱う。読込待ちの格子模様を完成した合成画像として保存せず、全部の必要タイルを確認してから永続キャッシュへ公開する。\nPERSIST_COMPOSITE_AFTER = \"all_required_tiles_verified\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/image-tile-assembly/q05",
+      "text": "半透明タイルの境界に黒い縁が出ないよう、アルファはどの方式で揃えますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/image-tile-assembly",
+          "start": 1318,
+          "end": 1584,
+          "quote": "# 透過タイルの境界は乗算済みアルファの同じ規則で合成する。保存時と表示時でアルファの解釈を変えず、半透明の縁だけが黒くなる現象を境界検査で検出する。\nTILE_ALPHA_MODE = \"premultiplied_consistent\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/image-tile-assembly/q06",
+      "text": "索引に載ったタイルを合成に使う前に、本文について何を検証しますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/image-tile-assembly",
+          "start": 1586,
+          "end": 1887,
+          "quote": "# タイル索引の存在とタイル本文の整合性は別々に確認する。索引に名前があるだけで使用を許可せず、本文のダイジェストが索引と一致したものだけを合成へ渡して途中書込みを排除する。\nTILE_ACCEPTANCE = \"digest_matches_manifest\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/image-tile-assembly/q07",
+      "text": "画面更新を取り消したとき、共有タイルまで消さずに解放する領域はどれですか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/image-tile-assembly",
+          "start": 1889,
+          "end": 2204,
+          "quote": "# 画面更新が取消された場合は、その合成要求が確保した一時領域だけを解放する。別の画面が使用する共有タイルは消さず、参照数が残っている画像片を次の表示でも再利用できるようにする。\nCANCEL_FREE_SCOPE = \"request_owned_scratch_buffers\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/image-tile-assembly/q08",
+      "text": "縮小画像のタイル間に隙間が生じないよう、配置は何の座標系から計算しますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/image-tile-assembly",
+          "start": 2206,
+          "end": 2493,
+          "quote": "# 隣接タイルの配置は原画像全体の座標系から計算する。各タイルで個別に縮小後の座標を丸めると継ぎ目に隙間が生じるため、共通の変換で境界を確定してから切り分ける。\nTILE_PLACEMENT_SPACE = \"global_source_coordinates\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/image-tile-assembly/q09",
+      "text": "圧縮タイルが小さな転送サイズでも、復号時の資源制限は何を基準にしますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/image-tile-assembly",
+          "start": 2495,
+          "end": 2780,
+          "quote": "# 圧縮されたタイルの読込みでは展開後の画素数を先に検査する。転送サイズが小さいことだけで安全と判断せず、宣言寸法と使用可能な復号領域を照合してから画素を確保する。\nDECODE_LIMIT_BASIS = \"decoded_pixel_count\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/image-tile-assembly/q10",
+      "text": "壊れたタイルが見つかった場合、空の画像片としてキャッシュを維持せず何を行いますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/image-tile-assembly",
+          "start": 2782,
+          "end": 3126,
+          "quote": "# 整合性検査で壊れたタイルを見つけたら、その索引改訂の再利用を停止する。空の画像片を成功として残さず、生成元への修復要求と診断情報を記録して次の要求も誤ったキャッシュを使わないようにする。\nCORRUPT_TILE_ACTION = \"invalidate_revision_and_request_repair\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/staged-schema-migration/q01",
+      "text": "新形式の書込みを有効にする前に、どのような読取者を先に配布しますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/staged-schema-migration",
+          "start": 88,
+          "end": 391,
+          "quote": "# 新形式の読取りは旧形式を読める状態のまま先に配布する。新しい書込みを始める前に全読取者の対応を確認し、形式を切り替えた途端に古い利用者が本文を解釈できなくなる事態を防ぐ。\nMIGRATION_FIRST_PHASE = \"deploy_dual_readers\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/staged-schema-migration/q02",
+      "text": "移行作業中の編集を見落とさないため、移行台帳は識別子と何を結び付けますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/staged-schema-migration",
+          "start": 393,
+          "end": 698,
+          "quote": "# 移行台帳はレコードの識別子と旧版のダイジェストを結び付ける。識別子だけで移行済みを判断すると作業中に編集された内容を見落とすため、移行元が同じ改訂か毎回確認する。\nMIGRATION_LEDGER_KEY = (\"record_id\", \"old_revision_digest\")"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/staged-schema-migration/q03",
+      "text": "バックフィル中に利用者の同時編集を検出した場合、変換結果をどう扱いますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/staged-schema-migration",
+          "start": 700,
+          "end": 1018,
+          "quote": "# 同時編集を検出したバックフィルは利用者の変更を上書きせず、再読込みの仕事として戻す。処理開始時の版と一致する場合にだけ変換結果を保存し、古い入力から作った結果の確定を避ける。\nBACKFILL_CONFLICT_ACTION = \"requeue_without_overwrite\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/staged-schema-migration/q04",
+      "text": "新旧両方への書込み期間に完全成功と判断する条件は何ですか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/staged-schema-migration",
+          "start": 1020,
+          "end": 1303,
+          "quote": "# 新旧形式を両方書く期間の成功判定は双方の保存確認を必要とする。片方だけ成功した場合は差分台帳へ残し、利用者へ完全成功を報告して不整合を隠さないようにする。\nDUAL_WRITE_SUCCESS = \"both_versions_acknowledged\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/staged-schema-migration/q05",
+      "text": "旧形式の変換情報を保持する期間は何を基準に決めますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/staged-schema-migration",
+          "start": 1305,
+          "end": 1609,
+          "quote": "# 切戻し可能な間は旧形式の変換情報を消さない。新形式の読取り件数が増えたことだけでは削除を許可せず、復旧演習で旧形式から回復できることを確認してから回収を計画する。\nLEGACY_METADATA_RETENTION = \"until_rollback_window_closed\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/staged-schema-migration/q06",
+      "text": "旧レコードに新形式の必須項目がない場合、空文字で補完してよいですか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/staged-schema-migration",
+          "start": 1611,
+          "end": 1916,
+          "quote": "# 欠落した必須項目を空文字で補って移行してはならない。変換できないレコードは理由付きで隔離し、成功件数から除外することで、形式上だけ成功した不完全データを公開しない。\nMISSING_REQUIRED_FIELD_ACTION = \"quarantine_with_reason\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/staged-schema-migration/q07",
+      "text": "保存形式移行の進捗率の分子には、走査件数ではなく何を使いますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/staged-schema-migration",
+          "start": 1918,
+          "end": 2224,
+          "quote": "# 移行の進捗率は走査件数ではなく検証を完了した対象件数で計算する。読み飛ばした隔離レコードやまだ保存確認のない対象を分母から隠さず、残作業を監査報告に見える形で残す。\nPROGRESS_NUMERATOR = \"validated_and_acknowledged_records\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/staged-schema-migration/q08",
+      "text": "新形式への読取先切替と問題時の切戻しは、どの単位で行いますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/staged-schema-migration",
+          "start": 2226,
+          "end": 2503,
+          "quote": "# 読取先の変更は契約単位の設定として配布する。全契約を一度に切り替えず、対象契約の検証結果を記録してから範囲を広げ、問題があれば同じ単位で旧読取先へ戻せるようにする。\nREAD_CUTOVER_UNIT = \"tenant\""
+        }
+      ]
+    },
+    {
+      "query_id": "ja/staged-schema-migration/q09",
+      "text": "移行結果を再利用するとき、入力ダイジェスト以外に照合する版は何ですか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/staged-schema-migration",
+          "start": 2505,
+          "end": 2815,
+          "quote": "# 変換関数の版は移行済みレコードにも保存する。同じ入力と見えても変換の規則が変われば再処理が必要になるため、入力のダイジェストだけでなく変換規則の版も再利用条件に含める。\nREUSE_IDENTITY = (\"input_digest\", \"transform_revision\")"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/staged-schema-migration/q10",
+      "text": "レコード件数が一致した移行でも、完了判定に追加する比較は何ですか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/staged-schema-migration",
+          "start": 2817,
+          "end": 3144,
+          "quote": "# 移行完了の判定には件数一致に加えて抽出した業務項目の比較を行う。レコード数だけ同じでも単位や状態の意味が変わる事故を検出できないため、意味を保つ検証結果を公開判断に含める。\nCOMPLETION_CHECKS = (\"record_count\", \"business_field_equivalence\")"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/accessibility-release-review/q01",
+      "text": "アイコン操作の公開前確認で、見た目以外に支援技術へ渡す何を調べますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/accessibility-release-review",
+          "start": 34,
+          "end": 292,
+          "quote": "公開前の読上げ確認では、画面の見た目と独立に操作の名前を調べる。アイコンが意味を伝えていても支援技術に名前が渡らなければ完了とせず、利用者が目的を判断できる表現を設定する。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/accessibility-release-review/q02",
+      "text": "画面の要素を見た目で並べ替えた場合、キーボードの移動順は何に沿って確認しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/accessibility-release-review",
+          "start": 294,
+          "end": 540,
+          "quote": "キーボードの移動順は文章と操作の意味に沿って決める。見た目を並べ替えただけで読み順との不一致を許可せず、画面を見ない状態でも入力と確認の関係が分かる順序を維持する。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/accessibility-release-review/q03",
+      "text": "確認ダイアログを閉じた後、キーボードの焦点はどこへ戻しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/accessibility-release-review",
+          "start": 542,
+          "end": 788,
+          "quote": "確認ダイアログを閉じた後は、開く操作をした要素へ焦点を戻す。画面の先頭へ無条件に戻す処理を避け、利用者が同じ文脈から次の操作を続けられることを公開前の検査に含める。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/accessibility-release-review/q04",
+      "text": "入力誤りを色で強調する以外に、項目へどの説明を関連付けますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/accessibility-release-review",
+          "start": 790,
+          "end": 1030,
+          "quote": "入力の誤りは色だけで示さず、その項目に関連付けた説明文でも伝える。何が誤りかと修正方法を明記し、再送信するたびに利用者が同じ原因を探し直さなくてよい状態にする。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/accessibility-release-review/q05",
+      "text": "一覧の自動更新通知は、入力中の読上げを毎回遮る設定にしますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/accessibility-release-review",
+          "start": 1032,
+          "end": 1272,
+          "quote": "自動更新される通知は重要度に応じて読上げ方法を分ける。静かな一覧の更新が入力中の読上げを毎回遮らないようにし、操作を続けられない失敗だけを即時の通知として扱う。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/accessibility-release-review/q06",
+      "text": "文字を拡大して読めること以外に、画面の操作について何を確認しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/accessibility-release-review",
+          "start": 1274,
+          "end": 1514,
+          "quote": "拡大表示の確認は文字だけでなく操作の到達可能性も調べる。説明が読めても確定ボタンが画面外に隠れる状態を成功とせず、横方向へ迷わず操作を完了できる配置を検証する。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/accessibility-release-review/q07",
+      "text": "動きを減らす端末設定を使う利用者のため、動く表示に何を用意しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/accessibility-release-review",
+          "start": 1516,
+          "end": 1759,
+          "quote": "動く表示には停止手段を用意し、端末の動きを減らす設定も尊重する。説明の理解に動きが必須となる作りを避け、静止した表示でも同じ状態と次の操作を判断できるようにする。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/accessibility-release-review/q08",
+      "text": "認証期限が近い画面で長い入力を失わせないため、期限前に何を案内しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/accessibility-release-review",
+          "start": 1761,
+          "end": 1995,
+          "quote": "認証の時間切れが近いことは、期限が切れる前に利用者へ伝える。延長できる操作では入力済み内容を保ったまま選択できるようにし、突然の失効で長い入力を失わせない。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/accessibility-release-review/q09",
+      "text": "以前に合格した画面でも構成を変更した場合、確認結果を何の版に結び付け直しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/accessibility-release-review",
+          "start": 1997,
+          "end": 2240,
+          "quote": "アクセシビリティの確認結果は画面名と検査した版に結び付ける。以前の版で合格したという理由だけで新しい構成を承認せず、変更された操作の再確認を公開判断の記録へ残す。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/accessibility-release-review/q10",
+      "text": "アクセシビリティ検査で例外を認めた項目には、影響と代替手段のほか何を指定しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/accessibility-release-review",
+          "start": 2242,
+          "end": 2500,
+          "quote": "例外を認める場合は影響する利用者と代替手段を記録し、解消の所有者を指定する。検査できなかった項目を合格と数えず、公開判断者が未解決の影響を理解した上で判断できるようにする。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/glossary-governance/q01",
+      "text": "画面向けの短縮名を変える場合も、業務用語の何を別欄で維持しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/glossary-governance",
+          "start": 34,
+          "end": 289,
+          "quote": "用語の正規名と画面上の表示名は別の欄で管理する。表示上の短縮を理由に正規名を変えず、連携先が参照する意味の識別子を保ったまま利用者向けの読みやすさを改善できるようにする。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/glossary-governance/q02",
+      "text": "部署ごとに意味が違う同じ表記の用語は、どう区別しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/glossary-governance",
+          "start": 291,
+          "end": 519,
+          "quote": "同じ表記でも部署によって意味が違う語には適用範囲を付ける。全社で一つの定義へ無理に統合せず、利用する業務の範囲が分かる見出しと具体例を並べて誤解を防ぐ。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/glossary-governance/q03",
+      "text": "廃止済み用語を検索結果で見つけた利用者には何を案内しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/glossary-governance",
+          "start": 521,
+          "end": 761,
+          "quote": "廃止した用語は検索結果から消さず置換先への案内を残す。古い手順書から訪れた利用者が現在の用語を見つけられるように、廃止理由と切替日を過去の定義と一緒に保存する。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/glossary-governance/q04",
+      "text": "用語の意味を変える定義変更は、公開前に誰の確認を得ますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/glossary-governance",
+          "start": 763,
+          "end": 997,
+          "quote": "意味が変わる定義変更は誤字修正と同じ更新に混ぜない。利用側が影響を判断できるように変更理由と影響する帳票を明記し、対象業務の所有者の確認を得てから公開する。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/glossary-governance/q05",
+      "text": "業務用語の翻訳を追加するとき、訳語以外に何の参照を保存しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/glossary-governance",
+          "start": 999,
+          "end": 1239,
+          "quote": "翻訳語の追加では訳語だけでなく元の定義への参照を保存する。言語別の担当者が説明を改善しても元の概念と対応を保ち、異なる翻訳が別の業務概念として増殖するのを防ぐ。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/glossary-governance/q06",
+      "text": "複数の正式名称に対応する略語の検索候補は、どのように表示しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/glossary-governance",
+          "start": 1241,
+          "end": 1475,
+          "quote": "略語が複数の正式名称を持つ場合、検索候補は利用範囲を添えて両方示す。閲覧頻度だけで一つへ自動確定せず、利用者が参照中の業務に対応する説明を選べるようにする。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/glossary-governance/q07",
+      "text": "用語集の具体例に顧客の実際の契約条件を使用できますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/glossary-governance",
+          "start": 1477,
+          "end": 1702,
+          "quote": "用語集の例に実在する顧客の契約条件を使ってはならない。意味を説明できる架空の条件へ置き換え、元の個別契約を推測できる固有の組合せも公開前の確認で除く。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/glossary-governance/q08",
+      "text": "用語の所有者が不在になった定義は、削除せずどの状態で残しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/glossary-governance",
+          "start": 1704,
+          "end": 1941,
+          "quote": "所有者が不在となった定義は暫定管理の状態で残す。意味を確認できないという理由で直ちに削除せず、関連する業務担当を探す期限と問い合わせ先を表示して解決を進める。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/glossary-governance/q09",
+      "text": "公開済み定義の説明文だけを修正した場合も、何の番号を更新しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/glossary-governance",
+          "start": 1943,
+          "end": 2177,
+          "quote": "定義の改訂番号は公開後の説明文修正でも更新する。引用している研修資料がどの説明を使ったか判定できるように、以前の文章を参照できる履歴と変更の種類を維持する。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/glossary-governance/q10",
+      "text": "外部規格に基づく用語の意味を後日も再現するため、参照に何を記載しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/glossary-governance",
+          "start": 2179,
+          "end": 2434,
+          "quote": "外部規格を参照する用語には規格の版を記載する。単に最新版と書くと後日の改訂で解釈が変わるため、どの版の定義に基づく説明かを固定し、更新時は影響を確認してから参照を替える。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/tenant-export-appeal/q01",
+      "text": "データ持出しの拒否へ異議を申し立てる際、最初に指定する番号は何ですか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/tenant-export-appeal",
+          "start": 49,
+          "end": 313,
+          "quote": "持出しの拒否に異議を申し立てるときは、拒否された要求番号を指定する。ファイルを新しく送るだけでは元の判断と対応が取れないため、審査は要求番号に保存された範囲と理由を起点にする。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/tenant-export-appeal/q02",
+      "text": "持出し拒否への異議は、元の拒否を決めた担当者がそのまま審査しますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/tenant-export-appeal",
+          "start": 315,
+          "end": 534,
+          "quote": "異議の審査担当者は元の拒否を決定した担当者と分ける。前回の判断を自己承認する形を避け、保存された証跡に基づいて別の担当者が範囲と制約を再確認する。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/tenant-export-appeal/q03",
+      "text": "異議が受理され審査中になった場合、要求者への持出し権限は自動的に広がりますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/tenant-export-appeal",
+          "start": 536,
+          "end": 767,
+          "quote": "審査中も要求者の契約権限は通常どおり検査する。異議を受け付けたことを一時的な持出し許可と解釈せず、権限のない契約の資料を審査用画面へ表示しないようにする。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/tenant-export-appeal/q04",
+      "text": "持出しの異議審査で秘匿項目を示すとき、実際の値の代わりに何を使いますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/tenant-export-appeal",
+          "start": 769,
+          "end": 1003,
+          "quote": "審査のための資料には拒否理由に関係する最小限の項目だけを含める。元の持出し範囲を丸ごと複製せず、秘匿項目は値ではなく項目名と制約の種類を示して判断を支える。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/tenant-export-appeal/q05",
+      "text": "異議審査中に持出し対象の範囲を広げたい場合、どの手続きにしますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/tenant-export-appeal",
+          "start": 1005,
+          "end": 1254,
+          "quote": "要求者が指定した持出し範囲を広げる場合は異議の修正ではなく新しい要求として扱う。元の拒否に対する再判断と追加の取得希望を分け、審査の対象が途中で変わらないようにする。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/tenant-export-appeal/q06",
+      "text": "異議が認められた後、ファイルを実際に作成する前に何を再検査しますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/tenant-export-appeal",
+          "start": 1256,
+          "end": 1493,
+          "quote": "異議を認めた場合も、実際のファイル作成前に現時点の制約を再検査する。審査時から契約や保存期間が変わった可能性を考慮し、過去の許可だけで最新データを公開しない。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/tenant-export-appeal/q07",
+      "text": "異議の結論を通知するとき、他契約の類似判断例を添付してよいですか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/tenant-export-appeal",
+          "start": 1495,
+          "end": 1741,
+          "quote": "審査の通知には結論と適用範囲を記載し、他契約の判断例を添付しない。利用者が次に取れる手続きは案内するが、類似案件の説明を理由に別の利用者の情報を共有してはならない。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/tenant-export-appeal/q08",
+      "text": "異議を取り下げた場合、一時資料と最小限の判断履歴はそれぞれどう扱いますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/tenant-export-appeal",
+          "start": 1743,
+          "end": 1995,
+          "quote": "要求者が異議を取り下げた場合、審査用の一時資料を削除する一方で判断経緯の最小記録は残す。取り下げを審査で許可された結果として集計しないよう、終了理由も区別して記録する。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/tenant-export-appeal/q09",
+      "text": "同じ持出し要求に再び異議を申し立てるために必要な条件は何ですか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/tenant-export-appeal",
+          "start": 1997,
+          "end": 2243,
+          "quote": "同じ要求への再異議は追加された新しい事実がある場合に受け付ける。通知を何度も送るだけで審査期限を延ばさず、新しい事実の説明を元の証跡に追記して再開の可否を判断する。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/tenant-export-appeal/q10",
+      "text": "異議審査の資料を閲覧したとき、監査記録で結び付ける二つの情報は何ですか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/tenant-export-appeal",
+          "start": 2245,
+          "end": 2485,
+          "quote": "審査資料の閲覧は閲覧者と要求番号を結び付けて監査に残す。結論だけでなく誰が判断の前提を見たかも追跡できるようにし、監査記録の閲覧権限は一般の審査担当と分離する。"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/media-transform/q01",
+      "text": "透過画像を透過非対応の形式へ変換する際、背景色が未指定ならどうしますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/media-transform",
+          "start": 92,
+          "end": 372,
+          "quote": "| 透過画像 | 背景を白く塗りつぶさず透過を保持する。出力形式が透過を扱えない場合は要求時に指定された背景色を使い、未指定なら変換を拒否する。 | 商品切抜きの縁が意図せず白くなる事故を避ける。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/media-transform/q02",
+      "text": "画像の向き情報を除去する前に画素へどの処理を行いますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/media-transform",
+          "start": 373,
+          "end": 638,
+          "quote": "| 向き情報 | 画素を向き情報に従って回転してから向き情報を除去する。情報だけを消す順序は禁止し、出力の見た目を正位置で固定する。 | 向き情報を読まない配信先でも画像を正しく見せる。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/media-transform/q03",
+      "text": "配信用画像の色空間変換に失敗した場合、成功扱いで公開しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/media-transform",
+          "start": 639,
+          "end": 904,
+          "quote": "| 色空間 | 配信用派生画像は指定の標準色空間へ変換し、元の色記述をそのままコピーしない。変換に失敗したものは色不明の成功画像として出さず隔離する。 | 画素と色記述の矛盾を防止する。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/media-transform/q04",
+      "text": "アニメーションから静止画を作る場合、どのフレームの状態を使いますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/media-transform",
+          "start": 905,
+          "end": 1182,
+          "quote": "| アニメーション | 静止画の要求では先頭の表示済み合成フレームを使う。最初の差分画像をそのまま切り出さず、背景との合成結果を保存する。 | 差分フレームだけが表示されて絵が欠ける問題を防ぐ。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/media-transform/q05",
+      "text": "無音区間を省略した音声波形でも、時間軸は何の時刻に対応させますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/media-transform",
+          "start": 1183,
+          "end": 1460,
+          "quote": "| 音声波形 | 波形の時間軸は変換後ではなく元音声の時刻に対応させる。無音区間を省略した場合も元の時刻との対応表を別に保持する。 | 波形から選んだ引用を元音声の正しい位置へ戻せるようにする。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/media-transform/q06",
+      "text": "指定言語の字幕がない映像の焼込み要求を受けた場合、他言語で代用しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/media-transform",
+          "start": 1461,
+          "end": 1714,
+          "quote": "| 字幕焼込み | 指定言語の字幕が無ければ他言語を自動採用せず欠落を返す。字幕なし配信への切替は別の明示要求でのみ許可する。 | 利用者が読めない字幕で処理を完了扱いにしない。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/media-transform/q07",
+      "text": "公開用の派生画像から削除する撮影関連の情報は何ですか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/media-transform",
+          "start": 1715,
+          "end": 2019,
+          "quote": "| 個人位置情報 | 公開用派生物から撮影位置と機器識別子を削除する。内部の原本は制限された保管先へ分離し、削除済み派生物のメタデータを原本から再注入しない。 | 公開配信から撮影者や機器を推測されることを防ぐ。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/media-transform/q08",
+      "text": "画面外にはみ出した切抜き領域は自動で画像端へ丸めますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/media-transform",
+          "start": 2020,
+          "end": 2309,
+          "quote": "| 切抜き指定 | 指定領域が画面外にはみ出す場合は端へ丸めず要求エラーを返す。座標系と原画像の寸法を応答に示し、利用者が指定を修正できるようにする。 | 意図と異なる領域を正常な変換として配信しない。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/media-transform/q09",
+      "text": "派生メディアを再利用するには原本の改訂以外に何の版が一致する必要がありますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/media-transform",
+          "start": 2310,
+          "end": 2590,
+          "quote": "| 派生物の再利用 | 原本の改訂と変換設定の版が一致する場合だけ既存の派生物を再利用する。ファイル名や幅高さの一致だけでは再利用を許可しない。 | 設定改訂前の古い出力が使われ続けることを防ぐ。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/media-transform/q10",
+      "text": "新しいメディア変換が失敗した場合、最後に確認された公開用派生物をどう扱いますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/media-transform",
+          "start": 2591,
+          "end": 2907,
+          "quote": "| 失敗時の公開 | 新しい変換が失敗しても最後の確認済み派生物を削除しない。成功した新世代の公開時にだけ配信参照を切り替え、失敗は別の状態として利用者へ知らせる。 | 一時的な変換失敗で公開済み画像が消えることを防ぐ。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/edge-cache-purge/q01",
+      "text": "キャッシュ削除対象の経路は何と同じ規則で正規化しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/edge-cache-purge",
+          "start": 92,
+          "end": 390,
+          "quote": "| 経路の正規化 | 削除対象の経路は配信時と同じ規則で正規化する。ただし正規化の結果が別の契約領域へ移る指定は拒否し、利用者の経路を管理用経路へ拡張しない。 | 削除の照合と配信の照合を同じ契約境界に保つ。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/edge-cache-purge/q02",
+      "text": "キャッシュ削除で照合するクエリ項目はどのように選びますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/edge-cache-purge",
+          "start": 391,
+          "end": 680,
+          "quote": "| クエリ文字列 | キャッシュキーに含めたクエリ項目だけを削除の照合に使う。配信で無視する追跡項目を削除キーへ足さず、同じオブジェクトへの要求を分散させない。 | 配信キーと削除キーの不一致を避ける。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/edge-cache-purge/q03",
+      "text": "利用者のワイルドカード削除はどの範囲の内部に限って適用しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/edge-cache-purge",
+          "start": 681,
+          "end": 970,
+          "quote": "| ワイルドカード | 利用者が所有する公開接頭辞の内部だけに適用する。契約全体を表す管理用ワイルドカードへ自動変換せず、所有範囲を越える要求は拒否する。 | 広すぎる削除による他の配信物の失効を防ぐ。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/edge-cache-purge/q04",
+      "text": "再送時に削除範囲を変更した場合、操作識別子を再利用できますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/edge-cache-purge",
+          "start": 971,
+          "end": 1248,
+          "quote": "| 再試行識別子 | 同じ削除要求の再送は同じ操作識別子を使う。削除範囲が変わった場合は新しい識別子を要求し、過去の成功結果を異なる範囲へ流用しない。 | 通信再試行と新しい削除操作を区別する。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/edge-cache-purge/q05",
+      "text": "キャッシュ削除の受付成功は、すべての端点での削除完了を意味しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/edge-cache-purge",
+          "start": 1249,
+          "end": 1529,
+          "quote": "| 受付と完了 | 制御面の受付は全端点での削除完了を意味しない。応答には受付状態を示し、完了は端点ごとの確認を集計した別の状態として公開する。 | 利用者が早すぎる再公開を判断しないようにする。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/edge-cache-purge/q06",
+      "text": "キャッシュ削除状況の応答に、結果の鮮度を判断するため何を添えますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/edge-cache-purge",
+          "start": 1530,
+          "end": 1810,
+          "quote": "| 応答の鮮度 | 削除状況の応答には観測時刻を添える。古い集計結果を最新の完了確認として扱わず、観測が途絶えた端点は不明のまま残して成功率から隠さない。 | 遅れた状態通知を完了の根拠にしない。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/edge-cache-purge/q07",
+      "text": "削除後にキャッシュを作り直すとき、原本側で何を再確認しますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/edge-cache-purge",
+          "start": 1811,
+          "end": 2103,
+          "quote": "| 原本の再取得 | 削除後の再取得は原本側の公開許可を改めて確認する。キャッシュに以前存在したという理由で非公開となった原本を再配信しない。 | 失効した公開許可がキャッシュ再生成で復活することを防ぐ。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/edge-cache-purge/q08",
+      "text": "同じ経路を再び削除したとき、古い完了通知との混同を防ぐ番号は何ですか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/edge-cache-purge",
+          "start": 2104,
+          "end": 2417,
+          "quote": "| 連続する削除 | 同じ経路への新しい削除には新しい世代番号を割り当てる。遅れて届いた旧完了通知が新しい削除を完了にしないよう、端点の確認には世代番号を照合する。 | 繰り返し操作でも完了通知の順序逆転を安全に扱う。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/edge-cache-purge/q09",
+      "text": "緊急に配信を止める場合、キャッシュ削除完了を待つ前に何を行いますか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/edge-cache-purge",
+          "start": 2418,
+          "end": 2722,
+          "quote": "| 配信停止 | 緊急の配信停止はキャッシュ削除の完了を待たず公開許可を取り消す。削除操作は残った複製の回収として継続し、公開禁止の判断を遅延した端点の応答へ依存させない。 | 緊急停止と複製回収の責務を分ける。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/edge-cache-purge/q10",
+      "text": "キャッシュ削除の一般運用指標に、非公開の対象経路をラベルとして載せてよいですか。",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "ja/edge-cache-purge",
+          "start": 2723,
+          "end": 3036,
+          "quote": "| 監査記録 | 削除の対象経路は監査用の制限領域に保存する。一般の運用指標には操作識別子と件数だけを出し、利用者が指定した非公開経路を指標ラベルにしない。 | 監視データから非公開コンテンツの所在が漏れることを防ぐ。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/search-visibility/q01",
+      "text": "検索候補の取得時と画面表示時のどちらで、まず要求者の許可範囲を適用しますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/search-visibility",
+          "start": 89,
+          "end": 384,
+          "quote": "| 検索前の範囲 | 候補を探す時点で要求者の許可範囲を適用する。全契約の候補を取得して画面だけで隠す方式を避け、候補数や順位から他契約の存在を推測できないようにする。 | 検索段階にも契約境界を適用する。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/search-visibility/q02",
+      "text": "検索中に権限が取り消された資料は、応答を作る直前にどう扱いますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/search-visibility",
+          "start": 385,
+          "end": 656,
+          "quote": "| 権限の再確認 | 取得済み候補も応答を組み立てる直前に権限を再確認する。検索中に権限が取り消された資料は省き、古い検索結果の参照で本文を公開しない。 | 検索開始後の権限変更を反映する。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/search-visibility/q03",
+      "text": "本文を読む権限がない資料について、検索断片だけを表示できますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/search-visibility",
+          "start": 657,
+          "end": 937,
+          "quote": "| 断片の表示 | 本文を開く権限がない資料は断片だけでも返さない。見出しや強調語にも機密内容が含まれるため、本文を隠して断片を表示する抜け道を作らない。 | 短い検索断片からの内容漏えいを防ぐ。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/search-visibility/q04",
+      "text": "同じ利用者と検索語の検索結果を再利用するとき、照合する二つの改訂情報は何ですか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/search-visibility",
+          "start": 938,
+          "end": 1239,
+          "quote": "| 結果キャッシュ | 結果の再利用には権限集合の改訂と索引世代を照合する。同じ利用者名と検索語だけでは再利用せず、権限変更や索引更新の後は古い結果を無効にする。 | 利用者名が同じでも表示可能範囲は変化する。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/search-visibility/q05",
+      "text": "検索応答の件数には、権限不足で非表示になった資料数を含めますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/search-visibility",
+          "start": 1240,
+          "end": 1517,
+          "quote": "| 関連件数 | 非表示にした資料の件数を応答へ含めない。結果が少ない理由として秘密資料の存在を示さず、表示許可された結果だけから件数を計算する。 | 件数表示による機密資料の存在の露出を防ぐ。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/search-visibility/q06",
+      "text": "共有リンクを受け取った人は、リンク所有者の契約全体を検索できますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/search-visibility",
+          "start": 1518,
+          "end": 1849,
+          "quote": "| 共有リンク | 共有リンクの閲覧者にはリンクで指定した資料の範囲だけを認める。リンク所有者の契約内検索権限を引き継がせず、関連資料の候補へアクセスできると解釈しない。 | 一つの資料の共有から検索範囲が拡張されないようにする。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/search-visibility/q07",
+      "text": "削除済み資料がまだ索引に残っている間、検索結果への表示をどう防ぎますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/search-visibility",
+          "start": 1850,
+          "end": 2148,
+          "quote": "| 削除後の候補 | 索引に残った削除済み資料は元資料の状態検査で除外する。索引の掃除が完了するまで削除前の内容を見せず、除外した候補の補充も許可範囲の中で行う。 | 索引更新の遅れを表示許可の根拠にしない。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/search-visibility/q08",
+      "text": "検索結果の説明を生成するモデルへ渡す本文は、どの範囲に限定しますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/search-visibility",
+          "start": 2149,
+          "end": 2468,
+          "quote": "| 説明文の生成 | 生成する検索説明には表示許可済みの本文だけを渡す。隠した候補を説明の材料に残すと直接の引用がなくても内容を推測できるため、生成処理の入力段階でも範囲を絞る。 | 生成文を通じた権限外情報の混入を防ぐ。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/search-visibility/q09",
+      "text": "権限不足で除外した候補の詳細は、一般の検索応答ではなくどこへ記録しますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/search-visibility",
+          "start": 2469,
+          "end": 2773,
+          "quote": "| 監査の分離 | 権限不足による除外の詳細は監査領域へ記録する。一般利用者向けの応答には候補の識別子や秘密の分類名を含めず、監査者だけが原因を調査できるようにする。 | 調査可能性と秘密候補の非公開を両立する。 |"
+        }
+      ]
+    },
+    {
+      "query_id": "ja/search-visibility/q10",
+      "text": "資料の所有契約が変更された場合、索引の識別子が同じなら旧契約の許可で本文を表示できますか。",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "ja/search-visibility",
+          "start": 2774,
+          "end": 3114,
+          "quote": "| 所有者の変更 | 資料の所有契約が移った場合は旧契約の許可で新しい本文を見せない。索引の識別子が同じでも所有情報を取り直し、旧契約の候補を失効させてから移管先で検索できるようにする。 | 資料移管で古い許可が持ち越されることを防ぐ。 |"
+        }
+      ]
+    }
+  ]
+}

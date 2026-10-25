@@ -28,6 +28,10 @@ jobs:
       - name: Run benchmark regression gate
         run: python scripts/check_benchmarks.py --run-quality
 
+      - name: Install tested retrieval comparators
+        if: matrix.python-version == '3.12'
+        run: pip install -r benchmarks/retrieval/requirements.txt
+
       - name: Historical throughput check (explicitly skips absent baseline)
         run: python scripts/check_benchmarks.py --run-regression-gate
 
@@ -43,10 +47,10 @@ jobs:
           flags: branch-coverage
 
       - name: Run Ruff
-        run: ruff check src tests
+        run: ruff check src tests benchmarks/run_retrieval.py benchmarks/retrieval
 
       - name: Check formatting
-        run: ruff format --check src tests
+        run: ruff format --check src tests benchmarks/run_retrieval.py benchmarks/retrieval
 
       - name: Run mypy (strict, full package)
         # NumPy selects type syntax based on mypy's target version. Use the
@@ -56,6 +60,22 @@ jobs:
 
       - name: Build documentation (MkDocs)
         run: mkdocs build --strict
+
+      - name: Validate retrieval evaluation on the development corpus
+        if: matrix.python-version == '3.12'
+        run: >-
+          python benchmarks/run_retrieval.py --split dev
+          --tools omnichunk,fixed,semchunk,langchain,semantic-text-splitter,chonkie,llamaindex
+          --chunk-sizes 128 256 --repeats 3 --require-all
+          --output reports/retrieval-ci.json
+
+      - name: Preserve retrieval evaluation evidence
+        if: matrix.python-version == '3.12' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: retrieval-evaluation
+          path: reports/retrieval-ci.json
+          if-no-files-found: warn
 
   wheel-smoke:
     runs-on: ${{ matrix.os }}

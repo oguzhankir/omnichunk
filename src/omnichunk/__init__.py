@@ -36,6 +36,13 @@ from .plugins import (
     register_parser,
 )
 from .propositions import Proposition
+from .retrieval_eval import (
+    EvidenceMetrics,
+    EvidenceSpan,
+    RankingMetrics,
+    score_evidence,
+    score_ranking,
+)
 
 if TYPE_CHECKING:
     from .semantic import (
@@ -107,6 +114,11 @@ __all__ = [
     "Chunker",
     "ContentType",
     "EvalReport",
+    "EvidenceMetrics",
+    "EvidenceSpan",
+    "RankingMetrics",
+    "score_evidence",
+    "score_ranking",
     "FormatSegment",
     "LoadedDocument",
     "EntityInfo",

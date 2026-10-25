@@ -1,0 +1,2 @@
+# Preserve exact fixture bytes and evidence hashes on autocrlf checkouts.
+benchmarks/retrieval/corpus_v1/** -text whitespace=-blank-at-eof
