@@ -16,6 +16,10 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
   and source/runtime fingerprints. CI preserves the full development report.
 
 ### Fixed
+- Code windows now measure the configured character, non-whitespace-character or
+  tokenizer budget throughout AST grouping and splitting, preserving fitting
+  Unicode declarations. Complete source gaps count toward grouping, minimum-size
+  merges stay bounded, and transient token probes are not cached.
 - Prose splitting now respects paragraph, line/table-row and Unicode sentence
   boundaries before word-level fallbacks. Node grouping counts the actual source
   slice, including whitespace and nonadditive token costs; minimum-size merging

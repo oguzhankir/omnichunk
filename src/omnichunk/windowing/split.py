@@ -5,7 +5,7 @@ from typing import Any
 
 from omnichunk.sizing.nws import get_nws_count
 
-from .models import ASTNodeWindowItem
+from .models import ASTNodeWindowItem, SourceBudget
 
 _SAFE_BOUNDARY_BYTES = {9, 10, 11, 12, 13, 32, 44, 59, 41, 93, 125}
 
@@ -134,9 +134,27 @@ def split_oversized_leaf(
     code: str,
     cumsum: Any,
     max_size: int,
+    budget: SourceBudget | None = None,
 ) -> Iterable[ASTNodeWindowItem]:
     """Split oversized leaf item at line boundaries first, then safe-boundary fallback."""
     if item.end <= item.start:
+        return
+
+    if budget is not None:
+        cursor = item.start
+        raw = budget.index.raw_bytes
+        while cursor < item.end:
+            verified = budget.fitting_end(cursor, item.end, max_size)
+            preferred = find_statement_boundary(raw, cursor, verified, item.end)
+            preferred = _adjust_to_safe_boundary(raw, cursor, preferred, item.end)
+            # Shortening a measured prefix can increase a tokenizer's count.
+            end = (
+                preferred
+                if preferred > cursor and budget.count(cursor, preferred) <= max_size
+                else verified
+            )
+            yield ASTNodeWindowItem(None, cursor, end, budget.count(cursor, end))
+            cursor = end
         return
 
     text = code.encode("utf-8")

@@ -66,7 +66,6 @@ Remaining gaps are product work, not reasons to call existing utilities absent:
 | Vendor payloads are not complete SDK requests | Pinecone's namespace belongs to the upsert request envelope; the legacy helper attaches it to rows. SDK contracts need explicit versioned adapters | P1 / M2 |
 | Export metadata is incomplete | Arbitrary `chunk.metadata` and format metadata are not fully preserved by vector/framework conversion; a typed source/ACL/page mapping is needed | P1 / M2–M3 |
 | Rich document structure is flattened | `LoadedDocument` holds canonical text/segments; PDF/DOCX loaders provide text extraction, not OCR or full page/element geometry | P1 / M3 |
-| Code windows can split multibyte text prematurely | Internal AST budgets use non-whitespace bytes before public character/token finalization; short Unicode literals can fragment despite fitting the requested budget | P1 / M1 follow-up |
 | Sentence segmentation is still heuristic | Unicode starters, CJK terminators and CRLF paragraphs are supported; abbreviations, language-specific ambiguity and wider RTL coverage still need validation | P1 / M3 |
 | Streaming does not bound total source memory | Iterators retain source/AST state; semantic/structured workflows retain per-document work | P1 / M4 |
 | Enterprise operating limits are not characterized | Existing tracing and release checks do not establish corpus-scale RSS, crash recovery, resource limits or long-term support | P1 / M4 |
@@ -141,8 +140,9 @@ preserve fitting paragraphs/table rows, use Unicode sentence boundaries and coun
 complete contiguous payloads when grouping prose. Keep the corpus and retrieval
 configuration fixed, report per-language/document wins and regressions, and only
 evaluate held-out documents after the implementation is frozen. Follow with
-configured-unit AST window sizing for multibyte code; final payload validation
-alone cannot undo premature splits.
+configured-unit AST window sizing for multibyte code; this repair now measures
+complete source ranges during grouping and splitting, including nonadditive token
+costs. Independent corpus and dense-model validation remain the M1 completion gate.
 
 - Publish a licensed, versioned corpus with code, Markdown/manuals, tables and
   mixed documents. Start with **300 evidence-labeled queries** across the user

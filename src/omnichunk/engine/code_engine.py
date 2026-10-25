@@ -11,7 +11,7 @@ from omnichunk.context.range_index import EntityRangeSweep
 from omnichunk.context.scope import build_scope_tree, find_scope_chain
 from omnichunk.context.siblings import SiblingIndex, build_sibling_index, detect_siblings_for_chunk
 from omnichunk.parser.tree_sitter import parse_code
-from omnichunk.sizing.counter import make_token_counter
+from omnichunk.sizing.counter import make_size_counter, make_token_counter
 from omnichunk.sizing.nws import get_nws_count, preprocess_nws_cumsum
 from omnichunk.types import (
     ByteRange,
@@ -26,6 +26,7 @@ from omnichunk.util.detect import detect_language
 from omnichunk.util.text_index import TextIndex
 from omnichunk.windowing.greedy import assign_windows_for_nodes, assign_windows_for_ranges
 from omnichunk.windowing.merge import merge_adjacent_windows
+from omnichunk.windowing.models import SourceBudget
 from omnichunk.windowing.overlap import apply_token_overlap, build_line_overlap_text
 
 
@@ -82,16 +83,22 @@ class CodeEngine:
 
         raw_bytes = text_index.raw_bytes
 
-        max_size_nws = _to_internal_nws_limit(options.max_chunk_size, options.size_unit)
-        min_size_nws = max(1, _to_internal_nws_limit(options.min_chunk_size, options.size_unit))
+        budget = SourceBudget(
+            content,
+            text_index,
+            make_size_counter(options.size_unit, options.tokenizer, cache_maxsize=0),
+            size_unit=options.size_unit,
+        )
 
         ast_nodes = _collect_ast_root_nodes(parse_result.tree)
         if ast_nodes:
             windows = assign_windows_for_nodes(
                 ast_nodes,
                 cumsum=cumsum,
-                max_size=max_size_nws,
+                max_size=options.max_chunk_size,
                 code=content,
+                budget=budget,
+                split_oversized=options.overflow_policy == "split",
             )
         else:
             candidate_ranges = _collect_candidate_ranges(
@@ -100,14 +107,17 @@ class CodeEngine:
             windows = assign_windows_for_ranges(
                 candidate_ranges,
                 cumsum=cumsum,
-                max_size=max_size_nws,
+                max_size=options.max_chunk_size,
                 code=content,
+                budget=budget,
+                split_oversized=options.overflow_policy == "split",
             )
 
         merged_windows = merge_adjacent_windows(
             windows,
-            max_size=max_size_nws,
-            min_size=min_size_nws,
+            max_size=options.max_chunk_size,
+            min_size=options.min_chunk_size,
+            budget=budget,
         )
 
         chunk_ranges = _windows_to_contiguous_ranges(merged_windows, len(raw_bytes))
@@ -380,15 +390,6 @@ def _merge_whitespace_only_ranges(
         return [ranges[0]]
 
     return merged
-
-
-def _to_internal_nws_limit(size: int, unit: str) -> int:
-    size = max(1, int(size))
-    if unit == "tokens":
-        return size * 4
-    if unit == "chars":
-        return size
-    return size
 
 
 def _finalize_chunk_indexes(chunks: list[Chunk]) -> list[Chunk]:
