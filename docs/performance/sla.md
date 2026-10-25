@@ -134,6 +134,45 @@ The CI `retrieval-evaluation` artifact retains raw development results per commi
 
 ## Environment and interpretation
 
+### Independent English prose check
+
+The frozen `corpus_squad_v1` subset adds 32 Wikipedia paragraphs and 96 SQuAD 1.1
+human-annotated questions. Eight entire articles belong to each local split.
+The upstream SQuAD development file supplies both local splits; this is a chunk
+retrieval experiment, not an official SQuAD score. Selection uses hashes rather
+than retrieval outcomes. Exact short-answer spans provide independently authored
+labels; their suitability as complete supporting evidence still needs review.
+
+With the frozen lexical retriever, zero overlap, no derived context, a
+1,024-character retrieved context and top-k 5, test evidence recall is:
+
+| Chunker | 128 characters | 256 characters |
+| --- | --- | --- |
+| OmniChunk | 0.9192 | 0.9792 |
+| Fixed | 0.8907 | 0.9375 |
+| semchunk | 0.9167 | 0.9792 |
+| LangChain | 0.8963 | 0.9583 |
+| semantic-text-splitter | 0.9401 | 0.9792 |
+| Chonkie | 0.8854 | 0.9792 |
+| LlamaIndex | 0.8963 | 0.9583 |
+
+These 48 held-out questions are a small English prose check. OmniChunk ties
+several alternatives at 256 characters and trails semantic-text-splitter at 128.
+The synthetic development experiment still has stronger alternatives in some
+configurations. Neither result establishes leadership or dense-model quality.
+The raw external reports, including per-query ranks, payloads, source/dependency
+hashes and timing samples, are preserved in
+[`benchmarks/retrieval/reports`](https://github.com/oguzhankir/omnichunk/tree/main/benchmarks/retrieval/reports).
+Reproduce with the [benchmark commands](https://github.com/oguzhankir/omnichunk/blob/main/benchmarks/README.md).
+
+Frozen dense artifacts and an optional local SentenceTransformer producer now
+provide the semantic comparison path. The producer checks complete native input
+tokens against full tokenizer inputs and rejects overflow or preprocessing
+differences. No pretrained dense result is reported: this environment's network
+policy blocks model downloads. Random local smoke-model outputs are not quality
+evidence. Multilingual dense results and production design-partner evidence remain
+open M1 requirements.
+
 Record source commit, package/Python/dependency versions, CPU/platform, tokenizer
 assets, corpus hash/license, size and overlap policies, and optional Rust use.
 Keep raw repeated timing samples; larger fixtures reduce timer/import noise.

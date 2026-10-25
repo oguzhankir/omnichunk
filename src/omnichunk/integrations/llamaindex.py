@@ -5,9 +5,11 @@ from __future__ import annotations
 import json
 from collections.abc import Sequence
 from copy import deepcopy
-from typing import Any
+from hashlib import sha256
+from typing import Any, cast
 
 from llama_index.core.bridge.pydantic import Field
+from llama_index.core.ingestion import IngestionPipeline
 from llama_index.core.node_parser import NodeParser
 from llama_index.core.schema import (
     BaseNode,
@@ -19,6 +21,8 @@ from llama_index.core.schema import (
 )
 
 from ._common import split_source
+
+_INGESTION_IDENTITY = "_omnichunk_ingestion_identity"
 
 
 class OmniChunkNodeParser(NodeParser):
@@ -72,9 +76,19 @@ class OmniChunkNodeParser(NodeParser):
     ) -> list[BaseNode]:
         result: list[BaseNode] = []
         for source in nodes:
+            identity = source.metadata.get(_INGESTION_IDENTITY)
+            if _INGESTION_IDENTITY in source.metadata and (
+                not isinstance(identity, dict)
+                or set(identity) != {"fingerprint", "source_hash"}
+                or not all(isinstance(value, str) for value in identity.values())
+            ):
+                raise ValueError(f"Reserved ingestion metadata key: {_INGESTION_IDENTITY}")
+            source_metadata = {
+                key: value for key, value in source.metadata.items() if key != _INGESTION_IDENTITY
+            }
             items = split_source(
                 source.get_content(metadata_mode=MetadataMode.NONE),
-                source.metadata,
+                source_metadata,
                 source.node_id,
                 options=self.options,
                 filepath=self.filepath,
@@ -89,8 +103,12 @@ class OmniChunkNodeParser(NodeParser):
                 )
                 # SOURCE points to the original framework document. Logical
                 # OmniChunk source_id may be independently caller-selected.
+                source_info = deepcopy(source.as_related_node_info())
+                source_info.metadata.pop(_INGESTION_IDENTITY, None)
+                if isinstance(identity, dict):
+                    source_info.hash = identity["source_hash"]
                 relationships: dict[NodeRelationship, RelatedNodeInfo | list[RelatedNodeInfo]] = {
-                    NodeRelationship.SOURCE: deepcopy(source.as_related_node_info())
+                    NodeRelationship.SOURCE: source_info
                 }
                 if item.parent_id is not None:
                     relationships[NodeRelationship.PARENT] = RelatedNodeInfo(node_id=item.parent_id)
@@ -134,3 +152,61 @@ class OmniChunkNodeParser(NodeParser):
         # The base implementation searches rendered text in the source and adds
         # cross-level adjacency. Exact source indices/relationships are set above.
         return nodes
+
+
+class OmniChunkIngestionPipeline(IngestionPipeline):
+    """Native pipeline whose cache distinguishes identical text from different sources.
+
+    LlamaIndex's ordinary cache key excludes document IDs and can return another
+    document's cached citations. This pipeline copies inputs and fingerprints
+    their complete JSON source records before cache lookup. Its first transform
+    must be :class:`OmniChunkNodeParser`; subsequent transforms remain caller-owned.
+    Internal identity metadata is removed by the parser and never embedded.
+    """
+
+    def __init__(self, **data: Any) -> None:
+        if "transformations" not in data:
+            data["transformations"] = [OmniChunkNodeParser()]
+        super().__init__(**data)
+        if not self.transformations or not isinstance(self.transformations[0], OmniChunkNodeParser):
+            raise ValueError("OmniChunkIngestionPipeline requires OmniChunkNodeParser first")
+
+    def _prepare_inputs(
+        self, documents: Sequence[Document] | None, nodes: Sequence[BaseNode] | None
+    ) -> list[BaseNode]:
+        # Both run() and arun() call this before deduplication and cache lookup.
+        if not self.transformations or not isinstance(self.transformations[0], OmniChunkNodeParser):
+            raise ValueError("OmniChunkIngestionPipeline requires OmniChunkNodeParser first")
+        result = []
+        for source in super()._prepare_inputs(documents, nodes):
+            if _INGESTION_IDENTITY in source.metadata:
+                raise ValueError(f"Reserved ingestion metadata key: {_INGESTION_IDENTITY}")
+            try:
+                raw = json.dumps(
+                    {"node": source.to_dict(), "native_hash": source.hash},
+                    sort_keys=True,
+                    separators=(",", ":"),
+                    allow_nan=False,
+                )
+            except (TypeError, ValueError) as exc:
+                raise ValueError("Ingestion source records must be finite JSON values") from exc
+            copied = deepcopy(source)
+            fingerprint = sha256(raw.encode("utf-8")).hexdigest()
+            copied.metadata[_INGESTION_IDENTITY] = {
+                "fingerprint": fingerprint,
+                "source_hash": source.hash,
+            }
+            # A source may hide metadata with a custom text/metadata template.
+            # Normalize only the private copy; raw source text remains unchanged.
+            copied.metadata_template = "{key}: {value}"
+            if hasattr(copied, "metadata_separator"):
+                copied.metadata_separator = "\n"
+            else:
+                # The declared minimum LlamaIndex version uses this spelling.
+                cast(Any, copied).metadata_seperator = "\n"
+            if hasattr(copied, "text_template"):
+                copied.text_template = "{metadata_str}\n\n{content}"
+            if fingerprint not in copied.get_content(MetadataMode.ALL):
+                raise ValueError("Ingestion source must expose identity metadata to the cache")
+            result.append(copied)
+        return result

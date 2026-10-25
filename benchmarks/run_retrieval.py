@@ -24,6 +24,7 @@ if str(ROOT) not in sys.path:
 import omnichunk  # noqa: E402
 from benchmarks.retrieval.adapters import AdapterUnavailable, Passage, split_document  # noqa: E402
 from benchmarks.retrieval.corpus import Corpus, load_corpus  # noqa: E402
+from benchmarks.retrieval.dense import FrozenDenseRetriever  # noqa: E402
 from benchmarks.retrieval.ranking import (  # noqa: E402
     MODEL_REVISION,
     LexicalRetriever,
@@ -141,7 +142,7 @@ def _evaluate_candidate(
     args: argparse.Namespace,
     tool: str,
     capacity: int,
-    retriever: LexicalRetriever,
+    retriever: LexicalRetriever | FrozenDenseRetriever,
 ) -> dict[str, Any]:
     documents = [doc for doc in corpus.documents if doc.split == args.split]
     queries = [query for query in corpus.queries if query.split == args.split]
@@ -264,7 +265,17 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     if not documents or not any(query.split == args.split for query in corpus.queries):
         raise ValueError(f"Corpus has no documents/queries for split {args.split!r}")
     started = perf_counter()
-    retriever = LexicalRetriever([doc.text for doc in documents])
+    dense_path = getattr(args, "dense_embeddings", None)
+    if args.retriever == "dense":
+        if dense_path is None:
+            raise ValueError("Dense retrieval requires --dense-embeddings")
+        retriever: LexicalRetriever | FrozenDenseRetriever = FrozenDenseRetriever(
+            dense_path, corpus_manifest_sha256=corpus.manifest_hash
+        )
+    else:
+        if dense_path is not None:
+            raise ValueError("--dense-embeddings requires --retriever dense")
+        retriever = LexicalRetriever([doc.text for doc in documents])
     fit_seconds = perf_counter() - started
     candidates = [
         _evaluate_candidate(corpus, args, tool, capacity, retriever)
@@ -272,9 +283,12 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         for capacity in args.chunk_sizes
     ]
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "corpus_id": corpus.corpus_id,
         "corpus_manifest_sha256": corpus.manifest_hash,
+        "corpus_license": corpus.license,
+        "corpus_source": corpus.source,
+        "corpus_provenance": corpus.provenance,
         "configuration": {
             "split": args.split,
             "tools": args.tools.split(","),
@@ -286,16 +300,24 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "repeats": args.repeats,
             "context": "none",
             "overlap": 0,
-            "retriever": MODEL_REVISION,
-            "idf_fit": "selected source documents only; queries/labels excluded",
+            "retriever": MODEL_REVISION
+            if args.retriever == "lexical"
+            else "frozen-dense-cosine-v1",
+            "dense_embeddings": retriever.metadata
+            if isinstance(retriever, FrozenDenseRetriever)
+            else None,
+            "idf_fit": "selected source documents only; queries/labels excluded"
+            if args.retriever == "lexical"
+            else None,
             "relevance": (
                 "binary positive canonical-byte intersection; chunk-level qrels differ by candidate"
             ),
             "budget_selection": "whole ranked prefix, including two newline separators",
         },
         "interpretation": (
-            "Synthetic lexical control; no dense model or external retrieval-quality claim. "
-            "Compare source evidence at equal budgets."
+            "Compare source evidence at equal budgets. Corpus provenance and retriever "
+            "configuration define the scope of this experiment; results do not establish "
+            "a universal ranking or production quality."
         ),
         "documents": len(documents),
         "queries": sum(q.split == args.split for q in corpus.queries),
@@ -313,6 +335,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--chunk-sizes", type=int, nargs="+", default=[128, 256])
     parser.add_argument("--unit", choices=["chars", "tokens"], default="chars")
     parser.add_argument("--tokenizer", default="cl100k_base")
+    parser.add_argument("--retriever", choices=["lexical", "dense"], default="lexical")
+    parser.add_argument(
+        "--dense-embeddings",
+        type=Path,
+        help="Frozen dense embedding artifact; no model calls during evaluation",
+    )
     parser.add_argument("--retrieval-budget", type=int, default=1024)
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--repeats", type=int, default=3)

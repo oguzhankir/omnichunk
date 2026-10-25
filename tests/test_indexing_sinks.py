@@ -81,7 +81,15 @@ def test_qdrant_metadata_refresh_replaces_old_acl(qdrant):
 
 
 @pytest.mark.parametrize(
-    "embedding", [(1.0,), (float("nan"), 0.0), (True, 0.0), (float("inf"), 0.0)]
+    "embedding",
+    [
+        (1.0,),
+        (float("nan"), 0.0),
+        (True, 0.0),
+        (float("inf"), 0.0),
+        (1e300, 0.0),
+        (-1e300, 0.0),
+    ],
 )
 def test_invalid_vector_fails_before_qdrant_deletion(qdrant, embedding):
     client, sink = qdrant
@@ -154,6 +162,45 @@ def test_qdrant_delete_then_replace_same_id(qdrant):
     sink.apply(batch(upserts=[record(text="replacement")], deletes=["same-id"]))
     points, _ = client.scroll("test")
     assert len(points) == 1 and points[0].payload["text"] == "replacement"
+
+
+@pytest.mark.parametrize(
+    "status,retryable",
+    [
+        ("UNAVAILABLE", True),
+        ("DEADLINE_EXCEEDED", True),
+        ("RESOURCE_EXHAUSTED", True),
+        ("ABORTED", True),
+        ("PERMISSION_DENIED", False),
+        ("INVALID_ARGUMENT", False),
+    ],
+)
+def test_qdrant_grpc_error_classification(status, retryable):
+    pytest.importorskip("qdrant_client")
+    grpc = pytest.importorskip("grpc")
+
+    class RpcFailure(grpc.RpcError):
+        def code(self):
+            return getattr(grpc.StatusCode, status)
+
+    def fail(**_):
+        raise RpcFailure()
+
+    sink = QdrantSink(
+        SimpleNamespace(upsert=fail),
+        target_id="test-target",
+        collection_name="test",
+        dimensions=2,
+    )
+    with pytest.raises(RetryableSinkError if retryable else PermanentSinkError):
+        sink.apply(batch(upserts=[record()]))
+
+
+@pytest.mark.parametrize("value", [1e300, -1e300])
+def test_pgvector_float32_overflow_fails_before_accessing_connection(value):
+    sink = PgvectorSink(None, target_id="test-target", dimensions=2)
+    with pytest.raises(PermanentSinkError, match="float32"):
+        sink.apply(batch(upserts=[replace(record(), embedding=(value, 0.0))], deletes=["old"]))
 
 
 @pytest.mark.parametrize("dimensions", [0, -1, True, 1.5])

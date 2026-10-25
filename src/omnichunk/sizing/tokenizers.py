@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+from importlib import import_module
 from numbers import Integral
 from typing import Any
 
@@ -71,9 +72,9 @@ def resolve_tokenizer(
         except (ImportError, ValueError, KeyError, OSError):
             pass
         try:
-            from transformers import AutoTokenizer  # type: ignore[import-not-found]
-
-            encoder = AutoTokenizer.from_pretrained(name, local_files_only=True)
+            encoder = import_module("transformers").AutoTokenizer.from_pretrained(
+                name, local_files_only=True
+            )
         except (ImportError, ValueError, OSError) as exc:
             raise ValueError(
                 f"Cannot resolve tokenizer {name!r}. Install omnichunk[tiktoken] or "

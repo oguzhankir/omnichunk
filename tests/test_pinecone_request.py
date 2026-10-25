@@ -43,6 +43,9 @@ def test_pinecone_request_namespace_and_complete_metadata():
         {"null": None},
         {"bad": float("nan")},
         {1: "key"},
+        {"$reserved": "bad"},
+        {"numeric_id": 2**53 + 1},
+        {"numeric_id": 10**400},
         ["not-an-object"],
     ],
 )
@@ -66,6 +69,23 @@ def test_pinecone_metadata_limit_validation(limit):
 def test_pinecone_metadata_count_must_match_chunks():
     with pytest.raises(ValueError, match="length"):
         chunks_to_pinecone_upsert_request([annotated_chunk()], [[1.0]], filter_metadata=[])
+
+
+@pytest.mark.parametrize("value", [1e300, -1e300])
+def test_pinecone_request_rejects_float32_vector_overflow(value):
+    with pytest.raises(ValueError, match="float32"):
+        chunks_to_pinecone_upsert_request([annotated_chunk()], [[value]])
+
+
+def test_pinecone_filter_identifiers_preserve_exact_values():
+    request = chunks_to_pinecone_upsert_request(
+        [annotated_chunk()],
+        [[3.4028234663852886e38]],
+        filter_metadata=[{"exact_integer": 2**60, "string_id": str(2**53 + 1)}],
+    )
+    metadata = request["vectors"][0]["metadata"]
+    assert metadata["exact_integer"] == 2**60
+    assert metadata["string_id"] == str(2**53 + 1)
 
 
 @pytest.mark.parametrize(

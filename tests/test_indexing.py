@@ -353,6 +353,41 @@ def test_imported_complete_scope_cannot_orphan_stale_source_records(tmp_path):
         assert not journal.records() and not sink.rows
 
 
+@pytest.mark.parametrize("contextualized", [False, True])
+def test_imported_policy_change_cannot_retain_the_old_payload(tmp_path, contextualized):
+    item = source()
+    item = replace(
+        item,
+        chunks=tuple(
+            replace(chunk, contextualized_text="Rendered policy: " + chunk.text)
+            for chunk in item.chunks
+        ),
+    )
+    with IndexJournal(tmp_path / "journal.db") as journal:
+        sink = Sink()
+        journal.enqueue(plan(journal, [item], use_contextualized_text=contextualized))
+        journal.deliver(sink, embed)
+        original = journal.records()
+        unchanged = plan(journal, [item], use_contextualized_text=contextualized)
+        assert unchanged.unchanged_ids and not unchanged.upserts
+        forged = replace(unchanged, use_contextualized_text=not contextualized)
+        forged = replace(forged, plan_id=digest(forged._body()))
+        imported = IndexPlan.from_json(forged.to_json())
+        with pytest.raises(ValueError, match="canonical chunk provenance"):
+            journal.enqueue(imported)
+        assert journal.status().generation == 1
+        assert journal.status().pending_plan_id is None
+        assert journal.records() == original
+        # A normally planned policy change regenerates the exact new payload.
+        changed = plan(journal, [item], use_contextualized_text=not contextualized)
+        assert changed.embedding_invalidations == unchanged.unchanged_ids
+        journal.enqueue(changed)
+        journal.deliver(sink, embed)
+        expected = item.chunks[0].text if contextualized else item.chunks[0].contextualized_text
+        assert journal.records()[0].text == expected
+        assert next(iter(sink.rows.values())).text == expected
+
+
 def test_concurrent_constructors_recheck_schema_after_acquiring_writer_lock(tmp_path, monkeypatch):
     """Force the first constructor's empty snapshot to overlap another initializer."""
     path = tmp_path / "fresh.db"

@@ -133,6 +133,14 @@ Its fixed lexical retriever and authored labels provide a reproducible baseline;
 independently validated corpora, frozen dense-model comparisons and production
 design-partner evidence remain open before this milestone can be completed.
 
+The hardening delivery adds a separately licensed, attributed SQuAD 1.1 subset
+with 96 human-annotated questions, article-disjoint splits, strict manifest checks
+and offline import from a pinned upstream checksum. A frozen dense-vector artifact
+and local-model preparation command now support repeatable semantic experiments.
+External lexical comparisons are recorded; pretrained dense measurements remain
+open because the execution environment cannot download model weights. The selected
+answer spans still need independent review for chunk-evaluation suitability.
+
 The next delivery repairs boundary defects exposed by the development report:
 preserve fitting paragraphs/table rows, use Unicode sentence boundaries and count
 complete contiguous payloads when grouping prose. Keep the corpus and retrieval
@@ -184,6 +192,11 @@ while external batches run. Batch bounds do not establish total-memory bounds,
 and acknowledged delivery does not provide atomic multi-batch reader visibility.
 These limits remain explicit inputs to M4; no distributed exactly-once or
 application authorization guarantee is implied.
+
+Post-merge hardening validates retained payloads when importing plans that change
+context policy, rejects backend float32 overflow before mutation, classifies
+transient gRPC failures for retry, and protects native ingestion caches from
+cross-source identity reuse. These behaviors have targeted regressions.
 
 - Ship optional native LangChain splitter and LlamaIndex node/transform adapters.
   Preserve IDs, source references, metadata and hierarchy without accidental double

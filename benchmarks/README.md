@@ -72,6 +72,56 @@ available for a token experiment; their download failure is never replaced with
 an approximate counter. Chonkie's count-only token adapter is explicitly
 unavailable because its encode/decode contract cannot be inferred from counts.
 
+### Independent source data
+
+`retrieval/corpus_squad_v1` contains a frozen, attributed CC-BY-SA-4.0 subset of
+SQuAD 1.1: 32 Wikipedia paragraphs and 96 human-annotated questions. Its development
+and test splits separate entire articles. The original SQuAD development file is
+the upstream source; these local splits are not the official SQuAD leaderboard.
+See the corpus README for selection, attribution and licensing.
+
+```bash
+python benchmarks/run_retrieval.py --corpus benchmarks/retrieval/corpus_squad_v1 \
+  --split dev --tools omnichunk,fixed,semchunk,langchain,semantic-text-splitter,chonkie,llamaindex \
+  --chunk-sizes 128 256 --repeats 3 --require-all --output reports/squad-dev.json
+```
+
+Rebuild only from an explicitly downloaded upstream file:
+
+```bash
+python benchmarks/import_squad.py --input /path/to/dev-v1.1.json --output /tmp/squad-corpus
+```
+
+The importer verifies a pinned upstream SHA-256 before selecting records and
+never downloads data. Corpus validation rejects duplicate JSON keys, non-finite
+numbers and Unicode/whitespace-equivalent documents or questions crossing splits.
+The independent corpus covers English prose; synthetic code/table/multilingual
+fixtures remain separate. Neither dataset establishes a production-wide ranking.
+
+### Frozen dense retrieval
+
+Use `--retriever dense --dense-embeddings /path/to/vectors.json` with the same
+runner settings to replace lexical retrieval. The versioned artifact binds each
+query/passage role and exact UTF-8 payload hash to a finite vector, a corpus hash,
+model revision and preprocessing revision. Missing payloads, inconsistent dimensions
+or incompatible corpus hashes fail the experiment. Reports retain the artifact
+hash and producer metadata; evaluation makes zero model calls.
+
+`benchmarks/prepare_dense.py --help` describes preparation using an explicitly
+cached, local SentenceTransformer model. Install `sentence-transformers` separately;
+it is not a library dependency. The producer records local model file hashes and
+rejects overflowing inputs instead of silently truncating them. Supported local
+models use the documented symmetric encoder contract; role-specific encoders can
+use `build_dense_artifact` with an explicit callback and preprocessing revision.
+An artifact records producer assertions and cannot independently attest how an
+external producer generated vectors.
+
+No pretrained dense-model result is included in this change: the execution
+environment blocks HuggingFace downloads. Unit-test vectors and randomly initialized
+local models validate plumbing only. A pretrained dense comparison, independent
+review of selected answer evidence and production design-partner evaluation remain
+M1 acceptance work.
+
 ## Core and structural checks
 
 ```bash

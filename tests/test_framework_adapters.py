@@ -192,6 +192,70 @@ def test_llama_native_ingestion_cache_and_serialization():
         parser.to_dict()
 
 
+def test_llama_pipeline_cache_preserves_native_source_identity_and_reuses_results(monkeypatch):
+    Document, Parser = llama_types()
+    from llama_index.core.ingestion import IngestionCache
+    from llama_index.core.schema import MetadataMode
+
+    from omnichunk.integrations.llamaindex import OmniChunkIngestionPipeline
+
+    calls = []
+    parse = Parser._parse_nodes
+
+    def counted(self, nodes, *args, **kwargs):
+        calls.append(len(nodes))
+        return parse(self, nodes, *args, **kwargs)
+
+    monkeypatch.setattr(Parser, "_parse_nodes", counted)
+    pipeline = OmniChunkIngestionPipeline(
+        transformations=[Parser(options=OPTIONS)], cache=IngestionCache()
+    )
+    # Custom formatting must not hide identity metadata from the framework cache.
+    first = Document(id_="a", text=TEXT, metadata={"acl": ["staff"]}, text_template="{content}")
+    second = Document(id_="b", text=TEXT, metadata={"acl": ["staff"]}, text_template="{content}")
+    before = deepcopy(first.to_dict())
+    a = pipeline.run(documents=[first])
+    b = pipeline.run(documents=[second])
+    again = asyncio.run(pipeline.arun(documents=[first]))
+    assert calls == [1, 1]  # The third call reuses the correctly identified cache entry.
+    assert {node.ref_doc_id for node in a} == {"a"}
+    assert {node.ref_doc_id for node in b} == {"b"}
+    assert [node.to_dict() for node in again] == [node.to_dict() for node in a]
+    assert {node.node_id for node in a}.isdisjoint({node.node_id for node in b})
+    assert first.to_dict() == before
+    for node in [*a, *b]:
+        assert node.metadata["acl"] == ["staff"]
+        assert "_omnichunk_ingestion_identity" not in node.metadata
+        assert "_omnichunk_ingestion_identity" not in node.source_node.metadata
+        assert node.source_node.hash == first.hash
+        assert node.get_content(MetadataMode.EMBED) == node.text
+        assert TEXT[node.start_char_idx : node.end_char_idx] == node.text
+
+
+def test_llama_pipeline_covers_stored_documents_nodes_and_input_validation():
+    Document, _ = llama_types()
+    from omnichunk.integrations.llamaindex import OmniChunkIngestionPipeline
+
+    source = Document(id_="stored", text="Stored source.")
+    pipeline = OmniChunkIngestionPipeline(documents=[source])
+    assert pipeline.run()[0].ref_doc_id == "stored"
+    assert pipeline.run(nodes=[Document(id_="node", text="Node source.")])[0].ref_doc_id == "node"
+    # Some supported native versions hash metadata in insertion order. Preserve
+    # the current source hash even when canonical JSON sees equivalent objects.
+    ordered = Document(id_="ordered", text="Same.", metadata={"one": 1, "two": 2})
+    reordered = Document(id_="ordered", text="Same.", metadata={"two": 2, "one": 1})
+    assert pipeline.run(documents=[ordered])[0].source_node.hash == ordered.hash
+    assert pipeline.run(documents=[reordered])[0].source_node.hash == reordered.hash
+    with pytest.raises(ValueError, match="first"):
+        OmniChunkIngestionPipeline(transformations=[])
+    with pytest.raises(ValueError, match="Reserved ingestion"):
+        pipeline.run(
+            documents=[Document(text="bad", metadata={"_omnichunk_ingestion_identity": "spoof"})]
+        )
+    with pytest.raises(ValueError, match="finite JSON"):
+        pipeline.run(documents=[Document(text="bad", metadata={"bad": float("nan")})])
+
+
 @pytest.mark.parametrize(
     "metadata,options,message",
     [

@@ -319,6 +319,8 @@ def chunks_to_pinecone_upsert_request(
                 raise ValueError("filter_metadata entries must be mappings")
             extra = _strict_json_copy(filter_metadata[index])
             for key, value in extra.items():
+                if key.startswith("$"):
+                    raise ValueError("Pinecone filter metadata keys cannot start with '$'")
                 if key in metadata:
                     raise ValueError(f"filter_metadata collides with generated field {key!r}")
                 if not (
@@ -326,6 +328,16 @@ def chunks_to_pinecone_upsert_request(
                     or (isinstance(value, list) and all(type(item) is str for item in value))
                 ):
                     raise ValueError("Pinecone filter metadata requires scalars or string lists")
+                if type(value) is int:
+                    try:
+                        exact = math.isfinite(float(value)) and int(float(value)) == value
+                    except OverflowError:
+                        exact = False
+                    if not exact:
+                        raise ValueError(
+                            "Pinecone integer filter metadata must be exactly representable "
+                            "as float64; use strings for identifiers"
+                        )
                 metadata[key] = value
         encoded = json.dumps(metadata, ensure_ascii=False, separators=(",", ":"), allow_nan=False)
         if len(encoded.encode("utf-8")) > max_metadata_bytes:
@@ -437,8 +449,12 @@ def _validated_vectors(
                 number = float(value)
             except (ValueError, OverflowError) as exc:
                 raise ValueError(f"Embedding {index} must contain finite real numbers") from exc
+            # These vendor APIs store dense vectors as float32. Finite Python
+            # floats can overflow during conversion and must fail before I/O.
             if not math.isfinite(number):
                 raise ValueError(f"Embedding {index} must contain finite real numbers")
+            if abs(number) > 3.4028234663852886e38:
+                raise ValueError(f"Embedding {index} must contain finite float32 real numbers")
             row.append(number)
         validated.append(row)
     return validated

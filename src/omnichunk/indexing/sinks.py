@@ -18,6 +18,8 @@ from uuid import NAMESPACE_URL, uuid5
 
 from .models import DeliveryBatch, DeliveryReceipt, PermanentSinkError, RetryableSinkError
 
+_FLOAT32_MAX = 3.4028234663852886e38
+
 
 def qdrant_point_id(collection: str, record_id: str) -> str:
     """Map a logical collection/record pair to the UUID used for writes/deletes."""
@@ -81,9 +83,10 @@ def _validate_batch(batch: DeliveryBatch, target_id: str, dimensions: int) -> No
                 isinstance(value, bool)
                 or not isinstance(value, Real)
                 or not math.isfinite(float(value))
+                or abs(float(value)) > _FLOAT32_MAX
                 for value in record.embedding
             ):
-                raise ValueError("Embeddings must contain finite real numbers")
+                raise ValueError("Embeddings must contain finite float32 real numbers")
     except (ValueError, TypeError, OverflowError) as exc:
         raise PermanentSinkError(str(exc)) from exc
 
@@ -97,12 +100,20 @@ def _delivery_error(exc: Exception, vendor: str) -> Exception:
         cause = exc
     status = getattr(cause, "status_code", None)
     sqlstate = getattr(cause, "sqlstate", None)
+    # Qdrant also supports gRPC. Inspect its optional exception hierarchy without
+    # importing grpc when only the dependency-free core or pgvector is in use.
+    grpc_status = None
+    if any(cls.__name__ == "RpcError" and cls.__module__ == "grpc" for cls in type(cause).__mro__):
+        code = getattr(cause, "code", None)
+        if callable(code):
+            grpc_status = getattr(code(), "name", None)
     transient = (
         isinstance(cause, (ConnectionError, TimeoutError))
         or status == 429
         or (isinstance(status, int) and status >= 500)
         or (isinstance(sqlstate, str) and sqlstate[:2] in {"08", "40"})
         or sqlstate in {"55P03", "53300", "57P01", "57P02", "57P03"}
+        or grpc_status in {"UNAVAILABLE", "DEADLINE_EXCEEDED", "RESOURCE_EXHAUSTED", "ABORTED"}
         or any(
             cls.__module__.startswith("httpx") and cls.__name__ == "TransportError"
             for cls in type(cause).__mro__

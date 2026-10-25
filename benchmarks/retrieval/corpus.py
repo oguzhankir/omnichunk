@@ -8,6 +8,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
+import re
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -39,13 +42,44 @@ class Corpus:
     documents: tuple[Document, ...]
     queries: tuple[Query, ...]
     manifest_hash: str
+    license: str = "MIT"
+    provenance: dict[str, Any] | None = None
+    source: str | None = None
 
 
 def _text(record: dict[str, Any], key: str) -> str:
     value = record.get(key)
     if not isinstance(value, str) or not value.strip():
         raise ValueError(f"{key} must be a nonempty string")
+    try:
+        value.encode("utf-8")
+    except UnicodeEncodeError as exc:
+        raise ValueError(f"{key} must contain valid Unicode text") from exc
     return value
+
+
+def _unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"Duplicate manifest JSON key: {key}")
+        result[key] = value
+    return result
+
+
+def _reject_constant(value: str) -> None:
+    raise ValueError(f"Non-finite manifest JSON value: {value}")
+
+
+def _finite_float(value: str) -> float:
+    number = float(value)
+    if not math.isfinite(number):
+        raise ValueError("Manifest JSON numbers must be finite")
+    return number
+
+
+def _normalized(text: str) -> str:
+    return " ".join(unicodedata.normalize("NFC", text).split())
 
 
 def _records(manifest: dict[str, Any], key: str) -> list[dict[str, Any]]:
@@ -67,12 +101,19 @@ def load_corpus(path: Path) -> Corpus:
 
     Hashes cover exact on-disk source bytes. Quotes must decode from nonempty,
     half-open UTF-8 ranges. A source and all its evidence belong to one split;
-    identical documents and query texts cannot straddle dev and test.
+    Unicode/whitespace-equivalent documents and case-insensitive equivalent
+    query texts cannot straddle dev and test. Sources retain their exact bytes.
+    The license identifies the imported corpus; it does not relicense its data.
     """
     manifest_path = path / "manifest.json" if path.is_dir() else path
     manifest_raw = manifest_path.read_bytes()
     try:
-        manifest = json.loads(manifest_raw)
+        manifest = json.loads(
+            manifest_raw,
+            object_pairs_hook=_unique_object,
+            parse_constant=_reject_constant,
+            parse_float=_finite_float,
+        )
     except (ValueError, UnicodeDecodeError) as exc:
         raise ValueError("Invalid corpus manifest JSON") from exc
     if (
@@ -82,12 +123,18 @@ def load_corpus(path: Path) -> Corpus:
     ):
         raise ValueError("Unsupported corpus schema_version")
     corpus_id = _text(manifest, "corpus_id")
-    if _text(manifest, "license") != "MIT":
-        raise ValueError("Corpus manifest must declare its MIT license")
+    license_id = _text(manifest, "license")
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9.+-]*", license_id):
+        raise ValueError("license must be one SPDX-style license identifier")
+    provenance = manifest.get("provenance")
+    if provenance is not None and not isinstance(provenance, dict):
+        raise ValueError("provenance must be a JSON object")
+    source = _text(manifest, "source") if "source" in manifest else None
     root = manifest_path.resolve().parent
     documents: list[Document] = []
     by_id: dict[str, Document] = {}
     content_splits: dict[str, str] = {}
+    normalized_splits: dict[str, str] = {}
     source_paths: set[str] = set()
     for item in _records(manifest, "documents"):
         source_id, relative = _text(item, "source_id"), _text(item, "path")
@@ -116,6 +163,10 @@ def load_corpus(path: Path) -> Corpus:
             text = raw.decode("utf-8")
         except UnicodeDecodeError as exc:
             raise ValueError(f"Document is not UTF-8: {relative}") from exc
+        normalized_digest = hashlib.sha256(_normalized(text).encode("utf-8")).hexdigest()
+        if normalized_digest in normalized_splits and normalized_splits[normalized_digest] != split:
+            raise ValueError("Equivalent document content leaks between splits")
+        normalized_splits[normalized_digest] = split
         document = Document(
             source_id, relative, text, _text(item, "language"), _text(item, "category"), split
         )
@@ -131,7 +182,7 @@ def load_corpus(path: Path) -> Corpus:
         if query_id in query_ids:
             raise ValueError(f"Duplicate query_id: {query_id}")
         split = _split(item)
-        normalized = " ".join(question.casefold().split())
+        normalized = _normalized(question.casefold())
         if normalized in question_splits and question_splits[normalized] != split:
             raise ValueError("Identical query text leaks between splits")
         question_splits[normalized] = split
@@ -165,5 +216,11 @@ def load_corpus(path: Path) -> Corpus:
     if labeled_sources != set(by_id):
         raise ValueError("Every document must have evidence labels")
     return Corpus(
-        corpus_id, tuple(documents), tuple(queries), hashlib.sha256(manifest_raw).hexdigest()
+        corpus_id,
+        tuple(documents),
+        tuple(queries),
+        hashlib.sha256(manifest_raw).hexdigest(),
+        license_id,
+        provenance,
+        source,
     )

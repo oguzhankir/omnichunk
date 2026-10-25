@@ -6,6 +6,11 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 ## [Unreleased]
 
 ### Added
+- A separately licensed, checksum-pinned SQuAD 1.1 retrieval corpus with 96
+  human-annotated queries, article-disjoint splits and offline import tooling.
+- Frozen dense-vector retrieval and optional local-model preparation with exact
+  payload/model provenance and fail-closed token overflow checks.
+- Identity-safe `OmniChunkIngestionPipeline` for cached native LlamaIndex ingestion.
 - Recoverable indexing with `IndexJournal`, versioned dry-run `IndexPlan` JSON,
   source/scope ownership, generation checks, persistent embedding reuse and
   acknowledged bounded delivery. Pending operations survive process restarts;
@@ -27,6 +32,12 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
   and source/runtime fingerprints. CI preserves the full development report.
 
 ### Fixed
+- Imported index plans cannot retain stale payloads when changing context policy.
+- Qdrant/pgvector/vector exports reject float32 overflow before remote mutation;
+  transient Qdrant gRPC failures remain retryable. Pinecone filter metadata rejects
+  reserved keys and numeric identifiers that would lose precision.
+- Retrieval corpus validation rejects ambiguous JSON and normalized cross-split
+  duplicates; comparator source-offset mapping is linear in document size.
 - Code windows now measure the configured character, non-whitespace-character or
   tokenizer budget throughout AST grouping and splitting, preserving fitting
   Unicode declarations. Complete source gaps count toward grouping, minimum-size
