@@ -167,6 +167,38 @@ def test_candidate_failure_is_visible_and_never_aggregated(
     assert runner.main([*command, "--require-all"]) == 1
 
 
+@pytest.mark.parametrize("empty", [False, True])
+def test_content_loss_is_a_failed_candidate_without_scores(tmp_path: Path, monkeypatch, empty):
+    from benchmarks.retrieval import adapters
+
+    corpus = _fixture_corpus(tmp_path)
+    monkeypatch.setattr(
+        adapters, "_split_texts", lambda tool, path, text, *args: [] if empty else [text[:1]]
+    )
+    output = tmp_path / "report.json"
+    assert (
+        runner.main(
+            [
+                "--corpus",
+                str(corpus),
+                "--tools",
+                "fixed",
+                "--chunk-sizes",
+                "20",
+                "--repeats",
+                "1",
+                "--output",
+                str(output),
+            ]
+        )
+        == 1
+    )
+    candidate = json.loads(output.read_text())["candidates"][0]
+    assert candidate["status"] == "error"
+    assert "drops non-whitespace" in candidate["detail"]
+    assert "summary" not in candidate and "per_query" not in candidate
+
+
 def test_nondeterministic_adapter_fails_instead_of_mixing_qrels(
     tmp_path: Path, monkeypatch
 ) -> None:

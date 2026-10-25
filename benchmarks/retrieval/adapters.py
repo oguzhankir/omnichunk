@@ -173,11 +173,15 @@ def _normalize(
         start = text.find(piece, cursor)
         if start < 0:
             raise ValueError("Adapter output is not an ordered, non-overlapping source slice")
+        if text[cursor:start].strip():
+            raise ValueError("Adapter source slice drops non-whitespace source text")
         end = start + len(piece)
         result.append(
             _passage(source_id, len(text[:start].encode()), len(text[:end].encode()), piece)
         )
         cursor = end
+    if text[cursor:].strip():
+        raise ValueError("Adapter output drops non-whitespace source text at the end")
     return result
 
 

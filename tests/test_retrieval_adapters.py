@@ -91,6 +91,36 @@ def test_adapter_failure_is_not_misreported_as_unavailable(monkeypatch):
         adapters.split_document("semchunk", "doc", "d.txt", "abcdef", 5, len, "chars")
 
 
+@pytest.mark.parametrize(
+    "source,pieces",
+    [
+        ("important context answer trailing evidence", ["answer"]),
+        ("missing answer", ["answer"]),
+        ("first missing last", ["first", "last"]),
+        ("answer missing", ["answer"]),
+        ("資料😀", []),
+        ("資料😀", [""]),
+        ("資料 missing 😀", ["資料", "😀"]),
+    ],
+)
+def test_adapter_cannot_silently_drop_nonwhitespace(source, pieces, monkeypatch):
+    monkeypatch.setattr(adapters, "_split_texts", lambda *_: iter(pieces))
+    with pytest.raises(ValueError, match="drops non-whitespace"):
+        adapters.split_document("fixed", "doc", "d.txt", source, 100, len, "chars")
+
+
+@pytest.mark.parametrize(
+    "source,pieces",
+    [(" \t資料\n\u2003😀\r\n", ["資料", "😀"]), (" \t\n\u2003", []), ("", [])],
+)
+def test_adapter_may_omit_only_whitespace(source, pieces, monkeypatch):
+    monkeypatch.setattr(adapters, "_split_texts", lambda *_: iter(pieces))
+    chunks = adapters.split_document("fixed", "doc", "d.txt", source, 100, len, "chars")
+    assert [chunk.text for chunk in chunks] == pieces
+    raw = source.encode()
+    assert all(raw[c.start : c.end].decode() == c.text for c in chunks)
+
+
 def test_absent_tool_is_unavailable_but_broken_transitive_import_is_error(monkeypatch):
     def absent(name):
         raise ModuleNotFoundError(name=name)
