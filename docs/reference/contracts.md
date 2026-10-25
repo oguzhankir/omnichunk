@@ -56,6 +56,21 @@ declarations and lexical boundaries but can divide an oversized definition;
 intersecting entity metadata is marked `is_partial`. A unit that cannot fit even
 as one Unicode character raises `ChunkingError` in strict mode.
 
+Prose and Markdown split oversized content in structural order: paragraphs,
+lines (including table rows), sentences, whitespace, then smaller separators and
+measured character prefixes. A unit that fits keeps its boundary; oversized units
+descend to the next level. Source whitespace participates in the measured budget.
+`min_chunk_size` is a preference: merging must still fit the maximum, so a short
+heading or tail can remain below the minimum. Table headers are not repeated as
+derived context by this policy.
+
+The default sentence heuristic recognizes Unicode uppercase/uncased starters and
+Japanese/Chinese `。！？` without intervening spaces. Closing quotes and whitespace
+remain with the preceding sentence. Abbreviations and ambiguous linguistic
+boundaries still need a custom `semantic_sentence_splitter` in semantic mode; that callback
+must preserve all source characters. Changing boundaries changes chunk IDs:
+rechunk affected documents and apply deletions when updating an existing index.
+
 ## Source coordinates and coverage
 
 - `Chunk.text` is an exact slice of its declared canonical source.

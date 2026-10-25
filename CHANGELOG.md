@@ -16,6 +16,14 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
   and source/runtime fingerprints. CI preserves the full development report.
 
 ### Fixed
+- Prose splitting now respects paragraph, line/table-row and Unicode sentence
+  boundaries before word-level fallbacks. Node grouping counts the actual source
+  slice, including whitespace and nonadditive token costs; minimum-size merging
+  cannot exceed the configured maximum. Explicit prose overflow policies also
+  apply when the minimum size is zero.
+- Default sentence segmentation recognizes Turkish and other Unicode starters,
+  Japanese/Chinese punctuation without spaces, closing quotes and CRLF paragraphs
+  while preserving exact source coordinates.
 - Batch inputs now apply per-document options, matching asynchronous batch behavior.
 - Unbroken prose uses measured hard splits instead of producing hundreds of tiny
   chunks; code hard splits preserve UTF-8 character boundaries.

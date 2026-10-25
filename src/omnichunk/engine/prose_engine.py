@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import re
-from bisect import bisect_right
 from collections.abc import Callable, Iterator
 from dataclasses import replace
 from typing import Any
@@ -11,6 +10,7 @@ from omnichunk.context.rebase import rebase_chunk
 from omnichunk.engine.code_engine import CodeEngine
 from omnichunk.engine.markup_engine import MarkupEngine
 from omnichunk.parser.markdown_parser import ProseNode, parse_markdown
+from omnichunk.semantic.sentences import split_sentences
 from omnichunk.sizing.counter import find_fitting_prefix, make_size_counter, make_token_counter
 from omnichunk.sizing.nws import get_nws_count, preprocess_nws_cumsum
 from omnichunk.types import (
@@ -28,15 +28,14 @@ from omnichunk.util.detect import detect_language
 from omnichunk.util.text_index import TextIndex
 from omnichunk.windowing.overlap import build_line_overlap_text
 
-_SPLIT_HIERARCHY: list[str] = [
-    r"(?:\r?\n){2,}",
-    r"\t+",
-    r"\s+",
-    r"[\.\?!\*]+",
-    r"[;,\(\)\[\]\"'`]+",
-    r"[:—…]+",
-    r"[/\\–&-]+",
-    r"",
+_SPLIT_HIERARCHY: list[re.Pattern[str] | None] = [
+    re.compile(r"(?:\r?\n[ \t]*){2,}"),
+    re.compile(r"\r?\n"),
+    None,  # Unicode sentence boundaries, before word-level fallbacks.
+    re.compile(r"\s+"),
+    re.compile(r"[;,，；、\(\)\[\]\"'`]+"),
+    re.compile(r"[:：—…]+"),
+    re.compile(r"[/\\–&-]+"),
 ]
 
 _CODE_FENCE_LANGUAGE_ALIASES: dict[str, str] = {
@@ -140,6 +139,7 @@ class ProseEngine:
             size_counter=size_counter,
             content=content,
             preserve_code_blocks=(language == "markdown"),
+            split_oversized=options.overflow_policy == "split",
         )
 
         if not windows:
@@ -450,16 +450,24 @@ def _build_node_windows(
     size_counter: Callable[[str], int],
     content: str,
     preserve_code_blocks: bool = False,
+    split_oversized: bool = True,
 ) -> list[list[tuple[int, int, list[str], str]]]:
     windows: list[list[tuple[int, int, list[str], str]]] = []
     current: list[tuple[int, int, list[str], str]] = []
-    current_size = 0
+    cursor = 0
 
-    for node in nodes:
-        node_size = size_counter(node.text)
+    for node_index, node in enumerate(nodes):
+        # Own the actual contiguous source, including parser-omitted trivia.
+        # Summing individual node sizes loses gaps and assumes additive tokens.
+        end = len(content) if node_index == len(nodes) - 1 else node.byte_range.end
+        if end <= cursor:
+            continue
+        start, cursor = cursor, end
+        node_text = content[start:end]
+        node_size = size_counter(node_text)
         node_payload = (
-            node.byte_range.start,
-            node.byte_range.end,
+            start,
+            end,
             list(node.heading_hierarchy),
             node.kind.value,
         )
@@ -468,24 +476,28 @@ def _build_node_windows(
             if current:
                 windows.append(current)
                 current = []
-                current_size = 0
             windows.append([node_payload])
             continue
 
-        if node_size <= max_size and current_size + node_size <= max_size:
+        combined_start = current[0][0] if current else start
+        if size_counter(content[combined_start:end]) <= max_size:
             current.append(node_payload)
-            current_size += node_size
             continue
 
         if node_size > max_size:
             if current:
                 windows.append(current)
                 current = []
-                current_size = 0
+
+            if not split_oversized:
+                # Keep an oversized structural unit intact so finalization can
+                # enforce the explicit error/preserve policy.
+                windows.append([node_payload])
+                continue
 
             split_ranges = _split_oversized_text(
-                node.text,
-                base_start=node.byte_range.start,
+                node_text,
+                base_start=start,
                 max_size=max_size,
                 size_counter=size_counter,
             )
@@ -501,7 +513,6 @@ def _build_node_windows(
         if current:
             windows.append(current)
         current = [node_payload]
-        current_size = node_size
 
     if current:
         windows.append(current)
@@ -522,25 +533,31 @@ def _build_node_windows(
             continue
 
         if idx + 1 < len(windows):
-            if preserve_code_blocks and _window_has_section_type(
-                windows[idx + 1], EntityType.CODE_BLOCK.value
+            following = windows[idx + 1]
+            if (
+                not (
+                    preserve_code_blocks
+                    and _window_has_section_type(following, EntityType.CODE_BLOCK.value)
+                )
+                and size_counter(content[window[0][0] : following[-1][1]]) <= max_size
             ):
-                idx += 1
+                windows[idx].extend(following)
+                del windows[idx + 1]
                 continue
-            windows[idx].extend(windows[idx + 1])
-            del windows[idx + 1]
-            continue
 
         if idx > 0:
-            if preserve_code_blocks and _window_has_section_type(
-                windows[idx - 1], EntityType.CODE_BLOCK.value
+            previous = windows[idx - 1]
+            if (
+                not (
+                    preserve_code_blocks
+                    and _window_has_section_type(previous, EntityType.CODE_BLOCK.value)
+                )
+                and size_counter(content[previous[0][0] : window[-1][1]]) <= max_size
             ):
-                idx += 1
+                previous.extend(window)
+                del windows[idx]
+                idx -= 1
                 continue
-            windows[idx - 1].extend(windows[idx])
-            del windows[idx]
-            idx -= 1
-            continue
 
         idx += 1
 
@@ -559,48 +576,67 @@ def _split_oversized_text(
     base_start: int,
     max_size: int,
     size_counter: Callable[[str], int],
+    _level: int = 0,
 ) -> list[tuple[int, int]]:
+    """Pack whole structural units; descend only when a unit cannot fit.
+
+    Separators remain in the source slices. Minimum-size preferences must never
+    force a fitting paragraph, line or sentence to be cut by finalization.
+    """
     if size_counter(text) <= max_size:
         return [(base_start, base_start + len(text))]
 
-    splits = _hierarchical_split_points(text)
-    if not splits:
-        splits = list(range(1, len(text)))
+    if _level < len(_SPLIT_HIERARCHY):
+        pattern = _SPLIT_HIERARCHY[_level]
+        points = (
+            [end for _, _, end in split_sentences(text)]
+            if pattern is None
+            else [match.end() for match in pattern.finditer(text)]
+        )
+        # Attach leading/trailing trivia to content instead of creating empty
+        # structural units which can perturb packing and source ownership.
+        first_content = len(text) - len(text.lstrip())
+        last_content = len(text.rstrip())
+        points = [point for point in points if first_content < point < last_content]
+        points.append(len(text))
+        chunks: list[tuple[int, int]] = []
+        group_start = unit_start = 0
+        for unit_end in points:
+            if size_counter(text[group_start:unit_end]) <= max_size:
+                unit_start = unit_end
+                continue
+            if unit_start > group_start:
+                chunks.append((base_start + group_start, base_start + unit_start))
+            if size_counter(text[unit_start:unit_end]) <= max_size:
+                group_start, unit_start = unit_start, unit_end
+                continue
+            chunks.extend(
+                _split_oversized_text(
+                    text[unit_start:unit_end],
+                    base_start=base_start + unit_start,
+                    max_size=max_size,
+                    size_counter=size_counter,
+                    _level=_level + 1,
+                )
+            )
+            group_start = unit_start = unit_end
+        if group_start < len(text):
+            chunks.append((base_start + group_start, base_start + len(text)))
+        return chunks
 
-    chunks: list[tuple[int, int]] = []
+    chunks = []
     cursor = 0
     while cursor < len(text):
-        best_end = cursor
-        for split_index in range(bisect_right(splits, cursor), len(splits)):
-            point = splits[split_index]
-            candidate = text[cursor:point]
-            if size_counter(candidate) <= max_size:
-                best_end = point
-            else:
-                break
-
+        best_end = find_fitting_prefix(text, cursor, len(text), max_size, size_counter)
         if best_end == cursor:
-            best_end = find_fitting_prefix(text, cursor, len(text), max_size, size_counter)
-            if best_end == cursor:
-                # Let finalization apply the configured overflow policy when
-                # even a complete Unicode character cannot fit the budget.
-                best_end = cursor + 1
+            # Finalization applies the caller's overflow policy when a complete
+            # Unicode character cannot fit the budget.
+            best_end = cursor + 1
 
         chunks.append((base_start + cursor, base_start + best_end))
         cursor = best_end
 
     return chunks
-
-
-def _hierarchical_split_points(text: str) -> list[int]:
-    points: set[int] = set()
-    for pattern in _SPLIT_HIERARCHY:
-        if not pattern:
-            continue
-        for match in re.finditer(pattern, text):
-            points.add(match.end())
-    points.add(len(text))
-    return sorted(p for p in points if p > 0)
 
 
 def _windows_to_contiguous_ranges(
