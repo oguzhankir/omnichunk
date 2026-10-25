@@ -103,6 +103,35 @@ peak RSS is a cumulative high-water mark and does not isolate the current
 candidate. Report comparable repeated measurements before interpreting small
 differences. No single synthetic corpus or configuration establishes leadership.
 
+### Structural boundary evaluation snapshot
+
+The prose-boundary repair compares baseline `71c5177` with implementation
+`58a6b41` on the unchanged `corpus_v1` corpus and lexical retriever. Both use zero
+overlap, no derived context, 1,024-character retrieval capacity, top-k 5 and three
+timing repeats. The implementation was frozen before evaluating the test split.
+These are character-budget experiments, not model-token or dense-retrieval scores.
+
+| Split | Chunk capacity | Evidence recall before → after | Indexed chunks before → after |
+| --- | --- | --- | --- |
+| Development | 128 chars | 0.8892 → 0.9026 | 312 → 348 |
+| Development | 256 chars | 0.9414 → 0.9744 | 162 → 181 |
+| Test | 128 chars | 0.8896 → 0.8883 | 206 → 245 |
+| Test | 256 chars | 0.9290 → 0.9566 | 115 → 131 |
+
+At 256 characters, test Markdown/table evidence recall reaches 1.0; code stays at
+0.8698. Overall evidence precision improves from 0.1313 to 0.1335. At 128
+characters, test Markdown recall falls from 0.9856 to 0.9379, while table recall
+improves from 0.9285 to 0.9539. Preserving structural units produces more chunks,
+which can increase embedding/index cost. Evaluate the relevant slices before
+choosing a capacity; smaller chunks are not automatically better.
+
+The strongest evaluated 256-character alternatives still reach 0.9833 overall
+test recall. This repair establishes a narrower structural improvement, not
+leadership. Independently reviewed labels and external/dense evaluations remain
+open. Reproduce with the linked runner commands using `--split dev` and
+`--split test`, `--chunk-sizes 128 256 --retrieval-budget 1024 --top-k 5 --repeats 3`.
+The CI `retrieval-evaluation` artifact retains raw development results per commit.
+
 ## Environment and interpretation
 
 Record source commit, package/Python/dependency versions, CPU/platform, tokenizer
