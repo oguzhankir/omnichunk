@@ -1,0 +1,190 @@
+"""Public code-window regressions for measured units and canonical source bytes."""
+
+from __future__ import annotations
+
+from collections.abc import Callable
+from dataclasses import replace
+
+import pytest
+
+from omnichunk import Chunker
+from omnichunk.parser import tree_sitter
+from omnichunk.types import Chunk, ChunkingError
+
+
+def _assert_source(chunks: list[Chunk], source: str, limit: int, count: Callable[[str], int]):
+    assert "".join(chunk.text for chunk in chunks) == source
+    raw = source.encode("utf-8")
+    cursor = 0
+    for chunk in chunks:
+        assert chunk.byte_range.start == cursor
+        cursor = chunk.byte_range.end
+        assert raw[chunk.byte_range.start : cursor].decode("utf-8") == chunk.text
+        assert count(chunk.contextualized_text) <= limit
+    assert cursor == len(raw)
+
+
+@pytest.mark.parametrize("symbol", ["界", "😀"])
+@pytest.mark.parametrize("unit", ["chars", "nws", "tokens"])
+@pytest.mark.parametrize("fallback", [False, True])
+def test_fitting_unicode_literal_is_not_split_by_utf8_byte_count(
+    symbol, unit, fallback, monkeypatch
+):
+    if fallback:
+        monkeypatch.setattr(tree_sitter, "get_ts_parser", lambda language: None)
+    source = 'value = "' + symbol * 120 + '"\n'
+    count = (
+        (lambda text: len(text) // 4)
+        if unit == "tokens"
+        else (lambda text: sum(not char.isspace() for char in text))
+        if unit == "nws"
+        else len
+    )
+    capacity = 64 if unit == "tokens" else 256
+    chunker = Chunker(
+        max_chunk_size=capacity,
+        min_chunk_size=0,
+        size_unit=unit,
+        tokenizer=count if unit == "tokens" else None,
+        context_mode="none",
+        coverage_policy="lossless",
+    )
+
+    chunks = chunker.chunk("literal.py", source)
+
+    assert [chunk.text for chunk in chunks] == [source]
+    _assert_source(chunks, source, capacity, count)
+    streamed = list(chunker.stream("literal.py", source))
+    assert [replace(chunk, total_chunks=len(streamed)) for chunk in streamed] == chunks
+
+
+def test_fitting_unicode_functions_remain_whole_in_a_larger_source():
+    functions = [f'def label_{index}():\n    return "' + "İ界😀" * 35 + '"\n' for index in range(3)]
+    source = "\n".join(functions)
+    chunks = Chunker(
+        max_chunk_size=160,
+        min_chunk_size=0,
+        size_unit="chars",
+        context_mode="none",
+        coverage_policy="lossless",
+    ).chunk("labels.py", source)
+
+    _assert_source(chunks, source, 160, len)
+    for function in functions:
+        assert any(function in chunk.text for chunk in chunks)
+
+
+def test_code_grouping_measures_inter_statement_whitespace():
+    source = "alpha = 1\n\n\n\nbravo = 2\n"
+    chunks = Chunker(
+        max_chunk_size=16,
+        min_chunk_size=0,
+        size_unit="chars",
+        context_mode="none",
+        coverage_policy="lossless",
+        overflow_policy="error",
+    ).chunk("assignments.py", source)
+
+    _assert_source(chunks, source, 16, len)
+    assert any("alpha = 1" in chunk.text for chunk in chunks)
+    assert any("bravo = 2" in chunk.text for chunk in chunks)
+
+
+def test_code_grouping_measures_nonadditive_combined_token_cost():
+    def count(text: str) -> int:
+        return len(text) + (20 if "alpha" in text and "bravo" in text else 0)
+
+    source = "alpha = 1\nbravo = 2\n"
+    chunks = Chunker(
+        max_chunk_size=20,
+        min_chunk_size=0,
+        size_unit="tokens",
+        tokenizer=count,
+        context_mode="none",
+        coverage_policy="lossless",
+        overflow_policy="error",
+    ).chunk("assignments.py", source)
+
+    _assert_source(chunks, source, 20, count)
+    assert any("alpha = 1" in chunk.text for chunk in chunks)
+    assert any("bravo = 2" in chunk.text for chunk in chunks)
+
+
+def test_code_measures_a_whole_source_before_splitting_partial_tokens():
+    source = "alpha = 1\nbravo = 2\n"
+
+    def count(text: str) -> int:
+        return 1 if text == source else len(text) * 2
+
+    chunks = Chunker(
+        max_chunk_size=1,
+        min_chunk_size=0,
+        size_unit="tokens",
+        tokenizer=count,
+        context_mode="none",
+        coverage_policy="lossless",
+    ).chunk("assignments.py", source)
+
+    assert [chunk.text for chunk in chunks] == [source]
+    _assert_source(chunks, source, 1, count)
+
+
+def test_code_rechecks_preferred_leaf_boundaries_with_nonmonotonic_counter():
+    def count(text: str) -> int:
+        return 100 if text.endswith(" ") else len(text)
+
+    source = "# abcd efgh ijkl"
+    chunks = Chunker(
+        max_chunk_size=4,
+        min_chunk_size=0,
+        size_unit="tokens",
+        tokenizer=count,
+        context_mode="none",
+        coverage_policy="lossless",
+    ).chunk("notes.py", source)
+
+    _assert_source(chunks, source, 4, count)
+    assert chunks[0].text == "# ab"
+
+
+@pytest.mark.parametrize("unit", ["chars", "nws", "tokens"])
+def test_oversized_unicode_leaf_keeps_exact_source_and_actual_budget(unit):
+    source = 'value = "' + "界😀İ" * 150 + '"\r\n'
+    count = (
+        (lambda text: len(text.encode("utf-8")))
+        if unit == "tokens"
+        else (lambda text: sum(not char.isspace() for char in text))
+        if unit == "nws"
+        else len
+    )
+    chunks = Chunker(
+        max_chunk_size=48,
+        min_chunk_size=0,
+        size_unit=unit,
+        tokenizer=count if unit == "tokens" else None,
+        context_mode="none",
+        coverage_policy="lossless",
+    ).chunk("literal.py", source)
+
+    _assert_source(chunks, source, 48, count)
+    assert len(chunks) > 1
+
+
+@pytest.mark.parametrize("policy", ["error", "preserve"])
+def test_code_overflow_policy_applies_to_an_oversized_unicode_literal(policy):
+    source = 'value = "' + "界😀" * 40 + '"\n'
+    chunker = Chunker(
+        max_chunk_size=30,
+        min_chunk_size=0,
+        size_unit="chars",
+        context_mode="none",
+        coverage_policy="lossless",
+        overflow_policy=policy,
+    )
+    if policy == "error":
+        with pytest.raises(ChunkingError, match="exceeds"):
+            chunker.chunk("literal.py", source)
+    else:
+        chunks = chunker.chunk("literal.py", source)
+        assert "".join(chunk.text for chunk in chunks) == source
+        assert any(chunk.metadata["budget"]["overflow"] > 0 for chunk in chunks)

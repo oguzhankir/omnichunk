@@ -6,7 +6,7 @@ from typing import Any
 
 from omnichunk.sizing.nws import get_nws_count
 
-from .models import ASTNodeWindowItem
+from .models import ASTNodeWindowItem, SourceBudget
 from .split import split_oversized_leaf
 
 
@@ -23,9 +23,20 @@ def assign_windows_for_ranges(
     cumsum: Any,
     max_size: int,
     code: str,
+    budget: SourceBudget | None = None,
+    split_oversized: bool = True,
 ) -> list[list[ASTNodeWindowItem]]:
     nodes = [RangeNode(start=s, end=e) for s, e in ranges if e > s]
-    return list(greedy_assign_windows(nodes, code=code, cumsum=cumsum, max_size=max_size))
+    return list(
+        greedy_assign_windows(
+            nodes,
+            code=code,
+            cumsum=cumsum,
+            max_size=max_size,
+            budget=budget,
+            split_oversized=split_oversized,
+        )
+    )
 
 
 def assign_windows_for_nodes(
@@ -34,9 +45,20 @@ def assign_windows_for_nodes(
     cumsum: Any,
     max_size: int,
     code: str,
+    budget: SourceBudget | None = None,
+    split_oversized: bool = True,
 ) -> list[list[ASTNodeWindowItem]]:
     """Assign windows for hierarchical nodes (e.g., AST root children)."""
-    return list(greedy_assign_windows(nodes, code=code, cumsum=cumsum, max_size=max_size))
+    return list(
+        greedy_assign_windows(
+            nodes,
+            code=code,
+            cumsum=cumsum,
+            max_size=max_size,
+            budget=budget,
+            split_oversized=split_oversized,
+        )
+    )
 
 
 def greedy_assign_windows(
@@ -45,8 +67,13 @@ def greedy_assign_windows(
     code: str,
     cumsum: Any,
     max_size: int,
+    budget: SourceBudget | None = None,
+    split_oversized: bool = True,
 ) -> Generator[list[ASTNodeWindowItem], None, None]:
-    """Assign nodes into windows greedily using NWS size."""
+    """Group nodes using a configured source budget or legacy NWS byte counts."""
+    if budget is not None:
+        yield from _measured_windows(nodes, budget, max_size, split_oversized)
+        return
     # Frames preserve recursive grouping semantics without Python recursion.
     frames: list[tuple[Any, list[ASTNodeWindowItem], int]] = [(iter(nodes), [], 0)]
     while frames:
@@ -81,6 +108,66 @@ def greedy_assign_windows(
             if window:
                 yield window
             frames[-1] = (iterator, [wrapped], node_size)
+
+
+def _nodes_with_ends(nodes: Iterable[Any], end: int) -> Iterable[tuple[Any, int]]:
+    """Attach inter-node and trailing source trivia to the preceding sibling."""
+    iterator = iter(nodes)
+    previous = next(iterator, None)
+    if previous is None:
+        return
+    for node in iterator:
+        yield previous, max(_node_range(previous)[1], _node_range(node)[0])
+        previous = node
+    yield previous, end
+
+
+def _measured_windows(
+    nodes: Iterable[Any], budget: SourceBudget, max_size: int, split_oversized: bool
+) -> Generator[list[ASTNodeWindowItem], None, None]:
+    total = len(budget.index.raw_bytes)
+    whole_size = budget.count(0, total)
+    if whole_size <= max_size:
+        if total:
+            yield [ASTNodeWindowItem(None, 0, total, whole_size)]
+        return
+    # One cursor owns every source byte, including whitespace and punctuation
+    # omitted by named AST children. Explicit frames avoid recursion limits.
+    frames = [iter(_nodes_with_ends(nodes, total))]
+    cursor = 0
+    window: list[ASTNodeWindowItem] = []
+    while frames:
+        entry = next(frames[-1], None)
+        if entry is None:
+            frames.pop()
+            continue
+        node, end = entry
+        if end <= cursor:
+            continue
+        size = budget.count(cursor, end)
+        wrapped = ASTNodeWindowItem(node, cursor, end, size)
+        if budget.count(window[0].start if window else cursor, end) <= max_size:
+            window.append(wrapped)
+            cursor = end
+            continue
+        if window:
+            yield window
+            window = []
+        if size <= max_size or not split_oversized:
+            window = [wrapped]
+            cursor = end
+            continue
+        children = tuple(_node_children(node))
+        if children:
+            frames.append(iter(_nodes_with_ends(children, end)))
+        else:
+            for part in split_oversized_leaf(
+                wrapped, code=budget.text, cumsum=None, max_size=max_size, budget=budget
+            ):
+                yield [part]
+            cursor = end
+    if window:
+        yield window
 
 
 def _node_range(node: Any) -> tuple[int, int]:
