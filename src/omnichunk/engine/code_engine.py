@@ -87,6 +87,7 @@ class CodeEngine:
             content,
             text_index,
             make_size_counter(options.size_unit, options.tokenizer, cache_maxsize=0),
+            size_unit=options.size_unit,
         )
 
         ast_nodes = _collect_ast_root_nodes(parse_result.tree)

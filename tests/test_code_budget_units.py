@@ -10,6 +10,8 @@ import pytest
 from omnichunk import Chunker
 from omnichunk.parser import tree_sitter
 from omnichunk.types import Chunk, ChunkingError
+from omnichunk.util.text_index import TextIndex
+from omnichunk.windowing import models
 
 
 def _assert_source(chunks: list[Chunk], source: str, limit: int, count: Callable[[str], int]):
@@ -188,3 +190,44 @@ def test_code_overflow_policy_applies_to_an_oversized_unicode_literal(policy):
         chunks = chunker.chunk("literal.py", source)
         assert "".join(chunk.text for chunk in chunks) == source
         assert any(chunk.metadata["budget"]["overflow"] > 0 for chunk in chunks)
+
+
+def test_nws_oversized_code_does_not_probe_shrinking_source_suffixes(monkeypatch):
+    def reject_suffix_probes(*args, **kwargs):
+        pytest.fail("NWS fitting must use its cumulative index, not suffix counter probes")
+
+    monkeypatch.setattr(models, "find_fitting_prefix", reject_suffix_probes)
+    source = 'value = "' + "界\u2003😀\u00a0" * 1000 + '"\n'
+    chunks = Chunker(
+        max_chunk_size=64,
+        min_chunk_size=0,
+        size_unit="nws",
+        context_mode="none",
+        coverage_policy="lossless",
+    ).chunk("unicode.py", source)
+
+    _assert_source(chunks, source, 64, lambda text: sum(not char.isspace() for char in text))
+    assert len(chunks) > 10
+
+
+@pytest.mark.parametrize("source", ["a b\n c", "\u00a0界\u2003😀\u3000İ\t "])
+def test_nws_index_measures_unicode_subranges_and_maximal_fitting_ends(source):
+    def reject_rescans(text):
+        pytest.fail("NWS subrange queries must not rescan source strings")
+
+    index = TextIndex(source)
+    budget = models.SourceBudget(source, index, reject_rescans, size_unit="nws")
+    for start in range(len(source)):
+        for end in range(start + 1, len(source) + 1):
+            start_b, end_b = index.byte_offset_for_char(start), index.byte_offset_for_char(end)
+            expected = sum(not char.isspace() for char in source[start:end])
+            assert budget.count(start_b, end_b) == expected
+            for limit in (1, 2, 5):
+                fitting = max(
+                    stop
+                    for stop in range(start, end + 1)
+                    if sum(not char.isspace() for char in source[start:stop]) <= limit
+                )
+                assert budget.fitting_end(start_b, end_b, limit) == index.byte_offset_for_char(
+                    fitting
+                )
