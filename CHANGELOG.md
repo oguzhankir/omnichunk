@@ -5,6 +5,8 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-10-25
+
 ### Added
 - A separately licensed, checksum-pinned SQuAD 1.1 retrieval corpus with 96
   human-annotated queries, article-disjoint splits and offline import tooling.

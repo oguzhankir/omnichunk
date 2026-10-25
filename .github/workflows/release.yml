@@ -1,6 +1,8 @@
 name: Release
 
 on:
+  push:
+    tags: ["v*"]
   release:
     types: [published]
 
@@ -19,7 +21,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install validation dependencies
-        run: pip install -e ".[dev,docs,langchain,llamaindex]"
+        run: pip install -e ".[dev,docs,langchain,llamaindex,qdrant,pgvector]"
       - name: Verify source, behavior and documentation
         run: |
           ruff check src tests
@@ -65,7 +67,7 @@ jobs:
           printf 'BASELINE_REF=%s\n' "$baseline_ref" >> "$GITHUB_ENV"
       - name: Require equivalent same-runner performance evidence
         env:
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_TAG: ${{ github.event.release.tag_name || github.ref_name }}
         run: >-
           python scripts/check_benchmarks.py --compare-ref "$BASELINE_REF" --require-baseline
           --comparison-report reports/release-benchmark.json
@@ -81,7 +83,7 @@ jobs:
         run: python -m build
       - name: Verify tag, wheel, sdist and isolated runtime
         env:
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_TAG: ${{ github.event.release.tag_name || github.ref_name }}
         run: python scripts/check_release.py --tag "$RELEASE_TAG"
       - name: Upload validated distributions
         uses: actions/upload-artifact@v4
@@ -89,6 +91,25 @@ jobs:
           name: distributions
           path: dist/
           if-no-files-found: error
+
+  github-release:
+    if: github.event_name == 'push'
+    needs: artifacts
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      discussions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: distributions
+          path: dist/
+      - name: Publish GitHub release and announcement
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: python scripts/publish_github_release.py
 
   publish:
     needs: artifacts
