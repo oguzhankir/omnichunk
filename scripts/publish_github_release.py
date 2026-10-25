@@ -16,8 +16,8 @@ def main() -> None:
     repository = os.environ["GITHUB_REPOSITORY"]
     tag = os.environ["RELEASE_TAG"]
     owner, name = repository.split("/")
-    notes = Path(".github/release-notes-2.2.0.md")
-    if tag != "v2.2.0":
+    notes = Path(f".github/release-notes-{tag.removeprefix('v')}.md")
+    if not notes.is_file():
         raise ValueError("Prepare reviewed release notes for this version before publishing")
     existing = subprocess.run(
         ["gh", "release", "view", tag, "--repo", repository], capture_output=True
@@ -36,7 +36,11 @@ def main() -> None:
             str(notes),
             *map(str, sorted(Path("dist").glob("*"))),
         )
-    query = """query($owner:String!,$name:String!){repository(owner:$owner,name:$name){id discussionCategories(first:25){nodes{id name}} discussions(first:50,orderBy:{field:CREATED_AT,direction:DESC}){nodes{title url}}}}"""
+    query = """
+query($owner:String!,$name:String!){repository(owner:$owner,name:$name){id
+discussionCategories(first:25){nodes{id name}} 
+discussions(first:50,orderBy:{field:CREATED_AT,direction:DESC}){nodes{title url}}}}
+"""
     repo = json.loads(
         gh("api", "graphql", "-f", f"query={query}", "-f", f"owner={owner}", "-f", f"name={name}")
     )["data"]["repository"]
@@ -51,10 +55,16 @@ def main() -> None:
     category = next(
         (item for item in categories if item["name"].casefold() == "announcements"), categories[0]
     )
-    mutation = """mutation($repository:ID!,$category:ID!,$title:String!,$body:String!){createDiscussion(input:{repositoryId:$repository,categoryId:$category,title:$title,body:$body}){discussion{url}}}"""
+    mutation = """
+mutation($repository:ID!,$category:ID!,$title:String!,$body:String!){
+createDiscussion(input:{repositoryId:$repository,categoryId:$category,title:$title,body:$body}){discussion{url}}}
+"""
     body = (
         notes.read_text()
-        + f"\n\nRelease: https://github.com/{repository}/releases/tag/{tag}\n\nWhat are you building with OmniChunk? Share your document types, integration needs, and reproducible issues below. We especially welcome multilingual retrieval evaluations and production indexing feedback.\n"
+        + f"\n\nRelease: https://github.com/{repository}/releases/tag/{tag}\n\n"
+        + "What are you building with OmniChunk? Share your document types, integration needs, "
+        + "and reproducible issues below. We especially welcome multilingual retrieval "
+        + "evaluations and production indexing feedback.\n"
     )
     print(
         gh(
