@@ -124,6 +124,9 @@ class ProseEngine:
             options.size_unit,
             tokenizer=options.tokenizer,
             chunk_size=options.max_chunk_size,
+            # Grouping probes progressively longer source slices. Retaining all
+            # of them in the token LRU would use quadratic memory per window.
+            cache_maxsize=0,
         )
         token_counter = make_token_counter(options.tokenizer, chunk_size=options.max_chunk_size)
 

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import tracemalloc
 from collections.abc import Callable
 from dataclasses import replace
 
@@ -9,6 +10,31 @@ import pytest
 
 from omnichunk import Chunker
 from omnichunk.types import Chunk, ChunkingError
+
+
+def test_token_grouping_does_not_retain_growing_source_prefixes() -> None:
+    source = ("word " * 20 + "\n\n") * 1000
+    chunker = Chunker(
+        max_chunk_size=128_000,
+        min_chunk_size=0,
+        size_unit="tokens",
+        tokenizer=lambda text: len(text) // 4,
+        context_mode="none",
+        coverage_policy="lossless",
+    )
+
+    tracemalloc.start()
+    try:
+        chunks = chunker.chunk("notes.txt", source)
+        _, peak = tracemalloc.get_traced_memory()
+    finally:
+        tracemalloc.stop()
+
+    assert [chunk.text for chunk in chunks] == [source]
+    # The old grouping probes cached ~49 MiB of progressively larger prefixes
+    # for this 100 KiB input. Allow generous space for source indexes and chunks
+    # without accepting retention of the transient prefix series.
+    assert peak < 24 * 1024 * 1024
 
 
 def assert_source_and_budget(

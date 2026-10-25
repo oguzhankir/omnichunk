@@ -20,7 +20,8 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
   boundaries before word-level fallbacks. Node grouping counts the actual source
   slice, including whitespace and nonadditive token costs; minimum-size merging
   cannot exceed the configured maximum. Explicit prose overflow policies also
-  apply when the minimum size is zero.
+  apply when the minimum size is zero. Transient token-budget probes are uncached
+  so large windows do not retain every growing source prefix.
 - Default sentence segmentation recognizes Turkish and other Unicode starters,
   Japanese/Chinese punctuation without spaces, closing quotes and CRLF paragraphs
   while preserving exact source coordinates.
