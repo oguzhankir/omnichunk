@@ -3,8 +3,23 @@ from __future__ import annotations
 import re
 from collections.abc import Callable
 
-_SENT_SPLIT = re.compile(r"(?<=[.!?])\s+(?=[A-Z\"'(\[])")
-_PARA_SPLIT = re.compile(r"\n\n+")
+_BOUNDARY_CANDIDATES = re.compile(
+    r"(?P<paragraph>\r?\n[\t ]*\r?\n(?:[\t ]*\r?\n)*)|(?P<punctuation>[.!?。！？]+)"
+)
+_CJK_TERMINATORS = frozenset("。！？")
+_CLOSING_DELIMITERS = frozenset("\"')]}”’»」』】）〕〉》")
+_OPENING_DELIMITERS = frozenset("\"'([{“‘«「『【（〔〈《")
+
+
+def _is_sentence_start(char: str) -> bool:
+    # Case-less scripts have no uppercase starter; ASCII lowercase continuations
+    # retain the conservative behavior of the original heuristic.
+    return (
+        char.isupper()
+        or (char.isalpha() and char.lower() == char.upper())
+        or char.isdigit()
+        or char in _OPENING_DELIMITERS
+    )
 
 
 def _collapse_empty_triples(
@@ -40,22 +55,28 @@ def _default_split_triples(text: str) -> list[tuple[str, int, int]]:
     parts: list[tuple[str, int, int]] = []
     pos = 0
     n = len(text)
-    while pos < n:
-        m_para = _PARA_SPLIT.search(text, pos)
-        m_sent = _SENT_SPLIT.search(text, pos)
-        p_start = m_para.start() if m_para else n + 1
-        s_start = m_sent.start() if m_sent else n + 1
-        if m_para is not None and p_start <= s_start:
-            end = m_para.end()
-            parts.append((text[pos:end], pos, end))
-            pos = end
-        elif m_sent is not None:
-            end = m_sent.end()
-            parts.append((text[pos:end], pos, end))
-            pos = m_sent.end()
-        else:
-            parts.append((text[pos:], pos, n))
-            pos = n
+    for match in _BOUNDARY_CANDIDATES.finditer(text):
+        if match.start() < pos:
+            continue
+        end = match.end()
+        if match.lastgroup == "punctuation":
+            while end < n and text[end] in _CLOSING_DELIMITERS:
+                end += 1
+            whitespace_start = end
+            while end < n and text[end].isspace():
+                end += 1
+            # Requiring whitespace avoids splitting decimal numbers,
+            # versions, URLs and identifiers at an internal period.
+            if (
+                not any(char in _CJK_TERMINATORS for char in match.group())
+                and end < n
+                and (end == whitespace_start or not _is_sentence_start(text[end]))
+            ):
+                continue
+        parts.append((text[pos:end], pos, end))
+        pos = end
+    if pos < n:
+        parts.append((text[pos:], pos, n))
     return _collapse_empty_triples(parts, full_text=text)
 
 
@@ -67,15 +88,19 @@ def split_sentences(
     """Split text into sentences, returning (sentence_text, char_start, char_end) triples.
 
     If splitter_fn is provided, it is called with the full text and must return
-    a list of sentence strings. The function then maps them back to byte offsets
-    using a linear scan (no re-encode; O(N) over chars).
+    a list of sentence strings that reconstruct the source exactly. The function
+    maps them back to character offsets in source order, without re-encoding.
 
-    Default splitter: regex-based, splits on sentence-ending punctuation
-    (.!?) followed by whitespace + capital letter OR end of string.
-    Does NOT depend on nltk.
+    The dependency-free default is a heuristic: ASCII .!? requires whitespace
+    followed by an uppercase letter, an uncased letter, a digit or an opening
+    delimiter. Japanese/Chinese 。！？ also splits without whitespace. Closing
+    quotes/brackets and following whitespace stay with the preceding sentence.
+    Blank lines (including CRLF) always split. Abbreviations and other ambiguous
+    linguistic boundaries require a caller-provided splitter.
 
     If nltk is installed and splitter_fn is None, the caller may optionally
-    pass nltk.tokenize.sent_tokenize as splitter_fn for better accuracy.
+    adapt nltk.tokenize.sent_tokenize to retain whitespace before passing it as
+    splitter_fn. A splitter that discards source characters is rejected.
 
     Returns list of (sentence_text, char_start, char_end) where
     char_start is inclusive, char_end is exclusive.
