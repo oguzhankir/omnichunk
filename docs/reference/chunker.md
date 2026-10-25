@@ -34,6 +34,8 @@ behavioral guarantees and examples, read the [contracts](contracts.md) and
 
 ::: omnichunk.integrations.llamaindex.OmniChunkNodeParser
 
+::: omnichunk.integrations.llamaindex.OmniChunkIngestionPipeline
+
 ## Optional delivery sinks
 
 ::: omnichunk.indexing.sinks.QdrantSink

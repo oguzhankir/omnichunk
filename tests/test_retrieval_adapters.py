@@ -91,6 +91,13 @@ def test_adapter_failure_is_not_misreported_as_unavailable(monkeypatch):
         adapters.split_document("semchunk", "doc", "d.txt", "abcdef", 5, len, "chars")
 
 
+@pytest.mark.parametrize("pieces", ["abcdef", b"abcdef"])
+def test_single_string_is_not_silently_interpreted_as_character_chunks(monkeypatch, pieces):
+    monkeypatch.setattr(adapters, "_split_texts", lambda *_: pieces)
+    with pytest.raises(ValueError, match="single string"):
+        adapters.split_document("fixed", "doc", "d.txt", "abcdef", 5, len, "chars")
+
+
 @pytest.mark.parametrize(
     "source,pieces",
     [

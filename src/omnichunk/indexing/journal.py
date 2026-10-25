@@ -406,7 +406,7 @@ class IndexJournal:
                 record.text, plan.model_revision, plan.preprocessing_revision
             ):
                 raise ValueError("Unchanged record has stale source/model metadata")
-        for record in plan.upserts:
+        for record in (*plan.upserts, *(previous[key] for key in unchanged)):
             raw = record.metadata.get("omnichunk")
             if not isinstance(raw, dict):
                 raise ValueError("Index record requires canonical chunk provenance")
@@ -420,6 +420,8 @@ class IndexJournal:
             )
             if expected != (record,):
                 raise ValueError("Index record differs from its canonical chunk provenance")
+            if record.id in unchanged:
+                continue
             old = previous.get(record.id)
             if old is not None and old.source_id != record.source_id:
                 raise ValueError("An index ID cannot change source ownership")

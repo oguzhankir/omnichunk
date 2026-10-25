@@ -265,3 +265,67 @@ def test_provenance_hashes_the_runtime_package() -> None:
     ).hexdigest()
     assert environment["source_sha256"] == expected
     assert environment["runtime_package_root"] == str(root)
+
+
+def test_dense_report_uses_exact_frozen_inputs_and_preserves_model_provenance(tmp_path):
+    from benchmarks.retrieval.corpus import load_corpus
+    from benchmarks.retrieval.dense import build_dense_artifact
+
+    corpus_path = _fixture_corpus(tmp_path)
+    corpus = load_corpus(corpus_path)
+    passages = [
+        passage.text
+        for doc in corpus.documents
+        if doc.split == "dev"
+        for passage in runner.split_document(
+            "fixed", doc.source_id, doc.path, doc.text, 20, len, "chars"
+        )
+    ]
+    artifact = tmp_path / "vectors.json"
+    build_dense_artifact(
+        artifact,
+        corpus_manifest_sha256=corpus.manifest_hash,
+        model_id="unit-test-encoder",
+        model_revision="fixture-v1",
+        preprocessing_revision="identity-v1",
+        passages=passages,
+        queries=[q.text for q in corpus.queries if q.split == "dev"],
+        embed=lambda role, texts: [[1.0, float(len(text))] for text in texts],
+    )
+    output = tmp_path / "dense-report.json"
+    command = [
+        "--corpus",
+        str(corpus_path),
+        "--tools",
+        "fixed",
+        "--chunk-sizes",
+        "20",
+        "--retriever",
+        "dense",
+        "--dense-embeddings",
+        str(artifact),
+        "--repeats",
+        "1",
+        "--output",
+        str(output),
+    ]
+    assert runner.main(command) == 0
+    report = json.loads(output.read_text())
+    assert report["configuration"]["dense_embeddings"]["model_revision"] == "fixture-v1"
+    assert (
+        report["configuration"]["dense_embeddings"]["artifact_sha256"]
+        == hashlib.sha256(artifact.read_bytes()).hexdigest()
+    )
+    assert report["candidates"][0]["embedding_calls"] == 0
+    assert report["corpus_license"] == "MIT"
+    # A changed payload budget must not silently reuse incompatible vectors.
+    assert runner.main([*command, "--chunk-sizes", "21"]) == 1
+    assert "Missing frozen embedding" in json.loads(output.read_text())["candidates"][0]["detail"]
+
+
+@pytest.mark.parametrize(
+    "options", [["--retriever", "dense"], ["--dense-embeddings", "missing.json"]]
+)
+def test_dense_mode_requires_explicit_matching_options(tmp_path, options):
+    corpus = _fixture_corpus(tmp_path)
+    assert runner.main(["--corpus", str(corpus), *options]) == 2

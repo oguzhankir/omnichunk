@@ -12,7 +12,7 @@ import inspect
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from omnichunk import Chunker
 from omnichunk.sizing.counter import find_fitting_prefix
@@ -97,18 +97,21 @@ def _split_texts(
     if tool == "semchunk":
         factory = _required_attribute(_optional_module("semchunk"), "chunkerify")
         _requires_parameters(factory, "chunk_size")
-        return factory(counter, chunk_size=capacity)(text, overlap=0)
+        return cast(Iterable[str], factory(counter, chunk_size=capacity)(text, overlap=0))
     if tool == "langchain":
         splitter = _required_attribute(
             _optional_module("langchain_text_splitters"), "RecursiveCharacterTextSplitter"
         )
-        return splitter(
-            chunk_size=capacity,
-            chunk_overlap=0,
-            length_function=counter,
-            separators=["\n\n", "\n", " ", ""],
-            strip_whitespace=False,
-        ).split_text(text)
+        return cast(
+            Iterable[str],
+            splitter(
+                chunk_size=capacity,
+                chunk_overlap=0,
+                length_function=counter,
+                separators=["\n\n", "\n", " ", ""],
+                strip_whitespace=False,
+            ).split_text(text),
+        )
     if tool == "semantic-text-splitter":
         module = _optional_module("semantic_text_splitter")
         name = (
@@ -120,7 +123,7 @@ def _split_texts(
         # A callback keeps character and token experiments on exactly the same
         # counter, including custom counters used in conformance checks.
         factory = _required_attribute(splitter_type, "from_callback")
-        return factory(counter, capacity, overlap=0, trim=False).chunks(text)
+        return cast(Iterable[str], factory(counter, capacity, overlap=0, trim=False).chunks(text))
     if tool == "chonkie":
         if unit != "chars" or counter is not len:
             raise AdapterUnavailable(
@@ -142,14 +145,17 @@ def _split_texts(
         _requires_parameters(splitter, "tokenizer", "keep_whitespaces")
         # TokenTextSplitter only reads len(tokenizer(text)). A range exposes the
         # exact shared count without allocating fake model token sequences.
-        return splitter(
-            chunk_size=capacity,
-            chunk_overlap=0,
-            tokenizer=lambda value: range(counter(value)),
-            keep_whitespaces=True,
-            include_metadata=False,
-            include_prev_next_rel=False,
-        ).split_text(text)
+        return cast(
+            Iterable[str],
+            splitter(
+                chunk_size=capacity,
+                chunk_overlap=0,
+                tokenizer=lambda value: range(counter(value)),
+                keep_whitespaces=True,
+                include_metadata=False,
+                include_prev_next_rel=False,
+            ).split_text(text),
+        )
     raise ValueError(f"Unknown retrieval adapter: {tool}")
 
 
@@ -161,7 +167,10 @@ def _passage(source_id: str, start: int, end: int, text: str) -> Passage:
 def _normalize(
     source_id: str, text: str, pieces: Iterable[str], capacity: int, counter: Callable[[str], int]
 ) -> list[Passage]:
+    if isinstance(pieces, (str, bytes)):
+        raise ValueError("Adapter output must be an iterable of strings, not a single string")
     cursor = 0
+    byte_cursor = 0
     result = []
     for piece in pieces:
         if not isinstance(piece, str):
@@ -173,13 +182,17 @@ def _normalize(
         start = text.find(piece, cursor)
         if start < 0:
             raise ValueError("Adapter output is not an ordered, non-overlapping source slice")
-        if text[cursor:start].strip():
+        gap = text[cursor:start]
+        if gap.strip():
             raise ValueError("Adapter source slice drops non-whitespace source text")
         end = start + len(piece)
-        result.append(
-            _passage(source_id, len(text[:start].encode()), len(text[:end].encode()), piece)
-        )
+        # Count each source character once. Encoding full prefixes per passage
+        # makes validation quadratic and distorts chunker latency on large files.
+        byte_start = byte_cursor + len(gap.encode("utf-8"))
+        byte_end = byte_start + len(piece.encode("utf-8"))
+        result.append(_passage(source_id, byte_start, byte_end, piece))
         cursor = end
+        byte_cursor = byte_end
     if text[cursor:].strip():
         raise ValueError("Adapter output drops non-whitespace source text at the end")
     return result
@@ -208,6 +221,7 @@ def split_document(
         raise ValueError("capacity must be a positive integer")
     if not source_id:
         raise ValueError("source_id must be nonempty")
+    pieces: Iterable[str]
     if tool == "omnichunk":
         chunks = Chunker(
             max_chunk_size=capacity,

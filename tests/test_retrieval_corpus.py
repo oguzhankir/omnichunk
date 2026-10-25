@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import unicodedata
 from collections import Counter
 from pathlib import Path
 
@@ -199,4 +200,89 @@ def test_unlabeled_document_rejected(tmp_path: Path) -> None:
     )
     manifest["documents"].append(second)
     with pytest.raises(ValueError, match="Every document"):
+        load_corpus(_write(path, manifest))
+
+
+def test_external_corpus_retains_original_license_and_provenance(tmp_path: Path) -> None:
+    path, manifest = _manifest(tmp_path)
+    manifest.update(
+        license="CC-BY-SA-4.0",
+        source="https://example.org/original-dataset",
+        provenance={"revision": "frozen-revision", "sha256": "original-download-hash"},
+    )
+    corpus = load_corpus(_write(path, manifest))
+    assert corpus.license == "CC-BY-SA-4.0"
+    assert corpus.source == manifest["source"]
+    assert corpus.provenance == manifest["provenance"]
+    assert (
+        corpus.documents[0]
+        .text.encode()[corpus.queries[0].evidence[0].start : corpus.queries[0].evidence[0].end]
+        .decode()
+        == manifest["queries"][0]["evidence"][0]["quote"]
+    )
+
+
+@pytest.mark.parametrize(
+    "extra",
+    [
+        '"schema_version": 2',
+        '"provenance": {"revision": "first", "revision": "second"}',
+        '"provenance": {"score": NaN}',
+        '"provenance": {"score": Infinity}',
+        '"provenance": {"score": 1e999}',
+    ],
+)
+def test_ambiguous_or_nonfinite_manifest_json_is_rejected(tmp_path: Path, extra: str) -> None:
+    path, manifest = _manifest(tmp_path)
+    encoded = json.dumps(manifest)
+    path.write_text(encoded[:-1] + "," + extra + "}", encoding="utf-8")
+    with pytest.raises(ValueError, match="manifest JSON"):
+        load_corpus(path)
+
+
+@pytest.mark.parametrize("license_id", ["", " ", "MIT OR Apache-2.0", None, 42])
+def test_license_requires_one_explicit_identifier(tmp_path: Path, license_id) -> None:
+    path, manifest = _manifest(tmp_path)
+    manifest["license"] = license_id
+    with pytest.raises(ValueError, match="license"):
+        load_corpus(_write(path, manifest))
+
+
+@pytest.mark.parametrize("change", ["line_endings", "unicode", "whitespace"])
+def test_equivalent_document_bytes_cannot_cross_splits(tmp_path: Path, change: str) -> None:
+    path, manifest = _manifest(tmp_path)
+    text = (tmp_path / "source.md").read_text(encoding="utf-8")
+    if change == "line_endings":
+        text = text.replace("\n", "\r\n")
+    elif change == "unicode":
+        text = unicodedata.normalize("NFD", text)
+    else:
+        text = text.replace(" ", "  ")
+    raw = text.encode("utf-8")
+    (tmp_path / "equivalent.md").write_bytes(raw)
+    manifest["documents"].append(
+        dict(
+            manifest["documents"][0],
+            source_id="equivalent",
+            path="equivalent.md",
+            sha256=hashlib.sha256(raw).hexdigest(),
+            split="test",
+        )
+    )
+    with pytest.raises(ValueError, match="content leaks"):
+        load_corpus(_write(path, manifest))
+
+
+def test_unicode_equivalent_query_text_cannot_cross_splits(tmp_path: Path) -> None:
+    path, manifest = _manifest(tmp_path)
+    manifest["queries"][0]["text"] = "Which café?"
+    manifest["queries"].append(
+        dict(
+            manifest["queries"][0],
+            query_id="equivalent",
+            text="  WHICH CAFE\u0301?  ",
+            split="test",
+        )
+    )
+    with pytest.raises(ValueError, match="query text leaks"):
         load_corpus(_write(path, manifest))

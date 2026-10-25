@@ -246,21 +246,39 @@ documents = splitter.split_documents([
 assert documents[0].metadata["acl"] == ["support"]
 ```
 
-The native LlamaIndex parser also works as an ingestion transformation:
+The native LlamaIndex parser works directly or inside an identity-safe ingestion
+pipeline:
 
 ```python
 from llama_index.core import Document
-from omnichunk.integrations.llamaindex import OmniChunkNodeParser
+from omnichunk.integrations.llamaindex import (
+    OmniChunkIngestionPipeline, OmniChunkNodeParser,
+)
 
 parser = OmniChunkNodeParser(
     options={"max_chunk_size": 256, "context_mode": "none"}
 )
-nodes = parser.get_nodes_from_documents([
+pipeline = OmniChunkIngestionPipeline(transformations=[parser])
+nodes = pipeline.run(documents=[
     Document(id_="policy-1", text="Keep backups for thirty days.",
              metadata={"acl": ["support"], "filepath": "policy.txt"})
 ])
 assert nodes[0].ref_doc_id == "policy-1"
 ```
+
+Use `OmniChunkIngestionPipeline` when enabling ingestion caching. LlamaIndex's
+ordinary `IngestionPipeline` cache hashes rendered content without native document
+IDs: two different sources containing the same text can reuse the first source's
+citations. The OmniChunk pipeline fingerprints complete JSON source records before
+cache lookup, on private copies, and supports both `run()` and `arun()`. Its first
+transformation must be `OmniChunkNodeParser`; add embedding transforms after it.
+The reserved `_omnichunk_ingestion_identity` input key is removed from output
+metadata and model text. Caller documents and metadata remain unchanged.
+
+Direct `parser.get_nodes_from_documents()` requires no pipeline. If using the
+ordinary upstream pipeline, include a stable, distinct `source_id` in every
+document's metadata and retain metadata in its cache rendering. Source metadata
+and parser configuration must contain finite JSON values for ingestion caching.
 
 Both preserve caller metadata under its original keys and complete chunk records
 under `metadata["omnichunk"]["chunk"]`. The reserved key rejects already-chunked
@@ -286,10 +304,12 @@ See the [tested version matrix](install.md#native-integration-compatibility).
   with the vector extension. Each batch commits before acknowledgment; an existing
   outer transaction is rejected.
 
-Both preserve nested metadata and validate complete batches before deletion.
+Both preserve nested metadata and validate complete batches before deletion,
+including rejection of vectors outside finite float32 range.
 Qdrant waits for completed operations; its logical record IDs map through
 `qdrant_point_id(collection, record_id)` for both upserts and deletes. Configure
-network timeouts on the underlying client/connection. Plans and source snapshots
+network timeouts on the underlying client/connection. Transient HTTP and gRPC
+failures are classified for retry. Plans and source snapshots
 remain resident during processing; batch limits bound embedding requests and
 remote writes, not total corpus memory.
 
@@ -297,5 +317,7 @@ For Pinecone, `chunks_to_pinecone_upsert_request()` builds
 `index.upsert(**request)` with `namespace` on the request envelope. Complete chunk
 metadata is JSON-encoded in the flat `omnichunk` metadata field; pass explicit
 scalar/string-list `filter_metadata` for queryable ACL/source/page attributes.
-Unsupported values, collisions and metadata over 40 KiB are rejected. The legacy
+Unsupported values, reserved `$` keys, collisions, integer filter values that
+cannot be represented exactly as float64, and metadata over 40 KiB are rejected.
+Use strings for numeric identifiers requiring exact matching. The legacy
 row helper remains available, but its per-row namespace is not an SDK request.

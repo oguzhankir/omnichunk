@@ -1,0 +1,1647 @@
+{
+  "schema_version": 1,
+  "corpus_id": "squad-1.1-retrieval-v1",
+  "license": "CC-BY-SA-4.0",
+  "source": "https://rajpurkar.github.io/SQuAD-explorer/",
+  "provenance": {
+    "upstream_url": "https://raw.githubusercontent.com/rajpurkar/SQuAD-explorer/master/dataset/dev-v1.1.json",
+    "upstream_sha256": "95aa6a52d5d6a735563366753ca50492a658031da74f301ac5238b03966972c9",
+    "upstream_version": "1.1",
+    "authors": [
+      "Pranav Rajpurkar",
+      "Jian Zhang",
+      "Konstantin Lopyrev",
+      "Percy Liang"
+    ],
+    "paragraph_attribution": "Wikipedia contributors; per-document source links",
+    "selection": "SHA256 order of article titles, paragraph text and question IDs; no retrieval scores used",
+    "articles": 16,
+    "paragraphs_per_article": 2,
+    "questions_per_paragraph": 3,
+    "selected_articles": [
+      "French_and_Indian_War",
+      "Private_school",
+      "Jacksonville,_Florida",
+      "Newcastle_upon_Tyne",
+      "Prime_number",
+      "1973_oil_crisis",
+      "Amazon_rainforest",
+      "Warsaw",
+      "Fresno,_California",
+      "Sky_(United_Kingdom)",
+      "Victoria_(Australia)",
+      "Ctenophora",
+      "Packet_switching",
+      "Scottish_Parliament",
+      "American_Broadcasting_Company",
+      "Black_Death"
+    ],
+    "split_policy": "Alternating article assignment in selected hash order; dev/test article-disjoint",
+    "answer_policy": "First annotation whose exact text matches answer_start; one answer span per question",
+    "limitations": "Small English Wikipedia prose subset, not representative of code/tables or multilingual retrieval; no independent OmniChunk-specific human review"
+  },
+  "documents": [
+    {
+      "source_id": "squad-7ab1e56997bdd8a6218e2b1259d60b97ba5b8a0977a2f8f0630ae3b51d485f28",
+      "path": "documents/squad-7ab1e56997bdd8a6218e2b1259d60b97ba5b8a0977a2f8f0630ae3b51d485f28.txt",
+      "sha256": "003096af8bd0b8d02214753872917ecb683e3c67185edc99abc12163b9741faf",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "French_and_Indian_War",
+      "source": "https://en.wikipedia.org/wiki/French_and_Indian_War",
+      "attribution": "Wikipedia contributors: French_and_Indian_War; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-f207ff5d9eac22d799bcbd808fd7445a414ad77c3e82fcab791f3c09647f1b50",
+      "path": "documents/squad-f207ff5d9eac22d799bcbd808fd7445a414ad77c3e82fcab791f3c09647f1b50.txt",
+      "sha256": "046e69fc2e3832debebd63f0302a7b549b843ea6c086e13ee2f397347e3b527e",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "French_and_Indian_War",
+      "source": "https://en.wikipedia.org/wiki/French_and_Indian_War",
+      "attribution": "Wikipedia contributors: French_and_Indian_War; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-02f22d31b7fdcea71d773bf551a8f2724838d405738fa2ef0af442c8070ac54d",
+      "path": "documents/squad-02f22d31b7fdcea71d773bf551a8f2724838d405738fa2ef0af442c8070ac54d.txt",
+      "sha256": "0fb23036449013510f8c252304c3eecf5fccaa6ce7e6eda9cdd52fb0feda00d2",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "Private_school",
+      "source": "https://en.wikipedia.org/wiki/Private_school",
+      "attribution": "Wikipedia contributors: Private_school; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-968bf3f82d0e9893fda7d11a74bd3d00f0497660d75d27bdab7adabf75acf841",
+      "path": "documents/squad-968bf3f82d0e9893fda7d11a74bd3d00f0497660d75d27bdab7adabf75acf841.txt",
+      "sha256": "18514753d866298f71238efff2e516d2386f7da19255feb3918f789671cbfb12",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "Private_school",
+      "source": "https://en.wikipedia.org/wiki/Private_school",
+      "attribution": "Wikipedia contributors: Private_school; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-4b04ecdfee380a0ccddc69abe0580399f947287f1effb51eb70832241adce75c",
+      "path": "documents/squad-4b04ecdfee380a0ccddc69abe0580399f947287f1effb51eb70832241adce75c.txt",
+      "sha256": "0606f47852eabec2d5a4ace87ec3d3465bf64d1690c2ed9ed7ea2e30ba0041e8",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Jacksonville,_Florida",
+      "source": "https://en.wikipedia.org/wiki/Jacksonville%2C_Florida",
+      "attribution": "Wikipedia contributors: Jacksonville,_Florida; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-bf1a1842a4b1b4b2a324a95148e1f27dfa80ea6325d6cebc82c740c1d7b29ecc",
+      "path": "documents/squad-bf1a1842a4b1b4b2a324a95148e1f27dfa80ea6325d6cebc82c740c1d7b29ecc.txt",
+      "sha256": "125135dd9d38f51af002ba49b99121835c8d0843192c33251f5a9c21d5b1e374",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Jacksonville,_Florida",
+      "source": "https://en.wikipedia.org/wiki/Jacksonville%2C_Florida",
+      "attribution": "Wikipedia contributors: Jacksonville,_Florida; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-200d518cfff7ce66d0ceec1d78cdd6008b99b91762a84f5ddcbb14347158f609",
+      "path": "documents/squad-200d518cfff7ce66d0ceec1d78cdd6008b99b91762a84f5ddcbb14347158f609.txt",
+      "sha256": "09bd619296bff732eeee3b840c1de008bdac4447921756d03c1e8a9707aebf39",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "Newcastle_upon_Tyne",
+      "source": "https://en.wikipedia.org/wiki/Newcastle_upon_Tyne",
+      "attribution": "Wikipedia contributors: Newcastle_upon_Tyne; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-644406a38ef9c2f1ad0865c00a9f41b3726e5cd3fac0c3ec11a741ecab0c8ee8",
+      "path": "documents/squad-644406a38ef9c2f1ad0865c00a9f41b3726e5cd3fac0c3ec11a741ecab0c8ee8.txt",
+      "sha256": "0f9c03154ef4f9ef66f2e51201fc0c1f5b36e92f27841a054e7a46301f6d751b",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "Newcastle_upon_Tyne",
+      "source": "https://en.wikipedia.org/wiki/Newcastle_upon_Tyne",
+      "attribution": "Wikipedia contributors: Newcastle_upon_Tyne; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-28db5136c5154a6f352a4c7c65d9faa91bb4d54e805e3291c6a3a7e087dd3716",
+      "path": "documents/squad-28db5136c5154a6f352a4c7c65d9faa91bb4d54e805e3291c6a3a7e087dd3716.txt",
+      "sha256": "02473abeaeaf0a7ac1221ede2323c119c62182f573df438534fcb86c2c6943d4",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Prime_number",
+      "source": "https://en.wikipedia.org/wiki/Prime_number",
+      "attribution": "Wikipedia contributors: Prime_number; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-626b284e073168611eefd03ef99ce9ea6f6edc26edd9a40065fa4db1206835ef",
+      "path": "documents/squad-626b284e073168611eefd03ef99ce9ea6f6edc26edd9a40065fa4db1206835ef.txt",
+      "sha256": "0392a2097b98d54cbb0accb20f821be719c1c3bbb9aa73d9293a66c7480a8de6",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Prime_number",
+      "source": "https://en.wikipedia.org/wiki/Prime_number",
+      "attribution": "Wikipedia contributors: Prime_number; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-84b2a4f870a44fb79b3450644f6034d71c05de0218d873de74fdaf521dcfa7aa",
+      "path": "documents/squad-84b2a4f870a44fb79b3450644f6034d71c05de0218d873de74fdaf521dcfa7aa.txt",
+      "sha256": "03cb2784f170548bcb7d5bac5f52461bd00a24b18ac95bd094e47c9bdf136670",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "1973_oil_crisis",
+      "source": "https://en.wikipedia.org/wiki/1973_oil_crisis",
+      "attribution": "Wikipedia contributors: 1973_oil_crisis; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-275a7a0d1b92cd14f6bba185f1649e64b6a08fdff921841fc5a8ecf844a5a2c0",
+      "path": "documents/squad-275a7a0d1b92cd14f6bba185f1649e64b6a08fdff921841fc5a8ecf844a5a2c0.txt",
+      "sha256": "0b9e372a1ede4fad3e2e3e533dabfda50ac0e4edb94f6e58693ab349419aab00",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "1973_oil_crisis",
+      "source": "https://en.wikipedia.org/wiki/1973_oil_crisis",
+      "attribution": "Wikipedia contributors: 1973_oil_crisis; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-3e4ffbe4504e08cde32d72e8d368130e3e7c2900dd70566b582d1930cb1db1dc",
+      "path": "documents/squad-3e4ffbe4504e08cde32d72e8d368130e3e7c2900dd70566b582d1930cb1db1dc.txt",
+      "sha256": "040a5627ef7bb5d949592bbcd7381d5c49b141f464054a8ba8c03c8253480ddb",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Amazon_rainforest",
+      "source": "https://en.wikipedia.org/wiki/Amazon_rainforest",
+      "attribution": "Wikipedia contributors: Amazon_rainforest; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-15927f44d6eeb6a909c22b635c110cf42d38e3caaeed36d855346fdd26c852d2",
+      "path": "documents/squad-15927f44d6eeb6a909c22b635c110cf42d38e3caaeed36d855346fdd26c852d2.txt",
+      "sha256": "1e78d27475aecd3ec0eb73d6278e6a3cbe36d5f520963ba6b65f7dc7602a6dd3",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Amazon_rainforest",
+      "source": "https://en.wikipedia.org/wiki/Amazon_rainforest",
+      "attribution": "Wikipedia contributors: Amazon_rainforest; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-a3592c30503b44fe1ac02896051d241b45383834c049d7a7f08bb70017a46950",
+      "path": "documents/squad-a3592c30503b44fe1ac02896051d241b45383834c049d7a7f08bb70017a46950.txt",
+      "sha256": "01fbee86abe8e1fdb157b2ec40b6bdbb181baa78b7843fc6874859b9c6d9e482",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "Warsaw",
+      "source": "https://en.wikipedia.org/wiki/Warsaw",
+      "attribution": "Wikipedia contributors: Warsaw; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-2194333995a547070579bfbd1a2b852186c713dc0ac5cdc8e3de93e21649664d",
+      "path": "documents/squad-2194333995a547070579bfbd1a2b852186c713dc0ac5cdc8e3de93e21649664d.txt",
+      "sha256": "05e6b70a4c996f49687d72f7a373609343967f6fed5be1f3bda6965dcfad141e",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "Warsaw",
+      "source": "https://en.wikipedia.org/wiki/Warsaw",
+      "attribution": "Wikipedia contributors: Warsaw; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-d09d4a86bab66348f1de715bb7744b60c3f588403f39f888c3e708fc0962b82b",
+      "path": "documents/squad-d09d4a86bab66348f1de715bb7744b60c3f588403f39f888c3e708fc0962b82b.txt",
+      "sha256": "17204d302a7a5587913391c2cc3ef01540a0e6cd9ac84ee2e0732c35291a5012",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Fresno,_California",
+      "source": "https://en.wikipedia.org/wiki/Fresno%2C_California",
+      "attribution": "Wikipedia contributors: Fresno,_California; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-5dc06dd0ecad8480cc5778141bfcc449500ef4e91071ca4803e2a58657855907",
+      "path": "documents/squad-5dc06dd0ecad8480cc5778141bfcc449500ef4e91071ca4803e2a58657855907.txt",
+      "sha256": "1e7dacb29402442c93e3c2f418a257081737db545af49703fbf284e8616f229c",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Fresno,_California",
+      "source": "https://en.wikipedia.org/wiki/Fresno%2C_California",
+      "attribution": "Wikipedia contributors: Fresno,_California; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-ff9356935c34fecf2330ca1ba8281801604325274930ea7b72b847e19c86e6d9",
+      "path": "documents/squad-ff9356935c34fecf2330ca1ba8281801604325274930ea7b72b847e19c86e6d9.txt",
+      "sha256": "1ee077fd22f6021abe57c6217dbbbf9e6db11baa3d7205f6f4f7249ae297f76c",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "Sky_(United_Kingdom)",
+      "source": "https://en.wikipedia.org/wiki/Sky_%28United_Kingdom%29",
+      "attribution": "Wikipedia contributors: Sky_(United_Kingdom); SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-cb98c8b99d635a90d3229490c358ae6d2ba74a1b43666a26a3d875079e4d4ee3",
+      "path": "documents/squad-cb98c8b99d635a90d3229490c358ae6d2ba74a1b43666a26a3d875079e4d4ee3.txt",
+      "sha256": "2892ce1ee90d7e758e8bd4b12fd7bebc4276caad2f0d0af29d0444e47b6a4a05",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "Sky_(United_Kingdom)",
+      "source": "https://en.wikipedia.org/wiki/Sky_%28United_Kingdom%29",
+      "attribution": "Wikipedia contributors: Sky_(United_Kingdom); SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-9ca5564ca4da3a5d82f2cd2597f1062f59fd271bf2af7f250c7c68372d81dedd",
+      "path": "documents/squad-9ca5564ca4da3a5d82f2cd2597f1062f59fd271bf2af7f250c7c68372d81dedd.txt",
+      "sha256": "04f203956d3cfbce055adc4cf145999fbeca50dd2e3199c11308d0130f84b6ae",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Victoria_(Australia)",
+      "source": "https://en.wikipedia.org/wiki/Victoria_%28Australia%29",
+      "attribution": "Wikipedia contributors: Victoria_(Australia); SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-d07c0b822954c98d025317dbff67421761ae2f34f146912fdb2ba5f783783d0e",
+      "path": "documents/squad-d07c0b822954c98d025317dbff67421761ae2f34f146912fdb2ba5f783783d0e.txt",
+      "sha256": "114b4c83f090585170508b423750087f82e2cd6538f45a9294aa4265f92637bf",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Victoria_(Australia)",
+      "source": "https://en.wikipedia.org/wiki/Victoria_%28Australia%29",
+      "attribution": "Wikipedia contributors: Victoria_(Australia); SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-3e35c21b4b52dc7791816ad4de620c8e4121981bf1467b82cc0b7d11216691a6",
+      "path": "documents/squad-3e35c21b4b52dc7791816ad4de620c8e4121981bf1467b82cc0b7d11216691a6.txt",
+      "sha256": "072cae5328a3bbbbba93f5b2e21167abdbd25abb7bbc7d61fd8f22c8a29ff41c",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "Ctenophora",
+      "source": "https://en.wikipedia.org/wiki/Ctenophora",
+      "attribution": "Wikipedia contributors: Ctenophora; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-17aed191342fcd8b9267f3e7c2b32bd668a14b79b8326e6bb6130b3a91939bc0",
+      "path": "documents/squad-17aed191342fcd8b9267f3e7c2b32bd668a14b79b8326e6bb6130b3a91939bc0.txt",
+      "sha256": "07329d2931c0ce6c3dad2ef45fb8898b17becf72c1aea534e734c98af62ad377",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "Ctenophora",
+      "source": "https://en.wikipedia.org/wiki/Ctenophora",
+      "attribution": "Wikipedia contributors: Ctenophora; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-ffe9cd82cb387d87ebd63d703bd85c84a9a7b32dc7ead0612ff3330f5cb39d26",
+      "path": "documents/squad-ffe9cd82cb387d87ebd63d703bd85c84a9a7b32dc7ead0612ff3330f5cb39d26.txt",
+      "sha256": "14212c40b27a0e19bf32e180538be5414b13cedcfeecb9acc491564a62569f91",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Packet_switching",
+      "source": "https://en.wikipedia.org/wiki/Packet_switching",
+      "attribution": "Wikipedia contributors: Packet_switching; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-e937f6a874321ceb9be652103e9680d4638bfe07618bda38c0cd5968d326616f",
+      "path": "documents/squad-e937f6a874321ceb9be652103e9680d4638bfe07618bda38c0cd5968d326616f.txt",
+      "sha256": "1f239cb46f0c6bc97c1b290e8ae59c90ddabab0351d296bec756f787061f0007",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Packet_switching",
+      "source": "https://en.wikipedia.org/wiki/Packet_switching",
+      "attribution": "Wikipedia contributors: Packet_switching; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-915fc20f4277ef271d0fc5bc849551ac80528b0d711e32f251c5afb383ae35cd",
+      "path": "documents/squad-915fc20f4277ef271d0fc5bc849551ac80528b0d711e32f251c5afb383ae35cd.txt",
+      "sha256": "0577e0dcf4d2d18ab7d9a4c7450fa8e061f67a47b2b7377ac280f6b5c429909c",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "Scottish_Parliament",
+      "source": "https://en.wikipedia.org/wiki/Scottish_Parliament",
+      "attribution": "Wikipedia contributors: Scottish_Parliament; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-cd69bab5cf9e51f661806efda31aa9a54094040ac96af552a1c9830a5c660176",
+      "path": "documents/squad-cd69bab5cf9e51f661806efda31aa9a54094040ac96af552a1c9830a5c660176.txt",
+      "sha256": "06dabbfdce88f733bf8b7c056c89d87a5ec555147201d86e7703ff7355c1b756",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "Scottish_Parliament",
+      "source": "https://en.wikipedia.org/wiki/Scottish_Parliament",
+      "attribution": "Wikipedia contributors: Scottish_Parliament; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-6f38f5caeb0cebf7d8f274962769c96d26b3f48567707ed996d9354db55e6ac4",
+      "path": "documents/squad-6f38f5caeb0cebf7d8f274962769c96d26b3f48567707ed996d9354db55e6ac4.txt",
+      "sha256": "043cac6ac63518c881cd4a6ea927a5625ee5038622848ec66d3b35284bd21034",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "American_Broadcasting_Company",
+      "source": "https://en.wikipedia.org/wiki/American_Broadcasting_Company",
+      "attribution": "Wikipedia contributors: American_Broadcasting_Company; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-d09a40b18e6407b0f3068ada78d11255bdf7e428ae5a6f68f83ed71321fd030d",
+      "path": "documents/squad-d09a40b18e6407b0f3068ada78d11255bdf7e428ae5a6f68f83ed71321fd030d.txt",
+      "sha256": "044cb1de94a6647a8be5b323bcdfe854aa1abbb2cabfbe6f916f91ce2dbc1305",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "American_Broadcasting_Company",
+      "source": "https://en.wikipedia.org/wiki/American_Broadcasting_Company",
+      "attribution": "Wikipedia contributors: American_Broadcasting_Company; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-563d5d191dbbfc2d09e51931c3bfa8a9fabfad63f29c0a39d5b0883f4a2cf926",
+      "path": "documents/squad-563d5d191dbbfc2d09e51931c3bfa8a9fabfad63f29c0a39d5b0883f4a2cf926.txt",
+      "sha256": "0b363ccd79edf5a3fae3de2a9ab5967af3dba12ea67dec7a1e57170a0dd0ba11",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "Black_Death",
+      "source": "https://en.wikipedia.org/wiki/Black_Death",
+      "attribution": "Wikipedia contributors: Black_Death; SQuAD 1.1"
+    },
+    {
+      "source_id": "squad-5ff5f51a1cc51906b646d6d26839d7263ae36b42e13455ce7fa04282a3e318d1",
+      "path": "documents/squad-5ff5f51a1cc51906b646d6d26839d7263ae36b42e13455ce7fa04282a3e318d1.txt",
+      "sha256": "0d50de71a8220db34991fd3710e965ad95973a5e898da92d2e09819ee0ff21b8",
+      "language": "en",
+      "category": "prose",
+      "split": "test",
+      "article_title": "Black_Death",
+      "source": "https://en.wikipedia.org/wiki/Black_Death",
+      "attribution": "Wikipedia contributors: Black_Death; SQuAD 1.1"
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "squad-5733da01d058e614000b63fb",
+      "text": "What tribes supported British?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-7ab1e56997bdd8a6218e2b1259d60b97ba5b8a0977a2f8f0630ae3b51d485f28",
+          "start": 493,
+          "end": 539,
+          "quote": "Iroquois Six Nations, and also by the Cherokee"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5733da01d058e614000b63f9",
+      "text": "What are the Siouan-speaking tribes?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-7ab1e56997bdd8a6218e2b1259d60b97ba5b8a0977a2f8f0630ae3b51d485f28",
+          "start": 70,
+          "end": 114,
+          "quote": "Catawba, Muskogee-speaking Creek and Choctaw"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5733da01d058e614000b63fa",
+      "text": "What areas did French recruit natives from?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-7ab1e56997bdd8a6218e2b1259d60b97ba5b8a0977a2f8f0630ae3b51d485f28",
+          "start": 257,
+          "end": 299,
+          "quote": "western portions of the Great Lakes region"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5733fb7bd058e614000b6700",
+      "text": "Who led New France reinforcements in 1756?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-f207ff5d9eac22d799bcbd808fd7445a414ad77c3e82fcab791f3c09647f1b50",
+          "start": 305,
+          "end": 343,
+          "quote": "Major General Louis-Joseph de Montcalm"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5733fb7bd058e614000b66ff",
+      "text": "Who was appointed as second in command to Lor Loudoun in 1756?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-f207ff5d9eac22d799bcbd808fd7445a414ad77c3e82fcab791f3c09647f1b50",
+          "start": 63,
+          "end": 94,
+          "quote": "Major General James Abercrombie"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5733fb7bd058e614000b6701",
+      "text": "When did England formally declare war on France?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-f207ff5d9eac22d799bcbd808fd7445a414ad77c3e82fcab791f3c09647f1b50",
+          "start": 527,
+          "end": 539,
+          "quote": "May 18, 1756"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572759665951b619008f8885",
+      "text": "In what year was Wisconsin v. Yoder decided at the Supreme Court?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-02f22d31b7fdcea71d773bf551a8f2724838d405738fa2ef0af442c8070ac54d",
+          "start": 443,
+          "end": 447,
+          "quote": "1972"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572759665951b619008f8884",
+      "text": "In what year did Massachusetts first require children to be educated in schools?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-02f22d31b7fdcea71d773bf551a8f2724838d405738fa2ef0af442c8070ac54d",
+          "start": 158,
+          "end": 162,
+          "quote": "1852"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572759665951b619008f8883",
+      "text": "What was the first US state to have compulsory education?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-02f22d31b7fdcea71d773bf551a8f2724838d405738fa2ef0af442c8070ac54d",
+          "start": 141,
+          "end": 154,
+          "quote": "Massachusetts"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572759dbdd62a815002e9b96",
+      "text": "What notable private school has an endowment of several hundred million dollars?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-968bf3f82d0e9893fda7d11a74bd3d00f0497660d75d27bdab7adabf75acf841",
+          "start": 304,
+          "end": 317,
+          "quote": "Groton School"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572759dbdd62a815002e9b97",
+      "text": "In addition to endowments and tuition, how do boarding schools cover their operating costs?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-968bf3f82d0e9893fda7d11a74bd3d00f0497660d75d27bdab7adabf75acf841",
+          "start": 404,
+          "end": 415,
+          "quote": "fundraising"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572759dbdd62a815002e9b94",
+      "text": "About how much did a New York City day school cost annually in 2012?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-968bf3f82d0e9893fda7d11a74bd3d00f0497660d75d27bdab7adabf75acf841",
+          "start": 95,
+          "end": 102,
+          "quote": "$40,000"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57280e1aff5b5019007d9bef",
+      "text": "What is the 16th century known as the start of?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-4b04ecdfee380a0ccddc69abe0580399f947287f1effb51eb70832241adce75c",
+          "start": 334,
+          "end": 352,
+          "quote": "the historical era"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57280e1aff5b5019007d9bee",
+      "text": "What civilization did the pottery belong to?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-4b04ecdfee380a0ccddc69abe0580399f947287f1effb51eb70832241adce75c",
+          "start": 420,
+          "end": 427,
+          "quote": "Timucua"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57280e1aff5b5019007d9bed",
+      "text": "Who discovered pottery found on Black Hammock Island?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-4b04ecdfee380a0ccddc69abe0580399f947287f1effb51eb70832241adce75c",
+          "start": 170,
+          "end": 204,
+          "quote": "a University of North Florida team"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5727cd7dff5b5019007d9590",
+      "text": "How many naval bases are located in Jacksonville?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-bf1a1842a4b1b4b2a324a95148e1f27dfa80ea6325d6cebc82c740c1d7b29ecc",
+          "start": 248,
+          "end": 251,
+          "quote": "two"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5727cd7dff5b5019007d9591",
+      "text": "What are those from Jacksonville sometimes called?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-bf1a1842a4b1b4b2a324a95148e1f27dfa80ea6325d6cebc82c740c1d7b29ecc",
+          "start": 664,
+          "end": 694,
+          "quote": "\"Jacksonvillians\" or \"Jaxsons\""
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5727cd7dff5b5019007d958f",
+      "text": "What sport attracts most tourists to Jacksonville?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-bf1a1842a4b1b4b2a324a95148e1f27dfa80ea6325d6cebc82c740c1d7b29ecc",
+          "start": 619,
+          "end": 623,
+          "quote": "golf"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57268a8fdd62a815002e88d1",
+      "text": "What did Queen Elizabeth II open in Newcastle in 1981?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-200d518cfff7ce66d0ceec1d78cdd6008b99b91762a84f5ddcbb14347158f609",
+          "start": 431,
+          "end": 439,
+          "quote": "A bridge"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57268a8fdd62a815002e88d0",
+      "text": "What type of tunnels are constructed through Newcastle's city center?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-200d518cfff7ce66d0ceec1d78cdd6008b99b91762a84f5ddcbb14347158f609",
+          "start": 369,
+          "end": 379,
+          "quote": "deep-level"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57268a8fdd62a815002e88d2",
+      "text": "How many passengers a year does the rail network in Newcastle carry?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-200d518cfff7ce66d0ceec1d78cdd6008b99b91762a84f5ddcbb14347158f609",
+          "start": 609,
+          "end": 624,
+          "quote": "over 37 million"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57266ab3dd62a815002e8435",
+      "text": "Who was Cromwell's allies?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-644406a38ef9c2f1ad0865c00a9f41b3726e5cd3fac0c3ec11a741ecab0c8ee8",
+          "start": 123,
+          "end": 132,
+          "quote": "the Scots"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57266ab3dd62a815002e8434",
+      "text": "Who did the North declare for during the English civil war?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-644406a38ef9c2f1ad0865c00a9f41b3726e5cd3fac0c3ec11a741ecab0c8ee8",
+          "start": 53,
+          "end": 61,
+          "quote": "the King"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57266ab3dd62a815002e8436",
+      "text": "What was roaring as Newcastle was stormed?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-644406a38ef9c2f1ad0865c00a9f41b3726e5cd3fac0c3ec11a741ecab0c8ee8",
+          "start": 366,
+          "end": 373,
+          "quote": "drummes"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5729a26d6aef05140015505a",
+      "text": "What happens to the norm when a number is multiplied by p?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-28db5136c5154a6f352a4c7c65d9faa91bb4d54e805e3291c6a3a7e087dd3716",
+          "start": 20,
+          "end": 37,
+          "quote": "norm gets smaller"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5729a26d6aef05140015505d",
+      "text": "What principle highlights the significance of primes in number theory",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-28db5136c5154a6f352a4c7c65d9faa91bb4d54e805e3291c6a3a7e087dd3716",
+          "start": 588,
+          "end": 610,
+          "quote": "local-global principle"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5729a26d6aef05140015505c",
+      "text": "Completing Q with respect to what will produce the field of real numbers?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-28db5136c5154a6f352a4c7c65d9faa91bb4d54e805e3291c6a3a7e087dd3716",
+          "start": 223,
+          "end": 241,
+          "quote": "the absolute value"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572991943f37b319004784a2",
+      "text": "What is a twin prime?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-626b284e073168611eefd03ef99ce9ea6f6edc26edd9a40065fa4db1206835ef",
+          "start": 138,
+          "end": 171,
+          "quote": "pairs of primes with difference 2"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572991943f37b319004784a3",
+      "text": "Which conjecture holds that for any positive integer n, there is an infinite amount of pairs of consecutive primes differing by 2n?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-626b284e073168611eefd03ef99ce9ea6f6edc26edd9a40065fa4db1206835ef",
+          "start": 197,
+          "end": 218,
+          "quote": "Polignac's conjecture"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572991943f37b319004784a5",
+      "text": "What conjecture holds that there are always a minimum of 4 primes  between the squares of consecutive primes greater than 2?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-626b284e073168611eefd03ef99ce9ea6f6edc26edd9a40065fa4db1206835ef",
+          "start": 521,
+          "end": 541,
+          "quote": "Brocard's conjecture"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57261f9f271a42140099d4ab",
+      "text": "Scholars stated that there was already an existing settlement between 2 parties prior to which date?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-84b2a4f870a44fb79b3450644f6034d71c05de0218d873de74fdaf521dcfa7aa",
+          "start": 136,
+          "end": 140,
+          "quote": "1973"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57261f9f271a42140099d4a9",
+      "text": "What is one of the reason that US production has been held responsible for recessions and lower economic growth?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-84b2a4f870a44fb79b3450644f6034d71c05de0218d873de74fdaf521dcfa7aa",
+          "start": 417,
+          "end": 451,
+          "quote": "distribution and price disruptions"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57261f9f271a42140099d4ac",
+      "text": "Interest groups and government agencies that were concerned with energy were no match for who?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-84b2a4f870a44fb79b3450644f6034d71c05de0218d873de74fdaf521dcfa7aa",
+          "start": 372,
+          "end": 381,
+          "quote": "Kissinger"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57265ceddd62a815002e82b9",
+      "text": "By which year did Chrysler ended its full sized luxury model?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-275a7a0d1b92cd14f6bba185f1649e64b6a08fdff921841fc5a8ecf844a5a2c0",
+          "start": 469,
+          "end": 473,
+          "quote": "1981"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57265ceddd62a815002e82b8",
+      "text": "By which year did full sized American cars shrink to be smaller?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-275a7a0d1b92cd14f6bba185f1649e64b6a08fdff921841fc5a8ecf844a5a2c0",
+          "start": 275,
+          "end": 279,
+          "quote": "1979"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57265ceddd62a815002e82ba",
+      "text": "Which car shows the DOT's revision of categories?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-275a7a0d1b92cd14f6bba185f1649e64b6a08fdff921841fc5a8ecf844a5a2c0",
+          "start": 141,
+          "end": 150,
+          "quote": "Mustang I"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5729edd56aef051400155112",
+      "text": "Who was the first European to travel the entire length of the Amazon River?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-3e4ffbe4504e08cde32d72e8d368130e3e7c2900dd70566b582d1930cb1db1dc",
+          "start": 64,
+          "end": 85,
+          "quote": "Francisco de Orellana"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5729edd56aef051400155115",
+      "text": "Who is given credit for discovering geoglyphs along the Amazon River?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-3e4ffbe4504e08cde32d72e8d368130e3e7c2900dd70566b582d1930cb1db1dc",
+          "start": 596,
+          "end": 608,
+          "quote": "Ondemar Dias"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5725cbb289a1e219009abed2",
+      "text": "Who was the first European to travel the Amazon River?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-3e4ffbe4504e08cde32d72e8d368130e3e7c2900dd70566b582d1930cb1db1dc",
+          "start": 64,
+          "end": 85,
+          "quote": "Francisco de Orellana"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5729fd56af94a219006aa72f",
+      "text": "What is the process of removing trees from a forest known as?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-15927f44d6eeb6a909c22b635c110cf42d38e3caaeed36d855346fdd26c852d2",
+          "start": 0,
+          "end": 13,
+          "quote": "Deforestation"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5729fd56af94a219006aa731",
+      "text": "What method was used to clear forest for crop cultivation in the amazon forest?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-15927f44d6eeb6a909c22b635c110cf42d38e3caaeed36d855346fdd26c852d2",
+          "start": 368,
+          "end": 389,
+          "quote": "slash and burn method"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5729fd56af94a219006aa732",
+      "text": "What are two factors that made it difficult for colonists to the Amazon forest to survive?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-15927f44d6eeb6a909c22b635c110cf42d38e3caaeed36d855346fdd26c852d2",
+          "start": 478,
+          "end": 518,
+          "quote": "loss of soil fertility and weed invasion"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-573368044776f41900660a2a",
+      "text": "Where is a palm house with subtropic plants from all over the world on display?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-a3592c30503b44fe1ac02896051d241b45383834c049d7a7f08bb70017a46950",
+          "start": 197,
+          "end": 209,
+          "quote": "New Orangery"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-573368044776f41900660a29",
+      "text": "What type of space in Warsaw are the Botanic Garden and University Library garden?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-a3592c30503b44fe1ac02896051d241b45383834c049d7a7f08bb70017a46950",
+          "start": 6,
+          "end": 11,
+          "quote": "green"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-573368044776f41900660a2c",
+      "text": "What park is close to John Lennon street?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-a3592c30503b44fe1ac02896051d241b45383834c049d7a7f08bb70017a46950",
+          "start": 429,
+          "end": 444,
+          "quote": "Park Ujazdowski"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5733638fd058e614000b59eb",
+      "text": "What building is the most interesting of the late 19th-century architecture?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-2194333995a547070579bfbd1a2b852186c713dc0ac5cdc8e3de93e21649664d",
+          "start": 352,
+          "end": 392,
+          "quote": "Warsaw University of Technology building"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5733638fd058e614000b59e8",
+      "text": "The Kronenberg Palace had been an exceptional example of what type of architecture?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-2194333995a547070579bfbd1a2b852186c713dc0ac5cdc8e3de93e21649664d",
+          "start": 28,
+          "end": 37,
+          "quote": "bourgeois"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5733638fd058e614000b59e9",
+      "text": "Why aren't the examples of bouregois architecture visible today?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-2194333995a547070579bfbd1a2b852186c713dc0ac5cdc8e3de93e21649664d",
+          "start": 77,
+          "end": 118,
+          "quote": "not restored by the communist authorities"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5725e1c4271a42140099d2d9",
+      "text": "In what year did Roger Rocka's Dinner Theater & Good Company Players open?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-d09d4a86bab66348f1de715bb7744b60c3f588403f39f888c3e708fc0962b82b",
+          "start": 463,
+          "end": 467,
+          "quote": "1978"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5725e1c4271a42140099d2db",
+      "text": "Which two leading roles did Audra McDonald perform when she was in high school?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-d09d4a86bab66348f1de715bb7744b60c3f588403f39f888c3e708fc0962b82b",
+          "start": 578,
+          "end": 595,
+          "quote": "Evita and The Wiz"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5725e1c4271a42140099d2d7",
+      "text": "During what period did the Tower Theatre re-open?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-d09d4a86bab66348f1de715bb7744b60c3f588403f39f888c3e708fc0962b82b",
+          "start": 296,
+          "end": 306,
+          "quote": "late 1970s"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5725f7cd38643c19005acf24",
+      "text": "What was the percentage of whit people in Fresno in 2010?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-5dc06dd0ecad8480cc5778141bfcc449500ef4e91071ca4803e2a58657855907",
+          "start": 195,
+          "end": 200,
+          "quote": "49.6%"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5725f7cd38643c19005acf26",
+      "text": "What was the percentage of Non-Hispanic Whites in 2010? ",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-5dc06dd0ecad8480cc5778141bfcc449500ef4e91071ca4803e2a58657855907",
+          "start": 739,
+          "end": 744,
+          "quote": "30.0%"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5725f7cd38643c19005acf27",
+      "text": "How many people per square mile lived in Fresno in 2010?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-5dc06dd0ecad8480cc5778141bfcc449500ef4e91071ca4803e2a58657855907",
+          "start": 107,
+          "end": 121,
+          "quote": "4,404.5 people"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-570961aa200fba1400367f16",
+      "text": "Who's satellites would the new free-to-air channels be broadcast from?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-ff9356935c34fecf2330ca1ba8281801604325274930ea7b72b847e19c86e6d9",
+          "start": 295,
+          "end": 300,
+          "quote": "Astra"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-570961aa200fba1400367f15",
+      "text": "Who was the chief executive officer when the service began?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-ff9356935c34fecf2330ca1ba8281801604325274930ea7b72b847e19c86e6d9",
+          "start": 97,
+          "end": 109,
+          "quote": "Sam Chisholm"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-570961aa200fba1400367f18",
+      "text": "What platform caused BSkyB to end their analogue service?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-ff9356935c34fecf2330ca1ba8281801604325274930ea7b72b847e19c86e6d9",
+          "start": 481,
+          "end": 492,
+          "quote": "Sky Digital"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57096505ed30961900e84082",
+      "text": "What is the name of Sky Q's broadband router?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-cb98c8b99d635a90d3229490c358ae6d2ba74a1b43666a26a3d875079e4d4ee3",
+          "start": 206,
+          "end": 215,
+          "quote": "Sky Q Hub"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57096505ed30961900e84084",
+      "text": "What does connecting different Sky Q boxes enable them to do?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-cb98c8b99d635a90d3229490c358ae6d2ba74a1b43666a26a3d875079e4d4ee3",
+          "start": 611,
+          "end": 627,
+          "quote": "share recordings"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57096505ed30961900e84085",
+      "text": "When is Sky going to introduce UHD broadcasts?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-cb98c8b99d635a90d3229490c358ae6d2ba74a1b43666a26a3d875079e4d4ee3",
+          "start": 763,
+          "end": 767,
+          "quote": "2016"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-570d4329fed7b91900d45dd8",
+      "text": "When was gold found near Ballarat?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-9ca5564ca4da3a5d82f2cd2597f1062f59fd271bf2af7f250c7c68372d81dedd",
+          "start": 233,
+          "end": 237,
+          "quote": "1851"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-570d4329fed7b91900d45ddb",
+      "text": "How much gold did Victoria produce in the years of 1851-1860?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-9ca5564ca4da3a5d82f2cd2597f1062f59fd271bf2af7f250c7c68372d81dedd",
+          "start": 755,
+          "end": 772,
+          "quote": "20 million ounces"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-570d4329fed7b91900d45dd7",
+      "text": "On what date was Victoria declared independent from New South Wales?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-9ca5564ca4da3a5d82f2cd2597f1062f59fd271bf2af7f250c7c68372d81dedd",
+          "start": 3,
+          "end": 14,
+          "quote": "1 July 1851"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-570d2556fed7b91900d45c48",
+      "text": "Where were the Lambing Flat riots?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-d07c0b822954c98d025317dbff67421761ae2f34f146912fdb2ba5f783783d0e",
+          "start": 348,
+          "end": 363,
+          "quote": "New South Wales"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-570d2556fed7b91900d45c47",
+      "text": "Where is the Asian influence strongest in Victoria?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-d07c0b822954c98d025317dbff67421761ae2f34f146912fdb2ba5f783783d0e",
+          "start": 181,
+          "end": 188,
+          "quote": "Bendigo"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-570d2556fed7b91900d45c4a",
+      "text": "How many miners died in the typhoid outbreak of 1854?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-d07c0b822954c98d025317dbff67421761ae2f34f146912fdb2ba5f783783d0e",
+          "start": 547,
+          "end": 557,
+          "quote": "over 1,000"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572684365951b619008f753f",
+      "text": "Juvenile and adult  beroe lack what?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-3e35c21b4b52dc7791816ad4de620c8e4121981bf1467b82cc0b7d11216691a6",
+          "start": 228,
+          "end": 258,
+          "quote": "tentacles and tentacle sheaths"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572684365951b619008f7543",
+      "text": "Which genus lack tentacles and sheaths?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-3e35c21b4b52dc7791816ad4de620c8e4121981bf1467b82cc0b7d11216691a6",
+          "start": 185,
+          "end": 190,
+          "quote": "Beroe"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572684365951b619008f7542",
+      "text": "Juvenile platyctenids act like what?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-3e35c21b4b52dc7791816ad4de620c8e4121981bf1467b82cc0b7d11216691a6",
+          "start": 426,
+          "end": 447,
+          "quote": "more like true larvae"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57265c10f1498d1400e8dd39",
+      "text": "Cydippids combs are controlled by what?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-17aed191342fcd8b9267f3e7c2b32bd668a14b79b8326e6bb6130b3a91939bc0",
+          "start": 701,
+          "end": 740,
+          "quote": "water disturbances created by the cilia"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57265c10f1498d1400e8dd37",
+      "text": "What happens when bathocyroe and ocyropsis clap their lobes together?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-17aed191342fcd8b9267f3e7c2b32bd668a14b79b8326e6bb6130b3a91939bc0",
+          "start": 552,
+          "end": 609,
+          "quote": "jet of expelled water drives them backwards very quickly."
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57265c10f1498d1400e8dd36",
+      "text": "What does the bathocyroe and ocyropsis do to escape danger?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-17aed191342fcd8b9267f3e7c2b32bd668a14b79b8326e6bb6130b3a91939bc0",
+          "start": 515,
+          "end": 538,
+          "quote": "by clapping their lobes"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57264586f1498d1400e8dac8",
+      "text": "Who else did DATNET 1 refer to ",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-ffe9cd82cb387d87ebd63d703bd85c84a9a7b32dc7ead0612ff3330f5cb39d26",
+          "start": 258,
+          "end": 305,
+          "quote": "public PAD service Telepad (using the DNIC 2049"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57264586f1498d1400e8dac7",
+      "text": "Strictly speaking who was included in DATANET 1",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-ffe9cd82cb387d87ebd63d703bd85c84a9a7b32dc7ead0612ff3330f5cb39d26",
+          "start": 119,
+          "end": 198,
+          "quote": "Datanet 1 only referred to the network and the connected users via leased lines"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57264586f1498d1400e8dac6",
+      "text": "What was DATANET 1 ",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-ffe9cd82cb387d87ebd63d703bd85c84a9a7b32dc7ead0612ff3330f5cb39d26",
+          "start": 10,
+          "end": 80,
+          "quote": "was the public switched data network operated by the Dutch PTT Telecom"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5726446a89cfff1900a8404d",
+      "text": "What was AUSTPAC",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-e937f6a874321ceb9be652103e9680d4638bfe07618bda38c0cd5968d326616f",
+          "start": 0,
+          "end": 65,
+          "quote": "AUSTPAC was an Australian public X.25 network operated by Telstra"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5726446a89cfff1900a8404f",
+      "text": "How are AUSTPAC connections made ",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-e937f6a874321ceb9be652103e9680d4638bfe07618bda38c0cd5968d326616f",
+          "start": 449,
+          "end": 547,
+          "quote": "Access can be via a dial-up terminal to a PAD, or, by linking a permanent X.25 node to the network"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5726446a89cfff1900a8404e",
+      "text": "What did AUSTPAC support ",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-e937f6a874321ceb9be652103e9680d4638bfe07618bda38c0cd5968d326616f",
+          "start": 183,
+          "end": 254,
+          "quote": "supporting applications such as on-line betting, financial applications"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572fb059947a6a140053cb81",
+      "text": "What  former administrative building was used for the MSP's offices?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-915fc20f4277ef271d0fc5bc849551ac80528b0d711e32f251c5afb383ae35cd",
+          "start": 158,
+          "end": 182,
+          "quote": "Lothian Regional Council"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572fb059947a6a140053cb82",
+      "text": "What happened to the building on George IV Bridge when the Parliament was done with it?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-915fc20f4277ef271d0fc5bc849551ac80528b0d711e32f251c5afb383ae35cd",
+          "start": 292,
+          "end": 302,
+          "quote": "demolished"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572fb059947a6a140053cb84",
+      "text": "Which hall was used as Parliament's principle committee room?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-915fc20f4277ef271d0fc5bc849551ac80528b0d711e32f251c5afb383ae35cd",
+          "start": 558,
+          "end": 562,
+          "quote": "main"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572fbb04a23a5019007fc8f8",
+      "text": "Who sets the work agenda and allocates time in the chamber?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-cd69bab5cf9e51f661806efda31aa9a54094040ac96af552a1c9830a5c660176",
+          "start": 226,
+          "end": 250,
+          "quote": "the Parliamentary Bureau"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572fbb04a23a5019007fc8f9",
+      "text": "How many seats must a political party have to be represented on the Parliamentary Bureau?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-cd69bab5cf9e51f661806efda31aa9a54094040ac96af552a1c9830a5c660176",
+          "start": 509,
+          "end": 513,
+          "quote": "five"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-572fbb04a23a5019007fc8f7",
+      "text": "Who is responsible for ensuring the Parliament works smoothly?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-cd69bab5cf9e51f661806efda31aa9a54094040ac96af552a1c9830a5c660176",
+          "start": 62,
+          "end": 79,
+          "quote": "Presiding Officer"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57269344f1498d1400e8e43e",
+      "text": "When did ABC Films begin selling programs to other networks?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-6f38f5caeb0cebf7d8f274962769c96d26b3f48567707ed996d9354db55e6ac4",
+          "start": 130,
+          "end": 134,
+          "quote": "1959"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57269344f1498d1400e8e440",
+      "text": "Where were ABC's international networks mainly situated in the 1970s?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-6f38f5caeb0cebf7d8f274962769c96d26b3f48567707ed996d9354db55e6ac4",
+          "start": 591,
+          "end": 614,
+          "quote": "Japan and Latin America"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57269344f1498d1400e8e441",
+      "text": "Why was ABC forced to sell its interests in international networks in the 70s?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-6f38f5caeb0cebf7d8f274962769c96d26b3f48567707ed996d9354db55e6ac4",
+          "start": 430,
+          "end": 495,
+          "quote": "legislation to limit foreign ownership of broadcasting properties"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57267b755951b619008f7435",
+      "text": "In what borough of New York City is ABC headquartered?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-d09a40b18e6407b0f3068ada78d11255bdf7e428ae5a6f68f83ed71321fd030d",
+          "start": 393,
+          "end": 402,
+          "quote": "Manhattan"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57267b755951b619008f7433",
+      "text": "What company owns the American Broadcasting Company?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-d09a40b18e6407b0f3068ada78d11255bdf7e428ae5a6f68f83ed71321fd030d",
+          "start": 238,
+          "end": 261,
+          "quote": "The Walt Disney Company"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57267b755951b619008f7437",
+      "text": "Disney-ABC Television Group is a subsidiary of what division of the Walt Disney Company?",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "squad-d09a40b18e6407b0f3068ada78d11255bdf7e428ae5a6f68f83ed71321fd030d",
+          "start": 204,
+          "end": 225,
+          "quote": "Disney Media Networks"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5726559edd62a815002e81ca",
+      "text": "How many people died in the outbreak of 1471?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-563d5d191dbbfc2d09e51931c3bfa8a9fabfad63f29c0a39d5b0883f4a2cf926",
+          "start": 499,
+          "end": 525,
+          "quote": "10–15% of the population"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5726559edd62a815002e81c8",
+      "text": "What did historians do in the absence of census figures?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-563d5d191dbbfc2d09e51931c3bfa8a9fabfad63f29c0a39d5b0883f4a2cf926",
+          "start": 57,
+          "end": 155,
+          "quote": "propose a range of preincident population figures from as high as 7 million to as low as 4 million"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-5726559edd62a815002e81cb",
+      "text": "When was the great plague of London?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-563d5d191dbbfc2d09e51931c3bfa8a9fabfad63f29c0a39d5b0883f4a2cf926",
+          "start": 781,
+          "end": 785,
+          "quote": "1665"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57264684708984140094c126",
+      "text": "When did the world's population finally recover from the black death?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-5ff5f51a1cc51906b646d6d26839d7263ae36b42e13455ce7fa04282a3e318d1",
+          "start": 622,
+          "end": 638,
+          "quote": "the 17th century"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57264684708984140094c125",
+      "text": "How much of the European population did the black death kill?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-5ff5f51a1cc51906b646d6d26839d7263ae36b42e13455ce7fa04282a3e318d1",
+          "start": 381,
+          "end": 418,
+          "quote": "30–60% of Europe's total population"
+        }
+      ]
+    },
+    {
+      "query_id": "squad-57264684708984140094c123",
+      "text": "Where did the black death originate?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "squad-5ff5f51a1cc51906b646d6d26839d7263ae36b42e13455ce7fa04282a3e318d1",
+          "start": 49,
+          "end": 80,
+          "quote": "the arid plains of Central Asia"
+        }
+      ]
+    }
+  ]
+}
