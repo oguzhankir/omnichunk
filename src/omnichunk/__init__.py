@@ -26,6 +26,23 @@ from .graph import (
     find_communities,
     to_networkx_dict,
 )
+from .indexing import (
+    AcknowledgementError,
+    DeliveryBatch,
+    DeliveryReceipt,
+    DeliveryResult,
+    IndexConflictError,
+    IndexJournal,
+    IndexPlan,
+    IndexRecord,
+    IndexSink,
+    IndexSource,
+    IndexStatus,
+    JournalSchemaError,
+    PermanentSinkError,
+    RetryableSinkError,
+    VectorRecord,
+)
 from .otel import maybe_span
 from .parser.languages import LanguageCapability, language_capabilities
 from .plugins import (
@@ -59,6 +76,7 @@ if TYPE_CHECKING:
 from ._version import __version__
 from .serialization import (
     chunk_from_dict,
+    chunks_to_pinecone_upsert_request,
     chunks_to_pinecone_vectors,
     chunks_to_supabase_rows,
     chunks_to_weaviate_objects,
@@ -90,6 +108,22 @@ from .types import (
 )
 
 __all__ = [
+    "AcknowledgementError",
+    "DeliveryBatch",
+    "DeliveryReceipt",
+    "DeliveryResult",
+    "IndexConflictError",
+    "IndexJournal",
+    "IndexPlan",
+    "IndexRecord",
+    "IndexSink",
+    "IndexSource",
+    "IndexStatus",
+    "JournalSchemaError",
+    "PermanentSinkError",
+    "RetryableSinkError",
+    "VectorRecord",
+    "chunks_to_pinecone_upsert_request",
     "BatchResult",
     "BudgetResult",
     "ByteRange",

@@ -14,6 +14,34 @@ behavioral guarantees and examples, read the [contracts](contracts.md) and
 
 ::: omnichunk.store.SyncResult
 
+## Recoverable index delivery
+
+::: omnichunk.indexing.IndexSource
+
+::: omnichunk.indexing.IndexPlan
+
+::: omnichunk.indexing.IndexJournal
+
+::: omnichunk.indexing.DeliveryBatch
+
+::: omnichunk.indexing.DeliveryReceipt
+
+::: omnichunk.indexing.DeliveryResult
+
+## Optional native framework adapters
+
+::: omnichunk.integrations.langchain.OmniChunkTextSplitter
+
+::: omnichunk.integrations.llamaindex.OmniChunkNodeParser
+
+## Optional delivery sinks
+
+::: omnichunk.indexing.sinks.QdrantSink
+
+::: omnichunk.indexing.sinks.PgvectorSink
+
+::: omnichunk.serialization.chunks_to_pinecone_upsert_request
+
 ## Durable chunk records and identity
 
 ::: omnichunk.serialization.chunk_to_dict

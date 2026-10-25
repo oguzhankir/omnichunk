@@ -5,7 +5,7 @@ import hashlib
 import importlib
 import json
 import math
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import fields, is_dataclass
 from enum import Enum
 from io import StringIO
@@ -232,7 +232,10 @@ def chunks_to_pinecone_vectors(
     """Convert chunks to Pinecone upsert-ready dicts (no Pinecone client required).
 
     Each dict has ``id``, ``values``, ``metadata``. If ``namespace`` is non-empty, a
-    top-level ``namespace`` key is set on each dict.
+    top-level ``namespace`` key is set on each dict for legacy compatibility.
+    That legacy shape is not an SDK request. Prefer
+    :func:`chunks_to_pinecone_upsert_request`, which places the namespace on the
+    request envelope and preserves complete chunk metadata.
     """
     embeddings = _validated_vectors(chunks, embeddings)
 
@@ -247,6 +250,87 @@ def chunks_to_pinecone_vectors(
             row["namespace"] = namespace
         out.append(row)
     return out
+
+
+def _strict_json_copy(value: Any) -> Any:
+    if value is None or type(value) in (str, bool, int):
+        return value
+    if type(value) is float and math.isfinite(value):
+        return value
+    if isinstance(value, Mapping):
+        if any(type(key) is not str for key in value):
+            raise ValueError("Metadata object keys must be strings")
+        return {key: _strict_json_copy(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_strict_json_copy(item) for item in value]
+    raise ValueError("Metadata must contain finite JSON values")
+
+
+def _chunk_snapshot(chunk: Chunk) -> dict[str, Any]:
+    # Validate dictionaries before chunk_to_dict's legacy key normalization.
+    for metadata in (
+        chunk.metadata,
+        chunk.context.format_metadata,
+        chunk.source.metadata if chunk.source else {},
+    ):
+        _strict_json_copy(metadata)
+    result: dict[str, Any] = _strict_json_copy(chunk_to_dict(chunk))
+    return result
+
+
+def chunks_to_pinecone_upsert_request(
+    chunks: Sequence[Chunk],
+    embeddings: Sequence[list[float]],
+    *,
+    namespace: str = "",
+    use_contextualized_text: bool = True,
+    filter_metadata: Sequence[Mapping[str, Any]] | None = None,
+    max_metadata_bytes: int = 40 * 1024,
+) -> dict[str, Any]:
+    """Build ``index.upsert(**request)`` with namespace on the request envelope.
+
+    Pinecone metadata permits flat scalars and string lists, so complete source,
+    chunk and format metadata is preserved as JSON in ``metadata['omnichunk']``.
+    Supply per-chunk ``filter_metadata`` for queryable ACL/page/source fields.
+    Names colliding with generated fields, unsupported values and oversized
+    metadata fail explicitly. No fields are silently dropped or truncated.
+    Existing legacy vector IDs are retained; this is a request-shape migration.
+    """
+    if not isinstance(namespace, str):
+        raise ValueError("namespace must be a string")
+    if type(max_metadata_bytes) is not int or not 0 < max_metadata_bytes <= 40 * 1024:
+        raise ValueError("max_metadata_bytes must be between 1 and 40960")
+    if filter_metadata is not None and len(filter_metadata) != len(chunks):
+        raise ValueError("filter_metadata length must match chunks length")
+    vectors = chunks_to_pinecone_vectors(
+        chunks, embeddings, use_contextualized_text=use_contextualized_text
+    )
+    for index, (chunk, vector) in enumerate(zip(chunks, vectors)):
+        metadata = vector["metadata"]
+        metadata["omnichunk"] = json.dumps(
+            _chunk_snapshot(chunk),
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        )
+        if filter_metadata is not None:
+            if not isinstance(filter_metadata[index], Mapping):
+                raise ValueError("filter_metadata entries must be mappings")
+            extra = _strict_json_copy(filter_metadata[index])
+            for key, value in extra.items():
+                if key in metadata:
+                    raise ValueError(f"filter_metadata collides with generated field {key!r}")
+                if not (
+                    type(value) in (str, bool, int, float)
+                    or (isinstance(value, list) and all(type(item) is str for item in value))
+                ):
+                    raise ValueError("Pinecone filter metadata requires scalars or string lists")
+                metadata[key] = value
+        encoded = json.dumps(metadata, ensure_ascii=False, separators=(",", ":"), allow_nan=False)
+        if len(encoded.encode("utf-8")) > max_metadata_bytes:
+            raise ValueError(f"Pinecone metadata exceeds {max_metadata_bytes} bytes")
+    return {"namespace": namespace, "vectors": vectors}
 
 
 def chunks_to_weaviate_objects(
@@ -314,7 +398,15 @@ def chunks_to_llamaindex_docs(
     for chunk in chunks:
         content = chunk.contextualized_text if use_contextualized_text else chunk.text
         docs.append(
-            document_cls(id_=stable_chunk_id(chunk), text=content, metadata=_chunk_metadata(chunk))
+            document_cls(
+                id_=stable_chunk_id(chunk),
+                text=content,
+                metadata=_chunk_metadata(chunk),
+                # The full provenance snapshot also contains raw/rendered text.
+                # Keep it accessible without duplicating that text in prompts.
+                excluded_embed_metadata_keys=["omnichunk"],
+                excluded_llm_metadata_keys=["omnichunk"],
+            )
         )
 
     return docs
@@ -437,6 +529,7 @@ def _vectordb_metadata(chunk: Chunk, *, use_contextualized_text: bool) -> dict[s
 
 def _chunk_metadata(chunk: Chunk) -> dict[str, Any]:
     return {
+        "omnichunk": _chunk_snapshot(chunk),
         "chunk_id": stable_chunk_id(chunk),
         "content_fingerprint": chunk_content_fingerprint(chunk),
         "embedding_fingerprint": chunk_embedding_fingerprint(chunk),

@@ -1,0 +1,51 @@
+name: Optional integration compatibility
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  frameworks-and-sinks:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        dependencies: [minimum, current]
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_PASSWORD: omnichunk
+          POSTGRES_USER: omnichunk
+          POSTGRES_DB: omnichunk
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U omnichunk -d omnichunk"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      OMNICHUNK_PGVECTOR_DSN: postgresql://omnichunk:omnichunk@localhost:5432/omnichunk
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install declared minimum integrations
+        if: matrix.dependencies == 'minimum'
+        run: >-
+          python -m pip install -e '.[langchain,llamaindex,qdrant,pgvector]'
+          pytest langchain-core==0.2.11 langchain-text-splitters==0.2.2
+          llama-index-core==0.10.68.post1 qdrant-client==1.12.0 'psycopg[binary]==3.2.1'
+      - name: Install current compatible integrations
+        if: matrix.dependencies == 'current'
+        run: python -m pip install --upgrade -e '.[langchain,llamaindex,qdrant,pgvector]' pytest
+      - name: Verify required imports before optional tests
+        run: >-
+          python -c "import langchain_text_splitters, llama_index.core, qdrant_client, psycopg;
+          from omnichunk.integrations.langchain import OmniChunkTextSplitter;
+          from omnichunk.integrations.llamaindex import OmniChunkNodeParser"
+      - name: Record resolved versions
+        run: python -m pip freeze
+      - name: Validate native pipelines and real local sinks
+        run: pytest -q tests/test_framework_adapters.py tests/test_indexing_sinks.py tests/test_pinecone_request.py
