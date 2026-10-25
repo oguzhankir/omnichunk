@@ -61,10 +61,8 @@ Remaining gaps are product work, not reasons to call existing utilities absent:
 | Gap | Evidence in the current implementation | Priority / milestone |
 | --- | --- | --- |
 | Retrieval quality needs independent evidence | A synthetic labeled corpus and lexical retrieval runner now measure quality; external validation and frozen dense-model comparisons remain open | P0 / M1 |
-| Export is not a recoverable indexing transaction | `stream_upsert()` yields rows; `ChunkStore` commits local state before external delivery. Neither acknowledges/resumes remote writes | P0 / M2 |
-| Framework support stops at document conversion | Native splitter/node-transform adapters and a maintained compatibility matrix are missing | P1 / M2 |
-| Vendor payloads are not complete SDK requests | Pinecone's namespace belongs to the upsert request envelope; the legacy helper attaches it to rows. SDK contracts need explicit versioned adapters | P1 / M2 |
-| Export metadata is incomplete | Arbitrary `chunk.metadata` and format metadata are not fully preserved by vector/framework conversion; a typed source/ACL/page mapping is needed | P1 / M2–M3 |
+| Production operating limits need measurement | The acknowledged journal and Qdrant/pgvector sinks now have crash/replay and real integration tests; large deployments, throughput limits and hosted failover remain to characterize | P1 / M4 |
+| Rich extraction metadata still needs adapters | Native framework/journal records preserve caller metadata and canonical chunk snapshots; original page/element geometry still depends on richer extraction | P1 / M3 |
 | Rich document structure is flattened | `LoadedDocument` holds canonical text/segments; PDF/DOCX loaders provide text extraction, not OCR or full page/element geometry | P1 / M3 |
 | Sentence segmentation is still heuristic | Unicode starters, CJK terminators and CRLF paragraphs are supported; abbreviations, language-specific ambiguity and wider RTL coverage still need validation | P1 / M3 |
 | Streaming does not bound total source memory | Iterators retain source/AST state; semantic/structured workflows retain per-document work | P1 / M4 |
@@ -168,8 +166,24 @@ is a methodology reference, not evidence about OmniChunk.
 
 ### M2 — Make indexing and framework adoption dependable
 
-**Status:** planned. **Dependency:** M0; use M1 for retrieval decisions.
+**Status:** implemented in [PR #31](https://github.com/oguzhankir/omnichunk/pull/31);
+PR verification and release publication are separate gates.
+**Dependency:** M0; use M1 for retrieval decisions.
 **Owner role:** integration/indexing maintainer.
+
+Delivery includes `IndexJournal`/`IndexPlan`, persistent prepared vectors,
+acknowledged Qdrant/pgvector sinks, native LangChain/LlamaIndex adapters, preserved
+metadata and a proper Pinecone request envelope. Independent process-crash and
+competing-worker tests cover replay and stale-write prevention. Minimum/current
+framework/SDK tests exercise real Qdrant local mode and PostgreSQL 16 with
+pgvector. The [indexing guide](docs/indexing.md) documents executable recipes,
+source/scope ownership, migration, rollback and at-least-once semantics.
+
+The journal uses a separate database from `ChunkStore` and serializes writers
+while external batches run. Batch bounds do not establish total-memory bounds,
+and acknowledged delivery does not provide atomic multi-batch reader visibility.
+These limits remain explicit inputs to M4; no distributed exactly-once or
+application authorization guarantee is implied.
 
 - Ship optional native LangChain splitter and LlamaIndex node/transform adapters.
   Preserve IDs, source references, metadata and hierarchy without accidental double

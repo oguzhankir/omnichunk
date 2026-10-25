@@ -6,6 +6,17 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 ## [Unreleased]
 
 ### Added
+- Recoverable indexing with `IndexJournal`, versioned dry-run `IndexPlan` JSON,
+  source/scope ownership, generation checks, persistent embedding reuse and
+  acknowledged bounded delivery. Pending operations survive process restarts;
+  unknown/permanent failures require explicit retry after intervention.
+- Optional native LangChain `OmniChunkTextSplitter` and LlamaIndex
+  `OmniChunkNodeParser`, preserving stable identity, complete provenance, caller
+  metadata and hierarchy relationships with cacheable transform configuration.
+- Optional Qdrant and pgvector sinks, executable integration recipes and a
+  minimum/current compatibility matrix with real local clients/PostgreSQL tests.
+- `chunks_to_pinecone_upsert_request()` places namespaces on the request envelope
+  and preserves complete chunk metadata within the vendor's flat metadata shape.
 - Dependency-free public retrieval ranking metrics (Recall@k, MRR@k and nDCG@k)
   and canonical source-byte evidence precision, recall and IoU.
 - A versioned MIT-licensed synthetic retrieval corpus: 30 documents and 300
@@ -54,6 +65,12 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
   `AGENTS.md` is the sole agent instruction file. Removed `ARCHITECTURE.md`.
 
 ### Compatibility
+- The delivery journal uses a separate versioned database from `ChunkStore`.
+  Rebuild into a new target when adopting its vendor identity mapping; keep the
+  old target for rollback. Delivery is at least once, and does not provide atomic
+  visibility across remote batches or enforce application authorization.
+- Native framework extras now include their verified splitter/parser dependencies;
+  minimum and current compatible versions are listed in the installation guide.
 - Exported native IDs change record identity for integrations that previously
   generated random IDs. Rebuild or reconcile those external indexes before reuse.
 - Corrected splitting can change chunk boundaries and IDs; reindex affected

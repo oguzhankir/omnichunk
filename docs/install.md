@@ -29,7 +29,9 @@ pip install "omnichunk[all-languages,formats]"
 | `sentence-transformers` | Optional local embedding-model helper. |
 | `scipy` | Sparse TF-IDF support. |
 | `pdf`, `docx`, `formats` | PDF reader, DOCX reader, or both. |
-| `langchain`, `llamaindex` | Framework document conversion. |
+| `langchain`, `llamaindex` | Native splitter/node-parser adapters and document conversion. |
+| `qdrant` | Qdrant client for acknowledged local/server vector delivery. |
+| `pgvector` | Psycopg PostgreSQL client; the server needs the pgvector extension. |
 | `otel` | OpenTelemetry API. |
 | `profiling` | py-spy and line-profiler. |
 | `rust` | Maturin build tooling; not a prebuilt accelerator. |
@@ -48,3 +50,21 @@ A tokenizer or model may need its own vocabulary/model files. Prepare those asse
 for offline environments; installation alone does not guarantee they are cached.
 See [contracts](reference/contracts.md) for exact token sizing and language
 capability reporting, and [migration](migrations/v2.md) before replacing an index.
+
+## Native integration compatibility
+
+The optional integration workflow exercises both declared minimum versions and
+the latest compatible releases. The initial M2 validation used:
+
+| Integration | Minimum tested | Current tested | Supported constraint |
+| --- | --- | --- | --- |
+| LangChain core / splitters | 0.2.11 / 0.2.2 | 1.7.0 / 1.1.3 | core `<2`, splitters `<2` |
+| LlamaIndex core | 0.10.68.post1 | 0.14.25 | `>=0.10.68.post1,<0.15` |
+| Qdrant client | 1.12.0 | 1.20.0 | `>=1.12,<2` |
+| Psycopg binary | 3.2.1 | 3.3.6 | `>=3.2.1,<4` |
+
+Framework and sink compatibility is checked on Python 3.12; the ordinary library
+matrix covers Python 3.10–3.13. Qdrant tests use its real local client. PostgreSQL
+tests use a disposable PostgreSQL 16 server with pgvector; production servers and
+credentials remain application-owned. See [indexing](indexing.md) for native
+adapter examples, delivery semantics and remote provisioning.

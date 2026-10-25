@@ -13,6 +13,14 @@ methods, and explicitly documented APIs such as `omnichunk.store.migrate_legacy_
 Internal engine/windowing/util helpers are not stable extension points. Prefer
 the public `Chunker`, loader and registry APIs.
 
+Recoverable delivery lives in `omnichunk.indexing`; optional framework adapters
+live in `omnichunk.integrations.langchain` and `omnichunk.integrations.llamaindex`.
+The delivery journal has its own versioned SQLite schema and must use a separate
+file from `ChunkStore`. Plans have a versioned JSON representation; unknown
+versions are rejected. Preserve the journal while writes are pending. Changing
+the physical sink target or vector dimension requires a separate collection and
+an explicit rebuild/cutover.
+
 Within 2.x, minor versions add compatible functionality and patch versions fix
 compatible behavior. The major transition changes default sizing, validation,
 source/budget contracts, identity, dependency extras and persistence schemas.

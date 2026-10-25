@@ -1,8 +1,9 @@
 # Omnichunk examples
 
-Runnable workflows using local sample data. No API key or external service is
-required. Start with the local RAG lifecycle to see how chunks, citations, updates
-and deletions work together.
+Numbered workflows use local sample data and need no API key or external service.
+Start with the local RAG lifecycle for citations and updates, then the recoverable
+indexing example for durable delivery. Optional vendor recipes in `integrations/`
+document their client/server requirements separately.
 
 ## Install and run
 
@@ -11,6 +12,7 @@ From this checkout, use the package installed in your current environment:
 ```bash
 pip install -e ".[code,semantic]"
 python examples/13_local_rag_lifecycle.py
+python examples/14_recoverable_indexing.py
 python examples/01_quickstart.py
 ```
 
@@ -22,6 +24,7 @@ checkout for the installed package.
 | File | What it demonstrates |
 | --- | --- |
 | [13_local_rag_lifecycle.py](13_local_rag_lifecycle.py) | SQLite indexing, lexical retrieval, exact citations, edit/delete sync, repeat skips and reopen |
+| [14_recoverable_indexing.py](14_recoverable_indexing.py) | Durable plans, failed delivery, replay, embedding reuse, deletion and application ACL filtering |
 | [01_quickstart.py](01_quickstart.py) | `chunk()`, `Chunker`, fields, files and batches |
 | [02_code_chunking.py](02_code_chunking.py) | Python/TypeScript, overlap, context and source reconstruction |
 | [03_prose_and_markdown.py](03_prose_and_markdown.py) | Markdown structure and explicit character/token-estimate sizing |
@@ -51,9 +54,11 @@ budget, install its matching tokenizer (for example `omnichunk[tiktoken]`) and
 configure it explicitly. Count the complete prompt, including labels, separators
 and instructions; a per-chunk limit does not bound the assembled prompt.
 
-SQLite synchronization and external vector writes are separate operations. The
-local example's in-memory projection is not a durable delivery queue. Persist a
-replayable plan or build and validate a new retrieval generation before cutover.
+SQLite synchronization and external vector writes are separate operations. Use
+the `IndexJournal` workflow in example 14 to persist pending changes and
+acknowledged checkpoints. Its toy vectors illustrate lifecycle mechanics; they
+are not a retrieval model. For an atomically visible cutover, build and validate
+a separate retrieval generation before switching readers.
 See the [indexing guide](../docs/indexing.md) and
 [migration guide](../docs/migrations/v2.md) for lifecycle and recovery details.
 

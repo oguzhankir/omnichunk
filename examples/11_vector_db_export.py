@@ -6,6 +6,7 @@ from __future__ import annotations
 
 from omnichunk import Chunker
 from omnichunk.serialization import (
+    chunks_to_pinecone_upsert_request,
     chunks_to_pinecone_vectors,
     chunks_to_supabase_rows,
     chunks_to_weaviate_objects,
@@ -22,8 +23,11 @@ def main() -> None:
     # configured model before uploading real records.
     emb = [[0.1, 0.2, 0.3] for _ in chunks]
 
-    # Pass namespace="ns1" on the Pinecone client's upsert request, not on
-    # individual vector rows. Leave the export helper's namespace empty.
+    request = chunks_to_pinecone_upsert_request(chunks, emb, namespace="ns1")
+    assert request["namespace"] == "ns1"
+    assert "namespace" not in request["vectors"][0]
+    # The SDK call is index.upsert(**request). Legacy row exports remain useful
+    # for clients which build their own request envelopes.
     pine = chunks_to_pinecone_vectors(chunks, emb)
     pine_plain = chunks_to_pinecone_vectors(
         chunks, emb, namespace="", use_contextualized_text=False

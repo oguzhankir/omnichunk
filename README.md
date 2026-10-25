@@ -47,7 +47,7 @@ code uses a diagnosed fallback. Structural chunking requires no external service
 optional model/tokenizer integrations may download assets or use your callbacks.
 
 Other extras include `transformers`, `sentence-transformers`, `scipy`, `langchain`,
-`llamaindex`, `otel`, `docs`, `dev` and optional Rust build tooling (`rust`).
+`llamaindex`, `qdrant`, `pgvector`, `otel`, `docs`, `dev` and optional Rust build tooling (`rust`).
 See [installation details](docs/install.md) for the full grouping and limitations.
 
 ## Quick start
@@ -98,14 +98,25 @@ Context that will not fit is omitted by default, or rejected with
   storage, token-budget selection, exact/near deduplication, entity–chunk graphs,
   centrality/community analysis and heuristic/callback-based propositions.
 - **Integration:** synchronous/async/batch APIs, iterators, CLI, JSONL/CSV,
-  LangChain/LlamaIndex document conversion, vendor-shaped vector payloads,
+  native LangChain splitter and LlamaIndex node parser, document conversion,
+  vendor-shaped vector payloads,
   parser/formatter registration and optional OpenTelemetry.
+- **Recoverable indexing:** serializable change plans, a SQLite delivery journal,
+  acknowledged batches, persistent embedding reuse and scoped deletion. Optional
+  Qdrant and pgvector sinks resume pending writes after a process restart.
 
 Use `language_capabilities()` to distinguish detected languages, installed
 grammars, extraction queries and fallback behavior. The
 [contract reference](docs/reference/contracts.md) defines guarantees and limits.
 Graph helpers provide entity relationships; they are not a complete GraphRAG
 retriever. PDF/DOCX support extracts text; it does not provide OCR or full layout.
+
+For recoverable index updates, follow the [indexing guide](docs/indexing.md) and run
+`python examples/14_recoverable_indexing.py`. It demonstrates a failed delivery,
+restart/replay, metadata updates without re-embedding and deletion. Delivery is
+at least once: applications own authorization, and sinks must make repeated
+upserts/deletes safe. Acknowledged delivery does not make a multi-batch remote
+update atomically visible to readers.
 
 ## Files, directories and CLI
 
