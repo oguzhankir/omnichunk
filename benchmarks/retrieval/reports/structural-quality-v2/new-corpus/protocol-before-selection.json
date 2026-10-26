@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "experiment_id": "omnichunk-independent-squad-v2",
+  "recorded_before_upstream_download_or_new_scores": true,
+  "upstream_url": "https://raw.githubusercontent.com/rajpurkar/SQuAD-explorer/master/dataset/dev-v1.1.json",
+  "upstream_sha256": "95aa6a52d5d6a735563366753ca50492a658031da74f301ac5238b03966972c9",
+  "selection_namespace": "omnichunk-independent-squad-v2|2026-10-26",
+  "primary_design": {
+    "new_articles": 64,
+    "paragraphs_per_article": 2,
+    "questions_per_paragraph": 3,
+    "reason": "More independent article bootstrap units and retrieval distractors if pinned source supports it"
+  },
+  "predeclared_fallback": {
+    "new_articles": 32,
+    "paragraphs_per_article": 3,
+    "questions_per_paragraph": 3,
+    "reason": "Pinned upstream may not have64unobserved articles after excluding all16previously observed articles"
+  },
+  "article_policy": "Exclude all normalized Wikipedia titles previously in corpus_squad_v1. Sort remaining eligible articles by SHA256(namespace + article title), title tiebreaker; take declared count. No retrieval/model/quality scores or token-length eligibility used.",
+  "paragraph_policy": "Sort upstream paragraphs by SHA256(namespace + exact context), original index tiebreaker. Require declared number of questions with exact valid answer annotations, normalized unique contexts/questions. Choose first declared count then restore original upstream paragraph order for article documents.",
+  "question_policy": "Sort by SHA256(namespace + upstream question ID), ID tiebreaker; select first3eligible normalized unique question texts. Use first nonempty answer annotation with exact matching character offset; convert to UTF8source bytes after article rendering.",
+  "duplicate_policy": "NFC, casefold, whitespace collapse. Exclude normalized contexts/questions seen in either existing synthetic or SQuAD corpus and duplicates across all newly selected articles/splits.",
+  "split_policy": "Alternate selected article hash order into development(dev) and sealed validation(test); all source paragraphs/questions for an article stay together. Never select or change split by retrieval result.",
+  "views": {
+    "article-text": "One.txtsource document per article:3selected unmodified source paragraphs in original upstream order, joined by2newlines; no title prefix. Under64article primary use2paragraphs instead.",
+    "article-markdown": "Same selected paragraphs/order/questions; source document.md begins # + title.replace(underscore,space) +2newlines. Source paragraph bytes otherwise unmodified; answer offsets exactly rebased."
+  },
+  "bootstrap_policy": "One source ID per article per view, so existing connected-gold-source bootstrap units are entire articles. Separate views are correlated paired adaptations, not independent replications.",
+  "blinding_policy": "Write only development corpus plaintext now. Encrypt deterministic validation ZIP in memory; disclose only protocol/count/hash commitments. Do not disclose validation article titles, source paragraphs, questions or answers to tuning agent. Release only after source+models+tokenizers+settings+acceptance record freeze. Same-workspace agent custody is not an external custodian.",
+  "evaluation_policy": "Old test results are permanently observed and may be used only as development diagnostics. Use new development for selection. Once final candidate, native tokenizer budgets and2model SHAs are frozen, run each declared validation view/model matrix once; no tuning or replacement run from its results.",
+  "language": "English only; second English encoder supports no new multilingual claim",
+  "limitations": [
+    "SQuAD/Wikipedia may overlap model pretraining; procedural tuning blindness does not imply pretraining novelty",
+    "Question annotations are independently authored, exact short answers are not independently audited complete supporting-evidence sets",
+    "Synthetic article rendering introduces headings/joins and transformation bias; text view is paired control",
+    "32article fallback yields16articleclustersper split; descriptive intervals and no universal leadership claim"
+  ]
+}

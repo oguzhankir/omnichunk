@@ -1,0 +1,37 @@
+{
+  "calibration": {
+    "directions_vs_current": {
+      "iou": {
+        "negative": 2,
+        "positive": 7,
+        "ties": 15
+      },
+      "precision": {
+        "negative": 2,
+        "positive": 7,
+        "ties": 15
+      },
+      "recall": {
+        "negative": 0,
+        "positive": 5,
+        "ties": 19
+      }
+    },
+    "distinct_positive_recall_questions": 2,
+    "original_synthetic96_native_token_ratio": 1.014989046466044,
+    "original_synthetic96_vector_ratio": 1.546218487394958,
+    "positive_recall_query_setting_instances": 5,
+    "primary_recall_tied_settings": 8,
+    "recall_loss_query_setting_instances": 0
+  },
+  "checks_count": 1478,
+  "failed": [],
+  "independent_narrative_audit_sha256": "266a5ec7a4151a59dff02e0f29cbdfc7c363b7199e7207d363d05d16ed7eb94d",
+  "model_or_ranking_calls": 0,
+  "numeric_table_rows": 85,
+  "passed": true,
+  "raw_comparisons": 84,
+  "report_sha256": "414e5f676f527b0fb5ef42c6b093b2b22bdf16367d358e7ec48a8d396a505859",
+  "schema_version": 1,
+  "scope": "Displayed table values and inline developmental deltas checked at stated rounding against original runtime reports, frozen paired outputs and recorded development paired statistics. All84comparison hashes and per-query win/tie/loss counts independently verified; bootstrap numeric intervals matched stored paired outputs rather than regenerated. No inference, reranking, data selection or source change."
+}

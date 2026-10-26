@@ -1,0 +1,7 @@
+{
+  "created_utc": "2026-10-26T18:15:47.927815+00:00",
+  "reason": "Fresh article-level English development shows paragraph preservation exactly neutral; semchunk exceeds current recall at64/96. All validation remains sealed.",
+  "additional_family": "Preserve complete sentence identities only when a prose paragraph itself exceeds capacity; no corpus/query/language rules, fitting paragraphs unchanged.",
+  "selection_constraints": "Same native64/96,512tokens,allsourcebudgets; score every variant and costs, do not retune from sealedvalidation.",
+  "scope": "Development adaptation only, original corpus partition/model choices unchanged."
+}

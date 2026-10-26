@@ -1,0 +1,8 @@
+{
+  "created_utc": "2026-10-26T18:25:05.808298+00:00",
+  "validation_still_sealed": true,
+  "reason": "Fresh development exhibits a sentence boundary inside balanced inline citation brackets, separating otherwise fitting context.",
+  "family": "Generic balanced square-bracket sentence-point protection on clause-first fallback; escaped/unmatched brackets treated explicitly; no abbreviation/query/corpus identifiers.",
+  "budget_policy": "Unchanged native64/96 and512, source coverage/token counters unchanged.",
+  "stop_rule": "Final causal structural family before selecting/freezing from development; no validation-driven changes."
+}

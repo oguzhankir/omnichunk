@@ -1,0 +1,17 @@
+{
+  "development_paragraphs": 48,
+  "min_paragraph_tokens": 69,
+  "max_paragraph_tokens": 632,
+  "paragraphs_fitting64": 0,
+  "paragraphs_fitting96": 2,
+  "heuristic_sentences": 266,
+  "oversized_sentence64": 15,
+  "oversized_sentence96": 1,
+  "oversized96_with_semicolon": 1,
+  "development_only": true,
+  "source_report_json_sha256": "d171061035259588620dbd3c275663f52b32ed25df6354892545e69c892f9a32",
+  "model_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "model_revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+  "include_special_tokens": true,
+  "model_forward_calls": 0
+}

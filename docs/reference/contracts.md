@@ -56,13 +56,26 @@ declarations and lexical boundaries but can divide an oversized definition;
 intersecting entity metadata is marked `is_partial`. A unit that cannot fit even
 as one Unicode character raises `ChunkingError` in strict mode.
 
+Fitting documented root statements retain their leading and same-line trailing
+comments as one unit. Independent documented statements keep separate boundaries;
+oversized groups use the normal recursive fallback. A complete code file that
+fits the maximum retains its existing single-chunk behavior.
+
 Prose and Markdown split oversized content in structural order: paragraphs,
-lines (including table rows), sentences, whitespace, then smaller separators and
-measured character prefixes. A unit that fits keeps its boundary; oversized units
-descend to the next level. Source whitespace participates in the measured budget.
-`min_chunk_size` is a preference: merging must still fit the maximum, so a short
-heading or tail can remain below the minimum. Table headers are not repeated as
-derived context by this policy.
+lines (including table rows), sentences, semicolon clauses, whitespace, then
+smaller separators and measured character prefixes. Prose sentence fallback
+avoids heuristic endpoints inside matched, unescaped square brackets without
+changing the public semantic sentence splitter. A unit that fits keeps its
+boundary; oversized units descend to the next level. Source whitespace
+participates in the measured budget.
+
+Markdown keeps blank-line-separated body paragraphs distinct and associates
+headings with their following content. Even a small Markdown file that fits the
+maximum can therefore produce multiple chunks. `min_chunk_size` is a preference:
+it does not merge these paragraph identities back together, and a short heading
+or tail can remain below the minimum. This can increase vector/index work and
+reduce adjacent context; it is not a universal cost or quality improvement.
+Table headers are not repeated as derived context by this policy.
 
 The default sentence heuristic recognizes Unicode uppercase/uncased starters and
 Japanese/Chinese `。！？` without intervening spaces. Closing quotes and whitespace

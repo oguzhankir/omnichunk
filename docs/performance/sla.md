@@ -167,23 +167,60 @@ Reproduce with the [benchmark commands](https://github.com/oguzhankir/omnichunk/
 
 ### Pretrained dense comparison
 
-The [dense experiment record](https://github.com/oguzhankir/omnichunk/blob/main/benchmarks/retrieval/reports/dense-minilm-v1/README.md)
+The historical [v1 dense record](https://github.com/oguzhankir/omnichunk/blob/main/benchmarks/retrieval/reports/dense-minilm-v1/README.md)
 compares v2.2.0 with source `a2e3bae7afb9b81f7c044ac0feda6612b0f97c97` using
 `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` at model commit
-`e8f8c211226b894fcb81acc59f3b34ba3efd5f42`. Development evidence informed the
-recursive-tail and orphan-heading repairs before the held-out evaluation.
-The original synthetic corpus and independent English SQuAD subset remain separate
-workloads; the record preserves gains, regressions and raw paired reports.
+`e8f8c211226b894fcb81acc59f3b34ba3efd5f42`. Its original test reports remain
+historical evidence; previously observed splits cannot serve as fresh validation
+for later source selection.
 
-All six token-compatible adapters use the native tokenizer with special tokens,
-64/96-token chunks, zero overlap and no derived context. Complete joined retrieval
-prefixes fit 512 tokens; top-k 5 separately defines ranking metrics. Chunking timing uses
-three repeats with two threads in each PyTorch CPU pool and OMP/MKL limited to two.
-The producer rejects input overflow instead of truncating. Frozen-vector search
-latency excludes encoding; shared deduplicated encoder preparation cannot be
-attributed to one chunker. Small corpora and descriptive source-cluster intervals
-do not establish universal leadership. Independent review of selected evidence
-labels and production design-partner evaluation remain open M1 requirements.
+The [structural-quality v2 record](https://github.com/oguzhankir/omnichunk/blob/main/benchmarks/retrieval/reports/structural-quality-v2/README.md)
+fixes candidate `386b5ce99d4508a62725d6b36883dfa999715e8c` against previous
+main `511c1cc50db8549060c9ab642ded2da96619e3db`, retaining the v2.2.0 release
+baseline separately. Development diagnosis led to paragraph/owning-heading
+boundaries, documented code-statement groups including fitting inline comment
+chains, semicolon clause fallback and balanced-square-bracket guards for prose
+sentence fallback. Full source budgets take precedence over grouping; unmatched
+brackets do not hide subsequent boundaries. These rules use no learned model or
+query/language identifiers.
+
+The new SQuAD 1.1 corpus excludes all 16 previously observed articles and selects
+32 new articles by the recorded protocol: three original paragraphs per article,
+three questions per paragraph, and 16 article documents/144 questions in each
+split. Text and Markdown views share the questions and differ only in declared
+rendering, including a synthetic title heading in Markdown. They are correlated
+views, and connected-source bootstrap units are entire articles. Validation
+source, questions and answers were encrypted until source/model/configuration
+freeze; custody was within the same workspace. Procedural blindness does not
+imply unseen model pretraining or independent external custody.
+
+The v2 matrix uses `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`
+at `e8f8c211226b894fcb81acc59f3b34ba3efd5f42` and English
+`sentence-transformers/all-MiniLM-L6-v2` at
+`1110a243fdf4706b3f48f1d95db1a4f5529b4d41`. Within each model's experiment,
+all six token-compatible adapters use that model's native tokenizer including
+special tokens, 64/96-token chunks, zero overlap and no derived context. The
+primary complete retrieval prefix fits 512 tokens, with predeclared 128/256-token
+sensitivity checks. Top-k 5 separately defines ranking metrics. Encoder input
+limits are enforced without truncation; retrieval-context capacity does not mean
+that complete context is embedded as a single model input.
+
+Chunking timing has three repeats, with two threads in each PyTorch CPU pool and
+OMP/MKL limited to two. Shared deduplicated encoder preparation cannot be assigned
+to one chunker. Frozen-vector search excludes encoding and an external database;
+process peak RSS is cumulative and Python allocation peaks exclude native memory.
+Concurrent development runs cannot establish controlled speed comparisons. Keep
+model/view results and descriptive article-cluster intervals separate; report
+gains, ties and losses at the declared capacities without a universal leadership
+claim.
+
+Markdown paragraph isolation can split an otherwise fitting small document and
+ignores soft minimum pressure to recombine body paragraphs. Heading prefixes may
+accompany their following body when the full payload fits. More chunks can mean
+more stored vectors and embedding/index work, while narrower passages contain
+less adjacent context. There is no compact-profile flag or universal cost-saving
+claim. Independent review of short-answer labels as complete supporting evidence
+and production design-partner evaluation remain open M1 gates.
 
 Record source commit, package/Python/dependency versions, CPU/platform, tokenizer
 assets, corpus hash/license, size and overlap policies, and optional Rust use.

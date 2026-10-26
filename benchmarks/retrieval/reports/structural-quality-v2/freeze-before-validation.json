@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "frozen_at_utc": "2026-10-26T18:37:29.198825+00:00",
+  "protocol_sha256": "d17570dbcca6ff1be0326392749098e90db9e1172eac6ca288a876ff3ee46453",
+  "validation_release_authorized": true,
+  "candidate_source": "/workspace/omnichunk",
+  "candidate_revision": "d3849df193e1d57f8c5e7fd75a8ea039f29be74c",
+  "baseline_source": "/workspace/work/omnichunk-quality/baseline-current",
+  "baseline_revision": "511c1cc50db8549060c9ab642ded2da96619e3db",
+  "release_baseline_source": "/workspace/work/omnichunk-quality/baseline-release",
+  "release_baseline_revision": "fa80b981efa84d1fe8ca1cbb8556aa715c14cb0e",
+  "model_revisions": {
+    "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+    "sentence-transformers/all-MiniLM-L6-v2": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+  },
+  "model_directories": {
+    "multilingual": "/workspace/work/cache/huggingface/models--sentence-transformers--paraphrase-multilingual-MiniLM-L12-v2/snapshots/e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+    "english": "/workspace/work/omnichunk-quality/new-corpus/second-model/model-cache/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+  },
+  "evaluation_configuration": {
+    "chunk_token_capacities": [
+      64,
+      96
+    ],
+    "retrieved_context_tokens": 512,
+    "top_k": 5,
+    "include_special_tokens": true,
+    "overlap": 0,
+    "context": "none",
+    "cpu_threads": 2,
+    "repeats": 3,
+    "secondary_retrieval_budgets": [
+      128,
+      256
+    ],
+    "views": [
+      "article-text",
+      "article-markdown"
+    ],
+    "tools": [
+      "omnichunk",
+      "fixed",
+      "semchunk",
+      "langchain",
+      "semantic-text-splitter",
+      "llamaindex"
+    ],
+    "batch_size": 32
+  },
+  "selection": "Choose the combined code/paragraph + clause/citation source, not full sentence isolation: strong original-development gains, fresh-English 96 recall/precision gains, a disclosed small partial64 loss and tied English-encoder recall. Sentence isolation almost doubles96vectors and lowers precision. No universal Pareto/superiority claim; vector cost and per-query losses retained.",
+  "validation_policy": "One declared evaluation matrix after sealed release. No model/source/configuration tuning from validation. Both source views share questions and are correlated; English encoder only supports English evidence. Code improvements have original synthetic-development evidence, not independent code validation.",
+  "sha256": {
+    "protocol.json": "5032f442cc9b2f277952d0b66e0db25710c4d256b9cd017b72de6cfcd664abc7",
+    "long-prose-development-amendment.json": "c73ee39ceabea61e6c5b4e0ab6fce83b0280274c97bca8fed0eca84250f08a37",
+    "citation-development-amendment.json": "f3949c3efcd44b6a2ebac61cb6df2f0da505e2305cea1dfa6f9db615db91cb7d",
+    "new-corpus/protocol-before-selection.json": "d17570dbcca6ff1be0326392749098e90db9e1172eac6ca288a876ff3ee46453",
+    "new-corpus/build-summary.json": "c781e8b76cdc0913379884645efbc9134fb0cc863d08086be9589103f8f90db4",
+    "new-corpus/independent-builder-audit.json": "77c87db8ce2de4452aa8ddd42a637369ecbf639cdd34972ffb600dbb070c4284",
+    "environment/installed-package-hashes.json": "9492c05a4fc51b46159f9f003588cfa6b79d50c4900760422026dd348039d0ed",
+    "environment/runtime.json": "e4b43ca1405d14d1208b06fe8ec6538f71d6815f46fb6fd879e0523b3b1814bf",
+    "screen-summary.json": "48369a9d75590d0186aaf022671df0e5d753b036d467b6259830d8cc91d5fff8",
+    "new-development-summary.json": "40493d8512757be049d01b985f498a282c6f279cfce514ae501773d880e95865",
+    "screen.py": "a5821e24ba00fd43af8ab59b5980b68454afaa2e2bff2db370e41cbc602889c8",
+    "matrix.py": "b3ec19bf703143d7992b3994289c42b95a79b1335fd9e63b97b11b969f10685a",
+    "frontier.py": "7c33224162fdbcb40de4821c089c6a460565995fd916b4cea0b58e4897261069",
+    "matrix/dev/english/citation-article-markdown/report.json.gz": "3bd6a45ad7018c54dd9d2fb67ffdc7c21d0605fa99a0bd3069ec868ea2622ac7",
+    "matrix/dev/english/citation-article-text/report.json.gz": "8ab3e52b141e62a4ab97bad71932b5df003c72e4243447aa310ce9f254aaebe3",
+    "matrix/dev/english/combined-article-markdown/report.json.gz": "51e2bc37c0d5b80d22a039e83c9d8e8801bd858f11f1b7f9f795531b4ca2b0f1",
+    "matrix/dev/english/combined-article-text/report.json.gz": "9018315d5da8e4dc1260113f2f5ebe832683edfcd9fb0d134cc6033a7f13fb6f",
+    "matrix/dev/english/current-article-markdown/report.json.gz": "a2260f5ededb4152d8ae1c250d6a56b43676e948f1921b720b58d689912612e3",
+    "matrix/dev/english/current-article-text/report.json.gz": "144b07ab2381e4ef4989f430e07406641dffe05ad418825851de5ba4d473bf03",
+    "matrix/dev/multilingual/citation-article-markdown/report.json.gz": "f7036e2c53b6ad53c2974843523aa163d6948e3a28d1c6aca0f55f3bb5f56f34",
+    "matrix/dev/multilingual/citation-article-text/report.json.gz": "bf918d5070ef023dd2ff75d7a2d90343a30e780ded9f9bb8071b8f70a4bd09d9",
+    "matrix/dev/multilingual/clause-article-markdown/report.json.gz": "d1d47b731282a31fa8bc0908fa6c823a15b1f588bd99c0147289157e6f2c75d5",
+    "matrix/dev/multilingual/clause-article-text/report.json.gz": "7c503551bc15eb1371ce18463a32805ee32789995c49008226ac079bd5be0591",
+    "matrix/dev/multilingual/current-article-markdown/report.json.gz": "b1bda30e380e4f2b35fd40fd87ad3e49a9014684b806059d9e459742d4de5425",
+    "matrix/dev/multilingual/current-article-text/report.json.gz": "8e8175633636517f56046b414c87991547e0d66765ae0b27ddedad7d6091dd06",
+    "matrix/dev/multilingual/paragraph-article-markdown/report.json.gz": "1a8340eb84563cc3a8a16fad0f73845628880af25c5e38bc034e6b9b134b9bf8",
+    "matrix/dev/multilingual/paragraph-article-text/report.json.gz": "2e49bf408110d838b0b3a69e602190b7d4b2204d39b39065ce85ad27810f54f6",
+    "matrix/dev/multilingual/sentence-article-markdown/report.json.gz": "baf61375e8ad1d8f4fd41d225cc356378fce446076b4d70bf77bab3eeaf15957",
+    "matrix/dev/multilingual/sentence-article-text/report.json.gz": "a8162baa5e97ab3bde3d09342487e947ee36d9d10d5447536ba84cb71c0c847f"
+  }
+}

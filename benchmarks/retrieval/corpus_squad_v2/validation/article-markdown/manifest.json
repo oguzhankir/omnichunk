@@ -1,0 +1,2741 @@
+{
+  "schema_version": 1,
+  "corpus_id": "squad-1.1-unobserved-articles-v2-article-markdown",
+  "license": "CC-BY-SA-4.0",
+  "source": "https://rajpurkar.github.io/SQuAD-explorer/",
+  "provenance": {
+    "upstream_url": "https://raw.githubusercontent.com/rajpurkar/SQuAD-explorer/master/dataset/dev-v1.1.json",
+    "upstream_sha256": "95aa6a52d5d6a735563366753ca50492a658031da74f301ac5238b03966972c9",
+    "upstream_version": "1.1",
+    "authors": [
+      "Pranav Rajpurkar",
+      "Jian Zhang",
+      "Konstantin Lopyrev",
+      "Percy Liang"
+    ],
+    "protocol_sha256": "d17570dbcca6ff1be0326392749098e90db9e1172eac6ca288a876ff3ee46453",
+    "selection_namespace": "omnichunk-independent-squad-v2|2026-10-26",
+    "selected_design": {
+      "new_articles": 32,
+      "paragraphs_per_article": 3,
+      "questions_per_paragraph": 3,
+      "reason": "Pinned upstream may not have64unobserved articles after excluding all16previously observed articles"
+    },
+    "previous_corpora": [
+      {
+        "corpus": "corpus_v1",
+        "manifest_sha256": "983ed940ce78d679bc651cae9a94d2805c8cdda006d898d0e281ce763b5acd9c"
+      },
+      {
+        "corpus": "corpus_squad_v1",
+        "manifest_sha256": "40c7a1e77c7e43d6560c496e860c306dc706cd5c5b83e5404f6d2bcb5b794135"
+      }
+    ],
+    "excluded_previously_observed_article_count": 16,
+    "selection": "Predeclared namespace-SHA256 order; no model/tokenizer/score used",
+    "split_policy": "Alternate selected article hash order into development(dev) and sealed validation(test); all source paragraphs/questions for an article stay together. Never select or change split by retrieval result.",
+    "article_component_policy": "Exactly1source document per article per view; gold-source bootstrap units are full articles",
+    "transformation": "Same selected paragraphs/order/questions; source document.md begins # + title.replace(underscore,space) +2newlines. Source paragraph bytes otherwise unmodified; answer offsets exactly rebased.",
+    "answer_policy": "Sort by SHA256(namespace + upstream question ID), ID tiebreaker; select first3eligible normalized unique question texts. Use first nonempty answer annotation with exact matching character offset; convert to UTF8source bytes after article rendering.",
+    "selected_articles": [
+      "Nikola_Tesla",
+      "Harvard_University",
+      "Yuan_dynasty",
+      "Genghis_Khan",
+      "Chloroplast",
+      "Geology",
+      "University_of_Chicago",
+      "Imperialism",
+      "Islamism",
+      "Martin_Luther",
+      "Victoria_and_Albert_Museum",
+      "Teacher",
+      "Rhine",
+      "Southern_California",
+      "Normans",
+      "Immune_system"
+    ],
+    "limitations": [
+      "SQuAD/Wikipedia may overlap model pretraining; procedural tuning blindness does not imply pretraining novelty",
+      "Question annotations are independently authored, exact short answers are not independently audited complete supporting-evidence sets",
+      "Synthetic article rendering introduces headings/joins and transformation bias; text view is paired control",
+      "32article fallback yields16articleclustersper split; descriptive intervals and no universal leadership claim"
+    ]
+  },
+  "documents": [
+    {
+      "source_id": "new-squad-8ea07f6ef655e1fa1894c00552f96f49f3b9b58ffca68aac90b12e2097778bc0-md",
+      "path": "documents/new-squad-8ea07f6ef655e1fa1894c00552f96f49f3b9b58ffca68aac90b12e2097778bc0-md.md",
+      "sha256": "82228f98d378b41248cd3cf58c321b04f10a1d6df53ce8c4fa774fa347daad65",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Nikola_Tesla",
+      "article_component": "article-e94b589a1f310206619fabfca8fe8944e2b09a272092c976e873c799c6a56fa1",
+      "source": "https://en.wikipedia.org/wiki/Nikola_Tesla",
+      "attribution": "Wikipedia contributors: Nikola_Tesla; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 60,
+          "start": 16,
+          "end": 302,
+          "upstream_context_sha256": "de15182916a68ec1c9d1adcdc94fbf33a7b26e446a33872466191792aaca8b0c"
+        },
+        {
+          "upstream_paragraph_index": 62,
+          "start": 304,
+          "end": 1050,
+          "upstream_context_sha256": "88cf2f09842afdb97ae0f86f62734721882eda93ff8c1dda1ef5be57275e0abe"
+        },
+        {
+          "upstream_paragraph_index": 73,
+          "start": 1052,
+          "end": 1313,
+          "upstream_context_sha256": "5f2c56b6813907535646e7eb22568b1da81720cc64a97c6fc3ea48019e379e9a"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-0e7dec43c80e759a02259c3c8b8a0d31ce14997bc9b53ad93f7c831d4e9b4153-md",
+      "path": "documents/new-squad-0e7dec43c80e759a02259c3c8b8a0d31ce14997bc9b53ad93f7c831d4e9b4153-md.md",
+      "sha256": "1b9d45533442e1bf1fe3e369657d613e21a2a804745bb326e7c724a922b21f19",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Harvard_University",
+      "article_component": "article-9afe59f447fe65f7c74a1e35280178d86ed2a110dec644c9032d99dde83bb049",
+      "source": "https://en.wikipedia.org/wiki/Harvard_University",
+      "attribution": "Wikipedia contributors: Harvard_University; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 0,
+          "start": 22,
+          "end": 1176,
+          "upstream_context_sha256": "84ed50acb1a12d2bfe77fc91bcf26a0b90534e1d1e03cd9cc53f99345379e87e"
+        },
+        {
+          "upstream_paragraph_index": 4,
+          "start": 1178,
+          "end": 1806,
+          "upstream_context_sha256": "dbe3b208199caa88b39153756ef6ca8b41ed19f9d4eb07b35c977b49efd4d689"
+        },
+        {
+          "upstream_paragraph_index": 15,
+          "start": 1808,
+          "end": 2374,
+          "upstream_context_sha256": "781a0469e96a630984364360256ef446a9a4f8ad14eb5552f82e6f2b813a457a"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-fb777c31c1182f71b688599c6ea3f19c91979a2bf925bfdfe51d1ed7116aafe1-md",
+      "path": "documents/new-squad-fb777c31c1182f71b688599c6ea3f19c91979a2bf925bfdfe51d1ed7116aafe1-md.md",
+      "sha256": "8134662fb7a863254ebddb8b9ac21fc37a735f8733319b8c9af7cb6d60398009",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Yuan_dynasty",
+      "article_component": "article-d4fc1d233c9b686d6e7b6913bf00f44d60ced57f4a581cb54c3e0faf908b1712",
+      "source": "https://en.wikipedia.org/wiki/Yuan_dynasty",
+      "attribution": "Wikipedia contributors: Yuan_dynasty; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 17,
+          "start": 16,
+          "end": 1267,
+          "upstream_context_sha256": "c71b1eee7e8e8a47719b20f0d4f2e9ca9aaeec5e9d9082387579fe235a47016d"
+        },
+        {
+          "upstream_paragraph_index": 31,
+          "start": 1269,
+          "end": 3295,
+          "upstream_context_sha256": "bfbe414bdbeab9da323fbcffbe2c73013d4592d5fc040c429776595b323bf4b3"
+        },
+        {
+          "upstream_paragraph_index": 33,
+          "start": 3297,
+          "end": 3875,
+          "upstream_context_sha256": "f9d0ba77dd8dff4446935bfec391a5986633d68d8bdf2319ad27e1fd5890d87c"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-091659da2fd893cb9cc0c70c0f42c5da1153726d88ce65c0834b96b13396377e-md",
+      "path": "documents/new-squad-091659da2fd893cb9cc0c70c0f42c5da1153726d88ce65c0834b96b13396377e-md.md",
+      "sha256": "fe2839a3c7552eb7a7fd3cd69e3d06b3f0ceb05d04c38c17103358963dcb6071",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Genghis_Khan",
+      "article_component": "article-7ca943dbed286b3c2b3f7a6b261cbe63ba6b5c00fdcbb24eb049046bb0785c0c",
+      "source": "https://en.wikipedia.org/wiki/Genghis_Khan",
+      "attribution": "Wikipedia contributors: Genghis_Khan; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 5,
+          "start": 16,
+          "end": 649,
+          "upstream_context_sha256": "f06a11396c483ce85a3b3ea7a2584e47e2b32d88f17e4a4f13a72670d7300e57"
+        },
+        {
+          "upstream_paragraph_index": 16,
+          "start": 651,
+          "end": 1469,
+          "upstream_context_sha256": "0ab83a9cb704a8ee3f1f68b2c5d6f13f78c86e838d4b8d9e55a63d91068230e6"
+        },
+        {
+          "upstream_paragraph_index": 33,
+          "start": 1471,
+          "end": 2463,
+          "upstream_context_sha256": "f3e4932b3020516139949885044d6f1e50418d2fc398a516e5e5efd84c31bca6"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-321939b8326de7d757a699cd5beadf9f00c2f81c1c1c283090238d4327784efc-md",
+      "path": "documents/new-squad-321939b8326de7d757a699cd5beadf9f00c2f81c1c1c283090238d4327784efc-md.md",
+      "sha256": "22b73e68e96917a84ad8927c5a2b38ef553beb71e9d58a5f9a2ab55084288734",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Chloroplast",
+      "article_component": "article-d54dccd27b14f2b54a93b26019b85b24595b3f9b3691d6eaee127d7c20de2a65",
+      "source": "https://en.wikipedia.org/wiki/Chloroplast",
+      "attribution": "Wikipedia contributors: Chloroplast; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 11,
+          "start": 15,
+          "end": 611,
+          "upstream_context_sha256": "1a430bcf514cd9d790f52305b6d5f31866744270166e9cd0100adb3cf327d2bd"
+        },
+        {
+          "upstream_paragraph_index": 26,
+          "start": 613,
+          "end": 1535,
+          "upstream_context_sha256": "e0e02e62aa887b921259c3623cce4783b585d8b0116f5dd89c3ab899ec4beb28"
+        },
+        {
+          "upstream_paragraph_index": 32,
+          "start": 1537,
+          "end": 2232,
+          "upstream_context_sha256": "fbad0d583cf5b94112935686a9faaa3c4fac256fe1195c9899eb41cfd1d2b5c6"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-2dfc7adb86d98f6e28af1936cea813074750eb2f52d832dc176411d1c922978b-md",
+      "path": "documents/new-squad-2dfc7adb86d98f6e28af1936cea813074750eb2f52d832dc176411d1c922978b-md.md",
+      "sha256": "15329689bb95c7d7348a71980fd1dc7d8377db14491a8a322fffb45275a7c106",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Geology",
+      "article_component": "article-54cda0543a402949d4e223cc16e9dbd93b48c514c48026db1fbf38cf711f46cd",
+      "source": "https://en.wikipedia.org/wiki/Geology",
+      "attribution": "Wikipedia contributors: Geology; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 1,
+          "start": 11,
+          "end": 783,
+          "upstream_context_sha256": "550636c40fe4508a2ea69d38f57883943b44dd88402a64050742216683d37a53"
+        },
+        {
+          "upstream_paragraph_index": 2,
+          "start": 785,
+          "end": 1823,
+          "upstream_context_sha256": "c8c47f5e5a648817ff11f913f97ee8b366aaf758a4bd7ff32582d54df2a8fa31"
+        },
+        {
+          "upstream_paragraph_index": 22,
+          "start": 1825,
+          "end": 2328,
+          "upstream_context_sha256": "c65899f588f28ae99ef5f3d38d2aa89c81477ceeb9b5361a95c37457b815468d"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-57b03f10c85db2300f3b1ccffbc25322ba836e3172af7487cacbe93ca9121f87-md",
+      "path": "documents/new-squad-57b03f10c85db2300f3b1ccffbc25322ba836e3172af7487cacbe93ca9121f87-md.md",
+      "sha256": "2fec47c60d12d32e4027f1a5023b9dc623b2be735fc86082de9b0a34d91ff71c",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "University_of_Chicago",
+      "article_component": "article-efb2cb56c23d021d97c02f6cab7c7eb476f51f87bcf08d4d1914bc5c3d2b5703",
+      "source": "https://en.wikipedia.org/wiki/University_of_Chicago",
+      "attribution": "Wikipedia contributors: University_of_Chicago; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 19,
+          "start": 25,
+          "end": 1050,
+          "upstream_context_sha256": "2fd2db7f9ebb0764f0702a549c4f477adbd55ed996cfd70886abb1c7a8ed9560"
+        },
+        {
+          "upstream_paragraph_index": 20,
+          "start": 1052,
+          "end": 2938,
+          "upstream_context_sha256": "3f83987ebc0c4b6d662d8cc6134fe19bdcd18d63555f50b4c6841486edd3606d"
+        },
+        {
+          "upstream_paragraph_index": 35,
+          "start": 2940,
+          "end": 3582,
+          "upstream_context_sha256": "9f74b3dd8fbafbd78a984fba505bc529aeeb1ecc9aa4c7f2f6efc2eef835a5d3"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-b4a1c384802cf06dad9852ba77b8dc454f630bd7005364a5b5b7b58a9e243a15-md",
+      "path": "documents/new-squad-b4a1c384802cf06dad9852ba77b8dc454f630bd7005364a5b5b7b58a9e243a15-md.md",
+      "sha256": "3f5c463b8344c646a40000497af0539c70a5ce49d81f87a31d7ae43c821f82f8",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Imperialism",
+      "article_component": "article-696e142c065cd7599718e137f780ecbe4029d6a956dbf4e731948f2ce45a3736",
+      "source": "https://en.wikipedia.org/wiki/Imperialism",
+      "attribution": "Wikipedia contributors: Imperialism; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 8,
+          "start": 15,
+          "end": 635,
+          "upstream_context_sha256": "8e3602480bdea2758de968c9cd5a7a211ace7419d041305ca06ede7a67c543c4"
+        },
+        {
+          "upstream_paragraph_index": 16,
+          "start": 637,
+          "end": 1553,
+          "upstream_context_sha256": "6e771f0502b0ffe4b6f4d609fc4c890fa8ed0de3b50ba8cf080f14d1b0e4278f"
+        },
+        {
+          "upstream_paragraph_index": 27,
+          "start": 1555,
+          "end": 2665,
+          "upstream_context_sha256": "c839b93c89294e489a29502c9894ea7f6f62991cc3c0581f2b9e618fca81f105"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-3dcb75201943e46e528321f88de8a5577a9ba60b1b950670521fe9a7f2a9473f-md",
+      "path": "documents/new-squad-3dcb75201943e46e528321f88de8a5577a9ba60b1b950670521fe9a7f2a9473f-md.md",
+      "sha256": "d1fe3cd9e476788a4b6efb82a3d45dd99c829c99472be03999286c167db97676",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Islamism",
+      "article_component": "article-f3af36a65de39c652dab1c95753f77a67cddac67acf5f76f901980c9883b3597",
+      "source": "https://en.wikipedia.org/wiki/Islamism",
+      "attribution": "Wikipedia contributors: Islamism; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 2,
+          "start": 12,
+          "end": 1076,
+          "upstream_context_sha256": "80a90cffe2844e64f980557e6dcea7aa0941bd898ec4710286e8187b5caa1fb2"
+        },
+        {
+          "upstream_paragraph_index": 16,
+          "start": 1078,
+          "end": 1645,
+          "upstream_context_sha256": "02626edefba54656b37e389ca8d9b91f2b351682bf3930851c24a8232cd02ef4"
+        },
+        {
+          "upstream_paragraph_index": 32,
+          "start": 1647,
+          "end": 2813,
+          "upstream_context_sha256": "d0282348263a9123328cb2baa7c6e8ed31817139c4b7270b227dfb27628e5063"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-03c6da7bc2dfe19a785d537ea2f1f89e9e66ece533955f3a8fdaef8d3b77be2b-md",
+      "path": "documents/new-squad-03c6da7bc2dfe19a785d537ea2f1f89e9e66ece533955f3a8fdaef8d3b77be2b-md.md",
+      "sha256": "5c481151f487f7e9846c1eb418a6bb7a80a14c205644bce6dedf0dca59390614",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Martin_Luther",
+      "article_component": "article-e59a4e218b51b9f7849fd0049b7bd494e1213e4094c7ab0374f33765f13073da",
+      "source": "https://en.wikipedia.org/wiki/Martin_Luther",
+      "attribution": "Wikipedia contributors: Martin_Luther; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 3,
+          "start": 17,
+          "end": 1226,
+          "upstream_context_sha256": "288283fb2bcd881a1e3ecd7a68e6c01d8d5ee119b007f40b2ecdb1f5d8932e35"
+        },
+        {
+          "upstream_paragraph_index": 28,
+          "start": 1228,
+          "end": 1696,
+          "upstream_context_sha256": "b4b8350c2def09eafbb09a5efc932a0ffe1c76dc4ab4bc543cda63ba3cf5eb6c"
+        },
+        {
+          "upstream_paragraph_index": 84,
+          "start": 1698,
+          "end": 2631,
+          "upstream_context_sha256": "c2092630d13ba2772923cbbcbcfde4de5a7004183e3fe65f0fcc5167d9dbf8a0"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-76bcd70c44bc315d9f911f153edbcb8bd891e0796cf1d0fa63335dccfc33b18e-md",
+      "path": "documents/new-squad-76bcd70c44bc315d9f911f153edbcb8bd891e0796cf1d0fa63335dccfc33b18e-md.md",
+      "sha256": "24fb3b1405b9260a97e3722a84d112a897bd8991902ec4042d832fc05770434b",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Victoria_and_Albert_Museum",
+      "article_component": "article-7731911d31ec627ded450d0995cf9868e3daf53cf5fdcabe147e0b6ea97a7a12",
+      "source": "https://en.wikipedia.org/wiki/Victoria_and_Albert_Museum",
+      "attribution": "Wikipedia contributors: Victoria_and_Albert_Museum; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 9,
+          "start": 30,
+          "end": 1379,
+          "upstream_context_sha256": "7ac26b2a7e733f63bea98ba33f51bb752729862edefd88aa9a81741ed4e119a6"
+        },
+        {
+          "upstream_paragraph_index": 49,
+          "start": 1381,
+          "end": 2151,
+          "upstream_context_sha256": "1a0a191925aad99301acfcbf97482fd596a75693251b34e2f3eeea0033cbff73"
+        },
+        {
+          "upstream_paragraph_index": 54,
+          "start": 2153,
+          "end": 2717,
+          "upstream_context_sha256": "49227f0a9adabac3e7c6ff98f99948721396f53862f8c15d359841a80f876cc9"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-fe11f3fe0ac24fdbab4311125a4a3f5f036079e6f7833921d7d1a12b11519108-md",
+      "path": "documents/new-squad-fe11f3fe0ac24fdbab4311125a4a3f5f036079e6f7833921d7d1a12b11519108-md.md",
+      "sha256": "5c12dc69f5a1fcfeec4136b921116e2271b4ac2d4feb645170b15246f096381d",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Teacher",
+      "article_component": "article-5eeee52ec1e580989be944ee7cae917d7b8115a193759c60f246f8097a4a744c",
+      "source": "https://en.wikipedia.org/wiki/Teacher",
+      "attribution": "Wikipedia contributors: Teacher; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 39,
+          "start": 11,
+          "end": 347,
+          "upstream_context_sha256": "39aa61cce7072df855f8ccbf33a02f6b9616c65cc6071e17aa7b74bed7a2f696"
+        },
+        {
+          "upstream_paragraph_index": 41,
+          "start": 349,
+          "end": 803,
+          "upstream_context_sha256": "3ae81935c966f192e38d32d325d1c70a661ad19f0eb1557b678a7d245b7e099a"
+        },
+        {
+          "upstream_paragraph_index": 51,
+          "start": 805,
+          "end": 1650,
+          "upstream_context_sha256": "8858021b6f7ccadcd4d8933984e971267a9209a13a24438bd379ce452af2aeee"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-9994bca7cc36b7ecffdd238313d73d9b4e1928bf811ec91267d698a38bc89795-md",
+      "path": "documents/new-squad-9994bca7cc36b7ecffdd238313d73d9b4e1928bf811ec91267d698a38bc89795-md.md",
+      "sha256": "0711e9249d8304404a2d77734824e284e500b332afbb35e5cd63cdf387bf1a8c",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Rhine",
+      "article_component": "article-d21a06552bb13cd9390565f06257dd6164fda5333b25638e88f8a199652c25eb",
+      "source": "https://en.wikipedia.org/wiki/Rhine",
+      "attribution": "Wikipedia contributors: Rhine; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 25,
+          "start": 9,
+          "end": 596,
+          "upstream_context_sha256": "a38345a7ecdd441e34d4cf32d9e5e2d6984d33e6becad500456638aba80cfa88"
+        },
+        {
+          "upstream_paragraph_index": 32,
+          "start": 598,
+          "end": 1233,
+          "upstream_context_sha256": "af9c49f97fc8aa685320f6a979a809ea599a1ed61f77f300b94cc58c1608c80b"
+        },
+        {
+          "upstream_paragraph_index": 36,
+          "start": 1235,
+          "end": 2113,
+          "upstream_context_sha256": "d206c39c98d46bd01f841c82284343c93a112882c53094883d72423bafd6ee01"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-e2d70cec82692194b0d1e32a77daec495d1bf1c804af54877b2cb2f01cb12b87-md",
+      "path": "documents/new-squad-e2d70cec82692194b0d1e32a77daec495d1bf1c804af54877b2cb2f01cb12b87-md.md",
+      "sha256": "cb2da769dc54ab41d09870f4492ec66cf1535426ab7fc77e34e3cf1f593a72de",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Southern_California",
+      "article_component": "article-d27aeb9fb477cbb8ca94f67fd2b41abe952c751e656e48b48fbb4b1363b0eeec",
+      "source": "https://en.wikipedia.org/wiki/Southern_California",
+      "attribution": "Wikipedia contributors: Southern_California; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 5,
+          "start": 23,
+          "end": 211,
+          "upstream_context_sha256": "9d6db7d999c0eeca9c2501df4a7fad2034d6cf68c86f755582e7b767a293e353"
+        },
+        {
+          "upstream_paragraph_index": 18,
+          "start": 213,
+          "end": 698,
+          "upstream_context_sha256": "1eab59159d4e8655de645254d1011cd4393701716f63f5e98c49c4c34ab70dd5"
+        },
+        {
+          "upstream_paragraph_index": 29,
+          "start": 700,
+          "end": 1074,
+          "upstream_context_sha256": "3990a188c951ac2ac5a549ad29f598b583da6695cf862bd17be6cdd20e3d149c"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-25f7609488ac2883a53580552591465ce4b005b627e5e965aad40894f4bcbb65-md",
+      "path": "documents/new-squad-25f7609488ac2883a53580552591465ce4b005b627e5e965aad40894f4bcbb65-md.md",
+      "sha256": "1f9bc9f9bb570232f5e66d02481aa1155e1e0121e908430e69563562eef7d03f",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Normans",
+      "article_component": "article-e2dd6534bb5731c74712135162ccf2b8269b7ee1738c3b123268ae4e387ebba4",
+      "source": "https://en.wikipedia.org/wiki/Normans",
+      "attribution": "Wikipedia contributors: Normans; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 7,
+          "start": 11,
+          "end": 825,
+          "upstream_context_sha256": "8ecaa4a2c2498cbde30646f63bb592d5763754a5cd99b82bc4cf7bef8d396583"
+        },
+        {
+          "upstream_paragraph_index": 12,
+          "start": 827,
+          "end": 1367,
+          "upstream_context_sha256": "8d0f136ca3e21898494994833851f5c381fc610d00c5a286083f4b15d65caad4"
+        },
+        {
+          "upstream_paragraph_index": 31,
+          "start": 1369,
+          "end": 2387,
+          "upstream_context_sha256": "c2aa9999cd49b96b950c98756b6cb8ee69d8e051665b4e9b169149c7c2fe349d"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-b7568890c702d891ac2edf0acd9cc8f56532f3856923836a319e1dfc814bc6ce-md",
+      "path": "documents/new-squad-b7568890c702d891ac2edf0acd9cc8f56532f3856923836a319e1dfc814bc6ce-md.md",
+      "sha256": "aeaad318723c2d78167dbf5bd45221a65bfff2c79b1102fca0c266d2aaa9b447",
+      "language": "en",
+      "category": "markdown",
+      "split": "test",
+      "article_title": "Immune_system",
+      "article_component": "article-ec224fa7e4440e486e59d6fca66baf79a84d0b392dce50e9bc90010f3a5a0501",
+      "source": "https://en.wikipedia.org/wiki/Immune_system",
+      "attribution": "Wikipedia contributors: Immune_system; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 9,
+          "start": 17,
+          "end": 976,
+          "upstream_context_sha256": "2ed7b7eae99e7056f5662b63272052233c62837610dd0ec46f3f2b941d8b9112"
+        },
+        {
+          "upstream_paragraph_index": 12,
+          "start": 978,
+          "end": 1839,
+          "upstream_context_sha256": "db6de70b42aaae5f96618f4be9863dbd2b0618f69ea12eeb5dd9dbfb1a8bcef5"
+        },
+        {
+          "upstream_paragraph_index": 31,
+          "start": 1841,
+          "end": 2612,
+          "upstream_context_sha256": "b557caa6a1a9ebdc6ec705acc8c1078fbde1cf27379b5961913015d24cbd8809"
+        }
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "new-squad-56e10e73cd28a01900c674ee",
+      "text": "What was another use for the weapon?",
+      "split": "test",
+      "article_component": "article-e94b589a1f310206619fabfca8fe8944e2b09a272092c976e873c799c6a56fa1",
+      "upstream_question_id": "56e10e73cd28a01900c674ee",
+      "evidence": [
+        {
+          "source_id": "new-squad-8ea07f6ef655e1fa1894c00552f96f49f3b9b58ffca68aac90b12e2097778bc0-md",
+          "start": 279,
+          "end": 301,
+          "quote": "anti-aircraft purposes"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e10e73cd28a01900c674ed",
+      "text": "What ground based group did Tesla think the weapon could be used on?",
+      "split": "test",
+      "article_component": "article-e94b589a1f310206619fabfca8fe8944e2b09a272092c976e873c799c6a56fa1",
+      "upstream_question_id": "56e10e73cd28a01900c674ed",
+      "evidence": [
+        {
+          "source_id": "new-squad-8ea07f6ef655e1fa1894c00552f96f49f3b9b58ffca68aac90b12e2097778bc0-md",
+          "start": 263,
+          "end": 271,
+          "quote": "infantry"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e10e73cd28a01900c674ef",
+      "text": "Other than a peace-ray, what did reporters call the weapon?",
+      "split": "test",
+      "article_component": "article-e94b589a1f310206619fabfca8fe8944e2b09a272092c976e873c799c6a56fa1",
+      "upstream_question_id": "56e10e73cd28a01900c674ef",
+      "evidence": [
+        {
+          "source_id": "new-squad-8ea07f6ef655e1fa1894c00552f96f49f3b9b58ffca68aac90b12e2097778bc0-md",
+          "start": 179,
+          "end": 188,
+          "quote": "death ray"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e10fbacd28a01900c6750a",
+      "text": "Where can the Treatise be found?",
+      "split": "test",
+      "article_component": "article-e94b589a1f310206619fabfca8fe8944e2b09a272092c976e873c799c6a56fa1",
+      "upstream_question_id": "56e10fbacd28a01900c6750a",
+      "evidence": [
+        {
+          "source_id": "new-squad-8ea07f6ef655e1fa1894c00552f96f49f3b9b58ffca68aac90b12e2097778bc0-md",
+          "start": 646,
+          "end": 673,
+          "quote": "Nikola Tesla Museum archive"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e10fbacd28a01900c67509",
+      "text": "What kind of weapons did Tesla's treatise concern?",
+      "split": "test",
+      "article_component": "article-e94b589a1f310206619fabfca8fe8944e2b09a272092c976e873c799c6a56fa1",
+      "upstream_question_id": "56e10fbacd28a01900c67509",
+      "evidence": [
+        {
+          "source_id": "new-squad-8ea07f6ef655e1fa1894c00552f96f49f3b9b58ffca68aac90b12e2097778bc0-md",
+          "start": 445,
+          "end": 474,
+          "quote": "charged particle beam weapons"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e10fbacd28a01900c6750c",
+      "text": "How many volts could particles be charged to in his weapon design?",
+      "split": "test",
+      "article_component": "article-e94b589a1f310206619fabfca8fe8944e2b09a272092c976e873c799c6a56fa1",
+      "upstream_question_id": "56e10fbacd28a01900c6750c",
+      "evidence": [
+        {
+          "source_id": "new-squad-8ea07f6ef655e1fa1894c00552f96f49f3b9b58ffca68aac90b12e2097778bc0-md",
+          "start": 811,
+          "end": 819,
+          "quote": "millions"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e11c24e3433e1400422c19",
+      "text": "How tall was Tesla?",
+      "split": "test",
+      "article_component": "article-e94b589a1f310206619fabfca8fe8944e2b09a272092c976e873c799c6a56fa1",
+      "upstream_question_id": "56e11c24e3433e1400422c19",
+      "evidence": [
+        {
+          "source_id": "new-squad-8ea07f6ef655e1fa1894c00552f96f49f3b9b58ffca68aac90b12e2097778bc0-md",
+          "start": 1062,
+          "end": 1077,
+          "quote": "6 feet 2 inches"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e11c24e3433e1400422c1b",
+      "text": "Where did he live while he was looking good?",
+      "split": "test",
+      "article_component": "article-e94b589a1f310206619fabfca8fe8944e2b09a272092c976e873c799c6a56fa1",
+      "upstream_question_id": "56e11c24e3433e1400422c1b",
+      "evidence": [
+        {
+          "source_id": "new-squad-8ea07f6ef655e1fa1894c00552f96f49f3b9b58ffca68aac90b12e2097778bc0-md",
+          "start": 1221,
+          "end": 1234,
+          "quote": "New York City"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e11c24e3433e1400422c1a",
+      "text": "In what time frame did Tesla weigh almost exactly the same amount?",
+      "split": "test",
+      "article_component": "article-e94b589a1f310206619fabfca8fe8944e2b09a272092c976e873c799c6a56fa1",
+      "upstream_question_id": "56e11c24e3433e1400422c1a",
+      "evidence": [
+        {
+          "source_id": "new-squad-8ea07f6ef655e1fa1894c00552f96f49f3b9b58ffca68aac90b12e2097778bc0-md",
+          "start": 1160,
+          "end": 1178,
+          "quote": "1888 to about 1926"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5727aa413acd2414000de922",
+      "text": "When did the undergraduate program become coeducational?",
+      "split": "test",
+      "article_component": "article-9afe59f447fe65f7c74a1e35280178d86ed2a110dec644c9032d99dde83bb049",
+      "upstream_question_id": "5727aa413acd2414000de922",
+      "evidence": [
+        {
+          "source_id": "new-squad-0e7dec43c80e759a02259c3c8b8a0d31ce14997bc9b53ad93f7c831d4e9b4153-md",
+          "start": 1141,
+          "end": 1145,
+          "quote": "1977"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5727aa413acd2414000de925",
+      "text": "What president of the university transformed it into a modern research university?",
+      "split": "test",
+      "article_component": "article-9afe59f447fe65f7c74a1e35280178d86ed2a110dec644c9032d99dde83bb049",
+      "upstream_question_id": "5727aa413acd2414000de925",
+      "evidence": [
+        {
+          "source_id": "new-squad-0e7dec43c80e759a02259c3c8b8a0d31ce14997bc9b53ad93f7c831d4e9b4153-md",
+          "start": 700,
+          "end": 716,
+          "quote": "Charles W. Eliot"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5727aa413acd2414000de921",
+      "text": "What individual is the school named after?",
+      "split": "test",
+      "article_component": "article-9afe59f447fe65f7c74a1e35280178d86ed2a110dec644c9032d99dde83bb049",
+      "upstream_question_id": "5727aa413acd2414000de921",
+      "evidence": [
+        {
+          "source_id": "new-squad-0e7dec43c80e759a02259c3c8b8a0d31ce14997bc9b53ad93f7c831d4e9b4153-md",
+          "start": 108,
+          "end": 120,
+          "quote": "John Harvard"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5727b0892ca10214002d93ea",
+      "text": "Was the school officially associated with any denomination?",
+      "split": "test",
+      "article_component": "article-9afe59f447fe65f7c74a1e35280178d86ed2a110dec644c9032d99dde83bb049",
+      "upstream_question_id": "5727b0892ca10214002d93ea",
+      "evidence": [
+        {
+          "source_id": "new-squad-0e7dec43c80e759a02259c3c8b8a0d31ce14997bc9b53ad93f7c831d4e9b4153-md",
+          "start": 1644,
+          "end": 1700,
+          "quote": "It was never affiliated with any particular denomination"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5727b0892ca10214002d93e9",
+      "text": "After what higher learning model was the school designed?",
+      "split": "test",
+      "article_component": "article-9afe59f447fe65f7c74a1e35280178d86ed2a110dec644c9032d99dde83bb049",
+      "upstream_question_id": "5727b0892ca10214002d93e9",
+      "evidence": [
+        {
+          "source_id": "new-squad-0e7dec43c80e759a02259c3c8b8a0d31ce14997bc9b53ad93f7c831d4e9b4153-md",
+          "start": 1509,
+          "end": 1533,
+          "quote": "English university model"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5727b0892ca10214002d93e8",
+      "text": "Ministers of what faith were trained by the university in early years?",
+      "split": "test",
+      "article_component": "article-9afe59f447fe65f7c74a1e35280178d86ed2a110dec644c9032d99dde83bb049",
+      "upstream_question_id": "5727b0892ca10214002d93e8",
+      "evidence": [
+        {
+          "source_id": "new-squad-0e7dec43c80e759a02259c3c8b8a0d31ce14997bc9b53ad93f7c831d4e9b4153-md",
+          "start": 1222,
+          "end": 1239,
+          "quote": "Puritan ministers"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5727d0f73acd2414000ded14",
+      "text": "What South African Vice Consul did Harvard students blockade the speech of? ",
+      "split": "test",
+      "article_component": "article-9afe59f447fe65f7c74a1e35280178d86ed2a110dec644c9032d99dde83bb049",
+      "upstream_question_id": "5727d0f73acd2414000ded14",
+      "evidence": [
+        {
+          "source_id": "new-squad-0e7dec43c80e759a02259c3c8b8a0d31ce14997bc9b53ad93f7c831d4e9b4153-md",
+          "start": 1974,
+          "end": 2016,
+          "quote": "South African Vice Consul Duke Kent-Brown."
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5727d0f73acd2414000ded15",
+      "text": "By how much did Harvard management reduce its South Africa holdings in response to pressure?",
+      "split": "test",
+      "article_component": "article-9afe59f447fe65f7c74a1e35280178d86ed2a110dec644c9032d99dde83bb049",
+      "upstream_question_id": "5727d0f73acd2414000ded15",
+      "evidence": [
+        {
+          "source_id": "new-squad-0e7dec43c80e759a02259c3c8b8a0d31ce14997bc9b53ad93f7c831d4e9b4153-md",
+          "start": 2311,
+          "end": 2323,
+          "quote": "$230 million"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5727d0f73acd2414000ded13",
+      "text": "When was the divestment from South Africa movement? ",
+      "split": "test",
+      "article_component": "article-9afe59f447fe65f7c74a1e35280178d86ed2a110dec644c9032d99dde83bb049",
+      "upstream_question_id": "5727d0f73acd2414000ded13",
+      "evidence": [
+        {
+          "source_id": "new-squad-0e7dec43c80e759a02259c3c8b8a0d31ce14997bc9b53ad93f7c831d4e9b4153-md",
+          "start": 1864,
+          "end": 1874,
+          "quote": "late 1980s"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728705c2ca10214002da35d",
+      "text": "Who was thought to have killed Tugh Temur?",
+      "split": "test",
+      "article_component": "article-d4fc1d233c9b686d6e7b6913bf00f44d60ced57f4a581cb54c3e0faf908b1712",
+      "upstream_question_id": "5728705c2ca10214002da35d",
+      "evidence": [
+        {
+          "source_id": "new-squad-fb777c31c1182f71b688599c6ea3f19c91979a2bf925bfdfe51d1ed7116aafe1-md",
+          "start": 822,
+          "end": 831,
+          "quote": "El Temür"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728705c2ca10214002da35c",
+      "text": "How long after a banquet with Tugh Temur did Kusala die?",
+      "split": "test",
+      "article_component": "article-d4fc1d233c9b686d6e7b6913bf00f44d60ced57f4a581cb54c3e0faf908b1712",
+      "upstream_question_id": "5728705c2ca10214002da35c",
+      "evidence": [
+        {
+          "source_id": "new-squad-fb777c31c1182f71b688599c6ea3f19c91979a2bf925bfdfe51d1ed7116aafe1-md",
+          "start": 738,
+          "end": 747,
+          "quote": "four days"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728705c2ca10214002da35b",
+      "text": "What was the civil war against Ragibagh also called?",
+      "split": "test",
+      "article_component": "article-d4fc1d233c9b686d6e7b6913bf00f44d60ced57f4a581cb54c3e0faf908b1712",
+      "upstream_question_id": "5728705c2ca10214002da35b",
+      "evidence": [
+        {
+          "source_id": "new-squad-fb777c31c1182f71b688599c6ea3f19c91979a2bf925bfdfe51d1ed7116aafe1-md",
+          "start": 515,
+          "end": 542,
+          "quote": "the War of the Two Capitals"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57287f6a3acd2414000dfa55",
+      "text": "What was a popular type of variety show during the Yuan?",
+      "split": "test",
+      "article_component": "article-d4fc1d233c9b686d6e7b6913bf00f44d60ced57f4a581cb54c3e0faf908b1712",
+      "upstream_question_id": "57287f6a3acd2414000dfa55",
+      "evidence": [
+        {
+          "source_id": "new-squad-fb777c31c1182f71b688599c6ea3f19c91979a2bf925bfdfe51d1ed7116aafe1-md",
+          "start": 2550,
+          "end": 2554,
+          "quote": "zaju"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57287f6a3acd2414000dfa54",
+      "text": "What form of poetry was developed in the Yuan?",
+      "split": "test",
+      "article_component": "article-d4fc1d233c9b686d6e7b6913bf00f44d60ced57f4a581cb54c3e0faf908b1712",
+      "upstream_question_id": "57287f6a3acd2414000dfa54",
+      "evidence": [
+        {
+          "source_id": "new-squad-fb777c31c1182f71b688599c6ea3f19c91979a2bf925bfdfe51d1ed7116aafe1-md",
+          "start": 2203,
+          "end": 2209,
+          "quote": "the qu"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57287f6a3acd2414000dfa53",
+      "text": "What dynasty shared artistic inspiration with the Yuan?",
+      "split": "test",
+      "article_component": "article-d4fc1d233c9b686d6e7b6913bf00f44d60ced57f4a581cb54c3e0faf908b1712",
+      "upstream_question_id": "57287f6a3acd2414000dfa53",
+      "evidence": [
+        {
+          "source_id": "new-squad-fb777c31c1182f71b688599c6ea3f19c91979a2bf925bfdfe51d1ed7116aafe1-md",
+          "start": 1927,
+          "end": 1931,
+          "quote": "Song"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728804b4b864d1900164a46",
+      "text": "When was Zhu Shijie born?",
+      "split": "test",
+      "article_component": "article-d4fc1d233c9b686d6e7b6913bf00f44d60ced57f4a581cb54c3e0faf908b1712",
+      "upstream_question_id": "5728804b4b864d1900164a46",
+      "evidence": [
+        {
+          "source_id": "new-squad-fb777c31c1182f71b688599c6ea3f19c91979a2bf925bfdfe51d1ed7116aafe1-md",
+          "start": 3407,
+          "end": 3411,
+          "quote": "1249"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728804b4b864d1900164a47",
+      "text": "When did Zhu Shijie die?",
+      "split": "test",
+      "article_component": "article-d4fc1d233c9b686d6e7b6913bf00f44d60ced57f4a581cb54c3e0faf908b1712",
+      "upstream_question_id": "5728804b4b864d1900164a47",
+      "evidence": [
+        {
+          "source_id": "new-squad-fb777c31c1182f71b688599c6ea3f19c91979a2bf925bfdfe51d1ed7116aafe1-md",
+          "start": 3414,
+          "end": 3418,
+          "quote": "1314"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728804b4b864d1900164a49",
+      "text": "What type of math was advanced during the Yuan?",
+      "split": "test",
+      "article_component": "article-d4fc1d233c9b686d6e7b6913bf00f44d60ced57f4a581cb54c3e0faf908b1712",
+      "upstream_question_id": "5728804b4b864d1900164a49",
+      "evidence": [
+        {
+          "source_id": "new-squad-fb777c31c1182f71b688599c6ea3f19c91979a2bf925bfdfe51d1ed7116aafe1-md",
+          "start": 3309,
+          "end": 3327,
+          "quote": "polynomial algebra"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726a5f65951b619008f7906",
+      "text": "Which of his future generals joined forces with Temüjin around the time of his escape from the Tayichi'ud?",
+      "split": "test",
+      "article_component": "article-7ca943dbed286b3c2b3f7a6b261cbe63ba6b5c00fdcbb24eb049046bb0785c0c",
+      "upstream_question_id": "5726a5f65951b619008f7906",
+      "evidence": [
+        {
+          "source_id": "new-squad-091659da2fd893cb9cc0c70c0f42c5da1153726d88ce65c0834b96b13396377e-md",
+          "start": 484,
+          "end": 502,
+          "quote": "Jelme and Bo'orchu"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726a5f65951b619008f7904",
+      "text": "How was Temüjin kept imprisoned by the Tayichi'ud?",
+      "split": "test",
+      "article_component": "article-7ca943dbed286b3c2b3f7a6b261cbe63ba6b5c00fdcbb24eb049046bb0785c0c",
+      "upstream_question_id": "5726a5f65951b619008f7904",
+      "evidence": [
+        {
+          "source_id": "new-squad-091659da2fd893cb9cc0c70c0f42c5da1153726d88ce65c0834b96b13396377e-md",
+          "start": 186,
+          "end": 226,
+          "quote": "with a cangue, a sort of portable stocks"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726a5f65951b619008f7903",
+      "text": "Who captured and held Temüjin prisoner around 1177?",
+      "split": "test",
+      "article_component": "article-7ca943dbed286b3c2b3f7a6b261cbe63ba6b5c00fdcbb24eb049046bb0785c0c",
+      "upstream_question_id": "5726a5f65951b619008f7903",
+      "evidence": [
+        {
+          "source_id": "new-squad-091659da2fd893cb9cc0c70c0f42c5da1153726d88ce65c0834b96b13396377e-md",
+          "start": 125,
+          "end": 139,
+          "quote": "the Tayichi'ud"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726b9e15951b619008f7bf4",
+      "text": "Who gave Genghis Khan the title Khadan?",
+      "split": "test",
+      "article_component": "article-7ca943dbed286b3c2b3f7a6b261cbe63ba6b5c00fdcbb24eb049046bb0785c0c",
+      "upstream_question_id": "5726b9e15951b619008f7bf4",
+      "evidence": [
+        {
+          "source_id": "new-squad-091659da2fd893cb9cc0c70c0f42c5da1153726d88ce65c0834b96b13396377e-md",
+          "start": 1144,
+          "end": 1151,
+          "quote": "Ögedei"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726b9e15951b619008f7bf1",
+      "text": "By what year had Temüjin created a significant \"Mongol\" tribal alliance?",
+      "split": "test",
+      "article_component": "article-7ca943dbed286b3c2b3f7a6b261cbe63ba6b5c00fdcbb24eb049046bb0785c0c",
+      "upstream_question_id": "5726b9e15951b619008f7bf1",
+      "evidence": [
+        {
+          "source_id": "new-squad-091659da2fd893cb9cc0c70c0f42c5da1153726d88ce65c0834b96b13396377e-md",
+          "start": 667,
+          "end": 671,
+          "quote": "1206"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726b9e15951b619008f7bf3",
+      "text": "What title was given to Genghis Khan posthumously?",
+      "split": "test",
+      "article_component": "article-7ca943dbed286b3c2b3f7a6b261cbe63ba6b5c00fdcbb24eb049046bb0785c0c",
+      "upstream_question_id": "5726b9e15951b619008f7bf3",
+      "evidence": [
+        {
+          "source_id": "new-squad-091659da2fd893cb9cc0c70c0f42c5da1153726d88ce65c0834b96b13396377e-md",
+          "start": 1057,
+          "end": 1063,
+          "quote": "Khagan"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57273249f1498d1400e8f46a",
+      "text": "Genghis Khan was in the process of taking what capital city when he died?",
+      "split": "test",
+      "article_component": "article-7ca943dbed286b3c2b3f7a6b261cbe63ba6b5c00fdcbb24eb049046bb0785c0c",
+      "upstream_question_id": "57273249f1498d1400e8f46a",
+      "evidence": [
+        {
+          "source_id": "new-squad-091659da2fd893cb9cc0c70c0f42c5da1153726d88ce65c0834b96b13396377e-md",
+          "start": 1506,
+          "end": 1514,
+          "quote": "Yinchuan"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57273249f1498d1400e8f46e",
+      "text": "Which rival of the Mongols is suspected of inventing the story that Genghis Khan was murdered by a captured princess?",
+      "split": "test",
+      "article_component": "article-7ca943dbed286b3c2b3f7a6b261cbe63ba6b5c00fdcbb24eb049046bb0785c0c",
+      "upstream_question_id": "57273249f1498d1400e8f46e",
+      "evidence": [
+        {
+          "source_id": "new-squad-091659da2fd893cb9cc0c70c0f42c5da1153726d88ce65c0834b96b13396377e-md",
+          "start": 2456,
+          "end": 2462,
+          "quote": "Oirads"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57273249f1498d1400e8f46c",
+      "text": "What weapon did Marco Pole report as the cause of Genghis Khan's death?",
+      "split": "test",
+      "article_component": "article-7ca943dbed286b3c2b3f7a6b261cbe63ba6b5c00fdcbb24eb049046bb0785c0c",
+      "upstream_question_id": "57273249f1498d1400e8f46c",
+      "evidence": [
+        {
+          "source_id": "new-squad-091659da2fd893cb9cc0c70c0f42c5da1153726d88ce65c0834b96b13396377e-md",
+          "start": 2088,
+          "end": 2093,
+          "quote": "arrow"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572963221d04691400779386",
+      "text": "What kind of chloroplasts do cryptophytes have?",
+      "split": "test",
+      "article_component": "article-d54dccd27b14f2b54a93b26019b85b24595b3f9b3691d6eaee127d7c20de2a65",
+      "upstream_question_id": "572963221d04691400779386",
+      "evidence": [
+        {
+          "source_id": "new-squad-321939b8326de7d757a699cd5beadf9f00c2f81c1c1c283090238d4327784efc-md",
+          "start": 81,
+          "end": 110,
+          "quote": "red-algal derived chloroplast"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572963221d04691400779389",
+      "text": "How do cryptophyte chloroplasts arrange their pyrenoid and thylakoids?",
+      "split": "test",
+      "article_component": "article-d54dccd27b14f2b54a93b26019b85b24595b3f9b3691d6eaee127d7c20de2a65",
+      "upstream_question_id": "572963221d04691400779389",
+      "evidence": [
+        {
+          "source_id": "new-squad-321939b8326de7d757a699cd5beadf9f00c2f81c1c1c283090238d4327784efc-md",
+          "start": 597,
+          "end": 610,
+          "quote": "stacks of two"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572963221d04691400779385",
+      "text": "What is another word for cryptophytes?",
+      "split": "test",
+      "article_component": "article-d54dccd27b14f2b54a93b26019b85b24595b3f9b3691d6eaee127d7c20de2a65",
+      "upstream_question_id": "572963221d04691400779385",
+      "evidence": [
+        {
+          "source_id": "new-squad-321939b8326de7d757a699cd5beadf9f00c2f81c1c1c283090238d4327784efc-md",
+          "start": 32,
+          "end": 44,
+          "quote": "cryptomonads"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57296bf96aef051400154e54",
+      "text": "What new tasks do the protein products of transferred genes take on?",
+      "split": "test",
+      "article_component": "article-d54dccd27b14f2b54a93b26019b85b24595b3f9b3691d6eaee127d7c20de2a65",
+      "upstream_question_id": "57296bf96aef051400154e54",
+      "evidence": [
+        {
+          "source_id": "new-squad-321939b8326de7d757a699cd5beadf9f00c2f81c1c1c283090238d4327784efc-md",
+          "start": 781,
+          "end": 857,
+          "quote": "participating in cell division, protein routing, and even disease resistance"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57296bf96aef051400154e53",
+      "text": "How much of the protein products of transferred genes don't go back to chloroplasts?",
+      "split": "test",
+      "article_component": "article-d54dccd27b14f2b54a93b26019b85b24595b3f9b3691d6eaee127d7c20de2a65",
+      "upstream_question_id": "57296bf96aef051400154e53",
+      "evidence": [
+        {
+          "source_id": "new-squad-321939b8326de7d757a699cd5beadf9f00c2f81c1c1c283090238d4327784efc-md",
+          "start": 624,
+          "end": 635,
+          "quote": "around half"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57296bf96aef051400154e55",
+      "text": "What do you have to cross to reach the chloroplast in many secondary plastids?",
+      "split": "test",
+      "article_component": "article-d54dccd27b14f2b54a93b26019b85b24595b3f9b3691d6eaee127d7c20de2a65",
+      "upstream_question_id": "57296bf96aef051400154e55",
+      "evidence": [
+        {
+          "source_id": "new-squad-321939b8326de7d757a699cd5beadf9f00c2f81c1c1c283090238d4327784efc-md",
+          "start": 1363,
+          "end": 1380,
+          "quote": "the cell membrane"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57296e43af94a219006aa3e8",
+      "text": "What does the chloroplast peripheral reticulum do?",
+      "split": "test",
+      "article_component": "article-d54dccd27b14f2b54a93b26019b85b24595b3f9b3691d6eaee127d7c20de2a65",
+      "upstream_question_id": "57296e43af94a219006aa3e8",
+      "evidence": [
+        {
+          "source_id": "new-squad-321939b8326de7d757a699cd5beadf9f00c2f81c1c1c283090238d4327784efc-md",
+          "start": 1986,
+          "end": 2054,
+          "quote": "increase the chloroplast's surface area for cross-membrane transport"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57296e43af94a219006aa3e7",
+      "text": "What is a maze of membranous tubes?",
+      "split": "test",
+      "article_component": "article-d54dccd27b14f2b54a93b26019b85b24595b3f9b3691d6eaee127d7c20de2a65",
+      "upstream_question_id": "57296e43af94a219006aa3e7",
+      "evidence": [
+        {
+          "source_id": "new-squad-321939b8326de7d757a699cd5beadf9f00c2f81c1c1c283090238d4327784efc-md",
+          "start": 1753,
+          "end": 1789,
+          "quote": "The chloroplast peripheral reticulum"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57296e43af94a219006aa3e6",
+      "text": "Where is the chloroplast peripheral reticulum less commonly found?",
+      "split": "test",
+      "article_component": "article-d54dccd27b14f2b54a93b26019b85b24595b3f9b3691d6eaee127d7c20de2a65",
+      "upstream_question_id": "57296e43af94a219006aa3e6",
+      "evidence": [
+        {
+          "source_id": "new-squad-321939b8326de7d757a699cd5beadf9f00c2f81c1c1c283090238d4327784efc-md",
+          "start": 1702,
+          "end": 1751,
+          "quote": "in some C3 angiosperms, and even some gymnosperms"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57265d08708984140094c39a",
+      "text": "Plate tectonics can be seen as the intimate coupling between rigid plates on the surface of the Earth and what? ",
+      "split": "test",
+      "article_component": "article-54cda0543a402949d4e223cc16e9dbd93b48c514c48026db1fbf38cf711f46cd",
+      "upstream_question_id": "57265d08708984140094c39a",
+      "evidence": [
+        {
+          "source_id": "new-squad-2dfc7adb86d98f6e28af1936cea813074750eb2f52d832dc176411d1c922978b-md",
+          "start": 735,
+          "end": 756,
+          "quote": "the convecting mantle"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57265d08708984140094c397",
+      "text": "What was the most important discovery that led to the understanding that Earth's lithosphere is separated into tectonic plates?",
+      "split": "test",
+      "article_component": "article-54cda0543a402949d4e223cc16e9dbd93b48c514c48026db1fbf38cf711f46cd",
+      "upstream_question_id": "57265d08708984140094c397",
+      "evidence": [
+        {
+          "source_id": "new-squad-2dfc7adb86d98f6e28af1936cea813074750eb2f52d832dc176411d1c922978b-md",
+          "start": 82,
+          "end": 100,
+          "quote": "seafloor spreading"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57265d08708984140094c399",
+      "text": "What is another word for the Earth's upper mantle?",
+      "split": "test",
+      "article_component": "article-54cda0543a402949d4e223cc16e9dbd93b48c514c48026db1fbf38cf711f46cd",
+      "upstream_question_id": "57265d08708984140094c399",
+      "evidence": [
+        {
+          "source_id": "new-squad-2dfc7adb86d98f6e28af1936cea813074750eb2f52d832dc176411d1c922978b-md",
+          "start": 344,
+          "end": 357,
+          "quote": "asthenosphere"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57265f605951b619008f70dc",
+      "text": "What is the area called where one plate subducts under another?",
+      "split": "test",
+      "article_component": "article-54cda0543a402949d4e223cc16e9dbd93b48c514c48026db1fbf38cf711f46cd",
+      "upstream_question_id": "57265f605951b619008f70dc",
+      "evidence": [
+        {
+          "source_id": "new-squad-2dfc7adb86d98f6e28af1936cea813074750eb2f52d832dc176411d1c922978b-md",
+          "start": 1183,
+          "end": 1204,
+          "quote": "convergent boundaries"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57265f605951b619008f70de",
+      "text": "Whose theory was the theory of continental drift?",
+      "split": "test",
+      "article_component": "article-54cda0543a402949d4e223cc16e9dbd93b48c514c48026db1fbf38cf711f46cd",
+      "upstream_question_id": "57265f605951b619008f70de",
+      "evidence": [
+        {
+          "source_id": "new-squad-2dfc7adb86d98f6e28af1936cea813074750eb2f52d832dc176411d1c922978b-md",
+          "start": 1397,
+          "end": 1411,
+          "quote": "Alfred Wegener"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57265f605951b619008f70db",
+      "text": "What is the area called where two plates move apart?",
+      "split": "test",
+      "article_component": "article-54cda0543a402949d4e223cc16e9dbd93b48c514c48026db1fbf38cf711f46cd",
+      "upstream_question_id": "57265f605951b619008f70db",
+      "evidence": [
+        {
+          "source_id": "new-squad-2dfc7adb86d98f6e28af1936cea813074750eb2f52d832dc176411d1c922978b-md",
+          "start": 1080,
+          "end": 1100,
+          "quote": "divergent boundaries"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57268527708984140094c8bf",
+      "text": "Who is viewed as the first modern geologist?",
+      "split": "test",
+      "article_component": "article-54cda0543a402949d4e223cc16e9dbd93b48c514c48026db1fbf38cf711f46cd",
+      "upstream_question_id": "57268527708984140094c8bf",
+      "evidence": [
+        {
+          "source_id": "new-squad-2dfc7adb86d98f6e28af1936cea813074750eb2f52d832dc176411d1c922978b-md",
+          "start": 1825,
+          "end": 1837,
+          "quote": "James Hutton"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57268527708984140094c8c2",
+      "text": "What was the main idea of James Hutton's paper?",
+      "split": "test",
+      "article_component": "article-54cda0543a402949d4e223cc16e9dbd93b48c514c48026db1fbf38cf711f46cd",
+      "upstream_question_id": "57268527708984140094c8c2",
+      "evidence": [
+        {
+          "source_id": "new-squad-2dfc7adb86d98f6e28af1936cea813074750eb2f52d832dc176411d1c922978b-md",
+          "start": 2025,
+          "end": 2083,
+          "quote": "Earth must be much older than had previously been supposed"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57268527708984140094c8c1",
+      "text": "James Hutton published a 2 volume version of his theories in what year?",
+      "split": "test",
+      "article_component": "article-54cda0543a402949d4e223cc16e9dbd93b48c514c48026db1fbf38cf711f46cd",
+      "upstream_question_id": "57268527708984140094c8c1",
+      "evidence": [
+        {
+          "source_id": "new-squad-2dfc7adb86d98f6e28af1936cea813074750eb2f52d832dc176411d1c922978b-md",
+          "start": 2306,
+          "end": 2310,
+          "quote": "1795"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57286010ff5b5019007da1cc",
+      "text": "What was the name of the experiment that tested how life originated?",
+      "split": "test",
+      "article_component": "article-efb2cb56c23d021d97c02f6cab7c7eb476f51f87bcf08d4d1914bc5c3d2b5703",
+      "upstream_question_id": "57286010ff5b5019007da1cc",
+      "evidence": [
+        {
+          "source_id": "new-squad-57b03f10c85db2300f3b1ccffbc25322ba836e3172af7487cacbe93ca9121f87-md",
+          "start": 897,
+          "end": 921,
+          "quote": "Miller–Urey experiment"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57286010ff5b5019007da1cd",
+      "text": "When was REM sleep discovered?",
+      "split": "test",
+      "article_component": "article-efb2cb56c23d021d97c02f6cab7c7eb476f51f87bcf08d4d1914bc5c3d2b5703",
+      "upstream_question_id": "57286010ff5b5019007da1cd",
+      "evidence": [
+        {
+          "source_id": "new-squad-57b03f10c85db2300f3b1ccffbc25322ba836e3172af7487cacbe93ca9121f87-md",
+          "start": 1002,
+          "end": 1006,
+          "quote": "1953"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57286010ff5b5019007da1cb",
+      "text": "What was the name of the first self-sustained man-made nuclear reaction?",
+      "split": "test",
+      "article_component": "article-efb2cb56c23d021d97c02f6cab7c7eb476f51f87bcf08d4d1914bc5c3d2b5703",
+      "upstream_question_id": "57286010ff5b5019007da1cb",
+      "evidence": [
+        {
+          "source_id": "new-squad-57b03f10c85db2300f3b1ccffbc25322ba836e3172af7487cacbe93ca9121f87-md",
+          "start": 562,
+          "end": 576,
+          "quote": "Chicago Pile-1"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572861cc4b864d1900164961",
+      "text": "When did the university start having a bachelor's degree program in theater & performance studies?",
+      "split": "test",
+      "article_component": "article-efb2cb56c23d021d97c02f6cab7c7eb476f51f87bcf08d4d1914bc5c3d2b5703",
+      "upstream_question_id": "572861cc4b864d1900164961",
+      "evidence": [
+        {
+          "source_id": "new-squad-57b03f10c85db2300f3b1ccffbc25322ba836e3172af7487cacbe93ca9121f87-md",
+          "start": 1896,
+          "end": 1900,
+          "quote": "2002"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572861cc4b864d190016495e",
+      "text": "Since what year did the university offer a doctorate in music composition?",
+      "split": "test",
+      "article_component": "article-efb2cb56c23d021d97c02f6cab7c7eb476f51f87bcf08d4d1914bc5c3d2b5703",
+      "upstream_question_id": "572861cc4b864d190016495e",
+      "evidence": [
+        {
+          "source_id": "new-squad-57b03f10c85db2300f3b1ccffbc25322ba836e3172af7487cacbe93ca9121f87-md",
+          "start": 1561,
+          "end": 1565,
+          "quote": "1933"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572861cc4b864d1900164962",
+      "text": "Around roughly how many students enroll yearly in creative and performing arts classes?",
+      "split": "test",
+      "article_component": "article-efb2cb56c23d021d97c02f6cab7c7eb476f51f87bcf08d4d1914bc5c3d2b5703",
+      "upstream_question_id": "572861cc4b864d1900164962",
+      "evidence": [
+        {
+          "source_id": "new-squad-57b03f10c85db2300f3b1ccffbc25322ba836e3172af7487cacbe93ca9121f87-md",
+          "start": 2103,
+          "end": 2119,
+          "quote": "Several thousand"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728742cff5b5019007da246",
+      "text": "What Egyptologist was also apart of the university's faculty?",
+      "split": "test",
+      "article_component": "article-efb2cb56c23d021d97c02f6cab7c7eb476f51f87bcf08d4d1914bc5c3d2b5703",
+      "upstream_question_id": "5728742cff5b5019007da246",
+      "evidence": [
+        {
+          "source_id": "new-squad-57b03f10c85db2300f3b1ccffbc25322ba836e3172af7487cacbe93ca9121f87-md",
+          "start": 2985,
+          "end": 3005,
+          "quote": "James Henry Breasted"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728742cff5b5019007da24a",
+      "text": "What cancer researchers were also apart of the university's faculty?",
+      "split": "test",
+      "article_component": "article-efb2cb56c23d021d97c02f6cab7c7eb476f51f87bcf08d4d1914bc5c3d2b5703",
+      "upstream_question_id": "5728742cff5b5019007da24a",
+      "evidence": [
+        {
+          "source_id": "new-squad-57b03f10c85db2300f3b1ccffbc25322ba836e3172af7487cacbe93ca9121f87-md",
+          "start": 3355,
+          "end": 3395,
+          "quote": "Charles Brenton Huggins and Janet Rowley"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728742cff5b5019007da247",
+      "text": "What mathematician was also apart of the university's faculty?",
+      "split": "test",
+      "article_component": "article-efb2cb56c23d021d97c02f6cab7c7eb476f51f87bcf08d4d1914bc5c3d2b5703",
+      "upstream_question_id": "5728742cff5b5019007da247",
+      "evidence": [
+        {
+          "source_id": "new-squad-57b03f10c85db2300f3b1ccffbc25322ba836e3172af7487cacbe93ca9121f87-md",
+          "start": 3021,
+          "end": 3038,
+          "quote": "Alberto Calderón"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57308cf88ab72b1400f9c579",
+      "text": "According to certain Geographical theories what type of human does a tropical climate produce?",
+      "split": "test",
+      "article_component": "article-696e142c065cd7599718e137f780ecbe4029d6a956dbf4e731948f2ce45a3736",
+      "upstream_question_id": "57308cf88ab72b1400f9c579",
+      "evidence": [
+        {
+          "source_id": "new-squad-b4a1c384802cf06dad9852ba77b8dc454f630bd7005364a5b5b7b58a9e243a15-md",
+          "start": 121,
+          "end": 132,
+          "quote": "uncivilized"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57308cf88ab72b1400f9c57a",
+      "text": "By justification certain racial and geographical theories, Europe thought of itself as what?",
+      "split": "test",
+      "article_component": "article-696e142c065cd7599718e137f780ecbe4029d6a956dbf4e731948f2ce45a3736",
+      "upstream_question_id": "57308cf88ab72b1400f9c57a",
+      "evidence": [
+        {
+          "source_id": "new-squad-b4a1c384802cf06dad9852ba77b8dc454f630bd7005364a5b5b7b58a9e243a15-md",
+          "start": 552,
+          "end": 560,
+          "quote": "superior"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57308cf88ab72b1400f9c576",
+      "text": "Which theory suggested people in the tropics were uncivilized?",
+      "split": "test",
+      "article_component": "article-696e142c065cd7599718e137f780ecbe4029d6a956dbf4e731948f2ce45a3736",
+      "upstream_question_id": "57308cf88ab72b1400f9c576",
+      "evidence": [
+        {
+          "source_id": "new-squad-b4a1c384802cf06dad9852ba77b8dc454f630bd7005364a5b5b7b58a9e243a15-md",
+          "start": 45,
+          "end": 70,
+          "quote": "environmental determinism"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-573098f38ab72b1400f9c5d2",
+      "text": "European imperialism was focused on what?",
+      "split": "test",
+      "article_component": "article-696e142c065cd7599718e137f780ecbe4029d6a956dbf4e731948f2ce45a3736",
+      "upstream_question_id": "573098f38ab72b1400f9c5d2",
+      "evidence": [
+        {
+          "source_id": "new-squad-b4a1c384802cf06dad9852ba77b8dc454f630bd7005364a5b5b7b58a9e243a15-md",
+          "start": 708,
+          "end": 723,
+          "quote": "economic growth"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-573098f38ab72b1400f9c5d4",
+      "text": "When did the colonization of India occur?",
+      "split": "test",
+      "article_component": "article-696e142c065cd7599718e137f780ecbe4029d6a956dbf4e731948f2ce45a3736",
+      "upstream_question_id": "573098f38ab72b1400f9c5d4",
+      "evidence": [
+        {
+          "source_id": "new-squad-b4a1c384802cf06dad9852ba77b8dc454f630bd7005364a5b5b7b58a9e243a15-md",
+          "start": 876,
+          "end": 892,
+          "quote": "mid-18th century"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-573098f38ab72b1400f9c5d3",
+      "text": "What did European empires rely on to supply them with resources?",
+      "split": "test",
+      "article_component": "article-696e142c065cd7599718e137f780ecbe4029d6a956dbf4e731948f2ce45a3736",
+      "upstream_question_id": "573098f38ab72b1400f9c5d3",
+      "evidence": [
+        {
+          "source_id": "new-squad-b4a1c384802cf06dad9852ba77b8dc454f630bd7005364a5b5b7b58a9e243a15-md",
+          "start": 753,
+          "end": 761,
+          "quote": "colonies"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5730ac782461fd1900a9cf77",
+      "text": "Who caused the dissolution of the Holy Roman Empire?",
+      "split": "test",
+      "article_component": "article-696e142c065cd7599718e137f780ecbe4029d6a956dbf4e731948f2ce45a3736",
+      "upstream_question_id": "5730ac782461fd1900a9cf77",
+      "evidence": [
+        {
+          "source_id": "new-squad-b4a1c384802cf06dad9852ba77b8dc454f630bd7005364a5b5b7b58a9e243a15-md",
+          "start": 1913,
+          "end": 1921,
+          "quote": "Napoleon"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5730ac782461fd1900a9cf75",
+      "text": "When was the the second German empire founded?",
+      "split": "test",
+      "article_component": "article-696e142c065cd7599718e137f780ecbe4029d6a956dbf4e731948f2ce45a3736",
+      "upstream_question_id": "5730ac782461fd1900a9cf75",
+      "evidence": [
+        {
+          "source_id": "new-squad-b4a1c384802cf06dad9852ba77b8dc454f630bd7005364a5b5b7b58a9e243a15-md",
+          "start": 2195,
+          "end": 2222,
+          "quote": "after the Franco-German War"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5730ac782461fd1900a9cf73",
+      "text": "Germany doesn't have an imperialistic past until when?",
+      "split": "test",
+      "article_component": "article-696e142c065cd7599718e137f780ecbe4029d6a956dbf4e731948f2ce45a3736",
+      "upstream_question_id": "5730ac782461fd1900a9cf73",
+      "evidence": [
+        {
+          "source_id": "new-squad-b4a1c384802cf06dad9852ba77b8dc454f630bd7005364a5b5b7b58a9e243a15-md",
+          "start": 1706,
+          "end": 1723,
+          "quote": "late 19th century"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572ff86004bcaa1900d76f66",
+      "text": "What did Olivier Roy state underwent a remarkable shift in the second half of the 20th century?",
+      "split": "test",
+      "article_component": "article-f3af36a65de39c652dab1c95753f77a67cddac67acf5f76f901980c9883b3597",
+      "upstream_question_id": "572ff86004bcaa1900d76f66",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dcb75201943e46e528321f88de8a5577a9ba60b1b950670521fe9a7f2a9473f-md",
+          "start": 311,
+          "end": 329,
+          "quote": "Sunni pan-Islamism"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572ff86004bcaa1900d76f67",
+      "text": "What did the Salafi movement put emphasis on?",
+      "split": "test",
+      "article_component": "article-f3af36a65de39c652dab1c95753f77a67cddac67acf5f76f901980c9883b3597",
+      "upstream_question_id": "572ff86004bcaa1900d76f67",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dcb75201943e46e528321f88de8a5577a9ba60b1b950670521fe9a7f2a9473f-md",
+          "start": 539,
+          "end": 595,
+          "quote": "sharia rather than the building of Islamic institutions,"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572ff86004bcaa1900d76f65",
+      "text": "What exists between fundamentalist Islamism and reformist Islamism?",
+      "split": "test",
+      "article_component": "article-f3af36a65de39c652dab1c95753f77a67cddac67acf5f76f901980c9883b3597",
+      "upstream_question_id": "572ff86004bcaa1900d76f65",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dcb75201943e46e528321f88de8a5577a9ba60b1b950670521fe9a7f2a9473f-md",
+          "start": 20,
+          "end": 34,
+          "quote": "major division"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-573005b9947a6a140053cf6e",
+      "text": "What gained ground when Arab nationalism suffered?",
+      "split": "test",
+      "article_component": "article-f3af36a65de39c652dab1c95753f77a67cddac67acf5f76f901980c9883b3597",
+      "upstream_question_id": "573005b9947a6a140053cf6e",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dcb75201943e46e528321f88de8a5577a9ba60b1b950670521fe9a7f2a9473f-md",
+          "start": 1560,
+          "end": 1594,
+          "quote": "anti-democratic Islamist movements"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-573005b9947a6a140053cf6d",
+      "text": "What happened to the credibility of secular politics as a result of the Six-Day War?",
+      "split": "test",
+      "article_component": "article-f3af36a65de39c652dab1c95753f77a67cddac67acf5f76f901980c9883b3597",
+      "upstream_question_id": "573005b9947a6a140053cf6d",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dcb75201943e46e528321f88de8a5577a9ba60b1b950670521fe9a7f2a9473f-md",
+          "start": 1357,
+          "end": 1383,
+          "quote": "A steep and steady decline"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-573005b9947a6a140053cf6b",
+      "text": "The defeat of the Arab troops in the Six-Day War constituted what for the Arab Muslim world?",
+      "split": "test",
+      "article_component": "article-f3af36a65de39c652dab1c95753f77a67cddac67acf5f76f901980c9883b3597",
+      "upstream_question_id": "573005b9947a6a140053cf6b",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dcb75201943e46e528321f88de8a5577a9ba60b1b950670521fe9a7f2a9473f-md",
+          "start": 1180,
+          "end": 1195,
+          "quote": "a pivotal event"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57302ad804bcaa1900d772b2",
+      "text": "What was Zia-ul-Haq accused of using Islamization to legitimize? ",
+      "split": "test",
+      "article_component": "article-f3af36a65de39c652dab1c95753f77a67cddac67acf5f76f901980c9883b3597",
+      "upstream_question_id": "57302ad804bcaa1900d772b2",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dcb75201943e46e528321f88de8a5577a9ba60b1b950670521fe9a7f2a9473f-md",
+          "start": 2517,
+          "end": 2543,
+          "quote": "his means of seizing power"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57302ad804bcaa1900d772af",
+      "text": "When was the regime in Pakistan overthrown by General Zia-ul-Haq?",
+      "split": "test",
+      "article_component": "article-f3af36a65de39c652dab1c95753f77a67cddac67acf5f76f901980c9883b3597",
+      "upstream_question_id": "57302ad804bcaa1900d772af",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dcb75201943e46e528321f88de8a5577a9ba60b1b950670521fe9a7f2a9473f-md",
+          "start": 1650,
+          "end": 1659,
+          "quote": "July 1977"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57302ad804bcaa1900d772b0",
+      "text": "What had Bhutto planned on banning within six months, before he was overthrown?",
+      "split": "test",
+      "article_component": "article-f3af36a65de39c652dab1c95753f77a67cddac67acf5f76f901980c9883b3597",
+      "upstream_question_id": "57302ad804bcaa1900d772b0",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dcb75201943e46e528321f88de8a5577a9ba60b1b950670521fe9a7f2a9473f-md",
+          "start": 1833,
+          "end": 1855,
+          "quote": "alcohol and nightclubs"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56f7cdc2a6d7ea1400e1728e",
+      "text": "When was Martin Luther born?",
+      "split": "test",
+      "article_component": "article-e59a4e218b51b9f7849fd0049b7bd494e1213e4094c7ab0374f33765f13073da",
+      "upstream_question_id": "56f7cdc2a6d7ea1400e1728e",
+      "evidence": [
+        {
+          "source_id": "new-squad-03c6da7bc2dfe19a785d537ea2f1f89e9e66ece533955f3a8fdaef8d3b77be2b-md",
+          "start": 124,
+          "end": 140,
+          "quote": "10 November 1483"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56f7cdc2a6d7ea1400e17290",
+      "text": "Of what region was Saxony a part?",
+      "split": "test",
+      "article_component": "article-e59a4e218b51b9f7849fd0049b7bd494e1213e4094c7ab0374f33765f13073da",
+      "upstream_question_id": "56f7cdc2a6d7ea1400e17290",
+      "evidence": [
+        {
+          "source_id": "new-squad-03c6da7bc2dfe19a785d537ea2f1f89e9e66ece533955f3a8fdaef8d3b77be2b-md",
+          "start": 179,
+          "end": 196,
+          "quote": "Holy Roman Empire"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56f7cdc2a6d7ea1400e17291",
+      "text": "Into what religion was Martin Luther baptized?",
+      "split": "test",
+      "article_component": "article-e59a4e218b51b9f7849fd0049b7bd494e1213e4094c7ab0374f33765f13073da",
+      "upstream_question_id": "56f7cdc2a6d7ea1400e17291",
+      "evidence": [
+        {
+          "source_id": "new-squad-03c6da7bc2dfe19a785d537ea2f1f89e9e66ece533955f3a8fdaef8d3b77be2b-md",
+          "start": 219,
+          "end": 227,
+          "quote": "Catholic"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56f826a7a6d7ea1400e17427",
+      "text": "What did Luther refuse to do?",
+      "split": "test",
+      "article_component": "article-e59a4e218b51b9f7849fd0049b7bd494e1213e4094c7ab0374f33765f13073da",
+      "upstream_question_id": "56f826a7a6d7ea1400e17427",
+      "evidence": [
+        {
+          "source_id": "new-squad-03c6da7bc2dfe19a785d537ea2f1f89e9e66ece533955f3a8fdaef8d3b77be2b-md",
+          "start": 1246,
+          "end": 1265,
+          "quote": "recant his writings"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56f826a7a6d7ea1400e17428",
+      "text": "Who said, \"Here I stand. I can do no other\"?",
+      "split": "test",
+      "article_component": "article-e59a4e218b51b9f7849fd0049b7bd494e1213e4094c7ab0374f33765f13073da",
+      "upstream_question_id": "56f826a7a6d7ea1400e17428",
+      "evidence": [
+        {
+          "source_id": "new-squad-03c6da7bc2dfe19a785d537ea2f1f89e9e66ece533955f3a8fdaef8d3b77be2b-md",
+          "start": 1228,
+          "end": 1234,
+          "quote": "Luther"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56f826a7a6d7ea1400e17429",
+      "text": "Why is the statement doubtful in the eyes of scholars?",
+      "split": "test",
+      "article_component": "article-e59a4e218b51b9f7849fd0049b7bd494e1213e4094c7ab0374f33765f13073da",
+      "upstream_question_id": "56f826a7a6d7ea1400e17429",
+      "evidence": [
+        {
+          "source_id": "new-squad-03c6da7bc2dfe19a785d537ea2f1f89e9e66ece533955f3a8fdaef8d3b77be2b-md",
+          "start": 1504,
+          "end": 1516,
+          "quote": "not recorded"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56f8b7189e9bad19000a0389",
+      "text": "When did seven Protestant churches agree with the Nazi policy of forcing Jews to wear yellow arm bands?",
+      "split": "test",
+      "article_component": "article-e59a4e218b51b9f7849fd0049b7bd494e1213e4094c7ab0374f33765f13073da",
+      "upstream_question_id": "56f8b7189e9bad19000a0389",
+      "evidence": [
+        {
+          "source_id": "new-squad-03c6da7bc2dfe19a785d537ea2f1f89e9e66ece533955f3a8fdaef8d3b77be2b-md",
+          "start": 1701,
+          "end": 1717,
+          "quote": "17 December 1941"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56f8b7189e9bad19000a038d",
+      "text": "What did Sasse proclaim Luther to be?",
+      "split": "test",
+      "article_component": "article-e59a4e218b51b9f7849fd0049b7bd494e1213e4094c7ab0374f33765f13073da",
+      "upstream_question_id": "56f8b7189e9bad19000a038d",
+      "evidence": [
+        {
+          "source_id": "new-squad-03c6da7bc2dfe19a785d537ea2f1f89e9e66ece533955f3a8fdaef8d3b77be2b-md",
+          "start": 2555,
+          "end": 2574,
+          "quote": "greatest antisemite"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56f8b7189e9bad19000a038c",
+      "text": "Who agreed with the burning of synagogues?",
+      "split": "test",
+      "article_component": "article-e59a4e218b51b9f7849fd0049b7bd494e1213e4094c7ab0374f33765f13073da",
+      "upstream_question_id": "56f8b7189e9bad19000a038c",
+      "evidence": [
+        {
+          "source_id": "new-squad-03c6da7bc2dfe19a785d537ea2f1f89e9e66ece533955f3a8fdaef8d3b77be2b-md",
+          "start": 2029,
+          "end": 2048,
+          "quote": "Bishop Martin Sasse"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57269d68708984140094cbdb",
+      "text": "Who was responsible for the decorations of the Grill Room?",
+      "split": "test",
+      "article_component": "article-7731911d31ec627ded450d0995cf9868e3daf53cf5fdcabe147e0b6ea97a7a12",
+      "upstream_question_id": "57269d68708984140094cbdb",
+      "evidence": [
+        {
+          "source_id": "new-squad-76bcd70c44bc315d9f911f153edbcb8bd891e0796cf1d0fa63335dccfc33b18e-md",
+          "start": 977,
+          "end": 995,
+          "quote": "Sir Edward Poynter"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57269d68708984140094cbd7",
+      "text": "Who were responsible for the interior decorations of the Green Dining Room?",
+      "split": "test",
+      "article_component": "article-7731911d31ec627ded450d0995cf9868e3daf53cf5fdcabe147e0b6ea97a7a12",
+      "upstream_question_id": "57269d68708984140094cbd7",
+      "evidence": [
+        {
+          "source_id": "new-squad-76bcd70c44bc315d9f911f153edbcb8bd891e0796cf1d0fa63335dccfc33b18e-md",
+          "start": 161,
+          "end": 191,
+          "quote": "Philip Webb and William Morris"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57269d68708984140094cbd9",
+      "text": "Who was responsible for the decorations of the Centre Refreshment Room?",
+      "split": "test",
+      "article_component": "article-7731911d31ec627ded450d0995cf9868e3daf53cf5fdcabe147e0b6ea97a7a12",
+      "upstream_question_id": "57269d68708984140094cbd9",
+      "evidence": [
+        {
+          "source_id": "new-squad-76bcd70c44bc315d9f911f153edbcb8bd891e0796cf1d0fa63335dccfc33b18e-md",
+          "start": 581,
+          "end": 593,
+          "quote": "James Gamble"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726fb18dd62a815002e96ce",
+      "text": "The V&A has the world's most comprehensive collection of sculptures from which period?",
+      "split": "test",
+      "article_component": "article-7731911d31ec627ded450d0995cf9868e3daf53cf5fdcabe147e0b6ea97a7a12",
+      "upstream_question_id": "5726fb18dd62a815002e96ce",
+      "evidence": [
+        {
+          "source_id": "new-squad-76bcd70c44bc315d9f911f153edbcb8bd891e0796cf1d0fa63335dccfc33b18e-md",
+          "start": 1454,
+          "end": 1477,
+          "quote": "post-classical European"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726fb18dd62a815002e96d0",
+      "text": "Which time period does the sculpture collection cover?",
+      "split": "test",
+      "article_component": "article-7731911d31ec627ded450d0995cf9868e3daf53cf5fdcabe147e0b6ea97a7a12",
+      "upstream_question_id": "5726fb18dd62a815002e96d0",
+      "evidence": [
+        {
+          "source_id": "new-squad-76bcd70c44bc315d9f911f153edbcb8bd891e0796cf1d0fa63335dccfc33b18e-md",
+          "start": 1581,
+          "end": 1606,
+          "quote": "from about 400 AD to 1914"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726fb18dd62a815002e96cf",
+      "text": "Approximately how many objects are in the V&A sculpture collection?",
+      "split": "test",
+      "article_component": "article-7731911d31ec627ded450d0995cf9868e3daf53cf5fdcabe147e0b6ea97a7a12",
+      "upstream_question_id": "5726fb18dd62a815002e96cf",
+      "evidence": [
+        {
+          "source_id": "new-squad-76bcd70c44bc315d9f911f153edbcb8bd891e0796cf1d0fa63335dccfc33b18e-md",
+          "start": 1526,
+          "end": 1532,
+          "quote": "22,000"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572703fdf1498d1400e8f23e",
+      "text": "What is the time period represented in the museum's textiles collection?",
+      "split": "test",
+      "article_component": "article-7731911d31ec627ded450d0995cf9868e3daf53cf5fdcabe147e0b6ea97a7a12",
+      "upstream_question_id": "572703fdf1498d1400e8f23e",
+      "evidence": [
+        {
+          "source_id": "new-squad-76bcd70c44bc315d9f911f153edbcb8bd891e0796cf1d0fa63335dccfc33b18e-md",
+          "start": 2299,
+          "end": 2337,
+          "quote": "from the 1st century AD to the present"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572703fdf1498d1400e8f240",
+      "text": "Besides countries of origin and date of production, how are the textiles classified?",
+      "split": "test",
+      "article_component": "article-7731911d31ec627ded450d0995cf9868e3daf53cf5fdcabe147e0b6ea97a7a12",
+      "upstream_question_id": "572703fdf1498d1400e8f240",
+      "evidence": [
+        {
+          "source_id": "new-squad-76bcd70c44bc315d9f911f153edbcb8bd891e0796cf1d0fa63335dccfc33b18e-md",
+          "start": 2509,
+          "end": 2521,
+          "quote": "by technique"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572703fdf1498d1400e8f23c",
+      "text": "Approximately how many items are in the V&A's textiles collection?",
+      "split": "test",
+      "article_component": "article-7731911d31ec627ded450d0995cf9868e3daf53cf5fdcabe147e0b6ea97a7a12",
+      "upstream_question_id": "572703fdf1498d1400e8f23c",
+      "evidence": [
+        {
+          "source_id": "new-squad-76bcd70c44bc315d9f911f153edbcb8bd891e0796cf1d0fa63335dccfc33b18e-md",
+          "start": 2192,
+          "end": 2208,
+          "quote": "more than 53,000"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e76de800c9c71400d77125",
+      "text": "What is tertiary education?",
+      "split": "test",
+      "article_component": "article-5eeee52ec1e580989be944ee7cae917d7b8115a193759c60f246f8097a4a744c",
+      "upstream_question_id": "56e76de800c9c71400d77125",
+      "evidence": [
+        {
+          "source_id": "new-squad-fe11f3fe0ac24fdbab4311125a4a3f5f036079e6f7833921d7d1a12b11519108-md",
+          "start": 312,
+          "end": 345,
+          "quote": "universities and/or TAFE colleges"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e76de800c9c71400d77123",
+      "text": "How many tiers are in the Australian form of learning?",
+      "split": "test",
+      "article_component": "article-5eeee52ec1e580989be944ee7cae917d7b8115a193759c60f246f8097a4a744c",
+      "upstream_question_id": "56e76de800c9c71400d77123",
+      "evidence": [
+        {
+          "source_id": "new-squad-fe11f3fe0ac24fdbab4311125a4a3f5f036079e6f7833921d7d1a12b11519108-md",
+          "start": 154,
+          "end": 159,
+          "quote": "three"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e76de800c9c71400d77124",
+      "text": "What follows secondary education?",
+      "split": "test",
+      "article_component": "article-5eeee52ec1e580989be944ee7cae917d7b8115a193759c60f246f8097a4a744c",
+      "upstream_question_id": "56e76de800c9c71400d77124",
+      "evidence": [
+        {
+          "source_id": "new-squad-fe11f3fe0ac24fdbab4311125a4a3f5f036079e6f7833921d7d1a12b11519108-md",
+          "start": 292,
+          "end": 310,
+          "quote": "tertiary education"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e76f7000c9c71400d7712c",
+      "text": "What are teachers considered to be in Germany?",
+      "split": "test",
+      "article_component": "article-5eeee52ec1e580989be944ee7cae917d7b8115a193759c60f246f8097a4a744c",
+      "upstream_question_id": "56e76f7000c9c71400d7712c",
+      "evidence": [
+        {
+          "source_id": "new-squad-fe11f3fe0ac24fdbab4311125a4a3f5f036079e6f7833921d7d1a12b11519108-md",
+          "start": 381,
+          "end": 395,
+          "quote": "civil servants"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e76f7000c9c71400d7712e",
+      "text": "What is the name of Elementary Schools?",
+      "split": "test",
+      "article_component": "article-5eeee52ec1e580989be944ee7cae917d7b8115a193759c60f246f8097a4a744c",
+      "upstream_question_id": "56e76f7000c9c71400d7712e",
+      "evidence": [
+        {
+          "source_id": "new-squad-fe11f3fe0ac24fdbab4311125a4a3f5f036079e6f7833921d7d1a12b11519108-md",
+          "start": 561,
+          "end": 572,
+          "quote": "Grundschule"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e76f7000c9c71400d7712d",
+      "text": "Where are teachers recruited from?",
+      "split": "test",
+      "article_component": "article-5eeee52ec1e580989be944ee7cae917d7b8115a193759c60f246f8097a4a744c",
+      "upstream_question_id": "56e76f7000c9c71400d7712d",
+      "evidence": [
+        {
+          "source_id": "new-squad-fe11f3fe0ac24fdbab4311125a4a3f5f036079e6f7833921d7d1a12b11519108-md",
+          "start": 444,
+          "end": 487,
+          "quote": "Lehramtstudien (Teaching Education Studies)"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e7796637bdd419002c4001",
+      "text": "What may a Charter school require that their teachers meet the standards to be highly qualified by?",
+      "split": "test",
+      "article_component": "article-5eeee52ec1e580989be944ee7cae917d7b8115a193759c60f246f8097a4a744c",
+      "upstream_question_id": "56e7796637bdd419002c4001",
+      "evidence": [
+        {
+          "source_id": "new-squad-fe11f3fe0ac24fdbab4311125a4a3f5f036079e6f7833921d7d1a12b11519108-md",
+          "start": 1307,
+          "end": 1327,
+          "quote": "No Child Left Behind"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e7796637bdd419002c3ffd",
+      "text": "In the US, who decides on the requirements for teachers?",
+      "split": "test",
+      "article_component": "article-5eeee52ec1e580989be944ee7cae917d7b8115a193759c60f246f8097a4a744c",
+      "upstream_question_id": "56e7796637bdd419002c3ffd",
+      "evidence": [
+        {
+          "source_id": "new-squad-fe11f3fe0ac24fdbab4311125a4a3f5f036079e6f7833921d7d1a12b11519108-md",
+          "start": 827,
+          "end": 837,
+          "quote": "each state"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e7796637bdd419002c3fff",
+      "text": "What must a public school teacher have, at a minimum?",
+      "split": "test",
+      "article_component": "article-5eeee52ec1e580989be944ee7cae917d7b8115a193759c60f246f8097a4a744c",
+      "upstream_question_id": "56e7796637bdd419002c3fff",
+      "evidence": [
+        {
+          "source_id": "new-squad-fe11f3fe0ac24fdbab4311125a4a3f5f036079e6f7833921d7d1a12b11519108-md",
+          "start": 1082,
+          "end": 1101,
+          "quote": "a bachelor's degree"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572ffb02b2c2fd14005686b7",
+      "text": "What rift system developed in the Alpine orogeny?",
+      "split": "test",
+      "article_component": "article-d21a06552bb13cd9390565f06257dd6164fda5333b25638e88f8a199652c25eb",
+      "upstream_question_id": "572ffb02b2c2fd14005686b7",
+      "evidence": [
+        {
+          "source_id": "new-squad-9994bca7cc36b7ecffdd238313d73d9b4e1928bf811ec91267d698a38bc89795-md",
+          "start": 70,
+          "end": 75,
+          "quote": "N–S"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572ffb02b2c2fd14005686b9",
+      "text": "What time did a river system develop in the Upper Rhine Graben?",
+      "split": "test",
+      "article_component": "article-d21a06552bb13cd9390565f06257dd6164fda5333b25638e88f8a199652c25eb",
+      "upstream_question_id": "572ffb02b2c2fd14005686b9",
+      "evidence": [
+        {
+          "source_id": "new-squad-9994bca7cc36b7ecffdd238313d73d9b4e1928bf811ec91267d698a38bc89795-md",
+          "start": 317,
+          "end": 324,
+          "quote": "Miocene"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572ffb02b2c2fd14005686b8",
+      "text": "What elements from the rift system in the Alpine orogeny in Southwest Germany?",
+      "split": "test",
+      "article_component": "article-d21a06552bb13cd9390565f06257dd6164fda5333b25638e88f8a199652c25eb",
+      "upstream_question_id": "572ffb02b2c2fd14005686b8",
+      "evidence": [
+        {
+          "source_id": "new-squad-9994bca7cc36b7ecffdd238313d73d9b4e1928bf811ec91267d698a38bc89795-md",
+          "start": 152,
+          "end": 170,
+          "quote": "Upper Rhine Graben"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5730042804bcaa1900d77012",
+      "text": "Where did the Rhine occupy during the Holocene?",
+      "split": "test",
+      "article_component": "article-d21a06552bb13cd9390565f06257dd6164fda5333b25638e88f8a199652c25eb",
+      "upstream_question_id": "5730042804bcaa1900d77012",
+      "evidence": [
+        {
+          "source_id": "new-squad-9994bca7cc36b7ecffdd238313d73d9b4e1928bf811ec91267d698a38bc89795-md",
+          "start": 671,
+          "end": 690,
+          "quote": "Late-Glacial valley"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5730042804bcaa1900d77013",
+      "text": "What country did the Rhine continue to rise during the holocene?",
+      "split": "test",
+      "article_component": "article-d21a06552bb13cd9390565f06257dd6164fda5333b25638e88f8a199652c25eb",
+      "upstream_question_id": "5730042804bcaa1900d77013",
+      "evidence": [
+        {
+          "source_id": "new-squad-9994bca7cc36b7ecffdd238313d73d9b4e1928bf811ec91267d698a38bc89795-md",
+          "start": 789,
+          "end": 800,
+          "quote": "Netherlands"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5730042804bcaa1900d77014",
+      "text": "When did the formation of the Holocene Rhine-Meuse delta begin?",
+      "split": "test",
+      "article_component": "article-d21a06552bb13cd9390565f06257dd6164fda5333b25638e88f8a199652c25eb",
+      "upstream_question_id": "5730042804bcaa1900d77014",
+      "evidence": [
+        {
+          "source_id": "new-squad-9994bca7cc36b7ecffdd238313d73d9b4e1928bf811ec91267d698a38bc89795-md",
+          "start": 858,
+          "end": 873,
+          "quote": "8,000 years ago"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-573007fab2c2fd140056876f",
+      "text": "Which direction did Romans use to drift through the Rhine?",
+      "split": "test",
+      "article_component": "article-d21a06552bb13cd9390565f06257dd6164fda5333b25638e88f8a199652c25eb",
+      "upstream_question_id": "573007fab2c2fd140056876f",
+      "evidence": [
+        {
+          "source_id": "new-squad-9994bca7cc36b7ecffdd238313d73d9b4e1928bf811ec91267d698a38bc89795-md",
+          "start": 2103,
+          "end": 2112,
+          "quote": "eastwards"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-573007fab2c2fd140056876e",
+      "text": "Where are the upper Rhine and upper Danube crossed?",
+      "split": "test",
+      "article_component": "article-d21a06552bb13cd9390565f06257dd6164fda5333b25638e88f8a199652c25eb",
+      "upstream_question_id": "573007fab2c2fd140056876e",
+      "evidence": [
+        {
+          "source_id": "new-squad-9994bca7cc36b7ecffdd238313d73d9b4e1928bf811ec91267d698a38bc89795-md",
+          "start": 1711,
+          "end": 1719,
+          "quote": "southern"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-573007fab2c2fd140056876b",
+      "text": "When did Augustus die?",
+      "split": "test",
+      "article_component": "article-d21a06552bb13cd9390565f06257dd6164fda5333b25638e88f8a199652c25eb",
+      "upstream_question_id": "573007fab2c2fd140056876b",
+      "evidence": [
+        {
+          "source_id": "new-squad-9994bca7cc36b7ecffdd238313d73d9b4e1928bf811ec91267d698a38bc89795-md",
+          "start": 1265,
+          "end": 1270,
+          "quote": "AD 14"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5705e99452bb891400689689",
+      "text": "What country are all the counties in?",
+      "split": "test",
+      "article_component": "article-d27aeb9fb477cbb8ca94f67fd2b41abe952c751e656e48b48fbb4b1363b0eeec",
+      "upstream_question_id": "5705e99452bb891400689689",
+      "evidence": [
+        {
+          "source_id": "new-squad-e2d70cec82692194b0d1e32a77daec495d1bf1c804af54877b2cb2f01cb12b87-md",
+          "start": 197,
+          "end": 210,
+          "quote": "United States"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5705e99452bb891400689688",
+      "text": "Orange, San Diego, Riverside and San Bernardino make up four of the five counties. What is the name of the last county?",
+      "split": "test",
+      "article_component": "article-d27aeb9fb477cbb8ca94f67fd2b41abe952c751e656e48b48fbb4b1363b0eeec",
+      "upstream_question_id": "5705e99452bb891400689688",
+      "evidence": [
+        {
+          "source_id": "new-squad-e2d70cec82692194b0d1e32a77daec495d1bf1c804af54877b2cb2f01cb12b87-md",
+          "start": 39,
+          "end": 50,
+          "quote": "Los Angeles"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5705e99452bb89140068968c",
+      "text": "What is the smallest geographical region discussed?",
+      "split": "test",
+      "article_component": "article-d27aeb9fb477cbb8ca94f67fd2b41abe952c751e656e48b48fbb4b1363b0eeec",
+      "upstream_question_id": "5705e99452bb89140068968c",
+      "evidence": [
+        {
+          "source_id": "new-squad-e2d70cec82692194b0d1e32a77daec495d1bf1c804af54877b2cb2f01cb12b87-md",
+          "start": 27,
+          "end": 35,
+          "quote": "counties"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5705fec152bb89140068977a",
+      "text": "How many earthquakes does southern California experience in a year?",
+      "split": "test",
+      "article_component": "article-d27aeb9fb477cbb8ca94f67fd2b41abe952c751e656e48b48fbb4b1363b0eeec",
+      "upstream_question_id": "5705fec152bb89140068977a",
+      "evidence": [
+        {
+          "source_id": "new-squad-e2d70cec82692194b0d1e32a77daec495d1bf1c804af54877b2cb2f01cb12b87-md",
+          "start": 263,
+          "end": 269,
+          "quote": "10,000"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5705fec152bb89140068977d",
+      "text": "What kind of destruction did the 1994 earthquake cause the most of in US history?",
+      "split": "test",
+      "article_component": "article-d27aeb9fb477cbb8ca94f67fd2b41abe952c751e656e48b48fbb4b1363b0eeec",
+      "upstream_question_id": "5705fec152bb89140068977d",
+      "evidence": [
+        {
+          "source_id": "new-squad-e2d70cec82692194b0d1e32a77daec495d1bf1c804af54877b2cb2f01cb12b87-md",
+          "start": 617,
+          "end": 632,
+          "quote": "property damage"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5705fec152bb89140068977b",
+      "text": "Generally speaking, what size are the earthquakes that hit southern California?",
+      "split": "test",
+      "article_component": "article-d27aeb9fb477cbb8ca94f67fd2b41abe952c751e656e48b48fbb4b1363b0eeec",
+      "upstream_question_id": "5705fec152bb89140068977b",
+      "evidence": [
+        {
+          "source_id": "new-squad-e2d70cec82692194b0d1e32a77daec495d1bf1c804af54877b2cb2f01cb12b87-md",
+          "start": 309,
+          "end": 314,
+          "quote": "small"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57060eaf75f01819005e7911",
+      "text": "Where are international corporations headquartered?",
+      "split": "test",
+      "article_component": "article-d27aeb9fb477cbb8ca94f67fd2b41abe952c751e656e48b48fbb4b1363b0eeec",
+      "upstream_question_id": "57060eaf75f01819005e7911",
+      "evidence": [
+        {
+          "source_id": "new-squad-e2d70cec82692194b0d1e32a77daec495d1bf1c804af54877b2cb2f01cb12b87-md",
+          "start": 968,
+          "end": 1000,
+          "quote": "University of California, Irvine"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57060eaf75f01819005e7913",
+      "text": "What other business district does Orange County envelop outside of Downtown Santa Ana and Newport Center?",
+      "split": "test",
+      "article_component": "article-d27aeb9fb477cbb8ca94f67fd2b41abe952c751e656e48b48fbb4b1363b0eeec",
+      "upstream_question_id": "57060eaf75f01819005e7913",
+      "evidence": [
+        {
+          "source_id": "new-squad-e2d70cec82692194b0d1e32a77daec495d1bf1c804af54877b2cb2f01cb12b87-md",
+          "start": 792,
+          "end": 809,
+          "quote": "South Coast Metro"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57060eaf75f01819005e7910",
+      "text": "Which county is developing its business center?",
+      "split": "test",
+      "article_component": "article-d27aeb9fb477cbb8ca94f67fd2b41abe952c751e656e48b48fbb4b1363b0eeec",
+      "upstream_question_id": "57060eaf75f01819005e7910",
+      "evidence": [
+        {
+          "source_id": "new-squad-e2d70cec82692194b0d1e32a77daec495d1bf1c804af54877b2cb2f01cb12b87-md",
+          "start": 700,
+          "end": 706,
+          "quote": "Orange"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56dde3aa9a695914005b9661",
+      "text": "Whose shrine did the pilgrims go to in 1016?",
+      "split": "test",
+      "article_component": "article-e2dd6534bb5731c74712135162ccf2b8269b7ee1738c3b123268ae4e387ebba4",
+      "upstream_question_id": "56dde3aa9a695914005b9661",
+      "evidence": [
+        {
+          "source_id": "new-squad-25f7609488ac2883a53580552591465ce4b005b627e5e965aad40894f4bcbb65-md",
+          "start": 632,
+          "end": 649,
+          "quote": "Archangel Michael"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56dde3aa9a695914005b9660",
+      "text": "When did the attack occur in which the Normans impressed Prince Guaimar III occur?",
+      "split": "test",
+      "article_component": "article-e2dd6534bb5731c74712135162ccf2b8269b7ee1738c3b123268ae4e387ebba4",
+      "upstream_question_id": "56dde3aa9a695914005b9660",
+      "evidence": [
+        {
+          "source_id": "new-squad-25f7609488ac2883a53580552591465ce4b005b627e5e965aad40894f4bcbb65-md",
+          "start": 244,
+          "end": 247,
+          "quote": "999"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56dde3aa9a695914005b9662",
+      "text": "Where was the Archangel Michael shrine located?",
+      "split": "test",
+      "article_component": "article-e2dd6534bb5731c74712135162ccf2b8269b7ee1738c3b123268ae4e387ebba4",
+      "upstream_question_id": "56dde3aa9a695914005b9662",
+      "evidence": [
+        {
+          "source_id": "new-squad-25f7609488ac2883a53580552591465ce4b005b627e5e965aad40894f4bcbb65-md",
+          "start": 653,
+          "end": 666,
+          "quote": "Monte Gargano"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56de0ffd4396321400ee258e",
+      "text": "When did Robert Crispin go up against the Turks?",
+      "split": "test",
+      "article_component": "article-e2dd6534bb5731c74712135162ccf2b8269b7ee1738c3b123268ae4e387ebba4",
+      "upstream_question_id": "56de0ffd4396321400ee258e",
+      "evidence": [
+        {
+          "source_id": "new-squad-25f7609488ac2883a53580552591465ce4b005b627e5e965aad40894f4bcbb65-md",
+          "start": 1120,
+          "end": 1125,
+          "quote": "1060s"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56de0ffd4396321400ee258f",
+      "text": "Who ruined Roussel de Bailleul's plans for an independent state?",
+      "split": "test",
+      "article_component": "article-e2dd6534bb5731c74712135162ccf2b8269b7ee1738c3b123268ae4e387ebba4",
+      "upstream_question_id": "56de0ffd4396321400ee258f",
+      "evidence": [
+        {
+          "source_id": "new-squad-25f7609488ac2883a53580552591465ce4b005b627e5e965aad40894f4bcbb65-md",
+          "start": 1350,
+          "end": 1366,
+          "quote": "Alexius Komnenos"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56de0ffd4396321400ee258d",
+      "text": "When did Herve serve as a Byzantine general?",
+      "split": "test",
+      "article_component": "article-e2dd6534bb5731c74712135162ccf2b8269b7ee1738c3b123268ae4e387ebba4",
+      "upstream_question_id": "56de0ffd4396321400ee258d",
+      "evidence": [
+        {
+          "source_id": "new-squad-25f7609488ac2883a53580552591465ce4b005b627e5e965aad40894f4bcbb65-md",
+          "start": 913,
+          "end": 918,
+          "quote": "1050s"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56de40da4396321400ee270a",
+      "text": "Who led Richard's troops when Cyprus was conquered?",
+      "split": "test",
+      "article_component": "article-e2dd6534bb5731c74712135162ccf2b8269b7ee1738c3b123268ae4e387ebba4",
+      "upstream_question_id": "56de40da4396321400ee270a",
+      "evidence": [
+        {
+          "source_id": "new-squad-25f7609488ac2883a53580552591465ce4b005b627e5e965aad40894f4bcbb65-md",
+          "start": 1454,
+          "end": 1469,
+          "quote": "Guy de Lusignan"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56de40da4396321400ee2708",
+      "text": "Who was Guy's Rival?",
+      "split": "test",
+      "article_component": "article-e2dd6534bb5731c74712135162ccf2b8269b7ee1738c3b123268ae4e387ebba4",
+      "upstream_question_id": "56de40da4396321400ee2708",
+      "evidence": [
+        {
+          "source_id": "new-squad-25f7609488ac2883a53580552591465ce4b005b627e5e965aad40894f4bcbb65-md",
+          "start": 1557,
+          "end": 1577,
+          "quote": "Conrad of Montferrat"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56de40da4396321400ee2709",
+      "text": "What were Isaac's chains made out of?",
+      "split": "test",
+      "article_component": "article-e2dd6534bb5731c74712135162ccf2b8269b7ee1738c3b123268ae4e387ebba4",
+      "upstream_question_id": "56de40da4396321400ee2709",
+      "evidence": [
+        {
+          "source_id": "new-squad-25f7609488ac2883a53580552591465ce4b005b627e5e965aad40894f4bcbb65-md",
+          "start": 1934,
+          "end": 1940,
+          "quote": "silver"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728fd206aef05140015494c",
+      "text": "What serves as a biological barrier by competing for space and food in the GI tract?",
+      "split": "test",
+      "article_component": "article-ec224fa7e4440e486e59d6fca66baf79a84d0b392dce50e9bc90010f3a5a0501",
+      "upstream_question_id": "5728fd206aef05140015494c",
+      "evidence": [
+        {
+          "source_id": "new-squad-b7568890c702d891ac2edf0acd9cc8f56532f3856923836a319e1dfc814bc6ce-md",
+          "start": 71,
+          "end": 86,
+          "quote": "commensal flora"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728fd206aef05140015494f",
+      "text": "Commensal flora can change what specific conditions of their environment in the gastrointestinal tract?",
+      "split": "test",
+      "article_component": "article-ec224fa7e4440e486e59d6fca66baf79a84d0b392dce50e9bc90010f3a5a0501",
+      "upstream_question_id": "5728fd206aef05140015494f",
+      "evidence": [
+        {
+          "source_id": "new-squad-b7568890c702d891ac2edf0acd9cc8f56532f3856923836a319e1dfc814bc6ce-md",
+          "start": 250,
+          "end": 270,
+          "quote": "pH or available iron"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728fd206aef05140015494d",
+      "text": "Most antibiotics target bacteria and don't affect what class of organisms?",
+      "split": "test",
+      "article_component": "article-ec224fa7e4440e486e59d6fca66baf79a84d0b392dce50e9bc90010f3a5a0501",
+      "upstream_question_id": "5728fd206aef05140015494d",
+      "evidence": [
+        {
+          "source_id": "new-squad-b7568890c702d891ac2edf0acd9cc8f56532f3856923836a319e1dfc814bc6ce-md",
+          "start": 447,
+          "end": 452,
+          "quote": "fungi"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5729081d3f37b31900477faf",
+      "text": "What is a regulatory factor produced by macrophages?",
+      "split": "test",
+      "article_component": "article-ec224fa7e4440e486e59d6fca66baf79a84d0b392dce50e9bc90010f3a5a0501",
+      "upstream_question_id": "5729081d3f37b31900477faf",
+      "evidence": [
+        {
+          "source_id": "new-squad-b7568890c702d891ac2edf0acd9cc8f56532f3856923836a319e1dfc814bc6ce-md",
+          "start": 1662,
+          "end": 1675,
+          "quote": "interleukin 1"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5729081d3f37b31900477fab",
+      "text": "What are two types of phagocytes that travel through the body to find invading pathogens?",
+      "split": "test",
+      "article_component": "article-ec224fa7e4440e486e59d6fca66baf79a84d0b392dce50e9bc90010f3a5a0501",
+      "upstream_question_id": "5729081d3f37b31900477fab",
+      "evidence": [
+        {
+          "source_id": "new-squad-b7568890c702d891ac2edf0acd9cc8f56532f3856923836a319e1dfc814bc6ce-md",
+          "start": 978,
+          "end": 1005,
+          "quote": "Neutrophils and macrophages"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5729081d3f37b31900477fad",
+      "text": "What percentage of leukocytes do neutrophils represent?",
+      "split": "test",
+      "article_component": "article-ec224fa7e4440e486e59d6fca66baf79a84d0b392dce50e9bc90010f3a5a0501",
+      "upstream_question_id": "5729081d3f37b31900477fad",
+      "evidence": [
+        {
+          "source_id": "new-squad-b7568890c702d891ac2edf0acd9cc8f56532f3856923836a319e1dfc814bc6ce-md",
+          "start": 1204,
+          "end": 1214,
+          "quote": "50% to 60%"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5729ffda1d046914007796b0",
+      "text": "What is the process of vaccination also known as?",
+      "split": "test",
+      "article_component": "article-ec224fa7e4440e486e59d6fca66baf79a84d0b392dce50e9bc90010f3a5a0501",
+      "upstream_question_id": "5729ffda1d046914007796b0",
+      "evidence": [
+        {
+          "source_id": "new-squad-b7568890c702d891ac2edf0acd9cc8f56532f3856923836a319e1dfc814bc6ce-md",
+          "start": 2048,
+          "end": 2060,
+          "quote": "immunization"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5729ffda1d046914007796af",
+      "text": "By what process can active immunity be generated in an artificial manner?",
+      "split": "test",
+      "article_component": "article-ec224fa7e4440e486e59d6fca66baf79a84d0b392dce50e9bc90010f3a5a0501",
+      "upstream_question_id": "5729ffda1d046914007796af",
+      "evidence": [
+        {
+          "source_id": "new-squad-b7568890c702d891ac2edf0acd9cc8f56532f3856923836a319e1dfc814bc6ce-md",
+          "start": 1989,
+          "end": 2000,
+          "quote": "vaccination"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5729ffda1d046914007796b1",
+      "text": "In the process of vaccination, what is introduced in order to develop a specific immunity?",
+      "split": "test",
+      "article_component": "article-ec224fa7e4440e486e59d6fca66baf79a84d0b392dce50e9bc90010f3a5a0501",
+      "upstream_question_id": "5729ffda1d046914007796b1",
+      "evidence": [
+        {
+          "source_id": "new-squad-b7568890c702d891ac2edf0acd9cc8f56532f3856923836a319e1dfc814bc6ce-md",
+          "start": 2078,
+          "end": 2104,
+          "quote": "an antigen from a pathogen"
+        }
+      ]
+    }
+  ]
+}

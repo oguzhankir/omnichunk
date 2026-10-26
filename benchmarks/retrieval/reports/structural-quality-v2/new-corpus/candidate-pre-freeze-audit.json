@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "checks": {
+    "protocol_unchanged": true,
+    "builder_unchanged": true,
+    "validation_ciphertext_unchanged": true,
+    "validation_not_released": true,
+    "first_model_revision": true,
+    "second_model_revision": true,
+    "first_model_upstream_verified": true,
+    "second_model_upstream_verified": true,
+    "candidate_revision_expected": true,
+    "candidate_clean": true
+  },
+  "candidate_source": "/workspace/work/omnichunk-quality/variant-citation",
+  "candidate_revision": "740146d64ef8ec0078e5d32796867000b3c97a6c",
+  "protocol_sha256": "d17570dbcca6ff1be0326392749098e90db9e1172eac6ca288a876ff3ee46453",
+  "first_model_manifest_sha256": "89e02fce0d1690eb50083cedc54928fdb9ad3feb9c0f43c44fe9933fff20d059",
+  "second_model_manifest_sha256": "cdec20c447d77bb4f7ba18333378b586ac0114b73c4d286b8dc60021f892dc46",
+  "structural_review": {
+    "random_boundary_oracle_cases": 500,
+    "balanced_nesting_depths": [
+      1,
+      100,
+      2000
+    ],
+    "source_budget_cases": 16,
+    "verdict": "No blocking clause/citation helper finding; iterative linear scans, escape parity, independently matched pairs, exactsourcebudget checks",
+    "quality_claim": false
+  },
+  "scope": "Metadata/structural audit while last development encoders run; no model weight rehash, no validation content or score inspection/release, no quality model calls"
+}

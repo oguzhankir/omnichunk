@@ -1,0 +1,7 @@
+{
+  "scope": "Formatting only; no source/model/data selection or numeric changes.",
+  "csv_before_sha256": "37becb97b31ef2e6666377878fc6118966b52f6c949cee820f5b1b69c4796d7f",
+  "csv_after_sha256": "dff2c90018d5b4fedab9d23f36be43508ff4e927ac82f42dc194e8526d68b352",
+  "csv_records_identical": true,
+  "svg": "Generated SVG trailing spaces removed; path separator newlines and numeric coordinates retained."
+}

@@ -140,24 +140,48 @@ local-model preparation now support real pretrained semantic comparisons. The
 selected short-answer spans still need independent review for chunk-evaluation
 suitability.
 
-The [pretrained dense experiment](benchmarks/retrieval/reports/dense-minilm-v1/README.md)
-uses `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` at model commit
-`e8f8c211226b894fcb81acc59f3b34ba3efd5f42` to compare v2.2.0 with source
-`a2e3bae7afb9b81f7c044ac0feda6612b0f97c97`. Development results retained the
-recursive-tail repair and identified orphaned headings before oversized Markdown
-bodies. Combined heading/body splitting now preserves the first complete fitting
-paragraph, original source metadata, fences and full nonadditive budgets. Source,
-model and settings were frozen before the held-out evaluation; raw reports retain
-wins and losses. The fixed experiment uses native 64/96-token chunks including
-special tokens, a 512-token retrieval prefix, separate top-k 5 ranking metrics,
-zero overlap, no derived context, three chunking repeats and two threads in both PyTorch CPU
-pools. Encoder preparation and frozen search cost remain separate.
+The historical [v1 pretrained experiment](benchmarks/retrieval/reports/dense-minilm-v1/README.md)
+records the recursive-tail and orphan-heading repair with one frozen multilingual
+encoder. Its raw reports and original held-out results remain available; those
+observed test splits were excluded from further rule selection; the follow-up
+uses original development and new article-disjoint development data.
 
-Boundary hardening also preserves fitting paragraphs/table rows, uses Unicode
-sentence boundaries and measures complete contiguous payloads. Configured-unit
-AST sizing handles multibyte code. These workload-specific results do not establish
-universal leadership. Independent evidence validation and production design-partner
-evaluation remain M1 completion gates.
+The [structural-quality v2 record](benchmarks/retrieval/reports/structural-quality-v2/README.md)
+freezes source `386b5ce99d4508a62725d6b36883dfa999715e8c` against previous main
+`511c1cc50db8549060c9ab642ded2da96619e3db`, with v2.2.0 identified separately.
+The general repairs preserve separate fitting Markdown paragraphs and their
+owning nested headings, fitting documented root statements with same-line comment
+chains, semicolon clauses before word fallback and balanced bracket expressions
+during prose sentence fallback. Source fidelity, protected fences and complete
+nonadditive budgets remain enforced; no query/language rules or learned dependency
+are introduced.
+
+A protocol recorded before selection excludes the 16 previously observed SQuAD
+articles, then uses its declared 32-article fallback with three paragraphs and
+nine questions per article. Development and validation each contain 16 entire
+articles and 144 questions. Text/Markdown renderings share questions and remain
+correlated views; article documents provide article-level bootstrap units.
+Validation material remained encrypted until the final source, model revisions,
+tokenizers and settings were frozen. The two pretrained encoders are multilingual
+MiniLM-L12-v2 (`e8f8c211226b894fcb81acc59f3b34ba3efd5f42`) and English
+all-MiniLM-L6-v2 (`1110a243fdf4706b3f48f1d95db1a4f5529b4d41`); English-encoder
+evidence is limited to English. Raw provenance and model/view comparisons belong
+in the v2 record; no superiority claim follows from implementation alone.
+
+The fixed matrix uses native 64/96-token chunks including special tokens, a
+512-token primary retrieval prefix with predeclared 128/256-token sensitivity
+checks, separate top-k 5 ranking metrics, zero overlap, no derived context, three
+chunking repeats and two threads in both PyTorch CPU pools. Shared encoder
+preparation and frozen search costs remain separate. Markdown paragraph isolation
+can split an otherwise fitting small file despite soft minimum preferences; it
+can add vectors/index work and reduce adjacent context. No compact-profile flag
+or universal speed/cost improvement is claimed.
+
+Boundary hardening also preserves fitting table rows and configured-unit AST
+ranges for multibyte code. M1 remains in progress: independently authored short
+answers still need a suitability audit as complete evidence, and production
+design-partner evaluation remains open. The new corpora, two encoders and paired
+views do not establish production-wide leadership.
 
 - Publish a licensed, versioned corpus with code, Markdown/manuals, tables and
   mixed documents. Start with **300 evidence-labeled queries** across the user

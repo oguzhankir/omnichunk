@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "checks": {
+    "protocol_hash_matches_build": true,
+    "builder_hash_matches_build": true,
+    "ciphertext_hash_matches_commitment": true,
+    "no_validation_plaintext_directory": true,
+    "upstream_plaintext_removed": true,
+    "no_builder_temp_directories": true,
+    "article-text.manifest_commitment": true,
+    "article-text.development_only": true,
+    "article-text.expected_counts": true,
+    "article-markdown.manifest_commitment": true,
+    "article-markdown.development_only": true,
+    "article-markdown.expected_counts": true,
+    "same_article_components": true,
+    "same_query_ids": true,
+    "paired_view_exact_utf8_rebasing": true,
+    "development_articles_disjoint_from_old": true,
+    "development_questions_disjoint_from_old": true,
+    "development_contexts_disjoint_from_old": true,
+    "development_contexts_unique": true,
+    "development_queries_unique": true
+  },
+  "paired_view_detail_checks": 480,
+  "validation_content_opened_or_decrypted": false,
+  "scope": "Read-only script/protocol/metadata audit and programmatic development-view integrity checks; validation content was neither read nor decrypted. Whole validation correctness relies on build-time checks and authenticated ciphertext commitment until authorized release."
+}

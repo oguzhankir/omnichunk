@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "cases": 360,
+  "before": "ccb9888011274f7e54e6ace896860fd6274adc1f",
+  "after": "52be942309894a1b95dcc3476ac5449fe0dcc757",
+  "scope": "Exact AST/grouped-range identity equivalence across LF/CRLF/CR, Python/JavaScript, Unicode, capacities and full-input counters; no quality/model claims."
+}

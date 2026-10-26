@@ -1,0 +1,327 @@
+{
+  "schema_version": 1,
+  "corpus_manifest_sha256": "7bb53b365ea6d53dbd8cf69179114c5ffd418ca71fdaf62a2f47c63e6f4d141d",
+  "baseline_tool": "semantic-text-splitter",
+  "candidate_tool": "omnichunk",
+  "configuration": {
+    "split": "test",
+    "unit": "tokens",
+    "tokenizer": "/workspace/work/omnichunk-quality/new-corpus/second-model/model-cache/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "include_special_tokens": true,
+    "retrieval_budget": 512,
+    "top_k": 5,
+    "context": "none",
+    "overlap": 0,
+    "retriever": "frozen-dense-cosine-v1",
+    "idf_fit": null,
+    "relevance": "binary positive canonical-byte intersection; chunk-level qrels differ by candidate",
+    "budget_selection": "whole ranked prefix, including two newline separators"
+  },
+  "dense_model_contract": {
+    "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "model_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "preprocessing_revision": "sentence-transformers-no-prompt-v1",
+    "dimension": 384,
+    "model_files": {
+      "1_Pooling/config.json": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23",
+      "README.md": "dcd602d2fd35c203a247304a06fec6654a12f7941b739f9221a064fe8dc3b7f0",
+      "config.json": "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41",
+      "config_sentence_transformers.json": "061ca9d39661d6c6d6de5ba27f79a1cd5770ea247f8d46412a68a498dc5ac9f3",
+      "data_config.json": "32edcb108fc2516b920734a862ae0692bcae1c5d45d5f8d972cb0d53434a4c54",
+      "model.safetensors": "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db",
+      "modules.json": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+      "sentence_bert_config.json": "fc1993fde0a95c24ec6c022539d41cf6e2f7c9721e5415d6fb6897472a9cd4b7",
+      "special_tokens_map.json": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+      "tokenizer.json": "be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037",
+      "tokenizer_config.json": "acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b",
+      "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+    },
+    "packages": {
+      "sentence-transformers": "6.2.0",
+      "tokenizers": "0.23.3",
+      "torch": "2.14.1+cpu",
+      "transformers": "5.20.2"
+    },
+    "prompt": "",
+    "max_sequence_length": 256,
+    "supported_pipeline": "standard Transformer + mean Pooling (+ Normalize); no prompts",
+    "device": "cpu",
+    "input_policy": "full tokenizer inputs including special tokens; reject overflow",
+    "normalization": "cosine normalization during evaluation"
+  },
+  "bootstrap": {
+    "samples": 2000,
+    "seed": 0,
+    "unit": "connected components of gold source IDs",
+    "interval": "95% percentile interval for paired query-mean delta"
+  },
+  "interpretation": "Descriptive paired evidence scores, not a universal ranking. Intervals assume independent gold-source components; queries within a component stay together. Sources from the same article or organization may remain correlated. Small samples and configuration/slice selection limit inference; intervals are not adjusted for multiple comparisons. Fewer than two source clusters yields no interval. Wins/ties/losses use an absolute delta tolerance of 1e-12.",
+  "comparisons": [
+    {
+      "chunk_capacity": 64,
+      "slices": {
+        "all": {
+          "queries": 144,
+          "gold_source_clusters": 16,
+          "metrics": {
+            "precision": {
+              "baseline_mean": 0.007172896623094961,
+              "candidate_mean": 0.007171682748900533,
+              "mean_delta": -1.2138741944281492e-06,
+              "wins": 38,
+              "ties": 42,
+              "losses": 64,
+              "bootstrap_delta_ci_95": [
+                -1.5949490862489004e-05,
+                1.395550182569253e-05
+              ]
+            },
+            "recall": {
+              "baseline_mean": 0.9743923611111112,
+              "candidate_mean": 0.9743923611111112,
+              "mean_delta": 0.0,
+              "wins": 0,
+              "ties": 144,
+              "losses": 0,
+              "bootstrap_delta_ci_95": [
+                0.0,
+                0.0
+              ]
+            },
+            "iou": {
+              "baseline_mean": 0.007172837999734168,
+              "candidate_mean": 0.007171624263100035,
+              "mean_delta": -1.213736634133719e-06,
+              "wins": 38,
+              "ties": 42,
+              "losses": 64,
+              "bootstrap_delta_ci_95": [
+                -1.5949490862489004e-05,
+                1.3955780385288752e-05
+              ]
+            }
+          }
+        },
+        "category:prose": {
+          "queries": 144,
+          "gold_source_clusters": 16,
+          "metrics": {
+            "precision": {
+              "baseline_mean": 0.007172896623094961,
+              "candidate_mean": 0.007171682748900533,
+              "mean_delta": -1.2138741944281492e-06,
+              "wins": 38,
+              "ties": 42,
+              "losses": 64,
+              "bootstrap_delta_ci_95": [
+                -1.5949490862489004e-05,
+                1.395550182569253e-05
+              ]
+            },
+            "recall": {
+              "baseline_mean": 0.9743923611111112,
+              "candidate_mean": 0.9743923611111112,
+              "mean_delta": 0.0,
+              "wins": 0,
+              "ties": 144,
+              "losses": 0,
+              "bootstrap_delta_ci_95": [
+                0.0,
+                0.0
+              ]
+            },
+            "iou": {
+              "baseline_mean": 0.007172837999734168,
+              "candidate_mean": 0.007171624263100035,
+              "mean_delta": -1.213736634133719e-06,
+              "wins": 38,
+              "ties": 42,
+              "losses": 64,
+              "bootstrap_delta_ci_95": [
+                -1.5949490862489004e-05,
+                1.3955780385288752e-05
+              ]
+            }
+          }
+        },
+        "language:en": {
+          "queries": 144,
+          "gold_source_clusters": 16,
+          "metrics": {
+            "precision": {
+              "baseline_mean": 0.007172896623094961,
+              "candidate_mean": 0.007171682748900533,
+              "mean_delta": -1.2138741944281492e-06,
+              "wins": 38,
+              "ties": 42,
+              "losses": 64,
+              "bootstrap_delta_ci_95": [
+                -1.5949490862489004e-05,
+                1.395550182569253e-05
+              ]
+            },
+            "recall": {
+              "baseline_mean": 0.9743923611111112,
+              "candidate_mean": 0.9743923611111112,
+              "mean_delta": 0.0,
+              "wins": 0,
+              "ties": 144,
+              "losses": 0,
+              "bootstrap_delta_ci_95": [
+                0.0,
+                0.0
+              ]
+            },
+            "iou": {
+              "baseline_mean": 0.007172837999734168,
+              "candidate_mean": 0.007171624263100035,
+              "mean_delta": -1.213736634133719e-06,
+              "wins": 38,
+              "ties": 42,
+              "losses": 64,
+              "bootstrap_delta_ci_95": [
+                -1.5949490862489004e-05,
+                1.3955780385288752e-05
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "chunk_capacity": 96,
+      "slices": {
+        "all": {
+          "queries": 144,
+          "gold_source_clusters": 16,
+          "metrics": {
+            "precision": {
+              "baseline_mean": 0.007339972681710668,
+              "candidate_mean": 0.007320258908152611,
+              "mean_delta": -1.971377355805786e-05,
+              "wins": 39,
+              "ties": 48,
+              "losses": 57,
+              "bootstrap_delta_ci_95": [
+                -5.1213162889600766e-05,
+                1.5071669958008372e-06
+              ]
+            },
+            "recall": {
+              "baseline_mean": 0.9722222222222222,
+              "candidate_mean": 0.9722222222222222,
+              "mean_delta": 0.0,
+              "wins": 0,
+              "ties": 144,
+              "losses": 0,
+              "bootstrap_delta_ci_95": [
+                0.0,
+                0.0
+              ]
+            },
+            "iou": {
+              "baseline_mean": 0.007339972681710668,
+              "candidate_mean": 0.007320258908152611,
+              "mean_delta": -1.971377355805786e-05,
+              "wins": 39,
+              "ties": 48,
+              "losses": 57,
+              "bootstrap_delta_ci_95": [
+                -5.1213162889600766e-05,
+                1.5071669958008372e-06
+              ]
+            }
+          }
+        },
+        "category:prose": {
+          "queries": 144,
+          "gold_source_clusters": 16,
+          "metrics": {
+            "precision": {
+              "baseline_mean": 0.007339972681710668,
+              "candidate_mean": 0.007320258908152611,
+              "mean_delta": -1.971377355805786e-05,
+              "wins": 39,
+              "ties": 48,
+              "losses": 57,
+              "bootstrap_delta_ci_95": [
+                -5.1213162889600766e-05,
+                1.5071669958008372e-06
+              ]
+            },
+            "recall": {
+              "baseline_mean": 0.9722222222222222,
+              "candidate_mean": 0.9722222222222222,
+              "mean_delta": 0.0,
+              "wins": 0,
+              "ties": 144,
+              "losses": 0,
+              "bootstrap_delta_ci_95": [
+                0.0,
+                0.0
+              ]
+            },
+            "iou": {
+              "baseline_mean": 0.007339972681710668,
+              "candidate_mean": 0.007320258908152611,
+              "mean_delta": -1.971377355805786e-05,
+              "wins": 39,
+              "ties": 48,
+              "losses": 57,
+              "bootstrap_delta_ci_95": [
+                -5.1213162889600766e-05,
+                1.5071669958008372e-06
+              ]
+            }
+          }
+        },
+        "language:en": {
+          "queries": 144,
+          "gold_source_clusters": 16,
+          "metrics": {
+            "precision": {
+              "baseline_mean": 0.007339972681710668,
+              "candidate_mean": 0.007320258908152611,
+              "mean_delta": -1.971377355805786e-05,
+              "wins": 39,
+              "ties": 48,
+              "losses": 57,
+              "bootstrap_delta_ci_95": [
+                -5.1213162889600766e-05,
+                1.5071669958008372e-06
+              ]
+            },
+            "recall": {
+              "baseline_mean": 0.9722222222222222,
+              "candidate_mean": 0.9722222222222222,
+              "mean_delta": 0.0,
+              "wins": 0,
+              "ties": 144,
+              "losses": 0,
+              "bootstrap_delta_ci_95": [
+                0.0,
+                0.0
+              ]
+            },
+            "iou": {
+              "baseline_mean": 0.007339972681710668,
+              "candidate_mean": 0.007320258908152611,
+              "mean_delta": -1.971377355805786e-05,
+              "wins": 39,
+              "ties": 48,
+              "losses": 57,
+              "bootstrap_delta_ci_95": [
+                -5.1213162889600766e-05,
+                1.5071669958008372e-06
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "reports": {
+    "baseline_sha256": "669a336fbf713d8d5ac5f4463355f9a87340d867035f36bd0638463e2ef8a79c",
+    "candidate_sha256": "e0c204a606c1b5bddff7dcc0511ce7a48b5420c4fc86a0d739c98a494c734234"
+  }
+}

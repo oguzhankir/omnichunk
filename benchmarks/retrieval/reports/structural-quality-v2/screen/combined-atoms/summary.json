@@ -1,0 +1,400 @@
+{
+  "label": "combined-atoms",
+  "revision": "d131578257470ac5e141a64c3063b8b7b4fab6a8",
+  "screen_script_sha256": "a5821e24ba00fd43af8ab59b5980b68454afaa2e2bff2db370e41cbc602889c8",
+  "development_only": true,
+  "rows": [
+    {
+      "corpus": "corpus_v1",
+      "capacity": 64,
+      "chunks": 230,
+      "summary": {
+        "all": {
+          "queries": 180,
+          "ranking": {
+            "recall_at_k": 0.8638888888888889,
+            "mrr_at_k": 0.8626851851851852,
+            "ndcg_at_k": 0.8203754013165321
+          },
+          "evidence_at_k": {
+            "precision": 0.20446841651600312,
+            "recall": 0.9193791402397103,
+            "iou": 0.20198162396537922
+          },
+          "evidence_at_budget": {
+            "precision": 0.08272459547069484,
+            "recall": 0.9360276534699216,
+            "iou": 0.08244850589467205
+          }
+        },
+        "category:code": {
+          "queries": 80,
+          "ranking": {
+            "recall_at_k": 0.84375,
+            "mrr_at_k": 0.8520833333333333,
+            "ndcg_at_k": 0.7973834785790258
+          },
+          "evidence_at_k": {
+            "precision": 0.19673438683793684,
+            "recall": 0.9182085341320847,
+            "iou": 0.19456352525448709
+          },
+          "evidence_at_budget": {
+            "precision": 0.08080176845746702,
+            "recall": 0.9339564798492163,
+            "iou": 0.0803848976059486
+          }
+        },
+        "category:markdown": {
+          "queries": 60,
+          "ranking": {
+            "recall_at_k": 0.9166666666666666,
+            "mrr_at_k": 0.8458333333333333,
+            "ndcg_at_k": 0.8641197472178933
+          },
+          "evidence_at_k": {
+            "precision": 0.18309413037906616,
+            "recall": 0.9166666666666666,
+            "iou": 0.18309413037906616
+          },
+          "evidence_at_budget": {
+            "precision": 0.0744557096267569,
+            "recall": 0.9166666666666666,
+            "iou": 0.0744557096267569
+          }
+        },
+        "category:table": {
+          "queries": 40,
+          "ranking": {
+            "recall_at_k": 0.825,
+            "mrr_at_k": 0.9091666666666667,
+            "ndcg_at_k": 0.8007427279395027
+          },
+          "evidence_at_k": {
+            "precision": 0.2519979050775411,
+            "recall": 0.925789062814527,
+            "iou": 0.24514906176663312
+          },
+          "evidence_at_budget": {
+            "precision": 0.0989735782630574,
+            "recall": 0.9692114809162143,
+            "iou": 0.09856491687399171
+          }
+        },
+        "language:en": {
+          "queries": 60,
+          "ranking": {
+            "recall_at_k": 0.9666666666666667,
+            "mrr_at_k": 0.9236111111111112,
+            "ndcg_at_k": 0.9343601051940809
+          },
+          "evidence_at_k": {
+            "precision": 0.17919520770469535,
+            "recall": 0.9666666666666667,
+            "iou": 0.17919520770469535
+          },
+          "evidence_at_budget": {
+            "precision": 0.06819602776924925,
+            "recall": 0.9666666666666667,
+            "iou": 0.06819602776924925
+          }
+        },
+        "language:ja": {
+          "queries": 60,
+          "ranking": {
+            "recall_at_k": 0.725,
+            "mrr_at_k": 0.9319444444444445,
+            "ndcg_at_k": 0.7514391627265673
+          },
+          "evidence_at_k": {
+            "precision": 0.2605379504418146,
+            "recall": 0.8914707540524643,
+            "iou": 0.2530775727899429
+          },
+          "evidence_at_budget": {
+            "precision": 0.11542097186325943,
+            "recall": 0.9247496270764313,
+            "iou": 0.11459270313519107
+          }
+        },
+        "language:tr": {
+          "queries": 60,
+          "ranking": {
+            "recall_at_k": 0.9,
+            "mrr_at_k": 0.7325,
+            "ndcg_at_k": 0.7753269360289481
+          },
+          "evidence_at_k": {
+            "precision": 0.17367209140149942,
+            "recall": 0.9,
+            "iou": 0.17367209140149942
+          },
+          "evidence_at_budget": {
+            "precision": 0.06455678677957583,
+            "recall": 0.9166666666666666,
+            "iou": 0.06455678677957583
+          }
+        }
+      },
+      "chunk_seconds": 0.2533613599999853
+    },
+    {
+      "corpus": "corpus_v1",
+      "capacity": 96,
+      "chunks": 154,
+      "summary": {
+        "all": {
+          "queries": 180,
+          "ranking": {
+            "recall_at_k": 0.9,
+            "mrr_at_k": 0.7626851851851851,
+            "ndcg_at_k": 0.7977725442128705
+          },
+          "evidence_at_k": {
+            "precision": 0.1488408855481576,
+            "recall": 0.9,
+            "iou": 0.1488408855481576
+          },
+          "evidence_at_budget": {
+            "precision": 0.08637225481365637,
+            "recall": 0.9277777777777778,
+            "iou": 0.08637225481365637
+          }
+        },
+        "category:code": {
+          "queries": 80,
+          "ranking": {
+            "recall_at_k": 0.8625,
+            "mrr_at_k": 0.7254166666666667,
+            "ndcg_at_k": 0.7601455729494633
+          },
+          "evidence_at_k": {
+            "precision": 0.1286558165179076,
+            "recall": 0.8625,
+            "iou": 0.1286558165179076
+          },
+          "evidence_at_budget": {
+            "precision": 0.08456918767106557,
+            "recall": 0.9,
+            "iou": 0.08456918767106557
+          }
+        },
+        "category:markdown": {
+          "queries": 60,
+          "ranking": {
+            "recall_at_k": 0.9166666666666666,
+            "mrr_at_k": 0.8388888888888889,
+            "ndcg_at_k": 0.859123967142861
+          },
+          "evidence_at_k": {
+            "precision": 0.1620636770777786,
+            "recall": 0.9166666666666666,
+            "iou": 0.1620636770777786
+          },
+          "evidence_at_budget": {
+            "precision": 0.07694144727619714,
+            "recall": 0.9333333333333333,
+            "iou": 0.07694144727619714
+          }
+        },
+        "category:table": {
+          "queries": 40,
+          "ranking": {
+            "recall_at_k": 0.95,
+            "mrr_at_k": 0.7229166666666667,
+            "ndcg_at_k": 0.7809993523446992
+          },
+          "evidence_at_k": {
+            "precision": 0.16937683631422618,
+            "recall": 0.95,
+            "iou": 0.16937683631422618
+          },
+          "evidence_at_budget": {
+            "precision": 0.10412460040502686,
+            "recall": 0.975,
+            "iou": 0.10412460040502686
+          }
+        },
+        "language:en": {
+          "queries": 60,
+          "ranking": {
+            "recall_at_k": 0.9166666666666666,
+            "mrr_at_k": 0.8111111111111111,
+            "ndcg_at_k": 0.8384882922619096
+          },
+          "evidence_at_k": {
+            "precision": 0.12282772079167062,
+            "recall": 0.9166666666666666,
+            "iou": 0.12282772079167062
+          },
+          "evidence_at_budget": {
+            "precision": 0.06942011904463039,
+            "recall": 0.9333333333333333,
+            "iou": 0.06942011904463039
+          }
+        },
+        "language:ja": {
+          "queries": 60,
+          "ranking": {
+            "recall_at_k": 0.9833333333333333,
+            "mrr_at_k": 0.8708333333333333,
+            "ndcg_at_k": 0.8991113073679577
+          },
+          "evidence_at_k": {
+            "precision": 0.21902191812415717,
+            "recall": 0.9833333333333333,
+            "iou": 0.21902191812415717
+          },
+          "evidence_at_budget": {
+            "precision": 0.12749247915876455,
+            "recall": 0.9833333333333333,
+            "iou": 0.12749247915876455
+          }
+        },
+        "language:tr": {
+          "queries": 60,
+          "ranking": {
+            "recall_at_k": 0.8,
+            "mrr_at_k": 0.6061111111111112,
+            "ndcg_at_k": 0.6557180330087441
+          },
+          "evidence_at_k": {
+            "precision": 0.10467301772864507,
+            "recall": 0.8,
+            "iou": 0.10467301772864507
+          },
+          "evidence_at_budget": {
+            "precision": 0.06220416623757421,
+            "recall": 0.8666666666666667,
+            "iou": 0.06220416623757421
+          }
+        }
+      },
+      "chunk_seconds": 0.2559276060000002
+    },
+    {
+      "corpus": "corpus_squad_v1",
+      "capacity": 64,
+      "chunks": 64,
+      "summary": {
+        "all": {
+          "queries": 48,
+          "ranking": {
+            "recall_at_k": 0.9791666666666666,
+            "mrr_at_k": 0.8454861111111112,
+            "ndcg_at_k": 0.8795053141562945
+          },
+          "evidence_at_k": {
+            "precision": 0.02653472503694826,
+            "recall": 0.9791666666666666,
+            "iou": 0.02653472503694826
+          },
+          "evidence_at_budget": {
+            "precision": 0.012791053702608057,
+            "recall": 0.9791666666666666,
+            "iou": 0.012791053702608057
+          }
+        },
+        "category:prose": {
+          "queries": 48,
+          "ranking": {
+            "recall_at_k": 0.9791666666666666,
+            "mrr_at_k": 0.8454861111111112,
+            "ndcg_at_k": 0.8795053141562945
+          },
+          "evidence_at_k": {
+            "precision": 0.02653472503694826,
+            "recall": 0.9791666666666666,
+            "iou": 0.02653472503694826
+          },
+          "evidence_at_budget": {
+            "precision": 0.012791053702608057,
+            "recall": 0.9791666666666666,
+            "iou": 0.012791053702608057
+          }
+        },
+        "language:en": {
+          "queries": 48,
+          "ranking": {
+            "recall_at_k": 0.9791666666666666,
+            "mrr_at_k": 0.8454861111111112,
+            "ndcg_at_k": 0.8795053141562945
+          },
+          "evidence_at_k": {
+            "precision": 0.02653472503694826,
+            "recall": 0.9791666666666666,
+            "iou": 0.02653472503694826
+          },
+          "evidence_at_budget": {
+            "precision": 0.012791053702608057,
+            "recall": 0.9791666666666666,
+            "iou": 0.012791053702608057
+          }
+        }
+      },
+      "chunk_seconds": 0.1952756099999533
+    },
+    {
+      "corpus": "corpus_squad_v1",
+      "capacity": 96,
+      "chunks": 45,
+      "summary": {
+        "all": {
+          "queries": 48,
+          "ranking": {
+            "recall_at_k": 0.9791666666666666,
+            "mrr_at_k": 0.9069444444444444,
+            "ndcg_at_k": 0.9252202462816744
+          },
+          "evidence_at_k": {
+            "precision": 0.018121488114884947,
+            "recall": 0.9791666666666666,
+            "iou": 0.018121488114884947
+          },
+          "evidence_at_budget": {
+            "precision": 0.012891140517061604,
+            "recall": 0.9791666666666666,
+            "iou": 0.012891140517061604
+          }
+        },
+        "category:prose": {
+          "queries": 48,
+          "ranking": {
+            "recall_at_k": 0.9791666666666666,
+            "mrr_at_k": 0.9069444444444444,
+            "ndcg_at_k": 0.9252202462816744
+          },
+          "evidence_at_k": {
+            "precision": 0.018121488114884947,
+            "recall": 0.9791666666666666,
+            "iou": 0.018121488114884947
+          },
+          "evidence_at_budget": {
+            "precision": 0.012891140517061604,
+            "recall": 0.9791666666666666,
+            "iou": 0.012891140517061604
+          }
+        },
+        "language:en": {
+          "queries": 48,
+          "ranking": {
+            "recall_at_k": 0.9791666666666666,
+            "mrr_at_k": 0.9069444444444444,
+            "ndcg_at_k": 0.9252202462816744
+          },
+          "evidence_at_k": {
+            "precision": 0.018121488114884947,
+            "recall": 0.9791666666666666,
+            "iou": 0.018121488114884947
+          },
+          "evidence_at_budget": {
+            "precision": 0.012891140517061604,
+            "recall": 0.9791666666666666,
+            "iou": 0.012891140517061604
+          }
+        }
+      },
+      "chunk_seconds": 0.10202485199999956
+    }
+  ]
+}

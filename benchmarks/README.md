@@ -122,14 +122,20 @@ use `build_dense_artifact` with an explicit callback and preprocessing revision.
 An artifact records producer assertions and cannot independently attest how an
 external producer generated vectors.
 
-Real pretrained results for `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`
-are recorded with snapshot commit `e8f8c211226b894fcb81acc59f3b34ba3efd5f42` and
-source commit `a2e3bae7afb9b81f7c044ac0feda6612b0f97c97`. The
-[dense experiment record](retrieval/reports/dense-minilm-v1/README.md) preserves the
-configuration, development decisions, raw reports, model/package hashes and
-the held-out evaluation. Unit-test vectors and random local models remain plumbing
-checks. Independent review of selected evidence labels and production design-partner
-evaluation remain open M1 requirements.
+The historical [v1 dense experiment](retrieval/reports/dense-minilm-v1/README.md)
+records the recursive-tail and orphan-heading comparison using
+`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` at model commit
+`e8f8c211226b894fcb81acc59f3b34ba3efd5f42` and source
+`a2e3bae7afb9b81f7c044ac0feda6612b0f97c97`. Its raw reports and original held-out
+results remain unchanged. Those previously observed test splits are development
+diagnostics for later work, rather than fresh validation.
+
+The [structural-quality v2 record](retrieval/reports/structural-quality-v2/README.md)
+documents the frozen source/model configuration, general boundary repairs,
+independent article selection and separate validation matrix. It retains raw
+comparisons and provenance for each model and source view. Unit-test vectors and
+random local models remain plumbing checks. Independent review of selected
+evidence labels and production design-partner evaluation remain M1 requirements.
 
 ### Baseline/candidate dense experiments
 
@@ -146,15 +152,17 @@ python benchmarks/run_dense_experiment.py \
   --output-dir reports/dense-synthetic-dev
 ```
 
-The frozen encoder is `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`
-at `e8f8c211226b894fcb81acc59f3b34ba3efd5f42`. Both runtimes use the
-same model and native tokenizer, including special tokens, at 64/96-token chunk
-capacities. The retrieved context is a complete ranked prefix within 512 tokens;
-top-k 5 separately defines the ranking metrics and does not cap that prefix to five
-passages. Overlap is zero, derived context is disabled and chunking timing has three repeats.
-Both PyTorch CPU thread pools use two threads, with OMP/MKL also limited to two.
-Repeat for `--corpus corpus_squad_v1`. Six token-safe adapters run; Chonkie's
-count-only token contract remains explicitly excluded.
+The default encoder for this helper and the historical v1 run is
+`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` at
+`e8f8c211226b894fcb81acc59f3b34ba3efd5f42`. Within each model's experiment,
+both runtimes and all six adapters use the same native tokenizer, including
+special tokens, at 64/96-token chunk capacities. Complete ranked retrieval
+prefixes fit 512 tokens; top-k 5 separately defines ranking metrics and does not
+cap that prefix to five passages. Overlap is zero, derived context is disabled
+and chunking timing has three repeats. Both PyTorch CPU thread pools use two
+threads, with OMP/MKL also limited to two. Chonkie's count-only token contract
+remains explicitly excluded. The v2 record declares its second encoder and
+predeclared 128/256-token retrieval-budget sensitivity checks separately.
 
 The actual imported runtime has its own git revision/dirty status and source hash,
 separate from the shared harness. A source checkout must be available for the baseline.
@@ -193,20 +201,58 @@ Candidate payload/token workloads describe potential work, not measured independ
 embedding bills. Frozen-vector index/query latency excludes encoding and any
 external vector database. Python incremental index memory excludes native allocations.
 
-Development evaluation retained the recursive-tail repair, which packs a short
-recursive fragment with the following complete fitting unit. It also exposed
-orphaned Markdown headings: an oversized following body was split independently,
-even when its first complete paragraph fit with the heading. The repair now splits
-the combined contiguous heading/body source and preserves structural units, source
-ranges, heading metadata, protected fences and complete nonadditive token budgets.
+### Structural quality follow-up
 
-Source `a2e3bae7afb9b81f7c044ac0feda6612b0f97c97`, the model revision and
-settings were frozen before the held-out evaluation. See the
-[dense experiment record](retrieval/reports/dense-minilm-v1/README.md) for gains,
-regressions, language/category slices and paired uncertainty intervals. Earlier
-character-budget lexical controls remain in `retrieval/reports/tail-*-dev.json.gz`.
-These small synthetic and external English workloads do not establish universal
-leadership; choose a configuration using the relevant development workload.
+The [v2 record](retrieval/reports/structural-quality-v2/README.md) compares frozen
+candidate `386b5ce99d4508a62725d6b36883dfa999715e8c` with previous main
+`511c1cc50db8549060c9ab642ded2da96619e3db`; release baseline
+`fa80b981efa84d1fe8ca1cbb8556aa715c14cb0e` remains identified separately.
+The source and complete model/configuration commitments were frozen before the
+new validation material was released. The historical v1 and lexical reports
+remain available in their original directories.
+
+General rules retain complete fitting Markdown paragraphs as separate retrieval
+units, preserve their owning nested headings and keep fitting documented root
+statements with their leading comments and same-line trailing comment chains.
+A group that cannot fit keeps the existing budget fallback. Oversized prose
+prefers strong semicolon clauses before words; fallback sentence cuts inside
+matched, unescaped square brackets are ignored, including nested pairs, without
+letting an unmatched opening suppress later boundaries. The global semantic
+sentence splitter is unchanged. Complete source ranges, protected fences and
+nonadditive full-input budgets remain enforced.
+
+Markdown paragraph isolation also applies to small documents whose complete text
+would fit one chunk: a heading and three plain paragraphs can now produce three
+chunks at a 256-character capacity. The minimum size remains soft and does not
+recombine these body paragraphs. No compact-profile flag is introduced. These
+rules can increase chunks, stored vectors and embedding/index work, and can
+reduce adjacent context in a retrieved passage. Assess these costs with the
+reported evidence gains and losses; the change makes no universal speed, memory,
+embedding-cost or superiority claim.
+
+The new English corpus selects 32 previously unused SQuAD 1.1 articles, excluding
+all 16 articles observed in `corpus_squad_v1`. A protocol fixed before selection
+uses the predeclared 32-article fallback: three source paragraphs per article and
+three questions per paragraph, with 16 whole articles and 144 questions in each
+development/validation split. The article-text view joins the original selected
+paragraphs; article-markdown adds the article title as a heading. Both views use
+the same questions and are correlated transformations, rather than independent
+replications. One source document per article makes each bootstrap unit an
+article. Attribution and CC-BY-SA-4.0 source licensing remain with the corpus and
+reproduced passages.
+
+The two encoders are `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`
+at `e8f8c211226b894fcb81acc59f3b34ba3efd5f42` and the English
+`sentence-transformers/all-MiniLM-L6-v2` at
+`1110a243fdf4706b3f48f1d95db1a4f5529b4d41`. The English encoder supplies
+English evidence only. Model-specific native token budgets and all adapter
+settings are fixed before validation; results must remain separate by encoder
+and view. The v2 record preserves the selection protocol, encrypted-validation
+commitments, source/model/package hashes, raw comparisons and timing limits.
+Procedural blindness does not establish pretraining novelty or externally held
+custody. Short-answer annotations still need an independent suitability review
+as complete supporting evidence, and production design-partner evaluation remains
+open before M1 can be completed.
 
 ## Core and structural checks
 

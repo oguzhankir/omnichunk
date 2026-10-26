@@ -1,0 +1,420 @@
+{
+  "schema_version": 1,
+  "producer_source_sha256": "7c33224162fdbcb40de4821c089c6a460565995fd916b4cea0b58e4897261069",
+  "source_report_file_sha256": "4367f9454ea44cf45bf03a99949b8294d499450e1bbbaba410d9c7c36716cec7",
+  "source_report_json_sha256": "2bc6b6c57b293ecf5e3832b0ee0918e11f913538d3b8c4416ffb4721b81b0fe9",
+  "source_vectors_file_sha256": "c242ad1f680c97badfcc76c7a5927f3f25a211f76e254d81f958350aab5368a2",
+  "source_vectors_json_sha256": "e95e527610b025cc95c328a1c1881a82811f9beca908bf34ead8728ee84a171f",
+  "shared_harness_files": {
+    "benchmarks/retrieval/dense.py": "9c53fd2d958bdf4429005a51b573cae9a1dfe8181440edf7c965a27fa0127cef",
+    "benchmarks/retrieval/ranking.py": "5da84f251f00324a3cb2c41cfc8c02ec2d1ef0458a856e24136544ffb3e7feaf",
+    "benchmarks/retrieval/tokenization.py": "5ac18498df84cf725cb11db1446e6e41dff4c720522c73b414f7bb977f1cb65f",
+    "benchmarks/run_retrieval.py": "f3e0fdaed03b849ebc58cb5b6c3cb527d629fb6a6663ed5435a18a07ad14e7b1"
+  },
+  "verified_tokenizer_assets": {
+    "1_Pooling/config.json": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23",
+    "config.json": "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41",
+    "config_sentence_transformers.json": "061ca9d39661d6c6d6de5ba27f79a1cd5770ea247f8d46412a68a498dc5ac9f3",
+    "data_config.json": "32edcb108fc2516b920734a862ae0692bcae1c5d45d5f8d972cb0d53434a4c54",
+    "modules.json": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+    "sentence_bert_config.json": "fc1993fde0a95c24ec6c022539d41cf6e2f7c9721e5415d6fb6897472a9cd4b7",
+    "special_tokens_map.json": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+    "tokenizer.json": "be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037",
+    "tokenizer_config.json": "acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b",
+    "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+  },
+  "anchor_budget": 512,
+  "requested_budgets": [
+    128,
+    256,
+    512
+  ],
+  "anchor_replay_exact": true,
+  "rank_calls_shared_across_budgets": 288,
+  "embedding_calls": 0,
+  "timing_scope": "Original chunk/index/query/encoder timing fields are retained unchanged from the input 512-token report. One additional frozen ranking per candidate/query is shared across all frontier budgets solely to verify/replay results. No per-budget ranking, encoding or end-to-end latency was measured.",
+  "interpretation": "Predeclared secondary context-budget frontier; ranks and exact real vectors are shared. Original top-k metrics and provenance remain unchanged. Budgets are reported together, without selecting favorable outcomes.",
+  "outputs": [
+    {
+      "retrieval_budget": 128,
+      "file": "budget-128.report.json",
+      "sha256": "1ddaca8ff7074cb8cd4a34a799031c0153df2fb8d203703162717f0e7d44b534",
+      "candidates": [
+        {
+          "tool": "omnichunk",
+          "chunk_capacity": 64,
+          "summary": {
+            "all": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9270833333333334,
+                "mrr_at_k": 0.8085648148148148,
+                "ndcg_at_k": 0.8343190169904557
+              },
+              "evidence_at_k": {
+                "precision": 0.015593145716743195,
+                "recall": 0.926840086996337,
+                "iou": 0.015589019613097794
+              },
+              "evidence_at_budget": {
+                "precision": 0.028185896347943683,
+                "recall": 0.8477802579365079,
+                "iou": 0.02817295419228091
+              }
+            },
+            "category:prose": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9270833333333334,
+                "mrr_at_k": 0.8085648148148148,
+                "ndcg_at_k": 0.8343190169904557
+              },
+              "evidence_at_k": {
+                "precision": 0.015593145716743195,
+                "recall": 0.926840086996337,
+                "iou": 0.015589019613097794
+              },
+              "evidence_at_budget": {
+                "precision": 0.028185896347943683,
+                "recall": 0.8477802579365079,
+                "iou": 0.02817295419228091
+              }
+            },
+            "language:en": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9270833333333334,
+                "mrr_at_k": 0.8085648148148148,
+                "ndcg_at_k": 0.8343190169904557
+              },
+              "evidence_at_k": {
+                "precision": 0.015593145716743195,
+                "recall": 0.926840086996337,
+                "iou": 0.015589019613097794
+              },
+              "evidence_at_budget": {
+                "precision": 0.028185896347943683,
+                "recall": 0.8477802579365079,
+                "iou": 0.02817295419228091
+              }
+            }
+          }
+        },
+        {
+          "tool": "omnichunk",
+          "chunk_capacity": 96,
+          "summary": {
+            "all": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9548611111111112,
+                "mrr_at_k": 0.8726851851851852,
+                "ndcg_at_k": 0.8930898714421358
+              },
+              "evidence_at_k": {
+                "precision": 0.010593177889962859,
+                "recall": 0.9552469135802469,
+                "iou": 0.010592746627989409
+              },
+              "evidence_at_budget": {
+                "precision": 0.03719584062097385,
+                "recall": 0.8649691358024691,
+                "iou": 0.037192957688224025
+              }
+            },
+            "category:prose": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9548611111111112,
+                "mrr_at_k": 0.8726851851851852,
+                "ndcg_at_k": 0.8930898714421358
+              },
+              "evidence_at_k": {
+                "precision": 0.010593177889962859,
+                "recall": 0.9552469135802469,
+                "iou": 0.010592746627989409
+              },
+              "evidence_at_budget": {
+                "precision": 0.03719584062097385,
+                "recall": 0.8649691358024691,
+                "iou": 0.037192957688224025
+              }
+            },
+            "language:en": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9548611111111112,
+                "mrr_at_k": 0.8726851851851852,
+                "ndcg_at_k": 0.8930898714421358
+              },
+              "evidence_at_k": {
+                "precision": 0.010593177889962859,
+                "recall": 0.9552469135802469,
+                "iou": 0.010592746627989409
+              },
+              "evidence_at_budget": {
+                "precision": 0.03719584062097385,
+                "recall": 0.8649691358024691,
+                "iou": 0.037192957688224025
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "retrieval_budget": 256,
+      "file": "budget-256.report.json",
+      "sha256": "934966ad3b471796e1788799c82a3b1a2da8ea8ba9289a50e9bd726588f061b4",
+      "candidates": [
+        {
+          "tool": "omnichunk",
+          "chunk_capacity": 64,
+          "summary": {
+            "all": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9270833333333334,
+                "mrr_at_k": 0.8085648148148148,
+                "ndcg_at_k": 0.8343190169904557
+              },
+              "evidence_at_k": {
+                "precision": 0.015593145716743195,
+                "recall": 0.926840086996337,
+                "iou": 0.015589019613097794
+              },
+              "evidence_at_budget": {
+                "precision": 0.014298848460944287,
+                "recall": 0.926840086996337,
+                "iou": 0.014294283171571835
+              }
+            },
+            "category:prose": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9270833333333334,
+                "mrr_at_k": 0.8085648148148148,
+                "ndcg_at_k": 0.8343190169904557
+              },
+              "evidence_at_k": {
+                "precision": 0.015593145716743195,
+                "recall": 0.926840086996337,
+                "iou": 0.015589019613097794
+              },
+              "evidence_at_budget": {
+                "precision": 0.014298848460944287,
+                "recall": 0.926840086996337,
+                "iou": 0.014294283171571835
+              }
+            },
+            "language:en": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9270833333333334,
+                "mrr_at_k": 0.8085648148148148,
+                "ndcg_at_k": 0.8343190169904557
+              },
+              "evidence_at_k": {
+                "precision": 0.015593145716743195,
+                "recall": 0.926840086996337,
+                "iou": 0.015589019613097794
+              },
+              "evidence_at_budget": {
+                "precision": 0.014298848460944287,
+                "recall": 0.926840086996337,
+                "iou": 0.014294283171571835
+              }
+            }
+          }
+        },
+        {
+          "tool": "omnichunk",
+          "chunk_capacity": 96,
+          "summary": {
+            "all": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9548611111111112,
+                "mrr_at_k": 0.8726851851851852,
+                "ndcg_at_k": 0.8930898714421358
+              },
+              "evidence_at_k": {
+                "precision": 0.010593177889962859,
+                "recall": 0.9552469135802469,
+                "iou": 0.010592746627989409
+              },
+              "evidence_at_budget": {
+                "precision": 0.01544207598109514,
+                "recall": 0.941358024691358,
+                "iou": 0.01544124161314555
+              }
+            },
+            "category:prose": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9548611111111112,
+                "mrr_at_k": 0.8726851851851852,
+                "ndcg_at_k": 0.8930898714421358
+              },
+              "evidence_at_k": {
+                "precision": 0.010593177889962859,
+                "recall": 0.9552469135802469,
+                "iou": 0.010592746627989409
+              },
+              "evidence_at_budget": {
+                "precision": 0.01544207598109514,
+                "recall": 0.941358024691358,
+                "iou": 0.01544124161314555
+              }
+            },
+            "language:en": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9548611111111112,
+                "mrr_at_k": 0.8726851851851852,
+                "ndcg_at_k": 0.8930898714421358
+              },
+              "evidence_at_k": {
+                "precision": 0.010593177889962859,
+                "recall": 0.9552469135802469,
+                "iou": 0.010592746627989409
+              },
+              "evidence_at_budget": {
+                "precision": 0.01544207598109514,
+                "recall": 0.941358024691358,
+                "iou": 0.01544124161314555
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "retrieval_budget": 512,
+      "file": "budget-512.report.json",
+      "sha256": "9c09a468a841f19f0be97a53cb4111e1908403d24762f75392abbe8d010d8d1b",
+      "candidates": [
+        {
+          "tool": "omnichunk",
+          "chunk_capacity": 64,
+          "summary": {
+            "all": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9270833333333334,
+                "mrr_at_k": 0.8085648148148148,
+                "ndcg_at_k": 0.8343190169904557
+              },
+              "evidence_at_k": {
+                "precision": 0.015593145716743195,
+                "recall": 0.926840086996337,
+                "iou": 0.015589019613097794
+              },
+              "evidence_at_budget": {
+                "precision": 0.007111025866601414,
+                "recall": 0.9701188568376068,
+                "iou": 0.00711073534008797
+              }
+            },
+            "category:prose": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9270833333333334,
+                "mrr_at_k": 0.8085648148148148,
+                "ndcg_at_k": 0.8343190169904557
+              },
+              "evidence_at_k": {
+                "precision": 0.015593145716743195,
+                "recall": 0.926840086996337,
+                "iou": 0.015589019613097794
+              },
+              "evidence_at_budget": {
+                "precision": 0.007111025866601414,
+                "recall": 0.9701188568376068,
+                "iou": 0.00711073534008797
+              }
+            },
+            "language:en": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9270833333333334,
+                "mrr_at_k": 0.8085648148148148,
+                "ndcg_at_k": 0.8343190169904557
+              },
+              "evidence_at_k": {
+                "precision": 0.015593145716743195,
+                "recall": 0.926840086996337,
+                "iou": 0.015589019613097794
+              },
+              "evidence_at_budget": {
+                "precision": 0.007111025866601414,
+                "recall": 0.9701188568376068,
+                "iou": 0.00711073534008797
+              }
+            }
+          }
+        },
+        {
+          "tool": "omnichunk",
+          "chunk_capacity": 96,
+          "summary": {
+            "all": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9548611111111112,
+                "mrr_at_k": 0.8726851851851852,
+                "ndcg_at_k": 0.8930898714421358
+              },
+              "evidence_at_k": {
+                "precision": 0.010593177889962859,
+                "recall": 0.9552469135802469,
+                "iou": 0.010592746627989409
+              },
+              "evidence_at_budget": {
+                "precision": 0.00741031413369163,
+                "recall": 0.9791666666666666,
+                "iou": 0.00741031413369163
+              }
+            },
+            "category:prose": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9548611111111112,
+                "mrr_at_k": 0.8726851851851852,
+                "ndcg_at_k": 0.8930898714421358
+              },
+              "evidence_at_k": {
+                "precision": 0.010593177889962859,
+                "recall": 0.9552469135802469,
+                "iou": 0.010592746627989409
+              },
+              "evidence_at_budget": {
+                "precision": 0.00741031413369163,
+                "recall": 0.9791666666666666,
+                "iou": 0.00741031413369163
+              }
+            },
+            "language:en": {
+              "queries": 144,
+              "ranking": {
+                "recall_at_k": 0.9548611111111112,
+                "mrr_at_k": 0.8726851851851852,
+                "ndcg_at_k": 0.8930898714421358
+              },
+              "evidence_at_k": {
+                "precision": 0.010593177889962859,
+                "recall": 0.9552469135802469,
+                "iou": 0.010592746627989409
+              },
+              "evidence_at_budget": {
+                "precision": 0.00741031413369163,
+                "recall": 0.9791666666666666,
+                "iou": 0.00741031413369163
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
