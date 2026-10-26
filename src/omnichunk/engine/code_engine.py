@@ -359,44 +359,70 @@ def _bind_leading_comments(nodes: list[Any], budget: SourceBudget, max_size: int
     """Keep an adjacent leading comment block with its fitting root statement.
 
     Source trivia belongs to the preceding sibling in measured windowing, so the
-    fit check includes the statement's trailing trivia. Original children remain
-    available if a later full-source budget check still requires descent.
+    fit check includes same-line trailing comments and the statement's trailing
+    trivia. Original children remain available if a later full-source budget
+    check still requires descent.
     """
     raw = budget.index.raw_bytes
     # Root offsets are queried repeatedly; scanning each entire source prefix
     # for a missing CR would otherwise make LF-only files quadratic.
-    line_starts = [0, *(offset + 1 for offset, byte in enumerate(raw) if byte in (10, 13))]
+    line_breaks = "\r\n\u2028\u2029"
+    line_starts = [
+        0,
+        *(
+            budget.index.byte_offset_for_char(offset + 1)
+            for offset, char in enumerate(budget.text)
+            if char in line_breaks
+        ),
+    ]
     output: list[Any] = []
     pending: list[Any] = []
 
     def adjacent(left: Any, right: Any) -> bool:
         gap = raw[int(left.end_byte) : int(right.start_byte)].decode("utf-8")
-        newlines = gap.replace("\r\n", "\n").replace("\r", "\n").count("\n")
+        newlines = sum(char in line_breaks for char in gap.replace("\r\n", "\n"))
         return not gap.strip() and newlines <= 1
 
-    for index, node in enumerate(nodes):
+    index = 0
+    while index < len(nodes):
+        node = nodes[index]
         start = int(node.start_byte)
         line_start = line_starts[bisect_right(line_starts, start) - 1]
         is_comment = "comment" in str(getattr(node, "type", "")).lower()
-        leading_comment = is_comment and not raw[line_start:start].strip()
+        leading_comment = is_comment and not raw[line_start:start].decode("utf-8").strip()
         if pending and not adjacent(pending[-1], node):
             output.extend(pending)
             pending = []
         if leading_comment:
             pending.append(node)
+            index += 1
             continue
         if pending and not is_comment:
+            group = [*pending, node]
+            following = index + 1
+            while following < len(nodes):
+                trailing = nodes[following]
+                gap = raw[int(group[-1].end_byte) : int(trailing.start_byte)].decode("utf-8")
+                if (
+                    "comment" not in str(getattr(trailing, "type", "")).lower()
+                    or gap.strip()
+                    or any(char in line_breaks for char in gap)
+                ):
+                    break
+                group.append(trailing)
+                following += 1
             owned_start = int(pending[0].start_byte) if output else 0
-            owned_end = int(nodes[index + 1].start_byte) if index + 1 < len(nodes) else len(raw)
+            owned_end = int(nodes[following].start_byte) if following < len(nodes) else len(raw)
             if budget.count(owned_start, owned_end) <= max_size:
                 output.append(
                     _CommentGroup(
                         start=int(pending[0].start_byte),
-                        end=int(node.end_byte),
-                        children=tuple([*pending, node]),
+                        end=int(group[-1].end_byte),
+                        children=tuple(group),
                     )
                 )
                 pending = []
+                index = following
                 continue
             output.extend(pending)
             pending = []
@@ -404,6 +430,7 @@ def _bind_leading_comments(nodes: list[Any], budget: SourceBudget, max_size: int
             output.extend(pending)
             pending = []
         output.append(node)
+        index += 1
     output.extend(pending)
     return output
 
