@@ -47,10 +47,10 @@ jobs:
           flags: branch-coverage
 
       - name: Run Ruff
-        run: ruff check src tests benchmarks/run_retrieval.py benchmarks/import_squad.py benchmarks/prepare_dense.py benchmarks/retrieval
+        run: ruff check src tests benchmarks/run_retrieval.py benchmarks/import_squad.py benchmarks/prepare_dense.py benchmarks/compare_retrieval.py benchmarks/run_dense_experiment.py benchmarks/retrieval
 
       - name: Check formatting
-        run: ruff format --check src tests benchmarks/run_retrieval.py benchmarks/import_squad.py benchmarks/prepare_dense.py benchmarks/retrieval
+        run: ruff format --check src tests benchmarks/run_retrieval.py benchmarks/import_squad.py benchmarks/prepare_dense.py benchmarks/compare_retrieval.py benchmarks/run_dense_experiment.py benchmarks/retrieval
 
       - name: Run mypy (strict, full package)
         # NumPy selects type syntax based on mypy's target version. Use the

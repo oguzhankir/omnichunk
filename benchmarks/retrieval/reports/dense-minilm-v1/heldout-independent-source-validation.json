@@ -1,0 +1,46 @@
+{
+  "actual_source_sha256": "1e97c0fdbe8a3a1c025948bb7094a8b54db0ecb8223c9b5e51189153dad916f7",
+  "checks": [
+    {
+      "corpus": "omnichunk-retrieval-v1",
+      "label": "baseline",
+      "revision_match": true,
+      "source_hash_match": true,
+      "clean": true,
+      "model_hashes_match": true,
+      "encoder_versions_match": true,
+      "candidate_source_matches_current": true
+    },
+    {
+      "corpus": "omnichunk-retrieval-v1",
+      "label": "candidate",
+      "revision_match": true,
+      "source_hash_match": true,
+      "clean": true,
+      "model_hashes_match": true,
+      "encoder_versions_match": true,
+      "candidate_source_matches_current": true
+    },
+    {
+      "corpus": "squad-1.1-retrieval-v1",
+      "label": "baseline",
+      "revision_match": true,
+      "source_hash_match": true,
+      "clean": true,
+      "model_hashes_match": true,
+      "encoder_versions_match": true,
+      "candidate_source_matches_current": true
+    },
+    {
+      "corpus": "squad-1.1-retrieval-v1",
+      "label": "candidate",
+      "revision_match": true,
+      "source_hash_match": true,
+      "clean": true,
+      "model_hashes_match": true,
+      "encoder_versions_match": true,
+      "candidate_source_matches_current": true
+    }
+  ],
+  "passed": true
+}

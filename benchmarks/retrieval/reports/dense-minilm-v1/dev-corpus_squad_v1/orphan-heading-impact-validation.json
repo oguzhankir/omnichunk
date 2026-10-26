@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "comparisons": [
+    {
+      "chunk_capacity": 64,
+      "identical": {
+        "summary": true,
+        "passages": true,
+        "per_query": true,
+        "chunks": true,
+        "payload_utf8_bytes": true,
+        "max_payload_size": true,
+        "embedding_workload": true
+      },
+      "recall_before": 0.9791666666666666,
+      "recall_after": 0.9791666666666666,
+      "passed": true
+    },
+    {
+      "chunk_capacity": 96,
+      "identical": {
+        "summary": true,
+        "passages": true,
+        "per_query": true,
+        "chunks": true,
+        "payload_utf8_bytes": true,
+        "max_payload_size": true,
+        "embedding_workload": true
+      },
+      "recall_before": 0.9791666666666666,
+      "recall_after": 0.9791666666666666,
+      "passed": true
+    }
+  ],
+  "interpretation": "External English prose payloads, all per-query results including ranking scores, quality summaries and chunk workloads are unchanged by the Markdown orphan-heading repair."
+}

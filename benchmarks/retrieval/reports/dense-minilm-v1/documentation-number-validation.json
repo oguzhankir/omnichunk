@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "checks_count": 240,
+  "failed": [],
+  "draft_sha256": "1d49c50ee6ea4e2c3796ad87961c89ac622fefa16f650d9c3bee64c71972ae5b",
+  "source_integrity": {
+    "current_source_sha256": "1e97c0fdbe8a3a1c025948bb7094a8b54db0ecb8223c9b5e51189153dad916f7",
+    "frozen_source_sha256": "1e97c0fdbe8a3a1c025948bb7094a8b54db0ecb8223c9b5e51189153dad916f7",
+    "source_files_unchanged": true,
+    "harness_files_unchanged": true,
+    "project_config_unchanged": true
+  },
+  "post_review_wording_change": "Added the reviewer-requested original-path/gzip mapping paragraph; no numeric claims changed."
+}

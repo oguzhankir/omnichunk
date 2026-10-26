@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "frozen_at_utc": "2026-10-26T10:21:54.542821+00:00",
+  "source_revision": "a2e3bae7afb9b81f7c044ac0feda6612b0f97c97",
+  "source_clean": true,
+  "baseline_revision": "fa80b981efa84d1fe8ca1cbb8556aa715c14cb0e",
+  "model_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "model_revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+  "configuration": {
+    "schema_version": 1,
+    "model_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "model_revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+    "corpus": "corpus_v1",
+    "split": "dev",
+    "tools": [
+      "omnichunk",
+      "fixed",
+      "semchunk",
+      "langchain",
+      "semantic-text-splitter",
+      "llamaindex"
+    ],
+    "chunk_token_capacities": [
+      64,
+      96
+    ],
+    "retrieved_context_tokens": 512,
+    "top_k": 5,
+    "repeats": 3,
+    "cpu_threads": 2,
+    "tokenizer": "snapshot native tokenizer, including special tokens",
+    "include_special_tokens": true,
+    "baseline_source": "/tmp/omnichunk-v220-eval",
+    "candidate_source": "/workspace/omnichunk",
+    "excluded": {
+      "chonkie": "count-only token callback cannot supply encode/decode semantics"
+    },
+    "interpretation": "Fixed experiment; no universal quality or end-to-end latency claim."
+  },
+  "development_decision": "Retain recursive tail packing and the general orphan-heading repair. Synthetic64 recall wins 2/180 with no losses; synthetic96 loses1/180. External recall unchanged, external64 precision improves with fewer chunks. Source/coverage and complete-input budgets are preserved. Disclose all gains and losses; no corpus/query-specific exception or setting selection.",
+  "heldout_policy": "Run both published test splits once with this frozen source/model/configuration. No tuning from dense test outcomes. These published splits have earlier lexical results and are not independently sealed.",
+  "sha256": {
+    "model-manifest.json": "89e02fce0d1690eb50083cedc54928fdb9ad3feb9c0f43c44fe9933fff20d059",
+    "environment/installed-package-hashes.json": "b0bd33ecd41d17f690dbe24e1907c5c3eec973021aadb7896c9cb84ddc997a1c",
+    "environment/runtime.json": "94c6492b503c316782cb59b3feaac2bbe0a1da230caa93bbf2e1b07dcea98ff0",
+    "dev-final-summary.json": "1bead4d19311f5215f8987738b73a15ace6846a306024cf67cf1e75f23230471",
+    "dev2-corpus_v1/baseline.report.json.gz": "cf4a1e25cd3d3230c35642844fa87469a1d7a71d2fc8518ff378aefa36d5fec3",
+    "dev2-corpus_v1/candidate.report.json.gz": "9acb45a1ccff598d8a91357cf0dd9b55f05a23bcaff3b858536e0c145a49bb66",
+    "dev2-corpus_v1/paired.json": "6619f4bacb382679c1f038285787d4619303fe14a3b66f50cb96c1ec1bd0f5f0",
+    "dev2-corpus_v1/experiment.json": "8738bc6d548b50d8369a97bb7fce46087a031b82fec23b4fda5633815e37458e",
+    "dev2-corpus_v1/provenance-validation.json": "aabbf4e9caaefc1d078cff4be3b071a8fa2318093ee6bf3b8368a795165a4ebc",
+    "dev2-corpus_v1/development-control-validation.json": "0023205e0140b2d7a5b4fa16f83c44a340387fc911ee9fc57010fe2577ed58b2",
+    "dev2-corpus_squad_v1/baseline.report.json.gz": "5356b09e34da6191bf9f4b9cdc3f4ea11b2ae0392159d87a190729703dc54fa5",
+    "dev2-corpus_squad_v1/candidate.report.json.gz": "c3262d3499782f7c2b515689705f8a74439baf147e89fc68c18ab432af7fa879",
+    "dev2-corpus_squad_v1/paired.json": "d35f425f2312130b3e6ec29f8246977dd19b8836100d9a71dc00ee64226de378",
+    "dev2-corpus_squad_v1/experiment.json": "c55e6e7ea1338b2cb477f617ee7ed82cbffbf047e50a636ec6734cb15632553b",
+    "dev2-corpus_squad_v1/provenance-validation.json": "2ef76ce5866342d2b8e1dc13ca2b58f3b2e5a1a5ae52828ece339ac3a02c47a0",
+    "dev2-corpus_squad_v1/development-control-validation.json": "dbba5204e3ae36ea59b61cc97a863d6222af4837e5a0641116831fe60d21c3a7"
+  }
+}

@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+from itertools import count
+from types import SimpleNamespace
 
 import pytest
 
@@ -176,6 +178,8 @@ def test_missing_local_model_reports_actionable_error(tmp_path, capsys):
     "extra",
     [
         ["--batch-size", "0"],
+        ["--cpu-threads", "0"],
+        ["--cpu-threads", "-1"],
         ["--chunk-sizes", "0"],
         ["--tools", "unknown"],
         ["--unit", "tokens", "--tokenizer", "approximate"],
@@ -205,3 +209,142 @@ def test_native_preprocessing_difference_is_rejected_before_encode(tmp_path, mon
     assert "preprocessing changes or truncates inputs" in capsys.readouterr().err
     assert output.read_text() == "old"
     assert not model.calls
+
+
+def test_explicit_cpu_threads_configures_both_pools_once_before_loading_model(
+    tmp_path, monkeypatch, capsys
+):
+    command, _, output, _ = configuration(tmp_path)
+    events = []
+    pools = {}
+
+    def configure(name, value):
+        events.append((name, value))
+        pools[name] = value
+
+    monkeypatch.setitem(
+        prepare_dense.sys.modules,
+        "torch",
+        SimpleNamespace(
+            set_num_threads=lambda value: configure("intraop", value),
+            set_num_interop_threads=lambda value: configure("interop", value),
+            get_num_threads=lambda: pools["intraop"],
+            get_num_interop_threads=lambda: pools["interop"],
+        ),
+    )
+
+    def load(_):
+        assert events == [("intraop", 2), ("interop", 2)]
+        return FakeModel()
+
+    monkeypatch.setattr(prepare_dense, "_load_model", load)
+    assert prepare_dense.main([*command, "--cpu-threads", "2"]) == 0
+    capsys.readouterr()
+    assert events == [("intraop", 2), ("interop", 2)]
+    metadata = json.loads(output.read_text())["producer_metadata"]
+    assert metadata["cpu_threads_requested"] == 2
+    assert metadata["torch_threads"] == {"intraop": 2, "interop": 2}
+
+
+def test_omitted_cpu_threads_preserves_existing_pool_settings(tmp_path, monkeypatch, capsys):
+    command, _, output, _ = configuration(tmp_path)
+    monkeypatch.setitem(
+        prepare_dense.sys.modules,
+        "torch",
+        SimpleNamespace(
+            set_num_threads=lambda _: pytest.fail("must not reconfigure a pool by default"),
+            set_num_interop_threads=lambda _: pytest.fail("must not reconfigure a pool by default"),
+            get_num_threads=lambda: 3,
+            get_num_interop_threads=lambda: 5,
+        ),
+    )
+    monkeypatch.setattr(prepare_dense, "_load_model", lambda _: FakeModel())
+    assert prepare_dense.main(command) == 0
+    capsys.readouterr()
+    metadata = json.loads(output.read_text())["producer_metadata"]
+    assert metadata["cpu_threads_requested"] is None
+    assert metadata["torch_threads"] == {"intraop": 3, "interop": 5}
+
+
+def test_explicit_cpu_threads_missing_torch_preserves_artifact(tmp_path, monkeypatch, capsys):
+    command, _, output, _ = configuration(tmp_path)
+    output.write_text("old")
+    monkeypatch.setitem(prepare_dense.sys.modules, "torch", None)
+    monkeypatch.setattr(prepare_dense, "_load_model", lambda _: pytest.fail("must not load model"))
+    assert prepare_dense.main([*command, "--cpu-threads", "2"]) == 2
+    assert "Install torch to configure --cpu-threads" in capsys.readouterr().err
+    assert output.read_text() == "old"
+
+
+@pytest.mark.parametrize("threads", [0, -1, True, 1.5])
+def test_programmatic_cpu_threads_rejects_invalid_pool_size(threads):
+    with pytest.raises(ValueError, match="positive integer"):
+        prepare_dense._configure_cpu_threads(threads)
+
+
+def test_producer_distinguishes_shared_encoding_measurements_from_candidate_workload(
+    tmp_path, monkeypatch, capsys
+):
+    command, _, output, _ = configuration(tmp_path)
+    model = FakeModel()
+    monkeypatch.setattr(prepare_dense, "_load_model", lambda _: model)
+    monkeypatch.setattr(prepare_dense, "perf_counter", count().__next__)
+    monkeypatch.setattr(prepare_dense, "_peak_rss_bytes", lambda: 123456)
+    monkeypatch.setitem(
+        prepare_dense.sys.modules,
+        "torch",
+        SimpleNamespace(
+            get_num_threads=lambda: 2,
+            get_num_interop_threads=lambda: 1,
+        ),
+    )
+    assert prepare_dense.main(command) == 0
+    capsys.readouterr()
+    metadata = json.loads(output.read_text())["producer_metadata"]
+    assert metadata["torch_threads"] == {"intraop": 2, "interop": 1}
+    assert metadata["timings"]["model_load_seconds"] == 1
+    assert metadata["timings"]["encoding_seconds"] == len(model.calls) == 2
+    assert metadata["timings"]["token_validation_seconds"] == 2
+    assert metadata["timings"]["process_lifetime_peak_rss_before_serialization_bytes"] == 123456
+    workloads = metadata["candidate_workloads"]
+    assert len(workloads) == 1 and workloads[0]["tool"] == "fixed"
+    assert workloads[0]["unique_passage_input_tokens"] == sum(
+        len(text) + 2 for text in model.calls[0]
+    )
+    assert (
+        metadata["role_statistics"]["passage"]["input_tokens"]
+        == workloads[0]["unique_passage_input_tokens"]
+    )
+    assert metadata["role_statistics"]["query"]["batches"] == 1
+    assert "not isolated per-candidate" in metadata["measurement_scope"]
+
+
+def test_prepare_explicit_full_model_counter_matches_encoder_input_limits(
+    tmp_path, monkeypatch, capsys
+):
+    from tests.test_retrieval_tokenization import fake_hf
+
+    command, directory, output, _ = configuration(tmp_path)
+    model = FakeModel()
+    model.max_seq_length = 8
+    fake_hf(monkeypatch, directory)
+    monkeypatch.setattr(prepare_dense, "_load_model", lambda _: model)
+    # Queries are deliberately long: a fitting chunk does not imply a fitting query.
+    assert (
+        prepare_dense.main(
+            [
+                *command,
+                "--unit",
+                "tokens",
+                "--tokenizer",
+                str(directory),
+                "--include-special-tokens",
+                "--chunk-sizes",
+                "8",
+            ]
+        )
+        == 2
+    )
+    assert "Dense query input requires" in capsys.readouterr().err
+    assert all(len(text) <= 6 for text in model.calls[0])
+    assert not output.exists()

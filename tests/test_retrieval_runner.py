@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -317,6 +318,13 @@ def test_dense_report_uses_exact_frozen_inputs_and_preserves_model_provenance(tm
         == hashlib.sha256(artifact.read_bytes()).hexdigest()
     )
     assert report["candidates"][0]["embedding_calls"] == 0
+    candidate = report["candidates"][0]
+    assert (
+        candidate["embedding_workload"]["frozen_vector_lookups"]
+        == candidate["chunks"] + report["queries"]
+    )
+    assert candidate["python_index_incremental_peak_bytes"] <= candidate["python_index_peak_bytes"]
+    assert "encoder preparation cost" in report["configuration"]["timing_scope"]
     assert report["corpus_license"] == "MIT"
     # A changed payload budget must not silently reuse incompatible vectors.
     assert runner.main([*command, "--chunk-sizes", "21"]) == 1
@@ -329,3 +337,84 @@ def test_dense_report_uses_exact_frozen_inputs_and_preserves_model_provenance(tm
 def test_dense_mode_requires_explicit_matching_options(tmp_path, options):
     corpus = _fixture_corpus(tmp_path)
     assert runner.main(["--corpus", str(corpus), *options]) == 2
+
+
+def test_runtime_revision_identifies_separate_source_checkout_but_not_nested_wheel(tmp_path):
+    package = tmp_path / "src" / "omnichunk"
+    package.mkdir(parents=True)
+    source = package / "__init__.py"
+    source.write_text("version = 'baseline'\n")
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "add", "."], cwd=tmp_path, check=True)
+    subprocess.run(
+        [
+            "git",
+            "-c",
+            "user.name=Fixture",
+            "-c",
+            "user.email=fixture@example.test",
+            "commit",
+            "-qm",
+            "baseline",
+        ],
+        cwd=tmp_path,
+        check=True,
+    )
+    expected = subprocess.run(
+        ["git", "rev-parse", "HEAD"], cwd=tmp_path, capture_output=True, text=True, check=True
+    ).stdout.strip()
+    assert runner._runtime_revision(package) == {
+        "runtime_git_revision": expected,
+        "runtime_git_dirty": False,
+    }
+    source.write_text("version = 'changed'\n")
+    assert runner._runtime_revision(package)["runtime_git_dirty"] is True
+    wheel = tmp_path / ".venv" / "site-packages" / "omnichunk"
+    wheel.mkdir(parents=True)
+    assert runner._runtime_revision(wheel) == {
+        "runtime_git_revision": None,
+        "runtime_git_dirty": None,
+    }
+
+
+def test_runner_explicit_full_model_token_budget(tmp_path, monkeypatch):
+    from benchmarks.retrieval import tokenization
+    from tests.test_retrieval_tokenization import fake_hf
+
+    corpus = _fixture_corpus(tmp_path)
+    tokenizer = tmp_path / "tokenizer"
+    tokenizer.mkdir()
+    fake_hf(monkeypatch, tokenizer)
+    output = tmp_path / "full-model.json"
+    assert (
+        runner.main(
+            [
+                "--corpus",
+                str(corpus),
+                "--tools",
+                "fixed",
+                "--chunk-sizes",
+                "8",
+                "--unit",
+                "tokens",
+                "--tokenizer",
+                str(tokenizer),
+                "--include-special-tokens",
+                "--retrieval-budget",
+                "8",
+                "--repeats",
+                "1",
+                "--output",
+                str(output),
+            ]
+        )
+        == 0
+    )
+    report = json.loads(output.read_text())
+    assert report["configuration"]["include_special_tokens"] is True
+    candidate = report["candidates"][0]
+    count = tokenization.benchmark_counter("tokens", str(tokenizer), include_special_tokens=True)
+    assert max(len(p["text"]) for p in candidate["passages"]) == 6
+    assert candidate["max_payload_size"] <= 8
+    assert all(count(p["text"]) <= 8 for p in candidate["passages"])
+    assert all(row["budget_used"] <= 8 for row in candidate["per_query"])

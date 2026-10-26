@@ -60,7 +60,7 @@ Remaining gaps are product work, not reasons to call existing utilities absent:
 
 | Gap | Evidence in the current implementation | Priority / milestone |
 | --- | --- | --- |
-| Retrieval quality needs independent evidence | A synthetic labeled corpus and lexical retrieval runner now measure quality; external validation and frozen dense-model comparisons remain open | P0 / M1 |
+| Retrieval quality needs independent evidence | Synthetic and external corpora now have frozen pretrained dense reports; independent evidence-suitability review and production design-partner validation remain open | P0 / M1 |
 | Production operating limits need measurement | The acknowledged journal and Qdrant/pgvector sinks now have crash/replay and real integration tests; large deployments, throughput limits and hosted failover remain to characterize | P1 / M4 |
 | Rich extraction metadata still needs adapters | Native framework/journal records preserve caller metadata and canonical chunk snapshots; original page/element geometry still depends on richer extraction | P1 / M3 |
 | Rich document structure is flattened | `LoadedDocument` holds canonical text/segments; PDF/DOCX loaders provide text extraction, not OCR or full page/element geometry | P1 / M3 |
@@ -129,26 +129,35 @@ The first delivery adds a versioned, original synthetic corpus with 300
 evidence-labeled queries, document-disjoint development/test splits, ranking and
 source-evidence metrics, equivalent-budget adapters and an offline tuning/report
 runner. See [benchmark commands](benchmarks/README.md#retrieval-evaluation-and-tuning).
-Its fixed lexical retriever and authored labels provide a reproducible baseline;
-independently validated corpora, frozen dense-model comparisons and production
-design-partner evidence remain open before this milestone can be completed.
+Its lexical baseline and authored labels support reproducible investigation;
+independent evidence-label review and production design-partner evidence remain
+open before this milestone can be completed.
 
 The hardening delivery adds a separately licensed, attributed SQuAD 1.1 subset
 with 96 human-annotated questions, article-disjoint splits, strict manifest checks
-and offline import from a pinned upstream checksum. A frozen dense-vector artifact
-and local-model preparation command now support repeatable semantic experiments.
-External lexical comparisons are recorded; pretrained dense measurements remain
-open because the execution environment cannot download model weights. The selected
-answer spans still need independent review for chunk-evaluation suitability.
+and offline import from a pinned upstream checksum. Frozen dense artifacts and
+local-model preparation now support real pretrained semantic comparisons. The
+selected short-answer spans still need independent review for chunk-evaluation
+suitability.
 
-The next delivery repairs boundary defects exposed by the development report:
-preserve fitting paragraphs/table rows, use Unicode sentence boundaries and count
-complete contiguous payloads when grouping prose. Keep the corpus and retrieval
-configuration fixed, report per-language/document wins and regressions, and only
-evaluate held-out documents after the implementation is frozen. Follow with
-configured-unit AST window sizing for multibyte code; this repair now measures
-complete source ranges during grouping and splitting, including nonadditive token
-costs. Independent corpus and dense-model validation remain the M1 completion gate.
+The [pretrained dense experiment](benchmarks/retrieval/reports/dense-minilm-v1/README.md)
+uses `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` at model commit
+`e8f8c211226b894fcb81acc59f3b34ba3efd5f42` to compare v2.2.0 with source
+`a2e3bae7afb9b81f7c044ac0feda6612b0f97c97`. Development results retained the
+recursive-tail repair and identified orphaned headings before oversized Markdown
+bodies. Combined heading/body splitting now preserves the first complete fitting
+paragraph, original source metadata, fences and full nonadditive budgets. Source,
+model and settings were frozen before the held-out evaluation; raw reports retain
+wins and losses. The fixed experiment uses native 64/96-token chunks including
+special tokens, a 512-token retrieval prefix, separate top-k 5 ranking metrics,
+zero overlap, no derived context, three chunking repeats and two threads in both PyTorch CPU
+pools. Encoder preparation and frozen search cost remain separate.
+
+Boundary hardening also preserves fitting paragraphs/table rows, uses Unicode
+sentence boundaries and measures complete contiguous payloads. Configured-unit
+AST sizing handles multibyte code. These workload-specific results do not establish
+universal leadership. Independent evidence validation and production design-partner
+evaluation remain M1 completion gates.
 
 - Publish a licensed, versioned corpus with code, Markdown/manuals, tables and
   mixed documents. Start with **300 evidence-labeled queries** across the user

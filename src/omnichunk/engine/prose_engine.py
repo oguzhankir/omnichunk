@@ -488,29 +488,56 @@ def _build_node_windows(
             continue
 
         if node_size > max_size:
-            if current:
-                windows.append(current)
-                current = []
-
             if not split_oversized:
+                if current:
+                    windows.append(current)
+                    current = []
                 # Keep an oversized structural unit intact so finalization can
                 # enforce the explicit error/preserve policy.
                 windows.append([node_payload])
                 continue
 
-            split_ranges = _split_oversized_text(
-                node_text,
-                base_start=start,
-                max_size=max_size,
-                size_counter=size_counter,
-            )
-            windows.extend(
-                [
-                    [(start, end, list(node.heading_hierarchy), node.kind.value)]
-                    for start, end in split_ranges
-                    if end > start
-                ]
-            )
+            split_ranges = None
+            split_payloads = [node_payload]
+            if (
+                current
+                and all(item[3] == EntityType.HEADING.value for item in current)
+                and node.kind in {EntityType.PARAGRAPH, EntityType.TABLE, EntityType.LIST}
+            ):
+                # Give a pending heading the first complete fitting body unit.
+                # Splitting the body alone can fill its first fragment with two
+                # paragraphs, stranding a heading which fits with the first one.
+                prefixed_ranges = _split_oversized_text(
+                    content[combined_start:end],
+                    base_start=combined_start,
+                    max_size=max_size,
+                    size_counter=size_counter,
+                )
+                if content[start : prefixed_ranges[0][1]].strip():
+                    split_ranges = prefixed_ranges
+                    split_payloads = [*current, node_payload]
+                    current = []
+
+            if current:
+                windows.append(current)
+                current = []
+            if split_ranges is None:
+                split_ranges = _split_oversized_text(
+                    node_text,
+                    base_start=start,
+                    max_size=max_size,
+                    size_counter=size_counter,
+                )
+            for split_start, split_end in split_ranges:
+                # Keep each source piece's original hierarchy and section kind
+                # when a new range contains both heading and body text.
+                windows.append(
+                    [
+                        (max(split_start, left), min(split_end, right), hierarchy, kind)
+                        for left, right, hierarchy, kind in split_payloads
+                        if max(split_start, left) < min(split_end, right)
+                    ]
+                )
             continue
 
         if current:
@@ -613,16 +640,19 @@ def _split_oversized_text(
             if size_counter(text[unit_start:unit_end]) <= max_size:
                 group_start, unit_start = unit_start, unit_end
                 continue
-            chunks.extend(
-                _split_oversized_text(
-                    text[unit_start:unit_end],
-                    base_start=base_start + unit_start,
-                    max_size=max_size,
-                    size_counter=size_counter,
-                    _level=_level + 1,
-                )
+            children = _split_oversized_text(
+                text[unit_start:unit_end],
+                base_start=base_start + unit_start,
+                max_size=max_size,
+                size_counter=size_counter,
+                _level=_level + 1,
             )
-            group_start = unit_start = unit_end
+            # Keep the last recursive fragment available for the next complete
+            # unit. Flushing it here strands a short sentence/line tail even
+            # when the following sentence or row fits in the same payload.
+            chunks.extend(children[:-1])
+            group_start = children[-1][0] - base_start
+            unit_start = unit_end
         if group_start < len(text):
             chunks.append((base_start + group_start, base_start + len(text)))
         return chunks
