@@ -23,6 +23,7 @@ _CONFIG = (
     "split",
     "unit",
     "tokenizer",
+    "include_special_tokens",
     "retrieval_budget",
     "top_k",
     "context",
@@ -292,7 +293,13 @@ def compare_reports(
     if digest != candidate.get("corpus_manifest_sha256"):
         raise ValueError("Corpus manifest fingerprints differ")
     before, after = _selected(baseline, baseline_tool), _selected(candidate, candidate_tool)
-    left, right = baseline["configuration"], candidate["configuration"]
+    # Historical schema-2 reports used content-only token counts and omitted
+    # this field. Normalize private copies without mutating loaded evidence.
+    left, right = dict(baseline["configuration"]), dict(candidate["configuration"])
+    for configuration in (left, right):
+        configuration.setdefault("include_special_tokens", False)
+        if type(configuration["include_special_tokens"]) is not bool:
+            raise ValueError("include_special_tokens must be a boolean")
     for key in _CONFIG:
         if (
             key not in left

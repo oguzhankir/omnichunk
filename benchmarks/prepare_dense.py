@@ -27,7 +27,7 @@ if str(ROOT) not in sys.path:
 from benchmarks.retrieval.adapters import TOOLS, split_document  # noqa: E402
 from benchmarks.retrieval.corpus import load_corpus  # noqa: E402
 from benchmarks.retrieval.dense import build_dense_artifact  # noqa: E402
-from omnichunk.sizing.counter import make_token_counter  # noqa: E402
+from benchmarks.retrieval.tokenization import benchmark_counter  # noqa: E402
 
 
 def _peak_rss_bytes() -> int | None:
@@ -100,7 +100,11 @@ def prepare(args: argparse.Namespace) -> dict[str, Any]:
     files = model_files(directory)
     snapshot_hash_seconds = perf_counter() - started
     corpus = load_corpus(args.corpus)
-    counter = len if args.unit == "chars" else make_token_counter(args.tokenizer)
+    counter = benchmark_counter(
+        args.unit,
+        args.tokenizer,
+        include_special_tokens=getattr(args, "include_special_tokens", False),
+    )
     candidate_texts = []
     for tool in args.tools.split(","):
         for size in args.chunk_sizes:
@@ -230,6 +234,7 @@ def prepare(args: argparse.Namespace) -> dict[str, Any]:
         "platform": platform.platform(),
         "processor": platform.processor(),
         "prompt": "",
+        "include_special_tokens": getattr(args, "include_special_tokens", False),
         "max_sequence_length": limit,
         "input_policy": "full tokenizer inputs including special tokens; reject overflow",
         "supported_pipeline": "standard Transformer + mean Pooling (+ Normalize); no prompts",
@@ -281,6 +286,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--chunk-sizes", type=int, nargs="+", default=[128, 256])
     parser.add_argument("--unit", choices=["chars", "tokens"], default="chars")
     parser.add_argument("--tokenizer", default="cl100k_base")
+    parser.add_argument(
+        "--include-special-tokens",
+        action="store_true",
+        help="Count full model inputs using an explicitly local Hugging Face tokenizer",
+    )
     parser.add_argument("--model-dir", type=Path, required=True)
     parser.add_argument("--model-id", required=True)
     parser.add_argument("--model-revision", required=True)

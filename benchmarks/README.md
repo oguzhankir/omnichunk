@@ -150,6 +150,12 @@ and no derived context. Repeat for `--corpus corpus_squad_v1`. Six token-safe
 adapters run; Chonkie's count-only token contract remains explicitly excluded.
 The actual imported runtime has its own git revision/dirty status and source hash,
 separate from the shared harness. A source checkout must be available for the baseline.
+The orchestrator passes `--include-special-tokens` to both preparation and evaluation.
+This benchmark-only option requires a local Hugging Face tokenizer directory and
+counts complete inputs with special tokens and truncation disabled. Generic token
+experiments retain existing library-default counting, without a complete-input
+guarantee; reports record the explicit policy and the
+paired comparer rejects different policies.
 
 `.github/workflows/dense-evaluation.yml` offers the same experiment on hosted
 CPU runners with pinned package versions and separate report/vector artifacts.

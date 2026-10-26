@@ -30,9 +30,9 @@ from benchmarks.retrieval.ranking import (  # noqa: E402
     LexicalRetriever,
     select_budget,
 )
+from benchmarks.retrieval.tokenization import benchmark_counter  # noqa: E402
 from omnichunk import __version__  # noqa: E402
 from omnichunk.retrieval_eval import EvidenceSpan, score_evidence, score_ranking  # noqa: E402
-from omnichunk.sizing.counter import make_token_counter  # noqa: E402
 
 DEFAULT_CORPUS = ROOT / "benchmarks" / "retrieval" / "corpus_v1"
 TOOLS = (
@@ -182,7 +182,11 @@ def _evaluate_candidate(
 ) -> dict[str, Any]:
     documents = [doc for doc in corpus.documents if doc.split == args.split]
     queries = [query for query in corpus.queries if query.split == args.split]
-    counter = len if args.unit == "chars" else make_token_counter(args.tokenizer)
+    counter = benchmark_counter(
+        args.unit,
+        args.tokenizer,
+        include_special_tokens=getattr(args, "include_special_tokens", False),
+    )
 
     def chunk_all() -> list[Passage]:
         return [
@@ -255,7 +259,9 @@ def _evaluate_candidate(
                         score_evidence(spans(ranked[: args.top_k]), query.evidence)
                     ),
                     "evidence_at_budget": asdict(score_evidence(spans(budgeted), query.evidence)),
-                    "budget_used": counter("\n\n".join(p.text for p, _ in budgeted)),
+                    "budget_used": counter("\n\n".join(p.text for p, _ in budgeted))
+                    if budgeted
+                    else 0,
                     "relevant_passages": len(qrels),
                     "ranks": [
                         {
@@ -343,6 +349,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "chunk_sizes": args.chunk_sizes,
             "unit": args.unit,
             "tokenizer": args.tokenizer if args.unit == "tokens" else "python-unicode-codepoints",
+            "include_special_tokens": getattr(args, "include_special_tokens", False),
             "retrieval_budget": args.retrieval_budget,
             "top_k": args.top_k,
             "repeats": args.repeats,
@@ -394,6 +401,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--chunk-sizes", type=int, nargs="+", default=[128, 256])
     parser.add_argument("--unit", choices=["chars", "tokens"], default="chars")
     parser.add_argument("--tokenizer", default="cl100k_base")
+    parser.add_argument(
+        "--include-special-tokens",
+        action="store_true",
+        help="Count full model inputs using an explicitly local Hugging Face tokenizer",
+    )
     parser.add_argument("--retriever", choices=["lexical", "dense"], default="lexical")
     parser.add_argument(
         "--dense-embeddings",

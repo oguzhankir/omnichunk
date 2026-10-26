@@ -244,3 +244,34 @@ def test_producer_distinguishes_shared_encoding_measurements_from_candidate_work
     )
     assert metadata["role_statistics"]["query"]["batches"] == 1
     assert "not isolated per-candidate" in metadata["measurement_scope"]
+
+
+def test_prepare_explicit_full_model_counter_matches_encoder_input_limits(
+    tmp_path, monkeypatch, capsys
+):
+    from tests.test_retrieval_tokenization import fake_hf
+
+    command, directory, output, _ = configuration(tmp_path)
+    model = FakeModel()
+    model.max_seq_length = 8
+    fake_hf(monkeypatch, directory)
+    monkeypatch.setattr(prepare_dense, "_load_model", lambda _: model)
+    # Queries are deliberately long: a fitting chunk does not imply a fitting query.
+    assert (
+        prepare_dense.main(
+            [
+                *command,
+                "--unit",
+                "tokens",
+                "--tokenizer",
+                str(directory),
+                "--include-special-tokens",
+                "--chunk-sizes",
+                "8",
+            ]
+        )
+        == 2
+    )
+    assert "Dense query input requires" in capsys.readouterr().err
+    assert all(len(text) <= 6 for text in model.calls[0])
+    assert not output.exists()

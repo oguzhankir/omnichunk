@@ -274,3 +274,36 @@ def test_failed_comparison_does_not_replace_existing_output(tmp_path):
         == 2
     )
     assert output.read_text() == "preserve previous result"
+
+
+def test_special_token_budget_policy_must_match():
+    before, after = report(), report()
+    before["configuration"]["include_special_tokens"] = False
+    after["configuration"]["include_special_tokens"] = True
+    with pytest.raises(ValueError, match="configuration differs.*include_special_tokens"):
+        comparison.compare_reports(before, after)
+
+
+def test_legacy_missing_special_token_policy_matches_explicit_content_only():
+    before, after = report(), report()
+    after["configuration"]["include_special_tokens"] = False
+    result = comparison.compare_reports(before, after)
+    assert result["configuration"]["include_special_tokens"] is False
+    assert "include_special_tokens" not in before["configuration"]
+
+
+@pytest.mark.parametrize("invalid", [None, 0, 1, "false", "true"])
+def test_special_token_policy_requires_a_boolean(invalid):
+    before, after = report(), report()
+    for item in (before, after):
+        item["configuration"]["include_special_tokens"] = invalid
+    with pytest.raises(ValueError, match="include_special_tokens must be a boolean"):
+        comparison.compare_reports(before, after)
+
+
+def test_matching_special_token_policy_is_preserved_in_output():
+    before, after = report(), report()
+    for item in (before, after):
+        item["configuration"]["include_special_tokens"] = True
+    result = comparison.compare_reports(before, after)
+    assert result["configuration"]["include_special_tokens"] is True

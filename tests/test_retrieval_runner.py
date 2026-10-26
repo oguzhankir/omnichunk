@@ -375,3 +375,46 @@ def test_runtime_revision_identifies_separate_source_checkout_but_not_nested_whe
         "runtime_git_revision": None,
         "runtime_git_dirty": None,
     }
+
+
+def test_runner_explicit_full_model_token_budget(tmp_path, monkeypatch):
+    from benchmarks.retrieval import tokenization
+    from tests.test_retrieval_tokenization import fake_hf
+
+    corpus = _fixture_corpus(tmp_path)
+    tokenizer = tmp_path / "tokenizer"
+    tokenizer.mkdir()
+    fake_hf(monkeypatch, tokenizer)
+    output = tmp_path / "full-model.json"
+    assert (
+        runner.main(
+            [
+                "--corpus",
+                str(corpus),
+                "--tools",
+                "fixed",
+                "--chunk-sizes",
+                "8",
+                "--unit",
+                "tokens",
+                "--tokenizer",
+                str(tokenizer),
+                "--include-special-tokens",
+                "--retrieval-budget",
+                "8",
+                "--repeats",
+                "1",
+                "--output",
+                str(output),
+            ]
+        )
+        == 0
+    )
+    report = json.loads(output.read_text())
+    assert report["configuration"]["include_special_tokens"] is True
+    candidate = report["candidates"][0]
+    count = tokenization.benchmark_counter("tokens", str(tokenizer), include_special_tokens=True)
+    assert max(len(p["text"]) for p in candidate["passages"]) == 6
+    assert candidate["max_payload_size"] <= 8
+    assert all(count(p["text"]) <= 8 for p in candidate["passages"])
+    assert all(row["budget_used"] <= 8 for row in candidate["per_query"])

@@ -75,6 +75,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "tokens",
         "--tokenizer",
         str(snapshot),
+        "--include-special-tokens",
     ]
     environment = {
         **os.environ,
@@ -173,6 +174,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "top_k": 5,
         "repeats": 3,
         "tokenizer": "snapshot native tokenizer, including special tokens",
+        "include_special_tokens": True,
         "baseline_source": str(baseline),
         "candidate_source": str(ROOT),
         "excluded": {"chonkie": "count-only token callback cannot supply encode/decode semantics"},
