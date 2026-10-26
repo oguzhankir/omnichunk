@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from bisect import bisect_right
 from collections.abc import Iterator
-from dataclasses import replace
+from dataclasses import dataclass, replace
 from typing import Any
 
 from omnichunk.context.entities import enrich_parent_links, extract_entities
@@ -31,8 +31,13 @@ from omnichunk.windowing.greedy import (
     assign_windows_for_ranges,
 )
 from omnichunk.windowing.merge import merge_adjacent_windows
-from omnichunk.windowing.models import SourceBudget
+from omnichunk.windowing.models import ASTNodeWindowItem, SourceBudget
 from omnichunk.windowing.overlap import apply_token_overlap, build_line_overlap_text
+
+
+@dataclass(frozen=True)
+class _CommentGroup(RangeNode):
+    """A fitting leading comment block and the statement it describes."""
 
 
 class CodeEngine:
@@ -125,6 +130,7 @@ class CodeEngine:
             min_size=options.min_chunk_size,
             budget=budget,
         )
+        merged_windows = _isolate_comment_groups(merged_windows, budget, options.max_chunk_size)
 
         chunk_ranges = _windows_to_contiguous_ranges(merged_windows, len(raw_bytes))
         chunk_ranges = _merge_whitespace_only_ranges(chunk_ranges, raw_bytes)
@@ -316,6 +322,39 @@ def _collect_candidate_ranges(
     return merged
 
 
+def _isolate_comment_groups(
+    windows: list[list[ASTNodeWindowItem]], budget: SourceBudget, max_size: int
+) -> list[list[ASTNodeWindowItem]]:
+    """Keep fitting documented statements distinct in an oversized source.
+
+    The whole-source fast path has no group markers and remains a single chunk.
+    A tokenizer can make a subrange larger than its containing payload; retain
+    the original valid window if any proposed structural piece would overflow.
+    """
+    isolated: list[list[ASTNodeWindowItem]] = []
+    for window in windows:
+        if not any(isinstance(item.node, _CommentGroup) for item in window):
+            isolated.append(window)
+            continue
+        pieces: list[list[ASTNodeWindowItem]] = []
+        pending: list[ASTNodeWindowItem] = []
+        for item in window:
+            if isinstance(item.node, _CommentGroup):
+                if pending:
+                    pieces.append(pending)
+                    pending = []
+                pieces.append([item])
+            else:
+                pending.append(item)
+        if pending:
+            pieces.append(pending)
+        if all(budget.count(piece[0].start, piece[-1].end) <= max_size for piece in pieces):
+            isolated.extend(pieces)
+        else:
+            isolated.append(window)
+    return isolated
+
+
 def _bind_leading_comments(nodes: list[Any], budget: SourceBudget, max_size: int) -> list[Any]:
     """Keep an adjacent leading comment block with its fitting root statement.
 
@@ -351,7 +390,7 @@ def _bind_leading_comments(nodes: list[Any], budget: SourceBudget, max_size: int
             owned_end = int(nodes[index + 1].start_byte) if index + 1 < len(nodes) else len(raw)
             if budget.count(owned_start, owned_end) <= max_size:
                 output.append(
-                    RangeNode(
+                    _CommentGroup(
                         start=int(pending[0].start_byte),
                         end=int(node.end_byte),
                         children=tuple([*pending, node]),
