@@ -92,10 +92,25 @@ def _load_model(directory: Path) -> Any:
     return model
 
 
+def _configure_cpu_threads(threads: int | None) -> None:
+    """Set both process-global Torch pools before any model work, when requested."""
+    if threads is None:
+        return
+    if type(threads) is not int or threads < 1:
+        raise ValueError("--cpu-threads must be a positive integer")
+    try:
+        import torch
+    except ImportError as exc:
+        raise ImportError("Install torch to configure --cpu-threads for dense preparation") from exc
+    torch.set_num_threads(threads)
+    torch.set_num_interop_threads(threads)
+
+
 def prepare(args: argparse.Namespace) -> dict[str, Any]:
     directory = args.model_dir.resolve()
     if not directory.is_dir():
         raise ValueError("--model-dir must be an existing local model snapshot directory")
+    _configure_cpu_threads(getattr(args, "cpu_threads", None))
     started = perf_counter()
     files = model_files(directory)
     snapshot_hash_seconds = perf_counter() - started
@@ -230,6 +245,7 @@ def prepare(args: argparse.Namespace) -> dict[str, Any]:
         "producer_source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "packages": versions,
         "device": "cpu",
+        "cpu_threads_requested": getattr(args, "cpu_threads", None),
         "python": sys.version,
         "platform": platform.platform(),
         "processor": platform.processor(),
@@ -296,10 +312,17 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--model-revision", required=True)
     parser.add_argument("--preprocessing-revision", default="sentence-transformers-no-prompt-v1")
     parser.add_argument("--batch-size", type=int, default=64)
+    parser.add_argument(
+        "--cpu-threads",
+        type=int,
+        help="Set both Torch CPU thread pools once before loading the model",
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     if any(n < 1 for n in [*args.chunk_sizes, args.batch_size]):
         parser.error("Chunk sizes and batch size must be positive")
+    if args.cpu_threads is not None and args.cpu_threads < 1:
+        parser.error("--cpu-threads must be a positive integer")
     if any(tool not in TOOLS for tool in args.tools.split(",")):
         parser.error(f"--tools must select names from {', '.join(TOOLS)}")
     if args.unit == "tokens" and args.tokenizer == "approximate":

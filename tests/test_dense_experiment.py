@@ -60,12 +60,16 @@ def test_orchestration_uses_same_harness_model_and_budgets_for_both_runtimes(tmp
     manifest = experiment.run(args)
     assert manifest["split"] == "dev"
     assert manifest["include_special_tokens"] is True
+    assert manifest["cpu_threads"] == 2
     assert len(calls) == 10
     preparations = [item for item in calls if item[0][0] == "benchmarks/prepare_dense.py"]
     assert [env["PYTHONPATH"] for _, env in preparations] == [
         str(args.baseline_dir / "src"),
         str(experiment.ROOT / "src"),
     ]
+    assert all(
+        arguments[arguments.index("--cpu-threads") + 1] == "2" for arguments, _ in preparations
+    )
     for arguments, environment in calls[:4]:
         assert "--include-special-tokens" in arguments
         assert environment["OMP_NUM_THREADS"] == environment["MKL_NUM_THREADS"] == "2"
