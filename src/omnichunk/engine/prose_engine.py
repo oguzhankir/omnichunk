@@ -613,16 +613,19 @@ def _split_oversized_text(
             if size_counter(text[unit_start:unit_end]) <= max_size:
                 group_start, unit_start = unit_start, unit_end
                 continue
-            chunks.extend(
-                _split_oversized_text(
-                    text[unit_start:unit_end],
-                    base_start=base_start + unit_start,
-                    max_size=max_size,
-                    size_counter=size_counter,
-                    _level=_level + 1,
-                )
+            children = _split_oversized_text(
+                text[unit_start:unit_end],
+                base_start=base_start + unit_start,
+                max_size=max_size,
+                size_counter=size_counter,
+                _level=_level + 1,
             )
-            group_start = unit_start = unit_end
+            # Keep the last recursive fragment available for the next complete
+            # unit. Flushing it here strands a short sentence/line tail even
+            # when the following sentence or row fits in the same payload.
+            chunks.extend(children[:-1])
+            group_start = children[-1][0] - base_start
+            unit_start = unit_end
         if group_start < len(text):
             chunks.append((base_start + group_start, base_start + len(text)))
         return chunks

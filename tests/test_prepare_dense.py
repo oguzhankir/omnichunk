@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+from itertools import count
+from types import SimpleNamespace
 
 import pytest
 
@@ -205,3 +207,40 @@ def test_native_preprocessing_difference_is_rejected_before_encode(tmp_path, mon
     assert "preprocessing changes or truncates inputs" in capsys.readouterr().err
     assert output.read_text() == "old"
     assert not model.calls
+
+
+def test_producer_distinguishes_shared_encoding_measurements_from_candidate_workload(
+    tmp_path, monkeypatch, capsys
+):
+    command, _, output, _ = configuration(tmp_path)
+    model = FakeModel()
+    monkeypatch.setattr(prepare_dense, "_load_model", lambda _: model)
+    monkeypatch.setattr(prepare_dense, "perf_counter", count().__next__)
+    monkeypatch.setattr(prepare_dense, "_peak_rss_bytes", lambda: 123456)
+    monkeypatch.setitem(
+        prepare_dense.sys.modules,
+        "torch",
+        SimpleNamespace(
+            get_num_threads=lambda: 2,
+            get_num_interop_threads=lambda: 1,
+        ),
+    )
+    assert prepare_dense.main(command) == 0
+    capsys.readouterr()
+    metadata = json.loads(output.read_text())["producer_metadata"]
+    assert metadata["torch_threads"] == {"intraop": 2, "interop": 1}
+    assert metadata["timings"]["model_load_seconds"] == 1
+    assert metadata["timings"]["encoding_seconds"] == len(model.calls) == 2
+    assert metadata["timings"]["token_validation_seconds"] == 2
+    assert metadata["timings"]["process_lifetime_peak_rss_before_serialization_bytes"] == 123456
+    workloads = metadata["candidate_workloads"]
+    assert len(workloads) == 1 and workloads[0]["tool"] == "fixed"
+    assert workloads[0]["unique_passage_input_tokens"] == sum(
+        len(text) + 2 for text in model.calls[0]
+    )
+    assert (
+        metadata["role_statistics"]["passage"]["input_tokens"]
+        == workloads[0]["unique_passage_input_tokens"]
+    )
+    assert metadata["role_statistics"]["query"]["batches"] == 1
+    assert "not isolated per-candidate" in metadata["measurement_scope"]

@@ -240,6 +240,48 @@ def test_word_fallback_packs_many_short_words_without_fragmentation() -> None:
     assert all(len(chunk.text) >= 50 for chunk in chunks[:-1])
 
 
+@pytest.mark.parametrize("minimum", [0, 20, 50])
+def test_recursive_sentence_tail_packs_with_following_complete_sentence(minimum: int) -> None:
+    source = (
+        "Review records carefully before approving these changes in the final audit. "
+        "The owner signs."
+    )
+    chunks = Chunker(
+        max_chunk_size=60,
+        min_chunk_size=minimum,
+        size_unit="chars",
+        context_mode="none",
+        coverage_policy="lossless",
+    ).chunk("review.txt", source)
+
+    assert_source_and_budget(chunks, source, 60)
+    assert len(chunks) == 2
+    assert chunks[-1].text == "the final audit. The owner signs."
+
+
+def test_recursive_tail_join_measures_nonadditive_token_budget() -> None:
+    source = (
+        "Review records carefully before approving these changes in the final audit. "
+        "The owner signs."
+    )
+
+    def count(text: str) -> int:
+        return len(text) + (40 if "audit." in text and "owner" in text else 0)
+
+    chunks = Chunker(
+        max_chunk_size=60,
+        min_chunk_size=0,
+        size_unit="tokens",
+        tokenizer=count,
+        context_mode="none",
+        coverage_policy="lossless",
+    ).chunk("review.txt", source)
+
+    assert_source_and_budget(chunks, source, 60, count)
+    assert chunks[-1].text == "The owner signs."
+    assert len(chunks) == 3
+
+
 @pytest.mark.parametrize("newline", ["\n", "\r\n"])
 def test_unicode_paragraph_boundaries_preserve_bytes_and_stream_parity(newline: str) -> None:
     paragraphs = [

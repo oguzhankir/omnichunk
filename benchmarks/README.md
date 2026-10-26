@@ -128,6 +128,65 @@ local models validate plumbing only. A pretrained dense comparison, independent
 review of selected answer evidence and production design-partner evaluation remain
 M1 acceptance work.
 
+### Baseline/candidate dense experiments
+
+`run_dense_experiment.py` orchestrates the current evaluation harness against an
+isolated baseline checkout and the candidate. It requires an already downloaded
+local snapshot and an explicit model commit. It never downloads a model itself.
+
+```bash
+git worktree add --detach /tmp/omnichunk-baseline v2.2.0
+OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false \
+python benchmarks/run_dense_experiment.py \
+  --model-dir /path/to/frozen/snapshot --model-revision MODEL_COMMIT_SHA \
+  --baseline-dir /tmp/omnichunk-baseline --corpus corpus_v1 --split dev \
+  --output-dir reports/dense-synthetic-dev
+```
+
+The declared encoder is `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`.
+Both runtimes use the same model, native tokenizer (including special tokens),
+64/96-token chunk capacities, 512-token retrieved context, top-k 5, zero overlap
+and no derived context. Repeat for `--corpus corpus_squad_v1`. Six token-safe
+adapters run; Chonkie's count-only token contract remains explicitly excluded.
+The actual imported runtime has its own git revision/dirty status and source hash,
+separate from the shared harness. A source checkout must be available for the baseline.
+
+`.github/workflows/dense-evaluation.yml` offers the same experiment on hosted
+CPU runners with pinned package versions and separate report/vector artifacts.
+It is **manual only**: no push, PR or release starts model downloads. GitHub must
+first have this workflow on its default branch before dispatch is available.
+Development discovery may resolve a model revision once for both corpus jobs;
+held-out dispatch requires its explicit 40-character commit. Freeze the source,
+model, tokenizer and capacities before selecting `test`; never tune from that run.
+
+```bash
+python benchmarks/compare_retrieval.py --baseline before.json.gz \
+  --candidate after.json.gz --output reports/paired.json
+```
+
+The paired report requires matching corpus, query/evidence labels, budgets and
+model/snapshot/package provenance. It retains language/category slices and
+wins/ties/losses, with deterministic 95% percentile intervals from gold-source
+connected-component resampling. Queries sharing a source stay together. Fewer
+than two components yields no interval. Articles can still correlate across
+paragraphs; these descriptive intervals do not correct selection or establish
+production leadership.
+
+Encoder preparation records global per-role batches, native token counts, timings,
+CPU thread settings, producer hashes and process-lifetime RSS. Shared preparation
+deduplicates across candidates: its cost is not attributable to one chunker.
+Candidate payload/token workloads describe potential work, not measured independent
+embedding bills. Frozen-vector index/query latency excludes encoding and any
+external vector database. Python incremental index memory excludes native allocations.
+
+The recursive-tail repair has development-only lexical evidence: external recall
+at 256 characters changes from 0.916667 to 0.937500 with 72 to 68 chunks; at 128
+it stays 0.918841 with 136 to 126 chunks. Synthetic recall at 128 changes from
+0.925479 to 0.925122 (one Turkish approval-matrix loss); 256 stays 0.982405.
+These are character-budget lexical controls, not native-token dense results.
+No pretrained or held-out result has been produced for this repair. Keep or revise
+the repair based on dense development evidence before freezing a held-out run.
+
 ## Core and structural checks
 
 ```bash

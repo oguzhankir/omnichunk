@@ -5,6 +5,16 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 
 ## [Unreleased]
 
+### Added
+- Manual baseline/candidate dense experiment orchestration with a frozen native
+  tokenizer and paired source-evidence comparisons using document-cluster intervals.
+- Separate encoder preparation timings, role/token workloads, CPU/RSS metadata
+  and runtime checkout provenance for reproducible baseline measurements.
+
+### Fixed
+- Short recursive prose tails can join the following complete sentence when the
+  complete payload fits, preserving exact bytes and nonadditive token budgets.
+
 ## [2.2.0] - 2026-10-25
 
 ### Added

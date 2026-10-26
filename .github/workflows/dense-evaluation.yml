@@ -1,0 +1,156 @@
+name: Manual dense retrieval evaluation
+
+on:
+  workflow_dispatch:
+    inputs:
+      model_revision:
+        description: "Exact model commit; use resolve only for development discovery"
+        default: resolve
+        required: true
+      split:
+        type: choice
+        description: "Use test only after freezing implementation and configuration"
+        default: dev
+        options: [dev, test]
+        required: true
+
+permissions:
+  contents: read
+
+env:
+  MODEL_ID: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+
+concurrency:
+  group: dense-evaluation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  resolve_model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      revision: ${{ steps.model.outputs.revision }}
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Resolve and record model revision before preparation
+        id: model
+        env:
+          REQUESTED_REVISION: ${{ inputs.model_revision }}
+          EXPERIMENT_SPLIT: ${{ inputs.split }}
+        run: |
+          pip install huggingface-hub==2.3.0
+          python - <<'PY'
+          import json, os, re
+          from huggingface_hub import HfApi
+          requested = os.environ['REQUESTED_REVISION']
+          if requested == 'resolve':
+              if os.environ['EXPERIMENT_SPLIT'] != 'dev':
+                  raise ValueError('Held-out evaluation requires an explicit frozen model commit')
+              revision = HfApi().model_info(os.environ['MODEL_ID']).sha
+          else:
+              revision = requested
+          if not re.fullmatch(r'[0-9a-f]{40}', revision):
+              raise ValueError('Model revision must be a 40-character commit SHA')
+          print(json.dumps({'model': os.environ['MODEL_ID'], 'resolved_revision': revision}))
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write(f'revision={revision}\n')
+          PY
+
+  evaluate:
+    needs: resolve_model
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        corpus: [corpus_v1, corpus_squad_v1]
+    env:
+      OMP_NUM_THREADS: "2"
+      MKL_NUM_THREADS: "2"
+      TOKENIZERS_PARALLELISM: "false"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned CPU encoder and tested comparators
+        run: |
+          pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
+          pip install -e '.[dev]' -r benchmarks/retrieval/requirements.txt
+          pip install sentence-transformers==6.2.0 transformers==5.20.2 huggingface-hub==2.3.0
+      - name: Record execution environment
+        run: |
+          mkdir -p environment
+          pip freeze > environment/requirements.txt
+          python -VV > environment/python.txt
+          uname -a > environment/platform.txt
+          lscpu > environment/cpu.txt
+      - uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/omnichunk-hf-cache
+          key: dense-model-${{ needs.resolve_model.outputs.revision }}
+      - name: Fetch explicit frozen snapshot
+        id: snapshot
+        env:
+          MODEL_REVISION: ${{ needs.resolve_model.outputs.revision }}
+        run: |
+          python - <<'PY'
+          import os
+          from huggingface_hub import snapshot_download
+          directory = snapshot_download(
+              repo_id=os.environ['MODEL_ID'], revision=os.environ['MODEL_REVISION'],
+              cache_dir=os.path.join(os.environ['RUNNER_TEMP'], 'omnichunk-hf-cache'),
+              allow_patterns=['*.json', 'model.safetensors', 'sentencepiece.bpe.model',
+                              'tokenizer.model', '*.txt', '1_Pooling/*', 'README.md', 'LICENSE*'],
+              ignore_patterns=['onnx/*', 'openvino/*', 'pytorch_model.bin'],
+          )
+          print(f'Frozen local snapshot: {directory}')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write(f'directory={directory}\n')
+          PY
+      - name: Prepare baseline and run declared experiment
+        env:
+          MODEL_DIR: ${{ steps.snapshot.outputs.directory }}
+          MODEL_REVISION: ${{ needs.resolve_model.outputs.revision }}
+          CORPUS: ${{ matrix.corpus }}
+          EXPERIMENT_SPLIT: ${{ inputs.split }}
+        run: |
+          git worktree add --detach "$RUNNER_TEMP/omnichunk-baseline" v2.2.0
+          python benchmarks/run_dense_experiment.py \
+            --model-dir "$MODEL_DIR" --model-id "$MODEL_ID" --model-revision "$MODEL_REVISION" \
+            --baseline-dir "$RUNNER_TEMP/omnichunk-baseline" --corpus "$CORPUS" \
+            --split "$EXPERIMENT_SPLIT" --output-dir results
+      - name: Preserve reports and execution provenance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dense-reports-${{ matrix.corpus }}-${{ inputs.split }}
+          path: |
+            results/*.report.json.gz
+            results/*.json
+            results/*.log
+            environment/
+            !results/*.vectors.json
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Preserve baseline frozen vectors
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dense-vectors-baseline-${{ matrix.corpus }}-${{ inputs.split }}
+          path: results/baseline.vectors.json.gz
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Preserve candidate frozen vectors
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dense-vectors-candidate-${{ matrix.corpus }}-${{ inputs.split }}
+          path: results/candidate.vectors.json.gz
+          if-no-files-found: warn
+          retention-days: 90

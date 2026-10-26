@@ -50,6 +50,41 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _runtime_revision(package_root: Path) -> dict[str, Any]:
+    """Identify the imported source checkout, without attributing an installed wheel to it."""
+    missing = {"runtime_git_revision": None, "runtime_git_dirty": None}
+    try:
+        top = Path(
+            subprocess.run(
+                ["git", "rev-parse", "--show-toplevel"],
+                cwd=package_root,
+                capture_output=True,
+                text=True,
+                check=True,
+            ).stdout.strip()
+        ).resolve()
+        if package_root not in (
+            (top / "src" / "omnichunk").resolve(),
+            (top / "omnichunk").resolve(),
+        ):
+            return missing
+        revision = subprocess.run(
+            ["git", "rev-parse", "HEAD"], cwd=top, capture_output=True, text=True, check=True
+        ).stdout.strip()
+        dirty = bool(
+            subprocess.run(
+                ["git", "status", "--porcelain"],
+                cwd=top,
+                capture_output=True,
+                text=True,
+                check=True,
+            ).stdout
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return missing
+    return {"runtime_git_revision": revision, "runtime_git_dirty": dirty}
+
+
 def _environment() -> dict[str, Any]:
     try:
         revision = subprocess.run(
@@ -102,6 +137,7 @@ def _environment() -> dict[str, Any]:
         "dependencies": dependencies,
         "runtime_package_root": str(package_root),
         "runtime_matches_checkout": package_root == (ROOT / "src" / "omnichunk").resolve(),
+        **_runtime_revision(package_root),
         "project_config_sha256": _sha256(ROOT / "pyproject.toml"),
         "source_sha256": hashlib.sha256(
             b"".join(
@@ -173,6 +209,7 @@ def _evaluate_candidate(
             if measured_passages != passages:
                 raise ValueError("Adapter output changed during memory measurement")
             _, chunk_peak = tracemalloc.get_traced_memory()
+            index_start_bytes, _ = tracemalloc.get_traced_memory()
             tracemalloc.reset_peak()
             started = perf_counter()
             index = retriever.index(measured_passages)
@@ -248,7 +285,18 @@ def _evaluate_candidate(
                 "query_seconds_samples": query_samples,
                 "python_chunk_peak_bytes": chunk_peak,
                 "python_index_peak_bytes": index_peak,
+                "python_index_incremental_peak_bytes": max(0, index_peak - index_start_bytes),
                 "embedding_calls": 0,
+                "embedding_workload": {
+                    "passages": len(passages),
+                    "unique_passage_payloads": len({p.text for p in passages}),
+                    "duplicate_payload_reuses": len(passages) - len({p.text for p in passages}),
+                    "queries": len(queries),
+                    "unique_query_payloads": len({query.text for query in queries}),
+                    "frozen_vector_lookups": len(passages) + len(queries)
+                    if isinstance(retriever, FrozenDenseRetriever)
+                    else 0,
+                },
                 "passages": [asdict(passage) for passage in passages],
             }
         )
@@ -313,6 +361,17 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 "binary positive canonical-byte intersection; chunk-level qrels differ by candidate"
             ),
             "budget_selection": "whole ranked prefix, including two newline separators",
+            "timing_scope": (
+                "Dense index/query times measure frozen-vector lookup and cosine ranking; "
+                "encoder preparation cost is recorded separately in producer_metadata. "
+                "Lexical times include local vectorization. Neither includes an external "
+                "vector database or a generation model."
+            ),
+            "memory_scope": (
+                "Python index peak includes retained chunk allocations; incremental peak "
+                "subtracts the traced allocation level immediately before index creation. "
+                "Neither measures native allocations or isolated encoder memory."
+            ),
         },
         "interpretation": (
             "Compare source evidence at equal budgets. Corpus provenance and retriever "

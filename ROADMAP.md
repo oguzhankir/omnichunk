@@ -141,6 +141,13 @@ External lexical comparisons are recorded; pretrained dense measurements remain
 open because the execution environment cannot download model weights. The selected
 answer spans still need independent review for chunk-evaluation suitability.
 
+The next experiment compares v2.2.0 with recursive-tail packing using one shared
+harness, native model-token budgets and paired source-evidence reports. Encoder
+cost and frozen ranking cost are measured separately. A manual hosted workflow
+and local-snapshot runner are prepared; pretrained measurements and a decision
+on the disclosed synthetic development regression remain pending. Held-out data
+must wait until the implementation and model configuration are frozen.
+
 The next delivery repairs boundary defects exposed by the development report:
 preserve fitting paragraphs/table rows, use Unicode sentence boundaries and count
 complete contiguous payloads when grouping prose. Keep the corpus and retrieval
