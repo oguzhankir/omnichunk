@@ -122,11 +122,14 @@ use `build_dense_artifact` with an explicit callback and preprocessing revision.
 An artifact records producer assertions and cannot independently attest how an
 external producer generated vectors.
 
-No pretrained dense-model result is included in this change: the execution
-environment blocks HuggingFace downloads. Unit-test vectors and randomly initialized
-local models validate plumbing only. A pretrained dense comparison, independent
-review of selected answer evidence and production design-partner evaluation remain
-M1 acceptance work.
+Real pretrained results for `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`
+are recorded with snapshot commit `e8f8c211226b894fcb81acc59f3b34ba3efd5f42` and
+source commit `a2e3bae7afb9b81f7c044ac0feda6612b0f97c97`. The
+[dense experiment record](retrieval/reports/dense-minilm-v1/README.md) preserves the
+configuration, development decisions, raw reports, model/package hashes and
+the held-out evaluation. Unit-test vectors and random local models remain plumbing
+checks. Independent review of selected evidence labels and production design-partner
+evaluation remain open M1 requirements.
 
 ### Baseline/candidate dense experiments
 
@@ -143,11 +146,16 @@ python benchmarks/run_dense_experiment.py \
   --output-dir reports/dense-synthetic-dev
 ```
 
-The declared encoder is `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`.
-Both runtimes use the same model, native tokenizer (including special tokens),
-64/96-token chunk capacities, 512-token retrieved context, top-k 5, zero overlap
-and no derived context. Repeat for `--corpus corpus_squad_v1`. Six token-safe
-adapters run; Chonkie's count-only token contract remains explicitly excluded.
+The frozen encoder is `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`
+at `e8f8c211226b894fcb81acc59f3b34ba3efd5f42`. Both runtimes use the
+same model and native tokenizer, including special tokens, at 64/96-token chunk
+capacities. The retrieved context is a complete ranked prefix within 512 tokens;
+top-k 5 separately defines the ranking metrics and does not cap that prefix to five
+passages. Overlap is zero, derived context is disabled and chunking timing has three repeats.
+Both PyTorch CPU thread pools use two threads, with OMP/MKL also limited to two.
+Repeat for `--corpus corpus_squad_v1`. Six token-safe adapters run; Chonkie's
+count-only token contract remains explicitly excluded.
+
 The actual imported runtime has its own git revision/dirty status and source hash,
 separate from the shared harness. A source checkout must be available for the baseline.
 The orchestrator passes `--include-special-tokens` to both preparation and evaluation.
@@ -185,13 +193,20 @@ Candidate payload/token workloads describe potential work, not measured independ
 embedding bills. Frozen-vector index/query latency excludes encoding and any
 external vector database. Python incremental index memory excludes native allocations.
 
-The recursive-tail repair has development-only lexical evidence: external recall
-at 256 characters changes from 0.916667 to 0.937500 with 72 to 68 chunks; at 128
-it stays 0.918841 with 136 to 126 chunks. Synthetic recall at 128 changes from
-0.925479 to 0.925122 (one Turkish approval-matrix loss); 256 stays 0.982405.
-These are character-budget lexical controls, not native-token dense results.
-No pretrained or held-out result has been produced for this repair. Keep or revise
-the repair based on dense development evidence before freezing a held-out run.
+Development evaluation retained the recursive-tail repair, which packs a short
+recursive fragment with the following complete fitting unit. It also exposed
+orphaned Markdown headings: an oversized following body was split independently,
+even when its first complete paragraph fit with the heading. The repair now splits
+the combined contiguous heading/body source and preserves structural units, source
+ranges, heading metadata, protected fences and complete nonadditive token budgets.
+
+Source `a2e3bae7afb9b81f7c044ac0feda6612b0f97c97`, the model revision and
+settings were frozen before the held-out evaluation. See the
+[dense experiment record](retrieval/reports/dense-minilm-v1/README.md) for gains,
+regressions, language/category slices and paired uncertainty intervals. Earlier
+character-budget lexical controls remain in `retrieval/reports/tail-*-dev.json.gz`.
+These small synthetic and external English workloads do not establish universal
+leadership; choose a configuration using the relevant development workload.
 
 ## Core and structural checks
 

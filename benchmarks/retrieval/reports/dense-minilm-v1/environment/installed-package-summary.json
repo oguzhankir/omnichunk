@@ -1,0 +1,1206 @@
+[
+  {
+    "file_count": 12,
+    "installed_file_manifest_sha256": "71433c5f321fcce597eb30f7c8942e339ae788a551a79100a088c4fb1786a7c2",
+    "missing_count": 0,
+    "name": "aiohappyeyeballs",
+    "version": "2.7.1"
+  },
+  {
+    "file_count": 75,
+    "installed_file_manifest_sha256": "6ddafb84f27857fd93daaf9624bed962e3b12fe825c52e086f9f228e1b3583c1",
+    "missing_count": 0,
+    "name": "aiohttp",
+    "version": "3.14.5"
+  },
+  {
+    "file_count": 9,
+    "installed_file_manifest_sha256": "c2634c2a458c6f48227d3f953260ace4b8de883d1f7b54c26359b53e32618a5c",
+    "missing_count": 0,
+    "name": "aiosignal",
+    "version": "1.4.0"
+  },
+  {
+    "file_count": 17,
+    "installed_file_manifest_sha256": "b05be928c950327b1b26519dae21cae6fe92baccde730021f73d3e1ca469cca3",
+    "missing_count": 0,
+    "name": "aiosqlite",
+    "version": "0.22.1"
+  },
+  {
+    "file_count": 10,
+    "installed_file_manifest_sha256": "4cfa933f599a320f114cc51e1e5109afa20aa3b036e9043bb32c2ce08d58870a",
+    "missing_count": 0,
+    "name": "annotated-doc",
+    "version": "0.0.5"
+  },
+  {
+    "file_count": 9,
+    "installed_file_manifest_sha256": "40e06208349a0755af738e53ac49395910af72cfc0aaddc9b5c4bd9665c83ec3",
+    "missing_count": 0,
+    "name": "annotated-types",
+    "version": "0.8.0"
+  },
+  {
+    "file_count": 55,
+    "installed_file_manifest_sha256": "06cf50dbcaa2f8e1e94176fa26957814fef5789a84927ef3ff2472fed1bfbb6a",
+    "missing_count": 0,
+    "name": "anyio",
+    "version": "4.15.1"
+  },
+  {
+    "file_count": 37,
+    "installed_file_manifest_sha256": "4a2146a828a00386aae9a9233b9524b0fc1f995e2e50b2edaec34030821b9835",
+    "missing_count": 0,
+    "name": "attrs",
+    "version": "26.1.0"
+  },
+  {
+    "file_count": 1122,
+    "installed_file_manifest_sha256": "0498a7e4bfb0dddc33af553d0b3d0fcec41159b4faaef0cd806cab8c884e2081",
+    "missing_count": 0,
+    "name": "babel",
+    "version": "2.18.0"
+  },
+  {
+    "file_count": 42,
+    "installed_file_manifest_sha256": "63bc0d6566675aa3e38381743b64f32045c05abf8ad1bbd5300c4be962758191",
+    "missing_count": 0,
+    "name": "backrefs",
+    "version": "8.1"
+  },
+  {
+    "file_count": 32,
+    "installed_file_manifest_sha256": "aba65c6121891353c476835c1c5913ee7b3cf29258ddcaa306f9e7dd816ca488",
+    "missing_count": 0,
+    "name": "banks",
+    "version": "2.5.1"
+  },
+  {
+    "file_count": 14,
+    "installed_file_manifest_sha256": "1042dbea536932ab5232a8891f59653dc14901328374baaf80d40b4744887e4a",
+    "missing_count": 0,
+    "name": "certifi",
+    "version": "2026.10.23"
+  },
+  {
+    "file_count": 8,
+    "installed_file_manifest_sha256": "af6e18dc058def1c1017051f7a4ad6527bb6e9d605482860df2bc58a1e59e775",
+    "missing_count": 0,
+    "name": "cfgv",
+    "version": "3.5.0"
+  },
+  {
+    "file_count": 24,
+    "installed_file_manifest_sha256": "146b019ccf3611c2fe02a3ca8f72933ee331fe2537d9327c0c710b4088ed85de",
+    "missing_count": 0,
+    "name": "charset-normalizer",
+    "version": "3.5.2"
+  },
+  {
+    "file_count": 131,
+    "installed_file_manifest_sha256": "7fa7513e4d4243fe593782429b31a342cf4d901a397ff7409c523976479a7b9b",
+    "missing_count": 0,
+    "name": "chonkie",
+    "version": "1.7.0"
+  },
+  {
+    "file_count": 9,
+    "installed_file_manifest_sha256": "dd763420a7b27c9b624173289125f57d2edd78a4e1a01ce6b1cb40760e78497e",
+    "missing_count": 0,
+    "name": "chonkie-core",
+    "version": "0.10.2"
+  },
+  {
+    "file_count": 24,
+    "installed_file_manifest_sha256": "8daf214d7a5424181a5ccf1bca2f75cc743408f6c76a073b2343ae7a774fc6d6",
+    "missing_count": 0,
+    "name": "click",
+    "version": "8.5.0"
+  },
+  {
+    "file_count": 9,
+    "installed_file_manifest_sha256": "24d11e9775e52fd64380943d44b8d67efa985b5e4ab1982023618955ada02340",
+    "missing_count": 0,
+    "name": "cloudpickle",
+    "version": "3.1.2"
+  },
+  {
+    "file_count": 19,
+    "installed_file_manifest_sha256": "fe05d3418330a596e1a6872068723aa9c2eadeaee2de5f6d395278c48ec33ebf",
+    "missing_count": 0,
+    "name": "colorama",
+    "version": "0.4.6"
+  },
+  {
+    "file_count": 67,
+    "installed_file_manifest_sha256": "deb98845305c9af21a9da9495f99856b9b855091535ae5689399b01d9520ee4c",
+    "missing_count": 0,
+    "name": "coverage",
+    "version": "7.17.0"
+  },
+  {
+    "file_count": 16,
+    "installed_file_manifest_sha256": "83c5f97c4f2a49df46edeacf8cb146bf94551d4021fc13ccf6baf217a37dac2f",
+    "missing_count": 0,
+    "name": "dataclasses-json",
+    "version": "0.6.7"
+  },
+  {
+    "file_count": 18,
+    "installed_file_manifest_sha256": "132b04c6b9cc9eb6abdb567f2e0248ad9591fe4ff2900f3687173e723c51f7af",
+    "missing_count": 0,
+    "name": "defusedxml",
+    "version": "0.7.1"
+  },
+  {
+    "file_count": 13,
+    "installed_file_manifest_sha256": "e991a252d5a33e4a887008496e552e418b0a81701728c53f404928c38b5a1e8d",
+    "missing_count": 0,
+    "name": "Deprecated",
+    "version": "3.0.0"
+  },
+  {
+    "file_count": 24,
+    "installed_file_manifest_sha256": "c5fb559b40118a5e47ce5d761252f1d3bc7c2113db9d8c2c85853d9fbe59ea14",
+    "missing_count": 0,
+    "name": "dirtyjson",
+    "version": "1.0.8"
+  },
+  {
+    "file_count": 26,
+    "installed_file_manifest_sha256": "d515225a04c8566a3d1e891f90c398f5035693443eae35942ec266e07c34fdfc",
+    "missing_count": 0,
+    "name": "distlib",
+    "version": "0.4.4"
+  },
+  {
+    "file_count": 13,
+    "installed_file_manifest_sha256": "3f55b846ed2aa13c40060106a3fc9a6c10c8ca12010ba61e7f5ca5a8ec70b06d",
+    "missing_count": 0,
+    "name": "distro",
+    "version": "1.9.0"
+  },
+  {
+    "file_count": 24,
+    "installed_file_manifest_sha256": "352b56c8979ad3f0a001cac9527f79dbe634402f0fa409c7c6d6bbfd77987f73",
+    "missing_count": 0,
+    "name": "execnet",
+    "version": "2.1.2"
+  },
+  {
+    "file_count": 28,
+    "installed_file_manifest_sha256": "ac2d7ec3c0d03ca33177ace1373b092aa30f99bffa8c000f8dabc1d72e91a010",
+    "missing_count": 0,
+    "name": "filelock",
+    "version": "3.32.3"
+  },
+  {
+    "file_count": 26,
+    "installed_file_manifest_sha256": "5c09cb8234d5ab787b17a00259c53cc235784bd160999b6e2f1b6847a04e95de",
+    "missing_count": 0,
+    "name": "filetype",
+    "version": "1.2.0"
+  },
+  {
+    "file_count": 12,
+    "installed_file_manifest_sha256": "7fed902a9ef3b917a78b403c32eb265b7ba168561d6cf5e690edad646e8de8c8",
+    "missing_count": 0,
+    "name": "frozenlist",
+    "version": "1.8.0"
+  },
+  {
+    "file_count": 63,
+    "installed_file_manifest_sha256": "3fbf8f0afcf9f9b741c549f54a9e9418b1fff173840ca284ad7a31369861f0a2",
+    "missing_count": 0,
+    "name": "fsspec",
+    "version": "2026.7.0"
+  },
+  {
+    "file_count": 10,
+    "installed_file_manifest_sha256": "c5274b642e20217468aa5688975a102700e9cb66221ecee4cf3eed80ba16356b",
+    "missing_count": 0,
+    "name": "ghp-import",
+    "version": "2.1.0"
+  },
+  {
+    "file_count": 12,
+    "installed_file_manifest_sha256": "e7f6f0f8861b89aae4c5d89533182927e2cad3eb2cbc2635dca91dbafe007831",
+    "missing_count": 0,
+    "name": "glob2",
+    "version": "0.7"
+  },
+  {
+    "file_count": 101,
+    "installed_file_manifest_sha256": "3fec3a65119863753bc14e79aa6e46422cae17070d1055d8bc9a9b35cfd30338",
+    "missing_count": 0,
+    "name": "greenlet",
+    "version": "3.5.6"
+  },
+  {
+    "file_count": 8,
+    "installed_file_manifest_sha256": "a4462101f7ace83cdb08778627477e511d80c53df56182b4a7a0c54738a3ef17",
+    "missing_count": 0,
+    "name": "griffe",
+    "version": "2.4.1"
+  },
+  {
+    "file_count": 13,
+    "installed_file_manifest_sha256": "55e32164239d8d204cf97b023aeed0b4fbadd15dbb26e5e3b071243f080ea86a",
+    "missing_count": 0,
+    "name": "griffecli",
+    "version": "2.4.1"
+  },
+  {
+    "file_count": 53,
+    "installed_file_manifest_sha256": "d97fa01f3df78eebdcc3d20c8c52c8335611feee5d47c0c7d7c3f29b9e2b8cd2",
+    "missing_count": 0,
+    "name": "griffelib",
+    "version": "2.4.1"
+  },
+  {
+    "file_count": 19,
+    "installed_file_manifest_sha256": "857c7d63b556a47bed43326fe0eda2c959dd209eafaff0bcd50be34704d3caca",
+    "missing_count": 0,
+    "name": "h11",
+    "version": "0.16.0"
+  },
+  {
+    "file_count": 9,
+    "installed_file_manifest_sha256": "06f8c26e74329b7a266625967a9aac3bbb2d6d8c1a0d044fe6e1d79670ff1089",
+    "missing_count": 0,
+    "name": "hf-xet",
+    "version": "1.7.0"
+  },
+  {
+    "file_count": 38,
+    "installed_file_manifest_sha256": "e502e7c700b09e35b7782d5aa5f96d208b362790f1cb0b328b56051b229e4b83",
+    "missing_count": 0,
+    "name": "httpcore",
+    "version": "1.0.9"
+  },
+  {
+    "file_count": 38,
+    "installed_file_manifest_sha256": "444b22326a49e56b233eef632786d03d5e29f8d990c677470da511f2bc5c4464",
+    "missing_count": 0,
+    "name": "httpcore2",
+    "version": "2.16.0"
+  },
+  {
+    "file_count": 32,
+    "installed_file_manifest_sha256": "64873411e0506077f2c378c7301aa20f5962501e5407504efc33aa10a3f23f81",
+    "missing_count": 0,
+    "name": "httpx",
+    "version": "0.28.1"
+  },
+  {
+    "file_count": 40,
+    "installed_file_manifest_sha256": "a77a3e910461077580adcc10a49dcb977af526be2c71f8b0885cc6fef7c67585",
+    "missing_count": 0,
+    "name": "httpx2",
+    "version": "2.16.0"
+  },
+  {
+    "file_count": 195,
+    "installed_file_manifest_sha256": "60ffd7dfbbe33a1170989b3f3d80ffdfb2a6b755161abd78ff5dd0e49ee447f1",
+    "missing_count": 0,
+    "name": "huggingface_hub",
+    "version": "2.3.0"
+  },
+  {
+    "file_count": 119,
+    "installed_file_manifest_sha256": "fff22c5fd0c685b75903b1383717940a28a92a6a8979b8361261633754ea5881",
+    "missing_count": 0,
+    "name": "hypothesis",
+    "version": "6.170.11"
+  },
+  {
+    "file_count": 17,
+    "installed_file_manifest_sha256": "1732536b32bd3e72c9a9a9ae7170a8cae5ee9cb564c23539a87f43e9b6cc68e3",
+    "missing_count": 0,
+    "name": "identify",
+    "version": "2.6.20"
+  },
+  {
+    "file_count": 19,
+    "installed_file_manifest_sha256": "87e78c6bec922164cdc058efa1bdce1737a2b8f2e14005272e4c62b88c89018a",
+    "missing_count": 0,
+    "name": "idna",
+    "version": "3.20"
+  },
+  {
+    "file_count": 12,
+    "installed_file_manifest_sha256": "b6539cb01f5e62eb8c345c5489095e549b39fea5c83bff210cfd0051c698b869",
+    "missing_count": 0,
+    "name": "iniconfig",
+    "version": "2.3.1"
+  },
+  {
+    "file_count": 33,
+    "installed_file_manifest_sha256": "967223eed69d37fd9536baa0c17bf53aaacbdd763ccc09b1f70871c0d0a6b39e",
+    "missing_count": 0,
+    "name": "Jinja2",
+    "version": "3.1.6"
+  },
+  {
+    "file_count": 143,
+    "installed_file_manifest_sha256": "c7ba8932b8680d8f5f90c46983bc28b3c1c5ed58157efab4d1ed13fe413b8814",
+    "missing_count": 0,
+    "name": "joblib",
+    "version": "1.6.0"
+  },
+  {
+    "file_count": 13,
+    "installed_file_manifest_sha256": "6075ac0642a0fcfe74c966ed1ca704065b2f1f802f38fa6d3646cd2bec7012b8",
+    "missing_count": 0,
+    "name": "jsonpatch",
+    "version": "1.37"
+  },
+  {
+    "file_count": 10,
+    "installed_file_manifest_sha256": "ac49a2a6836daf37f00886a9803786e0f297897d40601c397cf09d717cf995c0",
+    "missing_count": 0,
+    "name": "jsonpointer",
+    "version": "3.5"
+  },
+  {
+    "file_count": 8,
+    "installed_file_manifest_sha256": "179342deb5eee714dffdb54cb6a08cec8c6e6f6ce8c6ee30578977768b3c6786",
+    "missing_count": 0,
+    "name": "junit-xml",
+    "version": "1.9"
+  },
+  {
+    "file_count": 189,
+    "installed_file_manifest_sha256": "faf78a8854bd339d84cfe5a3aee3f89f26b83b34f959005679f5df1df1e35967",
+    "missing_count": 0,
+    "name": "langchain-core",
+    "version": "1.7.0"
+  },
+  {
+    "file_count": 9,
+    "installed_file_manifest_sha256": "66310dc268eceec0c6f1e2543fbe833e766e199ab2c3fcdb38b5b3326b4c4beb",
+    "missing_count": 0,
+    "name": "langchain-protocol",
+    "version": "0.0.20"
+  },
+  {
+    "file_count": 21,
+    "installed_file_manifest_sha256": "37dc913dbcd3eb2b7f58669b211349284dda09532171c6a681008d270a98564b",
+    "missing_count": 0,
+    "name": "langchain-text-splitters",
+    "version": "1.1.3"
+  },
+  {
+    "file_count": 363,
+    "installed_file_manifest_sha256": "a334e0b243b05c2694da39f22b20115120b044ad8fa9ad7fc1241867e5194247",
+    "missing_count": 0,
+    "name": "langsmith",
+    "version": "0.14.12"
+  },
+  {
+    "file_count": 23,
+    "installed_file_manifest_sha256": "38bce87039fbaee7da12e87a4ecf24db63357387fdbb206967b91e3a8f634a84",
+    "missing_count": 0,
+    "name": "librt",
+    "version": "0.16.0"
+  },
+  {
+    "file_count": 611,
+    "installed_file_manifest_sha256": "85dd2d61e6afa79008cdde411bed28499aabbc381fc3f9651f45a886939e5222",
+    "missing_count": 0,
+    "name": "llama-index-core",
+    "version": "0.14.25"
+  },
+  {
+    "file_count": 25,
+    "installed_file_manifest_sha256": "415570514fec54e1f45f4316f3946b781c42ebbfcf10ae6aa6f9a26c24766bdd",
+    "missing_count": 0,
+    "name": "llama-index-instrumentation",
+    "version": "0.6.0"
+  },
+  {
+    "file_count": 60,
+    "installed_file_manifest_sha256": "10835b8c0d32c85dd4ed450b04f372e2336c6bbedb2777bb596d9b1f2c14c4ec",
+    "missing_count": 0,
+    "name": "llama-index-workflows",
+    "version": "2.26.1"
+  },
+  {
+    "file_count": 176,
+    "installed_file_manifest_sha256": "d85bc61939c9f43a98679b53666eaa3c4b308a7be7ae22a407a0d0c6692a51e6",
+    "missing_count": 0,
+    "name": "lxml",
+    "version": "6.1.3"
+  },
+  {
+    "file_count": 42,
+    "installed_file_manifest_sha256": "3d7d2089cb61cd2da599d24b7ba665bdf627f9fae98aa6028207078002fc8a71",
+    "missing_count": 0,
+    "name": "Markdown",
+    "version": "3.11.2"
+  },
+  {
+    "file_count": 77,
+    "installed_file_manifest_sha256": "bea6e4d2747eec768f772d219c45cbd6b3c1827ba2433b67a317f313086a0575",
+    "missing_count": 0,
+    "name": "markdown-it-py",
+    "version": "4.2.0"
+  },
+  {
+    "file_count": 13,
+    "installed_file_manifest_sha256": "5f563aae4e5a2d521cb26d56a7a258d216ac6d7e8872f5c829f1ada3a22a9f14",
+    "missing_count": 0,
+    "name": "MarkupSafe",
+    "version": "3.0.3"
+  },
+  {
+    "file_count": 20,
+    "installed_file_manifest_sha256": "170d0a91d8136557e10336526c1287b52f9ca5e350b8c0c07824c31d8d38ee1f",
+    "missing_count": 0,
+    "name": "marshmallow",
+    "version": "3.26.2"
+  },
+  {
+    "file_count": 12,
+    "installed_file_manifest_sha256": "251d4e2525d0bdb20a60f7169ff6662905b347bc291c9da72237b123363488a8",
+    "missing_count": 0,
+    "name": "maturin",
+    "version": "1.15.0"
+  },
+  {
+    "file_count": 13,
+    "installed_file_manifest_sha256": "5631ec1f9640e389146e511511d1ab79c9e1b7d138490fefd029ac75380665a5",
+    "missing_count": 0,
+    "name": "mdurl",
+    "version": "0.1.2"
+  },
+  {
+    "file_count": 10,
+    "installed_file_manifest_sha256": "4af55a426bf65d47cbef03b535d67e922a3f19dc4cc6baf94f4347d312d2cdc0",
+    "missing_count": 0,
+    "name": "mergedeep",
+    "version": "1.3.4"
+  },
+  {
+    "file_count": 177,
+    "installed_file_manifest_sha256": "611d536364660d4130f0efbb2a4c3f8a7065232731d550516154019909adf7bd",
+    "missing_count": 0,
+    "name": "mkdocs",
+    "version": "1.6.1"
+  },
+  {
+    "file_count": 16,
+    "installed_file_manifest_sha256": "d2da630a2d7dbd95e6793c99d61a47e4914d9def8e7bcc8417dee051acf35182",
+    "missing_count": 0,
+    "name": "mkdocs-autorefs",
+    "version": "1.4.5"
+  },
+  {
+    "file_count": 13,
+    "installed_file_manifest_sha256": "640332d6edc350c6ec3a3f3d131588c0632579ffa8f70e5b581e63097884b88a",
+    "missing_count": 0,
+    "name": "mkdocs-get-deps",
+    "version": "0.2.2"
+  },
+  {
+    "file_count": 14593,
+    "installed_file_manifest_sha256": "161a9d0611581d7da49c192605c2f645dec293f635a3a93c0a345cff36b719b9",
+    "missing_count": 0,
+    "name": "mkdocs-material",
+    "version": "9.8.0"
+  },
+  {
+    "file_count": 9,
+    "installed_file_manifest_sha256": "0269ebf582f0c979fac9a1a924f24d12c4c3fa46c2809c94c9d598b5ae8170ca",
+    "missing_count": 0,
+    "name": "mkdocs-material-extensions",
+    "version": "1.3.1"
+  },
+  {
+    "file_count": 19,
+    "installed_file_manifest_sha256": "1bd9a9cdcc96c1c31951bf6640b069cd80e0e6f2135cec1dddd215932fc1fc9c",
+    "missing_count": 0,
+    "name": "mkdocstrings",
+    "version": "1.0.8"
+  },
+  {
+    "file_count": 123,
+    "installed_file_manifest_sha256": "57be82a3b757f6a73787c187098c2eb30e9a858b8604368ca5562cfc3b048ae6",
+    "missing_count": 0,
+    "name": "mkdocstrings-python",
+    "version": "2.0.10"
+  },
+  {
+    "file_count": 94,
+    "installed_file_manifest_sha256": "c6516201b01bad0b3eaabece6deb4493c574d1b9c1f5fee0e5a179809eb05ba5",
+    "missing_count": 0,
+    "name": "mpmath",
+    "version": "1.3.0"
+  },
+  {
+    "file_count": 17,
+    "installed_file_manifest_sha256": "694fec5da6ebb775d26d3eae83dd183b7067d483729d1c3a5feabd7f895594d3",
+    "missing_count": 0,
+    "name": "multidict",
+    "version": "7.2.1"
+  },
+  {
+    "file_count": 14,
+    "installed_file_manifest_sha256": "725e790cd4dc148568870513f0fe37f7bd2824742affb1c2818eca9f7df94c20",
+    "missing_count": 0,
+    "name": "mutmut",
+    "version": "2.5.1"
+  },
+  {
+    "file_count": 1427,
+    "installed_file_manifest_sha256": "7bdfdc4251ebf13d06ca2b82e2313b7405c880f112e944afe2e8cb5ed3f1affd",
+    "missing_count": 0,
+    "name": "mypy",
+    "version": "1.20.2"
+  },
+  {
+    "file_count": 7,
+    "installed_file_manifest_sha256": "69271627a5d2990a6da9833e5b7d9ed791c711099ab920c9fbcadf72efc04e84",
+    "missing_count": 0,
+    "name": "mypy_extensions",
+    "version": "1.1.0"
+  },
+  {
+    "file_count": 170,
+    "installed_file_manifest_sha256": "61df7c159f8fe4c8d6db80b220c8f0fcf4e7a0a9db77c8931a4da7650786496c",
+    "missing_count": 0,
+    "name": "narwhals",
+    "version": "2.27.1"
+  },
+  {
+    "file_count": 8,
+    "installed_file_manifest_sha256": "f53a14e73b626787cbb64819e37ac4f7b513aac42e3b8e35f04a522a2c396693",
+    "missing_count": 0,
+    "name": "nest-asyncio",
+    "version": "1.6.0"
+  },
+  {
+    "file_count": 603,
+    "installed_file_manifest_sha256": "6d1f4379b1f0ef29ed5e1f14fff2cb6d8f3dc7490413cf6873c8bd1ce3b2185e",
+    "missing_count": 0,
+    "name": "networkx",
+    "version": "3.6.1"
+  },
+  {
+    "file_count": 385,
+    "installed_file_manifest_sha256": "67b68f922406b8ff79f9192408304da4038245ac48b1caa3c6d7bf055f1274b2",
+    "missing_count": 0,
+    "name": "nltk",
+    "version": "3.10.4"
+  },
+  {
+    "file_count": 11,
+    "installed_file_manifest_sha256": "cb65c7edaed9a982a9e07bed2e6701c2ea76cae1bb6a5e121454f846be388d1a",
+    "missing_count": 0,
+    "name": "nodeenv",
+    "version": "1.11.0"
+  },
+  {
+    "file_count": 930,
+    "installed_file_manifest_sha256": "7e00a3cb6c8bd76b561bdd6ff095d73e951e3696165b73c7a8110a077af23845",
+    "missing_count": 0,
+    "name": "numpy",
+    "version": "2.5.4"
+  },
+  {
+    "file_count": 12,
+    "installed_file_manifest_sha256": "a663472c2ea6defdcc17a62438733670fbc8f5eaeeb05642ae5d39f251646d14",
+    "missing_count": 0,
+    "name": "omnichunk",
+    "version": "2.2.0"
+  },
+  {
+    "file_count": 49,
+    "installed_file_manifest_sha256": "aa747ced39a5ba409797119bda7af66e6a67f9e9df19cca90c07582b393cdb1a",
+    "missing_count": 0,
+    "name": "opentelemetry-api",
+    "version": "1.45.1"
+  },
+  {
+    "file_count": 72,
+    "installed_file_manifest_sha256": "d10ebf23342bc1fcaeba6a7bf2b22b023f1e5bbca252624012eb8100d209fcc4",
+    "missing_count": 0,
+    "name": "opentelemetry-sdk",
+    "version": "1.45.1"
+  },
+  {
+    "file_count": 134,
+    "installed_file_manifest_sha256": "cf597ded10700b801666be7b2e68c277d8dc89403c883b63b8b308d6bb9eb45d",
+    "missing_count": 0,
+    "name": "opentelemetry-semantic-conventions",
+    "version": "0.66b1"
+  },
+  {
+    "file_count": 13,
+    "installed_file_manifest_sha256": "67ae6b5eb374a0afb23ecbbe721a0e40bc42073d3ba5c31d27e9b1c574ad2551",
+    "missing_count": 0,
+    "name": "orjson",
+    "version": "3.13.0"
+  },
+  {
+    "file_count": 31,
+    "installed_file_manifest_sha256": "bb5419dae5e3f4ce2e11a0fa3eb0835e3ea3ce1ba55b9741ceb75bdbfa2ec084",
+    "missing_count": 0,
+    "name": "packaging",
+    "version": "26.3"
+  },
+  {
+    "file_count": 9,
+    "installed_file_manifest_sha256": "4397c95ce1294579147fa754e74de4b863b5b9791dbdb2a74f51881d8c9d0e69",
+    "missing_count": 0,
+    "name": "paginate",
+    "version": "0.5.7"
+  },
+  {
+    "file_count": 39,
+    "installed_file_manifest_sha256": "f2fc5f9301127c7ecdcc540758a7c66534558cb291063ff77fa88c89c6434dcf",
+    "missing_count": 0,
+    "name": "parso",
+    "version": "0.8.7"
+  },
+  {
+    "file_count": 38,
+    "installed_file_manifest_sha256": "292aa4661a67194e0b0ba23cb5985feec575436f58f0ae6c06ff4f5630f0cee1",
+    "missing_count": 0,
+    "name": "pathspec",
+    "version": "1.1.1"
+  },
+  {
+    "file_count": 141,
+    "installed_file_manifest_sha256": "30019307ed2bd2494f4950afae345951d13bd9e1566da94456de635b27a12ced",
+    "missing_count": 0,
+    "name": "pillow",
+    "version": "13.0.0"
+  },
+  {
+    "file_count": 20,
+    "installed_file_manifest_sha256": "812a9c059dcc4c6b6d808dd58c44bcde940d83dfb2a92558b065cd4a90bb88c3",
+    "missing_count": 0,
+    "name": "platformdirs",
+    "version": "4.13.5"
+  },
+  {
+    "file_count": 21,
+    "installed_file_manifest_sha256": "d1be98d2afaf36e94975e65566ebe5fd49b59aa36f9e7f8cf05005a11f5d4d9a",
+    "missing_count": 0,
+    "name": "pluggy",
+    "version": "1.7.0"
+  },
+  {
+    "file_count": 144,
+    "installed_file_manifest_sha256": "52b1332efe102e115a90ce7de132a3e87d9aa6124fd42e9b26bd238f39727cac",
+    "missing_count": 0,
+    "name": "pony",
+    "version": "0.7.20"
+  },
+  {
+    "file_count": 92,
+    "installed_file_manifest_sha256": "95cac200a2bf3f0a0e37300f70e81b435980261551509a5b65880001b1359591",
+    "missing_count": 0,
+    "name": "pre_commit",
+    "version": "4.7.0"
+  },
+  {
+    "file_count": 15,
+    "installed_file_manifest_sha256": "a2b63f9434a36c13bdb729447ac72b938d7518c6beb482ed1d1d14ba621f3079",
+    "missing_count": 0,
+    "name": "propcache",
+    "version": "0.5.4"
+  },
+  {
+    "file_count": 113,
+    "installed_file_manifest_sha256": "a265b11a43b1f19dd4a13902a75e4e72c96bd67bdf0046071691a344e4d265b5",
+    "missing_count": 0,
+    "name": "pydantic",
+    "version": "2.14.1"
+  },
+  {
+    "file_count": 13,
+    "installed_file_manifest_sha256": "4caa8fc7cd494536493ec0c9e53fa5ba06bbd33f1d56a62d6bed7bf244c1cc3d",
+    "missing_count": 0,
+    "name": "pydantic_core",
+    "version": "2.50.1"
+  },
+  {
+    "file_count": 352,
+    "installed_file_manifest_sha256": "b70511754fb2140e153f92add042d4b3c5d266fffeea8d0702f50b335041155d",
+    "missing_count": 0,
+    "name": "Pygments",
+    "version": "2.21.0"
+  },
+  {
+    "file_count": 51,
+    "installed_file_manifest_sha256": "47bffb2e4f7cfe770b38fcc435163fe8044ed2e28b1a4617792407b88ba3b3a7",
+    "missing_count": 0,
+    "name": "pymdown-extensions",
+    "version": "12.3"
+  },
+  {
+    "file_count": 66,
+    "installed_file_manifest_sha256": "f766df050d5fd2ee3ca83f8141278c0b3f8a13c3b4a019d94737c85a53890458",
+    "missing_count": 0,
+    "name": "pypdf",
+    "version": "6.21.2"
+  },
+  {
+    "file_count": 93,
+    "installed_file_manifest_sha256": "e4cf4e7a5c8454ff6799a9668b78da79f9d213d3c56684830e40f2e9b9be61ef",
+    "missing_count": 0,
+    "name": "pytest",
+    "version": "9.1.1"
+  },
+  {
+    "file_count": 11,
+    "installed_file_manifest_sha256": "8825a92302ee459bcfa1bf6c32c3d41623f24a221166041479968371b8012b27",
+    "missing_count": 0,
+    "name": "pytest-cov",
+    "version": "7.1.0"
+  },
+  {
+    "file_count": 26,
+    "installed_file_manifest_sha256": "774094933425fadf590884d47a95ff2aa378198ef1ddf5474a659666cff19ec1",
+    "missing_count": 0,
+    "name": "pytest-xdist",
+    "version": "3.8.0"
+  },
+  {
+    "file_count": 29,
+    "installed_file_manifest_sha256": "c9f80eb633835d5010b1b28550e6807be4fd36a31c0fd657780454730414067c",
+    "missing_count": 0,
+    "name": "python-dateutil",
+    "version": "3.0.0"
+  },
+  {
+    "file_count": 19,
+    "installed_file_manifest_sha256": "aa7b544df82c9d870aefd13f54e3b6f0d172acb6498e3fabf92632b907d42e5a",
+    "missing_count": 0,
+    "name": "python-discovery",
+    "version": "1.6.4"
+  },
+  {
+    "file_count": 126,
+    "installed_file_manifest_sha256": "8ec9ebd392953858b7de183918830dae3cf4907c23ea7a36aa8d43c7d8bc6f4d",
+    "missing_count": 0,
+    "name": "python-docx",
+    "version": "1.2.0"
+  },
+  {
+    "file_count": 26,
+    "installed_file_manifest_sha256": "e23cb9e749eff882e5c9255562e557b1e96c9e68415454b19c6789c84ce0a6d4",
+    "missing_count": 0,
+    "name": "PyYAML",
+    "version": "6.0.3"
+  },
+  {
+    "file_count": 8,
+    "installed_file_manifest_sha256": "b6709990755abf12041ee285450007cf316645a8c9750c72036a07c47cb7db0c",
+    "missing_count": 0,
+    "name": "pyyaml_env_tag",
+    "version": "1.1"
+  },
+  {
+    "file_count": 12,
+    "installed_file_manifest_sha256": "09f58cd79200988aa37fd204d5ce9fe1e8089addcd2ec40f4e350c2c6acd7e98",
+    "missing_count": 0,
+    "name": "regex",
+    "version": "2026.9.29"
+  },
+  {
+    "file_count": 28,
+    "installed_file_manifest_sha256": "59657e1386fd3ece6dec8bad603429991390495c6436b2df0d34dc04100be718",
+    "missing_count": 0,
+    "name": "requests",
+    "version": "2.34.2"
+  },
+  {
+    "file_count": 42,
+    "installed_file_manifest_sha256": "39f44f48ab18a70a484186ff29c2a5d4986074febbf02deefde9df94876e3581",
+    "missing_count": 0,
+    "name": "requests-toolbelt",
+    "version": "1.0.0"
+  },
+  {
+    "file_count": 107,
+    "installed_file_manifest_sha256": "2279d2697c433a4de63e5167de20a9dff32996f59cacce18ae33374a8db179e9",
+    "missing_count": 0,
+    "name": "rich",
+    "version": "15.0.0"
+  },
+  {
+    "file_count": 10,
+    "installed_file_manifest_sha256": "29e48c8f0933e3c2325126bbe78458eec066b9c70722c382e62a9b4379db4616",
+    "missing_count": 0,
+    "name": "ruff",
+    "version": "0.15.12"
+  },
+  {
+    "file_count": 17,
+    "installed_file_manifest_sha256": "de521911d660576a2aebd0f6d73b03b7db064c184e8f5cb4433bd913b4334175",
+    "missing_count": 0,
+    "name": "safetensors",
+    "version": "0.8.0"
+  },
+  {
+    "file_count": 1010,
+    "installed_file_manifest_sha256": "490acb3a82f8919234e7fe40cbb3b6c26f60acc232d60c93af091847ee3a6cab",
+    "missing_count": 0,
+    "name": "scikit-learn",
+    "version": "1.9.1"
+  },
+  {
+    "file_count": 1434,
+    "installed_file_manifest_sha256": "a385914d025013e62fb851212ef1a884a49e51c1251208a20cece53cdc895782",
+    "missing_count": 0,
+    "name": "scipy",
+    "version": "1.18.1"
+  },
+  {
+    "file_count": 10,
+    "installed_file_manifest_sha256": "cd7cd5de4f914f30edca3bc797c5d3c00a6ae31fc4ddb1d5f373925f6d209008",
+    "missing_count": 0,
+    "name": "semantic-text-splitter",
+    "version": "0.33.0"
+  },
+  {
+    "file_count": 9,
+    "installed_file_manifest_sha256": "524e171807c82c728dda4a481906d71dee62d6e66bb3080ab9885f25feec1ef5",
+    "missing_count": 0,
+    "name": "semchunk",
+    "version": "4.1.1"
+  },
+  {
+    "file_count": 226,
+    "installed_file_manifest_sha256": "2cfd08e2d61e77c89138bd245cab9d0f4ec3685100ad6e82df3c536ca223bef6",
+    "missing_count": 0,
+    "name": "sentence-transformers",
+    "version": "6.2.0"
+  },
+  {
+    "file_count": 350,
+    "installed_file_manifest_sha256": "edd0c014e5b7c54006405f268f238d4aaf875a51e3b2ce8b12209b68bbb10430",
+    "missing_count": 0,
+    "name": "setuptools",
+    "version": "84.2.1"
+  },
+  {
+    "file_count": 15,
+    "installed_file_manifest_sha256": "587de847adf330e9fe98cbaadbeed622dcdd4fe4285dfc6eaaa250d451ef4d3f",
+    "missing_count": 0,
+    "name": "shellingham",
+    "version": "1.5.4"
+  },
+  {
+    "file_count": 8,
+    "installed_file_manifest_sha256": "d0278c35d3d2b8cd775eea48635e564aa1642add065125e0c0ccd8da07040472",
+    "missing_count": 0,
+    "name": "six",
+    "version": "1.17.0"
+  },
+  {
+    "file_count": 15,
+    "installed_file_manifest_sha256": "7f6c387f014b9336d511b42d56e9092c4e44c2d6f7b84779cf625f9330a34e4a",
+    "missing_count": 0,
+    "name": "sniffio",
+    "version": "1.3.1"
+  },
+  {
+    "file_count": 11,
+    "installed_file_manifest_sha256": "7ad6abe5fa66e95a22be12d2809fa55fe4ebd0bb28cea95787824c092d55a7bc",
+    "missing_count": 0,
+    "name": "sortedcontainers",
+    "version": "2.4.0"
+  },
+  {
+    "file_count": 278,
+    "installed_file_manifest_sha256": "b7fdac6a57a65ad216e642628a34371939c85c809cb8ad67f594639aa71ee8e5",
+    "missing_count": 0,
+    "name": "SQLAlchemy",
+    "version": "2.1.6"
+  },
+  {
+    "file_count": 1573,
+    "installed_file_manifest_sha256": "fe113ed9b5bac95a4d32b17237e164ab9202abd7108e3f19456981de41a88be4",
+    "missing_count": 0,
+    "name": "sympy",
+    "version": "1.14.0"
+  },
+  {
+    "file_count": 20,
+    "installed_file_manifest_sha256": "c7f9a7b8fcb032b117aa95f98675570515f2044fa94b8d491f2beed9a3577f99",
+    "missing_count": 0,
+    "name": "tenacity",
+    "version": "9.2.1"
+  },
+  {
+    "file_count": 7,
+    "installed_file_manifest_sha256": "f91c0990d1f5152927ab471abf9f0fe1b5d18beafd88fc6f4d6e5a26ab21666e",
+    "missing_count": 0,
+    "name": "threadpoolctl",
+    "version": "3.7.0"
+  },
+  {
+    "file_count": 16,
+    "installed_file_manifest_sha256": "0fddfc55e6d86d9de29b2445cd0296e2b3f3185066c2d2c5c0ed0bcd2d30047c",
+    "missing_count": 0,
+    "name": "tiktoken",
+    "version": "0.14.0"
+  },
+  {
+    "file_count": 10,
+    "installed_file_manifest_sha256": "beee8dcf80a5e6b3f9cd72d3dc87e4df4bb3e3bfc9bf5aca6f0f73586ff27217",
+    "missing_count": 0,
+    "name": "tinytag",
+    "version": "2.3.2"
+  },
+  {
+    "file_count": 33,
+    "installed_file_manifest_sha256": "3cc7c6132b3990a3f044cc1ce19f777df849cc0968fa799336f97184142b74f3",
+    "missing_count": 0,
+    "name": "tokenizers",
+    "version": "0.23.3"
+  },
+  {
+    "file_count": 10,
+    "installed_file_manifest_sha256": "1e4ac4ec297aba9d2a4c4d53e4327c6facd9de15f7ed6e3d9830807a8997cda8",
+    "missing_count": 0,
+    "name": "tokie",
+    "version": "0.1.4"
+  },
+  {
+    "file_count": 12,
+    "installed_file_manifest_sha256": "51dd4904bf7e973e2cfcd36017a59f5ed8a4babad508fe8ff939165c31f0c30d",
+    "missing_count": 0,
+    "name": "toml",
+    "version": "0.10.2"
+  },
+  {
+    "file_count": 12400,
+    "installed_file_manifest_sha256": "41917b6f061bd5a8d3fae5a2f1cd98992c0c61437a6d2a866962a69480169e34",
+    "missing_count": 0,
+    "name": "torch",
+    "version": "2.14.1+cpu"
+  },
+  {
+    "file_count": 42,
+    "installed_file_manifest_sha256": "4be51afec094676fc61820bfc6ad1980363979a788733ca1993d77e81f07d5eb",
+    "missing_count": 0,
+    "name": "tqdm",
+    "version": "4.70.1"
+  },
+  {
+    "file_count": 2774,
+    "installed_file_manifest_sha256": "c5b15b0eaa1750bbcb70c5e1e8b475c2b82804e40957ec42957c816946f064d1",
+    "missing_count": 0,
+    "name": "transformers",
+    "version": "5.20.2"
+  },
+  {
+    "file_count": 11,
+    "installed_file_manifest_sha256": "0cabe24ba6b81d0ff5012cf4e1fd521070c680c8b2d3dd2562f9a32a5362c561",
+    "missing_count": 0,
+    "name": "tree-sitter",
+    "version": "0.26.0"
+  },
+  {
+    "file_count": 14,
+    "installed_file_manifest_sha256": "f455ef947acb1c8603b9060df86cc86d6901173ff39f0603639e534c401817c3",
+    "missing_count": 0,
+    "name": "tree-sitter-c",
+    "version": "0.24.2"
+  },
+  {
+    "file_count": 14,
+    "installed_file_manifest_sha256": "a6083ed652a5594507fea8cfd76e3e4ea95f466c241d2e2826fd459f1861a3e5",
+    "missing_count": 0,
+    "name": "tree-sitter-c-sharp",
+    "version": "0.23.5"
+  },
+  {
+    "file_count": 15,
+    "installed_file_manifest_sha256": "139f6813c19b7f4019b2e6f13c1ff06ad3f7fa7c5b7f30e081d2dcaabd8f6fb5",
+    "missing_count": 0,
+    "name": "tree-sitter-cpp",
+    "version": "0.23.4"
+  },
+  {
+    "file_count": 14,
+    "installed_file_manifest_sha256": "f88c4450d03e4da0da876d6e80fd2994125ab879f462ace16ed65a136b32c918",
+    "missing_count": 0,
+    "name": "tree-sitter-go",
+    "version": "0.25.0"
+  },
+  {
+    "file_count": 14,
+    "installed_file_manifest_sha256": "c9363c1b411816487caef57a151e1675d86689585ea633dce20a5b540d134286",
+    "missing_count": 0,
+    "name": "tree-sitter-java",
+    "version": "0.23.5"
+  },
+  {
+    "file_count": 18,
+    "installed_file_manifest_sha256": "84c65bbe3776afa83e606f2f23f270a8391f3d454ed7d6f2a4b9e1bda61b4294",
+    "missing_count": 0,
+    "name": "tree-sitter-javascript",
+    "version": "0.25.0"
+  },
+  {
+    "file_count": 12,
+    "installed_file_manifest_sha256": "ebee9c2d751295555811a8d5361cfee923bca51e7f499fe7d14b71e1af4b5460",
+    "missing_count": 0,
+    "name": "tree-sitter-kotlin",
+    "version": "1.1.0"
+  },
+  {
+    "file_count": 16,
+    "installed_file_manifest_sha256": "a65fb91750b49758d56535947c7834f3a3d07341891f81e85927172c82c0128c",
+    "missing_count": 0,
+    "name": "tree-sitter-php",
+    "version": "0.25.1"
+  },
+  {
+    "file_count": 14,
+    "installed_file_manifest_sha256": "224be38d5d7e68cd98dc326eea85222240cb5aa132e1117f71dacf0cb7e50ab9",
+    "missing_count": 0,
+    "name": "tree-sitter-python",
+    "version": "0.25.0"
+  },
+  {
+    "file_count": 15,
+    "installed_file_manifest_sha256": "c098a00892850f6206dcc0b7a7c29789caad5601d1005fd8a9ccaba2606b9343",
+    "missing_count": 0,
+    "name": "tree-sitter-ruby",
+    "version": "0.23.1"
+  },
+  {
+    "file_count": 15,
+    "installed_file_manifest_sha256": "fd3c07a62c790eca52727f748475795058ad9529c352ad0b38e25f2c571db83f",
+    "missing_count": 0,
+    "name": "tree-sitter-rust",
+    "version": "0.24.2"
+  },
+  {
+    "file_count": 20,
+    "installed_file_manifest_sha256": "0f46650f99a7d5513968e449011208b7510fc8a21800f5e2eee2550979168c7f",
+    "missing_count": 0,
+    "name": "tree-sitter-swift",
+    "version": "0.7.4"
+  },
+  {
+    "file_count": 15,
+    "installed_file_manifest_sha256": "a8d911896bf64e843cd7034f362689c6ee5dffb2641671159e21a5542a0e306e",
+    "missing_count": 0,
+    "name": "tree-sitter-typescript",
+    "version": "0.23.2"
+  },
+  {
+    "file_count": 13,
+    "installed_file_manifest_sha256": "3adafdb9c2ad56651224b65bde8c332772d9f8e7a7d33e5d869dc0bd1911de20",
+    "missing_count": 0,
+    "name": "truststore",
+    "version": "0.10.5"
+  },
+  {
+    "file_count": 44,
+    "installed_file_manifest_sha256": "561acffaa22d873129e518c23f742b3140750b7a0924c4fdfca0fa85e9c4cddf",
+    "missing_count": 0,
+    "name": "typer",
+    "version": "0.27.3"
+  },
+  {
+    "file_count": 8,
+    "installed_file_manifest_sha256": "1a8e264fe9de6d2e06a7430872f686fa2c33809efd8a1f862d09b5651f26d832",
+    "missing_count": 0,
+    "name": "typing-inspect",
+    "version": "0.9.0"
+  },
+  {
+    "file_count": 11,
+    "installed_file_manifest_sha256": "8dd550e0661fb6672a67997ba0f6c401d9ae27255efa8f7fa52fa14555ba9813",
+    "missing_count": 0,
+    "name": "typing-inspection",
+    "version": "0.4.4"
+  },
+  {
+    "file_count": 7,
+    "installed_file_manifest_sha256": "41ea07475370548a5279a49d8267fbc3e4037db7823ad573a1e0cc9ae86ff862",
+    "missing_count": 0,
+    "name": "typing_extensions",
+    "version": "4.16.0"
+  },
+  {
+    "file_count": 635,
+    "installed_file_manifest_sha256": "a0b44ab894a56a936619f36443b80d1e057195118ed515a8d3519f349d67858d",
+    "missing_count": 0,
+    "name": "tzdata",
+    "version": "2026.5"
+  },
+  {
+    "file_count": 44,
+    "installed_file_manifest_sha256": "677813b02eb48e2ddff6f179cd6b6f617f8daafb2534c87b9807fc5242c8ce1d",
+    "missing_count": 0,
+    "name": "urllib3",
+    "version": "2.8.0"
+  },
+  {
+    "file_count": 13,
+    "installed_file_manifest_sha256": "552f97487357de20c3b42930c0d2fd16873558c386a138fccd5702ddd7cf2e1d",
+    "missing_count": 0,
+    "name": "uuid_utils",
+    "version": "0.18.0"
+  },
+  {
+    "file_count": 118,
+    "installed_file_manifest_sha256": "c815283ccf84aa8a3d7ca0434699466f41667c5486a1df5d402435d2c76fe667",
+    "missing_count": 0,
+    "name": "virtualenv",
+    "version": "21.14.13"
+  },
+  {
+    "file_count": 37,
+    "installed_file_manifest_sha256": "c8d83d9bac5d381e0e3b4deb6249fcfcb3fefe3c507fa504a8ac505dd581a563",
+    "missing_count": 0,
+    "name": "watchdog",
+    "version": "6.0.0"
+  },
+  {
+    "file_count": 65,
+    "installed_file_manifest_sha256": "c2a860c93c20168eb363c6ff907d92939274f135fb3e7e175219c1793fc85f4a",
+    "missing_count": 0,
+    "name": "websockets",
+    "version": "17.3"
+  },
+  {
+    "file_count": 24,
+    "installed_file_manifest_sha256": "bd4bbd2aea0741944c079ea488416c67c2b7620d5b7c5340e31ece423e1ce72f",
+    "missing_count": 0,
+    "name": "wrapt",
+    "version": "2.5.1"
+  },
+  {
+    "file_count": 12,
+    "installed_file_manifest_sha256": "374dda74e3ff692c871763d469ff1d965dd0baf714be545416d95ec99fd6f6db",
+    "missing_count": 0,
+    "name": "xxhash",
+    "version": "4.0.2"
+  },
+  {
+    "file_count": 19,
+    "installed_file_manifest_sha256": "55227f23c8319b84e5f4eb7c0a298989a8c63e8565a24e0494543a84d9223729",
+    "missing_count": 0,
+    "name": "yarl",
+    "version": "1.25.1"
+  },
+  {
+    "file_count": 13,
+    "installed_file_manifest_sha256": "bfba38cfc660670353277eb98d75c5643e6d9dfde4c54900f2c773d0c5900019",
+    "missing_count": 0,
+    "name": "zstandard",
+    "version": "0.25.0"
+  }
+]

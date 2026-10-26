@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "model_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "model_revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+  "corpus": "corpus_v1",
+  "split": "dev",
+  "tools": [
+    "omnichunk",
+    "fixed",
+    "semchunk",
+    "langchain",
+    "semantic-text-splitter",
+    "llamaindex"
+  ],
+  "chunk_token_capacities": [
+    64,
+    96
+  ],
+  "retrieved_context_tokens": 512,
+  "top_k": 5,
+  "repeats": 3,
+  "cpu_threads": 2,
+  "tokenizer": "snapshot native tokenizer, including special tokens",
+  "include_special_tokens": true,
+  "baseline_source": "/tmp/omnichunk-v220-eval",
+  "candidate_source": "/workspace/omnichunk",
+  "excluded": {
+    "chonkie": "count-only token callback cannot supply encode/decode semantics"
+  },
+  "interpretation": "Fixed experiment; no universal quality or end-to-end latency claim."
+}

@@ -165,13 +165,25 @@ hashes and timing samples, are preserved in
 [`benchmarks/retrieval/reports`](https://github.com/oguzhankir/omnichunk/tree/main/benchmarks/retrieval/reports).
 Reproduce with the [benchmark commands](https://github.com/oguzhankir/omnichunk/blob/main/benchmarks/README.md).
 
-Frozen dense artifacts and an optional local SentenceTransformer producer now
-provide the semantic comparison path. The producer checks complete native input
-tokens against full tokenizer inputs and rejects overflow or preprocessing
-differences. No pretrained dense result is reported: this environment's network
-policy blocks model downloads. Random local smoke-model outputs are not quality
-evidence. Multilingual dense results and production design-partner evidence remain
-open M1 requirements.
+### Pretrained dense comparison
+
+The [dense experiment record](https://github.com/oguzhankir/omnichunk/blob/main/benchmarks/retrieval/reports/dense-minilm-v1/README.md)
+compares v2.2.0 with source `a2e3bae7afb9b81f7c044ac0feda6612b0f97c97` using
+`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` at model commit
+`e8f8c211226b894fcb81acc59f3b34ba3efd5f42`. Development evidence informed the
+recursive-tail and orphan-heading repairs before the held-out evaluation.
+The original synthetic corpus and independent English SQuAD subset remain separate
+workloads; the record preserves gains, regressions and raw paired reports.
+
+All six token-compatible adapters use the native tokenizer with special tokens,
+64/96-token chunks, zero overlap and no derived context. Complete joined retrieval
+prefixes fit 512 tokens; top-k 5 separately defines ranking metrics. Chunking timing uses
+three repeats with two threads in each PyTorch CPU pool and OMP/MKL limited to two.
+The producer rejects input overflow instead of truncating. Frozen-vector search
+latency excludes encoding; shared deduplicated encoder preparation cannot be
+attributed to one chunker. Small corpora and descriptive source-cluster intervals
+do not establish universal leadership. Independent review of selected evidence
+labels and production design-partner evaluation remain open M1 requirements.
 
 Record source commit, package/Python/dependency versions, CPU/platform, tokenizer
 assets, corpus hash/license, size and overlap policies, and optional Rust use.
