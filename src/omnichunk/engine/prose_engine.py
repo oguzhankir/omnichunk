@@ -132,6 +132,7 @@ class ProseEngine:
 
         if language == "markdown":
             _, nodes = parse_markdown(content)
+            nodes = _markdown_paragraph_nodes(nodes, text_index)
         else:
             nodes = _plaintext_nodes(content, text_index)
 
@@ -142,6 +143,7 @@ class ProseEngine:
             size_counter=size_counter,
             content=content,
             preserve_code_blocks=(language == "markdown"),
+            preserve_paragraphs=(language == "markdown"),
             split_oversized=options.overflow_policy == "split",
         )
 
@@ -445,6 +447,42 @@ def _plaintext_nodes(content: str, text_index: TextIndex | None = None) -> list[
     return nodes
 
 
+def _markdown_paragraph_nodes(nodes: list[ProseNode], text_index: TextIndex) -> list[ProseNode]:
+    """Retain blank-line paragraph identities inside plain Markdown body nodes."""
+    out: list[ProseNode] = []
+    pattern = _SPLIT_HIERARCHY[0]
+    assert pattern is not None
+    for node in nodes:
+        if node.kind != EntityType.PARAGRAPH:
+            out.append(node)
+            continue
+        first_content = len(node.text) - len(node.text.lstrip())
+        last_content = len(node.text.rstrip())
+        ends = [
+            match.end()
+            for match in pattern.finditer(node.text)
+            if first_content < match.end() < last_content
+        ]
+        ends.append(len(node.text))
+        cursor = 0
+        for end in ends:
+            start_char = node.byte_range.start + cursor
+            end_char = node.byte_range.start + end
+            out.append(
+                replace(
+                    node,
+                    text=node.text[cursor:end],
+                    byte_range=ByteRange(start_char, end_char),
+                    line_range=LineRange(
+                        text_index.line_for_char(start_char),
+                        text_index.line_for_char(max(start_char, end_char - 1)),
+                    ),
+                )
+            )
+            cursor = end
+    return out
+
+
 def _build_node_windows(
     nodes: list[ProseNode],
     *,
@@ -453,6 +491,7 @@ def _build_node_windows(
     size_counter: Callable[[str], int],
     content: str,
     preserve_code_blocks: bool = False,
+    preserve_paragraphs: bool = False,
     split_oversized: bool = True,
 ) -> list[list[tuple[int, int, list[str], str]]]:
     windows: list[list[tuple[int, int, list[str], str]]] = []
@@ -481,6 +520,16 @@ def _build_node_windows(
                 current = []
             windows.append([node_payload])
             continue
+
+        if (
+            preserve_paragraphs
+            and current
+            and any(item[3] != EntityType.HEADING.value for item in current)
+        ):
+            # A heading belongs to its following body. Distinct body paragraphs
+            # keep separate retrieval identities even when spare capacity exists.
+            windows.append(current)
+            current = []
 
         combined_start = current[0][0] if current else start
         if size_counter(content[combined_start:end]) <= max_size:
@@ -547,7 +596,8 @@ def _build_node_windows(
     if current:
         windows.append(current)
 
-    if len(windows) <= 1:
+    if len(windows) <= 1 or preserve_paragraphs:
+        # A minimum-size preference must not undo explicit paragraph boundaries.
         return windows
 
     idx = 0
@@ -685,7 +735,7 @@ def _windows_to_contiguous_ranges(
 
     for window in windows:
         window_end = max(item[1] for item in window)
-        hierarchy = next((item[2] for item in window if item[2]), [])
+        hierarchy = next((item[2] for item in reversed(window) if item[2]), [])
         section_type = window[0][3] if window else "section"
         start = cursor
         end = max(window_end, start)

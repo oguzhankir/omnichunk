@@ -303,7 +303,7 @@ def test_pending_heading_packs_with_first_whole_paragraph_of_oversized_body(
 
     assert_source_and_budget(chunks, source, 85)
     assert chunks[0].text == heading + paragraphs[0] + "\n\n"
-    assert len(chunks) == 2
+    assert len(chunks) == len(paragraphs)
     assert all(chunk.context.heading_hierarchy == ["Approval"] for chunk in chunks)
     for paragraph in paragraphs:
         assert any(paragraph in chunk.text for chunk in chunks)
