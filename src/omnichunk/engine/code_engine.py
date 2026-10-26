@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from bisect import bisect_right
 from collections.abc import Iterator
 from dataclasses import replace
 from typing import Any
@@ -323,6 +324,9 @@ def _bind_leading_comments(nodes: list[Any], budget: SourceBudget, max_size: int
     available if a later full-source budget check still requires descent.
     """
     raw = budget.index.raw_bytes
+    # Root offsets are queried repeatedly; scanning each entire source prefix
+    # for a missing CR would otherwise make LF-only files quadratic.
+    line_starts = [0, *(offset + 1 for offset, byte in enumerate(raw) if byte in (10, 13))]
     output: list[Any] = []
     pending: list[Any] = []
 
@@ -333,7 +337,7 @@ def _bind_leading_comments(nodes: list[Any], budget: SourceBudget, max_size: int
 
     for index, node in enumerate(nodes):
         start = int(node.start_byte)
-        line_start = max(raw.rfind(b"\n", 0, start), raw.rfind(b"\r", 0, start)) + 1
+        line_start = line_starts[bisect_right(line_starts, start) - 1]
         is_comment = "comment" in str(getattr(node, "type", "")).lower()
         leading_comment = is_comment and not raw[line_start:start].strip()
         if pending and not adjacent(pending[-1], node):
