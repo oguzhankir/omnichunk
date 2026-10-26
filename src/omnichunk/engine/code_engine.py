@@ -24,7 +24,11 @@ from omnichunk.types import (
 )
 from omnichunk.util.detect import detect_language
 from omnichunk.util.text_index import TextIndex
-from omnichunk.windowing.greedy import assign_windows_for_nodes, assign_windows_for_ranges
+from omnichunk.windowing.greedy import (
+    RangeNode,
+    assign_windows_for_nodes,
+    assign_windows_for_ranges,
+)
 from omnichunk.windowing.merge import merge_adjacent_windows
 from omnichunk.windowing.models import SourceBudget
 from omnichunk.windowing.overlap import apply_token_overlap, build_line_overlap_text
@@ -92,6 +96,7 @@ class CodeEngine:
 
         ast_nodes = _collect_ast_root_nodes(parse_result.tree)
         if ast_nodes:
+            ast_nodes = _bind_leading_comments(ast_nodes, budget, options.max_chunk_size)
             windows = assign_windows_for_nodes(
                 ast_nodes,
                 cumsum=cumsum,
@@ -308,6 +313,56 @@ def _collect_candidate_ranges(
             merged[-1] = (merged[-1][0], max(merged[-1][1], end))
 
     return merged
+
+
+def _bind_leading_comments(nodes: list[Any], budget: SourceBudget, max_size: int) -> list[Any]:
+    """Keep an adjacent leading comment block with its fitting root statement.
+
+    Source trivia belongs to the preceding sibling in measured windowing, so the
+    fit check includes the statement's trailing trivia. Original children remain
+    available if a later full-source budget check still requires descent.
+    """
+    raw = budget.index.raw_bytes
+    output: list[Any] = []
+    pending: list[Any] = []
+
+    def adjacent(left: Any, right: Any) -> bool:
+        gap = raw[int(left.end_byte) : int(right.start_byte)].decode("utf-8")
+        newlines = gap.replace("\r\n", "\n").replace("\r", "\n").count("\n")
+        return not gap.strip() and newlines <= 1
+
+    for index, node in enumerate(nodes):
+        start = int(node.start_byte)
+        line_start = max(raw.rfind(b"\n", 0, start), raw.rfind(b"\r", 0, start)) + 1
+        is_comment = "comment" in str(getattr(node, "type", "")).lower()
+        leading_comment = is_comment and not raw[line_start:start].strip()
+        if pending and not adjacent(pending[-1], node):
+            output.extend(pending)
+            pending = []
+        if leading_comment:
+            pending.append(node)
+            continue
+        if pending and not is_comment:
+            owned_start = int(pending[0].start_byte) if output else 0
+            owned_end = int(nodes[index + 1].start_byte) if index + 1 < len(nodes) else len(raw)
+            if budget.count(owned_start, owned_end) <= max_size:
+                output.append(
+                    RangeNode(
+                        start=int(pending[0].start_byte),
+                        end=int(node.end_byte),
+                        children=tuple([*pending, node]),
+                    )
+                )
+                pending = []
+                continue
+            output.extend(pending)
+            pending = []
+        elif pending:
+            output.extend(pending)
+            pending = []
+        output.append(node)
+    output.extend(pending)
+    return output
 
 
 def _collect_ast_root_nodes(tree: Any | None) -> list[Any]:
