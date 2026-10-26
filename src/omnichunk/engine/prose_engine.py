@@ -32,8 +32,9 @@ _SPLIT_HIERARCHY: list[re.Pattern[str] | None] = [
     re.compile(r"(?:\r?\n[ \t]*){2,}"),
     re.compile(r"\r?\n"),
     None,  # Unicode sentence boundaries, before word-level fallbacks.
+    re.compile(r"[;；]+"),  # Strong clause boundaries before splitting into words.
     re.compile(r"\s+"),
-    re.compile(r"[;,，；、\(\)\[\]\"'`]+"),
+    re.compile(r"[,，、\(\)\[\]\"'`]+"),
     re.compile(r"[:：—…]+"),
     re.compile(r"[/\\–&-]+"),
 ]
