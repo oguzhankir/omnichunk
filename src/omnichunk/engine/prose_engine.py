@@ -651,6 +651,47 @@ def _window_has_section_type(
     return any(item[3] == section_type for item in window)
 
 
+def _prose_sentence_ends(text: str) -> list[int]:
+    """Ignore fallback sentence boundaries inside matched square brackets.
+
+    Match each unescaped pair independently, so a missing outer closer does not
+    hide later sentences or invalidate an otherwise balanced inner expression.
+    This source-structure guard does not change the semantic sentence splitter.
+    """
+    ends = [end for _, _, end in split_sentences(text)]
+    if len(ends) < 2 or "[" not in text or "]" not in text:
+        return ends
+    stack: list[int] = []
+    opening: set[int] = set()
+    closing: set[int] = set()
+    escaped = False
+    for offset, char in enumerate(text):
+        if escaped:
+            escaped = False
+        elif char == "\\":
+            escaped = True
+        elif char == "[":
+            stack.append(offset)
+        elif char == "]" and stack:
+            opening.add(stack.pop() + 1)
+            closing.add(offset + 1)
+    if not opening:
+        return ends
+    filtered: list[int] = []
+    depth = 0
+    candidate = 0
+    for offset in range(len(text) + 1):
+        if offset in closing:
+            depth -= 1
+        if offset in opening:
+            depth += 1
+        if candidate < len(ends) and ends[candidate] == offset:
+            if depth == 0:
+                filtered.append(offset)
+            candidate += 1
+    return filtered
+
+
 def _split_oversized_text(
     text: str,
     *,
@@ -670,7 +711,7 @@ def _split_oversized_text(
     if _level < len(_SPLIT_HIERARCHY):
         pattern = _SPLIT_HIERARCHY[_level]
         points = (
-            [end for _, _, end in split_sentences(text)]
+            _prose_sentence_ends(text)
             if pattern is None
             else [match.end() for match in pattern.finditer(text)]
         )
