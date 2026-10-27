@@ -150,6 +150,7 @@ class ProseEngine:
             pack_paragraphs=(
                 language == "markdown" and options.markdown_paragraph_policy == "pack"
             ),
+            compact_sentences=options.prose_boundary_policy == "compact",
             split_oversized=options.overflow_policy == "split",
         )
 
@@ -499,6 +500,7 @@ def _build_node_windows(
     preserve_code_blocks: bool = False,
     preserve_paragraphs: bool = False,
     pack_paragraphs: bool = False,
+    compact_sentences: bool = False,
     split_oversized: bool = True,
 ) -> list[list[tuple[int, int, list[str], str]]]:
     windows: list[list[tuple[int, int, list[str], str]]] = []
@@ -586,6 +588,7 @@ def _build_node_windows(
                     base_start=combined_start,
                     max_size=max_size,
                     size_counter=size_counter,
+                    compact_sentences=compact_sentences,
                 )
                 if content[start : prefixed_ranges[0][1]].strip():
                     split_ranges = prefixed_ranges
@@ -601,6 +604,7 @@ def _build_node_windows(
                     base_start=start,
                     max_size=max_size,
                     size_counter=size_counter,
+                    compact_sentences=compact_sentences,
                 )
             for split_start, split_end in split_ranges:
                 # Keep each source piece's original hierarchy and section kind
@@ -723,6 +727,7 @@ def _split_oversized_text(
     max_size: int,
     size_counter: Callable[[str], int],
     _level: int = 0,
+    compact_sentences: bool = False,
 ) -> list[tuple[int, int]]:
     """Pack whole structural units; descend only when a unit cannot fit.
 
@@ -762,6 +767,7 @@ def _split_oversized_text(
                 max_size=max_size,
                 size_counter=size_counter,
                 _level=_level + 1,
+                compact_sentences=compact_sentences,
             )
             # Keep the last recursive fragment available for the next complete
             # unit. Flushing it here strands a short sentence/line tail even
@@ -771,6 +777,19 @@ def _split_oversized_text(
             unit_start = unit_end
         if group_start < len(text):
             chunks.append((base_start + group_start, base_start + len(text)))
+        if compact_sentences and pattern is None:
+            # Compare sentence-first and clause/word-first partitions. Compact
+            # mode may split a fitting sentence but never adds fragments here.
+            compact = _split_oversized_text(
+                text,
+                base_start=base_start,
+                max_size=max_size,
+                size_counter=size_counter,
+                _level=_level + 1,
+                compact_sentences=compact_sentences,
+            )
+            if len(compact) <= len(chunks):
+                return compact
         return chunks
 
     chunks = []

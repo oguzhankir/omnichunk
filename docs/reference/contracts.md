@@ -224,3 +224,18 @@ Origin, request sizes and read timeouts. Non-loopback binding requires a bearer
 token; `--token-env` names its environment variable. It uses stdlib `HTTPServer`,
 without TLS or hard cancellation of an executing parser. A real MCP adapter
 remains future work.
+
+
+### Compact prose fallback
+
+`prose_boundary_policy="sentence"` is the default and keeps fitting sentence units
+intact during oversized prose splitting. For a denser index, explicitly choose
+`prose_boundary_policy="compact"`. This also tries clause/word fallback and selects
+it when the resulting partition has equal or fewer fragments. A sentence that
+would fit on its own may be divided. Existing paragraph, fence and heading
+boundaries remain governed by their own policies; fitting paragraphs are not
+changed. Complete source slices and measured payload budgets remain enforced.
+Evaluate retrieval and vector counts for the selected mode; compact output does
+not imply universally better retrieval or a minimum fill ratio. The option is
+part of the configuration fingerprint, so rebuild persisted index generations
+when adopting it.
