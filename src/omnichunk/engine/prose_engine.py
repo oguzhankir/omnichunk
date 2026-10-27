@@ -777,7 +777,7 @@ def _split_oversized_text(
             unit_start = unit_end
         if group_start < len(text):
             chunks.append((base_start + group_start, base_start + len(text)))
-        if compact_sentences and pattern is None:
+        if compact_sentences and pattern is None and len(points) > 1:
             # Compare sentence-first and clause/word-first partitions. Compact
             # mode may split a fitting sentence but never adds fragments here.
             compact = _split_oversized_text(
