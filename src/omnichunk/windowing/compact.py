@@ -77,7 +77,11 @@ def compact_code_ranges(
             cursor = end
         return ranges
 
-    candidates = [structural]
+    candidates = (
+        [structural]
+        if all(budget.count(start, end) <= max_size for start, end in structural)
+        else []
+    )
     for target, prefer_lines in [(max_size, False), (max_size, True), (balanced_target, False)]:
         candidate = layout(target, prefer_lines)
         if candidate is not None:
@@ -89,4 +93,4 @@ def compact_code_ranges(
         balance = sum((size * len(sizes) - total_size) ** 2 for size in sizes)
         return len(ranges), balance
 
-    return min(candidates, key=key)
+    return min(candidates, key=key) if candidates else structural
