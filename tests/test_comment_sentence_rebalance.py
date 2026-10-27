@@ -7,6 +7,41 @@ import pytest
 from omnichunk import Chunker
 
 
+def test_long_comment_rebalance_bounds_counter_work():
+    from types import SimpleNamespace
+
+    from omnichunk.engine.code_engine import _bind_leading_comments
+    from omnichunk.util.text_index import TextIndex
+    from omnichunk.windowing.models import SourceBudget
+
+    def measured_work(sentences):
+        comment = "// " + "Sentence with a few words. " * sentences
+        source = comment + "\nconst enabled = false;\n"
+        probes = []
+
+        def count(text):
+            probes.append(len(text))
+            return len(text.split())
+
+        nodes = [
+            SimpleNamespace(type="comment", start_byte=0, end_byte=len(comment)),
+            SimpleNamespace(
+                type="lexical_declaration", start_byte=len(comment) + 1, end_byte=len(source) - 1
+            ),
+        ]
+        budget = SourceBudget(source, TextIndex(source), count)
+        assert _bind_leading_comments(nodes, budget, 96) == nodes
+        # No two-way split can fit here. Work must not grow as the sum of all
+        # sentence-prefix lengths, which is quadratic in the comment length.
+        assert len(probes) < 40
+        assert sum(probes) < 30 * len(source)
+        return sum(probes)
+
+    small = measured_work(4000)
+    large = measured_work(8000)
+    assert large <= 2.3 * small
+
+
 @pytest.mark.parametrize("newline", ["\n", "\r\n"])
 @pytest.mark.parametrize("punctuation", [". ", "。"])
 def test_comment_tail_stays_with_statement(newline, punctuation):

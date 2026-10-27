@@ -119,6 +119,11 @@ or tail can remain below the minimum. This can increase vector/index work and
 reduce adjacent context; it is not a universal cost or quality improvement.
 Table headers are not repeated as derived context by this policy.
 
+Oversized leading code comments can be rebalanced at sentence boundaries when
+both resulting payloads independently fit. This optional search inspects a bounded
+number of candidates. Nonmonotonic custom counters can cause it to retain ordinary
+structural splitting instead of finding every possible sentence rebalance.
+
 The default sentence heuristic recognizes Unicode uppercase/uncased starters and
 Japanese/Chinese `。！？` without intervening spaces. Closing quotes and whitespace
 remain with the preceding sentence. Abbreviations and ambiguous linguistic

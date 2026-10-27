@@ -20,6 +20,8 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 ### Fixed
 - Compact code grows token-prefix probes instead of repeatedly tokenizing the
   remaining file, while retaining measured budgets and nonadditive recovery.
+- Oversized comment rebalancing bounds sentence-cut probes instead of recounting
+  every growing prefix; resulting payload budgets remain independently checked.
 - Mixed Markdown blocks retain paragraph/table/list ownership, including tight
   list continuations, indented paragraphs in loose lists, and continuations
   after nested code fences.

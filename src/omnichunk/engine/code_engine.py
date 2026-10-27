@@ -465,11 +465,31 @@ def _bind_leading_comments(
                 # statement when the whole unit is too large. Both resulting
                 # source payloads must independently fit the actual counter.
                 cut = comment_start
+                cuts: list[int] = []
                 for sentence, _, _ in split_sentences(comment_text)[:-1]:
                     cut += len(sentence.encode("utf-8"))
+                    if owned_start < cut < comment_end:
+                        cuts.append(cut)
+                # Rebalancing is optional: inspect logarithmically many sentence
+                # cuts instead of recounting every growing prefix. Nonmonotonic
+                # counters can fall back to ordinary structural splitting; only
+                # independently verified two-way fits may become a group.
+                lo, hi = 0, len(cuts) - 1
+                selected: int | None = None
+                while lo <= hi:
+                    middle = (lo + hi) // 2
+                    candidate = cuts[middle]
+                    if budget.count(owned_start, candidate) > max_size:
+                        hi = middle - 1
+                    elif budget.count(candidate, owned_end) > max_size:
+                        lo = middle + 1
+                    else:
+                        selected = candidate
+                        hi = middle - 1
+                if selected is not None:
+                    cut = selected
                     if (
-                        owned_start < cut < comment_end
-                        and budget.count(owned_start, cut) <= max_size
+                        budget.count(owned_start, cut) <= max_size
                         and budget.count(cut, owned_end) <= max_size
                     ):
                         output.append(RangeNode(comment_start, cut))
@@ -483,7 +503,6 @@ def _bind_leading_comments(
                         )
                         pending = []
                         index = following
-                        break
                 if not pending:
                     continue
             output.extend(pending)
