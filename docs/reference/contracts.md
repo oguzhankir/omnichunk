@@ -61,6 +61,13 @@ comments as one unit. Independent documented statements keep separate boundaries
 oversized groups use the normal recursive fallback. A complete code file that
 fits the maximum retains its existing single-chunk behavior.
 
+With `overflow_policy="split"`, an oversized comment-and-statement group can
+split at a comment sentence boundary when both complete resulting source slices
+fit. This keeps the remaining comment text beside its statement and includes
+same-line trailing comment chains in the check. Chunk text is a source slice;
+a slice beginning within a comment is not necessarily independently executable.
+The `error` and `preserve` policies do not apply this rebalance.
+
 Prose and Markdown split oversized content in structural order: paragraphs,
 lines (including table rows), sentences, semicolon clauses, whitespace, then
 smaller separators and measured character prefixes. Prose sentence fallback

@@ -84,3 +84,58 @@ def test_comment_sentence_rebalance_in_other_ast_languages(path, leading, tail, 
         max_chunk_size=limit, min_chunk_size=0, context_mode="none", coverage_policy="lossless"
     ).chunk(path, source)
     assert [c.text for c in chunks] == [leading, tail + statement]
+
+
+def test_unicode_rebalance_owns_multiline_trailing_comment_chain_and_next_source():
+    lead = "// Önce bağlamı inceleyin. "
+    tail = "Sonra ayarı doğrulayın.\r\n"
+    statement = "const etkin = false; /* units\r\n seconds */ /* denetlendi */\r\n"
+    following = "// Ayrı belge.\r\nconst yeni = true;\r\n"
+    source = lead + tail + statement + following
+
+    def count(text):
+        return len(text.encode("utf-8")) + 2
+
+    limit = count(tail + statement)
+    chunker = Chunker(
+        max_chunk_size=limit,
+        min_chunk_size=0,
+        size_unit="tokens",
+        tokenizer=count,
+        context_mode="none",
+        coverage_policy="lossless",
+    )
+    chunks = chunker.chunk("settings.js", source)
+    assert [c.text for c in chunks] == [lead, tail + statement, following]
+    assert [c.text for c in chunker.stream("settings.js", source)] == [c.text for c in chunks]
+    raw = source.encode("utf-8")
+    assert "".join(c.text for c in chunks) == source
+    for chunk in chunks:
+        assert raw[chunk.byte_range.start : chunk.byte_range.end].decode("utf-8") == chunk.text
+        assert count(chunk.contextualized_text) <= limit
+
+
+@pytest.mark.parametrize("policy", ["error", "preserve"])
+def test_comment_sentence_rebalance_does_not_override_explicit_overflow_policy(policy):
+    from omnichunk import ChunkingError
+
+    lead = "# Background information. "
+    tail = "This explains the setting.\n"
+    statement = "ENABLED = False\n"
+    source = lead + tail + statement
+    limit = len(tail + statement)
+    chunker = Chunker(
+        max_chunk_size=limit,
+        min_chunk_size=0,
+        context_mode="none",
+        coverage_policy="lossless",
+        overflow_policy=policy,
+    )
+    if policy == "error":
+        with pytest.raises(ChunkingError):
+            chunker.chunk("settings.py", source)
+    else:
+        chunks = chunker.chunk("settings.py", source)
+        assert "".join(c.text for c in chunks) == source
+        assert any(c.metadata["budget"]["overflow"] > 0 for c in chunks)
+        assert not any(c.text == tail + statement for c in chunks)
