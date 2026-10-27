@@ -181,6 +181,7 @@ def _body_nodes(
     cursor = start
     kind: EntityType | None = None
     list_indent = list_content_indent = 0
+    blank_since_content = False
 
     def emit(block_end: int) -> None:
         nonlocal block_start, kind
@@ -212,6 +213,7 @@ def _body_nodes(
             # separate loose-list items. Defer ownership to the next content.
             if kind != EntityType.LIST:
                 emit(line_end)
+            blank_since_content = True
             cursor = line_end
             continue
         marker = _LIST_RE.match(line)
@@ -228,11 +230,22 @@ def _body_nodes(
             line_kind = EntityType.LIST
         elif _TABLE_RE.fullmatch(line.rstrip("\r\n")):
             line_kind = EntityType.TABLE
+        elif (
+            kind == EntityType.LIST
+            and not blank_since_content
+            and not line.lstrip(" \t").startswith(">")
+            and not re.fullmatch(r"(?:-{3,}|\*{3,}|_{3,})[ \t]*", line.strip())
+        ):
+            # A paragraph can lazily continue a tight list without repeating its
+            # indentation. Blank-separated paragraphs still need the content
+            # column; independent table/quote/rule blocks interrupt laziness.
+            line_kind = EntityType.LIST
         else:
             line_kind = EntityType.PARAGRAPH
         if kind is not None and line_kind != kind:
             emit(cursor)
         kind = line_kind
+        blank_since_content = False
         cursor = line_end
     emit(end)
     return out
