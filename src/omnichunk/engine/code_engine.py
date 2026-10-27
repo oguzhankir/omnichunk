@@ -22,10 +22,12 @@ from omnichunk.types import (
     ChunkOptions,
     ContentType,
     EntityInfo,
+    EntityType,
     LineRange,
 )
 from omnichunk.util.detect import detect_language
 from omnichunk.util.text_index import TextIndex
+from omnichunk.windowing.compact import compact_code_ranges
 from omnichunk.windowing.greedy import (
     RangeNode,
     assign_windows_for_nodes,
@@ -140,6 +142,29 @@ class CodeEngine:
 
         chunk_ranges = _windows_to_contiguous_ranges(merged_windows, len(raw_bytes))
         chunk_ranges = _merge_whitespace_only_ranges(chunk_ranges, raw_bytes)
+        if options.code_boundary_policy == "compact" and options.overflow_policy == "split":
+            protected = []
+            for position, node in enumerate(ast_nodes):
+                start = int(getattr(node, "start_byte", getattr(node, "start", 0)))
+                if position + 1 < len(ast_nodes):
+                    following = ast_nodes[position + 1]
+                    end = int(getattr(following, "start_byte", getattr(following, "start", 0)))
+                else:
+                    end = len(raw_bytes)
+                start = start if position else 0
+                if budget.count(start, end) <= options.max_chunk_size:
+                    protected.append((start, end))
+            protected.extend(
+                (entity.byte_range.start, entity.byte_range.end)
+                for entity in entities
+                if entity.type in {EntityType.FUNCTION, EntityType.METHOD, EntityType.CLASS}
+                and entity.byte_range is not None
+                and budget.count(entity.byte_range.start, entity.byte_range.end)
+                <= options.max_chunk_size
+            )
+            chunk_ranges = compact_code_ranges(
+                chunk_ranges, budget=budget, max_size=options.max_chunk_size, protected=protected
+            )
         token_counter = make_token_counter(options.tokenizer, chunk_size=options.max_chunk_size)
 
         previous_text = ""

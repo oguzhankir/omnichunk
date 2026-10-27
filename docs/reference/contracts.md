@@ -61,6 +61,16 @@ comments as one unit. Independent documented statements keep separate boundaries
 oversized groups use the normal recursive fallback. A complete code file that
 fits the maximum retains its existing single-chunk behavior.
 
+`code_boundary_policy="compact"` optionally compares AST, measured-prefix,
+line-preferred and balanced-size layouts for oversized code. It selects fewer
+fragments first, then more balanced measured payloads. Alternative layouts do not
+divide fitting definitions or documented root groups, but may divide statements
+or expressions inside oversized declarations. This trades finer source structure
+for fewer vectors and more surrounding code in each payload; evaluate both
+retrieval quality and index cost. Source slices and final payload budgets remain
+checked. The default is `"structure"`; `error` and `preserve` overflow policies
+retain their existing behavior.
+
 With `overflow_policy="split"`, an oversized comment-and-statement group can
 split at a comment sentence boundary when both complete resulting source slices
 fit. This keeps the remaining comment text beside its statement and includes
