@@ -21,6 +21,7 @@ TOOLS = (
     "omnichunk",
     "omnichunk-pack",
     "omnichunk-prose-compact",
+    "omnichunk-code-compact",
     "fixed",
     "semchunk",
     "langchain",
@@ -35,6 +36,7 @@ TOOL_DISTRIBUTIONS = {
     "omnichunk": "omnichunk",
     "omnichunk-pack": "omnichunk",
     "omnichunk-prose-compact": "omnichunk",
+    "omnichunk-code-compact": "omnichunk",
     "fixed": None,
     "semchunk": "semchunk",
     "langchain": "langchain-text-splitters",
@@ -316,6 +318,7 @@ def split_document(
         "omnichunk": {},
         "omnichunk-pack": {"markdown_paragraph_policy": "pack"},
         "omnichunk-prose-compact": {"prose_boundary_policy": "compact"},
+        "omnichunk-code-compact": {"code_boundary_policy": "compact"},
     }
     if tool in profiles:
         chunks = Chunker(

@@ -102,6 +102,11 @@ Additional explicit strategy identifiers leave the historical adapters unchanged
   combine the Markdown packing experiment with prose compaction. A runtime with
   the public prose boundary option is required. The historical `omnichunk`
   strategy retains its default sentence boundaries.
+- `omnichunk-code-compact` separately selects `code_boundary_policy="compact"`
+  while retaining the default prose and Markdown policies. This source-only
+  profile requires the corresponding public runtime option and still validates
+  complete payload budgets and exact UTF-8 ranges. The historical `omnichunk`
+  strategy retains its default structural code boundaries.
 
 All strategies must pass the same source and budget checks; none receives
 postprocessing that silently repairs its output. Compare explicit strategies and

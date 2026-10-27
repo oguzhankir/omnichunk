@@ -60,6 +60,32 @@ def test_compact_prose_profile_selects_compact_policy_without_changing_historica
     assert all(p.text.strip().endswith(".") for p in historical)
 
 
+@pytest.mark.parametrize("unit", ["chars", "tokens"])
+def test_compact_code_profile_preserves_unicode_source_and_actual_payload_budget(unit):
+    text = "def first():\n    label = '資料😀'\n    return label\n\ndef second():\n    return 42\n"
+    counter = len if unit == "chars" else lambda value: len(value.encode("utf-8")) + 2
+    chunks = adapters.split_document(
+        "omnichunk-code-compact", "doc", "test.py", text, 40, counter, unit
+    )
+    assert "".join(p.text for p in chunks) == text
+    assert all(counter(p.text) <= 40 for p in chunks)
+    raw = text.encode("utf-8")
+    assert all(raw[p.start : p.end].decode("utf-8") == p.text for p in chunks)
+
+
+def test_compact_code_profile_selects_compact_policy_without_changing_historical_adapter():
+    text = (
+        "def first(value):\n    first = value + 1\n    second = first * 2\n    return second\n\n\n"
+        "def next_task(item):\n    other = item - 1\n    final = other / 2\n    return final\n"
+    )
+    compact = adapters.split_document(
+        "omnichunk-code-compact", "doc", "test.py", text, 50, len, "chars"
+    )
+    historical = adapters.split_document("omnichunk", "doc", "test.py", text, 50, len, "chars")
+    assert compact != historical
+    assert "".join(p.text for p in compact) == "".join(p.text for p in historical) == text
+
+
 @pytest.mark.parametrize(
     "tool,module",
     [
