@@ -61,6 +61,11 @@ comments as one unit. Independent documented statements keep separate boundaries
 oversized groups use the normal recursive fallback. A complete code file that
 fits the maximum retains its existing single-chunk behavior.
 
+Inside an oversized declaration, complete body statements can use the remaining
+budget beside their declaration header. Pending source from a different
+declaration is flushed before descending into that declaration, preserving its
+own scope and sibling context.
+
 `code_boundary_policy="compact"` optionally compares AST, measured-prefix,
 line-preferred and balanced-size layouts for oversized code. It selects fewer
 fragments first, then fuller earlier measured payloads. Alternative layouts do not

@@ -158,7 +158,7 @@ def _measured_windows(
             "class_body",
             "declaration_list",
         }
-        if split_oversized and children and len(frames) > 1 and (size > max_size or body_block):
+        if split_oversized and children and len(frames) > 1 and body_block:
             # A declaration header should share its remaining budget with the
             # first fitting statement of an oversized body. Descending does not
             # itself require flushing the pending source prefix.
