@@ -182,6 +182,30 @@ python benchmarks/run_dense_experiment.py \
   --output-dir reports/dense-synthetic-dev
 ```
 
+The orchestrator also accepts an explicit corpus directory or manifest path,
+an independent candidate checkout, and a comma-separated strategy selection:
+
+```bash
+python benchmarks/run_dense_experiment.py \
+  --model-dir /path/to/frozen/snapshot --model-revision MODEL_COMMIT_SHA \
+  --baseline-dir /path/to/baseline --candidate-dir /path/to/candidate \
+  --corpus /path/to/external/development \
+  --tools omnichunk,langchain-code,llamaindex-sentence,chonkie-sentence \
+  --output-dir reports/dense-external-dev
+```
+
+Bare `corpus_v1` and `corpus_squad_v1` retain their bundled-directory resolution;
+other relative paths resolve from the working directory. The default candidate
+is this harness's checkout, and omitting `--tools` retains the historical six
+strategies. Both runtime checkouts must support every selected strategy/option;
+for example, `omnichunk-pack` requires a runtime with paragraph-policy support.
+Unknown, empty and duplicate strategy names fail before inference. Comparisons
+use `omnichunk` as their anchor when selected, otherwise the first selected tool.
+The manifest records resolved corpus/candidate paths and selected strategies.
+This helper retains the historical 64/96 chunk capacities and 512 context budget;
+use the preparation/evaluation CLIs directly for other predeclared settings, and
+the paired comparer with `--cluster-map` for repository-clustered intervals.
+
 The default encoder for this helper and the historical v1 run is
 `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` at
 `e8f8c211226b894fcb81acc59f3b34ba3efd5f42`. Within each model's experiment,

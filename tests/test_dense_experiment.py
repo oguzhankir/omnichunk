@@ -113,6 +113,90 @@ def test_orchestration_preserves_existing_results(tmp_path, monkeypatch):
     assert preserved.read_text() == "existing evidence"
 
 
+def test_external_corpus_candidate_checkout_and_extended_strategies_are_forwarded(
+    tmp_path, monkeypatch
+):
+    args = configuration(tmp_path)
+    corpus = tmp_path / "external-corpus"
+    corpus.mkdir()
+    (corpus / "manifest.json").write_text("{}")
+    args.corpus = str(corpus)
+    args.candidate_dir = tmp_path / "experimental-runtime"
+    (args.candidate_dir / "src/omnichunk").mkdir(parents=True)
+    (args.candidate_dir / "src/omnichunk/__init__.py").write_text("")
+    args.tools = "omnichunk-pack,langchain-code,llamaindex-sentence,chonkie-sentence"
+    calls = []
+
+    def command(arguments, environment, output):
+        calls.append((arguments, environment))
+        output.write_text("captured stdout")
+        Path(arguments[arguments.index("--output") + 1]).write_text("{}")
+
+    monkeypatch.setattr(experiment, "_command", command)
+    manifest = experiment.run(args)
+    assert manifest["corpus_path"] == str(corpus)
+    assert manifest["candidate_source"] == str(args.candidate_dir)
+    assert manifest["tools"] == args.tools.split(",")
+    assert manifest["comparison_anchor_tool"] == "omnichunk-pack"
+    preparations = [item for item in calls if item[0][0] == "benchmarks/prepare_dense.py"]
+    assert [env["PYTHONPATH"] for _, env in preparations] == [
+        str(args.baseline_dir / "src"),
+        str(args.candidate_dir / "src"),
+    ]
+    for arguments, _ in calls[:4]:
+        assert arguments[arguments.index("--corpus") + 1] == str(corpus)
+        assert arguments[arguments.index("--tools") + 1] == args.tools
+    comparisons = [
+        arguments for arguments, _ in calls if arguments[0].endswith("compare_retrieval.py")
+    ]
+    assert len(comparisons) == 4
+    assert all(
+        arguments[arguments.index("--baseline-tool") + 1] == "omnichunk-pack"
+        for arguments in comparisons
+    )
+
+
+@pytest.mark.parametrize("tools", ["unknown", "omnichunk,unknown", "", "omnichunk,omnichunk"])
+def test_unknown_empty_or_duplicate_strategy_is_rejected_before_inference(
+    tmp_path, monkeypatch, tools
+):
+    args = configuration(tmp_path)
+    args.tools = tools
+    monkeypatch.setattr(experiment, "_command", lambda *args: pytest.fail("must not encode"))
+    with pytest.raises(ValueError, match="--tools"):
+        experiment.run(args)
+    assert not args.output_dir.exists()
+
+
+def test_cli_accepts_external_path_candidate_and_new_strategy(tmp_path, monkeypatch):
+    captured = []
+    monkeypatch.setattr(experiment, "run", lambda args: captured.append(args) or {})
+    assert (
+        experiment.main(
+            [
+                "--model-dir",
+                str(tmp_path / "model"),
+                "--model-revision",
+                "a" * 40,
+                "--baseline-dir",
+                str(tmp_path / "baseline"),
+                "--candidate-dir",
+                str(tmp_path / "candidate"),
+                "--corpus",
+                str(tmp_path / "external"),
+                "--tools",
+                "langchain-code",
+                "--output-dir",
+                str(tmp_path / "results"),
+            ]
+        )
+        == 0
+    )
+    assert captured[0].candidate_dir == tmp_path / "candidate"
+    assert captured[0].corpus == str(tmp_path / "external")
+    assert captured[0].tools == "langchain-code"
+
+
 def test_missing_local_snapshot_is_an_actionable_cli_error(tmp_path, capsys):
     assert (
         experiment.main(
