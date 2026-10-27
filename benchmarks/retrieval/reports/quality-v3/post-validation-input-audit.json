@@ -1,7 +1,8 @@
 {
-  "scope": "Post-validation performance repair input comparison only; no embeddings, rankings or quality-based selection. All original quality tables continue to evaluate frozen d0.",
+  "scope": "Post-validation code-review repairs: input comparison only, without embeddings, rankings or quality-based selection. Original quality tables evaluate frozen d0.",
   "evaluated_frozen_commit": "d0bd4b5ea10ff458313a82b3340c8f1a3f49e572",
   "source_files_after": {
+    "parser/markdown_parser.py": "29d5eb685f626a787644a77317838505ce8a325b31a22ddbaf78ee84e89869fa",
     "windowing/compact.py": "621266e89518261033c5d8448f1fd09f600b8e22f29f76180cca3e22ab2c76e8",
     "windowing/models.py": "4cc47062e0a13ef5660c38708ad57d09aaae53f97aa800541ec818d26ee4f276"
   },
@@ -190,14 +191,15 @@
   "queries_and_corpus_commitments_unchanged": true,
   "input_artifact_sha256": {
     "d0-inputs.json.gz": "0cdb2c93e0b4cb4d42ba0211e33ae554490a4ba119001ce51bf36ab17cd948a4",
-    "fixed-inputs.json.gz": "3a3cff5266f9a620b3f371bfc0e67502b1d773ff0030f063c16cbb6a0c0df043"
+    "fixed-inputs.json.gz": "3a3cff5266f9a620b3f371bfc0e67502b1d773ff0030f063c16cbb6a0c0df043",
+    "final-inputs.json.gz": "7513c58287082937be1926d4b8cb8ec34c9c33cbb301a5b0e1558bde0d5d735a"
   },
   "local_verification": {
     "all_passed": true,
-    "tests_passed": 1659,
+    "tests_passed": 1679,
     "optional_skipped": 36,
-    "combined_line_branch_coverage": 90.81222850586018,
-    "source_tree_sha256": "641ecb11aec32ea684c8ccf125aa6af874c465e348419f58685b4ae3345c96e2",
+    "combined_line_branch_coverage": 90.75210737376217,
+    "source_tree_sha256": "5cf1123a56f00ff7394366648ef0181d81b6f5a16db8745b99bb0d4e029fc4f6",
     "other_gates": [
       "ruff",
       "format",
@@ -206,5 +208,6 @@
       "structural_quality",
       "wheel_sdist_metadata_and_dependency_free_install"
     ]
-  }
+  },
+  "markdown_repair_additional_input_changes": 0
 }

@@ -43,6 +43,64 @@ def test_loose_continuation_paragraph_can_itself_continue_lazily():
     assert nodes[0].text == source
 
 
+@pytest.mark.parametrize("newline", ["\n", "\r\n"])
+@pytest.mark.parametrize("marker", ["- ", "1. "])
+@pytest.mark.parametrize("fence", ["```", "~~~"])
+@pytest.mark.parametrize("policy", ["preserve", "pack"])
+def test_list_continuation_keeps_ownership_after_nested_fence(newline, marker, fence, policy):
+    indent = " " * len(marker)
+    source = (
+        f"{marker}First item 😀\n\n{indent}{fence}text\n"
+        f"{indent}Example\n{indent}{fence}\n\n"
+        f"{indent}More detail.\n\n{marker}Second item\n"
+    ).replace("\n", newline)
+    _, nodes = parse_markdown(source)
+    assert [n.kind for n in nodes] == [EntityType.LIST, EntityType.CODE_BLOCK, EntityType.LIST]
+    assert "More detail." in nodes[-1].text and "Second item" in nodes[-1].text
+    chunker = Chunker(
+        max_chunk_size=500,
+        min_chunk_size=0,
+        context_mode="none",
+        coverage_policy="lossless",
+        markdown_paragraph_policy=policy,
+    )
+    chunks = chunker.chunk("list.md", source)
+    assert "".join(c.text for c in chunks) == source
+    detail = next(c for c in chunks if "More detail." in c.text)
+    assert detail.context.section_type == "list" and "Second item" in detail.text
+    raw = source.encode()
+    for c in chunks:
+        assert raw[c.byte_range.start : c.byte_range.end].decode() == c.text
+        assert len(c.contextualized_text) <= 500
+    assert [c.text for c in chunker.stream("list.md", source)] == [c.text for c in chunks]
+
+
+@pytest.mark.parametrize(
+    "interruption",
+    [
+        "```text\nExample\n```\n\n  More detail.\n",
+        "  ```text\n  Example\n  ```\nMore detail.\n",
+        "  ```text\n  Example\n  ```\n# Outside\n\n  More detail.\n",
+    ],
+)
+def test_list_context_does_not_leak_past_independent_blocks(interruption):
+    _, nodes = parse_markdown("- First item\n\n" + interruption + "\n- Second item\n")
+    detail = next(n for n in nodes if "More detail." in n.text)
+    assert detail.kind == EntityType.PARAGRAPH
+    assert nodes[-1].kind == EntityType.LIST
+
+
+def test_list_context_survives_consecutive_nested_fences():
+    source = "- Item\n\n  ```\n  First\n  ```\n\n  ~~~\n  Second\n  ~~~\n\n  Detail\n"
+    _, nodes = parse_markdown(source)
+    assert [n.kind for n in nodes] == [
+        EntityType.LIST,
+        EntityType.CODE_BLOCK,
+        EntityType.CODE_BLOCK,
+        EntityType.LIST,
+    ]
+
+
 @pytest.mark.parametrize(
     "interruption,kind",
     [

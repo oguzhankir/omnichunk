@@ -75,6 +75,13 @@ _LIST_RE = re.compile(r"^(?P<indent>[ \t]*)(?:[-*+]|\d+[.)])[ \t]+(?=\S)")
 _FRONTMATTER_RE = re.compile(r"\A---\n([\s\S]*?)\n---\n", re.MULTILINE)
 
 
+@dataclass
+class _ListContext:
+    active: bool = False
+    indent: int = 0
+    content_indent: int = 0
+
+
 def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
     if not content:
         return [], []
@@ -120,6 +127,7 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
         boundary_points.add(e)
 
     sorted_points = sorted(boundary_points)
+    list_context = _ListContext()
     for left, right in zip(sorted_points, sorted_points[1:]):
         if right <= left:
             continue
@@ -131,6 +139,11 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
         heading = _match_range(left, right, heading_ranges)
 
         if fence is not None:
+            opening_end = segment.find("\n")
+            opening = segment if opening_end < 0 else segment[:opening_end]
+            indentation = len(opening[: len(opening) - len(opening.lstrip(" \t"))].expandtabs(4))
+            if indentation < list_context.content_indent:
+                list_context.active = False
             kind = EntityType.CODE_BLOCK
             hierarchy = _heading_hierarchy_at_pos(sections, left)
             nodes.append(
@@ -146,6 +159,7 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
             continue
 
         if heading is not None:
+            list_context.active = False
             level = len(heading[2])
             hierarchy = _heading_hierarchy_at_pos(sections, left)
             nodes.append(
@@ -161,14 +175,29 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
             continue
 
         hierarchy = _heading_hierarchy_at_pos(sections, left)
-        nodes.extend(_body_nodes(content, left, right, hierarchy, line_starts=line_starts))
+        nodes.extend(
+            _body_nodes(
+                content,
+                left,
+                right,
+                hierarchy,
+                line_starts=line_starts,
+                list_context=list_context,
+            )
+        )
 
     nodes.sort(key=lambda n: n.byte_range.start)
     return sections, nodes
 
 
 def _body_nodes(
-    content: str, start: int, end: int, hierarchy: list[str], *, line_starts: list[int]
+    content: str,
+    start: int,
+    end: int,
+    hierarchy: list[str],
+    *,
+    line_starts: list[int],
+    list_context: _ListContext,
 ) -> list[ProseNode]:
     """Keep tables and lists separate from the prose surrounding them.
 
@@ -179,9 +208,12 @@ def _body_nodes(
     out: list[ProseNode] = []
     block_start = start
     cursor = start
-    kind: EntityType | None = None
-    list_indent = list_content_indent = 0
-    blank_since_content = False
+    kind: EntityType | None = EntityType.LIST if list_context.active else None
+    list_indent = list_context.indent
+    list_content_indent = list_context.content_indent
+    # A nested fence ends its block; the following list paragraph must resume
+    # at its owner's content column, rather than using lazy continuation.
+    blank_since_content = list_context.active
 
     def emit(block_end: int) -> None:
         nonlocal block_start, kind
@@ -247,6 +279,9 @@ def _body_nodes(
         kind = line_kind
         blank_since_content = False
         cursor = line_end
+    list_context.active = kind == EntityType.LIST
+    list_context.indent = list_indent
+    list_context.content_indent = list_content_indent
     emit(end)
     return out
 

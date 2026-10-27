@@ -110,7 +110,9 @@ indented continuation paragraphs keep their list ownership. Without an
 intervening blank line, an ordinary paragraph line can continue the list lazily
 without indentation; a blank-separated dedented paragraph starts a separate
 block. This applies in both paragraph policies, so
-list continuations are not eligible for prose packing. Even a small Markdown file that fits the
+list continuations are not eligible for prose packing. After a code fence nested
+inside a list item, indented continuation paragraphs retain the owning list;
+dedented fences and independent headings end that ownership. Even a small Markdown file that fits the
 maximum can therefore produce multiple chunks. `min_chunk_size` is a preference:
 it does not merge these paragraph identities back together, and a short heading
 or tail can remain below the minimum. This can increase vector/index work and

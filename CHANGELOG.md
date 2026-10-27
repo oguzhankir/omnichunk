@@ -21,7 +21,8 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 - Compact code grows token-prefix probes instead of repeatedly tokenizing the
   remaining file, while retaining measured budgets and nonadditive recovery.
 - Mixed Markdown blocks retain paragraph/table/list ownership, including tight
-  list continuations and indented paragraphs in loose lists.
+  list continuations, indented paragraphs in loose lists, and continuations
+  after nested code fences.
 - Oversized documented statements can retain a useful comment sentence with their
   statement; AST declaration headers share their own body budget without crossing
   into the next declaration. Complete source and payload limits remain enforced.
