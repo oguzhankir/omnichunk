@@ -12,6 +12,7 @@ from omnichunk.context.range_index import EntityRangeSweep
 from omnichunk.context.scope import build_scope_tree, find_scope_chain
 from omnichunk.context.siblings import SiblingIndex, build_sibling_index, detect_siblings_for_chunk
 from omnichunk.parser.tree_sitter import parse_code
+from omnichunk.semantic.sentences import split_sentences
 from omnichunk.sizing.counter import make_size_counter, make_token_counter
 from omnichunk.sizing.nws import get_nws_count, preprocess_nws_cumsum
 from omnichunk.types import (
@@ -102,7 +103,12 @@ class CodeEngine:
 
         ast_nodes = _collect_ast_root_nodes(parse_result.tree)
         if ast_nodes:
-            ast_nodes = _bind_leading_comments(ast_nodes, budget, options.max_chunk_size)
+            ast_nodes = _bind_leading_comments(
+                ast_nodes,
+                budget,
+                options.max_chunk_size,
+                options.overflow_policy == "split",
+            )
             windows = assign_windows_for_nodes(
                 ast_nodes,
                 cumsum=cumsum,
@@ -355,7 +361,9 @@ def _isolate_comment_groups(
     return isolated
 
 
-def _bind_leading_comments(nodes: list[Any], budget: SourceBudget, max_size: int) -> list[Any]:
+def _bind_leading_comments(
+    nodes: list[Any], budget: SourceBudget, max_size: int, split_comments: bool = True
+) -> list[Any]:
     """Keep an adjacent leading comment block with its fitting root statement.
 
     Source trivia belongs to the preceding sibling in measured windowing, so the
@@ -424,6 +432,34 @@ def _bind_leading_comments(nodes: list[Any], budget: SourceBudget, max_size: int
                 pending = []
                 index = following
                 continue
+            if split_comments:
+                comment_start = int(pending[0].start_byte)
+                comment_end = int(pending[-1].end_byte)
+                comment_text = raw[comment_start:comment_end].decode("utf-8")
+                # Preserve the final explanatory sentence with the documented
+                # statement when the whole unit is too large. Both resulting
+                # source payloads must independently fit the actual counter.
+                for _, _, char_end in split_sentences(comment_text)[:-1]:
+                    cut = comment_start + len(comment_text[:char_end].encode("utf-8"))
+                    if (
+                        owned_start < cut < comment_end
+                        and budget.count(owned_start, cut) <= max_size
+                        and budget.count(cut, owned_end) <= max_size
+                    ):
+                        output.append(RangeNode(comment_start, cut))
+                        tail = RangeNode(cut, comment_end)
+                        output.append(
+                            _CommentGroup(
+                                start=cut,
+                                end=int(group[-1].end_byte),
+                                children=(tail, *group[len(pending) :]),
+                            )
+                        )
+                        pending = []
+                        index = following
+                        break
+                if not pending:
+                    continue
             output.extend(pending)
             pending = []
         elif pending:
