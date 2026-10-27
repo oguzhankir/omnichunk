@@ -40,6 +40,7 @@ nav:
   - Start here: index.md
   - User guide:
       - Installation: install.md
+      - Chunking recipes: usage.md
       - Index, retrieve and synchronize: indexing.md
       - Source and budget contracts: reference/contracts.md
       - API stability: api-stability.md
@@ -49,4 +50,8 @@ nav:
   - Contributing:
       - Mutation testing: contributing/mutation-testing.md
   - Reference:
-      - Python API: reference/chunker.md
+      - Chunking API: reference/chunker.md
+      - Chunk options: reference/options.md
+      - Data models: reference/data-models.md
+      - Indexing and integrations: reference/indexing-api.md
+      - Advanced APIs: reference/advanced.md
