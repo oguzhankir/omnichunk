@@ -1,0 +1,317 @@
+{
+  "input_function_documents": 64,
+  "input_queries": 64,
+  "input_repositories": 16,
+  "queried_unique_original_files": 41,
+  "eligible_source_files": 35,
+  "retained_queries": 56,
+  "retained_repositories": 16,
+  "excluded_queries": 8,
+  "failures": [
+    {
+      "query_id": "csn-q-aa3ab58da5d435b6e4049f2d",
+      "repository": "neherlab/treetime",
+      "upstream_function_url": "https://github.com/neherlab/treetime/blob/f6cdb58d19243a18ffdaa2b2ec71872fa00e65c0/treetime/treeanc.py#L1324-L1461",
+      "reason": "ValueError: Original source exceeds 30000 Unicode characters"
+    },
+    {
+      "query_id": "csn-q-5bb2534d2715d4c7183dd316",
+      "repository": "neherlab/treetime",
+      "upstream_function_url": "https://github.com/neherlab/treetime/blob/f6cdb58d19243a18ffdaa2b2ec71872fa00e65c0/treetime/clock_tree.py#L195-L221",
+      "reason": "ValueError: Original source exceeds 30000 Unicode characters"
+    },
+    {
+      "query_id": "csn-q-21023a245c7680f0ca50d63d",
+      "repository": "neherlab/treetime",
+      "upstream_function_url": "https://github.com/neherlab/treetime/blob/f6cdb58d19243a18ffdaa2b2ec71872fa00e65c0/treetime/treeanc.py#L1778-L1804",
+      "reason": "ValueError: Original source exceeds 30000 Unicode characters"
+    },
+    {
+      "query_id": "csn-q-d6a1e4ab0b72712978ce1a5f",
+      "repository": "aholkner/bacon",
+      "upstream_function_url": "https://github.com/aholkner/bacon/blob/edf3810dcb211942d392a8637945871399b0650d/native/Vendor/FreeType/src/tools/docmaker/content.py#L373-L387",
+      "reason": "ValueError: Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 70)"
+    },
+    {
+      "query_id": "csn-q-765a7f176f90b11f176bdc02",
+      "repository": "aholkner/bacon",
+      "upstream_function_url": "https://github.com/aholkner/bacon/blob/edf3810dcb211942d392a8637945871399b0650d/native/Vendor/FreeType/src/tools/docmaker/tohtml.py#L303-L309",
+      "reason": "ValueError: Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 191)"
+    },
+    {
+      "query_id": "csn-q-c0a21bbc3fba70e36bfb1dbf",
+      "repository": "avelino/bottle-auth",
+      "upstream_function_url": "https://github.com/avelino/bottle-auth/blob/db07e526864aeac05ee68444b47e5db29540ce18/bottle_auth/core/auth.py#L885-L901",
+      "reason": "ValueError: Original source exceeds 30000 Unicode characters"
+    },
+    {
+      "query_id": "csn-q-1d54ca6c2bb841087a50765e",
+      "repository": "avelino/bottle-auth",
+      "upstream_function_url": "https://github.com/avelino/bottle-auth/blob/db07e526864aeac05ee68444b47e5db29540ce18/bottle_auth/core/auth.py#L150-L166",
+      "reason": "ValueError: Original source exceeds 30000 Unicode characters"
+    },
+    {
+      "query_id": "csn-q-19131ffb35dffdf7520bea2f",
+      "repository": "avelino/bottle-auth",
+      "upstream_function_url": "https://github.com/avelino/bottle-auth/blob/db07e526864aeac05ee68444b47e5db29540ce18/bottle_auth/core/escape.py#L188-L200",
+      "reason": "ValueError: invalid syntax (<unknown>, line 223)"
+    }
+  ],
+  "query_substring_matches": [],
+  "manifest_sha256": "dcfb7769bffade3c0bf9e3b6cc3f4d77822ce15595e668d430d606fa7c0e24b7",
+  "raw_file_outcomes": [
+    {
+      "url": "https://raw.githubusercontent.com/ybrs/single-beat/d036b62d2531710dfd806e9dc2a8d67c77616082/singlebeat/beat.py",
+      "raw_sha256": "593e4b3b7c9684507023c4a603ba0e0539225ecd2d3a354c4041269324a717fd",
+      "raw_bytes": 14961,
+      "raw_characters": 14961
+    },
+    {
+      "url": "https://raw.githubusercontent.com/neherlab/treetime/f6cdb58d19243a18ffdaa2b2ec71872fa00e65c0/treetime/treeanc.py",
+      "error": "Original source exceeds 30000 Unicode characters",
+      "raw_sha256": "a35ec0e43780ca4857e7852ce8dfd897ec0c948fe38efcbce1f2d3f34e1fa32f",
+      "raw_bytes": 83051,
+      "raw_characters": 83051
+    },
+    {
+      "url": "https://raw.githubusercontent.com/neherlab/treetime/f6cdb58d19243a18ffdaa2b2ec71872fa00e65c0/treetime/clock_tree.py",
+      "error": "Original source exceeds 30000 Unicode characters",
+      "raw_sha256": "433664d001859e63cdbdb87a7a075c7e2969e19c15c685862fe7352ee9d80666",
+      "raw_bytes": 43448,
+      "raw_characters": 43448
+    },
+    {
+      "url": "https://raw.githubusercontent.com/neherlab/treetime/f6cdb58d19243a18ffdaa2b2ec71872fa00e65c0/treetime/treeregression.py",
+      "raw_sha256": "41af9d100f82b4ae80a6fbdc21ebad7627b28b17b595513057e2cf79b3f4e3e0",
+      "raw_bytes": 22083,
+      "raw_characters": 22083
+    },
+    {
+      "url": "https://raw.githubusercontent.com/joopert/nad_receiver/416de0173a330c75cc73f9c90b0c5df32e5e0ba3/nad_receiver/__init__.py",
+      "raw_sha256": "5ded2ae8c15782bedb3c417685f64764f17dede232590a24246135a316a729dc",
+      "raw_bytes": 12188,
+      "raw_characters": 12188
+    },
+    {
+      "url": "https://raw.githubusercontent.com/skioo/django-datatrans-gateway/1c4de5b589403e4ec3aadc4ff2fc1eb17b34bcc7/datatrans/gateway/payment_parameters.py",
+      "raw_sha256": "c68fceada77acd593d055a1568cdc17183a84a7774baec0b6c68891cc2a0dc62",
+      "raw_bytes": 2076,
+      "raw_characters": 2076
+    },
+    {
+      "url": "https://raw.githubusercontent.com/skioo/django-datatrans-gateway/1c4de5b589403e4ec3aadc4ff2fc1eb17b34bcc7/datatrans/gateway/notification.py",
+      "raw_sha256": "4b68d7c3c0c146d36ea81d73eda7cbbfefda49405e1a9bef63c2b2effd0f09e4",
+      "raw_bytes": 4839,
+      "raw_characters": 4839
+    },
+    {
+      "url": "https://raw.githubusercontent.com/skioo/django-datatrans-gateway/1c4de5b589403e4ec3aadc4ff2fc1eb17b34bcc7/datatrans/gateway/payment_with_alias.py",
+      "raw_sha256": "7101a593aef50d8dcdd49ccac851b2b4135e6aecc0ae51e38232dad3b10bc429",
+      "raw_bytes": 5141,
+      "raw_characters": 5141
+    },
+    {
+      "url": "https://raw.githubusercontent.com/aholkner/bacon/edf3810dcb211942d392a8637945871399b0650d/bacon/controller.py",
+      "raw_sha256": "8b5b44fdf82ba0b38008f632a8cee259f10f1e823d8d9fafbaa742d49ceec21f",
+      "raw_bytes": 14850,
+      "raw_characters": 14850
+    },
+    {
+      "url": "https://raw.githubusercontent.com/aholkner/bacon/edf3810dcb211942d392a8637945871399b0650d/bacon/font.py",
+      "raw_sha256": "d867b45286168289fa44fc74d3b62b657120200ab112c9b80b8a6018e6064506",
+      "raw_bytes": 7603,
+      "raw_characters": 7603
+    },
+    {
+      "url": "https://raw.githubusercontent.com/aholkner/bacon/edf3810dcb211942d392a8637945871399b0650d/native/Vendor/FreeType/src/tools/docmaker/content.py",
+      "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 70)",
+      "raw_sha256": "4fa007994a989e68971cdafa007445f7cc9b7889f01989ea4a3c980f02e7e4d9",
+      "raw_bytes": 17667,
+      "raw_characters": 17667
+    },
+    {
+      "url": "https://raw.githubusercontent.com/aholkner/bacon/edf3810dcb211942d392a8637945871399b0650d/native/Vendor/FreeType/src/tools/docmaker/tohtml.py",
+      "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 191)",
+      "raw_sha256": "8df831e6a74bad1ef4ec230a386536ffd54a7f2489a770c4860c6e88ea14ad3e",
+      "raw_bytes": 18715,
+      "raw_characters": 18715
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ojengwa/accounting/6343cf373a5c57941e407a92c101ac4bc45382e3/fabfile.py",
+      "raw_sha256": "7577021b2a14742da02cac42b0a61c0b568bcec25eef6e8444a9d9fd05fec506",
+      "raw_bytes": 1711,
+      "raw_characters": 1711
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ojengwa/accounting/6343cf373a5c57941e407a92c101ac4bc45382e3/accounting/accounting.py",
+      "raw_sha256": "b42be346c208afdc4d8b49a2d643bd1dc9dfac8d6cda13e955c8c2b50fe1acb1",
+      "raw_bytes": 9506,
+      "raw_characters": 9506
+    },
+    {
+      "url": "https://raw.githubusercontent.com/antevens/listen/d3ddff8e7fbfb672c5bd7f6f4febeb5e921d8c67/listen/signal_handler.py",
+      "raw_sha256": "8a1df07b24f78ce4784116b994b361f403e2868a527bd3d03cdeffeed574a184",
+      "raw_bytes": 12185,
+      "raw_characters": 12185
+    },
+    {
+      "url": "https://raw.githubusercontent.com/respondcreate/django-versatileimagefield/d41e279c39cccffafbe876c67596184704ae8877/versatileimagefield/datastructures/base.py",
+      "raw_sha256": "29346d21569e7586c9c30bcaf758f68b626fa77c8e3adcbd2e2b117295a05582",
+      "raw_bytes": 6143,
+      "raw_characters": 6143
+    },
+    {
+      "url": "https://raw.githubusercontent.com/respondcreate/django-versatileimagefield/d41e279c39cccffafbe876c67596184704ae8877/versatileimagefield/utils.py",
+      "raw_sha256": "c9bdee0572764b8f6ee0af11c898520c98c386f5ed234a039677daf3c51c98d4",
+      "raw_bytes": 7545,
+      "raw_characters": 7545
+    },
+    {
+      "url": "https://raw.githubusercontent.com/respondcreate/django-versatileimagefield/d41e279c39cccffafbe876c67596184704ae8877/versatileimagefield/fields.py",
+      "raw_sha256": "c6fd347e4ab6bcba5dc28954b78bf5771c2d840965fb4f4a97994db3ebc43b82",
+      "raw_bytes": 9112,
+      "raw_characters": 9112
+    },
+    {
+      "url": "https://raw.githubusercontent.com/respondcreate/django-versatileimagefield/d41e279c39cccffafbe876c67596184704ae8877/versatileimagefield/mixins.py",
+      "raw_sha256": "116368a1c1cc98046a72607fe5b5fabda5d6442a997543c5730b69195222c9ab",
+      "raw_bytes": 7404,
+      "raw_characters": 7404
+    },
+    {
+      "url": "https://raw.githubusercontent.com/drhagen/parsita/d97414a05541f48231381f607d1d2e6b50781d39/parsita/parsers.py",
+      "raw_sha256": "591f7af69d265a75150575c4795ac92f4e177bce7ab765e06b3470b5008ac882",
+      "raw_bytes": 25793,
+      "raw_characters": 25793
+    },
+    {
+      "url": "https://raw.githubusercontent.com/drhagen/parsita/d97414a05541f48231381f607d1d2e6b50781d39/parsita/util.py",
+      "raw_sha256": "5717e0573a1883a87297ed24aed8f67ff31e83c9e781163a7ca5e7c682dd69de",
+      "raw_bytes": 1693,
+      "raw_characters": 1693
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blockstack/zone-file-py/c1078c8c3c28f0881bc9a3af53d4972c4a6862d0/blockstack_zones/record_processors.py",
+      "raw_sha256": "7930d932c0a5aa2229a6b527cb865b76f0fdd1f8c4d344fe8d53188591fb9603",
+      "raw_bytes": 5664,
+      "raw_characters": 5664
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blockstack/zone-file-py/c1078c8c3c28f0881bc9a3af53d4972c4a6862d0/blockstack_zones/parse_zone_file.py",
+      "raw_sha256": "f3ccbbd9d43e1b8acb02f4de53f0b703752f59e0ada0b80285b6374405d53b85",
+      "raw_bytes": 10889,
+      "raw_characters": 10889
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hydrosquall/tiingo-python/9bb98ca9d24f2e4db651cf0590e4b47184546482/tiingo/api.py",
+      "raw_sha256": "0be915dba640b6722f8925468310b35c77306de1cb9ab48f3b1ea4e95bcd2400",
+      "raw_bytes": 12919,
+      "raw_characters": 12919
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hydrosquall/tiingo-python/9bb98ca9d24f2e4db651cf0590e4b47184546482/tools/api_key_tool.py",
+      "raw_sha256": "100589144dd950f49955cb0accd21d92529e647362b77c576be948321aaad392",
+      "raw_bytes": 1644,
+      "raw_characters": 1644
+    },
+    {
+      "url": "https://raw.githubusercontent.com/hydrosquall/tiingo-python/9bb98ca9d24f2e4db651cf0590e4b47184546482/tiingo/restclient.py",
+      "raw_sha256": "92ede4703e516998b2de4ef07b0b76cc809c5d1ae6452fc07db67524427169c8",
+      "raw_bytes": 1767,
+      "raw_characters": 1767
+    },
+    {
+      "url": "https://raw.githubusercontent.com/leovp/steamfiles/e2264d09d128aecb838c4d310d7ea11e28c6597e/steamfiles/manifest.py",
+      "raw_sha256": "e903141693a127fa7f54f40b0b2f198696ca32fa392151537235f7944a75e241",
+      "raw_bytes": 3105,
+      "raw_characters": 3105
+    },
+    {
+      "url": "https://raw.githubusercontent.com/leovp/steamfiles/e2264d09d128aecb838c4d310d7ea11e28c6597e/steamfiles/appinfo.py",
+      "raw_sha256": "15928928b03a6ca0009b79c10973fb2ba00d401256a62ce5d8c3290132c93821",
+      "raw_bytes": 10614,
+      "raw_characters": 10612
+    },
+    {
+      "url": "https://raw.githubusercontent.com/leovp/steamfiles/e2264d09d128aecb838c4d310d7ea11e28c6597e/steamfiles/acf.py",
+      "raw_sha256": "bd8583c9b0eab8d86b8680a470a88ead21e4bfdf993f05050a9d0d36af11b24e",
+      "raw_bytes": 3360,
+      "raw_characters": 3360
+    },
+    {
+      "url": "https://raw.githubusercontent.com/avelino/bottle-auth/db07e526864aeac05ee68444b47e5db29540ce18/bottle_auth/core/auth.py",
+      "error": "Original source exceeds 30000 Unicode characters",
+      "raw_sha256": "e46669ff4cfab6352c90695507ee02e569905a2322a545c0e3e94d96d4494d77",
+      "raw_bytes": 54118,
+      "raw_characters": 54118
+    },
+    {
+      "url": "https://raw.githubusercontent.com/avelino/bottle-auth/db07e526864aeac05ee68444b47e5db29540ce18/bottle_auth/core/escape.py",
+      "error": "invalid syntax (<unknown>, line 223)",
+      "raw_sha256": "e84efe2bb8e9cdc469887ad75def8af17612d7df8d2188be8ab5c500d6ef7e8d",
+      "raw_bytes": 11978,
+      "raw_characters": 11978
+    },
+    {
+      "url": "https://raw.githubusercontent.com/avelino/bottle-auth/db07e526864aeac05ee68444b47e5db29540ce18/bottle_auth/core/httputil.py",
+      "raw_sha256": "23ff9f98f9893da2f225a0afb8260b2974f603094b98e44ceccc42471e2c7d98",
+      "raw_bytes": 9400,
+      "raw_characters": 9400
+    },
+    {
+      "url": "https://raw.githubusercontent.com/lsst-sqre/ltd-conveyor/c492937c4c1e050ccc4a0b9dcc38f9980d57e305/ltdconveyor/s3/upload.py",
+      "raw_sha256": "7fab1da8f9a75b1747dc9c0bbd0b3021b601ce261d97861ff39fabce9a0be395",
+      "raw_bytes": 18044,
+      "raw_characters": 18044
+    },
+    {
+      "url": "https://raw.githubusercontent.com/lsst-sqre/ltd-conveyor/c492937c4c1e050ccc4a0b9dcc38f9980d57e305/ltdconveyor/fastly.py",
+      "raw_sha256": "a62ccc2c9f361ff14d1ddf33f139b00725f9c44648fec5f251ac1812fe0364a0",
+      "raw_bytes": 1532,
+      "raw_characters": 1532
+    },
+    {
+      "url": "https://raw.githubusercontent.com/lsst-sqre/ltd-conveyor/c492937c4c1e050ccc4a0b9dcc38f9980d57e305/ltdconveyor/s3/utils.py",
+      "raw_sha256": "d5783c0eda76f17c456847917cb87f8089d4f337ccd561047c0883ad879093e8",
+      "raw_bytes": 1114,
+      "raw_characters": 1114
+    },
+    {
+      "url": "https://raw.githubusercontent.com/pgjones/hypercorn/ef93d741fe246846a127f9318b54505ac65f1ae7/hypercorn/config.py",
+      "raw_sha256": "aaffab712978aa4732610f6989b0a64051fe4de73021a03aed553a46b83b6b4c",
+      "raw_bytes": 10343,
+      "raw_characters": 10343
+    },
+    {
+      "url": "https://raw.githubusercontent.com/pgjones/hypercorn/ef93d741fe246846a127f9318b54505ac65f1ae7/hypercorn/asgi/h11.py",
+      "raw_sha256": "8d561f3ce431af2c226a6678c49f4cfaadad465eea4f23dd0a8003962a5b199e",
+      "raw_bytes": 5968,
+      "raw_characters": 5968
+    },
+    {
+      "url": "https://raw.githubusercontent.com/sergei-maertens/django-systemjs/efd4a3862a39d9771609a25a5556f36023cf6e5c/systemjs/management/commands/_mixins.py",
+      "raw_sha256": "daf2a6a554361106539b1db344904d2015589b3ee2f0a7eeb9260472b16188e4",
+      "raw_bytes": 5792,
+      "raw_characters": 5792
+    },
+    {
+      "url": "https://raw.githubusercontent.com/sergei-maertens/django-systemjs/efd4a3862a39d9771609a25a5556f36023cf6e5c/systemjs/storage.py",
+      "raw_sha256": "6ea6763d03b10e1dcbfecc71e831ddaffdb29c8dcde1a4e3d230784753e7f001",
+      "raw_bytes": 3227,
+      "raw_characters": 3227
+    },
+    {
+      "url": "https://raw.githubusercontent.com/sergei-maertens/django-systemjs/efd4a3862a39d9771609a25a5556f36023cf6e5c/systemjs/finders.py",
+      "raw_sha256": "72826b969da168720d5d425accbc1838b2b7d205f92ef1f2a253556b90476465",
+      "raw_bytes": 926,
+      "raw_characters": 926
+    },
+    {
+      "url": "https://raw.githubusercontent.com/sergei-maertens/django-systemjs/efd4a3862a39d9771609a25a5556f36023cf6e5c/systemjs/jspm.py",
+      "raw_sha256": "67b0ac54af9d040954afb36d9340b17fa171c51afdfd7649f41568a19fb9ec00",
+      "raw_bytes": 1926,
+      "raw_characters": 1926
+    }
+  ],
+  "selection_uses_retrieval_scores": false
+}

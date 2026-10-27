@@ -1,0 +1,344 @@
+{
+  "recorded_utc": "2026-10-27T12:14:26.731818+00:00",
+  "scope": "DEVELOPMENT ONLY; no sealed validation data or results read",
+  "artifacts": [
+    {
+      "path": "external-quality-screen/v3-comment-isolated/corpus_squad_v1/report.json",
+      "absolute_input": "/workspace/work/omnichunk-quality/screen/v3-comment-isolated/corpus_squad_v1/report.json",
+      "sha256": "e6df20ae5917dedbf41891dd18090dcfd9ea5864fa5448aa2246d908d245cba3",
+      "bytes": 420280
+    },
+    {
+      "path": "external-quality-screen/v3-comment-isolated/corpus_v1/report.json",
+      "absolute_input": "/workspace/work/omnichunk-quality/screen/v3-comment-isolated/corpus_v1/report.json",
+      "sha256": "e3ccc4bbeb9af7d4a1bc1ab3827db8c57cd911c0412cf12b1c457feb1467c15d",
+      "bytes": 1486716
+    },
+    {
+      "path": "external-quality-screen/v3-comment-sentence/corpus_squad_v1/report.json",
+      "absolute_input": "/workspace/work/omnichunk-quality/screen/v3-comment-sentence/corpus_squad_v1/report.json",
+      "sha256": "252cb864a0502e5ee5ee0e5e50f46a4a9d548aa53b05ae7c16cdf369e5b671bf",
+      "bytes": 420259
+    },
+    {
+      "path": "external-quality-screen/v3-comment-sentence/corpus_v1/report.json",
+      "absolute_input": "/workspace/work/omnichunk-quality/screen/v3-comment-sentence/corpus_v1/report.json",
+      "sha256": "3a4f2c8e50a38cdcf39214d0da42843624e753f9f887b4480b4d1befbc1c4210",
+      "bytes": 1485687
+    },
+    {
+      "path": "external-quality-screen/v3-prose-fill/corpus_squad_v1/report.json",
+      "absolute_input": "/workspace/work/omnichunk-quality/screen/v3-prose-fill/corpus_squad_v1/report.json",
+      "sha256": "35083f7f94df6f17c60185abda77dd420ff92e25f8911a5ba8f842158441b7f6",
+      "bytes": 408302
+    },
+    {
+      "path": "external-quality-screen/v3-prose-fill/corpus_v1/report.json",
+      "absolute_input": "/workspace/work/omnichunk-quality/screen/v3-prose-fill/corpus_v1/report.json",
+      "sha256": "057b90afe8ccc6e5647a2acf2b21555222a97643e8c85aa77a97a6c0f010f2b6",
+      "bytes": 1485713
+    },
+    {
+      "path": "external-quality-screen/v3-prose-fill-equal/corpus_squad_v1/report.json",
+      "absolute_input": "/workspace/work/omnichunk-quality/screen/v3-prose-fill-equal/corpus_squad_v1/report.json",
+      "sha256": "e0f175411334c047b89ff65982512bcb7d848c53b590e097e9f13ade6b43ea01",
+      "bytes": 409535
+    },
+    {
+      "path": "external-quality-screen/v3-prose-fill-equal/corpus_v1/report.json",
+      "absolute_input": "/workspace/work/omnichunk-quality/screen/v3-prose-fill-equal/corpus_v1/report.json",
+      "sha256": "a0bd52a89292cdcf3becdcfafa76a52b8a94b0a1d7e63d898f26440811686e62",
+      "bytes": 1485737
+    },
+    {
+      "path": "external-quality-screen/v3-prose-fill-unconditional/corpus_squad_v1/report.json",
+      "absolute_input": "/workspace/work/omnichunk-quality/screen/v3-prose-fill-unconditional/corpus_squad_v1/report.json",
+      "sha256": "a95df94b92a98b7718a4cdff091cc3c2ac487fa93c58e952df498b40cbac0440",
+      "bytes": 407898
+    },
+    {
+      "path": "external-quality-screen/v3-prose-fill-unconditional/corpus_v1/report.json",
+      "absolute_input": "/workspace/work/omnichunk-quality/screen/v3-prose-fill-unconditional/corpus_v1/report.json",
+      "sha256": "b8f3391948ccce99b426baaf6d29859e422b8955e985851da7633f7e0764ac57",
+      "bytes": 1483380
+    },
+    {
+      "path": "context-dense-development/english-budget-128.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/context-dense-development/english-budget-128.json.gz",
+      "sha256": "01585a2af38d8c60fe8312172631c09b8ed0bc62652d6c8be4fb6351c1530fa8",
+      "bytes": 87371
+    },
+    {
+      "path": "context-dense-development/english-budget-256.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/context-dense-development/english-budget-256.json.gz",
+      "sha256": "3f93138301b0cc097eaefcc67bacde8999be81b2b0010873ac4041022ccbd0ca",
+      "bytes": 111440
+    },
+    {
+      "path": "context-dense-development/english-budget-512.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/context-dense-development/english-budget-512.json.gz",
+      "sha256": "00e971b75a592f74ca323a09dd029db3ec5afc02c331056aa93f20a5fd93718c",
+      "bytes": 138009
+    },
+    {
+      "path": "context-dense-development/multilingual-budget-128.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/context-dense-development/multilingual-budget-128.json.gz",
+      "sha256": "14ce73ca8bb553baa938e99b1a04f8b21036f5821d5113e0fe82c8de36eed587",
+      "bytes": 83829
+    },
+    {
+      "path": "context-dense-development/multilingual-budget-256.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/context-dense-development/multilingual-budget-256.json.gz",
+      "sha256": "1f9804fe686ffbd7e01134504789e5965adfd3b57353108a1e619922576eaff0",
+      "bytes": 110037
+    },
+    {
+      "path": "context-dense-development/multilingual-budget-512.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/context-dense-development/multilingual-budget-512.json.gz",
+      "sha256": "64672687af8fe0a2b09cb100178f5094e98a3030d80f31791b86317734be3f40",
+      "bytes": 138627
+    },
+    {
+      "path": "dev/code/english/ast-body-pack/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/english/ast-body-pack/report.json.gz",
+      "sha256": "b5793a673d06bca61474c4d89b3e5e2f8fbd040a1b8daae676d5d3bfb43cf25d",
+      "bytes": 104864
+    },
+    {
+      "path": "dev/code/english/ast-carry/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/english/ast-carry/report.json.gz",
+      "sha256": "8b79864c00a91d00f36e6dbef1e6b46bfc5494bbf2b7b8f336db012cbe1dcde5",
+      "bytes": 104732
+    },
+    {
+      "path": "dev/code/english/ast-scope-final/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/english/ast-scope-final/report.json.gz",
+      "sha256": "b924fa277ff3a8cc3f90d11de033326744bce6ea68138ab0cd20f59751c74c65",
+      "bytes": 204475
+    },
+    {
+      "path": "dev/code/english/baseline-summary/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/english/baseline-summary/report.json.gz",
+      "sha256": "a6cc008232bc94c36afb9c74d6ad5c0b24440854ee5ad0be4ff79c1a51a2c24f",
+      "bytes": 975816
+    },
+    {
+      "path": "dev/code/english/code-compact/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/english/code-compact/report.json.gz",
+      "sha256": "09cd809d603d23e9eb195e9d5c3b7a268ac2be696cd5b150ff9183587ae0ece9",
+      "bytes": 99150
+    },
+    {
+      "path": "dev/code/english/code-compact-reviewed/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/english/code-compact-reviewed/report.json.gz",
+      "sha256": "8bd90743c932df59b97ee484b1124d744a69c55ce0bc7770a29d34f7099ecc37",
+      "bytes": 99142
+    },
+    {
+      "path": "dev/code/english/code-full/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/english/code-full/report.json.gz",
+      "sha256": "fb7e378330280eec4ba42eaf00f11cab874f87e7a8716eef37888ff531368b4b",
+      "bytes": 99274
+    },
+    {
+      "path": "dev/code/english/final-routing-741/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/english/final-routing-741/report.json.gz",
+      "sha256": "219f8bca131a18ec5ed43225962075a66970b1006c8f9fb5da159cbff43c36bd",
+      "bytes": 296822
+    },
+    {
+      "path": "dev/code/multilingual/ast-body-pack/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/multilingual/ast-body-pack/report.json.gz",
+      "sha256": "a412a4954cb8c54a807cdfef452c3b200a329d0099f39deab09fa35df48aa812",
+      "bytes": 104384
+    },
+    {
+      "path": "dev/code/multilingual/ast-carry/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/multilingual/ast-carry/report.json.gz",
+      "sha256": "3d0853eb27aa73c53c59a83ca6a257979fb7805cee451de68ebc5a55a7983f17",
+      "bytes": 104524
+    },
+    {
+      "path": "dev/code/multilingual/ast-scope-final/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/multilingual/ast-scope-final/report.json.gz",
+      "sha256": "8f2263d5da2090cf94d38b3d1e004f401a9ca4c23fdf7c36394885e7f6e92cce",
+      "bytes": 205195
+    },
+    {
+      "path": "dev/code/multilingual/baseline-summary/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/multilingual/baseline-summary/report.json.gz",
+      "sha256": "59b1858b1723d4032460bbe3bd10125f054cec5ea9296b843f4c181ef0c3a0e5",
+      "bytes": 978821
+    },
+    {
+      "path": "dev/code/multilingual/code-compact/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/multilingual/code-compact/report.json.gz",
+      "sha256": "aecb6b0c5594c6e723df65848a7250d15f5baf47812d214dec3273a3ed694d7e",
+      "bytes": 100727
+    },
+    {
+      "path": "dev/code/multilingual/code-compact-reviewed/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/multilingual/code-compact-reviewed/report.json.gz",
+      "sha256": "a8528854ffae22b22baf7f437ec862ec3fdfb2dc4b18152fd6be58c218f529e5",
+      "bytes": 100725
+    },
+    {
+      "path": "dev/code/multilingual/code-full/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/multilingual/code-full/report.json.gz",
+      "sha256": "a100d45903a1900747329f00b2c936caf14dac35cd740e99deeacd53ed18d90a",
+      "bytes": 100888
+    },
+    {
+      "path": "dev/code/multilingual/final-routing-741/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code/multilingual/final-routing-741/report.json.gz",
+      "sha256": "b08e858796cb36105e17cea1f5448a4d0c66025038505b0fece6564730180255",
+      "bytes": 299585
+    },
+    {
+      "path": "dev/code-files/english/chonkie-sentence-64-failed/report.json",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/code-files/english/chonkie-sentence-64-failed/report.json",
+      "sha256": "bdd9e319f9ae4297cf3262fdfbc52702086396dfbd1409f22609abd8744c17d4",
+      "bytes": 11518
+    },
+    {
+      "path": "dev/corpus_squad_v1/code-full/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/corpus_squad_v1/code-full/report.json.gz",
+      "sha256": "59878d983d4b9abe56ee7e8711cb4bdc7e14c20eafce5d862460f5629eb4933c",
+      "bytes": 55899
+    },
+    {
+      "path": "dev/corpus_v1/code-full/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/corpus_v1/code-full/report.json.gz",
+      "sha256": "daac215c7f8b1a296500f7e8a9f4c6903eeb6e9d65e61dce8413ffa20d7cca95",
+      "bytes": 210400
+    },
+    {
+      "path": "dev/squad-old/ast-body-pack/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/squad-old/ast-body-pack/report.json.gz",
+      "sha256": "f743d5f5a9ab206238c983a669780217cb263df13e0269f31f3d4718fb16434f",
+      "bytes": 55893
+    },
+    {
+      "path": "dev/synthetic/ast-body-pack/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/synthetic/ast-body-pack/report.json.gz",
+      "sha256": "a7475ee187147a0cffe1dc4679fe5de85f81ca110571ff91e66d6d5aeb5bad24",
+      "bytes": 217789
+    },
+    {
+      "path": "dev/synthetic/baseline/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/synthetic/baseline/report.json.gz",
+      "sha256": "7e1f58a94f5083e53aa3a5cfb39c3999b57540e4b3d385a34f26b504b1f23af9",
+      "bytes": 1195822
+    },
+    {
+      "path": "dev/synthetic/combined/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/synthetic/combined/report.json.gz",
+      "sha256": "4da8e3a3de2ae99b218d837c31bb36e013093128f9707431b44393b8e73e8b88",
+      "bytes": 419819
+    },
+    {
+      "path": "dev/synthetic/packing/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/synthetic/packing/report.json.gz",
+      "sha256": "9852f80e56fb8ab3340ab58047adb6fd00f070e7c0530eb5488c26ddd41ae0df",
+      "bytes": 418235
+    },
+    {
+      "path": "dev/turkish/baseline/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/turkish/baseline/report.json.gz",
+      "sha256": "9bb4034d42c6761e84ade79103de003dc6769f2b1f931b2beb1e195c7ceabaeb",
+      "bytes": 1595819
+    },
+    {
+      "path": "dev/turkish/prose-fill/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/turkish/prose-fill/report.json.gz",
+      "sha256": "4c6051882a1303f60b81e96225e633c1bd3bfdcadebf1574e32725d62f8b438a",
+      "bytes": 148242
+    },
+    {
+      "path": "dev/turkish/prose-fill-equal/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/turkish/prose-fill-equal/report.json.gz",
+      "sha256": "67c3a985a81594e36c2713bb6cb72c6dbf6c44741fc9aff15872949f43cb9017",
+      "bytes": 148299
+    },
+    {
+      "path": "dev/turkish/prose-fill-unconditional/report.json.gz",
+      "absolute_input": "/workspace/work/omnichunk-v3/dev/turkish/prose-fill-unconditional/report.json.gz",
+      "sha256": "d1fed73510ecc2a250b02af1969768d57180fe76812875446b5762aad3c505c7",
+      "bytes": 147221
+    },
+    {
+      "path": "frontier/dev/code/english/baseline/budget-128.report.json",
+      "absolute_input": "/workspace/work/omnichunk-v3/frontier/dev/code/english/baseline/budget-128.report.json",
+      "sha256": "9db31a2e2b5481971c143e7e297920930a1dd069e546e1f80dc86ee62ae5dc75",
+      "bytes": 4647097
+    },
+    {
+      "path": "frontier/dev/code/english/baseline/budget-256.report.json",
+      "absolute_input": "/workspace/work/omnichunk-v3/frontier/dev/code/english/baseline/budget-256.report.json",
+      "sha256": "fc910ea4dde166f1a6e9093e5427899ff2e7a2f5ff12e0ee7ea14f02de57a1ca",
+      "bytes": 4919871
+    },
+    {
+      "path": "frontier/dev/code/english/baseline/budget-512.report.json",
+      "absolute_input": "/workspace/work/omnichunk-v3/frontier/dev/code/english/baseline/budget-512.report.json",
+      "sha256": "e5181c95382a30d691325c63a2bbcef2c6facb5265e25c4c025b945b55b54a37",
+      "bytes": 5482583
+    },
+    {
+      "path": "frontier/dev/code/multilingual/baseline/budget-128.report.json",
+      "absolute_input": "/workspace/work/omnichunk-v3/frontier/dev/code/multilingual/baseline/budget-128.report.json",
+      "sha256": "fb01995579b448bfffefc14fe711147c84abb55399b6b9b6005460b637c93316",
+      "bytes": 4665729
+    },
+    {
+      "path": "frontier/dev/code/multilingual/baseline/budget-256.report.json",
+      "absolute_input": "/workspace/work/omnichunk-v3/frontier/dev/code/multilingual/baseline/budget-256.report.json",
+      "sha256": "96f2822832ff09bf5014c0a2beb89bbc1790b641af1842b2b192ec87945961f7",
+      "bytes": 4944798
+    },
+    {
+      "path": "frontier/dev/code/multilingual/baseline/budget-512.report.json",
+      "absolute_input": "/workspace/work/omnichunk-v3/frontier/dev/code/multilingual/baseline/budget-512.report.json",
+      "sha256": "31dad85dc15adcc807736017d23e075e5950fb610a23b1d45d89bfafb78462c8",
+      "bytes": 5484445
+    },
+    {
+      "path": "frontier/dev/turkish/baseline/budget-128.report.json",
+      "absolute_input": "/workspace/work/omnichunk-v3/frontier/dev/turkish/baseline/budget-128.report.json",
+      "sha256": "10c232a698c0e3baef8deab5dcd254ccba63473ea3a7f06ccd025e20ffe81c1a",
+      "bytes": 7900798
+    },
+    {
+      "path": "frontier/dev/turkish/baseline/budget-256.report.json",
+      "absolute_input": "/workspace/work/omnichunk-v3/frontier/dev/turkish/baseline/budget-256.report.json",
+      "sha256": "6730f7bec2a3eeeb154894eec657e51d768c2ee931c2dfde8b269d171eaf3bf9",
+      "bytes": 8526666
+    },
+    {
+      "path": "frontier/dev/turkish/baseline/budget-512.report.json",
+      "absolute_input": "/workspace/work/omnichunk-v3/frontier/dev/turkish/baseline/budget-512.report.json",
+      "sha256": "8c851ba102d0b43bf4959b3c49594ab6a8c59b864841ab85a73e5dbe42dc69d7",
+      "bytes": 9706678
+    },
+    {
+      "path": "baseline-lexical.json",
+      "absolute_input": "/workspace/work/omnichunk-v3/baseline-lexical.json",
+      "sha256": "92adcf269ecc182835b3723f3a82582bcba98b980c935a473f0d8fef852eb608",
+      "bytes": 79367
+    },
+    {
+      "path": "mixed-lexical.json",
+      "absolute_input": "/workspace/work/omnichunk-v3/mixed-lexical.json",
+      "sha256": "92d47ddce277420bdd104926b6f858791da2278a337ae7d6de61806f2d31e7a1",
+      "bytes": 79364
+    },
+    {
+      "path": "pack-lexical.json",
+      "absolute_input": "/workspace/work/omnichunk-v3/pack-lexical.json",
+      "sha256": "ee950103c7ddc4e078f1c0a08e234c5aa17c0e67b97a6babfa2f5e85cc2d6c63",
+      "bytes": 79396
+    }
+  ],
+  "rows": 371,
+  "csv_sha256": "d943f9b44e22c8f75330ed4c15250d10ce476808c6d9e5a5cc4a95d908f8afa3"
+}

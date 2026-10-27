@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "restored_entries": 1422,
+  "restored_source_bytes": 522935456,
+  "original_gzip_containers_restored": 94,
+  "archive_files_unchanged": 1425,
+  "archive_bytes_preserved": true,
+  "unit_tests_passed": 12,
+  "unit_test_scope": "Tamper, raw/source/stored hash/size, path traversal, Windows drive/ADS, source traversal, symlinks, collisions, conflicts, duplicateJSON, originalgzipheader preservation, identityskip",
+  "helper_sha256": "7c33040e11ad8b9ebd836da1fb599616a29c485526cc41e4cee99e16826edca0",
+  "test_script_sha256": "2e7771124fa5465e18b3f960d2f473bad8642a7be7e7cbc6418913854d4e63e5",
+  "usage_sha256": "21e6109088bfb116de3b2c791fdf8958bcd2f5f73d4e4cf039a773cf03abf44c",
+  "storage_map_sha256": "dbab767e2d495443c628219019a506995cf8f098ef273e327edfbdac09769bc9",
+  "plotting": {
+    "status": "byte-identical",
+    "python": "3.12.14",
+    "matplotlib": "3.10.8",
+    "script_sha256": "1bfdd12e911b5961585cac0b10bfbc4baa7fa3dcd346a9fa0add54b58e071319",
+    "rows_primary": 10,
+    "successful_points": 125,
+    "outputs": {
+      "primary-reference-points.csv": "cfdfde91b478781e917481c5c2719fea1b2bcc3ad34c14d620eb41cf5bb4da39",
+      "primary-reference-forest.svg": "30519482e29b583c73636461287104f6d3830c140999a83c1e20adbc2e6c57e2",
+      "validation-quality-workload.csv": "b3d1d31095257b92a280136659d667495be1cffbd67a0abb293e9983e56d1e44",
+      "validation-quality-workload.svg": "27921676acd3de90303ab5b0dbfb2f6c450878fe898281a7f340e43c9f6fe90c"
+    },
+    "environment": {
+      "OMNICHUNK_V3_EVIDENCE": "/workspace/work/omnichunk-v3/publication-v2/restored-roundtrip/omnichunk-v3",
+      "OMNICHUNK_PLOT_OUTPUT": "/workspace/work/omnichunk-v3/publication-v2/regenerated-plots"
+    },
+    "model_inference": 0,
+    "downloads": 0
+  },
+  "identical_skip": {
+    "status": "passed",
+    "entries": 1422,
+    "written": 0,
+    "identical_skipped": 1422,
+    "restored_source_bytes": 522935456,
+    "archive_root": "/workspace/work/omnichunk-v3/publication-v2/evidence",
+    "output_dir": "/workspace/work/omnichunk-v3/publication-v2/restored-roundtrip",
+    "storage_map_sha256": "dbab767e2d495443c628219019a506995cf8f098ef273e327edfbdac09769bc9"
+  }
+}

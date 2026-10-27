@@ -174,14 +174,45 @@ checks, separate top-k 5 ranking metrics, zero overlap, no derived context, thre
 chunking repeats and two threads in both PyTorch CPU pools. Shared encoder
 preparation and frozen search costs remain separate. Markdown paragraph isolation
 can split an otherwise fitting small file despite soft minimum preferences; it
-can add vectors/index work and reduce adjacent context. No compact-profile flag
-or universal speed/cost improvement is claimed.
+can add vectors/index work and reduce adjacent context. That historical v2 change
+introduced no compaction option; the independent v3 options below supersede this
+limitation. Neither record establishes a universal speed/cost improvement.
 
 Boundary hardening also preserves fitting table rows and configured-unit AST
 ranges for multibyte code. M1 remains in progress: independently authored short
 answers still need a suitability audit as complete evidence, and production
 design-partner evaluation remains open. The new corpora, two encoders and paired
 views do not establish production-wide leadership.
+
+The [real-source quality/cost v3 record](benchmarks/retrieval/reports/quality-v3/README.md)
+freezes runtime/harness `d0bd4b5ea10ff458313a82b3340c8f1a3f49e572` against
+prior main `e63c7f097a8ccec39262c8fb00fb2375a3e5283d`. General comment, AST
+scope, Python data-string routing and Markdown ownership repairs accompany three
+independent opt-in controls: `markdown_paragraph_policy="pack"`,
+`prose_boundary_policy="compact"` and `code_boundary_policy="compact"`. Their
+defaults remain `"preserve"`, `"sentence"` and `"structure"`, respectively;
+compaction trades boundary isolation for index work and must be evaluated locally.
+
+The new tasks use licensed Belebele Turkish question stems with whole-passage
+gold and MIT-verified CodeSearchNet documentation-summary queries with
+docstring-stripped, whole-function gold. The real-file code supplement retains
+actual neighbors but reuses a subset of the same questions; neither it nor the
+second encoder is an independent dataset. These proxies do not measure answer
+accuracy, complete dependency support or production user traffic. References,
+profiles, model revisions and settings were committed before validation release;
+the record discloses shared-workspace custody and exact pinned-source recovery
+after transient code-validation keys became unavailable.
+
+In the English isolated-function 64-token cell, compact recall exceeds the
+strongest observed conforming named strategy, semchunk, with fewer vectors, but
+exactly ties the fixed splitter's recall. Compact real-file results include
+substantial 96-token losses; the structural default also declines on English
+real-file 96-token validation versus prior OmniChunk. The positive development
+parent/window result does not replicate on validation. All profiles, failed
+adapters, fixed controls and unadjusted cluster-bootstrap intervals remain
+reported. **M1 remains in progress:** these scoped outcomes establish neither
+global/Pareto leadership nor production design-partner validation, and complete
+support-label suitability still requires independent review.
 
 - Publish a licensed, versioned corpus with code, Markdown/manuals, tables and
   mixed documents. Start with **300 evidence-labeled queries** across the user

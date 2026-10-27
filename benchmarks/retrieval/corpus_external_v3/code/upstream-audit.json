@@ -1,0 +1,18 @@
+{
+  "dataset": "code-search-net/code_search_net",
+  "revision": "bd0cf261e357a3eb5c8fba490d23ec1a1cd59555",
+  "files": [
+    {
+      "upstream_path": "python/test-00000-of-00001.parquet",
+      "sha256": "3167e79ee7f081d825bf97b96d3a6b2d96428b00f6a98125be943384d8afae5f",
+      "verified_lfs": true,
+      "size_bytes": 28744352
+    },
+    {
+      "upstream_path": "python/validation-00000-of-00001.parquet",
+      "sha256": "22eaacb46ed7e74d582409b85692ef63f5a43e99f9395c2eb736b5c8451422bb",
+      "verified_lfs": true,
+      "size_bytes": 30742555
+    }
+  ]
+}

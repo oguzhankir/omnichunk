@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-10-27T11:51:33.906360+00:00",
+  "ciphertext_sha256": "2e260d8fcf2f78842e48f19c47a1bb02843332d95b3eaa7d2763dbef2adab13b",
+  "plaintext_archive_sha256": "b9855975366cb0b1a98e37ab0b98b381f4928056ceeba234d1422bfea0acd1b4",
+  "manifest_sha256": "dcfb7769bffade3c0bf9e3b6cc3f4d77822ce15595e668d430d606fa7c0e24b7",
+  "documents": 35,
+  "queries": 56,
+  "repository_clusters": 16,
+  "excluded_queries": 8,
+  "failure_reasons": {
+    "resource_limit_30000chars": 5,
+    "whole_file_python3_parse": 3
+  },
+  "query_substring_matches": 0,
+  "protocol_sha256": "53453d2a83cc0fdd191a71b92b0ed7550e5d3b5e19d92fc475f584ca483917ac",
+  "builder_sha256": "9c084fb9b959f849a4fc034acc8eb3f0d6aa9d3ef55967378f452065d6372150",
+  "custody": "code_dataset agent keyonly;not externalcustody",
+  "selection_uses_retrieval_scores": false,
+  "failure_reason_counter_note": "Aggregates reason field of encrypted audit;initial summary mistakenly read nonexistent error field"
+}

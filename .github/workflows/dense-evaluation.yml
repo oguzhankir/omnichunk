@@ -71,6 +71,7 @@ jobs:
       MKL_NUM_THREADS: "2"
       TOKENIZERS_PARALLELISM: "false"
       PYTHONHASHSEED: "0"
+      NLTK_DATA: ${{ runner.temp }}/omnichunk-nltk-data
     steps:
       - uses: actions/checkout@v4
         with:
@@ -83,6 +84,19 @@ jobs:
           pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
           pip install -e '.[dev]' -r benchmarks/retrieval/requirements.txt
           pip install sentence-transformers==6.2.0 transformers==5.20.2 huggingface-hub==2.3.0
+      - name: Prepare private NLTK assets
+        # Both frozen runtimes inherit the same trusted comparator data directory.
+        run: |
+          umask 077
+          install -d -m 700 "$NLTK_DATA"
+          python - <<'PY'
+          import os
+          import nltk
+          for asset in ("punkt", "punkt_tab", "stopwords"):
+              nltk.download(asset, download_dir=os.environ["NLTK_DATA"], quiet=True, raise_on_error=True)
+          for resource in ("tokenizers/punkt", "tokenizers/punkt_tab", "corpora/stopwords"):
+              nltk.data.find(resource)
+          PY
       - name: Record execution environment
         run: |
           mkdir -p environment

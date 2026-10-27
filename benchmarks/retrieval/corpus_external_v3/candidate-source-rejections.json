@@ -1,0 +1,14 @@
+{
+  "xquad": {
+    "status": "excluded",
+    "reason": "All48XQuAD article titles already observed in published SQuADv1/v2 corpora; no fresh article survives strict title exclusion",
+    "turkish_sha256": "92179a564774b7696100d144c1e10870d0a966b6fccbdd254a65b9d2ab1971cc",
+    "english_sha256": "e4c57d1c9143aaa1c5d265ba5987a65f4e69528d2a98f29d6e75019b10344f29"
+  },
+  "tquad": {
+    "status": "excluded",
+    "reason": "Original source repository has no license declaration in pinned tree/readme; no redistribution right assumed from third-party HF mirror labels",
+    "repository": "TQuad/turkish-nlp-qa-dataset",
+    "revision": "3bece60f62569182476fe00683793745ba92c32e"
+  }
+}

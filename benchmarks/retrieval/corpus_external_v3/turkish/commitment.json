@@ -1,0 +1,15 @@
+{
+  "protocol_sha256": "cf59dfdeec157f607b98e81a731d607e7094a64a119d1f96cd9ac1760b5ae410",
+  "development_manifest_sha256": "23daa703e1180b52a22df04cdd716914d6a638b57d71e7ad9e2d1ba879b3adad",
+  "validation_manifest_sha256": "7e4f9a1916689380289ce437f22df0a4e30677a62a15d3ea83256f84a8706b8f",
+  "sealed_sha256": "de6b48341abed5205276adec18b068b00c283d6d6da1bf3c5eb170324a58a6c5",
+  "eligible_article_count": 412,
+  "excluded_oldsource_article_count": 0,
+  "selected_article_count": 120,
+  "split_documents": 60,
+  "split_queries": 120,
+  "normalized_source_overlap": 0,
+  "normalized_question_overlap": 0,
+  "selection_uses_scores": false,
+  "same_agent_custody": true
+}

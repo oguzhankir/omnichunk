@@ -14,7 +14,7 @@ serve different purposes:
 | `run_comparisons.py` | Matching character capacities, zero overlap and no derived context; token scenarios use the same explicit `cl100k_base` counter. Emitted payload sizes are validated. |
 | `run_gutenberg.py` | All supported tools use 512 `cl100k_base` tokens and zero overlap; counts come from actual output chunks and throughput uses UTF-8 bytes. |
 | `run_quality_report.py` | Structural source/coverage/determinism checks, separate from retrieval evaluation. |
-| `run_retrieval.py` | Source-labeled retrieval evaluation and fixed-budget tuning using a frozen offline lexical baseline. |
+| `run_retrieval.py` | Source-labeled retrieval evaluation with a frozen offline lexical baseline or explicitly prepared dense vectors; fixed-budget development tuning. |
 | `check_benchmarks.py --compare-ref REF` | Controlled comparison with a prior source revision using one interpreter, dependency environment and reference harness. |
 
 Comparison adapters never substitute word counts or silently change units.
@@ -218,9 +218,56 @@ Markdown paragraph isolation can split an otherwise fitting small document and
 ignores soft minimum pressure to recombine body paragraphs. Heading prefixes may
 accompany their following body when the full payload fits. More chunks can mean
 more stored vectors and embedding/index work, while narrower passages contain
-less adjacent context. There is no compact-profile flag or universal cost-saving
-claim. Independent review of short-answer labels as complete supporting evidence
-and production design-partner evaluation remain open M1 gates.
+less adjacent context. That historical v2 change introduced no compaction option;
+the independent v3 policies below supersede this limitation. No universal
+cost-saving claim follows. Independent review of short-answer labels as complete
+supporting evidence and production design-partner evaluation remain open M1 gates.
+
+### Real-source quality and cost, v3
+
+The [v3 report](https://github.com/oguzhankir/omnichunk/blob/main/benchmarks/retrieval/reports/quality-v3/README.md)
+freezes runtime/harness `d0bd4b5ea10ff458313a82b3340c8f1a3f49e572` against
+prior main `e63c7f097a8ccec39262c8fb00fb2375a3e5283d`. It retains both frozen
+encoders, native special-token-inclusive 64/96 chunk limits, a complete 512-token
+primary context prefix, predeclared 128/256 sensitivity budgets, and separate
+top-k 5 metrics. Development fixes and optional profiles precede held-out release;
+the three profiles and all conforming rival strategies remain visible afterward.
+
+The [external corpus](https://github.com/oguzhankir/omnichunk/blob/main/benchmarks/retrieval/corpus_external_v3/README.md)
+contains 120 Turkish Belebele question stems on 60 validation passages and 64
+CodeSearchNet documentation-summary queries from 16 validation repositories.
+Whole-passage/function gold is not independently audited minimal answer support.
+Omitting multiple-choice options can underspecify Turkish stems; code docstrings
+are retrieval proxies, not independently authored user-QA questions. The 56-question
+real-file code supplement is a correlated view, with file-size/Python syntax
+exclusions declared before scoring. Model views are correlated as well.
+
+The English isolated-code 64-token compact profile has recall 0.808351 versus
+observed-best named semchunk 0.775593, using 234 versus 296 vectors. Its paired
+recall interval is positive but unadjusted for multiple comparisons; fixed
+splitting exactly ties its recall. Multilingual isolated code still loses to a
+stronger named control at 64 tokens. Real-file compact code has important losses,
+including multilingual 96-token recall 0.438800 for prior OmniChunk versus
+0.370523 for compact. The default is a separate secondary result, including an
+English real-file 96-token decline from 0.619607 to 0.601566. The report retains
+preselected references separately from the strongest means observed afterward,
+fixed controls, precision/IoU, vector/token work, adapter failures and all profiles.
+
+`markdown_paragraph_policy`, `prose_boundary_policy` and `code_boundary_policy`
+are independent opt-in choices; defaults remain `"preserve"`, `"sentence"` and
+`"structure"`. See [chunk options](../reference/options.md) and
+[the runnable recipe](../usage.md). Choosing fewer vectors can reduce boundary
+isolation or recall. A secondary parent/window study retains a development gain
+that does not replicate on validation and is not promoted as an improvement.
+
+Primary intervals use 2,000 paired bootstrap draws over 16 repository clusters
+or 60 Turkish source-passage clusters and remain descriptive under multiple
+comparisons. Shared/cached encoder work, actual new encoding and frozen ranking
+have separate timing scopes; no controlled production latency or global Pareto
+advantage is established. Release records disclose procedural shared-workspace
+custody and exact deterministic code-corpus recovery after transient key loss.
+Validation is now observed; M1, support-label review and production design-partner
+validation remain open.
 
 Record source commit, package/Python/dependency versions, CPU/platform, tokenizer
 assets, corpus hash/license, size and overlap policies, and optional Rust use.

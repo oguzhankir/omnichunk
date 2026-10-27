@@ -1,0 +1,322 @@
+{
+  "input_function_documents": 64,
+  "input_queries": 64,
+  "input_repositories": 16,
+  "queried_unique_original_files": 42,
+  "eligible_source_files": 37,
+  "retained_queries": 56,
+  "retained_repositories": 15,
+  "excluded_queries": 8,
+  "failures": [
+    {
+      "query_id": "csn-q-9408204a8aee60dd2794d1b3",
+      "repository": "skoczen/inkblock",
+      "upstream_function_url": "https://github.com/skoczen/inkblock/blob/099f834c1e9fc0938abaa8824725eeac57603f6c/inkblock/main.py#L204-L226",
+      "reason": "ValueError: Original source exceeds 30000 Unicode characters"
+    },
+    {
+      "query_id": "csn-q-012f5694b97c68c700e3fe5f",
+      "repository": "skoczen/inkblock",
+      "upstream_function_url": "https://github.com/skoczen/inkblock/blob/099f834c1e9fc0938abaa8824725eeac57603f6c/inkblock/main.py#L88-L149",
+      "reason": "ValueError: Original source exceeds 30000 Unicode characters"
+    },
+    {
+      "query_id": "csn-q-e3407288e0b82e6f4ea00f53",
+      "repository": "skoczen/inkblock",
+      "upstream_function_url": "https://github.com/skoczen/inkblock/blob/099f834c1e9fc0938abaa8824725eeac57603f6c/inkblock/main.py#L1381-L1392",
+      "reason": "ValueError: Original source exceeds 30000 Unicode characters"
+    },
+    {
+      "query_id": "csn-q-72e356c9415544b08f098eb6",
+      "repository": "skoczen/inkblock",
+      "upstream_function_url": "https://github.com/skoczen/inkblock/blob/099f834c1e9fc0938abaa8824725eeac57603f6c/inkblock/main.py#L1354-L1365",
+      "reason": "ValueError: Original source exceeds 30000 Unicode characters"
+    },
+    {
+      "query_id": "csn-q-7dc424026649c6a6bd20bc72",
+      "repository": "changhiskhan/poseidon",
+      "upstream_function_url": "https://github.com/changhiskhan/poseidon/blob/6d1cecbe02f1e510dd185fe23f88f7af35eb737f/scripts/snapshot.py#L10-L17",
+      "reason": "ValueError: Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 29)"
+    },
+    {
+      "query_id": "csn-q-29f817e1adb10315bf63a73b",
+      "repository": "aleju/imgaug",
+      "upstream_function_url": "https://github.com/aleju/imgaug/blob/786be74aa855513840113ea523c5df495dc6a8af/imgaug/augmentables/bbs.py#L773-L800",
+      "reason": "ValueError: Original source exceeds 30000 Unicode characters"
+    },
+    {
+      "query_id": "csn-q-cb30f2a667c2fb6fa7b894b9",
+      "repository": "aleju/imgaug",
+      "upstream_function_url": "https://github.com/aleju/imgaug/blob/786be74aa855513840113ea523c5df495dc6a8af/imgaug/imgaug.py#L379-L405",
+      "reason": "ValueError: Original source exceeds 30000 Unicode characters"
+    },
+    {
+      "query_id": "csn-q-b8c0b2d36e274610df8ea946",
+      "repository": "aleju/imgaug",
+      "upstream_function_url": "https://github.com/aleju/imgaug/blob/786be74aa855513840113ea523c5df495dc6a8af/imgaug/augmentables/polys.py#L780-L803",
+      "reason": "ValueError: Original source exceeds 30000 Unicode characters"
+    }
+  ],
+  "query_substring_matches": [],
+  "manifest_sha256": "2adcc8b1f230ccf1ee9ec07bb0bba4d9d01585a58226bf15f97bddb9c6f823df",
+  "raw_file_outcomes": [
+    {
+      "url": "https://raw.githubusercontent.com/multiformats/py-multicodec/23213b8b40b21e17e2e1844224498cbd8e359bfa/multicodec/multicodec.py",
+      "raw_sha256": "506fc4d8083a74bc4c6f0e59a3cacc4abc4a802c618262a4cf9a3bce0877be30",
+      "raw_bytes": 2178,
+      "raw_characters": 2178
+    },
+    {
+      "url": "https://raw.githubusercontent.com/drkjam/pydba/986c4b1315d6b128947c3bc3494513d8e5380ff0/pydba/postgres.py",
+      "raw_sha256": "2062fca5848bbbcdd49da3dbfa63f89c2e81dcfac73c266caf265f699dbefa96",
+      "raw_bytes": 10078,
+      "raw_characters": 10078
+    },
+    {
+      "url": "https://raw.githubusercontent.com/agsimeonov/cbexchange/e3762f77583f89cf7b4f501ab3c7675fc7d30ab3/cbexchange/private.py",
+      "raw_sha256": "1dfd1af17ff9b0a4b52ee305706d6f5462b118b13d7fd7f0fa2fbd282c40f7c6",
+      "raw_bytes": 13381,
+      "raw_characters": 13381
+    },
+    {
+      "url": "https://raw.githubusercontent.com/agsimeonov/cbexchange/e3762f77583f89cf7b4f501ab3c7675fc7d30ab3/cbexchange/websock.py",
+      "raw_sha256": "4634077f09d182ff17809374767d730d758e8e430fc46a02b8b01bcd8f4e99cd",
+      "raw_bytes": 4087,
+      "raw_characters": 4087
+    },
+    {
+      "url": "https://raw.githubusercontent.com/agsimeonov/cbexchange/e3762f77583f89cf7b4f501ab3c7675fc7d30ab3/cbexchange/client.py",
+      "raw_sha256": "7266815daf7ace8393c19cf514c80a8f6ef2c8ff11a70a28aa197f1b5123bc62",
+      "raw_bytes": 5523,
+      "raw_characters": 5523
+    },
+    {
+      "url": "https://raw.githubusercontent.com/agsimeonov/cbexchange/e3762f77583f89cf7b4f501ab3c7675fc7d30ab3/cbexchange/market.py",
+      "raw_sha256": "31206333335f3d2a814dcfdc347e59dffe93d3f9d9f7e2027c753d700edc3734",
+      "raw_bytes": 4043,
+      "raw_characters": 4043
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MacHu-GWU/superjson-project/782ca4b2edbd4b4018b8cedee42eeae7c921b917/superjson/comments.py",
+      "raw_sha256": "6437a5b1769d8b4d8d48a5b77f8a0bffb6eee7d99e7a52b58c83ab064afef229",
+      "raw_bytes": 2753,
+      "raw_characters": 2753
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MacHu-GWU/superjson-project/782ca4b2edbd4b4018b8cedee42eeae7c921b917/superjson/_superjson.py",
+      "raw_sha256": "9def9287e4cb532ff22eb9ffcabf6fcb290f87a7bd0b6054f555e39fb613e79d",
+      "raw_bytes": 16716,
+      "raw_characters": 16716
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MacHu-GWU/superjson-project/782ca4b2edbd4b4018b8cedee42eeae7c921b917/superjson/pkg/dateutil/tz/_common.py",
+      "raw_sha256": "4f37f96c1f28c8f6f4ebed0289548377c2713d7bf7a4e8af481c136103380d48",
+      "raw_bytes": 11997,
+      "raw_characters": 11997
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MacHu-GWU/superjson-project/782ca4b2edbd4b4018b8cedee42eeae7c921b917/superjson/pkg/dateutil/tz/win.py",
+      "raw_sha256": "993a49c23c56a4eb32420d1c9954484ed5cdce3df7a6dc613f24e5b02e0ad350",
+      "raw_bytes": 11424,
+      "raw_characters": 11424
+    },
+    {
+      "url": "https://raw.githubusercontent.com/skoczen/inkblock/099f834c1e9fc0938abaa8824725eeac57603f6c/inkblock/main.py",
+      "error": "Original source exceeds 30000 Unicode characters",
+      "raw_sha256": "4f77f62862a13b830e3792968170a37c867517651c6672bf4244efa7f2d36a52",
+      "raw_bytes": 59522,
+      "raw_characters": 59508
+    },
+    {
+      "url": "https://raw.githubusercontent.com/qualisys/qualisys_python_sdk/127d7eeebc2b38b5cafdfa5d1d0198437fedd274/qtm/qrt.py",
+      "raw_sha256": "063bbdd93507e5187d880eb5dd93b3d40a4e1f8a36802d38e337cb60406c0d90",
+      "raw_bytes": 12455,
+      "raw_characters": 12455
+    },
+    {
+      "url": "https://raw.githubusercontent.com/qualisys/qualisys_python_sdk/127d7eeebc2b38b5cafdfa5d1d0198437fedd274/examples/basic_example.py",
+      "raw_sha256": "d7506cfc3190c6285b1bdf3944391f05ae48ea78ac2754f73d467f7e99d428af",
+      "raw_bytes": 811,
+      "raw_characters": 811
+    },
+    {
+      "url": "https://raw.githubusercontent.com/romanvm/asyncore-wsgi/4203f64f17aa14728742358d34839618ed808a7c/asyncore_wsgi/__init__.py",
+      "raw_sha256": "1f2380aefebc3da2eba194d20caf0ae77345eb393850dd932b092aea71a43080",
+      "raw_bytes": 12242,
+      "raw_characters": 12242
+    },
+    {
+      "url": "https://raw.githubusercontent.com/jaraco/jaraco.path/39e4da09f325382e21b0917b1b5cd027edce8728/jaraco/path.py",
+      "raw_sha256": "2e7fa695c083edcb9ef13433e9fe33dd2079fda9c46b9b1ee4c3582c29faf82a",
+      "raw_bytes": 6726,
+      "raw_characters": 6726
+    },
+    {
+      "url": "https://raw.githubusercontent.com/kmpm/nodemcu-uploader/557a25f37b1fb4e31a745719e237e42fff192834/nodemcu_uploader/main.py",
+      "raw_sha256": "973872afdb84b324f9360088312cf73963cfaf19da08fcb852f969372bbfdcc6",
+      "raw_bytes": 9248,
+      "raw_characters": 9248
+    },
+    {
+      "url": "https://raw.githubusercontent.com/kmpm/nodemcu-uploader/557a25f37b1fb4e31a745719e237e42fff192834/nodemcu_uploader/uploader.py",
+      "raw_sha256": "6a90367d8efe23deb6283e3ded4dca294b18cfe32c293e35252055c1a5644356",
+      "raw_bytes": 16624,
+      "raw_characters": 16624
+    },
+    {
+      "url": "https://raw.githubusercontent.com/thombashi/pingparsing/0249df3e9d8fbd8f6f42243520e5f311736d3be9/pingparsing/_stats.py",
+      "raw_sha256": "bcf4399fa12dea8007cd7fda493757a02e22704e3632cc7deb04bb18c215e1d0",
+      "raw_bytes": 5840,
+      "raw_characters": 5840
+    },
+    {
+      "url": "https://raw.githubusercontent.com/thombashi/pingparsing/0249df3e9d8fbd8f6f42243520e5f311736d3be9/pingparsing/_pingparsing.py",
+      "raw_sha256": "86c41f41b8ec52161b6b46c4352a050024fc032724a0451c95c6e8a3ca76591a",
+      "raw_bytes": 3854,
+      "raw_characters": 3854
+    },
+    {
+      "url": "https://raw.githubusercontent.com/thombashi/pingparsing/0249df3e9d8fbd8f6f42243520e5f311736d3be9/pingparsing/_pingtransmitter.py",
+      "raw_sha256": "8d457ca3767f1bcd32880984372cd27b7a4c5534ea3bce4d71a5d693b3e16d7d",
+      "raw_bytes": 11552,
+      "raw_characters": 11552
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shalabhms/reliable-collections-cli/195d69816fb5a6e1e9ab0ab66b606b1248b4780d/rcctl/rcctl/custom_reliablecollections.py",
+      "raw_sha256": "c162823a2802bde927b2cc243409c9af383f3d9a9a6738fc5e5b2acb14d9fbfe",
+      "raw_bytes": 6042,
+      "raw_characters": 6042
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shalabhms/reliable-collections-cli/195d69816fb5a6e1e9ab0ab66b606b1248b4780d/rcctl/rcctl/auth.py",
+      "raw_sha256": "1dc60b5bccf7cc09302b89a6b0568c38990c1ad20634b432ab985eedf720af5f",
+      "raw_bytes": 2477,
+      "raw_characters": 2477
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shalabhms/reliable-collections-cli/195d69816fb5a6e1e9ab0ab66b606b1248b4780d/rcctl/rcctl/config.py",
+      "raw_sha256": "fed614bd9ce7957eae354733e38aa4cc458938363ef9fe175daf8c1187c04bbb",
+      "raw_bytes": 4604,
+      "raw_characters": 4604
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shymonk/django-datatable/f20a6ed2ce31aa7488ff85b4b0e80fe1ad94ec44/table/columns/calendarcolumn.py",
+      "raw_sha256": "daf55035430c30c8dd0f6090eba0a9f9a7710d74d5eebf59f5ebf91e4d77457c",
+      "raw_bytes": 4702,
+      "raw_characters": 4702
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shymonk/django-datatable/f20a6ed2ce31aa7488ff85b4b0e80fe1ad94ec44/table/utils.py",
+      "raw_sha256": "242e97dd5dd6f03d27fb4be6adeac43015c0d709544d175238c0d3882364f912",
+      "raw_bytes": 2358,
+      "raw_characters": 2358
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shymonk/django-datatable/f20a6ed2ce31aa7488ff85b4b0e80fe1ad94ec44/table/columns/linkcolumn.py",
+      "raw_sha256": "14d946d6ff61842ff83c4fc209e0573c688e072e65d20ff43c737ecb65620a3a",
+      "raw_bytes": 3900,
+      "raw_characters": 3900
+    },
+    {
+      "url": "https://raw.githubusercontent.com/shymonk/django-datatable/f20a6ed2ce31aa7488ff85b4b0e80fe1ad94ec44/table/views.py",
+      "raw_sha256": "8030a24ea324dfdf2f64375a75117f3c42a33d0b5b89d4f1497c5f3aa461a868",
+      "raw_bytes": 5110,
+      "raw_characters": 5110
+    },
+    {
+      "url": "https://raw.githubusercontent.com/jazzband/django-mongonaut/5485b2e029dff8ae267a4cb39c92d0a72cb5b144/mongonaut/forms/forms.py",
+      "raw_sha256": "6aa02b69e369a57f75f6dfdfab72906132384cecf68e8e4fb5a78d51c2e5ba9a",
+      "raw_bytes": 5815,
+      "raw_characters": 5815
+    },
+    {
+      "url": "https://raw.githubusercontent.com/jazzband/django-mongonaut/5485b2e029dff8ae267a4cb39c92d0a72cb5b144/mongonaut/templatetags/mongonaut_tags.py",
+      "raw_sha256": "2ad583b0b6414b1730c7d9d2c75baa1af83fedd254ffa311e8748a552a5459c8",
+      "raw_bytes": 1048,
+      "raw_characters": 1048
+    },
+    {
+      "url": "https://raw.githubusercontent.com/jazzband/django-mongonaut/5485b2e029dff8ae267a4cb39c92d0a72cb5b144/mongonaut/mixins.py",
+      "raw_sha256": "e48f1c8067bfa059ab5551716331a4c8365167499ad4b6ef6920f6b05e75a14d",
+      "raw_bytes": 11357,
+      "raw_characters": 11357
+    },
+    {
+      "url": "https://raw.githubusercontent.com/jazzband/django-mongonaut/5485b2e029dff8ae267a4cb39c92d0a72cb5b144/mongonaut/views.py",
+      "raw_sha256": "fda535979dbb18b3ee647aadb5925fcecfd1f0069b6ca737f5f83745fa54fc7f",
+      "raw_bytes": 13212,
+      "raw_characters": 13212
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mcrute/pydora/d9e353e7f19da741dcf372246b4d5640cb788488/pandora/models/_base.py",
+      "raw_sha256": "38abf456aed30d0f78edcf9bcf9d0cccb497b4ce09f085e5379c6af005c24153",
+      "raw_bytes": 9938,
+      "raw_characters": 9938
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mcrute/pydora/d9e353e7f19da741dcf372246b4d5640cb788488/pandora/transport.py",
+      "raw_sha256": "8e3eb73da4c1841d1cb71e41d7eb326239de12a47ca5056fd320d90ec96910fd",
+      "raw_bytes": 9574,
+      "raw_characters": 9574
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mcrute/pydora/d9e353e7f19da741dcf372246b4d5640cb788488/pydora/audio_backend.py",
+      "raw_sha256": "d3fdd8f1e89acdb72e5c21cc9fa43c8f85e9c6137c20add4292f19d4330e8f0f",
+      "raw_bytes": 9801,
+      "raw_characters": 9801
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mcrute/pydora/d9e353e7f19da741dcf372246b4d5640cb788488/pydora/player.py",
+      "raw_sha256": "0e17a83e0df57452dda43b1b234de3763652c0b30d9c36bc88dd9a8b6474bf7c",
+      "raw_bytes": 9171,
+      "raw_characters": 9171
+    },
+    {
+      "url": "https://raw.githubusercontent.com/changhiskhan/poseidon/6d1cecbe02f1e510dd185fe23f88f7af35eb737f/scripts/snapshot.py",
+      "error": "Missing parentheses in call to 'print'. Did you mean print(...)? (<unknown>, line 29)",
+      "raw_sha256": "6eb19c9a3fea5b3675e4bcfe64b9184d9909ab973cfd5d241197d76de7e26256",
+      "raw_bytes": 943,
+      "raw_characters": 943
+    },
+    {
+      "url": "https://raw.githubusercontent.com/changhiskhan/poseidon/6d1cecbe02f1e510dd185fe23f88f7af35eb737f/poseidon/api.py",
+      "raw_sha256": "811ea3adb0e48bfcd55255610d5f898e532bda47b65d8823ec354b51710fbcd9",
+      "raw_bytes": 14574,
+      "raw_characters": 14574
+    },
+    {
+      "url": "https://raw.githubusercontent.com/changhiskhan/poseidon/6d1cecbe02f1e510dd185fe23f88f7af35eb737f/poseidon/droplet.py",
+      "raw_sha256": "e18ed20637c7ccea54b207a8d0ebaa2c57788c8e6d5b42df139c8fca56d3eb1b",
+      "raw_bytes": 15103,
+      "raw_characters": 15103
+    },
+    {
+      "url": "https://raw.githubusercontent.com/aleju/imgaug/786be74aa855513840113ea523c5df495dc6a8af/imgaug/augmentables/bbs.py",
+      "error": "Original source exceeds 30000 Unicode characters",
+      "raw_sha256": "179bf037b6697994be9964e088ed4fe3a3a49a0e83725ad87c68aa4e4beaa3bc",
+      "raw_bytes": 36348,
+      "raw_characters": 36348
+    },
+    {
+      "url": "https://raw.githubusercontent.com/aleju/imgaug/786be74aa855513840113ea523c5df495dc6a8af/imgaug/multicore.py",
+      "raw_sha256": "898abe24062646a71716184698fdb68c8244da30ece9f31868879db50cb7b5c7",
+      "raw_bytes": 24442,
+      "raw_characters": 24442
+    },
+    {
+      "url": "https://raw.githubusercontent.com/aleju/imgaug/786be74aa855513840113ea523c5df495dc6a8af/imgaug/imgaug.py",
+      "error": "Original source exceeds 30000 Unicode characters",
+      "raw_sha256": "11573a017730dbe2be2be7eea4325a8ee084caf8ba26705f1a9acab046ad4bf3",
+      "raw_bytes": 72636,
+      "raw_characters": 72636
+    },
+    {
+      "url": "https://raw.githubusercontent.com/aleju/imgaug/786be74aa855513840113ea523c5df495dc6a8af/imgaug/augmentables/polys.py",
+      "error": "Original source exceeds 30000 Unicode characters",
+      "raw_sha256": "88e02d24e0cdc46d38e173e09d05e533ba52a7d1e06c4214b69dcc6112315789",
+      "raw_bytes": 71080,
+      "raw_characters": 71080
+    }
+  ],
+  "selection_uses_retrieval_scores": false
+}

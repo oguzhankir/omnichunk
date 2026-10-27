@@ -26,6 +26,7 @@ jobs:
           --health-interval 5s --health-timeout 5s --health-retries 10
     env:
       OMNICHUNK_PGVECTOR_DSN: postgresql://omnichunk:omnichunk@localhost:5432/omnichunk
+      NLTK_DATA: ${{ runner.temp }}/omnichunk-nltk-data
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -40,6 +41,19 @@ jobs:
       - name: Install current compatible integrations
         if: matrix.dependencies == 'current'
         run: python -m pip install --upgrade -e '.[langchain,llamaindex,qdrant,pgvector]' pytest
+      - name: Prepare private NLTK assets
+        # Provision both minimum/current LlamaIndex assets before its first import.
+        run: |
+          umask 077
+          install -d -m 700 "$NLTK_DATA"
+          python - <<'PY'
+          import os
+          import nltk
+          for asset in ("punkt", "punkt_tab", "stopwords"):
+              nltk.download(asset, download_dir=os.environ["NLTK_DATA"], quiet=True, raise_on_error=True)
+          for resource in ("tokenizers/punkt", "tokenizers/punkt_tab", "corpora/stopwords"):
+              nltk.data.find(resource)
+          PY
       - name: Verify required imports before optional tests
         run: >-
           python -c "import langchain_text_splitters, llama_index.core, qdrant_client, psycopg;

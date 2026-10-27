@@ -1,0 +1,2262 @@
+{
+  "schema_version": 1,
+  "corpus_id": "codesearchnet-python-mit-v3-test",
+  "license": "MIT",
+  "source": "https://github.com/github/CodeSearchNet",
+  "provenance": {
+    "dataset_revision": "bd0cf261e357a3eb5c8fba490d23ec1a1cd59555",
+    "protocol_sha256": "f9d7a00ac7d3f64db030f5957c6fe26ac625f3e4010019eaf77b8c6f35421c27",
+    "dataset_partition": "test",
+    "selection": "Predeclared deterministic hash selection;no scores",
+    "query_authorship": "Original repository documentation/docstrings;not userquestions",
+    "evidence_policy": "Whole transformed function;not dependency-complete evidence",
+    "license_records": [
+      {
+        "repository": "ybrs/single-beat",
+        "revision": "d036b62d2531710dfd806e9dc2a8d67c77616082",
+        "url": "https://raw.githubusercontent.com/ybrs/single-beat/d036b62d2531710dfd806e9dc2a8d67c77616082/LICENSE.txt",
+        "sha256": "3ba478033f2acc5c936a2235b16c4b6554044adcba92ff26e780a37852ae95d6",
+        "spdx": "MIT",
+        "path": "licenses/csn-0138f75378694c190913.txt"
+      },
+      {
+        "repository": "neherlab/treetime",
+        "revision": "f6cdb58d19243a18ffdaa2b2ec71872fa00e65c0",
+        "url": "https://raw.githubusercontent.com/neherlab/treetime/f6cdb58d19243a18ffdaa2b2ec71872fa00e65c0/LICENSE",
+        "sha256": "ec0b160980f238a1759a4b9e6661089ef440fef38937facd1994c8a0f4099da1",
+        "spdx": "MIT",
+        "path": "licenses/csn-01f913cad913c3e08921.txt"
+      },
+      {
+        "repository": "joopert/nad_receiver",
+        "revision": "416de0173a330c75cc73f9c90b0c5df32e5e0ba3",
+        "url": "https://raw.githubusercontent.com/joopert/nad_receiver/416de0173a330c75cc73f9c90b0c5df32e5e0ba3/LICENSE",
+        "sha256": "6e6869941379a5602a8dfc194fa74d667171b5d7bddf9fddd1dbdc5f7e4d4109",
+        "spdx": "MIT",
+        "path": "licenses/csn-0231e792ef77de9f30e3.txt"
+      },
+      {
+        "repository": "skioo/django-datatrans-gateway",
+        "revision": "1c4de5b589403e4ec3aadc4ff2fc1eb17b34bcc7",
+        "url": "https://raw.githubusercontent.com/skioo/django-datatrans-gateway/1c4de5b589403e4ec3aadc4ff2fc1eb17b34bcc7/LICENSE",
+        "sha256": "39f4dd611aa097b97617ac391340df34c5e77b143da0e72c38f6264fbd7dc7cd",
+        "spdx": "MIT",
+        "path": "licenses/csn-0660d9f6f7bfc3a2da3f.txt"
+      },
+      {
+        "repository": "aholkner/bacon",
+        "revision": "edf3810dcb211942d392a8637945871399b0650d",
+        "url": "https://raw.githubusercontent.com/aholkner/bacon/edf3810dcb211942d392a8637945871399b0650d/LICENSE",
+        "sha256": "59b142963470f4a4da78e22b332d2cfcc207e264a9d4485e3dd2ab9b992bb4f1",
+        "spdx": "MIT",
+        "path": "licenses/csn-07660648dbbbd2149155.txt"
+      },
+      {
+        "repository": "ojengwa/accounting",
+        "revision": "6343cf373a5c57941e407a92c101ac4bc45382e3",
+        "url": "https://raw.githubusercontent.com/ojengwa/accounting/6343cf373a5c57941e407a92c101ac4bc45382e3/LICENSE",
+        "sha256": "5c11481723ff4ee1b4a1964170cd337044753c95af99707019bd3c326b6a6569",
+        "spdx": "MIT",
+        "path": "licenses/csn-093fae68549b0eb7597c.txt"
+      },
+      {
+        "repository": "antevens/listen",
+        "revision": "d3ddff8e7fbfb672c5bd7f6f4febeb5e921d8c67",
+        "url": "https://raw.githubusercontent.com/antevens/listen/d3ddff8e7fbfb672c5bd7f6f4febeb5e921d8c67/LICENSE",
+        "sha256": "1548ae8f644a51e24786f036be419fd1be0020acd0627b19456a1a6428a6f30d",
+        "spdx": "MIT",
+        "path": "licenses/csn-0cac4733409916682375.txt"
+      },
+      {
+        "repository": "respondcreate/django-versatileimagefield",
+        "revision": "d41e279c39cccffafbe876c67596184704ae8877",
+        "url": "https://raw.githubusercontent.com/respondcreate/django-versatileimagefield/d41e279c39cccffafbe876c67596184704ae8877/LICENSE",
+        "sha256": "58a0dfd9f33025cfa94ab48f500468cad3a942e71ff441617e485197f0d47ada",
+        "spdx": "MIT",
+        "path": "licenses/csn-0d409d859bc2021f21d4.txt"
+      },
+      {
+        "repository": "drhagen/parsita",
+        "revision": "d97414a05541f48231381f607d1d2e6b50781d39",
+        "url": "https://raw.githubusercontent.com/drhagen/parsita/d97414a05541f48231381f607d1d2e6b50781d39/LICENSE",
+        "sha256": "dd954b68b1e388005049f2876ecaab7e891fd901b675a22435631e753019dd6e",
+        "spdx": "MIT",
+        "path": "licenses/csn-0f000d94337d0978690c.txt"
+      },
+      {
+        "repository": "blockstack/zone-file-py",
+        "revision": "c1078c8c3c28f0881bc9a3af53d4972c4a6862d0",
+        "url": "https://raw.githubusercontent.com/blockstack/zone-file-py/c1078c8c3c28f0881bc9a3af53d4972c4a6862d0/LICENSE",
+        "sha256": "5ed4e9dfdde5ded82065f1bd2a2a445c272e61cdaaeac8ffe09b9c9ed498aafe",
+        "spdx": "MIT",
+        "path": "licenses/csn-0f5c9e3d08e68f67eb5d.txt"
+      },
+      {
+        "repository": "hydrosquall/tiingo-python",
+        "revision": "9bb98ca9d24f2e4db651cf0590e4b47184546482",
+        "url": "https://raw.githubusercontent.com/hydrosquall/tiingo-python/9bb98ca9d24f2e4db651cf0590e4b47184546482/LICENSE",
+        "sha256": "b936f71a4bec428d8eef0d1d156a6c0f126af2fb02f4f2d518d3acc6fc84996f",
+        "spdx": "MIT",
+        "path": "licenses/csn-12aadbfa985b080a2379.txt"
+      },
+      {
+        "repository": "leovp/steamfiles",
+        "revision": "e2264d09d128aecb838c4d310d7ea11e28c6597e",
+        "url": "https://raw.githubusercontent.com/leovp/steamfiles/e2264d09d128aecb838c4d310d7ea11e28c6597e/LICENSE",
+        "sha256": "91b9e37e70ae3f762649d0a7853c9189b942472c58d9bab66564a993f34f12de",
+        "spdx": "MIT",
+        "path": "licenses/csn-133e04674fcbd95fbe3b.txt"
+      },
+      {
+        "repository": "avelino/bottle-auth",
+        "revision": "db07e526864aeac05ee68444b47e5db29540ce18",
+        "url": "https://raw.githubusercontent.com/avelino/bottle-auth/db07e526864aeac05ee68444b47e5db29540ce18/LICENSE",
+        "sha256": "55df7521c33945cd0ab5b4fbaf0046a8a58cc1cf81ee9096614bf33a0e2e0983",
+        "spdx": "MIT",
+        "path": "licenses/csn-13faf650dc53e748f9b0.txt"
+      },
+      {
+        "repository": "lsst-sqre/ltd-conveyor",
+        "revision": "c492937c4c1e050ccc4a0b9dcc38f9980d57e305",
+        "url": "https://raw.githubusercontent.com/lsst-sqre/ltd-conveyor/c492937c4c1e050ccc4a0b9dcc38f9980d57e305/LICENSE",
+        "sha256": "614af2c4250beac7135afb256949e271ea7a7d0bd52e9dc95f3919dc01ce99b8",
+        "spdx": "MIT",
+        "path": "licenses/csn-144e4d88ae7aaa8c5739.txt"
+      },
+      {
+        "repository": "pgjones/hypercorn",
+        "revision": "ef93d741fe246846a127f9318b54505ac65f1ae7",
+        "url": "https://raw.githubusercontent.com/pgjones/hypercorn/ef93d741fe246846a127f9318b54505ac65f1ae7/LICENSE",
+        "sha256": "1e319d8733d8344677cd0ee6c2a8cc0601c74487791d58b26b2b7ef0630c2b7f",
+        "spdx": "MIT",
+        "path": "licenses/csn-145261f186818422e07d.txt"
+      },
+      {
+        "repository": "sergei-maertens/django-systemjs",
+        "revision": "efd4a3862a39d9771609a25a5556f36023cf6e5c",
+        "url": "https://raw.githubusercontent.com/sergei-maertens/django-systemjs/efd4a3862a39d9771609a25a5556f36023cf6e5c/LICENSE.txt",
+        "sha256": "d792331dc3dafafd5848781a0a28915a630a733f26ad59a6599d559881b0c088",
+        "spdx": "MIT",
+        "path": "licenses/csn-1719fe87cf6aac62347c.txt"
+      }
+    ],
+    "source_components": "Each source is one transformed function;repository is independent bootstrap cluster",
+    "query_policy": "Original human documentation firstparagraph;no query text generation;not fullparameter documentation"
+  },
+  "documents": [
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "ybrs/single-beat",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0138f75378694c190913.txt",
+      "source_id": "csn-f-ccb0815b073b0303ce002735",
+      "path": "documents/csn-f-ccb0815b073b0303ce002735.py",
+      "sha256": "9e7887a33a8aad2ba4474e3ff491905a014751ec5660c1fd0910d3b1b2e96cee",
+      "function": {
+        "url": "https://github.com/ybrs/single-beat/blob/d036b62d2531710dfd806e9dc2a8d67c77616082/singlebeat/beat.py#L348-L353",
+        "path": "singlebeat/beat.py",
+        "name": "Process.cli_command_resume",
+        "start": 0,
+        "end": 122
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "ybrs/single-beat",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0138f75378694c190913.txt",
+      "source_id": "csn-f-f1d2502fd7fe1b35ebe0b0e5",
+      "path": "documents/csn-f-f1d2502fd7fe1b35ebe0b0e5.py",
+      "sha256": "9c2cc1b3bdad4abd20ded1bb2d0056ffee5b98e17bd160cee3e558efe3a4ac3a",
+      "function": {
+        "url": "https://github.com/ybrs/single-beat/blob/d036b62d2531710dfd806e9dc2a8d67c77616082/singlebeat/beat.py#L259-L278",
+        "path": "singlebeat/beat.py",
+        "name": "Process.sigterm_handler",
+        "start": 0,
+        "end": 465
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "ybrs/single-beat",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0138f75378694c190913.txt",
+      "source_id": "csn-f-f7a8ceaf0bcf006bb620ea58",
+      "path": "documents/csn-f-f7a8ceaf0bcf006bb620ea58.py",
+      "sha256": "643760631ac3ff333b77ee7202c2eefee03e95c66e0f5fb0ace57ba16866c570",
+      "function": {
+        "url": "https://github.com/ybrs/single-beat/blob/d036b62d2531710dfd806e9dc2a8d67c77616082/singlebeat/beat.py#L327-L346",
+        "path": "singlebeat/beat.py",
+        "name": "Process.cli_command_pause",
+        "start": 0,
+        "end": 387
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "ybrs/single-beat",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0138f75378694c190913.txt",
+      "source_id": "csn-f-140a5f10b4202eef9da9f036",
+      "path": "documents/csn-f-140a5f10b4202eef9da9f036.py",
+      "sha256": "39e8482050b32ff2f7aeb365f91eb10822497ed8d6bd0d173db4da57b9d70f9f",
+      "function": {
+        "url": "https://github.com/ybrs/single-beat/blob/d036b62d2531710dfd806e9dc2a8d67c77616082/singlebeat/beat.py#L318-L325",
+        "path": "singlebeat/beat.py",
+        "name": "Process.cli_command_quit",
+        "start": 0,
+        "end": 199
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "neherlab/treetime",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-01f913cad913c3e08921.txt",
+      "source_id": "csn-f-aa3ab58da5d435b6e4049f2d",
+      "path": "documents/csn-f-aa3ab58da5d435b6e4049f2d.py",
+      "sha256": "842c72b6428bde1fa1e8017179341e01c135431e4c4fb7a944af4c739c5080ac",
+      "function": {
+        "url": "https://github.com/neherlab/treetime/blob/f6cdb58d19243a18ffdaa2b2ec71872fa00e65c0/treetime/treeanc.py#L1324-L1461",
+        "path": "treetime/treeanc.py",
+        "name": "TreeAnc._ml_anc_marginal",
+        "start": 0,
+        "end": 5742
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "neherlab/treetime",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-01f913cad913c3e08921.txt",
+      "source_id": "csn-f-5bb2534d2715d4c7183dd316",
+      "path": "documents/csn-f-5bb2534d2715d4c7183dd316.py",
+      "sha256": "619c6d83b3fe538f231f65273af41c39968ab1083d40df867058ee4a628f82f8",
+      "function": {
+        "url": "https://github.com/neherlab/treetime/blob/f6cdb58d19243a18ffdaa2b2ec71872fa00e65c0/treetime/clock_tree.py#L195-L221",
+        "path": "treetime/clock_tree.py",
+        "name": "ClockTree.setup_TreeRegression",
+        "start": 0,
+        "end": 844
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "neherlab/treetime",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-01f913cad913c3e08921.txt",
+      "source_id": "csn-f-21023a245c7680f0ca50d63d",
+      "path": "documents/csn-f-21023a245c7680f0ca50d63d.py",
+      "sha256": "2f034db200c26d0c3d89a0e89be4f2234088410102191fea6cfe82711b69c083",
+      "function": {
+        "url": "https://github.com/neherlab/treetime/blob/f6cdb58d19243a18ffdaa2b2ec71872fa00e65c0/treetime/treeanc.py#L1778-L1804",
+        "path": "treetime/treeanc.py",
+        "name": "TreeAnc.optimal_branch_length",
+        "start": 0,
+        "end": 622
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "neherlab/treetime",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-01f913cad913c3e08921.txt",
+      "source_id": "csn-f-dd64341032822c7e209f2a77",
+      "path": "documents/csn-f-dd64341032822c7e209f2a77.py",
+      "sha256": "6e3fef7bf79c92d68ce1a4110486aaa252a830c1c060cb3f80ab9c1bd38affa2",
+      "function": {
+        "url": "https://github.com/neherlab/treetime/blob/f6cdb58d19243a18ffdaa2b2ec71872fa00e65c0/treetime/treeregression.py#L147-L176",
+        "path": "treetime/treeregression.py",
+        "name": "TreeRegression.recurse",
+        "start": 0,
+        "end": 924
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "joopert/nad_receiver",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0231e792ef77de9f30e3.txt",
+      "source_id": "csn-f-1cd3dd5da2d59eb3f6bd099c",
+      "path": "documents/csn-f-1cd3dd5da2d59eb3f6bd099c.py",
+      "sha256": "880269319d1726953a11680cefce33661bd97df12328876c30cdccf85b8fde2b",
+      "function": {
+        "url": "https://github.com/joopert/nad_receiver/blob/416de0173a330c75cc73f9c90b0c5df32e5e0ba3/nad_receiver/__init__.py#L215-L237",
+        "path": "nad_receiver/__init__.py",
+        "name": "NADReceiverTCP.status",
+        "start": 0,
+        "end": 712
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "joopert/nad_receiver",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0231e792ef77de9f30e3.txt",
+      "source_id": "csn-f-9846657925aa0d03ae14b59a",
+      "path": "documents/csn-f-9846657925aa0d03ae14b59a.py",
+      "sha256": "d0d0fbdba149f72b8de9f353d98265a6dd7661bf4412ac2a69cb206dfe667faa",
+      "function": {
+        "url": "https://github.com/joopert/nad_receiver/blob/416de0173a330c75cc73f9c90b0c5df32e5e0ba3/nad_receiver/__init__.py#L183-L213",
+        "path": "nad_receiver/__init__.py",
+        "name": "NADReceiverTCP._send",
+        "start": 0,
+        "end": 1086
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "joopert/nad_receiver",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0231e792ef77de9f30e3.txt",
+      "source_id": "csn-f-65060340240f015ad23328e3",
+      "path": "documents/csn-f-65060340240f015ad23328e3.py",
+      "sha256": "44efa3179260dd4112291f68efd2f56b5e29c19c1825f967d4d2f31b0a14db68",
+      "function": {
+        "url": "https://github.com/joopert/nad_receiver/blob/416de0173a330c75cc73f9c90b0c5df32e5e0ba3/nad_receiver/__init__.py#L320-L365",
+        "path": "nad_receiver/__init__.py",
+        "name": "NADReceiverTelnet.exec_command",
+        "start": 0,
+        "end": 1870
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "joopert/nad_receiver",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0231e792ef77de9f30e3.txt",
+      "source_id": "csn-f-888d9651f595aa5d6d8c8817",
+      "path": "documents/csn-f-888d9651f595aa5d6d8c8817.py",
+      "sha256": "c9d5142c97d84045d8e1501a70518eaf060fe57da62cf21986d75400fa1a4a97",
+      "function": {
+        "url": "https://github.com/joopert/nad_receiver/blob/416de0173a330c75cc73f9c90b0c5df32e5e0ba3/nad_receiver/__init__.py#L252-L256",
+        "path": "nad_receiver/__init__.py",
+        "name": "NADReceiverTCP.set_volume",
+        "start": 0,
+        "end": 180
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "skioo/django-datatrans-gateway",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0660d9f6f7bfc3a2da3f.txt",
+      "source_id": "csn-f-3b13ab334fecf194b2fd7572",
+      "path": "documents/csn-f-3b13ab334fecf194b2fd7572.py",
+      "sha256": "4c18011860de538cffbfffddb6a7de8e95ed38344e804d004908c148261c6168",
+      "function": {
+        "url": "https://github.com/skioo/django-datatrans-gateway/blob/1c4de5b589403e4ec3aadc4ff2fc1eb17b34bcc7/datatrans/gateway/payment_parameters.py#L13-L37",
+        "path": "datatrans/gateway/payment_parameters.py",
+        "name": "build_payment_parameters",
+        "start": 0,
+        "end": 545
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "skioo/django-datatrans-gateway",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0660d9f6f7bfc3a2da3f.txt",
+      "source_id": "csn-f-dd900bff3c38f224a8b72090",
+      "path": "documents/csn-f-dd900bff3c38f224a8b72090.py",
+      "sha256": "b9a19b8a33a1d18f6b5a488d0b417923e8930158e86f77c64865ff853c9c757a",
+      "function": {
+        "url": "https://github.com/skioo/django-datatrans-gateway/blob/1c4de5b589403e4ec3aadc4ff2fc1eb17b34bcc7/datatrans/gateway/payment_parameters.py#L40-L66",
+        "path": "datatrans/gateway/payment_parameters.py",
+        "name": "build_register_credit_card_parameters",
+        "start": 0,
+        "end": 604
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "skioo/django-datatrans-gateway",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0660d9f6f7bfc3a2da3f.txt",
+      "source_id": "csn-f-da0366cfee362682ec5fe3c4",
+      "path": "documents/csn-f-da0366cfee362682ec5fe3c4.py",
+      "sha256": "f73a442e623a8d8bd9c3ccafbcc87d632dc1d0201f2d260b3e010af6eb66de93",
+      "function": {
+        "url": "https://github.com/skioo/django-datatrans-gateway/blob/1c4de5b589403e4ec3aadc4ff2fc1eb17b34bcc7/datatrans/gateway/notification.py#L19-L134",
+        "path": "datatrans/gateway/notification.py",
+        "name": "parse_notification_xml",
+        "start": 0,
+        "end": 4197
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "skioo/django-datatrans-gateway",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0660d9f6f7bfc3a2da3f.txt",
+      "source_id": "csn-f-501bb9689b46c478d0f11e60",
+      "path": "documents/csn-f-501bb9689b46c478d0f11e60.py",
+      "sha256": "b89029bf5986e4bb05dd7fdc1fb7723bfd648ea5641d950d316da162362c5b48",
+      "function": {
+        "url": "https://github.com/skioo/django-datatrans-gateway/blob/1c4de5b589403e4ec3aadc4ff2fc1eb17b34bcc7/datatrans/gateway/payment_with_alias.py#L15-L47",
+        "path": "datatrans/gateway/payment_with_alias.py",
+        "name": "pay_with_alias",
+        "start": 0,
+        "end": 995
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "aholkner/bacon",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-07660648dbbbd2149155.txt",
+      "source_id": "csn-f-bb99d5800c39aae6079c02eb",
+      "path": "documents/csn-f-bb99d5800c39aae6079c02eb.py",
+      "sha256": "edbe613dd181bfbf7d32c5d78b845d642a67df2647d531157fe40bebbde0f8e3",
+      "function": {
+        "url": "https://github.com/aholkner/bacon/blob/edf3810dcb211942d392a8637945871399b0650d/bacon/controller.py#L265-L273",
+        "path": "bacon/controller.py",
+        "name": "ControllerMapping.register",
+        "start": 0,
+        "end": 117
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "aholkner/bacon",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-07660648dbbbd2149155.txt",
+      "source_id": "csn-f-11ee77e7b1b1931aad158e95",
+      "path": "documents/csn-f-11ee77e7b1b1931aad158e95.py",
+      "sha256": "36ee628126e56ebe7c8994f3283fd09f41ed99017b2150af633e87c5249ce90f",
+      "function": {
+        "url": "https://github.com/aholkner/bacon/blob/edf3810dcb211942d392a8637945871399b0650d/bacon/font.py#L219-L228",
+        "path": "bacon/font.py",
+        "name": "Font.measure_string",
+        "start": 0,
+        "end": 226
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "aholkner/bacon",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-07660648dbbbd2149155.txt",
+      "source_id": "csn-f-d6a1e4ab0b72712978ce1a5f",
+      "path": "documents/csn-f-d6a1e4ab0b72712978ce1a5f.py",
+      "sha256": "b126708e0288346e30bf27849703def0127d1dbaf3052db2207a31b359f8a28c",
+      "function": {
+        "url": "https://github.com/aholkner/bacon/blob/edf3810dcb211942d392a8637945871399b0650d/native/Vendor/FreeType/src/tools/docmaker/content.py#L373-L387",
+        "path": "native/Vendor/FreeType/src/tools/docmaker/content.py",
+        "name": "ContentProcessor.add_markup",
+        "start": 0,
+        "end": 464
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "aholkner/bacon",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-07660648dbbbd2149155.txt",
+      "source_id": "csn-f-765a7f176f90b11f176bdc02",
+      "path": "documents/csn-f-765a7f176f90b11f176bdc02.py",
+      "sha256": "b6c9a367cf2b8bc41fbae29771c03265647ceb45fe320dc1a3c25a31bd2a2f00",
+      "function": {
+        "url": "https://github.com/aholkner/bacon/blob/edf3810dcb211942d392a8637945871399b0650d/native/Vendor/FreeType/src/tools/docmaker/tohtml.py#L303-L309",
+        "path": "native/Vendor/FreeType/src/tools/docmaker/tohtml.py",
+        "name": "HtmlFormatter.make_html_code",
+        "start": 0,
+        "end": 187
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "ojengwa/accounting",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-093fae68549b0eb7597c.txt",
+      "source_id": "csn-f-f2b68abc04ff553554cc7603",
+      "path": "documents/csn-f-f2b68abc04ff553554cc7603.py",
+      "sha256": "83cb15b147dfcfe6768a4026631b66f1be442b2a979c109d56f289aae4a0d8f5",
+      "function": {
+        "url": "https://github.com/ojengwa/accounting/blob/6343cf373a5c57941e407a92c101ac4bc45382e3/fabfile.py#L42-L59",
+        "path": "fabfile.py",
+        "name": "publish",
+        "start": 0,
+        "end": 454
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "ojengwa/accounting",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-093fae68549b0eb7597c.txt",
+      "source_id": "csn-f-add7d6ef83dc0feb1487c3d3",
+      "path": "documents/csn-f-add7d6ef83dc0feb1487c3d3.py",
+      "sha256": "51777f7e8c6f6b860f84194d04eaa7a63e1046ce306e0792d7c3ade804727be3",
+      "function": {
+        "url": "https://github.com/ojengwa/accounting/blob/6343cf373a5c57941e407a92c101ac4bc45382e3/accounting/accounting.py#L225-L273",
+        "path": "accounting/accounting.py",
+        "name": "Accounting.as_money",
+        "start": 0,
+        "end": 1229
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "ojengwa/accounting",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-093fae68549b0eb7597c.txt",
+      "source_id": "csn-f-0f981784358a334d95ab834c",
+      "path": "documents/csn-f-0f981784358a334d95ab834c.py",
+      "sha256": "07d495f2b803e4099db6933f06be646bea27e24cf1009ad9af80c9a85f465535",
+      "function": {
+        "url": "https://github.com/ojengwa/accounting/blob/6343cf373a5c57941e407a92c101ac4bc45382e3/accounting/accounting.py#L179-L223",
+        "path": "accounting/accounting.py",
+        "name": "Accounting.format",
+        "start": 0,
+        "end": 1133
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "ojengwa/accounting",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-093fae68549b0eb7597c.txt",
+      "source_id": "csn-f-b612e28c60cacdfb0cd3409a",
+      "path": "documents/csn-f-b612e28c60cacdfb0cd3409a.py",
+      "sha256": "b8462c51eaef7acc080a8868873617132c28b4661f69f301a3157ddb27c25533",
+      "function": {
+        "url": "https://github.com/ojengwa/accounting/blob/6343cf373a5c57941e407a92c101ac4bc45382e3/accounting/accounting.py#L98-L113",
+        "path": "accounting/accounting.py",
+        "name": "Accounting._change_precision",
+        "start": 0,
+        "end": 269
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "antevens/listen",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0cac4733409916682375.txt",
+      "source_id": "csn-f-190e2e847f75a19480de8051",
+      "path": "documents/csn-f-190e2e847f75a19480de8051.py",
+      "sha256": "5310d8cd695878c7a0b0d5f98397c18819d2ac4302dbeb38b37f60d0409aeca2",
+      "function": {
+        "url": "https://github.com/antevens/listen/blob/d3ddff8e7fbfb672c5bd7f6f4febeb5e921d8c67/listen/signal_handler.py#L256-L263",
+        "path": "listen/signal_handler.py",
+        "name": "SignalHandler.reg_on_resume",
+        "start": 0,
+        "end": 277
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "antevens/listen",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0cac4733409916682375.txt",
+      "source_id": "csn-f-a3392730345133dd98a0a7d3",
+      "path": "documents/csn-f-a3392730345133dd98a0a7d3.py",
+      "sha256": "6787dd89cdc9db09e3ed75bffb15a10f43837b14d354fc6150f188c04369db2d",
+      "function": {
+        "url": "https://github.com/antevens/listen/blob/d3ddff8e7fbfb672c5bd7f6f4febeb5e921d8c67/listen/signal_handler.py#L61-L63",
+        "path": "listen/signal_handler.py",
+        "name": "SignalHandler.pseudo_handler",
+        "start": 0,
+        "end": 197
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "antevens/listen",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0cac4733409916682375.txt",
+      "source_id": "csn-f-6ece9d3aa0d9c53f0889d061",
+      "path": "documents/csn-f-6ece9d3aa0d9c53f0889d061.py",
+      "sha256": "3ba3526d396fc1cbc67d152c37df9f684b637b2a921530140da5b58e89a19133",
+      "function": {
+        "url": "https://github.com/antevens/listen/blob/d3ddff8e7fbfb672c5bd7f6f4febeb5e921d8c67/listen/signal_handler.py#L127-L142",
+        "path": "listen/signal_handler.py",
+        "name": "SignalHandler.status",
+        "start": 0,
+        "end": 791
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "antevens/listen",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0cac4733409916682375.txt",
+      "source_id": "csn-f-972f3a1a8397a0ca9ceac8af",
+      "path": "documents/csn-f-972f3a1a8397a0ca9ceac8af.py",
+      "sha256": "09c085d1c05cd2f00fb27f26c11f61b9388ee7a2eebf8d520566b574c51e095a",
+      "function": {
+        "url": "https://github.com/antevens/listen/blob/d3ddff8e7fbfb672c5bd7f6f4febeb5e921d8c67/listen/signal_handler.py#L247-L254",
+        "path": "listen/signal_handler.py",
+        "name": "SignalHandler.reg_on_status",
+        "start": 0,
+        "end": 277
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "respondcreate/django-versatileimagefield",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0d409d859bc2021f21d4.txt",
+      "source_id": "csn-f-31d1b2cb58e629013a13ef60",
+      "path": "documents/csn-f-31d1b2cb58e629013a13ef60.py",
+      "sha256": "3363a14a439fe2226486901cdaf4d1ad194692bedf5738e823194b04c9e72d36",
+      "function": {
+        "url": "https://github.com/respondcreate/django-versatileimagefield/blob/d41e279c39cccffafbe876c67596184704ae8877/versatileimagefield/datastructures/base.py#L60-L104",
+        "path": "versatileimagefield/datastructures/base.py",
+        "name": "ProcessedImage.preprocess",
+        "start": 0,
+        "end": 1130
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "respondcreate/django-versatileimagefield",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0d409d859bc2021f21d4.txt",
+      "source_id": "csn-f-9a8e1959379789ecbd788d39",
+      "path": "documents/csn-f-9a8e1959379789ecbd788d39.py",
+      "sha256": "42e903c5d7fd510a2717198ea65ea58cbe7ff8b91092fa9b4faece384151c2bf",
+      "function": {
+        "url": "https://github.com/respondcreate/django-versatileimagefield/blob/d41e279c39cccffafbe876c67596184704ae8877/versatileimagefield/utils.py#L176-L204",
+        "path": "versatileimagefield/utils.py",
+        "name": "validate_versatileimagefield_sizekey_list",
+        "start": 0,
+        "end": 819
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "respondcreate/django-versatileimagefield",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0d409d859bc2021f21d4.txt",
+      "source_id": "csn-f-1e423768279b88fc20f7db61",
+      "path": "documents/csn-f-1e423768279b88fc20f7db61.py",
+      "sha256": "b54e303644921eb976fd322dac387cdd37f22c2ee32af0618f24a98ab5062131",
+      "function": {
+        "url": "https://github.com/respondcreate/django-versatileimagefield/blob/d41e279c39cccffafbe876c67596184704ae8877/versatileimagefield/fields.py#L119-L154",
+        "path": "versatileimagefield/fields.py",
+        "name": "VersatileImageField.save_form_data",
+        "start": 0,
+        "end": 971
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "respondcreate/django-versatileimagefield",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0d409d859bc2021f21d4.txt",
+      "source_id": "csn-f-d14731b4c3c9fa0ee6d457ce",
+      "path": "documents/csn-f-d14731b4c3c9fa0ee6d457ce.py",
+      "sha256": "9a0e6ebbc96da74b3eccbaa03893f9a628602539d8ab7948997c6bb71c95cd0a",
+      "function": {
+        "url": "https://github.com/respondcreate/django-versatileimagefield/blob/d41e279c39cccffafbe876c67596184704ae8877/versatileimagefield/mixins.py#L140-L143",
+        "path": "versatileimagefield/mixins.py",
+        "name": "VersatileImageMixIn.get_sized_root_folder",
+        "start": 0,
+        "end": 169
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "drhagen/parsita",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f000d94337d0978690c.txt",
+      "source_id": "csn-f-849f314a1cefbdbe9ea91fe0",
+      "path": "documents/csn-f-849f314a1cefbdbe9ea91fe0.py",
+      "sha256": "90eb1e1bbf18d9b1c3aa8ef828b0fcf36b1babbe6222b13972df2f00ac1e41cd",
+      "function": {
+        "url": "https://github.com/drhagen/parsita/blob/d97414a05541f48231381f607d1d2e6b50781d39/parsita/parsers.py#L318-L330",
+        "path": "parsita/parsers.py",
+        "name": "opt",
+        "start": 0,
+        "end": 167
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "drhagen/parsita",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f000d94337d0978690c.txt",
+      "source_id": "csn-f-30bb77aa6583257f58c50ef0",
+      "path": "documents/csn-f-30bb77aa6583257f58c50ef0.py",
+      "sha256": "cc17ca16e7b1b3ae8c192990cce39cf05beb8c27f13744823561578a71dd079e",
+      "function": {
+        "url": "https://github.com/drhagen/parsita/blob/d97414a05541f48231381f607d1d2e6b50781d39/parsita/util.py#L22-L44",
+        "path": "parsita/util.py",
+        "name": "splat",
+        "start": 0,
+        "end": 134
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "drhagen/parsita",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f000d94337d0978690c.txt",
+      "source_id": "csn-f-8ad0cce37973f9cda08b7744",
+      "path": "documents/csn-f-8ad0cce37973f9cda08b7744.py",
+      "sha256": "5bf037cbe7e5ab6e40e56bccb66ae961257df9f2693fa13f76e1d579947c012e",
+      "function": {
+        "url": "https://github.com/drhagen/parsita/blob/d97414a05541f48231381f607d1d2e6b50781d39/parsita/parsers.py#L491-L503",
+        "path": "parsita/parsers.py",
+        "name": "rep",
+        "start": 0,
+        "end": 167
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "drhagen/parsita",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f000d94337d0978690c.txt",
+      "source_id": "csn-f-ebf7a84288571c0cc4c3ca42",
+      "path": "documents/csn-f-ebf7a84288571c0cc4c3ca42.py",
+      "sha256": "17f5ac9865d22ff663f83d71d40e01b5310fc7a739be8620f3d889fb1ec52c4d",
+      "function": {
+        "url": "https://github.com/drhagen/parsita/blob/d97414a05541f48231381f607d1d2e6b50781d39/parsita/parsers.py#L155-L182",
+        "path": "parsita/parsers.py",
+        "name": "completely_parse_reader",
+        "start": 0,
+        "end": 582
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "blockstack/zone-file-py",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f5c9e3d08e68f67eb5d.txt",
+      "source_id": "csn-f-208a98a98c1177fa3d6a84aa",
+      "path": "documents/csn-f-208a98a98c1177fa3d6a84aa.py",
+      "sha256": "f0ed3f074cc5439f92bc2294af4146872ac722e324e70c4b9c9e9a9a59a61952",
+      "function": {
+        "url": "https://github.com/blockstack/zone-file-py/blob/c1078c8c3c28f0881bc9a3af53d4972c4a6862d0/blockstack_zones/record_processors.py#L15-L23",
+        "path": "blockstack_zones/record_processors.py",
+        "name": "process_ttl",
+        "start": 0,
+        "end": 161
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "blockstack/zone-file-py",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f5c9e3d08e68f67eb5d.txt",
+      "source_id": "csn-f-22efa72778bc109a2ed8baba",
+      "path": "documents/csn-f-22efa72778bc109a2ed8baba.py",
+      "sha256": "2f69603351a417c2473eaeab97d4d34510115cc3ffd3343f839895a408243215",
+      "function": {
+        "url": "https://github.com/blockstack/zone-file-py/blob/c1078c8c3c28f0881bc9a3af53d4972c4a6862d0/blockstack_zones/parse_zone_file.py#L295-L359",
+        "path": "blockstack_zones/parse_zone_file.py",
+        "name": "parse_line",
+        "start": 0,
+        "end": 2133
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "blockstack/zone-file-py",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f5c9e3d08e68f67eb5d.txt",
+      "source_id": "csn-f-d7be51620216b6890644f35b",
+      "path": "documents/csn-f-d7be51620216b6890644f35b.py",
+      "sha256": "7292179ad82897bb616567095eca13c8217d275a07b97ce9084a528cdbd9eee0",
+      "function": {
+        "url": "https://github.com/blockstack/zone-file-py/blob/c1078c8c3c28f0881bc9a3af53d4972c4a6862d0/blockstack_zones/parse_zone_file.py#L163-L179",
+        "path": "blockstack_zones/parse_zone_file.py",
+        "name": "serialize",
+        "start": 0,
+        "end": 234
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "blockstack/zone-file-py",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f5c9e3d08e68f67eb5d.txt",
+      "source_id": "csn-f-e892a03a45b76831c8d87831",
+      "path": "documents/csn-f-e892a03a45b76831c8d87831.py",
+      "sha256": "ba931ffd1fcbfc204b3915c85cfc1ae76030e132b1800458806e0c3b58a20b83",
+      "function": {
+        "url": "https://github.com/blockstack/zone-file-py/blob/c1078c8c3c28f0881bc9a3af53d4972c4a6862d0/blockstack_zones/parse_zone_file.py#L244-L269",
+        "path": "blockstack_zones/parse_zone_file.py",
+        "name": "remove_class",
+        "start": 0,
+        "end": 555
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "hydrosquall/tiingo-python",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-12aadbfa985b080a2379.txt",
+      "source_id": "csn-f-1880f7107e35c3d5e2555f1b",
+      "path": "documents/csn-f-1880f7107e35c3d5e2555f1b.py",
+      "sha256": "f1232b00c486c85b56b96b99aca8340adf876a893e4e5457252890179167a4f1",
+      "function": {
+        "url": "https://github.com/hydrosquall/tiingo-python/blob/9bb98ca9d24f2e4db651cf0590e4b47184546482/tiingo/api.py#L101-L116",
+        "path": "tiingo/api.py",
+        "name": "TiingoClient.list_tickers",
+        "start": 0,
+        "end": 455
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "hydrosquall/tiingo-python",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-12aadbfa985b080a2379.txt",
+      "source_id": "csn-f-26bdd146a7e4e7a1a03bfeb4",
+      "path": "documents/csn-f-26bdd146a7e4e7a1a03bfeb4.py",
+      "sha256": "c4d1037cc386395f542ed6e17c115341f7a0a583b73fc6fb1cdf29d4dab0524c",
+      "function": {
+        "url": "https://github.com/hydrosquall/tiingo-python/blob/9bb98ca9d24f2e4db651cf0590e4b47184546482/tools/api_key_tool.py#L31-L41",
+        "path": "tools/api_key_tool.py",
+        "name": "remove_api_key",
+        "start": 0,
+        "end": 228
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "hydrosquall/tiingo-python",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-12aadbfa985b080a2379.txt",
+      "source_id": "csn-f-260aba2d05675382966a4097",
+      "path": "documents/csn-f-260aba2d05675382966a4097.py",
+      "sha256": "3b73e3bfd7c5f270105ba33cdbf02c555f63bbc2e175d2ad827299450d7e4c67",
+      "function": {
+        "url": "https://github.com/hydrosquall/tiingo-python/blob/9bb98ca9d24f2e4db651cf0590e4b47184546482/tiingo/restclient.py#L39-L58",
+        "path": "tiingo/restclient.py",
+        "name": "RestClient._request",
+        "start": 0,
+        "end": 457
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "hydrosquall/tiingo-python",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-12aadbfa985b080a2379.txt",
+      "source_id": "csn-f-16ff701a15538a2a4631585e",
+      "path": "documents/csn-f-16ff701a15538a2a4631585e.py",
+      "sha256": "92a2372d4c0f569bed99e37ffdf367b9219020cd6f53228eb5c2329307a7565f",
+      "function": {
+        "url": "https://github.com/hydrosquall/tiingo-python/blob/9bb98ca9d24f2e4db651cf0590e4b47184546482/tiingo/api.py#L127-L140",
+        "path": "tiingo/api.py",
+        "name": "TiingoClient.get_ticker_metadata",
+        "start": 0,
+        "end": 313
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "leovp/steamfiles",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-133e04674fcbd95fbe3b.txt",
+      "source_id": "csn-f-d1f33d22979b2fb45a4bc7ef",
+      "path": "documents/csn-f-d1f33d22979b2fb45a4bc7ef.py",
+      "sha256": "6aaa51a6324acbd1a10afe4c290638ef73ea4a7c1b7a7f917d9d7eb1e9950d6f",
+      "function": {
+        "url": "https://github.com/leovp/steamfiles/blob/e2264d09d128aecb838c4d310d7ea11e28c6597e/steamfiles/manifest.py#L90-L116",
+        "path": "steamfiles/manifest.py",
+        "name": "dumps",
+        "start": 0,
+        "end": 785
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "leovp/steamfiles",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-133e04674fcbd95fbe3b.txt",
+      "source_id": "csn-f-7900796ceb9e6ff7233672ee",
+      "path": "documents/csn-f-7900796ceb9e6ff7233672ee.py",
+      "sha256": "8187a45fda2d879f091541966c07184e4b8bf1fb3655574f11f4d9e017fd452e",
+      "function": {
+        "url": "https://github.com/leovp/steamfiles/blob/e2264d09d128aecb838c4d310d7ea11e28c6597e/steamfiles/appinfo.py#L54-L63",
+        "path": "steamfiles/appinfo.py",
+        "name": "dumps",
+        "start": 0,
+        "end": 209
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "leovp/steamfiles",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-133e04674fcbd95fbe3b.txt",
+      "source_id": "csn-f-81082cfb83960c92edbcdb27",
+      "path": "documents/csn-f-81082cfb83960c92edbcdb27.py",
+      "sha256": "2f32e22c39971daf5b16c77dc8960afa8dd9e3c9bbbd6d10753bdd01f46945bf",
+      "function": {
+        "url": "https://github.com/leovp/steamfiles/blob/e2264d09d128aecb838c4d310d7ea11e28c6597e/steamfiles/acf.py#L7-L42",
+        "path": "steamfiles/acf.py",
+        "name": "loads",
+        "start": 0,
+        "end": 996
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "leovp/steamfiles",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-133e04674fcbd95fbe3b.txt",
+      "source_id": "csn-f-dabb96fc29cce56c92a694cd",
+      "path": "documents/csn-f-dabb96fc29cce56c92a694cd.py",
+      "sha256": "e1171bd5449c7361f62a24632a50111685665642ffe947c792092af8e329dd9b",
+      "function": {
+        "url": "https://github.com/leovp/steamfiles/blob/e2264d09d128aecb838c4d310d7ea11e28c6597e/steamfiles/acf.py#L103-L116",
+        "path": "steamfiles/acf.py",
+        "name": "_prepare_subsection",
+        "start": 0,
+        "end": 203
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "avelino/bottle-auth",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-13faf650dc53e748f9b0.txt",
+      "source_id": "csn-f-c0a21bbc3fba70e36bfb1dbf",
+      "path": "documents/csn-f-c0a21bbc3fba70e36bfb1dbf.py",
+      "sha256": "caaf2e77ebe0c56be2b9b67ef7673b282050b3bd29e98008a28a573c4eee15c7",
+      "function": {
+        "url": "https://github.com/avelino/bottle-auth/blob/db07e526864aeac05ee68444b47e5db29540ce18/bottle_auth/core/auth.py#L885-L901",
+        "path": "bottle_auth/core/auth.py",
+        "name": "GoogleMixin.authorize_redirect",
+        "start": 0,
+        "end": 403
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "avelino/bottle-auth",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-13faf650dc53e748f9b0.txt",
+      "source_id": "csn-f-1d54ca6c2bb841087a50765e",
+      "path": "documents/csn-f-1d54ca6c2bb841087a50765e.py",
+      "sha256": "872fa329fa3d31f182527101b612f4395567a1055851d99b2c12cdd1d0363338",
+      "function": {
+        "url": "https://github.com/avelino/bottle-auth/blob/db07e526864aeac05ee68444b47e5db29540ce18/bottle_auth/core/auth.py#L150-L166",
+        "path": "bottle_auth/core/auth.py",
+        "name": "GenericAuth.get_argument",
+        "start": 0,
+        "end": 310
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "avelino/bottle-auth",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-13faf650dc53e748f9b0.txt",
+      "source_id": "csn-f-19131ffb35dffdf7520bea2f",
+      "path": "documents/csn-f-19131ffb35dffdf7520bea2f.py",
+      "sha256": "2f14b8c67e6c3f2b7cf1d41c317442919341f75a9d13256584d255754cb2cb7a",
+      "function": {
+        "url": "https://github.com/avelino/bottle-auth/blob/db07e526864aeac05ee68444b47e5db29540ce18/bottle_auth/core/escape.py#L188-L200",
+        "path": "bottle_auth/core/escape.py",
+        "name": "to_basestring",
+        "start": 0,
+        "end": 166
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "avelino/bottle-auth",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-13faf650dc53e748f9b0.txt",
+      "source_id": "csn-f-868ab70b69277109f15d905d",
+      "path": "documents/csn-f-868ab70b69277109f15d905d.py",
+      "sha256": "b5c3b04fbdadd2f49d39e77a1389b89ecfe3e3373559a521f770e33ef28154b8",
+      "function": {
+        "url": "https://github.com/avelino/bottle-auth/blob/db07e526864aeac05ee68444b47e5db29540ce18/bottle_auth/core/httputil.py#L191-L233",
+        "path": "bottle_auth/core/httputil.py",
+        "name": "parse_multipart_form_data",
+        "start": 0,
+        "end": 1736
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "lsst-sqre/ltd-conveyor",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-144e4d88ae7aaa8c5739.txt",
+      "source_id": "csn-f-07244a03752b879304df1652",
+      "path": "documents/csn-f-07244a03752b879304df1652.py",
+      "sha256": "d308b06d24ebda2bd922bc98f0b6ebb1a15894c2aca249c9be7daa5d68610112",
+      "function": {
+        "url": "https://github.com/lsst-sqre/ltd-conveyor/blob/c492937c4c1e050ccc4a0b9dcc38f9980d57e305/ltdconveyor/s3/upload.py#L328-L354",
+        "path": "ltdconveyor/s3/upload.py",
+        "name": "ObjectManager.list_filenames_in_directory",
+        "start": 0,
+        "end": 595
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "lsst-sqre/ltd-conveyor",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-144e4d88ae7aaa8c5739.txt",
+      "source_id": "csn-f-8077e5edeb879cca64f8796d",
+      "path": "documents/csn-f-8077e5edeb879cca64f8796d.py",
+      "sha256": "0378e5cdd8b950e289c36bea5c16d430105e541b0061b43301b329c5fda498a6",
+      "function": {
+        "url": "https://github.com/lsst-sqre/ltd-conveyor/blob/c492937c4c1e050ccc4a0b9dcc38f9980d57e305/ltdconveyor/s3/upload.py#L257-L297",
+        "path": "ltdconveyor/s3/upload.py",
+        "name": "create_dir_redirect_object",
+        "start": 0,
+        "end": 685
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "lsst-sqre/ltd-conveyor",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-144e4d88ae7aaa8c5739.txt",
+      "source_id": "csn-f-372ca88fbe1cc106a25edf51",
+      "path": "documents/csn-f-372ca88fbe1cc106a25edf51.py",
+      "sha256": "1f7731987ac2c946d5b4b4a6ba7e0fd1936c7ba9048847d6af4f6d869990af15",
+      "function": {
+        "url": "https://github.com/lsst-sqre/ltd-conveyor/blob/c492937c4c1e050ccc4a0b9dcc38f9980d57e305/ltdconveyor/fastly.py#L14-L52",
+        "path": "ltdconveyor/fastly.py",
+        "name": "purge_key",
+        "start": 0,
+        "end": 532
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "lsst-sqre/ltd-conveyor",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-144e4d88ae7aaa8c5739.txt",
+      "source_id": "csn-f-b6d66bdfdb207792c9870b95",
+      "path": "documents/csn-f-b6d66bdfdb207792c9870b95.py",
+      "sha256": "cded5decc789302ed735f5639a516b2407961e2c4dd6c317e048e2d342bc2e43",
+      "function": {
+        "url": "https://github.com/lsst-sqre/ltd-conveyor/blob/c492937c4c1e050ccc4a0b9dcc38f9980d57e305/ltdconveyor/s3/utils.py#L9-L39",
+        "path": "ltdconveyor/s3/utils.py",
+        "name": "open_bucket",
+        "start": 0,
+        "end": 392
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "pgjones/hypercorn",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-145261f186818422e07d.txt",
+      "source_id": "csn-f-d5d5c9682592c2b0d8537954",
+      "path": "documents/csn-f-d5d5c9682592c2b0d8537954.py",
+      "sha256": "014280022075ee2dc00045209bc8179d6f0d03d204b28b560e581771497ab596",
+      "function": {
+        "url": "https://github.com/pgjones/hypercorn/blob/ef93d741fe246846a127f9318b54505ac65f1ae7/hypercorn/config.py#L274-L309",
+        "path": "hypercorn/config.py",
+        "name": "Config.from_object",
+        "start": 0,
+        "end": 668
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "pgjones/hypercorn",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-145261f186818422e07d.txt",
+      "source_id": "csn-f-f717421ce67b98f3f8d6cfe4",
+      "path": "documents/csn-f-f717421ce67b98f3f8d6cfe4.py",
+      "sha256": "1fa25b56a2fcce1c034b1fa86c3d49bb572b4f2a524250134ac2b9b71ca3e389",
+      "function": {
+        "url": "https://github.com/pgjones/hypercorn/blob/ef93d741fe246846a127f9318b54505ac65f1ae7/hypercorn/config.py#L256-L271",
+        "path": "hypercorn/config.py",
+        "name": "Config.from_toml",
+        "start": 0,
+        "end": 230
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "pgjones/hypercorn",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-145261f186818422e07d.txt",
+      "source_id": "csn-f-a76a1b875af4703fb63e1fb8",
+      "path": "documents/csn-f-a76a1b875af4703fb63e1fb8.py",
+      "sha256": "c4c933611e19c46accf5985621313c17c6b4560fd0bb06f2d1a05dc783277b61",
+      "function": {
+        "url": "https://github.com/pgjones/hypercorn/blob/ef93d741fe246846a127f9318b54505ac65f1ae7/hypercorn/asgi/h11.py#L123-L151",
+        "path": "hypercorn/asgi/h11.py",
+        "name": "H11Mixin.asgi_send",
+        "start": 0,
+        "end": 1336
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "pgjones/hypercorn",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-145261f186818422e07d.txt",
+      "source_id": "csn-f-8c9d5bdd24004a135a6f0a98",
+      "path": "documents/csn-f-8c9d5bdd24004a135a6f0a98.py",
+      "sha256": "50e1d51841a55b0d8d4adae91c179fb89bad5472c74a1559b4c1a1e4863538c1",
+      "function": {
+        "url": "https://github.com/pgjones/hypercorn/blob/ef93d741fe246846a127f9318b54505ac65f1ae7/hypercorn/config.py#L206-L236",
+        "path": "hypercorn/config.py",
+        "name": "Config.from_mapping",
+        "start": 0,
+        "end": 480
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "sergei-maertens/django-systemjs",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-1719fe87cf6aac62347c.txt",
+      "source_id": "csn-f-4c7745b5cc5147abc1454d1b",
+      "path": "documents/csn-f-4c7745b5cc5147abc1454d1b.py",
+      "sha256": "4096e0ca2c85d66e7d3a9d6784d13816a44601ee2cf773beae6cf6c21331da19",
+      "function": {
+        "url": "https://github.com/sergei-maertens/django-systemjs/blob/efd4a3862a39d9771609a25a5556f36023cf6e5c/systemjs/management/commands/_mixins.py#L75-L118",
+        "path": "systemjs/management/commands/_mixins.py",
+        "name": "TemplateDiscoveryMixin.find_apps",
+        "start": 0,
+        "end": 1780
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "sergei-maertens/django-systemjs",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-1719fe87cf6aac62347c.txt",
+      "source_id": "csn-f-f18e7825e1334b16d0c5e3f3",
+      "path": "documents/csn-f-f18e7825e1334b16d0c5e3f3.py",
+      "sha256": "d7d383310f32648ec009d1e212277e728e384b34ffd0040845d24cb7578a103e",
+      "function": {
+        "url": "https://github.com/sergei-maertens/django-systemjs/blob/efd4a3862a39d9771609a25a5556f36023cf6e5c/systemjs/storage.py#L23-L41",
+        "path": "systemjs/storage.py",
+        "name": "SystemJSManifestStaticFilesMixin.load_systemjs_manifest",
+        "start": 0,
+        "end": 629
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "sergei-maertens/django-systemjs",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-1719fe87cf6aac62347c.txt",
+      "source_id": "csn-f-2337493fe624a6ad458f3802",
+      "path": "documents/csn-f-2337493fe624a6ad458f3802.py",
+      "sha256": "e9955b78af5c02b3911fa43e8e49ac32b5ddfc32e56fb3e3a2ebf85c58207825",
+      "function": {
+        "url": "https://github.com/sergei-maertens/django-systemjs/blob/efd4a3862a39d9771609a25a5556f36023cf6e5c/systemjs/finders.py#L17-L27",
+        "path": "systemjs/finders.py",
+        "name": "SystemFinder.find",
+        "start": 0,
+        "end": 281
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "test",
+      "repository": "sergei-maertens/django-systemjs",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-1719fe87cf6aac62347c.txt",
+      "source_id": "csn-f-cb601ea606bcd9117e969285",
+      "path": "documents/csn-f-cb601ea606bcd9117e969285.py",
+      "sha256": "095630d1a59d6b8bbeb4dc092b5eb66650a67cd3e79a0f7fefbeba786315ce4f",
+      "function": {
+        "url": "https://github.com/sergei-maertens/django-systemjs/blob/efd4a3862a39d9771609a25a5556f36023cf6e5c/systemjs/jspm.py#L8-L21",
+        "path": "systemjs/jspm.py",
+        "name": "locate_package_json",
+        "start": 0,
+        "end": 483
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "csn-q-ccb0815b073b0303ce002735",
+      "text": "\\\n        sets state to waiting - so we resume spawning children",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-ccb0815b073b0303ce002735",
+          "start": 0,
+          "end": 122,
+          "quote": "def cli_command_resume(self, msg):\n        \n        if self.state == State.PAUSED:\n            self.state = State.WAITING\n"
+        }
+      ],
+      "original_documentation_sha256": "baeb0c177add4ba1488bf8eba625b49a9fd71c090b8dbc0d2cb5f12edfdd1cf5"
+    },
+    {
+      "query_id": "csn-q-f1d2502fd7fe1b35ebe0b0e5",
+      "text": "When we get term signal\n        if we are waiting and got a sigterm, we just exit.\n        if we have a child running, we pass the signal first to the child\n        then we exit.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-f1d2502fd7fe1b35ebe0b0e5",
+          "start": 0,
+          "end": 465,
+          "quote": "def sigterm_handler(self, signum, frame):\n        \n        assert(self.state in ('WAITING', 'RUNNING', 'PAUSED'))\n        logger.debug(\"our state %s\", self.state)\n        if self.state == 'WAITING':\n            return self.ioloop.stop()\n\n        if self.state == 'RUNNING':\n            logger.debug('already running sending signal to child - %s',\n                         self.sprocess.pid)\n            os.kill(self.sprocess.pid, signum)\n        self.ioloop.stop()\n"
+        }
+      ],
+      "original_documentation_sha256": "b33716ddc884286569213a7d09091e59dd9a519ccdcc09e79a3bb06db8396074"
+    },
+    {
+      "query_id": "csn-q-f7a8ceaf0bcf006bb620ea58",
+      "text": "\\\n        if we have a running child we kill it and set our state to paused\n        if we don't have a running child, we set our state to paused\n        this will pause all the nodes in single-beat cluster",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-f7a8ceaf0bcf006bb620ea58",
+          "start": 0,
+          "end": 387,
+          "quote": "def cli_command_pause(self, msg):\n        \n        info = ''\n        if self.state == State.RUNNING and self.sprocess and self.sprocess.proc:\n            self.sprocess.set_exit_callback(self.proc_exit_cb_noop)\n            self.sprocess.proc.kill()\n            info = 'killed'\n            # TODO: check if process is really dead etc.\n        self.state = State.PAUSED\n        return info\n"
+        }
+      ],
+      "original_documentation_sha256": "512435ef7839fc8e4e30da65b2c522901beb20fecd59269746c3d4ef307bb253"
+    },
+    {
+      "query_id": "csn-q-140a5f10b4202eef9da9f036",
+      "text": "\\\n        kills the child and exits",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-140a5f10b4202eef9da9f036",
+          "start": 0,
+          "end": 199,
+          "quote": "def cli_command_quit(self, msg):\n        \n        if self.state == State.RUNNING and self.sprocess and self.sprocess.proc:\n            self.sprocess.proc.kill()\n        else:\n            sys.exit(0)\n"
+        }
+      ],
+      "original_documentation_sha256": "0f08b45def27029d99bc7c0d8b9e25aa990354d356e276cdf83a3771e410732c"
+    },
+    {
+      "query_id": "csn-q-aa3ab58da5d435b6e4049f2d",
+      "text": "Perform marginal ML reconstruction of the ancestral states. In contrast to\n        joint reconstructions, this needs to access the probabilities rather than only\n        log probabilities and is hence handled by a separate function.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-aa3ab58da5d435b6e4049f2d",
+          "start": 0,
+          "end": 5742,
+          "quote": "def _ml_anc_marginal(self, store_compressed=False, final=True, sample_from_profile=False,\n                         debug=False, **kwargs):\n        \n\n        tree = self.tree\n        # number of nucleotides changed from prev reconstruction\n        N_diff = 0\n\n        L = self.multiplicity.shape[0]\n        n_states = self.gtr.alphabet.shape[0]\n        self.logger(\"TreeAnc._ml_anc_marginal: type of reconstruction: Marginal\", 2)\n\n        self.logger(\"Attaching sequence profiles to leafs... \", 3)\n        #  set the leaves profiles\n        for leaf in tree.get_terminals():\n            # in any case, set the profile\n            leaf.marginal_subtree_LH = seq2prof(leaf.original_cseq, self.gtr.profile_map)\n            leaf.marginal_subtree_LH_prefactor = np.zeros(L)\n\n        self.logger(\"Walking up the tree, computing likelihoods... \", 3)\n        # propagate leaves --> root, set the marginal-likelihood messages\n        for node in tree.get_nonterminals(order='postorder'): #leaves -> root\n            # regardless of what was before, set the profile to ones\n            tmp_log_subtree_LH = np.zeros((L,n_states), dtype=float)\n            node.marginal_subtree_LH_prefactor = np.zeros(L, dtype=float)\n            for ch in node.clades:\n                ch.marginal_log_Lx = self.gtr.propagate_profile(ch.marginal_subtree_LH,\n                    self._branch_length_to_gtr(ch), return_log=True) # raw prob to transfer prob up\n                tmp_log_subtree_LH += ch.marginal_log_Lx\n                node.marginal_subtree_LH_prefactor += ch.marginal_subtree_LH_prefactor\n\n            node.marginal_subtree_LH, offset = normalize_profile(tmp_log_subtree_LH, log=True)\n            node.marginal_subtree_LH_prefactor += offset # and store log-prefactor\n\n        self.logger(\"Computing root node sequence and total tree likelihood...\",3)\n        # Msg to the root from the distant part (equ frequencies)\n        if len(self.gtr.Pi.shape)==1:\n            tree.root.marginal_outgroup_LH = np.repeat([self.gtr.Pi], tree.root.marginal_subtree_LH.shape[0], axis=0)\n        else:\n            tree.root.marginal_outgroup_LH = np.copy(self.gtr.Pi.T)\n\n        tree.root.marginal_profile, pre = normalize_profile(tree.root.marginal_outgroup_LH*tree.root.marginal_subtree_LH)\n        marginal_LH_prefactor = tree.root.marginal_subtree_LH_prefactor + pre\n\n        # choose sequence characters from this profile.\n        # treat root node differently to avoid piling up mutations on the longer branch\n        if sample_from_profile=='root':\n            root_sample_from_profile = True\n            other_sample_from_profile = False\n        elif isinstance(sample_from_profile, bool):\n            root_sample_from_profile = sample_from_profile\n            other_sample_from_profile = sample_from_profile\n\n        seq, prof_vals, idxs = prof2seq(tree.root.marginal_profile,\n                                        self.gtr, sample_from_prof=root_sample_from_profile, normalize=False)\n\n        self.tree.sequence_LH = marginal_LH_prefactor\n        self.tree.total_sequence_LH = (self.tree.sequence_LH*self.multiplicity).sum()\n        self.tree.root.cseq = seq\n        gc.collect()\n\n        if final:\n            if self.is_vcf:\n                self.tree.root.sequence = self.dict_sequence(self.tree.root)\n            else:\n                self.tree.root.sequence = self.expanded_sequence(self.tree.root)\n\n        self.logger(\"Walking down the tree, computing maximum likelihood sequences...\",3)\n        # propagate root -->> leaves, reconstruct the internal node sequences\n        # provided the upstream message + the message from the complementary subtree\n        for node in tree.find_clades(order='preorder'):\n            if node.up is None: # skip if node is root\n                continue\n\n            # integrate the information coming from parents with the information\n            # of all children my multiplying it to the prev computed profile\n            node.marginal_outgroup_LH, pre = normalize_profile(np.log(node.up.marginal_profile) - node.marginal_log_Lx,\n                                                               log=True, return_offset=False)\n            tmp_msg_from_parent = self.gtr.evolve(node.marginal_outgroup_LH,\n                                                 self._branch_length_to_gtr(node), return_log=False)\n\n            node.marginal_profile, pre = normalize_profile(node.marginal_subtree_LH * tmp_msg_from_parent, return_offset=False)\n\n            # choose sequence based maximal marginal LH.\n            seq, prof_vals, idxs = prof2seq(node.marginal_profile, self.gtr,\n                                            sample_from_prof=other_sample_from_profile, normalize=False)\n\n            if hasattr(node, 'cseq') and node.cseq is not None:\n                N_diff += (seq!=node.cseq).sum()\n            else:\n                N_diff += L\n\n            #assign new sequence\n            node.cseq = seq\n            if final:\n                if self.is_vcf:\n                    node.sequence = self.dict_sequence(node)\n                else:\n                    node.sequence = self.expanded_sequence(node)\n                node.mutations = self.get_mutations(node)\n\n\n        # note that the root doesn't contribute to N_diff (intended, since root sequence is often ambiguous)\n        self.logger(\"TreeAnc._ml_anc_marginal: ...done\", 3)\n        if store_compressed:\n            self._store_compressed_sequence_pairs()\n\n        # do clean-up:\n        if not debug:\n            for node in self.tree.find_clades():\n                try:\n                    del node.marginal_log_Lx\n                    del node.marginal_subtree_LH_prefactor\n                except:\n                    pass\n        gc.collect()\n\n        return N_diff\n"
+        }
+      ],
+      "original_documentation_sha256": "254b830df5bad90008adf0243df9477c28e2b5b2da033a8d513d35b4a4dcfbcd"
+    },
+    {
+      "query_id": "csn-q-5bb2534d2715d4c7183dd316",
+      "text": "instantiate a TreeRegression object and set its tip_value and branch_value function\n        to defaults that are sensible for treetime instances.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-5bb2534d2715d4c7183dd316",
+          "start": 0,
+          "end": 844,
+          "quote": "def setup_TreeRegression(self, covariation=True):\n        \n        from .treeregression import TreeRegression\n        tip_value = lambda x:np.mean(x.raw_date_constraint) if (x.is_terminal() and (x.bad_branch is False)) else None\n        branch_value = lambda x:x.mutation_length\n        if covariation:\n            om = self.one_mutation\n            branch_variance = lambda x:((x.clock_length if hasattr(x,'clock_length') else x.mutation_length)\n                                        +(self.tip_slack**2*om if x.is_terminal() else 0.0))*om\n        else:\n            branch_variance = lambda x:1.0 if x.is_terminal() else 0.0\n\n        Treg = TreeRegression(self.tree, tip_value=tip_value,\n                             branch_value=branch_value, branch_variance=branch_variance)\n        Treg.valid_confidence = covariation\n        return Treg\n"
+        }
+      ],
+      "original_documentation_sha256": "1b7d2766ab38838fc673c1032ebfcef7d7ef058fddc6f2a8368f89f5fe7ad546"
+    },
+    {
+      "query_id": "csn-q-21023a245c7680f0ca50d63d",
+      "text": "Calculate optimal branch length given the sequences of node and parent",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-21023a245c7680f0ca50d63d",
+          "start": 0,
+          "end": 622,
+          "quote": "def optimal_branch_length(self, node):\n        \n        if node.up is None:\n            return self.one_mutation\n\n        parent = node.up\n        if hasattr(node, 'compressed_sequence'):\n            new_len = self.gtr.optimal_t_compressed(node.compressed_sequence['pair'],\n                                                    node.compressed_sequence['multiplicity'])\n        else:\n            new_len = self.gtr.optimal_t(parent.cseq, node.cseq,\n                                         pattern_multiplicity=self.multiplicity,\n                                         ignore_gaps=self.ignore_gaps)\n        return new_len\n"
+        }
+      ],
+      "original_documentation_sha256": "3c6129c15350288781632188fc709316b64a767b63e0a5d72c9a7ab5dc5206eb"
+    },
+    {
+      "query_id": "csn-q-dd64341032822c7e209f2a77",
+      "text": "recursion to calculate inverse covariance matrix",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-dd64341032822c7e209f2a77",
+          "start": 0,
+          "end": 924,
+          "quote": "def recurse(self, full_matrix=False):\n        \n        for n in self.tree.get_nonterminals(order='postorder'):\n            n_leaves = len(n._ii)\n            if full_matrix: M = np.zeros((n_leaves, n_leaves), dtype=float)\n            r = np.zeros(n_leaves, dtype=float)\n            c_count = 0\n            for c in n:\n                ssq = self.branch_variance(c)\n                nc = len(c._ii)\n                if c.is_terminal():\n                    if full_matrix:\n                        M[c_count, c_count] = 1.0/ssq\n                    r[c_count] = 1.0/ssq\n                else:\n                    if full_matrix:\n                        M[c_count:c_count+nc, c_count:c_count+nc] = c.cinv - ssq*np.outer(c.r,c.r)/(1+ssq*c.s)\n                    r[c_count:c_count+nc] = c.r/(1+ssq*c.s)\n                c_count += nc\n\n            if full_matrix: n.cinv = M\n            n.r = r #M.sum(axis=1)\n            n.s = n.r.sum()\n"
+        }
+      ],
+      "original_documentation_sha256": "1e392098e911182bbdfa5c0d6c7935d7c4ba866ae9aeee240232be497792f481"
+    },
+    {
+      "query_id": "csn-q-1cd3dd5da2d59eb3f6bd099c",
+      "text": "Return the status of the device.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-1cd3dd5da2d59eb3f6bd099c",
+          "start": 0,
+          "end": 712,
+          "quote": "def status(self):\n        \n        nad_reply = self._send(self.POLL_VOLUME +\n                               self.POLL_POWER +\n                               self.POLL_MUTED +\n                               self.POLL_SOURCE, read_reply=True)\n        if nad_reply is None:\n            return\n\n        # split reply into parts of 10 characters\n        num_chars = 10\n        nad_status = [nad_reply[i:i + num_chars]\n                      for i in range(0, len(nad_reply), num_chars)]\n\n        return {'volume': int(nad_status[0][-2:], 16),\n                'power': nad_status[1][-2:] == '01',\n                'muted': nad_status[2][-2:] == '01',\n                'source': self.SOURCES_REVERSED[nad_status[3][-2:]]}\n"
+        }
+      ],
+      "original_documentation_sha256": "27f6ea0db390f92b27675fb3e59965693301dfa795ec3c0195c1a9cafef9e913"
+    },
+    {
+      "query_id": "csn-q-9846657925aa0d03ae14b59a",
+      "text": "Send a command string to the amplifier.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-9846657925aa0d03ae14b59a",
+          "start": 0,
+          "end": 1086,
+          "quote": "def _send(self, message, read_reply=False):\n        \n        sock = None\n        for tries in range(0, 3):\n            try:\n                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n                sock.connect((self._host, self.PORT))\n                break\n            except (ConnectionError, BrokenPipeError):\n                if tries == 3:\n                    print(\"socket connect failed.\")\n                    return\n                sleep(0.1)\n        sock.send(codecs.decode(message, 'hex_codec'))\n        if read_reply:\n            sleep(0.1)\n            reply = ''\n            tries = 0\n            max_tries = 20\n            while len(reply) < len(message) and tries < max_tries:\n                try:\n                    reply += codecs.encode(sock.recv(self.BUFFERSIZE), 'hex')\\\n                        .decode(\"utf-8\")\n                except (ConnectionError, BrokenPipeError):\n                    pass\n                tries += 1\n            sock.close()\n            if tries >= max_tries:\n                return\n            return reply\n        sock.close()\n"
+        }
+      ],
+      "original_documentation_sha256": "db34d9ec2b8fbd13770debe306abcde6836964fc852ce8f365becfe2ee366925"
+    },
+    {
+      "query_id": "csn-q-65060340240f015ad23328e3",
+      "text": "Write a command to the receiver and read the value it returns.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-65060340240f015ad23328e3",
+          "start": 0,
+          "end": 1870,
+          "quote": "def exec_command(self, domain, function, operator, value=None):\n        \n        if operator in CMDS[domain][function]['supported_operators']:\n            if operator is '=' and value is None:\n                raise ValueError('No value provided')\n\n            if value is None:\n                cmd = ''.join([CMDS[domain][function]['cmd'], operator])\n            else:\n                cmd = ''.join(\n                    [CMDS[domain][function]['cmd'], operator, str(value)])\n        else:\n            raise ValueError('Invalid operator provided %s' % operator)\n\n        if self._open_connection():\n            # For telnet the first \\r / \\n is recommended only\n            self.telnet.write((''.join(['\\r', cmd, '\\n']).encode()))\n            # Could raise eg. socket.error, UnicodeError, let the client handle it\n\n            # Test 3 x buffer is completely empty\n            # With the default timeout that means a delay at\n            # about 3+ seconds\n            loop = 3\n            while loop:\n                msg = self.telnet.read_until('\\n'.encode(), self.timeout)\n                # Could raise eg. EOFError, UnicodeError, let the client handle it\n\n                if msg == \"\":\n                    # Nothing in buffer\n                    loop -= 1\n                    continue\n\n                msg = msg.decode().strip('\\r\\n')\n                # Could raise eg. UnicodeError, let the client handle it\n\n                #print(\"NAD reponded with '%s'\" % msg)\n                # Wait for the response that equals the requested domain.function\n                if msg.strip().split('=')[0].lower() == '.'.join([domain, function]).lower():\n                    # b'Main.Volume=-12\\r will return -12\n                    return msg.strip().split('=')[1]\n\n            raise RuntimeError('Failed to read response')\n\n        raise RuntimeError('Failed to open connection')\n"
+        }
+      ],
+      "original_documentation_sha256": "b31d28aeb3391b18cf76e6c300d5388c2c19855e9b25689d242f5efe9cf09d51"
+    },
+    {
+      "query_id": "csn-q-888d9651f595aa5d6d8c8817",
+      "text": "Set volume level of the device. Accepts integer values 0-200.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-888d9651f595aa5d6d8c8817",
+          "start": 0,
+          "end": 180,
+          "quote": "def set_volume(self, volume):\n        \n        if 0 <= volume <= 200:\n            volume = format(volume, \"02x\")  # Convert to hex\n            self._send(self.CMD_VOLUME + volume)\n"
+        }
+      ],
+      "original_documentation_sha256": "a300a88960bc700b8d6e9b838a79d63cde02c13ce95b8bfe7c54ca8936adcc22"
+    },
+    {
+      "query_id": "csn-q-3b13ab334fecf194b2fd7572",
+      "text": "Builds the parameters needed to present the user with a datatrans payment form.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-3b13ab334fecf194b2fd7572",
+          "start": 0,
+          "end": 545,
+          "quote": "def build_payment_parameters(amount: Money, client_ref: str) -> PaymentParameters:\n    \n    merchant_id = web_merchant_id\n    amount, currency = money_to_amount_and_currency(amount)\n    refno = client_ref\n    sign = sign_web(merchant_id, amount, currency, refno)\n\n    parameters = PaymentParameters(\n        merchant_id=merchant_id,\n        amount=amount,\n        currency=currency,\n        refno=refno,\n        sign=sign,\n        use_alias=False,\n    )\n\n    logger.info('build-payment-parameters', parameters=parameters)\n\n    return parameters\n"
+        }
+      ],
+      "original_documentation_sha256": "16dc61b4ad478b22ba1292ca556bc0c32f6b048e34a90d9fbeee7966046b7b4b"
+    },
+    {
+      "query_id": "csn-q-dd900bff3c38f224a8b72090",
+      "text": "Builds the parameters needed to present the user with a datatrans form to register a credit card.\n    Contrary to a payment form, datatrans will not show an amount.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-dd900bff3c38f224a8b72090",
+          "start": 0,
+          "end": 604,
+          "quote": "def build_register_credit_card_parameters(client_ref: str) -> PaymentParameters:\n    \n\n    amount = 0\n    currency = 'CHF'  # Datatrans requires this value to be filled, so we use this arbitrary currency.\n    merchant_id = web_merchant_id\n    refno = client_ref\n    sign = sign_web(merchant_id, amount, currency, refno)\n\n    parameters = PaymentParameters(\n        merchant_id=merchant_id,\n        amount=amount,\n        currency=currency,\n        refno=refno,\n        sign=sign,\n        use_alias=True,\n    )\n\n    logger.info('building-payment-parameters', parameters=parameters)\n\n    return parameters\n"
+        }
+      ],
+      "original_documentation_sha256": "9085eb85778195b6518b5530fd245dd12bbcbb89d210cc17c8bf42edfc9e04b0"
+    },
+    {
+      "query_id": "csn-q-da0366cfee362682ec5fe3c4",
+      "text": "Both alias registration and payments are received here.\n    We can differentiate them by looking at the use-alias user-parameter (and verifying the amount is o).",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-da0366cfee362682ec5fe3c4",
+          "start": 0,
+          "end": 4197,
+          "quote": "def parse_notification_xml(xml: str) -> Union[AliasRegistration, Payment]:\n    \n    body = fromstring(xml).find('body')\n    transaction = body.find('transaction')\n    _user_parameters = transaction.find('userParameters')\n\n    def get_named_parameter(name):\n        return _user_parameters.find(\"parameter[@name='\" + name + \"']\")\n\n    def success():\n        return transaction.get('status') == 'success'\n\n    def parse_success():\n        # From the spec: sign2 is only returned in the success case\n        computed_signature = sign_web(body.get('merchantId'), transaction.find('amount').text,\n                                      transaction.find('currency').text,\n                                      transaction.find('uppTransactionId').text)\n\n        sign2 = get_named_parameter('sign2').text\n        if computed_signature != sign2:\n            raise ValueError('sign2 did not match computed signature')\n\n        success = transaction.find('success')\n        d = dict(\n            response_code=success.find('responseCode').text,\n            response_message=success.find('responseMessage').text,\n            authorization_code=success.find('authorizationCode').text,\n            acquirer_authorization_code=success.find('acqAuthorizationCode').text,\n        )\n        return {k: v for k, v in d.items() if v is not None}\n\n    def parse_error():\n        error = transaction.find('error')\n        d = dict(\n            error_code=error.find('errorCode').text,\n            error_message=error.find('errorMessage').text,\n            error_detail=error.find('errorDetail').text)\n\n        acquirer_error_code = get_named_parameter('acqErrorCode')\n        if acquirer_error_code is not None:\n            d['acquirer_error_code'] = acquirer_error_code.text\n\n        return {k: v for k, v in d.items() if v is not None}\n\n    def parse_common_attributes():\n        d = dict(\n            transaction_id=transaction.find('uppTransactionId').text,\n            merchant_id=body.get('merchantId'),\n            client_ref=transaction.get('refno'),\n            amount=parse_money(transaction))\n\n        payment_method = transaction.find('pmethod')\n        if payment_method is not None:\n            d['payment_method'] = payment_method.text\n\n        request_type = transaction.find('reqtype')\n        if request_type is not None:\n            d['request_type'] = request_type.text\n\n        credit_card_country = get_named_parameter('returnCustomerCountry')\n        if credit_card_country is not None:\n            d['credit_card_country'] = credit_card_country.text\n\n        expiry_month = get_named_parameter('expm')\n        if expiry_month is not None:\n            d['expiry_month'] = int(expiry_month.text)\n\n        expiry_year = get_named_parameter('expy')\n        if expiry_year is not None:\n            d['expiry_year'] = int(expiry_year.text)\n\n        return d\n\n    # End of inner helper functions, we're back inside parse_notification_xml\n\n    use_alias_parameter = get_named_parameter('useAlias')\n    if use_alias_parameter is not None and use_alias_parameter.text == 'true':\n        # It's an alias registration\n\n        d = dict(parse_common_attributes())\n\n        masked_card_number = get_named_parameter('maskedCC')\n        if masked_card_number is not None:\n            d['masked_card_number'] = masked_card_number.text\n\n        card_alias = get_named_parameter('aliasCC')\n        if card_alias is not None:\n            d['card_alias'] = card_alias.text\n\n        if success():\n            d['success'] = True\n            d.update(parse_success())\n        else:\n            d['success'] = False\n            d.update(parse_error())\n\n        return AliasRegistration(**d)\n    else:\n        # It's a payment or a charge\n        if success():\n            d = dict(success=True)\n            cardno = get_named_parameter('cardno')\n            if cardno is not None:\n                d['masked_card_number'] = cardno.text\n            d.update(parse_common_attributes())\n            d.update(parse_success())\n            return Payment(**d)\n        else:\n            d = dict(success=False)\n            d.update(parse_common_attributes())\n            d.update(parse_error())\n            return Payment(**d)\n"
+        }
+      ],
+      "original_documentation_sha256": "7db785f3a8fa59d032f79fda4ba0854e1d5a1b5552f99e60bc069d131b8846c4"
+    },
+    {
+      "query_id": "csn-q-501bb9689b46c478d0f11e60",
+      "text": "Charges money using datatrans, given a previously registered credit card alias.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-501bb9689b46c478d0f11e60",
+          "start": 0,
+          "end": 995,
+          "quote": "def pay_with_alias(amount: Money, alias_registration_id: str, client_ref: str) -> Payment:\n    \n    if amount.amount <= 0:\n        raise ValueError('Pay with alias takes a strictly positive amount')\n\n    alias_registration = AliasRegistration.objects.get(pk=alias_registration_id)\n\n    logger.info('paying-with-alias', amount=amount, client_ref=client_ref,\n                alias_registration=alias_registration)\n\n    request_xml = build_pay_with_alias_request_xml(amount, client_ref, alias_registration)\n\n    logger.info('sending-pay-with-alias-request', url=datatrans_authorize_url, data=request_xml)\n\n    response = requests.post(\n        url=datatrans_authorize_url,\n        headers={'Content-Type': 'application/xml'},\n        data=request_xml)\n\n    logger.info('processing-pay-with-alias-response', response=response.content)\n\n    charge_response = parse_pay_with_alias_response_xml(response.content)\n    charge_response.save()\n    charge_response.send_signal()\n\n    return charge_response\n"
+        }
+      ],
+      "original_documentation_sha256": "5c0dc0db1e70f9a189a2802ad0e2219bee8e3eff34e524a4b63e88cb4e60007f"
+    },
+    {
+      "query_id": "csn-q-bb99d5800c39aae6079c02eb",
+      "text": "Register a mapping for controllers with the given vendor and product IDs.  The mapping will\n        replace any existing mapping for these IDs for controllers not yet connected.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-bb99d5800c39aae6079c02eb",
+          "start": 0,
+          "end": 117,
+          "quote": "def register(cls, vendor_id, product_id, mapping):\n        \n        cls._registry[(vendor_id, product_id)] = mapping\n"
+        }
+      ],
+      "original_documentation_sha256": "2469948f5a09cac7980483ed253d47ee5f0c2607f6ac33e52509f83d266928d1"
+    },
+    {
+      "query_id": "csn-q-11ee77e7b1b1931aad158e95",
+      "text": "Calculates the width of the given string in this font.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-11ee77e7b1b1931aad158e95",
+          "start": 0,
+          "end": 226,
+          "quote": "def measure_string(self, str):\n        \n        style = bacon.text.Style(self)\n        run = bacon.text.GlyphRun(style, str)\n        glyph_layout = bacon.text.GlyphLayout([run], 0, 0)\n        return glyph_layout.content_width\n"
+        }
+      ],
+      "original_documentation_sha256": "a8bcbbafaf173d6560ee011c096d0f14a6f52692c78bddf0340f1dff8683d5a1"
+    },
+    {
+      "query_id": "csn-q-d6a1e4ab0b72712978ce1a5f",
+      "text": "add a new markup section",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-d6a1e4ab0b72712978ce1a5f",
+          "start": 0,
+          "end": 464,
+          "quote": "def  add_markup( self ):\n        \n        if self.markup and self.markup_lines:\n\n            # get rid of last line of markup if it's empty\n            marks = self.markup_lines\n            if len( marks ) > 0 and not string.strip( marks[-1] ):\n                self.markup_lines = marks[:-1]\n\n            m = DocMarkup( self.markup, self.markup_lines )\n\n            self.markups.append( m )\n\n            self.markup       = None\n            self.markup_lines = []\n"
+        }
+      ],
+      "original_documentation_sha256": "0697bc02ce57e0364430bd47b30c3dcb11bc2f96edd286b27010777824f2e0d3"
+    },
+    {
+      "query_id": "csn-q-765a7f176f90b11f176bdc02",
+      "text": "convert a code sequence to HTML",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-765a7f176f90b11f176bdc02",
+          "start": 0,
+          "end": 187,
+          "quote": "def  make_html_code( self, lines ):\n        \n        line = code_header + '\\n'\n        for l in lines:\n            line = line + html_quote( l ) + '\\n'\n\n        return line + code_footer\n"
+        }
+      ],
+      "original_documentation_sha256": "2f166dba136a04ce0dff6fbb21ae2964e1439f3220d867d75a33cf645df9c6d0"
+    },
+    {
+      "query_id": "csn-q-f2b68abc04ff553554cc7603",
+      "text": "Deploy the app to PYPI.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-f2b68abc04ff553554cc7603",
+          "start": 0,
+          "end": 454,
+          "quote": "def publish(msg=\"checkpoint: publish package\"):\n    \n    test = check()\n    if test.succeeded:\n        # clean()\n        # push(msg)\n        sdist = local(\"python setup.py sdist\")\n        if sdist.succeeded:\n            build = local(\n                'python setup.py build && python setup.py bdist_egg')\n            if build.succeeded:\n                upload = local(\"twine upload dist/*\")\n                if upload.succeeded:\n                    tag()\n"
+        }
+      ],
+      "original_documentation_sha256": "e0e773e5c8cee4efbf9533ac9b36161294189855f0e34c2f0c5aeccc84fdac82"
+    },
+    {
+      "query_id": "csn-q-add7d6ef83dc0feb1487c3d3",
+      "text": "Format a number into currency.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-add7d6ef83dc0feb1487c3d3",
+          "start": 0,
+          "end": 1229,
+          "quote": "def as_money(self, number, **options):\n        \n        # Resursively format arrays\n        if isinstance(number, list):\n            return map(lambda val: self.as_money(val, **options))\n\n        # Clean up number\n        decimal = options.get('decimal')\n        number = self.parse(number, decimal)\n\n        # Build options object from second param (if object) or all params,\n        # extending defaults\n        if check_type(options, 'dict'):\n            options = (self.settings['currency'].update(options))\n\n        # Check format (returns object with pos, neg and zero)\n        formats = self._check_currency_format(options['format'])\n\n        # Choose which format to use for this value\n        use_format = (lambda num: formats['pos'] if num > 0 else formats[\n                      'neg'] if num < 0 else formats['zero'])(number)\n        precision = self._change_precision(number, options['precision'])\n        thousands = options['thousand']\n        decimal = options['decimal']\n        formater = self.format(abs(number), precision, thousands, decimal)\n\n        # Return with currency symbol added\n        amount = use_format.replace(\n            '%s', options['symbol']).replace('%v', formater)\n\n        return amount\n"
+        }
+      ],
+      "original_documentation_sha256": "0e5983a9804b6fcefe80bace6cfb2576ee456953c7b22f7223aa7338d63e7cd4"
+    },
+    {
+      "query_id": "csn-q-0f981784358a334d95ab834c",
+      "text": "Format a given number.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-0f981784358a334d95ab834c",
+          "start": 0,
+          "end": 1133,
+          "quote": "def format(self, number, **kwargs):\n        \n        # Resursively format lists\n        if check_type(number, 'list'):\n            return map(lambda val: self.format(val, **kwargs))\n        # Clean up number\n        number = self.parse(number)\n\n        # Build options object from second param (if object) or all params,\n        # extending defaults\n        if check_type(kwargs, 'dict'):\n            options = (self.settings['number'].update(kwargs))\n\n        # Clean up precision\n        precision = self._change_precision(options['precision'])\n        negative = (lambda num: \"-\" if num < 0 else \"\")(number)\n        base = str(int(self.to_fixed(abs(number) or 0, precision)), 10)\n        mod = (lambda num: len(num) % 3 if len(num) > 3 else 0)(base)\n\n        # Format the number:\n        num = negative + (lambda num: base[0:num] if num else '')(mod)\n\n        num += re.sub('/(\\d{3})(?=\\d)/g', '$1' +\n                      options['thousand'], base[mod:])\n        num += (lambda val: options[\n            'decimal'] + self.to_fixed(abs(number), precision)\n            .split('.')[1] if val else '')(precision)\n\n        return num\n"
+        }
+      ],
+      "original_documentation_sha256": "9b985cc35822a62e88250544baadf50987ec36d37db73307e4d4cbe91449b934"
+    },
+    {
+      "query_id": "csn-q-b612e28c60cacdfb0cd3409a",
+      "text": "Check and normalise the value of precision (must be positive integer).",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-b612e28c60cacdfb0cd3409a",
+          "start": 0,
+          "end": 269,
+          "quote": "def _change_precision(self, val, base=0):\n        \n        if not isinstance(val, int):\n            raise TypeError('The first argument must be an integer.')\n        val = round(abs(val))\n        val = (lambda num: base if is_num(num) else num)(val)\n        return val\n"
+        }
+      ],
+      "original_documentation_sha256": "e2aa1f96ebf5309303e4f757941c1d3a532e84eb99aad63d2a7fda5b684e34dc"
+    },
+    {
+      "query_id": "csn-q-190e2e847f75a19480de8051",
+      "text": "Register a function/method to be called if the system needs to\n        resume a previously halted or paused execution, including status\n        requests.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-190e2e847f75a19480de8051",
+          "start": 0,
+          "end": 277,
+          "quote": "def reg_on_resume(self, callable_object, *args, **kwargs):\n        \n        persistent = kwargs.pop('persistent', False)\n        event = self._create_event(callable_object, 'resume', persistent, *args, **kwargs)\n        self.resume_callbacks.append(event)\n        return event\n"
+        }
+      ],
+      "original_documentation_sha256": "f01eabac51699cd63033ccfcec6eb4297fd0eed22aad61cfa4ddb5f7fd7d76e7"
+    },
+    {
+      "query_id": "csn-q-a3392730345133dd98a0a7d3",
+      "text": "Pseudo handler placeholder while signal is beind processed",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-a3392730345133dd98a0a7d3",
+          "start": 0,
+          "end": 197,
+          "quote": "def pseudo_handler(self, signum, frame):\n        \n        self.log.warn(\"Received sigal {0} but system is already busy processing a previous signal, current frame: {1}\".format(signum, str(frame)))\n"
+        }
+      ],
+      "original_documentation_sha256": "aa17880f27d6cf768b7383cc399f57462f5b7c9b5b1f9e739ba4d3f74ccb1415"
+    },
+    {
+      "query_id": "csn-q-6ece9d3aa0d9c53f0889d061",
+      "text": "Run all status tasks, then run all tasks in the resume queue",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-6ece9d3aa0d9c53f0889d061",
+          "start": 0,
+          "end": 791,
+          "quote": "def status(self, signum):\n        \n        self.log.debug('Signal handler got status signal')\n        new_status_callbacks = []\n        for status_call in self.status_callbacks:\n            # If callback is non persistent we remove it\n            try:\n                self.log.debug(\"Calling {0}({1},{2})\".format(status_call['function'].__name__, status_call['args'], status_call['kwargs']))\n            except AttributeError:\n                self.log.debug(\"Calling unbound function/method {0}\".format(str(status_call)))\n\n            apply(status_call['function'], status_call['args'], status_call['kwargs'])\n            if status_call['persistent']:\n                new_status_callbacks.append(status_call)\n        self.status_callbacks = new_status_callbacks\n        self._resume(signum)\n"
+        }
+      ],
+      "original_documentation_sha256": "d799620e26d0b0dfa3d1159044b77eaaa5124bf0ae0c515a1c789ebb2690f5e3"
+    },
+    {
+      "query_id": "csn-q-972f3a1a8397a0ca9ceac8af",
+      "text": "Register a function/method to be called when a user or another\n        program asks for an update, when status is done it will start running\n        any tasks registered with the reg_on_resume method",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-972f3a1a8397a0ca9ceac8af",
+          "start": 0,
+          "end": 277,
+          "quote": "def reg_on_status(self, callable_object, *args, **kwargs):\n        \n        persistent = kwargs.pop('persistent', False)\n        event = self._create_event(callable_object, 'status', persistent, *args, **kwargs)\n        self.status_callbacks.append(event)\n        return event\n"
+        }
+      ],
+      "original_documentation_sha256": "090e969c7ebcbe0828f580f69466d37261d32a5853f17bd50bcb10db884c0765"
+    },
+    {
+      "query_id": "csn-q-31d1b2cb58e629013a13ef60",
+      "text": "Preprocess an image.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-31d1b2cb58e629013a13ef60",
+          "start": 0,
+          "end": 1130,
+          "quote": "def preprocess(self, image, image_format):\n        \n        save_kwargs = {'format': image_format}\n\n        # Ensuring image is properly rotated\n        if hasattr(image, '_getexif'):\n            exif_datadict = image._getexif()  # returns None if no EXIF data\n            if exif_datadict is not None:\n                exif = dict(exif_datadict.items())\n                orientation = exif.get(EXIF_ORIENTATION_KEY, None)\n                if orientation == 3:\n                    image = image.transpose(Image.ROTATE_180)\n                elif orientation == 6:\n                    image = image.transpose(Image.ROTATE_270)\n                elif orientation == 8:\n                    image = image.transpose(Image.ROTATE_90)\n\n        # Ensure any embedded ICC profile is preserved\n        save_kwargs['icc_profile'] = image.info.get('icc_profile')\n\n        if hasattr(self, 'preprocess_%s' % image_format):\n            image, addl_save_kwargs = getattr(\n                self,\n                'preprocess_%s' % image_format\n            )(image=image)\n            save_kwargs.update(addl_save_kwargs)\n\n        return image, save_kwargs\n"
+        }
+      ],
+      "original_documentation_sha256": "19ac448c3df77c7d7ef884bc20c4b3ca7f1c7971daff61d97be46915eb564c11"
+    },
+    {
+      "query_id": "csn-q-9a8e1959379789ecbd788d39",
+      "text": "Validate a list of size keys.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-9a8e1959379789ecbd788d39",
+          "start": 0,
+          "end": 819,
+          "quote": "def validate_versatileimagefield_sizekey_list(sizes):\n    \n    try:\n        for key, size_key in sizes:\n            size_key_split = size_key.split('__')\n            if size_key_split[-1] != 'url' and (\n                'x' not in size_key_split[-1]\n            ):\n                raise InvalidSizeKey(\n                    \"{0} is an invalid size. All sizes must be either \"\n                    \"'url' or made up of at least two segments separated \"\n                    \"by double underscores. Examples: 'crop__400x400', \"\n                    \"filters__invert__url\".format(size_key)\n                )\n    except ValueError:\n        raise InvalidSizeKeySet(\n            '{} is an invalid size key set. Size key sets must be an '\n            'iterable of 2-tuples'.format(str(sizes))\n        )\n    return list(set(sizes))\n"
+        }
+      ],
+      "original_documentation_sha256": "c844cd68a0756ffae32e8db1c27c64f1033acfd4cc1b7feaea75abd2682529df"
+    },
+    {
+      "query_id": "csn-q-1e423768279b88fc20f7db61",
+      "text": "Handle data sent from MultiValueField forms that set ppoi values.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-1e423768279b88fc20f7db61",
+          "start": 0,
+          "end": 971,
+          "quote": "def save_form_data(self, instance, data):\n        \n        to_assign = data\n        if data and isinstance(data, tuple):\n            # This value is coming from a MultiValueField\n            if data[0] is None:\n                # This means the file hasn't changed but we need to\n                # update the ppoi\n                current_field = getattr(instance, self.name)\n                if data[1]:\n                    current_field.ppoi = data[1]\n                to_assign = current_field\n            elif data[0] is False:\n                # This means the 'Clear' checkbox was checked so we\n                # need to empty the field\n                to_assign = ''\n            else:\n                # This means there is a new upload so we need to unpack\n                # the tuple and assign the first position to the field\n                # attribute\n                to_assign = data[0]\n        super(VersatileImageField, self).save_form_data(instance, to_assign)\n"
+        }
+      ],
+      "original_documentation_sha256": "19d7b31ca7972f18dc4362e619db46632dec396307d9f4a68f72896c85a65af5"
+    },
+    {
+      "query_id": "csn-q-d14731b4c3c9fa0ee6d457ce",
+      "text": "Return the location where sized images are stored.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-d14731b4c3c9fa0ee6d457ce",
+          "start": 0,
+          "end": 169,
+          "quote": "def get_sized_root_folder(self):\n        \n        folder, filename = os.path.split(self.name)\n        return os.path.join(VERSATILEIMAGEFIELD_SIZED_DIRNAME, folder, '')\n"
+        }
+      ],
+      "original_documentation_sha256": "c98f629790160edbdaf5a6d9daff2a162a1b1c8d5315acb370df8e027ba7e32f"
+    },
+    {
+      "query_id": "csn-q-849f314a1cefbdbe9ea91fe0",
+      "text": "Optionally match a parser.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-849f314a1cefbdbe9ea91fe0",
+          "start": 0,
+          "end": 167,
+          "quote": "def opt(parser: Union[Parser, Sequence[Input]]) -> OptionalParser:\n    \n    if isinstance(parser, str):\n        parser = lit(parser)\n    return OptionalParser(parser)\n"
+        }
+      ],
+      "original_documentation_sha256": "dd2dd8bfc323d23ad9612034b858f7d410b7be8ff436406ff8b5b390e21e43aa"
+    },
+    {
+      "query_id": "csn-q-30bb77aa6583257f58c50ef0",
+      "text": "Convert a function taking multiple arguments into a function taking a single iterable argument.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-30bb77aa6583257f58c50ef0",
+          "start": 0,
+          "end": 134,
+          "quote": "def splat(f: Callable[..., A]) -> Callable[[Iterable], A]:\n    \n\n    def splatted(args):\n        return f(*args)\n\n    return splatted\n"
+        }
+      ],
+      "original_documentation_sha256": "a9ad2384f44be199ed523d3f8725d63aabdbdf23546abee94ea278f47cbf2c12"
+    },
+    {
+      "query_id": "csn-q-8ad0cce37973f9cda08b7744",
+      "text": "Match a parser zero or more times repeatedly.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-8ad0cce37973f9cda08b7744",
+          "start": 0,
+          "end": 167,
+          "quote": "def rep(parser: Union[Parser, Sequence[Input]]) -> RepeatedParser:\n    \n    if isinstance(parser, str):\n        parser = lit(parser)\n    return RepeatedParser(parser)\n"
+        }
+      ],
+      "original_documentation_sha256": "109b948eb288644defd05e1b52782b3512ac7dce170be0a42bd556cc4ca7418b"
+    },
+    {
+      "query_id": "csn-q-ebf7a84288571c0cc4c3ca42",
+      "text": "Consume reader and return Success only on complete consumption.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-ebf7a84288571c0cc4c3ca42",
+          "start": 0,
+          "end": 582,
+          "quote": "def completely_parse_reader(parser: Parser[Input, Output], reader: Reader[Input]) -> Result[Output]:\n    \n    result = (parser << eof).consume(reader)\n\n    if isinstance(result, Continue):\n        return Success(result.value)\n    else:\n        used = set()\n        unique_expected = []\n        for expected_lambda in result.expected:\n            expected = expected_lambda()\n            if expected not in used:\n                used.add(expected)\n                unique_expected.append(expected)\n\n        return Failure(result.farthest.expected_error(' or '.join(unique_expected)))\n"
+        }
+      ],
+      "original_documentation_sha256": "217a5dfb53278cc4ca375f29edf56776ea61f82ca50c249cf8d610906ee21183"
+    },
+    {
+      "query_id": "csn-q-208a98a98c1177fa3d6a84aa",
+      "text": "Replace {$ttl} in template with a serialized $TTL record",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-208a98a98c1177fa3d6a84aa",
+          "start": 0,
+          "end": 161,
+          "quote": "def process_ttl(data, template):\n    \n    record = \"\"\n    if data is not None:\n        record += \"$TTL %s\" % data\n\n    return template.replace(\"{$ttl}\", record)\n"
+        }
+      ],
+      "original_documentation_sha256": "c6011efbd3a4810e0dfb661746549ed78d2ac8177cb5f0732dde5b1dddd4d4f9"
+    },
+    {
+      "query_id": "csn-q-22efa72778bc109a2ed8baba",
+      "text": "Given the parser, capitalized list of a line's tokens, and the current set of records \n    parsed so far, parse it into a dictionary.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-22efa72778bc109a2ed8baba",
+          "start": 0,
+          "end": 2133,
+          "quote": "def parse_line(parser, record_token, parsed_records):\n    \n\n    global SUPPORTED_RECORDS\n\n    line = \" \".join(record_token)\n\n    # match parser to record type\n    if len(record_token) >= 2 and record_token[1] in SUPPORTED_RECORDS:\n        # with no ttl\n        record_token = [record_token[1]] + record_token\n    elif len(record_token) >= 3 and record_token[2] in SUPPORTED_RECORDS:\n        # with ttl\n        record_token = [record_token[2]] + record_token\n        if record_token[0] == \"TXT\":\n            record_token = record_token[:2] + [\"--ttl\"] + record_token[2:]\n    try:\n        rr, unmatched = parser.parse_known_args(record_token)\n        assert len(unmatched) == 0, \"Unmatched fields: %s\" % unmatched\n    except (SystemExit, AssertionError, InvalidLineException):\n        # invalid argument \n        raise InvalidLineException(line)\n\n    record_dict = rr.__dict__\n    if record_token[0] == \"TXT\" and len(record_dict['txt']) == 1:\n        record_dict['txt'] = record_dict['txt'][0]\n\n    # what kind of record? including origin and ttl\n    record_type = None\n    for key in record_dict.keys():\n        if key in SUPPORTED_RECORDS and (key.startswith(\"$\") or record_dict[key] == key):\n            record_type = key\n            if record_dict[key] == key:\n                del record_dict[key]\n            break\n\n    assert record_type is not None, \"Unknown record type in %s\" % rr\n\n    # clean fields\n    for field in record_dict.keys():\n        if record_dict[field] is None:\n            del record_dict[field]\n\n    current_origin = record_dict.get('$ORIGIN', parsed_records.get('$ORIGIN', None))\n\n    # special record-specific fix-ups\n    if record_type == 'PTR':\n        record_dict['fullname'] = record_dict['name'] + '.' + current_origin\n\n    if len(record_dict) > 0:\n        if record_type.startswith(\"$\"):\n            # put the value directly\n            record_dict_key = record_type.lower()\n            parsed_records[record_dict_key] = record_dict[record_type]\n        else:\n            record_dict_key = record_type.lower()\n            parsed_records[record_dict_key].append(record_dict)\n\n    return parsed_records\n"
+        }
+      ],
+      "original_documentation_sha256": "14ec75ecf179a15772396f5d125d3367701f28d9639cf3db6908a95114faa05a"
+    },
+    {
+      "query_id": "csn-q-d7be51620216b6890644f35b",
+      "text": "Serialize tokens:\n    * quote whitespace-containing tokens\n    * escape semicolons",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-d7be51620216b6890644f35b",
+          "start": 0,
+          "end": 234,
+          "quote": "def serialize(tokens):\n    \n    ret = []\n    for tok in tokens:\n        if \" \" in tok:\n            tok = '\"%s\"' % tok\n\n        if \";\" in tok:\n            tok = tok.replace(\";\", \"\\;\")\n\n        ret.append(tok)\n\n    return \" \".join(ret)\n"
+        }
+      ],
+      "original_documentation_sha256": "9675fa0ca8bd00849a8ff3b8235e3e7ecdc3f80ee56ce033520b34dfbfc221c8"
+    },
+    {
+      "query_id": "csn-q-e892a03a45b76831c8d87831",
+      "text": "Remove the CLASS from each DNS record, if present.\n    The only class that gets used today (for all intents\n    and purposes) is 'IN'.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-e892a03a45b76831c8d87831",
+          "start": 0,
+          "end": 555,
+          "quote": "def remove_class(text):\n    \n\n    # see RFC 1035 for list of classes\n    lines = text.split(\"\\n\")\n    ret = []\n    for line in lines:\n        tokens = tokenize_line(line)\n        tokens_upper = [t.upper() for t in tokens]\n\n        if \"IN\" in tokens_upper:\n            tokens.remove(\"IN\")\n        elif \"CS\" in tokens_upper:\n            tokens.remove(\"CS\")\n        elif \"CH\" in tokens_upper:\n            tokens.remove(\"CH\")\n        elif \"HS\" in tokens_upper:\n            tokens.remove(\"HS\")\n\n        ret.append(serialize(tokens))\n\n    return \"\\n\".join(ret)\n"
+        }
+      ],
+      "original_documentation_sha256": "0cb7de762077072eb1bb74354a7c5970f91d5a76f6ef7b53c56e469c2945b0d7"
+    },
+    {
+      "query_id": "csn-q-1880f7107e35c3d5e2555f1b",
+      "text": "Return a list of dicts of metadata tickers for all supported tickers\n            of the specified asset type, as well as metadata about each ticker.\n            This includes supported date range, the exchange the ticker is traded\n            on, and the currency the stock is traded on.\n           Tickers for unrelated products are omitted.\n           https://apimedia.tiingo.com/docs/tiingo/daily/supported_tickers.zip",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-1880f7107e35c3d5e2555f1b",
+          "start": 0,
+          "end": 455,
+          "quote": "def list_tickers(self, assetType):\n        \n        listing_file_url = \"https://apimedia.tiingo.com/docs/tiingo/daily/supported_tickers.zip\"\n        response = requests.get(listing_file_url)\n        zipdata = get_zipfile_from_response(response)\n        raw_csv = get_buffer_from_zipfile(zipdata, 'supported_tickers.csv')\n        reader = csv.DictReader(raw_csv)\n\n        return [row for row in reader\n                if row.get('assetType') == assetType]\n"
+        }
+      ],
+      "original_documentation_sha256": "7db60604135a7ec54bd2a35f695ba420c6632278369879a59b1806328d4b8cf7"
+    },
+    {
+      "query_id": "csn-q-26bdd146a7e4e7a1a03bfeb4",
+      "text": "Change the api key in the Token object to 40*'0'.  See issue #86.\n    :param file: path-to-file to change",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-26bdd146a7e4e7a1a03bfeb4",
+          "start": 0,
+          "end": 228,
+          "quote": "def remove_api_key(file_name):\n    \n    with open(file_name, 'r') as fp:\n        text = fp.read()\n    text = re.sub(real_api_regex, zero_token_string, text)\n    with open(file_name, 'w') as fp:\n        fp.write(text)\n    return\n"
+        }
+      ],
+      "original_documentation_sha256": "723ec01a89baf14ff5730515c2952fc9708dc473eea1b8e00270a9b84ec4b742"
+    },
+    {
+      "query_id": "csn-q-260aba2d05675382966a4097",
+      "text": "Make HTTP request and return response object",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-260aba2d05675382966a4097",
+          "start": 0,
+          "end": 457,
+          "quote": "def _request(self, method, url, **kwargs):\n        \n        resp = self._session.request(method,\n                                     '{}/{}'.format(self._base_url, url),\n                                     headers=self._headers,\n                                     **kwargs)\n\n        try:\n            resp.raise_for_status()\n        except HTTPError as e:\n            logging.error(resp.content)\n            raise RestClientError(e)\n\n        return resp\n"
+        }
+      ],
+      "original_documentation_sha256": "7659af7d1db5e326fd05e19740039fbf7c44efaea52fd4906903eb049b9d63e0"
+    },
+    {
+      "query_id": "csn-q-16ff701a15538a2a4631585e",
+      "text": "Return metadata for 1 ticker\n           Use TiingoClient.list_tickers() to get available options",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-16ff701a15538a2a4631585e",
+          "start": 0,
+          "end": 313,
+          "quote": "def get_ticker_metadata(self, ticker, fmt='json'):\n        \n        url = \"tiingo/daily/{}\".format(ticker)\n        response = self._request('GET', url)\n        data = response.json()\n        if fmt == 'json':\n            return data\n        elif fmt == 'object':\n            return dict_to_object(data, \"Ticker\")\n"
+        }
+      ],
+      "original_documentation_sha256": "e698e07bfac94be9add47abb1d47d0e546bf353349b733fe40127e070c6fbe05"
+    },
+    {
+      "query_id": "csn-q-d1f33d22979b2fb45a4bc7ef",
+      "text": "Serializes a dictionary into Manifest data.\n    :param obj: A dictionary to serialize.\n    :return: A file object.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-d1f33d22979b2fb45a4bc7ef",
+          "start": 0,
+          "end": 785,
+          "quote": "def dumps(obj):\n    \n    if not isinstance(obj, dict):\n        raise TypeError('can only dump a dictionary as a Manifest but got ' + type(obj).__name__)\n\n    data = []\n    int32 = struct.Struct('<I')\n\n    for message_name in ('payload', 'metadata', 'signature'):\n        message_data = obj[message_name]\n        message_id = MSG_IDS[message_name]\n        message_class = MessageClass[message_id]\n        message = dict_to_protobuf(message_class, message_data)\n        message_bytes = message.SerializeToString()\n        message_size = len(message_bytes)\n\n        data.append(int32.pack(message_id))\n        data.append(int32.pack(message_size))\n        data.append(message_bytes)\n\n    # MSG_EOF marks the end of messages.\n    data.append(int32.pack(MSG_EOF))\n    return b''.join(data)\n"
+        }
+      ],
+      "original_documentation_sha256": "f9c22a714938c6ca3f9832aad35830d29f739d57507eb1f9b53daa34d70d62bb"
+    },
+    {
+      "query_id": "csn-q-7900796ceb9e6ff7233672ee",
+      "text": "Serializes a dictionary into Appinfo data.\n    :param obj: A dictionary to serialize.\n    :return:",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-7900796ceb9e6ff7233672ee",
+          "start": 0,
+          "end": 209,
+          "quote": "def dumps(obj):\n    \n    if not isinstance(obj, dict):\n        raise TypeError('can only dump a dictionary as an Appinfo but got ' + type(obj).__name__)\n\n    return b''.join(AppinfoEncoder(obj).iter_encode())\n"
+        }
+      ],
+      "original_documentation_sha256": "8039d8b354be3b0775adb05c23e8a7d2ea81d5c16b316afa3d66023f915c419c"
+    },
+    {
+      "query_id": "csn-q-81082cfb83960c92edbcdb27",
+      "text": "Loads ACF content into a Python object.\n    :param data: An UTF-8 encoded content of an ACF file.\n    :param wrapper: A wrapping object for key-value pairs.\n    :return: An Ordered Dictionary with ACF data.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-81082cfb83960c92edbcdb27",
+          "start": 0,
+          "end": 996,
+          "quote": "def loads(data, wrapper=dict):\n    \n    if not isinstance(data, str):\n        raise TypeError('can only load a str as an ACF but got ' + type(data).__name__)\n\n    parsed = wrapper()\n    current_section = parsed\n    sections = []\n\n    lines = (line.strip() for line in data.splitlines())\n\n    for line in lines:\n        try:\n            key, value = line.split(None, 1)\n            key = key.replace('\"', '').lstrip()\n            value = value.replace('\"', '').rstrip()\n        except ValueError:\n            if line == SECTION_START:\n                # Initialize the last added section.\n                current_section = _prepare_subsection(parsed, sections, wrapper)\n            elif line == SECTION_END:\n                # Remove the last section from the queue.\n                sections.pop()\n            else:\n                # Add a new section to the queue.\n                sections.append(line.replace('\"', ''))\n            continue\n\n        current_section[key] = value\n\n    return parsed\n"
+        }
+      ],
+      "original_documentation_sha256": "969c0543707843773b2774b1760c1b0f0912d02fc9cdaadf958412882d4b8bdf"
+    },
+    {
+      "query_id": "csn-q-dabb96fc29cce56c92a694cd",
+      "text": "Creates a subsection ready to be filled.\n    :param data: Semi-parsed dictionary.\n    :param sections: A list of sections.\n    :param wrapper: A wrapping object for key-value pairs.\n    :return: A newly created subsection.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-dabb96fc29cce56c92a694cd",
+          "start": 0,
+          "end": 203,
+          "quote": "def _prepare_subsection(data, sections, wrapper):\n    \n    current = data\n    for i in sections[:-1]:\n        current = current[i]\n\n    current[sections[-1]] = wrapper()\n    return current[sections[-1]]\n"
+        }
+      ],
+      "original_documentation_sha256": "d02313d321565fbc7838f8dae228616f76cfdac110217ac0bc3c02025e9406e3"
+    },
+    {
+      "query_id": "csn-q-c0a21bbc3fba70e36bfb1dbf",
+      "text": "Authenticates and authorizes for the given Google resource.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-c0a21bbc3fba70e36bfb1dbf",
+          "start": 0,
+          "end": 403,
+          "quote": "def authorize_redirect(self, oauth_scope, callback_uri=None,\n                           ax_attrs=[\"name\",\"email\",\"language\",\"username\"]):\n        \n        callback_uri = callback_uri or self.request.uri\n        args = self._openid_args(callback_uri, ax_attrs=ax_attrs,\n                                 oauth_scope=oauth_scope)\n        self.redirect(self._OPENID_ENDPOINT + \"?\" + urllib.urlencode(args))\n"
+        }
+      ],
+      "original_documentation_sha256": "a893e8ca13b34ccdba0c127b97cb1140476b62975bd2a33f03a1ab4d8bfed8e1"
+    },
+    {
+      "query_id": "csn-q-1d54ca6c2bb841087a50765e",
+      "text": "Returns the value of the argument with the given name.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-1d54ca6c2bb841087a50765e",
+          "start": 0,
+          "end": 310,
+          "quote": "def get_argument(self, name, default=_ARG_DEFAULT, strip=True):\n        \n        args = self.get_arguments(name, strip=strip)\n        if not args:\n            if default is self._ARG_DEFAULT:\n                raise HTTPError(400, \"Missing argument %s\" % name)\n            return default\n        return args[-1]\n"
+        }
+      ],
+      "original_documentation_sha256": "15d81ac752ec1ea099705239ae7c01bda9215b6c785f4d8dc9849778c9f4c18f"
+    },
+    {
+      "query_id": "csn-q-19131ffb35dffdf7520bea2f",
+      "text": "Converts a string argument to a subclass of basestring.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-19131ffb35dffdf7520bea2f",
+          "start": 0,
+          "end": 166,
+          "quote": "def to_basestring(value):\n    \n    if isinstance(value, _BASESTRING_TYPES):\n        return value\n    assert isinstance(value, bytes)\n    return value.decode(\"utf-8\")\n"
+        }
+      ],
+      "original_documentation_sha256": "4188dba33c36036688b9d40892c5096d959318540944a28481804991de1c194d"
+    },
+    {
+      "query_id": "csn-q-868ab70b69277109f15d905d",
+      "text": "Parses a multipart/form-data body.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-868ab70b69277109f15d905d",
+          "start": 0,
+          "end": 1736,
+          "quote": "def parse_multipart_form_data(boundary, data, arguments, files):\n    \n    # The standard allows for the boundary to be quoted in the header,\n    # although it's rare (it happens at least for google app engine\n    # xmpp).  I think we're also supposed to handle backslash-escapes\n    # here but I'll save that until we see a client that uses them\n    # in the wild.\n    if boundary.startswith(b('\"')) and boundary.endswith(b('\"')):\n        boundary = boundary[1:-1]\n    if data.endswith(b(\"\\r\\n\")):\n        footer_length = len(boundary) + 6\n    else:\n        footer_length = len(boundary) + 4\n    parts = data[:-footer_length].split(b(\"--\") + boundary + b(\"\\r\\n\"))\n    for part in parts:\n        if not part: continue\n        eoh = part.find(b(\"\\r\\n\\r\\n\"))\n        if eoh == -1:\n            logging.warning(\"multipart/form-data missing headers\")\n            continue\n        headers = HTTPHeaders.parse(part[:eoh].decode(\"utf-8\"))\n        disp_header = headers.get(\"Content-Disposition\", \"\")\n        disposition, disp_params = _parse_header(disp_header)\n        if disposition != \"form-data\" or not part.endswith(b(\"\\r\\n\")):\n            logging.warning(\"Invalid multipart/form-data\")\n            continue\n        value = part[eoh + 4:-2]\n        if not disp_params.get(\"name\"):\n            logging.warning(\"multipart/form-data value missing name\")\n            continue\n        name = disp_params[\"name\"]\n        if disp_params.get(\"filename\"):\n            ctype = headers.get(\"Content-Type\", \"application/unknown\")\n            files.setdefault(name, []).append(dict(\n                filename=disp_params[\"filename\"], body=value,\n                content_type=ctype))\n        else:\n            arguments.setdefault(name, []).append(value)\n"
+        }
+      ],
+      "original_documentation_sha256": "ac28533f227e6e4635c4ab574477eaacba2ebb297d3a884381c211d24e9379f4"
+    },
+    {
+      "query_id": "csn-q-07244a03752b879304df1652",
+      "text": "List all file-type object names that exist at the root of this\n        bucket directory.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-07244a03752b879304df1652",
+          "start": 0,
+          "end": 595,
+          "quote": "def list_filenames_in_directory(self, dirname):\n        \n        prefix = self._create_prefix(dirname)\n        filenames = []\n        for obj in self._bucket.objects.filter(Prefix=prefix):\n            if obj.key.endswith('/'):\n                # a directory redirect object, not a file\n                continue\n            obj_dirname = os.path.dirname(obj.key)\n            if obj_dirname == prefix:\n                # object is at root of directory\n                filenames.append(os.path.relpath(obj.key,\n                                                 start=prefix))\n        return filenames\n"
+        }
+      ],
+      "original_documentation_sha256": "0ec4d21db67c795674c1caaa37e9010f432f3ae8789c6c77d06720e725fa99da"
+    },
+    {
+      "query_id": "csn-q-8077e5edeb879cca64f8796d",
+      "text": "Create an S3 object representing a directory that's designed to\n    redirect a browser (via Fastly) to the ``index.html`` contained inside\n    that directory.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-8077e5edeb879cca64f8796d",
+          "start": 0,
+          "end": 685,
+          "quote": "def create_dir_redirect_object(bucket_dir_path, bucket, metadata=None,\n                               acl=None, cache_control=None):\n    \n    # Just the name of the 'directory' itself\n    bucket_dir_path = bucket_dir_path.rstrip('/')\n\n    # create a copy of metadata\n    if metadata is not None:\n        metadata = dict(metadata)\n    else:\n        metadata = {}\n\n    # header used by LTD's Fastly Varnish config to create a 301 redirect\n    metadata['dir-redirect'] = 'true'\n\n    upload_object(bucket_dir_path,\n                  content='',\n                  bucket=bucket,\n                  metadata=metadata,\n                  acl=acl,\n                  cache_control=cache_control)\n"
+        }
+      ],
+      "original_documentation_sha256": "3f702906136b499417476639a419f6e14da439092e9b4d2ed9ab52746fa5e374"
+    },
+    {
+      "query_id": "csn-q-372ca88fbe1cc106a25edf51",
+      "text": "Instant purge URLs with a given surrogate key from the Fastly caches.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-372ca88fbe1cc106a25edf51",
+          "start": 0,
+          "end": 532,
+          "quote": "def purge_key(surrogate_key, service_id, api_key):\n    \n    logger = logging.getLogger(__name__)\n\n    api_root = 'https://api.fastly.com'\n    path = '/service/{service}/purge/{surrogate_key}'.format(\n        service=service_id,\n        surrogate_key=surrogate_key)\n    logger.info('Fastly purge {0}'.format(path))\n    r = requests.post(api_root + path,\n                      headers={'Fastly-Key': api_key,\n                               'Accept': 'application/json'})\n    if r.status_code != 200:\n        raise FastlyError(r.json)\n"
+        }
+      ],
+      "original_documentation_sha256": "0c68b70cab4341d4f00d2795e4fe219eca140e492b271a9bcf11f8ff33450763"
+    },
+    {
+      "query_id": "csn-q-b6d66bdfdb207792c9870b95",
+      "text": "Open an S3 Bucket resource.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-b6d66bdfdb207792c9870b95",
+          "start": 0,
+          "end": 392,
+          "quote": "def open_bucket(bucket_name,\n                aws_access_key_id=None, aws_secret_access_key=None,\n                aws_profile=None):\n    \n    session = boto3.session.Session(\n        profile_name=aws_profile,\n        aws_access_key_id=aws_access_key_id,\n        aws_secret_access_key=aws_secret_access_key)\n    s3 = session.resource('s3')\n    bucket = s3.Bucket(bucket_name)\n    return bucket\n"
+        }
+      ],
+      "original_documentation_sha256": "2aa3beec62bc8cb7074354d21c933caed49fcaf438651cdd627ae04660fca2d8"
+    },
+    {
+      "query_id": "csn-q-d5d5c9682592c2b0d8537954",
+      "text": "Create a configuration from a Python object.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-d5d5c9682592c2b0d8537954",
+          "start": 0,
+          "end": 668,
+          "quote": "def from_object(cls: Type[\"Config\"], instance: Union[object, str]) -> \"Config\":\n        \n        if isinstance(instance, str):\n            try:\n                path, config = instance.rsplit(\".\", 1)\n            except ValueError:\n                path = instance\n                instance = importlib.import_module(instance)\n            else:\n                module = importlib.import_module(path)\n                instance = getattr(module, config)\n\n        mapping = {\n            key: getattr(instance, key)\n            for key in dir(instance)\n            if not isinstance(getattr(instance, key), types.ModuleType)\n        }\n        return cls.from_mapping(mapping)\n"
+        }
+      ],
+      "original_documentation_sha256": "0a3172338d2dc24d15697a3ffd7174a18884371cfaf6f2c3ccefa7ad9be80927"
+    },
+    {
+      "query_id": "csn-q-f717421ce67b98f3f8d6cfe4",
+      "text": "Load the configuration values from a TOML formatted file.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-f717421ce67b98f3f8d6cfe4",
+          "start": 0,
+          "end": 230,
+          "quote": "def from_toml(cls: Type[\"Config\"], filename: FilePath) -> \"Config\":\n        \n        file_path = os.fspath(filename)\n        with open(file_path) as file_:\n            data = toml.load(file_)\n        return cls.from_mapping(data)\n"
+        }
+      ],
+      "original_documentation_sha256": "cc1154d7a60be390afdb62be882a5bba3a873ba9d51633c5d7b75b48a7f5f708"
+    },
+    {
+      "query_id": "csn-q-a76a1b875af4703fb63e1fb8",
+      "text": "Called by the ASGI instance to send a message.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-a76a1b875af4703fb63e1fb8",
+          "start": 0,
+          "end": 1336,
+          "quote": "async def asgi_send(self, message: dict) -> None:\n        \n        if message[\"type\"] == \"http.response.start\" and self.state == ASGIHTTPState.REQUEST:\n            self.response = message\n        elif message[\"type\"] == \"http.response.body\" and self.state in {\n            ASGIHTTPState.REQUEST,\n            ASGIHTTPState.RESPONSE,\n        }:\n            if self.state == ASGIHTTPState.REQUEST:\n                headers = build_and_validate_headers(self.response[\"headers\"])\n                headers.extend(self.response_headers())\n                await self.asend(\n                    h11.Response(status_code=int(self.response[\"status\"]), headers=headers)\n                )\n                self.state = ASGIHTTPState.RESPONSE\n\n            if (\n                not suppress_body(self.scope[\"method\"], int(self.response[\"status\"]))\n                and message.get(\"body\", b\"\") != b\"\"\n            ):\n                await self.asend(h11.Data(data=bytes(message[\"body\"])))\n\n            if not message.get(\"more_body\", False):\n                if self.state != ASGIHTTPState.CLOSED:\n                    await self.asend(h11.EndOfMessage())\n                    await self.asgi_put({\"type\": \"http.disconnect\"})\n                    self.state = ASGIHTTPState.CLOSED\n        else:\n            raise UnexpectedMessage(self.state, message[\"type\"])\n"
+        }
+      ],
+      "original_documentation_sha256": "ad489f89c1fb54ce192415ce3c0c4a61b3ef2986eefeb26421455155116de8e3"
+    },
+    {
+      "query_id": "csn-q-8c9d5bdd24004a135a6f0a98",
+      "text": "Create a configuration from a mapping.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-8c9d5bdd24004a135a6f0a98",
+          "start": 0,
+          "end": 480,
+          "quote": "def from_mapping(\n        cls: Type[\"Config\"], mapping: Optional[Mapping[str, Any]] = None, **kwargs: Any\n    ) -> \"Config\":\n        \n        mappings: Dict[str, Any] = {}\n        if mapping is not None:\n            mappings.update(mapping)\n        mappings.update(kwargs)\n        config = cls()\n        for key, value in mappings.items():\n            try:\n                setattr(config, key, value)\n            except AttributeError:\n                pass\n\n        return config\n"
+        }
+      ],
+      "original_documentation_sha256": "a3cd929c47fdeca6afb402abc55819908b89bce60cdc4472c75f9b126278709d"
+    },
+    {
+      "query_id": "csn-q-4c7745b5cc5147abc1454d1b",
+      "text": "Crawls the (specified) template files and extracts the apps.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-4c7745b5cc5147abc1454d1b",
+          "start": 0,
+          "end": 1780,
+          "quote": "def find_apps(self, templates=None):\n        \n\n        all_apps = OrderedDict()\n\n        if not templates:\n            all_files = self.discover_templates()\n            for tpl_name, fp in all_files:\n                # this is the most performant - a testcase that used the loader with tpl_name\n                # was about 8x slower for a project with ~5 apps in different templates :(\n                with io.open(fp, 'r', encoding=settings.FILE_CHARSET) as template_file:\n                    src_data = template_file.read()\n\n                for t in Lexer(src_data).tokenize():\n                    if t.token_type == TOKEN_BLOCK:\n                        imatch = SYSTEMJS_TAG_RE.match(t.contents)\n                        if imatch:\n                            all_apps.setdefault(tpl_name, [])\n                            all_apps[tpl_name].append(imatch.group('app'))\n        else:\n            for tpl_name in templates:\n                try:\n                    template = loader.get_template(tpl_name)\n                except TemplateDoesNotExist:\n                    raise CommandError('Template \\'%s\\' does not exist' % tpl_name)\n                import_nodes = template.template.nodelist.get_nodes_by_type(SystemImportNode)\n                for node in import_nodes:\n                    app = node.path.resolve(RESOLVE_CONTEXT)\n                    if not app:\n                        self.stdout.write(self.style.WARNING(\n                            '{tpl}: Could not resolve path with context {ctx}, skipping.'.format(\n                                tpl=tpl_name, ctx=RESOLVE_CONTEXT)\n                        ))\n                        continue\n                    all_apps.setdefault(tpl_name, [])\n                    all_apps[tpl_name].append(app)\n\n        return all_apps\n"
+        }
+      ],
+      "original_documentation_sha256": "d2f6ae1697a2874661a28cd2ef796ede64df400c41f352d97e494f4991196b40"
+    },
+    {
+      "query_id": "csn-q-f18e7825e1334b16d0c5e3f3",
+      "text": "Load the existing systemjs manifest and remove any entries that no longer\n        exist on the storage.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-f18e7825e1334b16d0c5e3f3",
+          "start": 0,
+          "end": 629,
+          "quote": "def load_systemjs_manifest(self):\n        \n        # backup the original name\n        _manifest_name = self.manifest_name\n\n        # load the custom bundle manifest\n        self.manifest_name = self.systemjs_manifest_name\n        bundle_files = self.load_manifest()\n        # reset the manifest name\n        self.manifest_name = _manifest_name\n\n        # check that the files actually exist, if not, remove them from the manifest\n        for file, hashed_file in bundle_files.copy().items():\n            if not self.exists(file) or not self.exists(hashed_file):\n                del bundle_files[file]\n        return bundle_files\n"
+        }
+      ],
+      "original_documentation_sha256": "16e4910ddb374987138e141fa6f2ec7f007d8718f613d15f3d5da3103efd618e"
+    },
+    {
+      "query_id": "csn-q-2337493fe624a6ad458f3802",
+      "text": "Only allow lookups for jspm_packages.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-2337493fe624a6ad458f3802",
+          "start": 0,
+          "end": 281,
+          "quote": "def find(self, path, all=False):\n        \n        bits = path.split('/')\n        dirs_to_serve = ['jspm_packages', settings.SYSTEMJS_OUTPUT_DIR]\n        if not bits or bits[0] not in dirs_to_serve:\n            return []\n        return super(SystemFinder, self).find(path, all=all)\n"
+        }
+      ],
+      "original_documentation_sha256": "15e566012effb9d3d67e48b82cde9aaed3b584062d50db9e440382fed9891393"
+    },
+    {
+      "query_id": "csn-q-cb601ea606bcd9117e969285",
+      "text": "Find and return the location of package.json.",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "csn-f-cb601ea606bcd9117e969285",
+          "start": 0,
+          "end": 483,
+          "quote": "def locate_package_json():\n    \n    directory = settings.SYSTEMJS_PACKAGE_JSON_DIR\n    if not directory:\n        raise ImproperlyConfigured(\n            \"Could not locate 'package.json'. Set SYSTEMJS_PACKAGE_JSON_DIR \"\n            \"to the directory that holds 'package.json'.\"\n        )\n    path = os.path.join(directory, 'package.json')\n    if not os.path.isfile(path):\n        raise ImproperlyConfigured(\"'package.json' does not exist, tried looking in %s\" % path)\n    return path\n"
+        }
+      ],
+      "original_documentation_sha256": "7d5730e563c189f71a1f3a8c5b61afbd6e1d7f2ad029012429162a0f754159c3"
+    }
+  ]
+}

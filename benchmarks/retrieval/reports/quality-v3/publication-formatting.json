@@ -1,0 +1,45 @@
+{
+  "original_reviewed_draft_sha256": "8034f9175b0d945c733182d75dc348d7039d7f08b7bc294bcb635202ff401bf6",
+  "published_readme_sha256": "b1887aa531cb0037f2335d32b9eb3ed88078267083a7955c59891ba61bbfaabf",
+  "table_rows_unchanged": true,
+  "table_row_count": 118,
+  "table_rows_sha256": "0218a4a4b075a7c6fbd8dbc8c1a35910dedf3b438974cd59f3e010bee316b0d1",
+  "presentation_changes": [
+    "Resolve evidence links through storage-map-v2.",
+    "Clarify correctness-repair wording and validation-release timing.",
+    "Scope multilingual isolated-code interpretation to the full control results.",
+    "Clarify that the historical prose-fill pointer refers to development, not validation.",
+    "Add frozen plot links, their input CSVs, and artifact restoration instructions."
+  ],
+  "link_replacements": [
+    {
+      "old": "evidence/freeze-before-validation-v3.json",
+      "new": "evidence/top-level/freeze-before-validation-v3.json.gz"
+    },
+    {
+      "old": "evidence/reference-choices-before-validation.json",
+      "new": "evidence/top-level/reference-choices-before-validation.json.gz"
+    },
+    {
+      "old": "evidence/reference-selection-commitment.json",
+      "new": "evidence/top-level/reference-selection-commitment.json.gz"
+    },
+    {
+      "old": "evidence/parent-retrieval/validation/README.md",
+      "new": "evidence/parent-retrieval/validation/README.md"
+    }
+  ],
+  "direct_artifacts": {
+    "validation-outcomes.csv": "7c8f11b6b121113a3b0d4ac1744b8bea5e21e67c5f6e83d04b92f2989aa1dec5",
+    "development-outcomes.csv": "d943f9b44e22c8f75330ed4c15250d10ce476808c6d9e5a5cc4a95d908f8afa3",
+    "development-inputs.json": "c47f45d7d473485a001ce7300dd90d9559252116dbf7e613eb32a923b4f9555c",
+    "final-report-inputs.json": "0d3d73a62ab508e35973d5cb706ac23d9c282ba67312fbdcc57ba6d8f7c02f76",
+    "final-report-number-validation.json": "faf9a718fa6508cef7d39f97c5ff92c0765bca4636dbb565e86aaf18f3642a0b",
+    "final-table-audit.json": "046d9b6f15fd6a9a45269b72deb325c3cf0bce2efb4e92f124371b423ed7a3aa",
+    "plot-audit.json": "c3fb4979e24d942e9a6ba432c35a9f30405ebfba5ea1d240fa75e1ade488f9de",
+    "primary-reference-points.csv": "cfdfde91b478781e917481c5c2719fea1b2bcc3ad34c14d620eb41cf5bb4da39",
+    "primary-reference-forest.svg": "30519482e29b583c73636461287104f6d3830c140999a83c1e20adbc2e6c57e2",
+    "validation-quality-workload.csv": "b3d1d31095257b92a280136659d667495be1cffbd67a0abb293e9983e56d1e44",
+    "validation-quality-workload.svg": "27921676acd3de90303ab5b0dbfb2f6c450878fe898281a7f340e43c9f6fe90c"
+  }
+}

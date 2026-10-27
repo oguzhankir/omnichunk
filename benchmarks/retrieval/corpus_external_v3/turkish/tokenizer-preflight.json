@@ -1,0 +1,9 @@
+{
+  "model_revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+  "native_special_tokens_included": true,
+  "predeclared_model_max_sequence_length": 128,
+  "all_upstream900_query_max_tokens": 38,
+  "all_upstream_queries_over128": 0,
+  "selected_development_query_max_tokens": 30,
+  "selection_or_scoring_uses_token_lengths": false
+}

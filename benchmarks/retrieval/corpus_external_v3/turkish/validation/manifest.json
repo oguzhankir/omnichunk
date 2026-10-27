@@ -1,0 +1,2572 @@
+{
+  "schema_version": 1,
+  "corpus_id": "belebele-turkish-passage-v1",
+  "license": "CC-BY-SA-4.0",
+  "source": "https://huggingface.co/datasets/facebook/belebele",
+  "provenance": {
+    "dataset_revision": "7899cdfa4e1e0d733fd77c848e2c273cb1d32be2",
+    "authors": "Belebele authors: Bandarkar et al., 2023; FLORES source contributors",
+    "upstream_sha256": "0a592307498d7999eb7be60b7ac3a037545b6ce400f85c61bdb1b88b790e4567",
+    "paired_english_sha256": "15af884c2b5994fdc71199e79d553a1864b08ce1b31894aa87f6be925a064a31",
+    "protocol_sha256": "cf59dfdeec157f607b98e81a731d607e7094a64a119d1f96cd9ac1760b5ae410",
+    "evidence_policy": "Complete originating unmodified Turkish passage as evidence, not minimal answer spans. Query is human question only; choices and correct answer are retained only in provenance, never indexed or used to generate query. This adapts multiple-choice reading comprehension to passage retrieval.",
+    "limitations": [
+      "Passage relevance is derived from source reading-comprehension pairing, not independent chunk support annotation",
+      "Whole-passage recall rewards recovering all source bytes, even bytes not necessary to answer the question",
+      "Passages are short and may be in pretrained models' training data",
+      "Human-translated Turkish is not original Turkish production data"
+    ],
+    "previous_manifests": [
+      {
+        "path": "benchmarks/retrieval/corpus_squad_v1/manifest.json",
+        "sha256": "40c7a1e77c7e43d6560c496e860c306dc706cd5c5b83e5404f6d2bcb5b794135"
+      },
+      {
+        "path": "benchmarks/retrieval/corpus_v1/manifest.json",
+        "sha256": "983ed940ce78d679bc651cae9a94d2805c8cdda006d898d0e281ce763b5acd9c"
+      },
+      {
+        "path": "benchmarks/retrieval/corpus_squad_v2/development/article-markdown/manifest.json",
+        "sha256": "ac1e1c98e33c298e8c9d11ae797edf53d55a0b7ce21ca2469b3bb94896d6a851"
+      },
+      {
+        "path": "benchmarks/retrieval/corpus_squad_v2/development/article-text/manifest.json",
+        "sha256": "ac76294c50f45e54ab83500f2a4b5bf76e3bf9849fb80089d36e800476370302"
+      },
+      {
+        "path": "benchmarks/retrieval/corpus_squad_v2/validation/article-markdown/manifest.json",
+        "sha256": "6c6e61c872922bf9fb13d7d574b4bd529e7930a332881fe89eb5e2429572dc9b"
+      },
+      {
+        "path": "benchmarks/retrieval/corpus_squad_v2/validation/article-text/manifest.json",
+        "sha256": "7bb53b365ea6d53dbd8cf69179114c5ffd418ca71fdaf62a2f47c63e6f4d141d"
+      }
+    ],
+    "selection_namespace": "omnichunk-v3-belebele-turkish|2026-10-27",
+    "source_link_grouping": "Each upstream link has exactly one unique passage; link disjointness is enforced."
+  },
+  "documents": [
+    {
+      "source_id": "belebele-tr-cf9ef4e33141b5c2580b",
+      "path": "documents/belebele-tr-cf9ef4e33141b5c2580b.txt",
+      "sha256": "25dc87a9b7af51b4261fcb363f2cc17e2cfa5657f937d74af305df77c5beb0ce",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Haitian_cholera_victims_threaten_United_Nations_with_lawsuit",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Haitian_cholera_victims_threaten_United_Nations_with_lawsuit"
+    },
+    {
+      "source_id": "belebele-tr-7bb688fe0dd3202735eb",
+      "path": "documents/belebele-tr-7bb688fe0dd3202735eb.txt",
+      "sha256": "c83a1cbb2da83c8f971e846b827b9f7a8e7e817756ec4716e52366a0c248d791",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/Introduction_to_Paleoanthropology/Genetics/Introduction",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/Introduction_to_Paleoanthropology/Genetics/Introduction"
+    },
+    {
+      "source_id": "belebele-tr-ec47fb210caea41ba9d7",
+      "path": "documents/belebele-tr-ec47fb210caea41ba9d7.txt",
+      "sha256": "f46bc6179fb8f20b380ab4d95322fb037a8254b0df03051b049c9addf27cdc0a",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/European_History/Revolution_in_France",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/European_History/Revolution_in_France"
+    },
+    {
+      "source_id": "belebele-tr-32a0f4ec1d68f0b529cd",
+      "path": "documents/belebele-tr-32a0f4ec1d68f0b529cd.txt",
+      "sha256": "7c305109826b49604af9fcfb65c57840a5a0fb5434001fff2c9df854e9dbc4a4",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/India_struggles_with_encephalitis_outbreak",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/India_struggles_with_encephalitis_outbreak"
+    },
+    {
+      "source_id": "belebele-tr-b3bb852dde4e9330b72b",
+      "path": "documents/belebele-tr-b3bb852dde4e9330b72b.txt",
+      "sha256": "4eccdb16bc1fd13ae10a5da5ea693ab5968a4e5031d9ad54fee74e7d8bb82344",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/China%27s_economy_surpasses_Japan%27s_in_second_quarter",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/China%27s_economy_surpasses_Japan%27s_in_second_quarter"
+    },
+    {
+      "source_id": "belebele-tr-af302e596156f9638046",
+      "path": "documents/belebele-tr-af302e596156f9638046.txt",
+      "sha256": "f45ef7ff5a5f9cbb8b471f45c63bf65fd3245be0f6f148239e7c1f9e40716d0f",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Explosion_at_earthquake-damaged_Fukushima_nuclear_power_plant",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Explosion_at_earthquake-damaged_Fukushima_nuclear_power_plant"
+    },
+    {
+      "source_id": "belebele-tr-4c83c685fb9aeb94c7c0",
+      "path": "documents/belebele-tr-4c83c685fb9aeb94c7c0.txt",
+      "sha256": "1ac86467d46ed989ba88f4a1ca0a9057d00fe4ff9f7dd83297ce1f4d7a5c60b8",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/Guanajuato",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/Guanajuato"
+    },
+    {
+      "source_id": "belebele-tr-827883200737738a0863",
+      "path": "documents/belebele-tr-827883200737738a0863.txt",
+      "sha256": "d72c01333c9cebb3d7d18145ffe2fc047bbf0e8fc379ad0ed49b0e5f806cf875",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/New_South_Wales_government_starts_trial_of_hunting_in_national_parks",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/New_South_Wales_government_starts_trial_of_hunting_in_national_parks"
+    },
+    {
+      "source_id": "belebele-tr-6bfe617abe8ea71e7678",
+      "path": "documents/belebele-tr-6bfe617abe8ea71e7678.txt",
+      "sha256": "bc1627eca47564a0cbd78980d6ee10d114f9f7e9c6354e437ea78ca4f105ae88",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Women%E2%80%99s_boxing_to_be_included_in_the_2012_Olympics_for_the_first_time",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Women%E2%80%99s_boxing_to_be_included_in_the_2012_Olympics_for_the_first_time"
+    },
+    {
+      "source_id": "belebele-tr-08772fcb6188a09e477e",
+      "path": "documents/belebele-tr-08772fcb6188a09e477e.txt",
+      "sha256": "436c6c0218e42ab672b9fd2eb2b7c9cedbeea6935a84247c12ae293088a16f30",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Biology/Systems/Circulatory_System",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/Wikijunior:Biology/Systems/Circulatory_System"
+    },
+    {
+      "source_id": "belebele-tr-f85941f0c8234af54940",
+      "path": "documents/belebele-tr-f85941f0c8234af54940.txt",
+      "sha256": "e1b1122e90f3aa86ad0d76de39b9c1d00756400922bd9dc10fe1cf3e195951f4",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Ancient_Civilizations/Hebrews",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/Wikijunior:Ancient_Civilizations/Hebrews"
+    },
+    {
+      "source_id": "belebele-tr-bc60f00e2691a5a77ecf",
+      "path": "documents/belebele-tr-bc60f00e2691a5a77ecf.txt",
+      "sha256": "4ef99f06d5b54febbcbb867b4c6641e8c4fdb7006a9f9ea479fd4657d515acea",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/The_Cold_War/Hungarian_Revolution",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/The_Cold_War/Hungarian_Revolution"
+    },
+    {
+      "source_id": "belebele-tr-6fa90bda51344793e8d2",
+      "path": "documents/belebele-tr-6fa90bda51344793e8d2.txt",
+      "sha256": "fe39cb23de17a9dbc00015322d2d1ad6d5dca42bd609521d411f644ce2b4257b",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Kings_and_Queens_of_England/Future_monarchs",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/Wikijunior:Kings_and_Queens_of_England/Future_monarchs"
+    },
+    {
+      "source_id": "belebele-tr-c8c82c96dc228607da70",
+      "path": "documents/belebele-tr-c8c82c96dc228607da70.txt",
+      "sha256": "aa0946251bd61da05e3d8e00cd286774844be5c845140edf3dea7cfa5efc315e",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/Studying_abroad",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/Studying_abroad"
+    },
+    {
+      "source_id": "belebele-tr-cbc91724f0f78bdb2249",
+      "path": "documents/belebele-tr-cbc91724f0f78bdb2249.txt",
+      "sha256": "5acac1d16b3828a1ab7f83775f48cd7500586c4b9004ba5e1260e302b054e21b",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/German_phrasebook",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/German_phrasebook"
+    },
+    {
+      "source_id": "belebele-tr-0b4f5cf76c3560fd2775",
+      "path": "documents/belebele-tr-0b4f5cf76c3560fd2775.txt",
+      "sha256": "b0a3cee453a3f4e8b8d877b5f81ee1c1a3539ad60156ca6f7b84b102999ac1f5",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Rare_Middle_East_cyclone_batters_Oman",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Rare_Middle_East_cyclone_batters_Oman"
+    },
+    {
+      "source_id": "belebele-tr-243119f80b49e1cd2d62",
+      "path": "documents/belebele-tr-243119f80b49e1cd2d62.txt",
+      "sha256": "797a74e6bfa7c4993c70462b5b092ecc7d2bf87d2c1e9b6efbe993e8547c64ab",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Sandra_Fluke_insists_she_will_not_be_silenced",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Sandra_Fluke_insists_she_will_not_be_silenced"
+    },
+    {
+      "source_id": "belebele-tr-462c60a7a8702d46db4a",
+      "path": "documents/belebele-tr-462c60a7a8702d46db4a.txt",
+      "sha256": "ee505b7ade527246d8b52173eb5245114d7b94bc7ede2474ad25e31a688736c8",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/8.0_magnitude_earthquake_occurs_near_Tonga",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/8.0_magnitude_earthquake_occurs_near_Tonga"
+    },
+    {
+      "source_id": "belebele-tr-5b41e260e4ae5657267d",
+      "path": "documents/belebele-tr-5b41e260e4ae5657267d.txt",
+      "sha256": "bc69f3d943ffca1e621913364b1e271a507fc4f64b17f6b10b387cfffbfcb026",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Amazon_to_buy_smart_doorbell_startup_Ring",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Amazon_to_buy_smart_doorbell_startup_Ring"
+    },
+    {
+      "source_id": "belebele-tr-689c69ee9dba8b3f0a90",
+      "path": "documents/belebele-tr-689c69ee9dba8b3f0a90.txt",
+      "sha256": "e8b99ea72721c0b61a69117bc24ff60b0e734325a90eaa9c611b5fbc2f793152",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/Music_festival_circuit",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/Music_festival_circuit"
+    },
+    {
+      "source_id": "belebele-tr-47811237bb13a3f46906",
+      "path": "documents/belebele-tr-47811237bb13a3f46906.txt",
+      "sha256": "2fc8a54beeac06b58f4c2a3e77c8654038b133fdccbbfda9a4af8a4a8a9943ce",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Argentina%27s_first_lady_launches_presidential_bid",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Argentina%27s_first_lady_launches_presidential_bid"
+    },
+    {
+      "source_id": "belebele-tr-7ec31b461f0b0ee78a84",
+      "path": "documents/belebele-tr-7ec31b461f0b0ee78a84.txt",
+      "sha256": "c1e81a87c01e40eb8b2d807809249e389307fb59dcbfc95cf8bf53a274f067f5",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/Charlotte_with_children",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/Charlotte_with_children"
+    },
+    {
+      "source_id": "belebele-tr-f258197d59b89f80061d",
+      "path": "documents/belebele-tr-f258197d59b89f80061d.txt",
+      "sha256": "af3f02e3e00eb98f7e59831975679d001667123eb83630fd79d13db15ad84d04",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/Communication_Theory/Orality_and_Literacy",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/Communication_Theory/Orality_and_Literacy"
+    },
+    {
+      "source_id": "belebele-tr-56b473a0a107caa4248b",
+      "path": "documents/belebele-tr-56b473a0a107caa4248b.txt",
+      "sha256": "2843fc2d409f15ca8ce7f39cab6cc5afc8493584e0692b24eece26a8bf9450b5",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Tropical_Storm_Danielle_forms_in_Atlantic_Ocean",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Tropical_Storm_Danielle_forms_in_Atlantic_Ocean"
+    },
+    {
+      "source_id": "belebele-tr-0635a957db347e8ed59d",
+      "path": "documents/belebele-tr-0635a957db347e8ed59d.txt",
+      "sha256": "cecab1335bc35f7b609204d4c63824757ee581902940c43432f87895e593a65c",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:The_Elements/Hydrogen",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/Wikijunior:The_Elements/Hydrogen"
+    },
+    {
+      "source_id": "belebele-tr-9b0afd9740ad570cc14b",
+      "path": "documents/belebele-tr-9b0afd9740ad570cc14b.txt",
+      "sha256": "76ca01ed11498302693f5376247807e53ac4b72a6acc9a7640fe29db7346a9d4",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Biology/Origin_of_Life",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/Wikijunior:Biology/Origin_of_Life"
+    },
+    {
+      "source_id": "belebele-tr-93192500cadff7689a86",
+      "path": "documents/belebele-tr-93192500cadff7689a86.txt",
+      "sha256": "ecb6fc36809e5cb9649ba3f28a45ec1b4fed856f8c6be1d82b9771c1263ce54f",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:How_Things_Work/Time",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/Wikijunior:How_Things_Work/Time"
+    },
+    {
+      "source_id": "belebele-tr-dfea589599f160f0a19b",
+      "path": "documents/belebele-tr-dfea589599f160f0a19b.txt",
+      "sha256": "9b86887832334a050a2d875e6c6c2b18acf8e1a0842358058f41e318a77cd5e1",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Asia/Bhutan",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/Wikijunior:Asia/Bhutan"
+    },
+    {
+      "source_id": "belebele-tr-8a0699efa76103817a7c",
+      "path": "documents/belebele-tr-8a0699efa76103817a7c.txt",
+      "sha256": "0c164316722c79d66b47dd58a97b0524931cfd3179c317adae178148857605d8",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/Izmir",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/Izmir"
+    },
+    {
+      "source_id": "belebele-tr-2ed95b5084bef88171ed",
+      "path": "documents/belebele-tr-2ed95b5084bef88171ed.txt",
+      "sha256": "c1a6a072e427168a1bea5721b409ca7cb87b516d9037d82393a70a27604c327c",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/German_judge_orders_life_sentence_for_nation%27s_%27first_Islamic-motivated_terror_attack%27",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/German_judge_orders_life_sentence_for_nation%27s_%27first_Islamic-motivated_terror_attack%27"
+    },
+    {
+      "source_id": "belebele-tr-1d6fcfcd6d6713f3d32d",
+      "path": "documents/belebele-tr-1d6fcfcd6d6713f3d32d.txt",
+      "sha256": "abb394feac0f8fb971380987df362a9bd2dd82dd4ec7b3a71e86f5417893c089",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/Cinque_Terre",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/Cinque_Terre"
+    },
+    {
+      "source_id": "belebele-tr-67b2aaabc414341984fe",
+      "path": "documents/belebele-tr-67b2aaabc414341984fe.txt",
+      "sha256": "350a95af269b2711b08ccc64c45d525ee06ffd906a315dbc1d5b3508e0b4af3d",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/California_lawmaker_denies_affairs_after_sexual_discussion_becomes_public",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/California_lawmaker_denies_affairs_after_sexual_discussion_becomes_public"
+    },
+    {
+      "source_id": "belebele-tr-ef28577814f84ec03394",
+      "path": "documents/belebele-tr-ef28577814f84ec03394.txt",
+      "sha256": "c465c9d10d71c973bbf79eac0dac3aac85845a83d67a2c59b0e51ba78ca84bfe",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/Past_events/Wikimania_2018_Cape_Town_Guidebook",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/Past_events/Wikimania_2018_Cape_Town_Guidebook"
+    },
+    {
+      "source_id": "belebele-tr-ce421f86db37560bdce2",
+      "path": "documents/belebele-tr-ce421f86db37560bdce2.txt",
+      "sha256": "1e9398f806d1fc4d47fc6724e5843d0d0313f7e2a3ab7c9222f2328f1d28e6ec",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/US_Navy_ship_damages_Tubbataha_Reef_National_Park",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/US_Navy_ship_damages_Tubbataha_Reef_National_Park"
+    },
+    {
+      "source_id": "belebele-tr-0026f0d487a3581ffbaf",
+      "path": "documents/belebele-tr-0026f0d487a3581ffbaf.txt",
+      "sha256": "daef72ee64e46f8ef94204f42b82ffab81fdc015aadd6f5d23bb4c2a4ba564f6",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Researchers_report_rapid_formation_of_new_bird_species_in_Gal%C3%A1pagos_islands",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Researchers_report_rapid_formation_of_new_bird_species_in_Gal%C3%A1pagos_islands"
+    },
+    {
+      "source_id": "belebele-tr-ed7ba3850e0c76026f8d",
+      "path": "documents/belebele-tr-ed7ba3850e0c76026f8d.txt",
+      "sha256": "db10340de13bdfd9563134faf38a4179bcd6b87f5cc4c341160c58e8ae76326c",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Toronto_team-led_research_on_Type_1_Diabetes_%27groundbreaking%27",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Toronto_team-led_research_on_Type_1_Diabetes_%27groundbreaking%27"
+    },
+    {
+      "source_id": "belebele-tr-ed30b78615cfcec955f4",
+      "path": "documents/belebele-tr-ed30b78615cfcec955f4.txt",
+      "sha256": "9f40db3c7dc9402364ab5ff03c13642638eee9441fb894b37703a8ccc3779db4",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Italy_arrests_reputed_Mafia_boss_Lo_Piccolo",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Italy_arrests_reputed_Mafia_boss_Lo_Piccolo"
+    },
+    {
+      "source_id": "belebele-tr-0979bbcc161670a52ed8",
+      "path": "documents/belebele-tr-0979bbcc161670a52ed8.txt",
+      "sha256": "0e4d6d087d8d5ed24d4901744d1ecf8618cb0e33898e75c4571823289ea5ecc9",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/Sleep",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/Sleep"
+    },
+    {
+      "source_id": "belebele-tr-19431f920f755e32f623",
+      "path": "documents/belebele-tr-19431f920f755e32f623.txt",
+      "sha256": "703c368fdba1c9c565f0222643b263d0b259a3357de2f4df006e5b91448c631e",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Gas_explosion_reported_in_Hammersmith,_London",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Gas_explosion_reported_in_Hammersmith,_London"
+    },
+    {
+      "source_id": "belebele-tr-0d457bba29134135f304",
+      "path": "documents/belebele-tr-0d457bba29134135f304.txt",
+      "sha256": "52a0fab4ad961e3be86808f5e2537466b83bfe91df550de275e093813d9f779a",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Canadian_Prime_Minister_Harper_agrees_to_send_%27Clean_Air_Act%27_to_committee",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Canadian_Prime_Minister_Harper_agrees_to_send_%27Clean_Air_Act%27_to_committee"
+    },
+    {
+      "source_id": "belebele-tr-3f6bc3ea7d22ad597391",
+      "path": "documents/belebele-tr-3f6bc3ea7d22ad597391.txt",
+      "sha256": "6f95119951726d68db6cc00bf6a71171c5ea6466d14ce22499a6b06f900d5e86",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/Eye_care",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/Eye_care"
+    },
+    {
+      "source_id": "belebele-tr-525b5ca81e1198481424",
+      "path": "documents/belebele-tr-525b5ca81e1198481424.txt",
+      "sha256": "7bd7be9e78dc192ef4ff4fc32f0fac63857114f0c01cd69e9d21b4c1f437238b",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Nintendo_unveils_controller_for_Revolution_console",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Nintendo_unveils_controller_for_Revolution_console"
+    },
+    {
+      "source_id": "belebele-tr-d1057a4360351fc35589",
+      "path": "documents/belebele-tr-d1057a4360351fc35589.txt",
+      "sha256": "9bc8173c63d59a85f3d7b1adc7cdcc92f1fa972fd62dac5fd4412c03cb1c3804",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/Lucid_Dreaming/Induction_Techniques",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/Lucid_Dreaming/Induction_Techniques"
+    },
+    {
+      "source_id": "belebele-tr-6a3f74b024666f67d797",
+      "path": "documents/belebele-tr-6a3f74b024666f67d797.txt",
+      "sha256": "1bd0d7024810e701d9e5014ce8d2680bb1dbc0472262e2a451c3e8e0c02372bf",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/National_Basketball_Association_suspends_season_due_to_COVID-19_concerns",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/National_Basketball_Association_suspends_season_due_to_COVID-19_concerns"
+    },
+    {
+      "source_id": "belebele-tr-069198bf48cafa406b1b",
+      "path": "documents/belebele-tr-069198bf48cafa406b1b.txt",
+      "sha256": "b78339d9379dde3cbb476828c65b3c884331ba652748d56e3e29f29d8c65d9db",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/Noum%C3%A9a",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/Noum%C3%A9a"
+    },
+    {
+      "source_id": "belebele-tr-376eeb3533b2f07bbdf9",
+      "path": "documents/belebele-tr-376eeb3533b2f07bbdf9.txt",
+      "sha256": "8cf922f726c7d1ef417124cc9b329f809e2ba15beee9f297707f9745a16f7af8",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/Communication_Theory/Uses_and_Gratifications",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/Communication_Theory/Uses_and_Gratifications"
+    },
+    {
+      "source_id": "belebele-tr-c2f7012a1fac5a786a13",
+      "path": "documents/belebele-tr-c2f7012a1fac5a786a13.txt",
+      "sha256": "a6a7e307ddc0b810defe47be95cd6b414f3760165a1c635275f603a8e7a318a8",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Russian_military_cargo_jet_crash_kills_eleven_in_Siberia",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Russian_military_cargo_jet_crash_kills_eleven_in_Siberia"
+    },
+    {
+      "source_id": "belebele-tr-de1aa615e68fbc6b2e89",
+      "path": "documents/belebele-tr-de1aa615e68fbc6b2e89.txt",
+      "sha256": "9e43ab2b5be1119eec1ebc5f74cf8572f2e1fff03fe3c0b90baa9fef805386bb",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Canadian_professional_wrestler_Luna_Vachon_dies_aged_48",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Canadian_professional_wrestler_Luna_Vachon_dies_aged_48"
+    },
+    {
+      "source_id": "belebele-tr-1a730f0b2404877bcd9f",
+      "path": "documents/belebele-tr-1a730f0b2404877bcd9f.txt",
+      "sha256": "ee77609a34b4c5963f5bbb0c2f41c8b72aec8560bfd222540eae3113d1a4cc54",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/Alcoholic_beverages",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/Alcoholic_beverages"
+    },
+    {
+      "source_id": "belebele-tr-05b07726383ca53a9ead",
+      "path": "documents/belebele-tr-05b07726383ca53a9ead.txt",
+      "sha256": "8b37e60621d1d754a1c7bc5f32ba36597132bddfc7f5cb3626e14bca4b14e8da",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/Running",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/Running"
+    },
+    {
+      "source_id": "belebele-tr-763d60bb03946e66ff40",
+      "path": "documents/belebele-tr-763d60bb03946e66ff40.txt",
+      "sha256": "f5f99e48c864d99526efd168f544aab207c42991edf9112453c5293d04459860",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Matt_Kenseth_wins_third_NASCAR_Sprint_Cup_race_of_2012",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Matt_Kenseth_wins_third_NASCAR_Sprint_Cup_race_of_2012"
+    },
+    {
+      "source_id": "belebele-tr-22d6c1d81ccc8088e015",
+      "path": "documents/belebele-tr-22d6c1d81ccc8088e015.txt",
+      "sha256": "6fbcbc3ecd180986f7defe86e176c4a8bb731c88142103aae1587866935c653e",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/New_Mexico_Pueblos",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/New_Mexico_Pueblos"
+    },
+    {
+      "source_id": "belebele-tr-9e40c3aab315fab669cd",
+      "path": "documents/belebele-tr-9e40c3aab315fab669cd.txt",
+      "sha256": "56a947f95719ea44bdfff8cd20bd979df920dd636d74a5933257ea863fc514be",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Large_earthquake_off_Japan,_tsunami_warning_issued",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Large_earthquake_off_Japan,_tsunami_warning_issued"
+    },
+    {
+      "source_id": "belebele-tr-3c4ab71fe86fa14fc9c7",
+      "path": "documents/belebele-tr-3c4ab71fe86fa14fc9c7.txt",
+      "sha256": "fcc4834fd4a979cf378bc2e203aca03af6e61c132d866f10473c3f13d4c88614",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/Safaris",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/Safaris"
+    },
+    {
+      "source_id": "belebele-tr-2bb55bca758da74a5a47",
+      "path": "documents/belebele-tr-2bb55bca758da74a5a47.txt",
+      "sha256": "8b9333b18019468387bacee5e1ab1bdc5962cad24c9731cf7e57be9dbc72f58a",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/San_Francisco",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/San_Francisco"
+    },
+    {
+      "source_id": "belebele-tr-3e0e51102dde7e17bd31",
+      "path": "documents/belebele-tr-3e0e51102dde7e17bd31.txt",
+      "sha256": "a8ac96798679c3c339e9c7f66b02c4a14f608f7868e9bbda6b2ebe288f01c880",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:How_Things_Work/Flush_Toilet",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/Wikijunior:How_Things_Work/Flush_Toilet"
+    },
+    {
+      "source_id": "belebele-tr-603638fc3c8ec21437b8",
+      "path": "documents/belebele-tr-603638fc3c8ec21437b8.txt",
+      "sha256": "dea6b852dbce38e8858396b4874d27eb4f69efa316dd8bf966e4945ed3eca39f",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Scientists_find_dinosaur_feathers_preserved_in_amber",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Scientists_find_dinosaur_feathers_preserved_in_amber"
+    },
+    {
+      "source_id": "belebele-tr-e7bc77311b8f4f31151c",
+      "path": "documents/belebele-tr-e7bc77311b8f4f31151c.txt",
+      "sha256": "b16a31c0a43db8551b8ecb3a45dc8ef89d689dab3948074ec45b59e6e4338287",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikivoyage.org/wiki/Montevideo",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikivoyage.org/wiki/Montevideo"
+    },
+    {
+      "source_id": "belebele-tr-9e23197ceefbdb0e5abc",
+      "path": "documents/belebele-tr-9e23197ceefbdb0e5abc.txt",
+      "sha256": "8e024025447d03613a695d9ac1130c68d7e88790facc7361b4b93b1b122cfb99",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikibooks.org/wiki/European_History/Absolutism_in_Europe",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikibooks.org/wiki/European_History/Absolutism_in_Europe"
+    },
+    {
+      "source_id": "belebele-tr-162c5212145a8a1d4031",
+      "path": "documents/belebele-tr-162c5212145a8a1d4031.txt",
+      "sha256": "8874b738bf71afe71496ae0ceec6dfc29359aaf9713b57348876ca7c44ad457f",
+      "language": "tr",
+      "category": "prose",
+      "split": "test",
+      "upstream_link": "https://en.wikinews.org/wiki/Iraq_Study_Group_Report:_Iraq_could_be_on_a_slide_towards_chaos",
+      "attribution": "Belebele authors and original FLORES source contributors: https://en.wikinews.org/wiki/Iraq_Study_Group_Report:_Iraq_could_be_on_a_slide_towards_chaos"
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "belebele-tr-cf9ef4e33141b5c2580b-q1",
+      "text": "Haiti’nin, barış güçlerinin neden olduğu yayılmadan önce hastalıkla son karşılaşması ne zamandı?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-cf9ef4e33141b5c2580b",
+          "start": 0,
+          "end": 773,
+          "quote": "2010 depreminden sonra Haiti'ye varan BM barış güçleri, askerlerin kampının yakınlarında başlayan hastalığın yayılmasıyla suçlanıyorlar. Davaya göre, BM kampından gelen atıklar uygun şekilde sterilize edilmedi ve bakterilerin Haiti'nin en büyük nehirlerinden biri olan Artibonite Nehri'nin bir koluna karışmasına neden oldu. Askerlerin gelmesinden önce Haiti 1800'lerden beri hastalıkla ilgili sorunlarla karşılaşmamıştı. Haiti Adalet ve Demokrasi Enstitüsü, Nepal BM barışı koruma birliğinin, hastalığı farkına varmadan Haiti'ye taşıdığını ileri süren bağımsız çalışmalara gönderme yaptı. Hastalık konusunda BM uzmanı olan Danielle Lantagne, salgına muhtemelen barış gücündekilerin neden olduğunu söyledi."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Haitian_cholera_victims_threaten_United_Nations_with_lawsuit",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-cf9ef4e33141b5c2580b-q2",
+      "text": "Nerenin atıkları hastalığın yayılmasına sebep olmuştur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-cf9ef4e33141b5c2580b",
+          "start": 0,
+          "end": 773,
+          "quote": "2010 depreminden sonra Haiti'ye varan BM barış güçleri, askerlerin kampının yakınlarında başlayan hastalığın yayılmasıyla suçlanıyorlar. Davaya göre, BM kampından gelen atıklar uygun şekilde sterilize edilmedi ve bakterilerin Haiti'nin en büyük nehirlerinden biri olan Artibonite Nehri'nin bir koluna karışmasına neden oldu. Askerlerin gelmesinden önce Haiti 1800'lerden beri hastalıkla ilgili sorunlarla karşılaşmamıştı. Haiti Adalet ve Demokrasi Enstitüsü, Nepal BM barışı koruma birliğinin, hastalığı farkına varmadan Haiti'ye taşıdığını ileri süren bağımsız çalışmalara gönderme yaptı. Hastalık konusunda BM uzmanı olan Danielle Lantagne, salgına muhtemelen barış gücündekilerin neden olduğunu söyledi."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Haitian_cholera_victims_threaten_United_Nations_with_lawsuit",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-7bb688fe0dd3202735eb-q1",
+      "text": "Seçilim yeni genetik farklılığı hangi havuzdan kaldırır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-7bb688fe0dd3202735eb",
+          "start": 0,
+          "end": 355,
+          "quote": "Yirminci yüzyılda gerçekleştirilen araştırmalar, iki farklı genetik varyasyon havuzu olduğunu göstermiştir: gizli ve dışa vurulan Değişim, yeni genetik farklılık oluşturur ve seçilim, bunu ifade edilen farklılık havuzundan kaldırır. Her nesilde, iki havuz arasındaki ayrım ve yeniden birleşim varyasyonu ileri geri karıştırır."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/Introduction_to_Paleoanthropology/Genetics/Introduction",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-7bb688fe0dd3202735eb-q2",
+      "text": "Genetik farklılığın eklenmesinden hangi işlem sorumludur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-7bb688fe0dd3202735eb",
+          "start": 0,
+          "end": 355,
+          "quote": "Yirminci yüzyılda gerçekleştirilen araştırmalar, iki farklı genetik varyasyon havuzu olduğunu göstermiştir: gizli ve dışa vurulan Değişim, yeni genetik farklılık oluşturur ve seçilim, bunu ifade edilen farklılık havuzundan kaldırır. Her nesilde, iki havuz arasındaki ayrım ve yeniden birleşim varyasyonu ileri geri karıştırır."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/Introduction_to_Paleoanthropology/Genetics/Introduction",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-ec47fb210caea41ba9d7-q2",
+      "text": "Kral ve Kraliçe kalabalık grup tarafından aşağıdakilerden hangisine zorlandı?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-ec47fb210caea41ba9d7",
+          "start": 0,
+          "end": 653,
+          "quote": "Dehşete düşen Kral On Altıncı Louis, iki küçük çocuğu, (11 yaşındaki Marie Therese ve dört yaşındaki Louis-Charles) Kraliçe Marie Antoinette ve Kralın kız kardeşi Madam Elizabeth kalabalık bir kadın grubu tarafından 6 Ekim 1789 tarihinde zorla Versay'dan Paris'e sürüldü. Kral ve Kraliçe'ye karşı bağıran ve tehditler savuran bir grup insanla çevrili olarak bir arabayla Paris'e geri döndüler. İnsan topluluğu Kral ve Kraliçe'yi arabanın pencerelerini açmaya mecbur bıraktı. Bir noktada kalabalıktan biri, korkmuş Kraliçe'nin önünde Versailles'da canı alınan bir kraliyet muhafızının başını salladı."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/European_History/Revolution_in_France",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-ec47fb210caea41ba9d7-q1",
+      "text": "Metne göre Versay’da kim öldürülmüştür?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-ec47fb210caea41ba9d7",
+          "start": 0,
+          "end": 653,
+          "quote": "Dehşete düşen Kral On Altıncı Louis, iki küçük çocuğu, (11 yaşındaki Marie Therese ve dört yaşındaki Louis-Charles) Kraliçe Marie Antoinette ve Kralın kız kardeşi Madam Elizabeth kalabalık bir kadın grubu tarafından 6 Ekim 1789 tarihinde zorla Versay'dan Paris'e sürüldü. Kral ve Kraliçe'ye karşı bağıran ve tehditler savuran bir grup insanla çevrili olarak bir arabayla Paris'e geri döndüler. İnsan topluluğu Kral ve Kraliçe'yi arabanın pencerelerini açmaya mecbur bıraktı. Bir noktada kalabalıktan biri, korkmuş Kraliçe'nin önünde Versailles'da canı alınan bir kraliyet muhafızının başını salladı."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/European_History/Revolution_in_France",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-32a0f4ec1d68f0b529cd-q1",
+      "text": "Metne göre, hastalığa karşı hangi koruma önlemi son olarak uygulanacaktır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-32a0f4ec1d68f0b529cd",
+          "start": 0,
+          "end": 685,
+          "quote": "Bu sezon hastalığın ilk vakaları Temmuz'un sonlarında bildirildi. Hastalık domuzlar tarafından taşınır, daha sonra sivrisinekler yoluyla insanlara geçer. Salgın, Hint hükümetininin ciddi etkilenen bölgelerde domuz yakalayıcılarını işe almak, binlerce cibinlik dağıtmak ve böcek ilacı sıkmak gibi önlemler almasına sebep oldu. Hükümet, sağlık kuruluşlarının gelecek yıla hazırlanmasına yardımcı olacak milyonlarca doz ensefalit aşısının da sözünü verdi. Bu yıl tarihsel olarak en çok etkilenen bölgelere yapılacak aşı dağıtım planları, fon yetersizliği ve diğer hastalıklara göre düşük önceliklendirme nedeniyle ertelendi."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/India_struggles_with_encephalitis_outbreak",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-32a0f4ec1d68f0b529cd-q2",
+      "text": "Hastalık insanlara nasıl geçer?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-32a0f4ec1d68f0b529cd",
+          "start": 0,
+          "end": 685,
+          "quote": "Bu sezon hastalığın ilk vakaları Temmuz'un sonlarında bildirildi. Hastalık domuzlar tarafından taşınır, daha sonra sivrisinekler yoluyla insanlara geçer. Salgın, Hint hükümetininin ciddi etkilenen bölgelerde domuz yakalayıcılarını işe almak, binlerce cibinlik dağıtmak ve böcek ilacı sıkmak gibi önlemler almasına sebep oldu. Hükümet, sağlık kuruluşlarının gelecek yıla hazırlanmasına yardımcı olacak milyonlarca doz ensefalit aşısının da sözünü verdi. Bu yıl tarihsel olarak en çok etkilenen bölgelere yapılacak aşı dağıtım planları, fon yetersizliği ve diğer hastalıklara göre düşük önceliklendirme nedeniyle ertelendi."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/India_struggles_with_encephalitis_outbreak",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-b3bb852dde4e9330b72b-q1",
+      "text": "Metne göre, aşağıdaki ifadelerden hangisi Çin’in ekonomisini doğru yansıtmamaktadır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-b3bb852dde4e9330b72b",
+          "start": 0,
+          "end": 488,
+          "quote": "Resmi olarak komünist bir ülke olarak kalmasına rağmen Çin, son otuz yılda bir piyasa ekonomisi geliştirdi. İlk ekonomik reformlar Deng Xiaoping liderliğinde gerçekleştirildi. O zamandan beri, Çin'in ekonomik boyutu 90 kat kadar arttı. İlk defa, geçen sene Çin, Almanya'dan daha fazla araba ihraç etti ve bu sanayi için en büyük pazar olarak, Birleşik Devletler'i gölgede bıraktı. Çin'in GSYİH'si yirmi yıl içinde Birleşik Devletler'den daha büyük olabilir."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/China%27s_economy_surpasses_Japan%27s_in_second_quarter",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-b3bb852dde4e9330b72b-q2",
+      "text": "Metne göre, Çin’in GSYİH'si Birleşik Devletler'inkini ne zaman geçebilir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-b3bb852dde4e9330b72b",
+          "start": 0,
+          "end": 488,
+          "quote": "Resmi olarak komünist bir ülke olarak kalmasına rağmen Çin, son otuz yılda bir piyasa ekonomisi geliştirdi. İlk ekonomik reformlar Deng Xiaoping liderliğinde gerçekleştirildi. O zamandan beri, Çin'in ekonomik boyutu 90 kat kadar arttı. İlk defa, geçen sene Çin, Almanya'dan daha fazla araba ihraç etti ve bu sanayi için en büyük pazar olarak, Birleşik Devletler'i gölgede bıraktı. Çin'in GSYİH'si yirmi yıl içinde Birleşik Devletler'den daha büyük olabilir."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/China%27s_economy_surpasses_Japan%27s_in_second_quarter",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-af302e596156f9638046-q2",
+      "text": "Aşağıdakilerden hangisi, fabrikada gerçekleşen olayın ardından bölge sakinlerine verilecek güvenlik tavsiyelerinden biri olamaz?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-af302e596156f9638046",
+          "start": 0,
+          "end": 472,
+          "quote": "Televizyon haberleri santralden yükselen beyaz dumanı gösteriyor. Yerel merciler, tesisin etrafında oturanları kapalı mekanlarda durmaları, klimaları kapamaları ve çeşme suyu içmemeleri konusunda ikaz ediyor. Japonya'nın nükleer ajansına göre, tesiste radyoaktif sezyum ve iyodin tespit edildi. Yetkililer bunun, sahadaki uranyum yakıtı taşıyan konteynerlerin yırtılmış ve sızıntı yapıyor olabileceğinin göstergesi olduğunu tahmin ediyorlar."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Explosion_at_earthquake-damaged_Fukushima_nuclear_power_plant",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-af302e596156f9638046-q1",
+      "text": "Metne göre, aşağıdakilerden hangisi fabrikanın içinde ve etrafında görülen tehlikeli koşullara sebep olmuştur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-af302e596156f9638046",
+          "start": 0,
+          "end": 472,
+          "quote": "Televizyon haberleri santralden yükselen beyaz dumanı gösteriyor. Yerel merciler, tesisin etrafında oturanları kapalı mekanlarda durmaları, klimaları kapamaları ve çeşme suyu içmemeleri konusunda ikaz ediyor. Japonya'nın nükleer ajansına göre, tesiste radyoaktif sezyum ve iyodin tespit edildi. Yetkililer bunun, sahadaki uranyum yakıtı taşıyan konteynerlerin yırtılmış ve sızıntı yapıyor olabileceğinin göstergesi olduğunu tahmin ediyorlar."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Explosion_at_earthquake-damaged_Fukushima_nuclear_power_plant",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-4c83c685fb9aeb94c7c0-q2",
+      "text": "Metne göre, aşağıdakilerden hangisi Jardin de la Unión’da bulunmaz?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-4c83c685fb9aeb94c7c0",
+          "start": 0,
+          "end": 595,
+          "quote": "Jardín de la Unión, 17. yüzyıldan kalma bir manastırın avlusu olarak inşa edilmiştir ve Templo de San Diego, ayakta kalan tek binasıdır. Şimdi merkez plaza olarak faaliyet gösteriyor ve gece gündüz hayat dolu. Bahçeyi çevreleyen çok sayıda restoran vardır ve öğleden sonraları ile akşamları genellikle merkezi çardaktan ücretsiz konserler verilmektedir. Callejon del Beso (Öpücük Sokağı). Sadece 69 santimetre ile ayrılmış iki balkon eski bir aşk efsanesine ev sahipliği yapmaktadır. Birkaç kuruş karşılığında bazı çocuklar size öyküyü anlatacak."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Guanajuato",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-4c83c685fb9aeb94c7c0-q1",
+      "text": "Aşağıdakilerden hangisi artık merkezi bir plaza olarak kullanılmaktadır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-4c83c685fb9aeb94c7c0",
+          "start": 0,
+          "end": 595,
+          "quote": "Jardín de la Unión, 17. yüzyıldan kalma bir manastırın avlusu olarak inşa edilmiştir ve Templo de San Diego, ayakta kalan tek binasıdır. Şimdi merkez plaza olarak faaliyet gösteriyor ve gece gündüz hayat dolu. Bahçeyi çevreleyen çok sayıda restoran vardır ve öğleden sonraları ile akşamları genellikle merkezi çardaktan ücretsiz konserler verilmektedir. Callejon del Beso (Öpücük Sokağı). Sadece 69 santimetre ile ayrılmış iki balkon eski bir aşk efsanesine ev sahipliği yapmaktadır. Birkaç kuruş karşılığında bazı çocuklar size öyküyü anlatacak."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Guanajuato",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-827883200737738a0863-q2",
+      "text": "Böcek ilacı denemesiyle ilgili hangi ifade doğru değildir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-827883200737738a0863",
+          "start": 0,
+          "end": 551,
+          "quote": "Deneme gözlemlenirken ve verimliliği değerlendirilirken tamamlayıcı böcek ilaçlama denemesinde görev alan avcıların korucular tarafından yakından denetlenmesi planlandı. NPWS ve Sporting Shooters Association of Australia (NSW) Inc’in birlikte yaptığı çalışmayla Sportif Avcılık Birliği’nin avcılık programı kapsamında kalifiye gönüllüler ekibe katıldı. Park Koruma Direktör Vekili Mick O'Flynn ve NPWS Mirasına göre, ilk avcılık operasyonu için seçilen dört avcı kapsamlı güvenlik ve talim eğitimi aldı."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/New_South_Wales_government_starts_trial_of_hunting_in_national_parks",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-827883200737738a0863-q1",
+      "text": "Denemeye katılan avcılar hangi program için görevlendirilmiştir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-827883200737738a0863",
+          "start": 0,
+          "end": 551,
+          "quote": "Deneme gözlemlenirken ve verimliliği değerlendirilirken tamamlayıcı böcek ilaçlama denemesinde görev alan avcıların korucular tarafından yakından denetlenmesi planlandı. NPWS ve Sporting Shooters Association of Australia (NSW) Inc’in birlikte yaptığı çalışmayla Sportif Avcılık Birliği’nin avcılık programı kapsamında kalifiye gönüllüler ekibe katıldı. Park Koruma Direktör Vekili Mick O'Flynn ve NPWS Mirasına göre, ilk avcılık operasyonu için seçilen dört avcı kapsamlı güvenlik ve talim eğitimi aldı."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/New_South_Wales_government_starts_trial_of_hunting_in_national_parks",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-6bfe617abe8ea71e7678-q1",
+      "text": "Metne göre, Amir Khan aşağıdakilerden hangisini desteklememektedir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-6bfe617abe8ea71e7678",
+          "start": 0,
+          "end": 288,
+          "quote": "\"Kadın klasmanının dahil edilmesini herkes desteklemiyordu. 2004 Olimpiyatlarında gümüş madalya kazanan Amir Khan, \"\"Bence kadınlar kavga etmemeli.\"\" dedi. Yorumlarına rağmen Londra'da düzenlenecek 2012 Olimpiyatları'nda İngiliz yarışmacıları destekleyeceğini söyledi.\""
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Women%E2%80%99s_boxing_to_be_included_in_the_2012_Olympics_for_the_first_time",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-6bfe617abe8ea71e7678-q2",
+      "text": "Metne göre, kişisel fikrine rağmen Amir Khan aşağıdakilerden hangisini destekleyecektir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-6bfe617abe8ea71e7678",
+          "start": 0,
+          "end": 288,
+          "quote": "\"Kadın klasmanının dahil edilmesini herkes desteklemiyordu. 2004 Olimpiyatlarında gümüş madalya kazanan Amir Khan, \"\"Bence kadınlar kavga etmemeli.\"\" dedi. Yorumlarına rağmen Londra'da düzenlenecek 2012 Olimpiyatları'nda İngiliz yarışmacıları destekleyeceğini söyledi.\""
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Women%E2%80%99s_boxing_to_be_included_in_the_2012_Olympics_for_the_first_time",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-08772fcb6188a09e477e-q2",
+      "text": "Dolaşım sisteminde hangi tüpler en küçüktür?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-08772fcb6188a09e477e",
+          "start": 0,
+          "end": 210,
+          "quote": "Kan pompalayan kalp, dolaşım sistemindeki temel organdır. Kan, arter adı verilen tüplerde kalpten çıkar ve damar adı verilen tüplerde kalbe geri döner. En küçük tüplere kılcal damar adı verilir."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Biology/Systems/Circulatory_System",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-08772fcb6188a09e477e-q1",
+      "text": "Dolaşım sisteminin hangi kısmı kalbe kan taşır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-08772fcb6188a09e477e",
+          "start": 0,
+          "end": 210,
+          "quote": "Kan pompalayan kalp, dolaşım sistemindeki temel organdır. Kan, arter adı verilen tüplerde kalpten çıkar ve damar adı verilen tüplerde kalbe geri döner. En küçük tüplere kılcal damar adı verilir."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Biology/Systems/Circulatory_System",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-f85941f0c8234af54940-q1",
+      "text": "İbrani ailesi zamanlarının çoğunu nerede geçiriyordu?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-f85941f0c8234af54940",
+          "start": 0,
+          "end": 347,
+          "quote": "Orta Doğu'nun sıcak ikliminde ev o kadar da önemli değildi. İbrani ailesinin yaşamının çoğu açık havada geçiyordu. Kadınlar yemeği bahçede yaptılar; dükkanlar sadece sokağa bakan açık tezgahlardı. Taş, ev inşa etmek için kullanıldı. Kenan diyarında büyük ormanlar yoktu, bu sebeple odun aşırı derecede pahalıydı."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Ancient_Civilizations/Hebrews",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-f85941f0c8234af54940-q2",
+      "text": "İbrani ailesi için neyin çok önemi yoktur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-f85941f0c8234af54940",
+          "start": 0,
+          "end": 347,
+          "quote": "Orta Doğu'nun sıcak ikliminde ev o kadar da önemli değildi. İbrani ailesinin yaşamının çoğu açık havada geçiyordu. Kadınlar yemeği bahçede yaptılar; dükkanlar sadece sokağa bakan açık tezgahlardı. Taş, ev inşa etmek için kullanıldı. Kenan diyarında büyük ormanlar yoktu, bu sebeple odun aşırı derecede pahalıydı."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Ancient_Civilizations/Hebrews",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-bc60f00e2691a5a77ecf-q2",
+      "text": "Aşağıdakilerden hangisi Polonya’daki ayaklanmaların bir sebebi değildir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-bc60f00e2691a5a77ecf",
+          "start": 0,
+          "end": 412,
+          "quote": "Ancak, Haziran 1956'da, işçilerin gıda kıtlığı ve ücret kesintilerini protesto ettiği Polonya'daki ayaklanmaların Komünizme karşı genel bir protestoya dönüşmesiyle Kruşçev'in vaatleri sorgulandı. Nihayetinde Kruşçev düzeni sağlamak için tanklar göndermesine rağmen bazı ekonomik taleplere öncelik verdi ve popüler olan Wladyslaw Gomulka'yı yeni başbakan olarak atamayı kabul etti."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/The_Cold_War/Hungarian_Revolution",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-bc60f00e2691a5a77ecf-q1",
+      "text": "Metne göre, aşağıdakilerden hangisi Kruşçev’in işçi ayaklanmalarına verdiği yanıtın bir parçası değildir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-bc60f00e2691a5a77ecf",
+          "start": 0,
+          "end": 412,
+          "quote": "Ancak, Haziran 1956'da, işçilerin gıda kıtlığı ve ücret kesintilerini protesto ettiği Polonya'daki ayaklanmaların Komünizme karşı genel bir protestoya dönüşmesiyle Kruşçev'in vaatleri sorgulandı. Nihayetinde Kruşçev düzeni sağlamak için tanklar göndermesine rağmen bazı ekonomik taleplere öncelik verdi ve popüler olan Wladyslaw Gomulka'yı yeni başbakan olarak atamayı kabul etti."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/The_Cold_War/Hungarian_Revolution",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-6fa90bda51344793e8d2-q2",
+      "text": "Metinde verilen bilgilere göre, Charles hangi konuda ilk olmuştu?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-6fa90bda51344793e8d2",
+          "start": 0,
+          "end": 346,
+          "quote": "Geleneksel olarak tahtın varisi, eğitimini bitirdikten sonra doğrudan askere giderdi. Buna rağmen Charles; Antropoloji, Arkeoloji ve sonrasında Tarih okuduğu, Cambridge'de bulunan Trinity College'a gitti ve 2:2 (2. sınıfta ikincilik) derecesi kazandı. Charles, Britanya Kraliyet Ailesi'nin üniversite lisans derecesi alan ilk üyesiydi."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Kings_and_Queens_of_England/Future_monarchs",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-6fa90bda51344793e8d2-q1",
+      "text": "Metne göre, aşağıdakilerden hangisi geleneksel olarak tahtın varisi için düşünülebilir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-6fa90bda51344793e8d2",
+          "start": 0,
+          "end": 346,
+          "quote": "Geleneksel olarak tahtın varisi, eğitimini bitirdikten sonra doğrudan askere giderdi. Buna rağmen Charles; Antropoloji, Arkeoloji ve sonrasında Tarih okuduğu, Cambridge'de bulunan Trinity College'a gitti ve 2:2 (2. sınıfta ikincilik) derecesi kazandı. Charles, Britanya Kraliyet Ailesi'nin üniversite lisans derecesi alan ilk üyesiydi."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Kings_and_Queens_of_England/Future_monarchs",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-c8c82c96dc228607da70-q2",
+      "text": "Muhtemelen hangisi vize uzatma gereği duyabilir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-c8c82c96dc228607da70",
+          "start": 0,
+          "end": 790,
+          "quote": "Bazı ülkelere turist olarak veya iş amaçlı kısa ziyaretleriniz için vize gerekmiyor olsa da, uluslararası öğrenci olarak gitmek sıradan bir turist olarak gitmeye göre genellikle daha uzun bir süre kalmayı gerektirir. Çoğunlukla, herhangi bir yabancı ülkede uzun süre bulunmak için, önceden vize almanız gerekecektir. Öğrenci vizelerinin genellikle normal turist ve iş vizelerinden farklı şartları ve başvuru usülleri bulunmaktadır. Çoğu ülke için, eğitim almak istediğiniz kurumdan bir teklif mektubuna ve ayrıca eğitiminizin en azından ilk yılında kendinizi destekleyebilecek fonlara sahip olduğunuzun kanıtına ihtiyaç duyarsınız. Detaylı gerekenler için kurumun yanı sıra okumak istediğiniz ülkenin göçmenlik bölümüne danışın."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Studying_abroad",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-c8c82c96dc228607da70-q1",
+      "text": "Hangi vize türü bir kişinin yeterli mali desteği olduğunu kanıtlamasını gerektirebilir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-c8c82c96dc228607da70",
+          "start": 0,
+          "end": 790,
+          "quote": "Bazı ülkelere turist olarak veya iş amaçlı kısa ziyaretleriniz için vize gerekmiyor olsa da, uluslararası öğrenci olarak gitmek sıradan bir turist olarak gitmeye göre genellikle daha uzun bir süre kalmayı gerektirir. Çoğunlukla, herhangi bir yabancı ülkede uzun süre bulunmak için, önceden vize almanız gerekecektir. Öğrenci vizelerinin genellikle normal turist ve iş vizelerinden farklı şartları ve başvuru usülleri bulunmaktadır. Çoğu ülke için, eğitim almak istediğiniz kurumdan bir teklif mektubuna ve ayrıca eğitiminizin en azından ilk yılında kendinizi destekleyebilecek fonlara sahip olduğunuzun kanıtına ihtiyaç duyarsınız. Detaylı gerekenler için kurumun yanı sıra okumak istediğiniz ülkenin göçmenlik bölümüne danışın."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Studying_abroad",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-cbc91724f0f78bdb2249-q1",
+      "text": "Metne göre, konuşmanın hangi kısmı cümlenin ortasında büyük harfle yazılır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-cbc91724f0f78bdb2249",
+          "start": 0,
+          "end": 372,
+          "quote": "Siz anlamına gelen Sie ile birlikte tüm isimler her zaman, cümle ortasında dahi, büyük harfle başlar. Bu, bazı fiiller ve nesneler arasında ayrım yapmanın önemli bir yoludur. Bir fiilin veya sıfatın isim formunda kullanılıp kullanılmadığını bulma ihtiyacı sebebiyle yazma biraz daha karmaşıklaşsa da muhtemelen okumayı da daha kolay hale getirir."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/German_phrasebook",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-cbc91724f0f78bdb2249-q2",
+      "text": "Metne göre, isimlerin büyük harfle yazılması neyi zorlaştırabilmektedir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-cbc91724f0f78bdb2249",
+          "start": 0,
+          "end": 372,
+          "quote": "Siz anlamına gelen Sie ile birlikte tüm isimler her zaman, cümle ortasında dahi, büyük harfle başlar. Bu, bazı fiiller ve nesneler arasında ayrım yapmanın önemli bir yoludur. Bir fiilin veya sıfatın isim formunda kullanılıp kullanılmadığını bulma ihtiyacı sebebiyle yazma biraz daha karmaşıklaşsa da muhtemelen okumayı da daha kolay hale getirir."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/German_phrasebook",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-0b4f5cf76c3560fd2775-q2",
+      "text": "Tropikal Kasırga Gonu’nun zirve hızında rüzgar ne kadar hızla esiyordu?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-0b4f5cf76c3560fd2775",
+          "start": 0,
+          "end": 299,
+          "quote": "Adını Maldivler lisanında bir palmiye yaprağı torbasından alan Tropikal Kasırga Gonu, zirve hızında saatte 240 kilometre (saatte 149 mil) hıza çıkan sürekli rüzgarlara ulaştı. Bugün erken saatlerde rüzgar 83 km/s civarındaydı ve rüzgarın zayıflamaya devam etmesi bekleniyordu."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Rare_Middle_East_cyclone_batters_Oman",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-0b4f5cf76c3560fd2775-q1",
+      "text": "Metne göre, Tropikal Kasırga Gonu’nun ne zaman zayıflamasını sürdürmesi bekleniyordu?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-0b4f5cf76c3560fd2775",
+          "start": 0,
+          "end": 299,
+          "quote": "Adını Maldivler lisanında bir palmiye yaprağı torbasından alan Tropikal Kasırga Gonu, zirve hızında saatte 240 kilometre (saatte 149 mil) hıza çıkan sürekli rüzgarlara ulaştı. Bugün erken saatlerde rüzgar 83 km/s civarındaydı ve rüzgarın zayıflamaya devam etmesi bekleniyordu."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Rare_Middle_East_cyclone_batters_Oman",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-243119f80b49e1cd2d62-q1",
+      "text": "Fluke’a göre, kim ona olumlu yorum iletiyor ve destek veriyordu?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-243119f80b49e1cd2d62",
+          "start": 0,
+          "end": 335,
+          "quote": "Fluke, bazılarının kadınların kadın sağlığı hakkında konuşmasını engelleme çabalarının başarısız olduğunu yazdı. Doğum kontrol hapının tıbbi bir gereklilik olarak görülmesi için hem kadın hem de erkekler tarafından kendisine iletilen çok sayıda olumlu yorum ve destek nedeniyle bu çıkarıma ulaştı."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Sandra_Fluke_insists_she_will_not_be_silenced",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-243119f80b49e1cd2d62-q2",
+      "text": "Metne göre, bazı insanlar kadınların ne hakkında konuşmasını istemiyor?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-243119f80b49e1cd2d62",
+          "start": 0,
+          "end": 335,
+          "quote": "Fluke, bazılarının kadınların kadın sağlığı hakkında konuşmasını engelleme çabalarının başarısız olduğunu yazdı. Doğum kontrol hapının tıbbi bir gereklilik olarak görülmesi için hem kadın hem de erkekler tarafından kendisine iletilen çok sayıda olumlu yorum ve destek nedeniyle bu çıkarıma ulaştı."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Sandra_Fluke_insists_she_will_not_be_silenced",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-462c60a7a8702d46db4a-q2",
+      "text": "Metne göre Tonga elektrik kesintisinden nasıl etkilendi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-462c60a7a8702d46db4a",
+          "start": 0,
+          "end": 525,
+          "quote": "Son bültene göre, deniz seviyesi ölçümleri bir tsunami oluştuğunu gösterdi. Pago Pago ve Niue yakınlarında kaydedilen birtakım belirli tsunami faaliyetleri vardı. Tonga'da büyük bir hasar veya yaralanma bildirilmedi. Ancak elektrikler geçici olarak kesildi, bu da Tonga yetkililerinin PTWC tarafından yayınlanan tsunami uyarısını almasını engelledi. Hawaii'de, sahil şeridinde veya sahil şeridinin yakınında bulunan on dört okul, uyarıların kalkmasına rağmen tüm Çarşamba günü kapatıldı."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/8.0_magnitude_earthquake_occurs_near_Tonga",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-462c60a7a8702d46db4a-q1",
+      "text": "Tsunami nedeniyle nerede bir elektrik kesintisi meydana geldi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-462c60a7a8702d46db4a",
+          "start": 0,
+          "end": 525,
+          "quote": "Son bültene göre, deniz seviyesi ölçümleri bir tsunami oluştuğunu gösterdi. Pago Pago ve Niue yakınlarında kaydedilen birtakım belirli tsunami faaliyetleri vardı. Tonga'da büyük bir hasar veya yaralanma bildirilmedi. Ancak elektrikler geçici olarak kesildi, bu da Tonga yetkililerinin PTWC tarafından yayınlanan tsunami uyarısını almasını engelledi. Hawaii'de, sahil şeridinde veya sahil şeridinin yakınında bulunan on dört okul, uyarıların kalkmasına rağmen tüm Çarşamba günü kapatıldı."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/8.0_magnitude_earthquake_occurs_near_Tonga",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-5b41e260e4ae5657267d-q1",
+      "text": "Ring’in satışları ne zaman arttı?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-5b41e260e4ae5657267d",
+          "start": 0,
+          "end": 608,
+          "quote": "Daha önce, Ring'in CEO'su Jamie Siminoff şirketin, garajındaki dükkanından kapı zilinin duyulmadığı zamanlarda başladığını belirtmişti. WiFi ile çalışan bir kapı zili yaptığını söyledi. Siminoff, programdaki jürilerin başlangıç fonu sağlamayı reddettiği, 2013 yılında katıldığı Shark Tank bölümünün ardından satışların arttığını söyledi. 2017'nin sonlarına doğru Siminoff, alışveriş konulu televizyon kanalı QVC'ye çıktı. Ayrıca Ring, rakip güvenlik şirketi ADT Corporation ile aralarındaki davayı anlaşma yoluyla çözüme ulaştırmıştır."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Amazon_to_buy_smart_doorbell_startup_Ring",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-5b41e260e4ae5657267d-q2",
+      "text": "Jamie Smirnoff Ring’i ne zaman başlatmaya karar verdi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-5b41e260e4ae5657267d",
+          "start": 0,
+          "end": 608,
+          "quote": "Daha önce, Ring'in CEO'su Jamie Siminoff şirketin, garajındaki dükkanından kapı zilinin duyulmadığı zamanlarda başladığını belirtmişti. WiFi ile çalışan bir kapı zili yaptığını söyledi. Siminoff, programdaki jürilerin başlangıç fonu sağlamayı reddettiği, 2013 yılında katıldığı Shark Tank bölümünün ardından satışların arttığını söyledi. 2017'nin sonlarına doğru Siminoff, alışveriş konulu televizyon kanalı QVC'ye çıktı. Ayrıca Ring, rakip güvenlik şirketi ADT Corporation ile aralarındaki davayı anlaşma yoluyla çözüme ulaştırmıştır."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Amazon_to_buy_smart_doorbell_startup_Ring",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-689c69ee9dba8b3f0a90-q2",
+      "text": "Metne göre, bir festival katılımcısı müziğe yakın kamp yapmak istiyorsa neye öncelik vermelidir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-689c69ee9dba8b3f0a90",
+          "start": 0,
+          "end": 550,
+          "quote": "Bazı festivallerde, müzik festivalleri katılımcılarının büyük çoğunluğu festival alanında kamp yapmaya karar verir ve çoğu katılımcı bunu deneyimin önemli bir parçası olarak görür. Harekete yakın olmayı arzu ediyorsanız, müziğe yakın bir kamp alanı kapmak için önceden gitmeniz lazım. Ana sahnelerde müzik bitmiş olsa bile festivalin gece geç saatlere kadar müzik çalmaya devam edecek olan kısımları olabileceğini unutmayın. Bazı festivaller küçük çocuklu aileler için özel kamp alanlarına sahiptir."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Music_festival_circuit",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-689c69ee9dba8b3f0a90-q1",
+      "text": "Bazı katılımcılar müzik festivallerinin hangi özelliğini deneyimin önemli bir kısmı olarak nitelendirmektedir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-689c69ee9dba8b3f0a90",
+          "start": 0,
+          "end": 550,
+          "quote": "Bazı festivallerde, müzik festivalleri katılımcılarının büyük çoğunluğu festival alanında kamp yapmaya karar verir ve çoğu katılımcı bunu deneyimin önemli bir parçası olarak görür. Harekete yakın olmayı arzu ediyorsanız, müziğe yakın bir kamp alanı kapmak için önceden gitmeniz lazım. Ana sahnelerde müzik bitmiş olsa bile festivalin gece geç saatlere kadar müzik çalmaya devam edecek olan kısımları olabileceğini unutmayın. Bazı festivaller küçük çocuklu aileler için özel kamp alanlarına sahiptir."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Music_festival_circuit",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-47811237bb13a3f46906-q1",
+      "text": "Cristina Fernandez de Kirchner Arjantin Tiyatrosu’nda neyi duyurmuştur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-47811237bb13a3f46906",
+          "start": 0,
+          "end": 454,
+          "quote": "Mevcut dönem Senatörü ve aynı zamanda Arjantin'in First Lady'si olan Cristina Fernandez de Kirchner dün akşam Buenos Aires'e 50 kilometre (31 mil) uzaklıktaki bir şehir olan La Plata'da başkanlığa aday olduğunu duyurdu. Bayan Kirchner, Buenos Aires ili delege heyetinin bir üyesi olarak senatoya yönelik 2005 yılı kampanyasını başlatırken kullandığı yer olan Arjantin Tiyatrosu'nda başkanlığa aday olmak istediğini açıkladı."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Argentina%27s_first_lady_launches_presidential_bid",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-47811237bb13a3f46906-q2",
+      "text": "Cristina Fernandez de Kirchner adaylık niyetini nerede duyurmuştur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-47811237bb13a3f46906",
+          "start": 0,
+          "end": 454,
+          "quote": "Mevcut dönem Senatörü ve aynı zamanda Arjantin'in First Lady'si olan Cristina Fernandez de Kirchner dün akşam Buenos Aires'e 50 kilometre (31 mil) uzaklıktaki bir şehir olan La Plata'da başkanlığa aday olduğunu duyurdu. Bayan Kirchner, Buenos Aires ili delege heyetinin bir üyesi olarak senatoya yönelik 2005 yılı kampanyasını başlatırken kullandığı yer olan Arjantin Tiyatrosu'nda başkanlığa aday olmak istediğini açıkladı."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Argentina%27s_first_lady_launches_presidential_bid",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-7ec31b461f0b0ee78a84-q1",
+      "text": "Charlotte’ta taksiye binince ne için ekstra ücret alınmaktadır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-7ec31b461f0b0ee78a84",
+          "start": 0,
+          "end": 688,
+          "quote": "North Carolina’daki Charlotte'un en önemli özelliklerinden biri, aileler için çok sayıda yüksek kaliteli seçenek sunmasıdır. Diğer bölgelerde yaşayanlar buraya taşınmanın asıl sebebi olarak ailelere uygun olmasını gösteriyor ve ziyaretçiler, çoğunlukla şehrin çocuklarla birlikte keyif alınabilecek bir yer olduğunu düşünüyor. Geçtiğimiz 20 yıl içinde Charlotte şehir merkezinde sunulan çocuklara uygun seçenek sayısı katlanarak arttı. Charlotte'taki aileler genellikle taksi kullanmaz ancak bazı durumlarda faydalı olabilirler. İkiden fazla yolcu alındığında ek ücret eklenir. Bu yüzden bu seçenek gereğinden fazla maliyetli olabilir."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Charlotte_with_children",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-7ec31b461f0b0ee78a84-q2",
+      "text": "Metne göre, çocuklarla birlikte Charlotte’ta yaşamanın dezavantajı ne olabilir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-7ec31b461f0b0ee78a84",
+          "start": 0,
+          "end": 688,
+          "quote": "North Carolina’daki Charlotte'un en önemli özelliklerinden biri, aileler için çok sayıda yüksek kaliteli seçenek sunmasıdır. Diğer bölgelerde yaşayanlar buraya taşınmanın asıl sebebi olarak ailelere uygun olmasını gösteriyor ve ziyaretçiler, çoğunlukla şehrin çocuklarla birlikte keyif alınabilecek bir yer olduğunu düşünüyor. Geçtiğimiz 20 yıl içinde Charlotte şehir merkezinde sunulan çocuklara uygun seçenek sayısı katlanarak arttı. Charlotte'taki aileler genellikle taksi kullanmaz ancak bazı durumlarda faydalı olabilirler. İkiden fazla yolcu alındığında ek ücret eklenir. Bu yüzden bu seçenek gereğinden fazla maliyetli olabilir."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Charlotte_with_children",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-f258197d59b89f80061d-q1",
+      "text": "Aşağıdakilerden hangisi Rönesans’ın sonuçları bakımından daha önemli olmuştur? ",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-f258197d59b89f80061d",
+          "start": 0,
+          "end": 385,
+          "quote": "Bilgi edinme ve öğrenme yetisi yukarıda bahsedildiği şekilde değiştikçe bilgi edinimindeki temel oran değişti. Bilgi elde etmeye yönelik yaklaşım farklıydı. Baskı artık bireysel hatırlama üzerinde değildi ve metin hatırlamaya odaklanılıyordu. Özünde, Rönesans öğrenme yaklaşımı ve bilginin yayılması konusunda önemli değişikliklere yol açmıştır."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/Communication_Theory/Orality_and_Literacy",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-f258197d59b89f80061d-q2",
+      "text": "Rönesans’ın bir sonucu olarak, aşağıdakilerden hangisi daha az vurgulanmıştır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-f258197d59b89f80061d",
+          "start": 0,
+          "end": 385,
+          "quote": "Bilgi edinme ve öğrenme yetisi yukarıda bahsedildiği şekilde değiştikçe bilgi edinimindeki temel oran değişti. Bilgi elde etmeye yönelik yaklaşım farklıydı. Baskı artık bireysel hatırlama üzerinde değildi ve metin hatırlamaya odaklanılıyordu. Özünde, Rönesans öğrenme yaklaşımı ve bilginin yayılması konusunda önemli değişikliklere yol açmıştır."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/Communication_Theory/Orality_and_Literacy",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-56b473a0a107caa4248b-q1",
+      "text": "Danielle Tropik Fırtınasının olası etkisini ölçmek neden zordur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-56b473a0a107caa4248b",
+          "start": 0,
+          "end": 538,
+          "quote": "2010 Atlantik kasırga sezonunda isim verilen dördüncü fırtına olan Danielle Tropik Fırtınası Doğu Atlantik Okyanusu'nda meydana geldi. Florida, Miami'den yaklaşık 3.000 mil uzaklıkta bulunan fırtına, maksimum 40 mil/saat (64 km/saat) hızda seyreden rüzgarlara sahiptir. Ulusal Kasırga Merkezindeki bilim insanları, Danielle'in çarşamba gününe kadar kasırga haline geleceğini öngörüyor. Fırtına karadan uzakta olduğundan, Amerika Birleşik Devletleri ve Karayipler üzerindeki olası etkisini hesaplamak zor."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Tropical_Storm_Danielle_forms_in_Atlantic_Ocean",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-56b473a0a107caa4248b-q2",
+      "text": "Metne göre, Danielle Tropik Fırtınası hakkında aşağıdaki ifadelerden hangisi doğru değildir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-56b473a0a107caa4248b",
+          "start": 0,
+          "end": 538,
+          "quote": "2010 Atlantik kasırga sezonunda isim verilen dördüncü fırtına olan Danielle Tropik Fırtınası Doğu Atlantik Okyanusu'nda meydana geldi. Florida, Miami'den yaklaşık 3.000 mil uzaklıkta bulunan fırtına, maksimum 40 mil/saat (64 km/saat) hızda seyreden rüzgarlara sahiptir. Ulusal Kasırga Merkezindeki bilim insanları, Danielle'in çarşamba gününe kadar kasırga haline geleceğini öngörüyor. Fırtına karadan uzakta olduğundan, Amerika Birleşik Devletleri ve Karayipler üzerindeki olası etkisini hesaplamak zor."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Tropical_Storm_Danielle_forms_in_Atlantic_Ocean",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-0635a957db347e8ed59d-q1",
+      "text": "Metne göre füzyon yıldızların ne yapmasına imkan tanır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-0635a957db347e8ed59d",
+          "start": 0,
+          "end": 403,
+          "quote": "Yıldızların ışık ve ısı vermesinin nedeni hidrojen atomlarının daha ağır elementler meydana getirmek için birleşmesiyle (veya kaynaşmasıyla) oluşan enerjidir. Bilim insanları aynı şekilde enerji üretebilen bir reaktör oluşturmak için çalışıyorlar. Ancak bu çözülmesi çok zor bir sorundur ve yararlı füzyon reaktörlerinin inşa edildiğini görmemiz yıllar alacaktır."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:The_Elements/Hydrogen",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-0635a957db347e8ed59d-q2",
+      "text": "Aşağıdakilerden hangisi yararlı bir füzyon reaktörü oluştururdu?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-0635a957db347e8ed59d",
+          "start": 0,
+          "end": 403,
+          "quote": "Yıldızların ışık ve ısı vermesinin nedeni hidrojen atomlarının daha ağır elementler meydana getirmek için birleşmesiyle (veya kaynaşmasıyla) oluşan enerjidir. Bilim insanları aynı şekilde enerji üretebilen bir reaktör oluşturmak için çalışıyorlar. Ancak bu çözülmesi çok zor bir sorundur ve yararlı füzyon reaktörlerinin inşa edildiğini görmemiz yıllar alacaktır."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:The_Elements/Hydrogen",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-9b0afd9740ad570cc14b-q1",
+      "text": "Metne göre, aşağıdaki örneklerden hangisi evrim sürecini gölgeler?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-9b0afd9740ad570cc14b",
+          "start": 0,
+          "end": 1039,
+          "quote": "Küçük bir canlı grubu (küçük bir popülasyon), geldikleri popülasyondan ayrıldığında (örneğin bir sıradağın ya da nehrin ardına giderlerse ya da geri dönmelerinin kolay olmayacağı yeni bir adaya giderlerse) genellikle kendilerini önceki çevrelerinden farklı bir çevrede bulacaklardır. Bu yeni ortam farklı kaynaklara ve farklı rakiplere sahiptir, yani yeni nüfus, daha önce ihtiyaç duymuş olduklarından daha güçlü bir rakip olmak için farklı özelliklere ya da adaptasyonlara ihtiyaç duyacaktır. Orijinal popülasyon hiç değişmedi. Hala öncekiyle aynı adaptasyonlara ihtiyaçları var. Zamanla, yeni nüfus yeni çevresine uyum sağlamaya başladıkça diğer popülasyondan gittikçe daha farklı görünmeye başlarlar. Eninde sonunda, binlerce hatta milyonlarca yıl sonra, bu iki hayvan aynı tür denemeyecek kadar farklı gözükecektir. Bu sürece yeni türlerin oluşumu anlamına gelen türleşme diyoruz. Türleşme, kaçınılmaz bir sonuç ve evrimin çok önemli bir parçasıdır."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Biology/Origin_of_Life",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-9b0afd9740ad570cc14b-q2",
+      "text": "Aşağıdaki ifadelerden hangisi türleşme sürecinin doğru tanımı değildir? ",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-9b0afd9740ad570cc14b",
+          "start": 0,
+          "end": 1039,
+          "quote": "Küçük bir canlı grubu (küçük bir popülasyon), geldikleri popülasyondan ayrıldığında (örneğin bir sıradağın ya da nehrin ardına giderlerse ya da geri dönmelerinin kolay olmayacağı yeni bir adaya giderlerse) genellikle kendilerini önceki çevrelerinden farklı bir çevrede bulacaklardır. Bu yeni ortam farklı kaynaklara ve farklı rakiplere sahiptir, yani yeni nüfus, daha önce ihtiyaç duymuş olduklarından daha güçlü bir rakip olmak için farklı özelliklere ya da adaptasyonlara ihtiyaç duyacaktır. Orijinal popülasyon hiç değişmedi. Hala öncekiyle aynı adaptasyonlara ihtiyaçları var. Zamanla, yeni nüfus yeni çevresine uyum sağlamaya başladıkça diğer popülasyondan gittikçe daha farklı görünmeye başlarlar. Eninde sonunda, binlerce hatta milyonlarca yıl sonra, bu iki hayvan aynı tür denemeyecek kadar farklı gözükecektir. Bu sürece yeni türlerin oluşumu anlamına gelen türleşme diyoruz. Türleşme, kaçınılmaz bir sonuç ve evrimin çok önemli bir parçasıdır."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Biology/Origin_of_Life",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-93192500cadff7689a86-q2",
+      "text": "Metne göre, bir olayın hangi yönünü karşılaştırmak için zaman kullanılır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-93192500cadff7689a86",
+          "start": 0,
+          "end": 560,
+          "quote": "Zaman, hep hayatımızda olan ve yaptığımız her şeyi etkileyen, ancak yine de anlaması zor olan bir şeydir. Zaman binlerce yıldır, din, felsefe ve bilim alimleri tarafından çalışılmıştır. Zamanı, bugün üzerinden, gelecekten geçmişe, uzanan olaylar serisi olarak deneyimliyoruz. Zaman ayrıca olayların süresini (uzunluğunu) nasıl kıyasladığımızdır. Döngüsel bir olayın tekrarını gözlemleyerek zamanın geçişini kendiniz işaretleyebilirsiniz. Döngüsel bir olay, düzenli olarak tekrar tekrar gerçekleşen bir şeydir."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:How_Things_Work/Time",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-93192500cadff7689a86-q1",
+      "text": "Zamanın geçişini gözlemlemek için döngüsel bir olayla ilgili neye dikkat edilmelidir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-93192500cadff7689a86",
+          "start": 0,
+          "end": 560,
+          "quote": "Zaman, hep hayatımızda olan ve yaptığımız her şeyi etkileyen, ancak yine de anlaması zor olan bir şeydir. Zaman binlerce yıldır, din, felsefe ve bilim alimleri tarafından çalışılmıştır. Zamanı, bugün üzerinden, gelecekten geçmişe, uzanan olaylar serisi olarak deneyimliyoruz. Zaman ayrıca olayların süresini (uzunluğunu) nasıl kıyasladığımızdır. Döngüsel bir olayın tekrarını gözlemleyerek zamanın geçişini kendiniz işaretleyebilirsiniz. Döngüsel bir olay, düzenli olarak tekrar tekrar gerçekleşen bir şeydir."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:How_Things_Work/Time",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-dfea589599f160f0a19b-q1",
+      "text": "Drukgyal Dzong hakkındaki hangi cümle yanlıştır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-dfea589599f160f0a19b",
+          "start": 0,
+          "end": 548,
+          "quote": "Drukgyal Dzong, Paro Bölgesi'nin (Phondey Köyü'nde) üst kesiminde yıkık bir kale ve Budist manastırıdır. 1649'da Zhabdrung Ngawang Namgyel'in Tibet-Moğol kuvvetlerine karşı kazandığı zaferin anısına kaleyi yaptırdığı bahsediliyor. 1951'de, Zhabdrung Ngawang Namgyal'ın görüntüsü gibi, Drukgyal Dzong'un yalnızca bazı kalıntılarının kalmasına neden olan bir yangın çıktı. Yangından sonra kale korunmuş ve muhafaza edilmiş, Bhutan'ın en heyecan verici görülmesi gereken yerlerinden biri olmaya devam ediyor."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Asia/Bhutan",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-dfea589599f160f0a19b-q2",
+      "text": "Hangi ifade Drukgyal Dzong’daki yangının sonuçlarını doğru olarak tanımlamaktadır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-dfea589599f160f0a19b",
+          "start": 0,
+          "end": 548,
+          "quote": "Drukgyal Dzong, Paro Bölgesi'nin (Phondey Köyü'nde) üst kesiminde yıkık bir kale ve Budist manastırıdır. 1649'da Zhabdrung Ngawang Namgyel'in Tibet-Moğol kuvvetlerine karşı kazandığı zaferin anısına kaleyi yaptırdığı bahsediliyor. 1951'de, Zhabdrung Ngawang Namgyal'ın görüntüsü gibi, Drukgyal Dzong'un yalnızca bazı kalıntılarının kalmasına neden olan bir yangın çıktı. Yangından sonra kale korunmuş ve muhafaza edilmiş, Bhutan'ın en heyecan verici görülmesi gereken yerlerinden biri olmaya devam ediyor."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:Asia/Bhutan",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-8a0699efa76103817a7c-q2",
+      "text": "Aşağıdakilerden hangisi İzmir’in özelliğini yansıtmaz?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-8a0699efa76103817a7c",
+          "start": 0,
+          "end": 626,
+          "quote": "İzmir, aşağı yukarı 3,7 milyon nüfusu ile Türkiye'nin üçüncü büyük şehridir, İstanbul'dan sonra ikinci büyük liman ve çok iyi bir ulaşım merkezidir. Bir zamanlar antik bir şehir olan İzmir, şimdilerde büyükçe bir koy etrafında kurulmuş ve dağlarla çevrelenmiş modern, gelişmiş ve işlek bir ticaret merkezi haline gelmiştir. 18. yüzyıl pazarı, tarihi camiler ve kiliseler ile şehir geleneksel Türkiye'den daha çok Akdeniz Avrupası havasına sahip olmasına rağmen geniş bulvarlar, cam binalar ve modern alışveriş merkezleri geleneksel kırmızı kiremitli çatılarla çevrilidir."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Izmir",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-8a0699efa76103817a7c-q1",
+      "text": "İzmir’le ilgili aşağıdaki özelliklerden hangisi modern zamanlardan öncesine dayanmaktadır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-8a0699efa76103817a7c",
+          "start": 0,
+          "end": 626,
+          "quote": "İzmir, aşağı yukarı 3,7 milyon nüfusu ile Türkiye'nin üçüncü büyük şehridir, İstanbul'dan sonra ikinci büyük liman ve çok iyi bir ulaşım merkezidir. Bir zamanlar antik bir şehir olan İzmir, şimdilerde büyükçe bir koy etrafında kurulmuş ve dağlarla çevrelenmiş modern, gelişmiş ve işlek bir ticaret merkezi haline gelmiştir. 18. yüzyıl pazarı, tarihi camiler ve kiliseler ile şehir geleneksel Türkiye'den daha çok Akdeniz Avrupası havasına sahip olmasına rağmen geniş bulvarlar, cam binalar ve modern alışveriş merkezleri geleneksel kırmızı kiremitli çatılarla çevrilidir."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Izmir",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-2ed95b5084bef88171ed-q1",
+      "text": "Metne göre, saldırıda kaç kişi ölmüştür?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-2ed95b5084bef88171ed",
+          "start": 0,
+          "end": 548,
+          "quote": "Hayatını kaybedenler 25 yaşındaki Nicholas Alden ve 21 yaşındaki Zachary Cuddeback. Aracı Cuddeback kullanıyordu. Edgar Veguilla kolundan ve çenesinden yaralanırken Kristoffer Schneider'in yüzünden rekonstrüktif ameliyat olması gerekti. Uka'nın silahı beşinci bir adamın kafasını doğrulmuşken başarısız oldu. Schneider devam eden ağrılara, gözde körlüğe, eksik bir kafatası bölümüne ve titanyumdan yeniden yapılmış bir yüze sahip. Schneider, ülkesindeki bir USAF üssünden telekonferans yoluyla ifade verdi."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/German_judge_orders_life_sentence_for_nation%27s_%27first_Islamic-motivated_terror_attack%27",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-2ed95b5084bef88171ed-q2",
+      "text": "Saldırı sırasında kimin silahı ateşlemedi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-2ed95b5084bef88171ed",
+          "start": 0,
+          "end": 548,
+          "quote": "Hayatını kaybedenler 25 yaşındaki Nicholas Alden ve 21 yaşındaki Zachary Cuddeback. Aracı Cuddeback kullanıyordu. Edgar Veguilla kolundan ve çenesinden yaralanırken Kristoffer Schneider'in yüzünden rekonstrüktif ameliyat olması gerekti. Uka'nın silahı beşinci bir adamın kafasını doğrulmuşken başarısız oldu. Schneider devam eden ağrılara, gözde körlüğe, eksik bir kafatası bölümüne ve titanyumdan yeniden yapılmış bir yüze sahip. Schneider, ülkesindeki bir USAF üssünden telekonferans yoluyla ifade verdi."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/German_judge_orders_life_sentence_for_nation%27s_%27first_Islamic-motivated_terror_attack%27",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-1d6fcfcd6d6713f3d32d-q1",
+      "text": "Liguria bölgesindeki uzak köylere insanlar nasıl ulaşabiliyordu?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-1d6fcfcd6d6713f3d32d",
+          "start": 0,
+          "end": 531,
+          "quote": "Beş Yer anlamına gelen Cinque Terre, İtalya'nın Liguria bölgesinde yer alan Riomaggiore, Manarola, Corniglia, Vernazza ve Monterosso adlarında beş küçük kıyı köyünden oluşmaktadır. Onlar UNESCO Dünya Mirası Listesindeler. İnsanlar yüzyıllar boyunca denizi yukarıdan gören yamaçlarda bulunan engebeli, dik arazilerde dikkatle teraslar inşa ettiler. Cazibesinin bir parçası kurumsal gelişmenin eksikliği görülebilir. Yollar, trenler ve botlar köyleri bağlar ve arabalar onlara dışarıdan erişemez."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Cinque_Terre",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-1d6fcfcd6d6713f3d32d-q2",
+      "text": "İtalyanca bir ifade olan “Cinque Terre” ne anlama gelir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-1d6fcfcd6d6713f3d32d",
+          "start": 0,
+          "end": 531,
+          "quote": "Beş Yer anlamına gelen Cinque Terre, İtalya'nın Liguria bölgesinde yer alan Riomaggiore, Manarola, Corniglia, Vernazza ve Monterosso adlarında beş küçük kıyı köyünden oluşmaktadır. Onlar UNESCO Dünya Mirası Listesindeler. İnsanlar yüzyıllar boyunca denizi yukarıdan gören yamaçlarda bulunan engebeli, dik arazilerde dikkatle teraslar inşa ettiler. Cazibesinin bir parçası kurumsal gelişmenin eksikliği görülebilir. Yollar, trenler ve botlar köyleri bağlar ve arabalar onlara dışarıdan erişemez."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Cinque_Terre",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-67b2aaabc414341984fe-q1",
+      "text": "Metne göre, söylenenleri kim duyamamıştır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-67b2aaabc414341984fe",
+          "start": 0,
+          "end": 272,
+          "quote": "\"İki yetişkin çocukla evli olan Duvall, hikayenin ilişkili olduğu Miller üzerinde büyük bir intiba bırakmadı. Yorumu sorulduğunda Miller, \"\"Mike duruşma sırasında çok konuşuyor... Ben hazırlanıyordum o yüzden ne dediğini tam olarak duyamadım,\"\" dedi.\""
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/California_lawmaker_denies_affairs_after_sexual_discussion_becomes_public",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-67b2aaabc414341984fe-q2",
+      "text": "Metne göre, aşağıdakilerden hangisi Miller’ın duruşmasıyla ilgili doğru bir ifadedir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-67b2aaabc414341984fe",
+          "start": 0,
+          "end": 272,
+          "quote": "\"İki yetişkin çocukla evli olan Duvall, hikayenin ilişkili olduğu Miller üzerinde büyük bir intiba bırakmadı. Yorumu sorulduğunda Miller, \"\"Mike duruşma sırasında çok konuşuyor... Ben hazırlanıyordum o yüzden ne dediğini tam olarak duyamadım,\"\" dedi.\""
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/California_lawmaker_denies_affairs_after_sexual_discussion_becomes_public",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-ef28577814f84ec03394-q1",
+      "text": "Hangisi Cape Town’daki MetroRail’de First Class’ın bir avantajıdır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-ef28577814f84ec03394",
+          "start": 0,
+          "end": 453,
+          "quote": "MetroRail'in Cape Town'daki ve çevresindeki banliyö trenlerinde sunduğu iki sınıf vardır: MetroPlus (First Class da denir) ve Metro (Third Class da denir). MetroPlus daha rahat ve daha az kalabalıktır ancak biraz daha pahalıdır. Fakat yine de Avrupa'daki normal metro biletlerinden daha ekonomiktir. Her bir trenin hem MetroPlus hem de Metro vagonları vardır. MetroPlus vagonları daima Cape Town şehrine en yakındaki treninin sonundadır."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Past_events/Wikimania_2018_Cape_Town_Guidebook",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-ef28577814f84ec03394-q2",
+      "text": "Metne göre, hangisi Cape Town’daki her banliyö treni için geçerlidir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-ef28577814f84ec03394",
+          "start": 0,
+          "end": 453,
+          "quote": "MetroRail'in Cape Town'daki ve çevresindeki banliyö trenlerinde sunduğu iki sınıf vardır: MetroPlus (First Class da denir) ve Metro (Third Class da denir). MetroPlus daha rahat ve daha az kalabalıktır ancak biraz daha pahalıdır. Fakat yine de Avrupa'daki normal metro biletlerinden daha ekonomiktir. Her bir trenin hem MetroPlus hem de Metro vagonları vardır. MetroPlus vagonları daima Cape Town şehrine en yakındaki treninin sonundadır."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Past_events/Wikimania_2018_Cape_Town_Guidebook",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-ce421f86db37560bdce2-q1",
+      "text": "Olay gerçekleştiğinde gemi nereye gidiyordu? ",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-ce421f86db37560bdce2",
+          "start": 0,
+          "end": 438,
+          "quote": "\"ABD Donanması da vakayı incelediklerini belirtti. Ayrıca bir açıklamada, \"\"Mürettebat şu anda gemiyi güvenli bir şekilde çıkarmanın en iyi yöntemini belirlemek için çalışıyor\"\" dediler. Bu Avenger sınıfı bir mayın önleme gemisiydi. Geminin rotası Palawan'daki Puerto Princesa'ya doğruydu. ABD Donanması'nın Yedinci Filosunda görevlendirildi ve merkezi Japonya'nın Nagasaki, Sasebo şehrinde yer almaktadır.\""
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/US_Navy_ship_damages_Tubbataha_Reef_National_Park",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-ce421f86db37560bdce2-q2",
+      "text": "Metinde bahsedilen gemiyle ilgili hangisi gerçek bilgi değildir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-ce421f86db37560bdce2",
+          "start": 0,
+          "end": 438,
+          "quote": "\"ABD Donanması da vakayı incelediklerini belirtti. Ayrıca bir açıklamada, \"\"Mürettebat şu anda gemiyi güvenli bir şekilde çıkarmanın en iyi yöntemini belirlemek için çalışıyor\"\" dediler. Bu Avenger sınıfı bir mayın önleme gemisiydi. Geminin rotası Palawan'daki Puerto Princesa'ya doğruydu. ABD Donanması'nın Yedinci Filosunda görevlendirildi ve merkezi Japonya'nın Nagasaki, Sasebo şehrinde yer almaktadır.\""
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/US_Navy_ship_damages_Tubbataha_Reef_National_Park",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-0026f0d487a3581ffbaf-q2",
+      "text": "Aşağıdakilerden hangisi araştırmacılar tarafından bildirilmemiştir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-0026f0d487a3581ffbaf",
+          "start": 0,
+          "end": 515,
+          "quote": "Science dergisinde Perşembe günü yayınlanan bir araştırma, Ekvador Galapagos Adaları'nda yeni bir kuş türünün ortaya çıktığını bildirdi. Birleşik Devletler'deki Princeton Üniversitesi ve İsveç'teki Uppsala Üniversitesi'nden araştırmacılar türlerin yalnızca iki nesilde evrimleştiğini bildirdi. Halbuki bu sürecin, endemik bir Darwin ispinozu, Geospiza fortes, ve göçmen kaktüs ispinozu, Geospiza conirostris, arasındaki üreme nedeniyle çok daha uzun sürdüğüne inanılıyordu."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Researchers_report_rapid_formation_of_new_bird_species_in_Gal%C3%A1pagos_islands",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-0026f0d487a3581ffbaf-q1",
+      "text": "Metne göre, aşağıdakilerden hangisi araştırmacıların inandığından daha az zaman almıştır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-0026f0d487a3581ffbaf",
+          "start": 0,
+          "end": 515,
+          "quote": "Science dergisinde Perşembe günü yayınlanan bir araştırma, Ekvador Galapagos Adaları'nda yeni bir kuş türünün ortaya çıktığını bildirdi. Birleşik Devletler'deki Princeton Üniversitesi ve İsveç'teki Uppsala Üniversitesi'nden araştırmacılar türlerin yalnızca iki nesilde evrimleştiğini bildirdi. Halbuki bu sürecin, endemik bir Darwin ispinozu, Geospiza fortes, ve göçmen kaktüs ispinozu, Geospiza conirostris, arasındaki üreme nedeniyle çok daha uzun sürdüğüne inanılıyordu."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Researchers_report_rapid_formation_of_new_bird_species_in_Gal%C3%A1pagos_islands",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-ed7ba3850e0c76026f8d-q2",
+      "text": "Metne göre, Dr. Ur ne konuda şüphecidir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-ed7ba3850e0c76026f8d",
+          "start": 0,
+          "end": 522,
+          "quote": "Daha önce diyabetik olup şimdi diyabetik olmayan 4 aylık farelerimiz var, diye ekledi. Halifax, Nova Scotia'daki Dalhousie Üniversitesi'nde tıp profesörü ve Kanada Diyabet Derneği'nin klinik ve bilim alanı başkanı olan Dr. Ehud Ur, çalışmanın henüz başlangıç aşamasında olduğu konusunda uyarıda bulundu. Bazı diğer uzmanlar gibi o da, bu bulguların zaten Tip 1 diyabeti olan kişilerle bir ilişkisi olmadığına dikkat çekerek diyabetin tedavi edilebileceği ile ilgili şüpheci kalmıştır."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Toronto_team-led_research_on_Type_1_Diabetes_%27groundbreaking%27",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-ed7ba3850e0c76026f8d-q1",
+      "text": "Dr. Ehud Ur tarafından yapılan araştırmayla ilgili hangisi doğrudur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-ed7ba3850e0c76026f8d",
+          "start": 0,
+          "end": 522,
+          "quote": "Daha önce diyabetik olup şimdi diyabetik olmayan 4 aylık farelerimiz var, diye ekledi. Halifax, Nova Scotia'daki Dalhousie Üniversitesi'nde tıp profesörü ve Kanada Diyabet Derneği'nin klinik ve bilim alanı başkanı olan Dr. Ehud Ur, çalışmanın henüz başlangıç aşamasında olduğu konusunda uyarıda bulundu. Bazı diğer uzmanlar gibi o da, bu bulguların zaten Tip 1 diyabeti olan kişilerle bir ilişkisi olmadığına dikkat çekerek diyabetin tedavi edilebileceği ile ilgili şüpheci kalmıştır."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Toronto_team-led_research_on_Type_1_Diabetes_%27groundbreaking%27",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-ed30b78615cfcec955f4-q2",
+      "text": "Metindeki bilgilere göre Falcone’nin ölüm nedeni neydi?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-ed30b78615cfcec955f4",
+          "start": 0,
+          "end": 702,
+          "quote": "\"Ansa'ya göre, \"\"polis, gerçek anlamda bir savaşı ateşleyebileceğinden korktukları birbirini izleyen, birkaç üst düzey suikastten endişe ediyor. Polis, Lo Piccolo'nun üstün olduğunu çünkü Provenzano'nun Palermo'daki sağ kolu olduğunu ve daha büyük deneyiminin ona, Provenzano'nun güç ağlarını sağlamlaştırırken mümkün olduğunca dikkat çekmeme politikasını izleyen eski nesil patronların saygısını kazandırdığını söyledi. Bu patronlar, 1992'de kendilerini Mafya'yla mücadeleye adayan Giovanni Falcone ve Paolo Borsellino'nun hayatına mal olan devlete karşı Riina'nın yürüttüğü savaşa son verdiğinde Provenzano tarafından dizginlenmişlerdi. \"\"\""
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Italy_arrests_reputed_Mafia_boss_Lo_Piccolo",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-ed30b78615cfcec955f4-q1",
+      "text": "Polise göre, kim Provenzano’nun sağ koludur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-ed30b78615cfcec955f4",
+          "start": 0,
+          "end": 702,
+          "quote": "\"Ansa'ya göre, \"\"polis, gerçek anlamda bir savaşı ateşleyebileceğinden korktukları birbirini izleyen, birkaç üst düzey suikastten endişe ediyor. Polis, Lo Piccolo'nun üstün olduğunu çünkü Provenzano'nun Palermo'daki sağ kolu olduğunu ve daha büyük deneyiminin ona, Provenzano'nun güç ağlarını sağlamlaştırırken mümkün olduğunca dikkat çekmeme politikasını izleyen eski nesil patronların saygısını kazandırdığını söyledi. Bu patronlar, 1992'de kendilerini Mafya'yla mücadeleye adayan Giovanni Falcone ve Paolo Borsellino'nun hayatına mal olan devlete karşı Riina'nın yürüttüğü savaşa son verdiğinde Provenzano tarafından dizginlenmişlerdi. \"\"\""
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Italy_arrests_reputed_Mafia_boss_Lo_Piccolo",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-0979bbcc161670a52ed8-q2",
+      "text": "Aşağıdakilerden hangisinden bir seyahat acentesi yoluyla rezervasyon yapmanın faydalarından biri olarak bahsedilmez?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-0979bbcc161670a52ed8",
+          "start": 0,
+          "end": 797,
+          "quote": "Önceden rezervasyon yapmak, gidecekleri yere vardıklarında uyuyabilecekleri bir yer olduğunu bilerek gezginlerin içinin rahat olmasını sağlar. Seyahat acentelerinin genelde belli otellerle anlaşmaları vardır, ancak bir seyahat acentesi aracılığıyla kamp alanları gibi diğer konaklama şekillerini de tercih edebilirsiniz. Seyahat acenteleri genellikle kahvaltı, havalimanına/havaalanından ulaşım düzenlemeleri ve hatta kombine uçuş ve otel paketlerini içeren paketler sunar. Eğer teklif hakkında düşünmek ya da varş noktanız için gereken diğer evrakları temin etmek için (vize gibi) süreye ihtiyacınız olursa, sizin için rezervasyonunuzu bekletebilirler. Herhangi bir değişiklik veya talep, doğrudan otele değil, önce seyahat acentesine iletilmelidir."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Sleep",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-0979bbcc161670a52ed8-q1",
+      "text": "Metne göre, hangi tip gezginler bir seyahat acentesinin hizmetlerinden muhtemelen pek faydalanamaz?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-0979bbcc161670a52ed8",
+          "start": 0,
+          "end": 797,
+          "quote": "Önceden rezervasyon yapmak, gidecekleri yere vardıklarında uyuyabilecekleri bir yer olduğunu bilerek gezginlerin içinin rahat olmasını sağlar. Seyahat acentelerinin genelde belli otellerle anlaşmaları vardır, ancak bir seyahat acentesi aracılığıyla kamp alanları gibi diğer konaklama şekillerini de tercih edebilirsiniz. Seyahat acenteleri genellikle kahvaltı, havalimanına/havaalanından ulaşım düzenlemeleri ve hatta kombine uçuş ve otel paketlerini içeren paketler sunar. Eğer teklif hakkında düşünmek ya da varş noktanız için gereken diğer evrakları temin etmek için (vize gibi) süreye ihtiyacınız olursa, sizin için rezervasyonunuzu bekletebilirler. Herhangi bir değişiklik veya talep, doğrudan otele değil, önce seyahat acentesine iletilmelidir."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Sleep",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-19431f920f755e32f623-q1",
+      "text": "Patlamanın ardından kim ciddi yaralanma tehlikesiyle karşı karşıya kalmıştır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-19431f920f755e32f623",
+          "start": 0,
+          "end": 502,
+          "quote": "Haberlere göre Macbeth Caddesi'ndeki bir daire gaz sızıntısı nedeniyle patladı. Bir komşunun gaz sızıntısı için aramasının ardından gaz şirketinde çalışan bir yetkili olay yerine gidiyordu. Yetkililer geldiğinde, apartman havaya uçtu. Hiçbir ağır yaralanma bildirilmedi, fakat patlama sırasında olay yerinde bulunan en az beş kişi şok belirtileri göstermeleri nedeniyle tedavi edildi. Dairenin içinde kimse yoktu. O sırada yaklaşık 100 sakin, bölgeden tahliye edildi."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Gas_explosion_reported_in_Hammersmith,_London",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-19431f920f755e32f623-q2",
+      "text": "Gaz sızıntısını kim bildirmiştir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-19431f920f755e32f623",
+          "start": 0,
+          "end": 502,
+          "quote": "Haberlere göre Macbeth Caddesi'ndeki bir daire gaz sızıntısı nedeniyle patladı. Bir komşunun gaz sızıntısı için aramasının ardından gaz şirketinde çalışan bir yetkili olay yerine gidiyordu. Yetkililer geldiğinde, apartman havaya uçtu. Hiçbir ağır yaralanma bildirilmedi, fakat patlama sırasında olay yerinde bulunan en az beş kişi şok belirtileri göstermeleri nedeniyle tedavi edildi. Dairenin içinde kimse yoktu. O sırada yaklaşık 100 sakin, bölgeden tahliye edildi."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Gas_explosion_reported_in_Hammersmith,_London",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-0d457bba29134135f304-q2",
+      "text": "‘Temiz Hava Yasası’nın seçim öncesi gösterisi olduğunu öne sürerek kim eleştirmiştir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-0d457bba29134135f304",
+          "start": 0,
+          "end": 1043,
+          "quote": "\"Başbakan Stephen Harper, PYO'da HSYH lideri Jack Layton ile Salı günkü 25 dakikalık toplantı sonrasında hükümetin 'Temiz Hava Yasasını' ikinci değerlendirmesinden önce bir daha gözden geçirilmek üzere tüm tarafların bulunduğu bir komiteye göndermeyi kabul etti. Layton, başbakan ile toplantı sırasında muhafazakarların çevre kanun teklifinde değişiklikler talep ederek Muhafazakar partinin çevre kanun teklifinin \"\"kapsamlı ve bütüncül bir şekilde yeniden yazımını\"\" istedi. Federal Hükümet, Tazmanya Devonport'taki Mersey hastanesinin fonunu devralmak için devreye girdiğinden beri, eyalet hükümeti ve bazı federal parlamento üyeleri bunun, kasım ayına kadar gerçekleştirilecek olan federal seçimlerin başlangıcı için yapılan dikkat çekici bir gösteri olmasını eleştirdi. Fakat Başbakan John Howard bu yasanın amacının sadece fazladan 45 milyon Avustralya doları harcayarak, Tazmanya hükümetinin hastane tesislerinin kalitesini düşürmesini engellemek olduğunu söyledi.\""
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Canadian_Prime_Minister_Harper_agrees_to_send_%27Clean_Air_Act%27_to_committee",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-0d457bba29134135f304-q1",
+      "text": "Kim ‘Temiz Hava Yasası’nda değişiklikler yapılmasını önermiştir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-0d457bba29134135f304",
+          "start": 0,
+          "end": 1043,
+          "quote": "\"Başbakan Stephen Harper, PYO'da HSYH lideri Jack Layton ile Salı günkü 25 dakikalık toplantı sonrasında hükümetin 'Temiz Hava Yasasını' ikinci değerlendirmesinden önce bir daha gözden geçirilmek üzere tüm tarafların bulunduğu bir komiteye göndermeyi kabul etti. Layton, başbakan ile toplantı sırasında muhafazakarların çevre kanun teklifinde değişiklikler talep ederek Muhafazakar partinin çevre kanun teklifinin \"\"kapsamlı ve bütüncül bir şekilde yeniden yazımını\"\" istedi. Federal Hükümet, Tazmanya Devonport'taki Mersey hastanesinin fonunu devralmak için devreye girdiğinden beri, eyalet hükümeti ve bazı federal parlamento üyeleri bunun, kasım ayına kadar gerçekleştirilecek olan federal seçimlerin başlangıcı için yapılan dikkat çekici bir gösteri olmasını eleştirdi. Fakat Başbakan John Howard bu yasanın amacının sadece fazladan 45 milyon Avustralya doları harcayarak, Tazmanya hükümetinin hastane tesislerinin kalitesini düşürmesini engellemek olduğunu söyledi.\""
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Canadian_Prime_Minister_Harper_agrees_to_send_%27Clean_Air_Act%27_to_committee",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-3f6bc3ea7d22ad597391-q1",
+      "text": "Aşağıdakilerden hangisi yabancı bir ülkede kendi ülkenize kıyasla daha pahalıdır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-3f6bc3ea7d22ad597391",
+          "start": 0,
+          "end": 525,
+          "quote": "Gözlükler, yabancı bir ülkede, özellikle de iş gücü maliyetinin daha düşük olduğu düşük gelirli ülkelerde daha ucuz olabilir. Özellikle sigortaya dahilse göz muayenesini kendi ülkenizde yaptırtmayı ve reçeteyi başka bir yerde doldurulmak üzere yanınızda getirmeyi düşünebilirsiniz. Bu tür bölgelerdeki en yüksek kaliteli, markalı çerçevelerle ilgili iki sorun olabilir: Bunların bazıları imitasyon olabilir ve gerçekten ithal edilmiş olanlar kendi ülkenizden daha pahalıya gelebilir."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Eye_care",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-3f6bc3ea7d22ad597391-q2",
+      "text": "Yabancı bir ülkede yüksek kaliteli çerçeveler satın almanın potansiyel risklerinden biri ne olabilir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-3f6bc3ea7d22ad597391",
+          "start": 0,
+          "end": 525,
+          "quote": "Gözlükler, yabancı bir ülkede, özellikle de iş gücü maliyetinin daha düşük olduğu düşük gelirli ülkelerde daha ucuz olabilir. Özellikle sigortaya dahilse göz muayenesini kendi ülkenizde yaptırtmayı ve reçeteyi başka bir yerde doldurulmak üzere yanınızda getirmeyi düşünebilirsiniz. Bu tür bölgelerdeki en yüksek kaliteli, markalı çerçevelerle ilgili iki sorun olabilir: Bunların bazıları imitasyon olabilir ve gerçekten ithal edilmiş olanlar kendi ülkenizden daha pahalıya gelebilir."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Eye_care",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-525b5ca81e1198481424-q1",
+      "text": "Bir video oyunu sırasında oyuncunun hareketleri kontrol etmesi için ne yapması gerekmektedir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-525b5ca81e1198481424",
+          "start": 0,
+          "end": 459,
+          "quote": "Perşembe günkü Tokyo Game Show'un açılış sunumunda Nintendo başkanı Satoru Iwata, şirketin yeni Nintendo Revolution konsolunun kumanda tasarımını açıkladı. Televizyon kumandasını andıran kumandada kullanıcının televizyonunun yakınına yerleştirilerek üç boyutlu konumunu belirleyen iki sensör kullanılıyor. Bu, oyunculara cihazı havada hareket ettirerek video oyunlarındaki hareket ve eylemleri kontrol etme imkanı sunacaktır."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Nintendo_unveils_controller_for_Revolution_console",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-525b5ca81e1198481424-q2",
+      "text": "Bir televizyon kumandası görünümünde tasarlanan nedir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-525b5ca81e1198481424",
+          "start": 0,
+          "end": 459,
+          "quote": "Perşembe günkü Tokyo Game Show'un açılış sunumunda Nintendo başkanı Satoru Iwata, şirketin yeni Nintendo Revolution konsolunun kumanda tasarımını açıkladı. Televizyon kumandasını andıran kumandada kullanıcının televizyonunun yakınına yerleştirilerek üç boyutlu konumunu belirleyen iki sensör kullanılıyor. Bu, oyunculara cihazı havada hareket ettirerek video oyunlarındaki hareket ve eylemleri kontrol etme imkanı sunacaktır."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Nintendo_unveils_controller_for_Revolution_console",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-d1057a4360351fc35589-q2",
+      "text": "Aşağıdakilerden hangisi uyku kesintisinin doğru bir tanımı değildir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-d1057a4360351fc35589",
+          "start": 0,
+          "end": 683,
+          "quote": "Uyku kesintisi, normal uyku sırasında bilinçli olarak uyanma ve kısa bir süre sonra (10-60 dakika kadar) tekrar uykuya dalma sürecidir. Bu, sizi uykunuzdan tamamen uyandırmadan sadece bilincinizi açık hale getirmek için göreceli olarak daha sessiz bir çalar saat kullanılarak kolay bir şekilde yapılabilir. Eğer kendinizi uykunuzda alarmı tekrar kurarken bulursanız, saati odanın diğer tarafına yerleştirilebilirsiniz, bu sizi alarmı kapatmak için yataktan kalkmanıza zorlar. Diğer biyoritm temelli seçenekler, uykudan önce çok fazla sıvı (özellikle su veya çay, bilinen bir idrar söktürücü) içmeyi ve birini idrara çıkmaya zorlamayı içerir."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/Lucid_Dreaming/Induction_Techniques",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-d1057a4360351fc35589-q1",
+      "text": "Normal uyku sırasında bilinçli olarak uyandıktan sonra şunlardan hangisi uyku kesintisi olarak tanımlanabilir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-d1057a4360351fc35589",
+          "start": 0,
+          "end": 683,
+          "quote": "Uyku kesintisi, normal uyku sırasında bilinçli olarak uyanma ve kısa bir süre sonra (10-60 dakika kadar) tekrar uykuya dalma sürecidir. Bu, sizi uykunuzdan tamamen uyandırmadan sadece bilincinizi açık hale getirmek için göreceli olarak daha sessiz bir çalar saat kullanılarak kolay bir şekilde yapılabilir. Eğer kendinizi uykunuzda alarmı tekrar kurarken bulursanız, saati odanın diğer tarafına yerleştirilebilirsiniz, bu sizi alarmı kapatmak için yataktan kalkmanıza zorlar. Diğer biyoritm temelli seçenekler, uykudan önce çok fazla sıvı (özellikle su veya çay, bilinen bir idrar söktürücü) içmeyi ve birini idrara çıkmaya zorlamayı içerir."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/Lucid_Dreaming/Induction_Techniques",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-6a3f74b024666f67d797-q2",
+      "text": "Metne göre, NBA’in virüsle ilgili endişelerine ne sebep olmuştur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-6a3f74b024666f67d797",
+          "start": 0,
+          "end": 267,
+          "quote": "Çarşamba günü, ABD Ulusal Basketbol Birliği (NBA), COVID-19 ile ilgili endişeler nedeniyle profesyonel basketbol sezonunu askıya aldı. NBA'in kararı, bir Utah Jazz oyuncusunun COVID-19 virüsü için yaptırdığı testin pozitif çıkmasını takiben geldi."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/National_Basketball_Association_suspends_season_due_to_COVID-19_concerns",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-6a3f74b024666f67d797-q1",
+      "text": "NBA aşağıdakilerden hangisini askıya almaya karar vermiştir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-6a3f74b024666f67d797",
+          "start": 0,
+          "end": 267,
+          "quote": "Çarşamba günü, ABD Ulusal Basketbol Birliği (NBA), COVID-19 ile ilgili endişeler nedeniyle profesyonel basketbol sezonunu askıya aldı. NBA'in kararı, bir Utah Jazz oyuncusunun COVID-19 virüsü için yaptırdığı testin pozitif çıkmasını takiben geldi."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/National_Basketball_Association_suspends_season_due_to_COVID-19_concerns",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-069198bf48cafa406b1b-q2",
+      "text": "Metinde tanımlanan alan düşünüldüğünde, garsonun aşağıdaki içeceklerden hangisini karıştırması muhtemeldir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-069198bf48cafa406b1b",
+          "start": 0,
+          "end": 674,
+          "quote": "\"Başlıca yerel birası 'Number One'dır. Çok karmaşık bir bira olmasa da hoş ve ferahlatıcıdır. Diğer yerel birasının adı da \"\"Manta\"\"dır. İçilebilecek epey Fransız şarabı olmasına rağmen Yeni Zelanda ve Avustralya şarapları daha iyi gidebilir. Yerel musluk suyunu içmek tamamen güvenlidir ancak bundan korkuyorsanız şişelenmiş su bulmak da kolaydır. Avustralyalılar için 'düz beyaz' kahve düşüncesi yabancıdır. Bir kısa siyah 'espresso'dur, cappuccino yüksek krema ile (köpüklü değil) tepeleme olarak gelir ve çay sütsüz servis edilir. Sıcak çikolata Belçika standartlarındadır. Meyve suları pahalı fakat muhteşemdir.\""
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Noum%C3%A9a",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-069198bf48cafa406b1b-q1",
+      "text": "Bütçe dostu seyahat yapan kişiler hangi tip içecekten uzak durmak isteyebilir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-069198bf48cafa406b1b",
+          "start": 0,
+          "end": 674,
+          "quote": "\"Başlıca yerel birası 'Number One'dır. Çok karmaşık bir bira olmasa da hoş ve ferahlatıcıdır. Diğer yerel birasının adı da \"\"Manta\"\"dır. İçilebilecek epey Fransız şarabı olmasına rağmen Yeni Zelanda ve Avustralya şarapları daha iyi gidebilir. Yerel musluk suyunu içmek tamamen güvenlidir ancak bundan korkuyorsanız şişelenmiş su bulmak da kolaydır. Avustralyalılar için 'düz beyaz' kahve düşüncesi yabancıdır. Bir kısa siyah 'espresso'dur, cappuccino yüksek krema ile (köpüklü değil) tepeleme olarak gelir ve çay sütsüz servis edilir. Sıcak çikolata Belçika standartlarındadır. Meyve suları pahalı fakat muhteşemdir.\""
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Noum%C3%A9a",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-376eeb3533b2f07bbdf9-q2",
+      "text": "Aşağıdakilerden hangisi kişisel ilgi açısından internetin kullanılması için bir motivasyon değildir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-376eeb3533b2f07bbdf9",
+          "start": 0,
+          "end": 579,
+          "quote": "İnternet, hem kitle iletişim hem de bireylerarası iletişim elemanlarını bir araya getirir. İnternetin belirgin özellikleri, kullanım ve memnuniyet yaklaşımı açısından ek boyutlar kazandırır. Mesela, “öğrenme” ve “sosyalleşme”, İnternet kullanımı için önemli motivasyonlar olarak tavsiye edilmektedir (James ve diğerleri, 1995). İzleyicilerin internet sitelerine tepkilerini araştırdıklarında, “şahsi katılım” ve “sürdürülen ilişkiler” Eighmey ve McCord (1998) tarafından yeni teşvik unsurları olarak da tanımlanmıştır."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/Communication_Theory/Uses_and_Gratifications",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-376eeb3533b2f07bbdf9-q1",
+      "text": "Aşağıdakilerden hangisi ilişkilerin sürdürülmesi açısından internetin kullanılması için bir motivasyon değildir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-376eeb3533b2f07bbdf9",
+          "start": 0,
+          "end": 579,
+          "quote": "İnternet, hem kitle iletişim hem de bireylerarası iletişim elemanlarını bir araya getirir. İnternetin belirgin özellikleri, kullanım ve memnuniyet yaklaşımı açısından ek boyutlar kazandırır. Mesela, “öğrenme” ve “sosyalleşme”, İnternet kullanımı için önemli motivasyonlar olarak tavsiye edilmektedir (James ve diğerleri, 1995). İzleyicilerin internet sitelerine tepkilerini araştırdıklarında, “şahsi katılım” ve “sürdürülen ilişkiler” Eighmey ve McCord (1998) tarafından yeni teşvik unsurları olarak da tanımlanmıştır."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/Communication_Theory/Uses_and_Gratifications",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-c2f7012a1fac5a786a13-q2",
+      "text": "II-76 nedir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-c2f7012a1fac5a786a13",
+          "start": 0,
+          "end": 410,
+          "quote": "Uçak İrkutsk'a doğru gidiyordu ve iç birlikler tarafından yönetiliyordu. Konuyu araştırmak için soruşturma başlatıldı. II-76, 1970'lerden beri hem Rusya'nın hem de Sovyet ordusunun büyük bir parçası olmuştur, ve geçen ay Rusya'da ciddi bir kaza geçirmiştir. 7 Ekim'de bir motor kalkışta ayrıldı, yaralanma olmadı. Rusya, o kazadan sonra Il-76'leri kısa bir süre için yere indirdi."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Russian_military_cargo_jet_crash_kills_eleven_in_Siberia",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-c2f7012a1fac5a786a13-q1",
+      "text": "Rusya’nın II-76’ların kullanımını askıya almasına ne neden olmuştur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-c2f7012a1fac5a786a13",
+          "start": 0,
+          "end": 410,
+          "quote": "Uçak İrkutsk'a doğru gidiyordu ve iç birlikler tarafından yönetiliyordu. Konuyu araştırmak için soruşturma başlatıldı. II-76, 1970'lerden beri hem Rusya'nın hem de Sovyet ordusunun büyük bir parçası olmuştur, ve geçen ay Rusya'da ciddi bir kaza geçirmiştir. 7 Ekim'de bir motor kalkışta ayrıldı, yaralanma olmadı. Rusya, o kazadan sonra Il-76'leri kısa bir süre için yere indirdi."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Russian_military_cargo_jet_crash_kills_eleven_in_Siberia",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-de1aa615e68fbc6b2e89-q2",
+      "text": "Kim Luna’dan “tuhaf” olarak bahsetmiştir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-de1aa615e68fbc6b2e89",
+          "start": 0,
+          "end": 530,
+          "quote": "\"Xinhua, hükümet soruşturmacılarının Çarşamba günü iki adet 'kara kutu' uçuş kaydedicisini kurtardığını bildirdi. Güreşçi arkadaşları da Luna'ya saygılarını sundular. Tommy Dreamer, \"\"Luna Extreme'in ilk Kraliçesiydi. İlk menajerim Luna iki ayın olduğu bir gecede öldü. Tıpkı onun gibi oldukça eşsiz. Güçlü kadın.\"\" dedi. Dustin \"\"Goldust\"\" Runnels şöyle söylemiştir \"\"Luna benim kadar tuhaftı...belki hatta daha fazla...onu seviyorum ve özleyeceğim...umarım daha iyi bir yerdedir.\"\"\""
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Canadian_professional_wrestler_Luna_Vachon_dies_aged_48",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-de1aa615e68fbc6b2e89-q1",
+      "text": "Luna’dan “Extreme'in Kraliçesi” olarak söz eden kimdir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-de1aa615e68fbc6b2e89",
+          "start": 0,
+          "end": 530,
+          "quote": "\"Xinhua, hükümet soruşturmacılarının Çarşamba günü iki adet 'kara kutu' uçuş kaydedicisini kurtardığını bildirdi. Güreşçi arkadaşları da Luna'ya saygılarını sundular. Tommy Dreamer, \"\"Luna Extreme'in ilk Kraliçesiydi. İlk menajerim Luna iki ayın olduğu bir gecede öldü. Tıpkı onun gibi oldukça eşsiz. Güçlü kadın.\"\" dedi. Dustin \"\"Goldust\"\" Runnels şöyle söylemiştir \"\"Luna benim kadar tuhaftı...belki hatta daha fazla...onu seviyorum ve özleyeceğim...umarım daha iyi bir yerdedir.\"\"\""
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Canadian_professional_wrestler_Luna_Vachon_dies_aged_48",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-1a730f0b2404877bcd9f-q1",
+      "text": "Metne göre, aşağıdaki duyulardan hangisi aşırı alkol tüketiminden zarar görebilir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-1a730f0b2404877bcd9f",
+          "start": 0,
+          "end": 505,
+          "quote": "Alkollü içkileri ölçülü biçimde için. Alkol herkese farklı etki eder ve sınırınızı bilmek çok önemlidir. Aşırı alkol tüketiminden kaynaklanan olası uzun vadeli sağlık sorunları, karaciğer hasarını ve hatta körlüğü ve ölümü içerebilir. Kaçak olarak üretilmiş alkol tüketildiğinde potansiyel tehlike artar. Kaçak içkiler, metanol dahil olmak üzere çeşitli tehlikeli yabancı maddeleri içerebilir ve küçük dozlarda bile körlüğe veya ölüme neden olabilir."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Alcoholic_beverages",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-1a730f0b2404877bcd9f-q2",
+      "text": "Metne göre, hangisi alkolün zararlı etkilerini potansiyel olarak azaltabilir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-1a730f0b2404877bcd9f",
+          "start": 0,
+          "end": 505,
+          "quote": "Alkollü içkileri ölçülü biçimde için. Alkol herkese farklı etki eder ve sınırınızı bilmek çok önemlidir. Aşırı alkol tüketiminden kaynaklanan olası uzun vadeli sağlık sorunları, karaciğer hasarını ve hatta körlüğü ve ölümü içerebilir. Kaçak olarak üretilmiş alkol tüketildiğinde potansiyel tehlike artar. Kaçak içkiler, metanol dahil olmak üzere çeşitli tehlikeli yabancı maddeleri içerebilir ve küçük dozlarda bile körlüğe veya ölüme neden olabilir."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Alcoholic_beverages",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-05b07726383ca53a9ead-q1",
+      "text": "Hangi tur organizasyonu Global Running Tours’u gerçekleştirmiştir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-05b07726383ca53a9ead",
+          "start": 0,
+          "end": 444,
+          "quote": "Yaklaşık 200 uluslararası koşu maratonu organizasyonu vardır. Bunların çoğu bağımsız olarak yürütülür. The Global Running Tours'un halefi olan Go Running Tours, dört kıtada bulunan birçok manzara koşusu sağlayıcısını bir araya getirir. Barcelona'nın Barcelona Koşu Turları ve Kopenhag'ın Koşan Kopenhag'ından köken almasıyla birlikte, hemen ardından Prag merkezli Prag Koşu Turları ve diğerleri de katıldı."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Running",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-05b07726383ca53a9ead-q2",
+      "text": "Metne göre, Go Running Tours kaç farklı manzara koşusu sağlayıcısını bir araya getirmeye yardımcı olur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-05b07726383ca53a9ead",
+          "start": 0,
+          "end": 444,
+          "quote": "Yaklaşık 200 uluslararası koşu maratonu organizasyonu vardır. Bunların çoğu bağımsız olarak yürütülür. The Global Running Tours'un halefi olan Go Running Tours, dört kıtada bulunan birçok manzara koşusu sağlayıcısını bir araya getirir. Barcelona'nın Barcelona Koşu Turları ve Kopenhag'ın Koşan Kopenhag'ından köken almasıyla birlikte, hemen ardından Prag merkezli Prag Koşu Turları ve diğerleri de katıldı."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Running",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-763d60bb03946e66ff40-q1",
+      "text": "Sezonda kalan dört yarış içinde kim Sürücüler Şampiyonası’nda dördüncü sıradadır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-763d60bb03946e66ff40",
+          "start": 0,
+          "end": 566,
+          "quote": "Yarıştan sonra Keselowski 2.250 puanla Sürücüler Şampiyonası lideri olmaya devam ediyor. Yedi puan geride olan Johnson, 2.243 puan ile ikinci sırada. Üçüncü sırada, Hamlin yirmi puan geriden geliyor ama bununla birlikte dördüncü sırada bulunan Bowyer'le arasında 5 puan bulunuyor. Kahne ve Truex Jr. sırasıyla 2.220 ve 2.207 puana sahipler, beşinci ve altıncı sıralarda yarışa devam ediyorlar. Geriye dört yarışın kaldığı sezonda  Stewart, Gordon, Kenseth ve Harvick , Sürücüler Şampiyonluğunda ilk onda yer almayı garantiledi."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Matt_Kenseth_wins_third_NASCAR_Sprint_Cup_race_of_2012",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-763d60bb03946e66ff40-q2",
+      "text": "Metinde belirtilen yarışın ardından Kahne, Sürücüler Şampiyonası’nda kaç puan almıştır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-763d60bb03946e66ff40",
+          "start": 0,
+          "end": 566,
+          "quote": "Yarıştan sonra Keselowski 2.250 puanla Sürücüler Şampiyonası lideri olmaya devam ediyor. Yedi puan geride olan Johnson, 2.243 puan ile ikinci sırada. Üçüncü sırada, Hamlin yirmi puan geriden geliyor ama bununla birlikte dördüncü sırada bulunan Bowyer'le arasında 5 puan bulunuyor. Kahne ve Truex Jr. sırasıyla 2.220 ve 2.207 puana sahipler, beşinci ve altıncı sıralarda yarışa devam ediyorlar. Geriye dört yarışın kaldığı sezonda  Stewart, Gordon, Kenseth ve Harvick , Sürücüler Şampiyonluğunda ilk onda yer almayı garantiledi."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Matt_Kenseth_wins_third_NASCAR_Sprint_Cup_race_of_2012",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-22d6c1d81ccc8088e015-q2",
+      "text": "Metne göre, bir ziyaretçi kuzey New Mexico’da iyi bir eğlence mekanı bulmak için muhtemelen nereye gitmelidir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-22d6c1d81ccc8088e015",
+          "start": 0,
+          "end": 728,
+          "quote": "Pueblo'ların çoğunun ne kadar ücra oldukları düşünülürse Albuquerque ya da Santa Fe'ye seyahat etmeden önemli kayda değer bir hayatı bulamayacaksınız. Ancak, yukarıda belirtilen kumarhanelerin hemen hemen tamamı içecek servisine sahiptir ve bunlardan birkaçı, ünlü eğlence faaliyetleri de sunmaktadır (öncelikli olarak Albuquerque ve Santa Fe civarında bulunan büyük kumarhaneler). Dikkat: Buradaki küçük kasaba barları, genellikle ülke dışından gelen ziyaretçilerin takılabileceği yerler değildir. Öncelikle, kuzey New Mexico'da alkollü araç kullanmaya dair önemli sorunlar vardır ve alkollü sürücülerin yoğunluğu küçük kasaba barlarına yakın bölgelerde daha yüksektir."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/New_Mexico_Pueblos",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-22d6c1d81ccc8088e015-q1",
+      "text": "Metne göre, ziyaretçiler New Mexico’nun kuzeyinde gece hayatı ararken nerelerden uzak durmalıdırlar?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-22d6c1d81ccc8088e015",
+          "start": 0,
+          "end": 728,
+          "quote": "Pueblo'ların çoğunun ne kadar ücra oldukları düşünülürse Albuquerque ya da Santa Fe'ye seyahat etmeden önemli kayda değer bir hayatı bulamayacaksınız. Ancak, yukarıda belirtilen kumarhanelerin hemen hemen tamamı içecek servisine sahiptir ve bunlardan birkaçı, ünlü eğlence faaliyetleri de sunmaktadır (öncelikli olarak Albuquerque ve Santa Fe civarında bulunan büyük kumarhaneler). Dikkat: Buradaki küçük kasaba barları, genellikle ülke dışından gelen ziyaretçilerin takılabileceği yerler değildir. Öncelikle, kuzey New Mexico'da alkollü araç kullanmaya dair önemli sorunlar vardır ve alkollü sürücülerin yoğunluğu küçük kasaba barlarına yakın bölgelerde daha yüksektir."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/New_Mexico_Pueblos",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-9e40c3aab315fab669cd-q2",
+      "text": "Metne göre, aşağıdakilerden hangisi deprem nedeniyle hasar görmüştür?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-9e40c3aab315fab669cd",
+          "start": 0,
+          "end": 556,
+          "quote": "NHK ayrıca Niigata ilinde bulunan Kashiwazaki Kariwa nükleer santralinin olağan surette faaliyette bulunduğunu belirtti. Hokuriku Electric Power Co., sarsıntının herhangi bir zarar vermediğini ve Shika nükleer santralindeki 1 ve 2 Numaralı reaktörlerin çalışmasının durdurulduğunu belirtti. Bölgede yaklaşık 9400 evin susuz kaldığı ve yaklaşık 100 evin ise elektriğinin olmadığı belirtildi. Bazı yollar hasar gördü, etkilenen bölgelerde demiryolu hizmetleri aksadı ve Ishikawa bölgesindeki Noto Havaalanı hâlâ kapalı."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Large_earthquake_off_Japan,_tsunami_warning_issued",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-9e40c3aab315fab669cd-q1",
+      "text": "Aşağıdakilerden hangisi depremden sonra çalışmaya devam etmiştir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-9e40c3aab315fab669cd",
+          "start": 0,
+          "end": 556,
+          "quote": "NHK ayrıca Niigata ilinde bulunan Kashiwazaki Kariwa nükleer santralinin olağan surette faaliyette bulunduğunu belirtti. Hokuriku Electric Power Co., sarsıntının herhangi bir zarar vermediğini ve Shika nükleer santralindeki 1 ve 2 Numaralı reaktörlerin çalışmasının durdurulduğunu belirtti. Bölgede yaklaşık 9400 evin susuz kaldığı ve yaklaşık 100 evin ise elektriğinin olmadığı belirtildi. Bazı yollar hasar gördü, etkilenen bölgelerde demiryolu hizmetleri aksadı ve Ishikawa bölgesindeki Noto Havaalanı hâlâ kapalı."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Large_earthquake_off_Japan,_tsunami_warning_issued",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-3c4ab71fe86fa14fc9c7-q1",
+      "text": "Bir turist bir çitayı olabildiğince iyi görebilmek için ne yapmalıdır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-3c4ab71fe86fa14fc9c7",
+          "start": 0,
+          "end": 739,
+          "quote": "\"Safariler belki de Afrika'daki en büyük turizm çekiciliğidir ve birçok ziyaretçi için en öne çıkan noktadır. Safari teriminin sıkça kullanılan kullanımı, özellikle savanalarda yaşayan çarpıcı Afrika yaban hayvanlarını izlemek için yapılan yolculukları ifade etmektedir. Filler ve zürafalar gibi bir takım hayvanlar, arabalara daha fazla yakınlaşma eğilimindedirler bı sayede standart ekipmanlar iyi bir görüş sağlar. Aslanlar, çitalar ve leoparlar bazen utangaçtırlar ve onları dürbünlerle daha iyi göreceksiniz. Yürüyerek safari (\"\"doğa yürüyüşü\"\", \"\"doğa yürüyüş safarisi\"\" veya \"\"ayaklama\"\" olarak da adlandırılır) birkaç saat veya birkaç günlük yürüyüşten ibarettir.\""
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Safaris",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-3c4ab71fe86fa14fc9c7-q2",
+      "text": "Metne göre, araçla safari yaparken bir ziyaretçi muhtemelen hangi tür hayvanlarla karşılaşır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-3c4ab71fe86fa14fc9c7",
+          "start": 0,
+          "end": 739,
+          "quote": "\"Safariler belki de Afrika'daki en büyük turizm çekiciliğidir ve birçok ziyaretçi için en öne çıkan noktadır. Safari teriminin sıkça kullanılan kullanımı, özellikle savanalarda yaşayan çarpıcı Afrika yaban hayvanlarını izlemek için yapılan yolculukları ifade etmektedir. Filler ve zürafalar gibi bir takım hayvanlar, arabalara daha fazla yakınlaşma eğilimindedirler bı sayede standart ekipmanlar iyi bir görüş sağlar. Aslanlar, çitalar ve leoparlar bazen utangaçtırlar ve onları dürbünlerle daha iyi göreceksiniz. Yürüyerek safari (\"\"doğa yürüyüşü\"\", \"\"doğa yürüyüş safarisi\"\" veya \"\"ayaklama\"\" olarak da adlandırılır) birkaç saat veya birkaç günlük yürüyüşten ibarettir.\""
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Safaris",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-2bb55bca758da74a5a47-q2",
+      "text": "Metne göre, San Francisco’yla alakalı aşağıdaki ifadelerden hangisi doğru değildir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-2bb55bca758da74a5a47",
+          "start": 0,
+          "end": 679,
+          "quote": "San Fransisco'nun ekonomisi onun birinci sınıf turist cazibesi olmasına bağlı olsa da, ekonomisi farklı alanlara dağılmıştır. En büyük istihdam sektörleri profesyonel hizmetler, hükümet, finans, ticaret ve turizmdir. Müzikte, filmlerde, edebiyatta ve popüler kültürde sıklıkla yer alması, kentin ve kentin sembolik yerlerinin tüm dünyada tanınmasını sağlamıştır. San Francisco, çok sayıda otel, restoran ve birinci sınıf kongre tesisleri ile büyük bir turizm altyapısı geliştirmiştir. San Francisco aynı zamanda diğer Asya mutfakları olan Kore, Tayland, Hint ve Japon mutfakları açısından ülkedeki en iyi yerlerden bir tanesidir."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/San_Francisco",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-2bb55bca758da74a5a47-q1",
+      "text": "Metne göre, San Francisco’nun dünya çapında tanınmasında hangisinin payı olmuştur?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-2bb55bca758da74a5a47",
+          "start": 0,
+          "end": 679,
+          "quote": "San Fransisco'nun ekonomisi onun birinci sınıf turist cazibesi olmasına bağlı olsa da, ekonomisi farklı alanlara dağılmıştır. En büyük istihdam sektörleri profesyonel hizmetler, hükümet, finans, ticaret ve turizmdir. Müzikte, filmlerde, edebiyatta ve popüler kültürde sıklıkla yer alması, kentin ve kentin sembolik yerlerinin tüm dünyada tanınmasını sağlamıştır. San Francisco, çok sayıda otel, restoran ve birinci sınıf kongre tesisleri ile büyük bir turizm altyapısı geliştirmiştir. San Francisco aynı zamanda diğer Asya mutfakları olan Kore, Tayland, Hint ve Japon mutfakları açısından ülkedeki en iyi yerlerden bir tanesidir."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/San_Francisco",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-3e0e51102dde7e17bd31-q1",
+      "text": "Metne göre, neredeki evlerin çoğu sifonlu tuvalete sahipti?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-3e0e51102dde7e17bd31",
+          "start": 0,
+          "end": 435,
+          "quote": "Harappa ve Mohenjo-daro şehirlerinin hemen hemen her evi sofistike bir kanalizasyon sistemine bağlı bir sifonlu tuvalete sahipti. Yunanistan'da Girit ve Santorini Adasında bulunan Minos kentlerinin evlerinde kanalizasyon sistemi kalıntıları bulundu. Eski Mısır, İran ve Çin'de de tuvaletler vardı. Roma medeniyetinde tuvaletler bazen kadın ve erkeklerin karma bir şirkette bir arada olduğu hamamların bir parçasıydı."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:How_Things_Work/Flush_Toilet",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-3e0e51102dde7e17bd31-q2",
+      "text": "Aşağıdaki yerlerden hangisinde gelişmiş kanalizasyon sistemleri bulunurdu?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-3e0e51102dde7e17bd31",
+          "start": 0,
+          "end": 435,
+          "quote": "Harappa ve Mohenjo-daro şehirlerinin hemen hemen her evi sofistike bir kanalizasyon sistemine bağlı bir sifonlu tuvalete sahipti. Yunanistan'da Girit ve Santorini Adasında bulunan Minos kentlerinin evlerinde kanalizasyon sistemi kalıntıları bulundu. Eski Mısır, İran ve Çin'de de tuvaletler vardı. Roma medeniyetinde tuvaletler bazen kadın ve erkeklerin karma bir şirkette bir arada olduğu hamamların bir parçasıydı."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/Wikijunior:How_Things_Work/Flush_Toilet",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-603638fc3c8ec21437b8-q2",
+      "text": "Dinozorların tüylerinde ne yoktu?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-603638fc3c8ec21437b8",
+          "start": 0,
+          "end": 1258,
+          "quote": "Bu sadece zaten hali hazırda olan bir teori olan en azından bazı dinozorların tüylerinin olduğunu doğrulamakla kalmıyor, aynı zamanda fosillerin genel olarak yapamayacağı, renk ve üç boyutlu düzenleme gibi ayrıntıları da sağlıyor. Bilim insanları, bu hayvanın tüylerinin gövdenin alt kısmında soluk veya karotenoid renkli, üst kısmında ise kestane-kahverengi olduğunu söylüyor. Keşif aynı zamanda kuşlardaki tüylerin evrimi konusunda fikirler veriyor. Dinozor tüylerinde, kuş tüyü sapı adı verilen iyi gelişmiş bir sap olmadığı fakat çengeller ve çengelcikler gibi diğer tüy özellikleri bulunduğundan araştırmacılar, kuş tüyü sapının muhtemelen bu özelliklerden daha sonra ortaya çıkan bir evrimsel gelişme olduğu sonucuna vardı. Tüylerin yapısı, uçuş amaçlı kullanılmadıklarını, daha ziyade sıcaklık düzenleme ve görüntü amaçlı kullanıldıklarını öne sürüyor. Araştırmacılar, bunun genç bir dinozorun kuyruğu olmasına rağmen numunenin yavru tüyü değil yetişkin tüyü gösterdiğini söylüyor. Bunun genç bir dinozorun kuyruğu olmasına rağmen araştırmacılar, örneğin bir civciv tüyünü değil yetişkin tüylerini işaret ettiğini iddia etti."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Scientists_find_dinosaur_feathers_preserved_in_amber",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-603638fc3c8ec21437b8-q1",
+      "text": "Şu bulgulardan hangisi tüylerin keşfedilmesinin sonucu değildir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-603638fc3c8ec21437b8",
+          "start": 0,
+          "end": 1258,
+          "quote": "Bu sadece zaten hali hazırda olan bir teori olan en azından bazı dinozorların tüylerinin olduğunu doğrulamakla kalmıyor, aynı zamanda fosillerin genel olarak yapamayacağı, renk ve üç boyutlu düzenleme gibi ayrıntıları da sağlıyor. Bilim insanları, bu hayvanın tüylerinin gövdenin alt kısmında soluk veya karotenoid renkli, üst kısmında ise kestane-kahverengi olduğunu söylüyor. Keşif aynı zamanda kuşlardaki tüylerin evrimi konusunda fikirler veriyor. Dinozor tüylerinde, kuş tüyü sapı adı verilen iyi gelişmiş bir sap olmadığı fakat çengeller ve çengelcikler gibi diğer tüy özellikleri bulunduğundan araştırmacılar, kuş tüyü sapının muhtemelen bu özelliklerden daha sonra ortaya çıkan bir evrimsel gelişme olduğu sonucuna vardı. Tüylerin yapısı, uçuş amaçlı kullanılmadıklarını, daha ziyade sıcaklık düzenleme ve görüntü amaçlı kullanıldıklarını öne sürüyor. Araştırmacılar, bunun genç bir dinozorun kuyruğu olmasına rağmen numunenin yavru tüyü değil yetişkin tüyü gösterdiğini söylüyor. Bunun genç bir dinozorun kuyruğu olmasına rağmen araştırmacılar, örneğin bir civciv tüyünü değil yetişkin tüylerini işaret ettiğini iddia etti."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Scientists_find_dinosaur_feathers_preserved_in_amber",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-e7bc77311b8f4f31151c-q2",
+      "text": "Metne göre, bir gezgin daha serin iklim seviyorsa Montevideo’yu ne zaman ziyaret etmelidir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-e7bc77311b8f4f31151c",
+          "start": 0,
+          "end": 621,
+          "quote": "\"Montevideo, ekvatorun güneyinde olduğundan kuzey yarımkürede kış varken orada yaz, kuzey yarımkürede yaz varken orada kış olur.. Montevideo, subtropikal iklim bölgesindedir. Yaz aylarında 30°C'nin üzerinde sıcaklıklar yaygın görülür. Kış aldatıcı bir şekilde soğuk olabilir. Sıcaklıklar nadiren donma noktasının altına iner fakat rüzgar ve nem bir araya gelerek termometrenin gösterdiğinden daha soğuk hissetmenize neden olur. Yağışlı ve \"\"kurak\"\" mevsimler olarak tanımlanabilecek belirgin mevsimleri yoktur. Yağmur miktarı yıl boyunca aşağı yukarı aynı miktarda kalır.\""
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Montevideo",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-e7bc77311b8f4f31151c-q1",
+      "text": "Metne göre, rüzgarlı havalardan kaçınmak istiyorsa bir gezgin Montevideo’yu ne zaman ziyaret etmelidir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-e7bc77311b8f4f31151c",
+          "start": 0,
+          "end": 621,
+          "quote": "\"Montevideo, ekvatorun güneyinde olduğundan kuzey yarımkürede kış varken orada yaz, kuzey yarımkürede yaz varken orada kış olur.. Montevideo, subtropikal iklim bölgesindedir. Yaz aylarında 30°C'nin üzerinde sıcaklıklar yaygın görülür. Kış aldatıcı bir şekilde soğuk olabilir. Sıcaklıklar nadiren donma noktasının altına iner fakat rüzgar ve nem bir araya gelerek termometrenin gösterdiğinden daha soğuk hissetmenize neden olur. Yağışlı ve \"\"kurak\"\" mevsimler olarak tanımlanabilecek belirgin mevsimleri yoktur. Yağmur miktarı yıl boyunca aşağı yukarı aynı miktarda kalır.\""
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikivoyage.org/wiki/Montevideo",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-9e23197ceefbdb0e5abc-q1",
+      "text": "Avrupa’da ana meselesi din yerine güç dengesi olan ilk savaşın hangi ülkede yapıldığı belirtilmiştir?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-9e23197ceefbdb0e5abc",
+          "start": 0,
+          "end": 642,
+          "quote": "Güç dengesi, Avrupa milletlerinin tüm Avrupa devletlerinin milli egemenliklerini korumasını amaçlayan bir sistemdi. Konsept, tüm Avrupa uluslarının tek bir ulusun güçlenmesini engellemek zorunda kalmasıydı ve bu nedenle ulusal hükümetler genellikle dengeyi korumak amacıyla ittifaklarını sıkça değiştiriyorlardı. İspanyol Veraset Savaşı ana meselesi güçler dengesi olan ilk savaştır. Avrupalı güçlerin artık dini savaşları olduğu bahanesine sahip olamayacağı ile bu, önemli bir değişime işaret ediyordu. Böylelikle Otuz Yıl Savaşları, dini savaş olarak sınıflandırılan son savaş olacaktı."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikibooks.org/wiki/European_History/Absolutism_in_Europe",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-9e23197ceefbdb0e5abc-q2",
+      "text": "Hangi savaş zaman zaman son ‘din savaşı’ olarak tanımlanmaktadır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-9e23197ceefbdb0e5abc",
+          "start": 0,
+          "end": 642,
+          "quote": "Güç dengesi, Avrupa milletlerinin tüm Avrupa devletlerinin milli egemenliklerini korumasını amaçlayan bir sistemdi. Konsept, tüm Avrupa uluslarının tek bir ulusun güçlenmesini engellemek zorunda kalmasıydı ve bu nedenle ulusal hükümetler genellikle dengeyi korumak amacıyla ittifaklarını sıkça değiştiriyorlardı. İspanyol Veraset Savaşı ana meselesi güçler dengesi olan ilk savaştır. Avrupalı güçlerin artık dini savaşları olduğu bahanesine sahip olamayacağı ile bu, önemli bir değişime işaret ediyordu. Böylelikle Otuz Yıl Savaşları, dini savaş olarak sınıflandırılan son savaş olacaktı."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikibooks.org/wiki/European_History/Absolutism_in_Europe",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-162c5212145a8a1d4031-q2",
+      "text": "Aşağıdakilerden hangisi için Irak Çalışma Grubu tarafından raporlarında çağrıda bulunulmamıştır?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-162c5212145a8a1d4031",
+          "start": 0,
+          "end": 774,
+          "quote": "Irak Çalışma Grubu bildirisni bugün 12.00 GMT'de takdim etti. Bu noktada Irak'ta yapılacak eylemlerin; mezhep savaşlarını, artan şiddeti veya kaosa kayışı durduracağını kimsenin garanti edemeyeceği konusunda uyarıyor. Rapor, Amerika Birleşik Devletleri'nde Ortadoğu'ya karşı politika hakkında açık bir müzakere ve bir uzlaşma istemiyle başlıyor. Rapor, Yönetimin Irak politikasının hemen hemen her yönünü yoğun bir şekilde eleştiriyor ve acilen bir yön değişikliği çağrısında bulunuyor. 78 önerisinden ilki, bu yılın sonuna kadar Irak'ın sınırlarının düşman müdahalesine karşı korunması ve komşularıyla diplomatik ilişkilerin yeniden kurulmasını sağlamak için yeni bir diplomatik inisiyatifin alınmasıdır."
+        }
+      ],
+      "upstream_question_number": 2,
+      "upstream_link": "https://en.wikinews.org/wiki/Iraq_Study_Group_Report:_Iraq_could_be_on_a_slide_towards_chaos",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    },
+    {
+      "query_id": "belebele-tr-162c5212145a8a1d4031-q1",
+      "text": "Aşağıdakilerden hangisi Irak Çalışma Grubu’ndan alınan raporda yer almaz?",
+      "split": "test",
+      "evidence": [
+        {
+          "source_id": "belebele-tr-162c5212145a8a1d4031",
+          "start": 0,
+          "end": 774,
+          "quote": "Irak Çalışma Grubu bildirisni bugün 12.00 GMT'de takdim etti. Bu noktada Irak'ta yapılacak eylemlerin; mezhep savaşlarını, artan şiddeti veya kaosa kayışı durduracağını kimsenin garanti edemeyeceği konusunda uyarıyor. Rapor, Amerika Birleşik Devletleri'nde Ortadoğu'ya karşı politika hakkında açık bir müzakere ve bir uzlaşma istemiyle başlıyor. Rapor, Yönetimin Irak politikasının hemen hemen her yönünü yoğun bir şekilde eleştiriyor ve acilen bir yön değişikliği çağrısında bulunuyor. 78 önerisinden ilki, bu yılın sonuna kadar Irak'ın sınırlarının düşman müdahalesine karşı korunması ve komşularıyla diplomatik ilişkilerin yeniden kurulmasını sağlamak için yeni bir diplomatik inisiyatifin alınmasıdır."
+        }
+      ],
+      "upstream_question_number": 1,
+      "upstream_link": "https://en.wikinews.org/wiki/Iraq_Study_Group_Report:_Iraq_could_be_on_a_slide_towards_chaos",
+      "original_task": "multiple-choice reading comprehension adapted to passage retrieval"
+    }
+  ]
+}

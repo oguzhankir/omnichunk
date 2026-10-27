@@ -1,0 +1,11 @@
+{
+ "schema_version": 1,
+ "namespace": "omnichunk-v3-belebele-turkish|2026-10-27",
+ "dataset": "facebook/belebele",
+ "revision": "7899cdfa4e1e0d733fd77c848e2c273cb1d32be2",
+ "license": "CC-BY-SA-4.0",
+ "selection": "Exclude normalized English/Turkish passage overlap and English/Turkish question overlap with any previously published corpus. Group rows by original passage ID or exact NFC/whitespace-normalized passage. Select first120eligible groups with >=2 questions sorted SHA256(namespace+groupID), alternate groups into dev/test, use first2 distinct normalized questions in SHA256(namespace+questionID) order per group. If fewer120 eligible groups, use largest even group count; no retrieval scores or model embeddings inform selection.",
+ "evidence_policy": "Complete originating unmodified Turkish passage as evidence, not minimal answer spans. Query is human question only; choices and correct answer are retained only in provenance, never indexed or used to generate query. This adapts multiple-choice reading comprehension to passage retrieval.",
+ "split": "All questions and identical/normalized-equivalent source passages stay in one split.120unique query texts per split target. Validation encrypted until final source/model/settings freeze.",
+ "limitations": ["Passage relevance is derived from source reading-comprehension pairing, not independent chunk support annotation", "Whole-passage recall rewards recovering all source bytes, even bytes not necessary to answer the question", "Passages are short and may be in pretrained models' training data", "Human-translated Turkish is not original Turkish production data"]
+}

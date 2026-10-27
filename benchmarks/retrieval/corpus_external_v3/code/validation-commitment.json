@@ -1,0 +1,11 @@
+{
+  "ciphertext_sha256": "05b711e14e1378e96d9a2fdf1ad1d01ccf5767eaf6d9a9175efc5fc1695452b8",
+  "plaintext_archive_sha256": "dc06807e809eda0d8a083d3633a6913edf1a350ac320216f1e0e234f23bb502b",
+  "validation_manifest_sha256": "ddbe1ee7172576c20339ed6e261bc066bb4269612b2f04232cd89a07498be46f",
+  "documents": 64,
+  "queries": 64,
+  "repository_clusters": 16,
+  "cipher": "FernetAES128CBC-HMACSHA256",
+  "custody": "code_dataset agent key only;not externalcustody",
+  "query_policy": "Firstblanklineparagraph;max101native tokens;supersedes full-docstringcommitmentbefore scoring"
+}

@@ -1,5 +1,13 @@
 # Benchmarks
 
+Frozen retrieval reports are retained in Git and excluded from the source
+distribution. Use a repository checkout to inspect or reproduce those records.
+Corpus sources and recorded evidence have Git attributes that preserve their
+exact bytes on systems using automatic line-ending conversion; do not format
+frozen data or rewrite its whitespace. See
+[`corpus_external_v3`](retrieval/corpus_external_v3/README.md) for licensed code
+and Turkish passage data, reproduction requirements and evaluation limitations.
+
 These scripts measure declared workloads and configurations. Record the commit,
 dependency versions, corpus hash/license, platform and optional acceleration with
 results. Structural checks and throughput do not establish retrieval quality.
@@ -184,6 +192,35 @@ comparisons and provenance for each model and source view. Unit-test vectors and
 random local models remain plumbing checks. Independent review of selected
 evidence labels and production design-partner evaluation remain M1 requirements.
 
+The [real-source quality/cost v3 report](retrieval/reports/quality-v3/README.md)
+freezes runtime/harness `d0bd4b5ea10ff458313a82b3340c8f1a3f49e572` against
+prior main `e63c7f097a8ccec39262c8fb00fb2375a3e5283d`. It adds the
+[licensed external corpus](retrieval/corpus_external_v3/README.md): Turkish
+Belebele question stems with whole-passage gold and CodeSearchNet documentation
+summaries with whole-function gold, including a correlated original-file view.
+The proxy queries/gold do not measure answer accuracy or complete dependency
+support; omitted choices can underspecify Turkish questions. Repository/source
+splits, fixed model/settings/profile choices and named references precede release.
+
+The report preserves 95 successful baseline cells and five conformance failures,
+all 30 final profile cells, predeclared context sensitivities and descriptive
+cluster-paired intervals. English isolated-code compact at 64 tokens improves
+over the strongest observed conforming named strategy while exactly tying fixed
+recall. Multilingual and real-file results include losses, with substantial
+compact 96-token regressions and a default English real-file 96-token decline.
+The preselected comparator, ex-post observed best and fixed control remain
+distinct. Neither global/Pareto superiority nor M1 completion is claimed.
+
+The independent options `markdown_paragraph_policy`, `prose_boundary_policy`
+and `code_boundary_policy` default to `"preserve"`, `"sentence"` and `"structure"`.
+Their packing/compact values are opt-in cost/quality tradeoffs, not automatic
+quality upgrades. The v3 record retains every rejected development trial, negative
+context study and the parent/window development gain that did not replicate on
+validation. Shared encoder/cache/new-work scopes are separate from frozen search
+timings. Corpus release records disclose procedural custody, transient code-key
+loss and exact pinned-source reconstruction. Validation is now observed data;
+independent support-label and production design-partner review remain open.
+
 ### Baseline/candidate dense experiments
 
 `run_dense_experiment.py` orchestrates the current evaluation harness against an
@@ -313,8 +350,9 @@ nonadditive full-input budgets remain enforced.
 Markdown paragraph isolation also applies to small documents whose complete text
 would fit one chunk: a heading and three plain paragraphs can now produce three
 chunks at a 256-character capacity. The minimum size remains soft and does not
-recombine these body paragraphs. No compact-profile flag is introduced. These
-rules can increase chunks, stored vectors and embedding/index work, and can
+recombine these body paragraphs. That historical v2 change introduced no
+compaction option; v3 now offers the independent opt-in policies documented above.
+These rules can increase chunks, stored vectors and embedding/index work, and can
 reduce adjacent context in a retrieved passage. Assess these costs with the
 reported evidence gains and losses; the change makes no universal speed, memory,
 embedding-cost or superiority claim.

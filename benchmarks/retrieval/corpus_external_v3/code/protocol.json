@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "dataset": "code-search-net/code_search_net",
+  "revision": "bd0cf261e357a3eb5c8fba490d23ec1a1cd59555",
+  "namespace": "omnichunk-codesearchnet-v3-2026-10-27",
+  "selection_before_scoring": true,
+  "development_partition": "validation",
+  "validation_partition": "test",
+  "repositories_per_split": 16,
+  "functions_per_repository": 4,
+  "fallback": "Use fewer qualifying MIT repositories if necessary;never change eligibility using scores",
+  "eligibility": "Python3AST exactly one function;firstbody string docstring;documentation10to1000chars;after removing allASTdocstrings code80to8000UTF8bytes remains parseable;normalized full query absent from normalized code;queries/codes unique;atleast4eligible functions per repo;exact-commit root license carriesMITgrant/disclaimer",
+  "ordering": "SHA256(namespace|repository) ascending;functions SHA256(namespace|code_url|func_name),URLtiebreaker;first16MITrepositories and4functions each",
+  "document_policy": "One.py document per original extracted function;ASTdocstrings removed;no cross-file or cross-function joins;gold whole transformed function;repository remains split/bootstrap cluster",
+  "limitations": [
+    "Docstrings are human-authored retrieval proxies,not verified user questions",
+    "Full-function gold is not complete dependency evidence",
+    "MIT-only Python selection bias",
+    "Pretraining overlap possible",
+    "Code never executed",
+    "64queries cluster within16repositories"
+  ],
+  "amendment_before_scoring": {
+    "reason": "Root requests individual real function documents rather than synthetic bundles",
+    "previous_protocol_sha256": "f46ec534a1e11fd2983b2e28de8644eeb4a8cc0426d576eaffcaa3a1f093b22a",
+    "selection_unchanged": true
+  },
+  "query_policy_amendment_before_scores": {
+    "timestamp": "2026-10-27T11:19:53.568363+00:00",
+    "policy": "Use first blank-line-separated paragraph of original documentation as query for all selected functions",
+    "reason": "Full docstringsoverflow128native query token limit;firstparagraph summaries fit all128",
+    "original_full_docstring_overflow": {
+      "dev": 6,
+      "validation": 7
+    },
+    "selected_function_changes": 0,
+    "summary_native_max": {
+      "dev": 98,
+      "validation": 101
+    },
+    "selection_scoring_used": false
+  }
+}

@@ -1,0 +1,132 @@
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index c124fb9..2f16891 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -8,6 +8,8 @@ on:
+ jobs:
+   test:
+     runs-on: ubuntu-latest
++    env:
++      NLTK_DATA: ${{ runner.temp }}/omnichunk-nltk-data
+     strategy:
+       matrix:
+         python-version: ["3.10", "3.11", "3.12", "3.13"]
+@@ -32,6 +34,21 @@ jobs:
+         if: matrix.python-version == '3.12'
+         run: pip install -r benchmarks/retrieval/requirements.txt
+ 
++      - name: Prepare private NLTK assets
++        # Recent NLTK refuses shared writable package caches. Download serially
++        # before workers start; older LlamaIndex also expects the punkt package.
++        run: |
++          umask 077
++          install -d -m 700 "$NLTK_DATA"
++          python - <<'PY'
++          import os
++          import nltk
++          for asset in ("punkt", "punkt_tab", "stopwords"):
++              nltk.download(asset, download_dir=os.environ["NLTK_DATA"], quiet=True, raise_on_error=True)
++          for resource in ("tokenizers/punkt", "tokenizers/punkt_tab", "corpora/stopwords"):
++              nltk.data.find(resource)
++          PY
++
+       - name: Historical throughput check (explicitly skips absent baseline)
+         run: python scripts/check_benchmarks.py --run-regression-gate
+ 
+diff --git a/.github/workflows/dense-evaluation.yml b/.github/workflows/dense-evaluation.yml
+index b4e0bc9..898f3eb 100644
+--- a/.github/workflows/dense-evaluation.yml
++++ b/.github/workflows/dense-evaluation.yml
+@@ -71,6 +71,7 @@ jobs:
+       MKL_NUM_THREADS: "2"
+       TOKENIZERS_PARALLELISM: "false"
+       PYTHONHASHSEED: "0"
++      NLTK_DATA: ${{ runner.temp }}/omnichunk-nltk-data
+     steps:
+       - uses: actions/checkout@v4
+         with:
+@@ -83,6 +84,19 @@ jobs:
+           pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
+           pip install -e '.[dev]' -r benchmarks/retrieval/requirements.txt
+           pip install sentence-transformers==6.2.0 transformers==5.20.2 huggingface-hub==2.3.0
++      - name: Prepare private NLTK assets
++        # Both frozen runtimes inherit the same trusted comparator data directory.
++        run: |
++          umask 077
++          install -d -m 700 "$NLTK_DATA"
++          python - <<'PY'
++          import os
++          import nltk
++          for asset in ("punkt", "punkt_tab", "stopwords"):
++              nltk.download(asset, download_dir=os.environ["NLTK_DATA"], quiet=True, raise_on_error=True)
++          for resource in ("tokenizers/punkt", "tokenizers/punkt_tab", "corpora/stopwords"):
++              nltk.data.find(resource)
++          PY
+       - name: Record execution environment
+         run: |
+           mkdir -p environment
+diff --git a/.github/workflows/integrations.yml b/.github/workflows/integrations.yml
+index 5806f5e..8a6e367 100644
+--- a/.github/workflows/integrations.yml
++++ b/.github/workflows/integrations.yml
+@@ -26,6 +26,7 @@ jobs:
+           --health-interval 5s --health-timeout 5s --health-retries 10
+     env:
+       OMNICHUNK_PGVECTOR_DSN: postgresql://omnichunk:omnichunk@localhost:5432/omnichunk
++      NLTK_DATA: ${{ runner.temp }}/omnichunk-nltk-data
+     steps:
+       - uses: actions/checkout@v4
+       - uses: actions/setup-python@v5
+@@ -40,6 +41,19 @@ jobs:
+       - name: Install current compatible integrations
+         if: matrix.dependencies == 'current'
+         run: python -m pip install --upgrade -e '.[langchain,llamaindex,qdrant,pgvector]' pytest
++      - name: Prepare private NLTK assets
++        # Provision both minimum/current LlamaIndex assets before its first import.
++        run: |
++          umask 077
++          install -d -m 700 "$NLTK_DATA"
++          python - <<'PY'
++          import os
++          import nltk
++          for asset in ("punkt", "punkt_tab", "stopwords"):
++              nltk.download(asset, download_dir=os.environ["NLTK_DATA"], quiet=True, raise_on_error=True)
++          for resource in ("tokenizers/punkt", "tokenizers/punkt_tab", "corpora/stopwords"):
++              nltk.data.find(resource)
++          PY
+       - name: Verify required imports before optional tests
+         run: >-
+           python -c "import langchain_text_splitters, llama_index.core, qdrant_client, psycopg;
+diff --git a/.github/workflows/release.yml b/.github/workflows/release.yml
+index 3ef0a10..77a574d 100644
+--- a/.github/workflows/release.yml
++++ b/.github/workflows/release.yml
+@@ -12,6 +12,8 @@ permissions:
+ jobs:
+   validate:
+     runs-on: ubuntu-latest
++    env:
++      NLTK_DATA: ${{ runner.temp }}/omnichunk-nltk-data
+     strategy:
+       matrix:
+         python-version: ["3.10", "3.11", "3.12", "3.13"]
+@@ -22,6 +24,19 @@ jobs:
+           python-version: ${{ matrix.python-version }}
+       - name: Install validation dependencies
+         run: pip install -e ".[dev,docs,langchain,llamaindex,qdrant,pgvector]"
++      - name: Prepare private NLTK assets
++        # Keep optional LlamaIndex data out of shared writable package caches.
++        run: |
++          umask 077
++          install -d -m 700 "$NLTK_DATA"
++          python - <<'PY'
++          import os
++          import nltk
++          for asset in ("punkt", "punkt_tab", "stopwords"):
++              nltk.download(asset, download_dir=os.environ["NLTK_DATA"], quiet=True, raise_on_error=True)
++          for resource in ("tokenizers/punkt", "tokenizers/punkt_tab", "corpora/stopwords"):
++              nltk.data.find(resource)
++          PY
+       - name: Verify source, behavior and documentation
+         run: |
+           ruff check src tests

@@ -1,0 +1,52 @@
+{
+  "scope": "README-only dataset documentation refresh; full imports run in scratch, not checkout/scoring environment",
+  "python": "3.12.14",
+  "pyarrow": "23.0.1 isolated research target",
+  "all_six_manifests_match": true,
+  "rebuilds": [
+    {
+      "corpus_split": "turkish/development",
+      "manifest_sha256": "23daa703e1180b52a22df04cdd716914d6a638b57d71e7ad9e2d1ba879b3adad",
+      "documents": 60,
+      "queries": 120,
+      "source_and_attribution_byte_checks": 60
+    },
+    {
+      "corpus_split": "turkish/validation",
+      "manifest_sha256": "7e4f9a1916689380289ce437f22df0a4e30677a62a15d3ea83256f84a8706b8f",
+      "documents": 60,
+      "queries": 120,
+      "source_and_attribution_byte_checks": 60
+    },
+    {
+      "corpus_split": "code/development",
+      "manifest_sha256": "f9430856e48270caf25c78eeaa8da3fc98d932055f6c02bd8a99c4abef43aaa3",
+      "documents": 64,
+      "queries": 64,
+      "source_and_attribution_byte_checks": 128
+    },
+    {
+      "corpus_split": "code/validation",
+      "manifest_sha256": "ddbe1ee7172576c20339ed6e261bc066bb4269612b2f04232cd89a07498be46f",
+      "documents": 64,
+      "queries": 64,
+      "source_and_attribution_byte_checks": 128
+    },
+    {
+      "corpus_split": "code-files/development",
+      "manifest_sha256": "2adcc8b1f230ccf1ee9ec07bb0bba4d9d01585a58226bf15f97bddb9c6f823df",
+      "documents": 37,
+      "queries": 56,
+      "source_and_attribution_byte_checks": 74
+    },
+    {
+      "corpus_split": "code-files/validation",
+      "manifest_sha256": "dcfb7769bffade3c0bf9e3b6cc3f4d77822ce15595e668d430d606fa7c0e24b7",
+      "documents": 35,
+      "queries": 56,
+      "source_and_attribution_byte_checks": 70
+    }
+  ],
+  "non_readme_files_unchanged_per_tree": 430,
+  "quality_inference_or_selection": false
+}

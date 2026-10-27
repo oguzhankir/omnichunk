@@ -1,0 +1,2262 @@
+{
+  "schema_version": 1,
+  "corpus_id": "codesearchnet-python-mit-v3-dev",
+  "license": "MIT",
+  "source": "https://github.com/github/CodeSearchNet",
+  "provenance": {
+    "dataset_revision": "bd0cf261e357a3eb5c8fba490d23ec1a1cd59555",
+    "protocol_sha256": "f9d7a00ac7d3f64db030f5957c6fe26ac625f3e4010019eaf77b8c6f35421c27",
+    "dataset_partition": "validation",
+    "selection": "Predeclared deterministic hash selection;no scores",
+    "query_authorship": "Original repository documentation/docstrings;not userquestions",
+    "evidence_policy": "Whole transformed function;not dependency-complete evidence",
+    "license_records": [
+      {
+        "repository": "multiformats/py-multicodec",
+        "revision": "23213b8b40b21e17e2e1844224498cbd8e359bfa",
+        "url": "https://raw.githubusercontent.com/multiformats/py-multicodec/23213b8b40b21e17e2e1844224498cbd8e359bfa/LICENSE",
+        "sha256": "8e1a42dbcf7113eeace7ac3a51ba89ad817d8c40b9b65eaa6365b5338dda0393",
+        "spdx": "MIT",
+        "path": "licenses/csn-001412af73faea72cc1c.txt"
+      },
+      {
+        "repository": "drkjam/pydba",
+        "revision": "986c4b1315d6b128947c3bc3494513d8e5380ff0",
+        "url": "https://raw.githubusercontent.com/drkjam/pydba/986c4b1315d6b128947c3bc3494513d8e5380ff0/LICENSE",
+        "sha256": "756697d85a0c658d9f79d2d28d8e06b0c886c505a4283abaf6995ee872477bb6",
+        "spdx": "MIT",
+        "path": "licenses/csn-014be6e309f82ae7c128.txt"
+      },
+      {
+        "repository": "agsimeonov/cbexchange",
+        "revision": "e3762f77583f89cf7b4f501ab3c7675fc7d30ab3",
+        "url": "https://raw.githubusercontent.com/agsimeonov/cbexchange/e3762f77583f89cf7b4f501ab3c7675fc7d30ab3/LICENSE.txt",
+        "sha256": "501b84cee415350d78bbfb3c82769008de2672bf5a56fe0512dfb0fa533b4a25",
+        "spdx": "MIT",
+        "path": "licenses/csn-01814e57f0c6bf8acb2b.txt"
+      },
+      {
+        "repository": "MacHu-GWU/superjson-project",
+        "revision": "782ca4b2edbd4b4018b8cedee42eeae7c921b917",
+        "url": "https://raw.githubusercontent.com/MacHu-GWU/superjson-project/782ca4b2edbd4b4018b8cedee42eeae7c921b917/LICENSE.txt",
+        "sha256": "cbeff4e17af5b8254d1f180f5cb2f01584201836e1f121589d68666301b1d945",
+        "spdx": "MIT",
+        "path": "licenses/csn-019966db81b488046780.txt"
+      },
+      {
+        "repository": "skoczen/inkblock",
+        "revision": "099f834c1e9fc0938abaa8824725eeac57603f6c",
+        "url": "https://raw.githubusercontent.com/skoczen/inkblock/099f834c1e9fc0938abaa8824725eeac57603f6c/LICENSE",
+        "sha256": "6507c0b704f96734982302f7c2dba2820861f43256f0a8053aba09a68d6b2aeb",
+        "spdx": "MIT",
+        "path": "licenses/csn-053e173f31418b80cffe.txt"
+      },
+      {
+        "repository": "qualisys/qualisys_python_sdk",
+        "revision": "127d7eeebc2b38b5cafdfa5d1d0198437fedd274",
+        "url": "https://raw.githubusercontent.com/qualisys/qualisys_python_sdk/127d7eeebc2b38b5cafdfa5d1d0198437fedd274/LICENSE",
+        "sha256": "7ee803da0716f20853e00f70fa38d8368c5650ad8032fc07873ad69ba1174c7e",
+        "spdx": "MIT",
+        "path": "licenses/csn-07bba105f34457875bcb.txt"
+      },
+      {
+        "repository": "romanvm/asyncore-wsgi",
+        "revision": "4203f64f17aa14728742358d34839618ed808a7c",
+        "url": "https://raw.githubusercontent.com/romanvm/asyncore-wsgi/4203f64f17aa14728742358d34839618ed808a7c/LICENSE.txt",
+        "sha256": "7633dbfbb8098f2e9ef954699ce6f246e04f3ffb746e2c552880faa344fda173",
+        "spdx": "MIT",
+        "path": "licenses/csn-08a4f4aa1b3003ffa8ab.txt"
+      },
+      {
+        "repository": "jaraco/jaraco.path",
+        "revision": "39e4da09f325382e21b0917b1b5cd027edce8728",
+        "url": "https://raw.githubusercontent.com/jaraco/jaraco.path/39e4da09f325382e21b0917b1b5cd027edce8728/LICENSE",
+        "sha256": "a55e2ffe9b44998e621d51d8c094bed09acc4b5236ee73d7df395a33ba3c18fd",
+        "spdx": "MIT",
+        "path": "licenses/csn-08e263ddbf0cce6932c6.txt"
+      },
+      {
+        "repository": "kmpm/nodemcu-uploader",
+        "revision": "557a25f37b1fb4e31a745719e237e42fff192834",
+        "url": "https://raw.githubusercontent.com/kmpm/nodemcu-uploader/557a25f37b1fb4e31a745719e237e42fff192834/LICENSE",
+        "sha256": "f44bebcb207675da7341032763d73d6b44e7372c1ac7298de280f7ba40ed41c6",
+        "spdx": "MIT",
+        "path": "licenses/csn-0a680ba25e834a8a6de2.txt"
+      },
+      {
+        "repository": "thombashi/pingparsing",
+        "revision": "0249df3e9d8fbd8f6f42243520e5f311736d3be9",
+        "url": "https://raw.githubusercontent.com/thombashi/pingparsing/0249df3e9d8fbd8f6f42243520e5f311736d3be9/LICENSE",
+        "sha256": "a93d75bcb0774e2990106380cadad6dcb2de193c55d435ffc56ba345a08b1dc2",
+        "spdx": "MIT",
+        "path": "licenses/csn-0b22abaf288af255d784.txt"
+      },
+      {
+        "repository": "shalabhms/reliable-collections-cli",
+        "revision": "195d69816fb5a6e1e9ab0ab66b606b1248b4780d",
+        "url": "https://raw.githubusercontent.com/shalabhms/reliable-collections-cli/195d69816fb5a6e1e9ab0ab66b606b1248b4780d/LICENSE",
+        "sha256": "18bb76a21e10da626d9c0e9483fac05eb7957dced98e99dd56eec0ab37db612c",
+        "spdx": "MIT",
+        "path": "licenses/csn-0cf8010e8f1786b131d4.txt"
+      },
+      {
+        "repository": "shymonk/django-datatable",
+        "revision": "f20a6ed2ce31aa7488ff85b4b0e80fe1ad94ec44",
+        "url": "https://raw.githubusercontent.com/shymonk/django-datatable/f20a6ed2ce31aa7488ff85b4b0e80fe1ad94ec44/LICENSE",
+        "sha256": "f074a3bd4f74081750252e4b10f5fc5a4990261bfdfbc93f353118368b631d6e",
+        "spdx": "MIT",
+        "path": "licenses/csn-0f317cba0779aab58ae8.txt"
+      },
+      {
+        "repository": "jazzband/django-mongonaut",
+        "revision": "5485b2e029dff8ae267a4cb39c92d0a72cb5b144",
+        "url": "https://raw.githubusercontent.com/jazzband/django-mongonaut/5485b2e029dff8ae267a4cb39c92d0a72cb5b144/LICENSE.txt",
+        "sha256": "8fb3ee66305a6ce881bd5e06c6e1ccf7cab9cbf2fcce56e5744e61336b4c490e",
+        "spdx": "MIT",
+        "path": "licenses/csn-0f72fe632a0284b0b579.txt"
+      },
+      {
+        "repository": "mcrute/pydora",
+        "revision": "d9e353e7f19da741dcf372246b4d5640cb788488",
+        "url": "https://raw.githubusercontent.com/mcrute/pydora/d9e353e7f19da741dcf372246b4d5640cb788488/LICENSE.txt",
+        "sha256": "4e7aa776f3ced7a0330a2604692c513bce0bd5ca5df19f24221b24cb036783fe",
+        "spdx": "MIT",
+        "path": "licenses/csn-0f8ca6f79f28981c59b3.txt"
+      },
+      {
+        "repository": "changhiskhan/poseidon",
+        "revision": "6d1cecbe02f1e510dd185fe23f88f7af35eb737f",
+        "url": "https://raw.githubusercontent.com/changhiskhan/poseidon/6d1cecbe02f1e510dd185fe23f88f7af35eb737f/LICENSE",
+        "sha256": "9cdfae9e39f0c9c339218a4113cfad039b638fda9d35bdb2d7bd946be13edc46",
+        "spdx": "MIT",
+        "path": "licenses/csn-118a56fbc27f753534ba.txt"
+      },
+      {
+        "repository": "aleju/imgaug",
+        "revision": "786be74aa855513840113ea523c5df495dc6a8af",
+        "url": "https://raw.githubusercontent.com/aleju/imgaug/786be74aa855513840113ea523c5df495dc6a8af/LICENSE",
+        "sha256": "a4d82f05083fc6a43d0a2ad026c7445dd28b529f717c91851933032459858eb7",
+        "spdx": "MIT",
+        "path": "licenses/csn-1339b663cd8f0806a7cc.txt"
+      }
+    ],
+    "source_components": "Each source is one transformed function;repository is independent bootstrap cluster",
+    "query_policy": "Original human documentation firstparagraph;no query text generation;not fullparameter documentation"
+  },
+  "documents": [
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "multiformats/py-multicodec",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-001412af73faea72cc1c.txt",
+      "source_id": "csn-f-7f8cca96879dfb2222fa46ee",
+      "path": "documents/csn-f-7f8cca96879dfb2222fa46ee.py",
+      "sha256": "938e263662d382484004b2adcbdc4679023a35a7e28af1c649ca48875333f66b",
+      "function": {
+        "url": "https://github.com/multiformats/py-multicodec/blob/23213b8b40b21e17e2e1844224498cbd8e359bfa/multicodec/multicodec.py#L63-L75",
+        "path": "multicodec/multicodec.py",
+        "name": "get_codec",
+        "start": 0,
+        "end": 213
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "multiformats/py-multicodec",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-001412af73faea72cc1c.txt",
+      "source_id": "csn-f-a52b1b6a63ac63473a49800c",
+      "path": "documents/csn-f-a52b1b6a63ac63473a49800c.py",
+      "sha256": "af4efa27853a6c9d23d805e89ee136acf497acf2be35b441cef1a10fd7ca08bf",
+      "function": {
+        "url": "https://github.com/multiformats/py-multicodec/blob/23213b8b40b21e17e2e1844224498cbd8e359bfa/multicodec/multicodec.py#L50-L60",
+        "path": "multicodec/multicodec.py",
+        "name": "remove_prefix",
+        "start": 0,
+        "end": 143
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "multiformats/py-multicodec",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-001412af73faea72cc1c.txt",
+      "source_id": "csn-f-7eb79b4de2655aaecc66f41e",
+      "path": "documents/csn-f-7eb79b4de2655aaecc66f41e.py",
+      "sha256": "1a21c7f218e4cf592f2782ceda74dfaad3808c4256cdbfb428a89a6c4e90703c",
+      "function": {
+        "url": "https://github.com/multiformats/py-multicodec/blob/23213b8b40b21e17e2e1844224498cbd8e359bfa/multicodec/multicodec.py#L37-L47",
+        "path": "multicodec/multicodec.py",
+        "name": "add_prefix",
+        "start": 0,
+        "end": 115
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "multiformats/py-multicodec",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-001412af73faea72cc1c.txt",
+      "source_id": "csn-f-6c7325c1a87d7a27f6acaacc",
+      "path": "documents/csn-f-6c7325c1a87d7a27f6acaacc.py",
+      "sha256": "f7b84f9e15cbf7d1c1908d9175e5bf19e89699f32eae853d04922cbe4e7f5a27",
+      "function": {
+        "url": "https://github.com/multiformats/py-multicodec/blob/23213b8b40b21e17e2e1844224498cbd8e359bfa/multicodec/multicodec.py#L21-L34",
+        "path": "multicodec/multicodec.py",
+        "name": "get_prefix",
+        "start": 0,
+        "end": 215
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "drkjam/pydba",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-014be6e309f82ae7c128.txt",
+      "source_id": "csn-f-9eb58a62eaff396ea9344cc4",
+      "path": "documents/csn-f-9eb58a62eaff396ea9344cc4.py",
+      "sha256": "0e060667039da2c5250569b43677adbdb91cd43df895693c43bbfe771de38095",
+      "function": {
+        "url": "https://github.com/drkjam/pydba/blob/986c4b1315d6b128947c3bc3494513d8e5380ff0/pydba/postgres.py#L199-L219",
+        "path": "pydba/postgres.py",
+        "name": "PostgresDB.restore",
+        "start": 0,
+        "end": 330
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "drkjam/pydba",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-014be6e309f82ae7c128.txt",
+      "source_id": "csn-f-58d989efa61a3876c426e5f1",
+      "path": "documents/csn-f-58d989efa61a3876c426e5f1.py",
+      "sha256": "88d02a28d4234bc05a2df0c6fb32cdea5fa64cf3cab609ba50e5f4212150742b",
+      "function": {
+        "url": "https://github.com/drkjam/pydba/blob/986c4b1315d6b128947c3bc3494513d8e5380ff0/pydba/postgres.py#L258-L274",
+        "path": "pydba/postgres.py",
+        "name": "PostgresDB.connection_url",
+        "start": 0,
+        "end": 163
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "drkjam/pydba",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-014be6e309f82ae7c128.txt",
+      "source_id": "csn-f-35b0af49c045a356b65807d0",
+      "path": "documents/csn-f-35b0af49c045a356b65807d0.py",
+      "sha256": "6e0f8ca4d498d9b21ffd05adba89c75067381d965b44ebbafd855b22cb47ce1f",
+      "function": {
+        "url": "https://github.com/drkjam/pydba/blob/986c4b1315d6b128947c3bc3494513d8e5380ff0/pydba/postgres.py#L170-L180",
+        "path": "pydba/postgres.py",
+        "name": "PostgresDB.available",
+        "start": 0,
+        "end": 329
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "drkjam/pydba",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-014be6e309f82ae7c128.txt",
+      "source_id": "csn-f-da699890485771a218b10cf0",
+      "path": "documents/csn-f-da699890485771a218b10cf0.py",
+      "sha256": "c7094509484e3adb3610b04e1681e81daf9368d2dcbf335394a93187c6d4db3a",
+      "function": {
+        "url": "https://github.com/drkjam/pydba/blob/986c4b1315d6b128947c3bc3494513d8e5380ff0/pydba/postgres.py#L153-L159",
+        "path": "pydba/postgres.py",
+        "name": "PostgresDB.connections",
+        "start": 0,
+        "end": 316
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "agsimeonov/cbexchange",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-01814e57f0c6bf8acb2b.txt",
+      "source_id": "csn-f-a5f586f701cfb9a3436c021b",
+      "path": "documents/csn-f-a5f586f701cfb9a3436c021b.py",
+      "sha256": "fec7a65b05795bffc08cb41a4f405b32128ad60c01f93de213ce55894af7546c",
+      "function": {
+        "url": "https://github.com/agsimeonov/cbexchange/blob/e3762f77583f89cf7b4f501ab3c7675fc7d30ab3/cbexchange/private.py#L210-L228",
+        "path": "cbexchange/private.py",
+        "name": "PrivateClient._new_report",
+        "start": 0,
+        "end": 537
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "agsimeonov/cbexchange",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-01814e57f0c6bf8acb2b.txt",
+      "source_id": "csn-f-bfad66306debcdc0fafc2145",
+      "path": "documents/csn-f-bfad66306debcdc0fafc2145.py",
+      "sha256": "8b4fe43c22a44886753bec4dc49feca28e37ae8ed1516493d72367db32daf4b4",
+      "function": {
+        "url": "https://github.com/agsimeonov/cbexchange/blob/e3762f77583f89cf7b4f501ab3c7675fc7d30ab3/cbexchange/websock.py#L116-L130",
+        "path": "cbexchange/websock.py",
+        "name": "WSClient.connect",
+        "start": 0,
+        "end": 446
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "agsimeonov/cbexchange",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-01814e57f0c6bf8acb2b.txt",
+      "source_id": "csn-f-c7db8b45b2285b3cf0d9b970",
+      "path": "documents/csn-f-c7db8b45b2285b3cf0d9b970.py",
+      "sha256": "2fc9a1b7f3391db5af6bded47925f39495cb161aa7379248c962bbb6fd3a7605",
+      "function": {
+        "url": "https://github.com/agsimeonov/cbexchange/blob/e3762f77583f89cf7b4f501ab3c7675fc7d30ab3/cbexchange/client.py#L39-L52",
+        "path": "cbexchange/client.py",
+        "name": "RESTClient._format_iso_time",
+        "start": 0,
+        "end": 204
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "agsimeonov/cbexchange",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-01814e57f0c6bf8acb2b.txt",
+      "source_id": "csn-f-0c6202316bfb13197b899199",
+      "path": "documents/csn-f-0c6202316bfb13197b899199.py",
+      "sha256": "bc8a3d6be4270f83ffdda176471f4d5ef3e2e9e5057d05bb933379bd135b7c73",
+      "function": {
+        "url": "https://github.com/agsimeonov/cbexchange/blob/e3762f77583f89cf7b4f501ab3c7675fc7d30ab3/cbexchange/market.py#L53-L67",
+        "path": "cbexchange/market.py",
+        "name": "MarketClient.get_historic_trades",
+        "start": 0,
+        "end": 291
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "MacHu-GWU/superjson-project",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-019966db81b488046780.txt",
+      "source_id": "csn-f-2357a188e89f9d2e9389a877",
+      "path": "documents/csn-f-2357a188e89f9d2e9389a877.py",
+      "sha256": "160162862001eb52b44c6d838ad703913285697f24d25178009bb02c882a2cd5",
+      "function": {
+        "url": "https://github.com/MacHu-GWU/superjson-project/blob/782ca4b2edbd4b4018b8cedee42eeae7c921b917/superjson/comments.py#L41-L53",
+        "path": "superjson/comments.py",
+        "name": "strip_comment_line_with_symbol",
+        "start": 0,
+        "end": 402
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "MacHu-GWU/superjson-project",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-019966db81b488046780.txt",
+      "source_id": "csn-f-93a8d539570fffa0dd6a2c76",
+      "path": "documents/csn-f-93a8d539570fffa0dd6a2c76.py",
+      "sha256": "36b66e7d0bac9fcab0048885258bda98b841c47d4de6dfa673f1448fa5cfa7b1",
+      "function": {
+        "url": "https://github.com/MacHu-GWU/superjson-project/blob/782ca4b2edbd4b4018b8cedee42eeae7c921b917/superjson/_superjson.py#L452-L456",
+        "path": "superjson/_superjson.py",
+        "name": "SupportBuiltInDataType.dump_set",
+        "start": 0,
+        "end": 139
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "MacHu-GWU/superjson-project",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-019966db81b488046780.txt",
+      "source_id": "csn-f-75e7836abb3578653e9bbc4e",
+      "path": "documents/csn-f-75e7836abb3578653e9bbc4e.py",
+      "sha256": "2317ef0092a6e3b98b16a3b0797ecb6d491b666c91c8a9004879bfbc464a07cf",
+      "function": {
+        "url": "https://github.com/MacHu-GWU/superjson-project/blob/782ca4b2edbd4b4018b8cedee42eeae7c921b917/superjson/pkg/dateutil/tz/_common.py#L211-L230",
+        "path": "superjson/pkg/dateutil/tz/_common.py",
+        "name": "_tzinfo.fromutc",
+        "start": 0,
+        "end": 278
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "MacHu-GWU/superjson-project",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-019966db81b488046780.txt",
+      "source_id": "csn-f-5b07648d92d8fe2f16cc6b3f",
+      "path": "documents/csn-f-5b07648d92d8fe2f16cc6b3f.py",
+      "sha256": "29bf18c5ab7cbc838af07684c86c9e5613e78ce27b2021f72bc152845592712f",
+      "function": {
+        "url": "https://github.com/MacHu-GWU/superjson-project/blob/782ca4b2edbd4b4018b8cedee42eeae7c921b917/superjson/pkg/dateutil/tz/win.py#L311-L334",
+        "path": "superjson/pkg/dateutil/tz/win.py",
+        "name": "valuestodict",
+        "start": 0,
+        "end": 840
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "skoczen/inkblock",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-053e173f31418b80cffe.txt",
+      "source_id": "csn-f-9408204a8aee60dd2794d1b3",
+      "path": "documents/csn-f-9408204a8aee60dd2794d1b3.py",
+      "sha256": "659edb0389d1c117730641cdf9e325bd8057bbfac3f71e559188ee4024c7f6e4",
+      "function": {
+        "url": "https://github.com/skoczen/inkblock/blob/099f834c1e9fc0938abaa8824725eeac57603f6c/inkblock/main.py#L204-L226",
+        "path": "inkblock/main.py",
+        "name": "apply_orientation",
+        "start": 0,
+        "end": 594
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "skoczen/inkblock",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-053e173f31418b80cffe.txt",
+      "source_id": "csn-f-012f5694b97c68c700e3fe5f",
+      "path": "documents/csn-f-012f5694b97c68c700e3fe5f.py",
+      "sha256": "c404246fb8c15ab840f49729bc0703a4cee84bdbdbe8315ddbebdf7e02fa5f95",
+      "function": {
+        "url": "https://github.com/skoczen/inkblock/blob/099f834c1e9fc0938abaa8824725eeac57603f6c/inkblock/main.py#L88-L149",
+        "path": "inkblock/main.py",
+        "name": "combine_filenames",
+        "start": 0,
+        "end": 1303
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "skoczen/inkblock",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-053e173f31418b80cffe.txt",
+      "source_id": "csn-f-e3407288e0b82e6f4ea00f53",
+      "path": "documents/csn-f-e3407288e0b82e6f4ea00f53.py",
+      "sha256": "3e0d3e82fb718ea67874dafc263e814950eb6fd4fe71f8f04aedcb6042e10b73",
+      "function": {
+        "url": "https://github.com/skoczen/inkblock/blob/099f834c1e9fc0938abaa8824725eeac57603f6c/inkblock/main.py#L1381-L1392",
+        "path": "inkblock/main.py",
+        "name": "publish",
+        "start": 0,
+        "end": 473
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "skoczen/inkblock",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-053e173f31418b80cffe.txt",
+      "source_id": "csn-f-72e356c9415544b08f098eb6",
+      "path": "documents/csn-f-72e356c9415544b08f098eb6.py",
+      "sha256": "a04bd453fdca2c2d3b4fcad072f840174d8fce9aab65896453df2d9a40519089",
+      "function": {
+        "url": "https://github.com/skoczen/inkblock/blob/099f834c1e9fc0938abaa8824725eeac57603f6c/inkblock/main.py#L1354-L1365",
+        "path": "inkblock/main.py",
+        "name": "write",
+        "start": 0,
+        "end": 357
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "qualisys/qualisys_python_sdk",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-07bba105f34457875bcb.txt",
+      "source_id": "csn-f-5d5672987a2c7738e3c389fe",
+      "path": "documents/csn-f-5d5672987a2c7738e3c389fe.py",
+      "sha256": "fd390717b2c1334efee272a7577fa5849840bd346e600f982b7f1bcdea573058",
+      "function": {
+        "url": "https://github.com/qualisys/qualisys_python_sdk/blob/127d7eeebc2b38b5cafdfa5d1d0198437fedd274/qtm/qrt.py#L247-L255",
+        "path": "qtm/qrt.py",
+        "name": "QRTConnection.load",
+        "start": 0,
+        "end": 193
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "qualisys/qualisys_python_sdk",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-07bba105f34457875bcb.txt",
+      "source_id": "csn-f-423cbd6856bb261694fc01d6",
+      "path": "documents/csn-f-423cbd6856bb261694fc01d6.py",
+      "sha256": "b6570b6e7c6e17e1871853f2a2c1264e5640683ef8e00c4d80a7f5d33d91fbc2",
+      "function": {
+        "url": "https://github.com/qualisys/qualisys_python_sdk/blob/127d7eeebc2b38b5cafdfa5d1d0198437fedd274/examples/basic_example.py#L20-L26",
+        "path": "examples/basic_example.py",
+        "name": "setup",
+        "start": 0,
+        "end": 190
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "qualisys/qualisys_python_sdk",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-07bba105f34457875bcb.txt",
+      "source_id": "csn-f-70d572ccc6f3f340216d5161",
+      "path": "documents/csn-f-70d572ccc6f3f340216d5161.py",
+      "sha256": "6a72882ed624e89b86c72b76eea20734a1e2fd166f92893a7a4399c20947d6eb",
+      "function": {
+        "url": "https://github.com/qualisys/qualisys_python_sdk/blob/127d7eeebc2b38b5cafdfa5d1d0198437fedd274/qtm/qrt.py#L63-L69",
+        "path": "qtm/qrt.py",
+        "name": "QRTConnection.byte_order",
+        "start": 0,
+        "end": 162
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "qualisys/qualisys_python_sdk",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-07bba105f34457875bcb.txt",
+      "source_id": "csn-f-4af77bdc06bc0acfc1ddd664",
+      "path": "documents/csn-f-4af77bdc06bc0acfc1ddd664.py",
+      "sha256": "2bd1c9efa7c843fbee7df8807fa902224755880c7d9b870103fd656645d93c4a",
+      "function": {
+        "url": "https://github.com/qualisys/qualisys_python_sdk/blob/127d7eeebc2b38b5cafdfa5d1d0198437fedd274/qtm/qrt.py#L147-L173",
+        "path": "qtm/qrt.py",
+        "name": "QRTConnection.stream_frames",
+        "start": 0,
+        "end": 452
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "romanvm/asyncore-wsgi",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-08a4f4aa1b3003ffa8ab.txt",
+      "source_id": "csn-f-a828b2873a7a81b3f7e35ecd",
+      "path": "documents/csn-f-a828b2873a7a81b3f7e35ecd.py",
+      "sha256": "568bdd5594409a3dde7d73e44306aec2d0961f96f71768b1fdbc1e29119883d3",
+      "function": {
+        "url": "https://github.com/romanvm/asyncore-wsgi/blob/4203f64f17aa14728742358d34839618ed808a7c/asyncore_wsgi/__init__.py#L323-L341",
+        "path": "asyncore_wsgi/__init__.py",
+        "name": "AsyncWsgiServer.serve_forever",
+        "start": 0,
+        "end": 393
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "romanvm/asyncore-wsgi",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-08a4f4aa1b3003ffa8ab.txt",
+      "source_id": "csn-f-c82bc03c774116a5ab7aa037",
+      "path": "documents/csn-f-c82bc03c774116a5ab7aa037.py",
+      "sha256": "18eb71c5256989fbc9cae2d1cd72357ad907dde36f7d82e618c2ab9b81355ffb",
+      "function": {
+        "url": "https://github.com/romanvm/asyncore-wsgi/blob/4203f64f17aa14728742358d34839618ed808a7c/asyncore_wsgi/__init__.py#L101-L112",
+        "path": "asyncore_wsgi/__init__.py",
+        "name": "get_poll_func",
+        "start": 0,
+        "end": 226
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "romanvm/asyncore-wsgi",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-08a4f4aa1b3003ffa8ab.txt",
+      "source_id": "csn-f-f8a0bc6ce30f12b7e883e1aa",
+      "path": "documents/csn-f-f8a0bc6ce30f12b7e883e1aa.py",
+      "sha256": "e6cb7a7438e71b9c6741df67dc6ac3908a15b477d34f71dba56279d2cd3a19b3",
+      "function": {
+        "url": "https://github.com/romanvm/asyncore-wsgi/blob/4203f64f17aa14728742358d34839618ed808a7c/asyncore_wsgi/__init__.py#L66-L98",
+        "path": "asyncore_wsgi/__init__.py",
+        "name": "epoll_poller",
+        "start": 0,
+        "end": 928
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "romanvm/asyncore-wsgi",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-08a4f4aa1b3003ffa8ab.txt",
+      "source_id": "csn-f-f7da82d1195c303c921b7617",
+      "path": "documents/csn-f-f7da82d1195c303c921b7617.py",
+      "sha256": "fcb3db696832ed426aa40ddd49b9200ef0e715b3a704dc40800ad1e34269c3ee",
+      "function": {
+        "url": "https://github.com/romanvm/asyncore-wsgi/blob/4203f64f17aa14728742358d34839618ed808a7c/asyncore_wsgi/__init__.py#L348-L374",
+        "path": "asyncore_wsgi/__init__.py",
+        "name": "make_server",
+        "start": 0,
+        "end": 412
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "jaraco/jaraco.path",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-08e263ddbf0cce6932c6.txt",
+      "source_id": "csn-f-d3f112fb65c34efe04aaec47",
+      "path": "documents/csn-f-d3f112fb65c34efe04aaec47.py",
+      "sha256": "9fc58539cdc1ca6ccd047ffba4eb0efbdbef65e6734543b2a2194e5c2b2e0b9d",
+      "function": {
+        "url": "https://github.com/jaraco/jaraco.path/blob/39e4da09f325382e21b0917b1b5cd027edce8728/jaraco/path.py#L131-L154",
+        "path": "jaraco/path.py",
+        "name": "recursive_glob",
+        "start": 0,
+        "end": 258
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "jaraco/jaraco.path",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-08e263ddbf0cce6932c6.txt",
+      "source_id": "csn-f-f2ae5bbc60e226c0ed6480f7",
+      "path": "documents/csn-f-f2ae5bbc60e226c0ed6480f7.py",
+      "sha256": "505a539eda3420b557d145b20f727589b6435234bd40428cb3fa97a67051ed2b",
+      "function": {
+        "url": "https://github.com/jaraco/jaraco.path/blob/39e4da09f325382e21b0917b1b5cd027edce8728/jaraco/path.py#L46-L50",
+        "path": "jaraco/path.py",
+        "name": "splitext_files_only",
+        "start": 0,
+        "end": 130
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "jaraco/jaraco.path",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-08e263ddbf0cce6932c6.txt",
+      "source_id": "csn-f-973569c4c76124e2f7cce076",
+      "path": "documents/csn-f-973569c4c76124e2f7cce076.py",
+      "sha256": "6caca5a9eb8c054fd43ab686d675294f5cab7c26d3e3e202ec276d1cf9d85315",
+      "function": {
+        "url": "https://github.com/jaraco/jaraco.path/blob/39e4da09f325382e21b0917b1b5cd027edce8728/jaraco/path.py#L157-L167",
+        "path": "jaraco/path.py",
+        "name": "encode",
+        "start": 0,
+        "end": 276
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "jaraco/jaraco.path",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-08e263ddbf0cce6932c6.txt",
+      "source_id": "csn-f-0575099a424b0459b8e9d092",
+      "path": "documents/csn-f-0575099a424b0459b8e9d092.py",
+      "sha256": "53ec4b54b891f4abc435a515236542ea5ab7bac4239db1367440a0d82847adbf",
+      "function": {
+        "url": "https://github.com/jaraco/jaraco.path/blob/39e4da09f325382e21b0917b1b5cd027edce8728/jaraco/path.py#L29-L36",
+        "path": "jaraco/path.py",
+        "name": "get_unique_pathname",
+        "start": 0,
+        "end": 321
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "kmpm/nodemcu-uploader",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0a680ba25e834a8a6de2.txt",
+      "source_id": "csn-f-7366b58ac8b58fb42badce82",
+      "path": "documents/csn-f-7366b58ac8b58fb42badce82.py",
+      "sha256": "1154b403814700edf8dd4085c7ebca8ee343a6a5accbe6632771be397c718834",
+      "function": {
+        "url": "https://github.com/kmpm/nodemcu-uploader/blob/557a25f37b1fb4e31a745719e237e42fff192834/nodemcu_uploader/main.py#L88-L92",
+        "path": "nodemcu_uploader/main.py",
+        "name": "operation_list",
+        "start": 0,
+        "end": 155
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "kmpm/nodemcu-uploader",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0a680ba25e834a8a6de2.txt",
+      "source_id": "csn-f-d62dc503f01fd791a9f87260",
+      "path": "documents/csn-f-d62dc503f01fd791a9f87260.py",
+      "sha256": "48ddbb79a2e8691cc516d2db7165336403e0477c668b2bd2529cc8c9f64473cc",
+      "function": {
+        "url": "https://github.com/kmpm/nodemcu-uploader/blob/557a25f37b1fb4e31a745719e237e42fff192834/nodemcu_uploader/uploader.py#L362-L366",
+        "path": "nodemcu_uploader/uploader.py",
+        "name": "Uploader.write_lines",
+        "start": 0,
+        "end": 150
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "kmpm/nodemcu-uploader",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0a680ba25e834a8a6de2.txt",
+      "source_id": "csn-f-d4db07481027f0090e5a22d7",
+      "path": "documents/csn-f-d4db07481027f0090e5a22d7.py",
+      "sha256": "afc4adb1baa8c9f839f530cd9f8fd87add4db5d9c95c66dc5f5dcb42ec645cd0",
+      "function": {
+        "url": "https://github.com/kmpm/nodemcu-uploader/blob/557a25f37b1fb4e31a745719e237e42fff192834/nodemcu_uploader/uploader.py#L451-L456",
+        "path": "nodemcu_uploader/uploader.py",
+        "name": "Uploader.node_restart",
+        "start": 0,
+        "end": 150
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "kmpm/nodemcu-uploader",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0a680ba25e834a8a6de2.txt",
+      "source_id": "csn-f-f7a33f644e93dc4bc48183b2",
+      "path": "documents/csn-f-f7a33f644e93dc4bc48183b2.py",
+      "sha256": "11103a4072bd28b88a334db04925b3924b69a4b827d09cbcfec4077c12e84c13",
+      "function": {
+        "url": "https://github.com/kmpm/nodemcu-uploader/blob/557a25f37b1fb4e31a745719e237e42fff192834/nodemcu_uploader/uploader.py#L104-L107",
+        "path": "nodemcu_uploader/uploader.py",
+        "name": "Uploader.set_timeout",
+        "start": 0,
+        "end": 153
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "thombashi/pingparsing",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0b22abaf288af255d784.txt",
+      "source_id": "csn-f-a7e05d2f5fa964f6deadb31f",
+      "path": "documents/csn-f-a7e05d2f5fa964f6deadb31f.py",
+      "sha256": "151e2a81f9251346f921a6dce2e9c4941b3d78fcd1f9d3ecada615fa9939140a",
+      "function": {
+        "url": "https://github.com/thombashi/pingparsing/blob/0249df3e9d8fbd8f6f42243520e5f311736d3be9/pingparsing/_stats.py#L213-L232",
+        "path": "pingparsing/_stats.py",
+        "name": "PingStats.as_tuple",
+        "start": 0,
+        "end": 191
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "thombashi/pingparsing",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0b22abaf288af255d784.txt",
+      "source_id": "csn-f-00bcb51f19ef0261d2a44ea2",
+      "path": "documents/csn-f-00bcb51f19ef0261d2a44ea2.py",
+      "sha256": "953c4c5787a03471bf1ea68f936e0eceb3828b6b232f9dad79a825123f20d882",
+      "function": {
+        "url": "https://github.com/thombashi/pingparsing/blob/0249df3e9d8fbd8f6f42243520e5f311736d3be9/pingparsing/_pingparsing.py#L112-L162",
+        "path": "pingparsing/_pingparsing.py",
+        "name": "PingParsing.parse",
+        "start": 0,
+        "end": 1244
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "thombashi/pingparsing",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0b22abaf288af255d784.txt",
+      "source_id": "csn-f-a1b4671a1fca55815b1daf0a",
+      "path": "documents/csn-f-a1b4671a1fca55815b1daf0a.py",
+      "sha256": "e21a9afde8df56d10b3f48ad03fd0465d61f1c412a427e8251778f480b61d7ce",
+      "function": {
+        "url": "https://github.com/thombashi/pingparsing/blob/0249df3e9d8fbd8f6f42243520e5f311736d3be9/pingparsing/_stats.py#L172-L211",
+        "path": "pingparsing/_stats.py",
+        "name": "PingStats.as_dict",
+        "start": 0,
+        "end": 599
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "thombashi/pingparsing",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0b22abaf288af255d784.txt",
+      "source_id": "csn-f-631975acc340f177f2a13790",
+      "path": "documents/csn-f-631975acc340f177f2a13790.py",
+      "sha256": "a14da8acf0abdbf4b1e702f265765ed7ece558105602179b8ef6eb77356654e5",
+      "function": {
+        "url": "https://github.com/thombashi/pingparsing/blob/0249df3e9d8fbd8f6f42243520e5f311736d3be9/pingparsing/_pingtransmitter.py#L197-L211",
+        "path": "pingparsing/_pingtransmitter.py",
+        "name": "PingTransmitter.ping",
+        "start": 0,
+        "end": 251
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "shalabhms/reliable-collections-cli",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0cf8010e8f1786b131d4.txt",
+      "source_id": "csn-f-bab9c861064d1b75849c2e5c",
+      "path": "documents/csn-f-bab9c861064d1b75849c2e5c.py",
+      "sha256": "f344137a3c982181f854c1af2e1bec690a1c7d9c1c0f11d0e8270fbc550454ec",
+      "function": {
+        "url": "https://github.com/shalabhms/reliable-collections-cli/blob/195d69816fb5a6e1e9ab0ab66b606b1248b4780d/rcctl/rcctl/custom_reliablecollections.py#L27-L51",
+        "path": "rcctl/rcctl/custom_reliablecollections.py",
+        "name": "get_reliabledictionary_schema",
+        "start": 0,
+        "end": 630
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "shalabhms/reliable-collections-cli",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0cf8010e8f1786b131d4.txt",
+      "source_id": "csn-f-fa141d740fcabd16465026f3",
+      "path": "documents/csn-f-fa141d740fcabd16465026f3.py",
+      "sha256": "0eb61b787b43e1fccc540032a3f76e6e2640ab6a8f6bb4aee96b63928c75ca1f",
+      "function": {
+        "url": "https://github.com/shalabhms/reliable-collections-cli/blob/195d69816fb5a6e1e9ab0ab66b606b1248b4780d/rcctl/rcctl/auth.py#L20-L39",
+        "path": "rcctl/rcctl/auth.py",
+        "name": "ClientCertAuthentication.signed_session",
+        "start": 0,
+        "end": 482
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "shalabhms/reliable-collections-cli",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0cf8010e8f1786b131d4.txt",
+      "source_id": "csn-f-caa9e4fb2043509baba79df3",
+      "path": "documents/csn-f-caa9e4fb2043509baba79df3.py",
+      "sha256": "009984e00b2a3f6b6dadb37c0d3096b4f028d868aa0aaf6add496468e0d60092",
+      "function": {
+        "url": "https://github.com/shalabhms/reliable-collections-cli/blob/195d69816fb5a6e1e9ab0ab66b606b1248b4780d/rcctl/rcctl/config.py#L110-L114",
+        "path": "rcctl/rcctl/config.py",
+        "name": "set_aad_metadata",
+        "start": 0,
+        "end": 183
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "shalabhms/reliable-collections-cli",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0cf8010e8f1786b131d4.txt",
+      "source_id": "csn-f-da4bde0ba774d2f00120c407",
+      "path": "documents/csn-f-da4bde0ba774d2f00120c407.py",
+      "sha256": "54db869bc11a3b1612d59b5255bef1b5c4731b455a385049ed6cd784e8931a84",
+      "function": {
+        "url": "https://github.com/shalabhms/reliable-collections-cli/blob/195d69816fb5a6e1e9ab0ab66b606b1248b4780d/rcctl/rcctl/auth.py#L47-L71",
+        "path": "rcctl/rcctl/auth.py",
+        "name": "AdalAuthentication.signed_session",
+        "start": 0,
+        "end": 873
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "shymonk/django-datatable",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f317cba0779aab58ae8.txt",
+      "source_id": "csn-f-a89ac7206fa15bddcd5b369e",
+      "path": "documents/csn-f-a89ac7206fa15bddcd5b369e.py",
+      "sha256": "53ef4715ab096f1d0e6aef206c47a0a186145681a47693deb2e04c71788a80cb",
+      "function": {
+        "url": "https://github.com/shymonk/django-datatable/blob/f20a6ed2ce31aa7488ff85b4b0e80fe1ad94ec44/table/columns/calendarcolumn.py#L83-L102",
+        "path": "table/columns/calendarcolumn.py",
+        "name": "InlineMonthsColumn.get_days_span",
+        "start": 0,
+        "end": 670
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "shymonk/django-datatable",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f317cba0779aab58ae8.txt",
+      "source_id": "csn-f-110eb046b38b2457bc64ef7b",
+      "path": "documents/csn-f-110eb046b38b2457bc64ef7b.py",
+      "sha256": "ce110ecc0db59f5f2a751e85cc1c344f4d8195dfc9c2f3d2d911502022186825",
+      "function": {
+        "url": "https://github.com/shymonk/django-datatable/blob/f20a6ed2ce31aa7488ff85b4b0e80fe1ad94ec44/table/utils.py#L17-L48",
+        "path": "table/utils.py",
+        "name": "Accessor.resolve",
+        "start": 0,
+        "end": 1105
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "shymonk/django-datatable",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f317cba0779aab58ae8.txt",
+      "source_id": "csn-f-9b4de8ba60482cf774277714",
+      "path": "documents/csn-f-9b4de8ba60482cf774277714.py",
+      "sha256": "dec235d104594695bf0365c02013018ce3d4221ceb90eb08759b9090ad601596",
+      "function": {
+        "url": "https://github.com/shymonk/django-datatable/blob/f20a6ed2ce31aa7488ff85b4b0e80fe1ad94ec44/table/columns/linkcolumn.py#L85-L95",
+        "path": "table/columns/linkcolumn.py",
+        "name": "Link.render",
+        "start": 0,
+        "end": 354
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "shymonk/django-datatable",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f317cba0779aab58ae8.txt",
+      "source_id": "csn-f-73b29a3dbaf8d3a158a01e9c",
+      "path": "documents/csn-f-73b29a3dbaf8d3a158a01e9c.py",
+      "sha256": "a309c0757fbe7ed115c8f67adb3d9e28eea58a19b9e262634d9ee084b76c440f",
+      "function": {
+        "url": "https://github.com/shymonk/django-datatable/blob/f20a6ed2ce31aa7488ff85b4b0e80fe1ad94ec44/table/views.py#L119-L149",
+        "path": "table/views.py",
+        "name": "FeedDataView.get_context_data",
+        "start": 0,
+        "end": 1023
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "jazzband/django-mongonaut",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f72fe632a0284b0b579.txt",
+      "source_id": "csn-f-8324f5475f9ffb9df7b73a53",
+      "path": "documents/csn-f-8324f5475f9ffb9df7b73a53.py",
+      "sha256": "d7a5d553b35c00caf0b56a00c0bcc3df4a230b6c738d1f839dfc03672e9ead82",
+      "function": {
+        "url": "https://github.com/jazzband/django-mongonaut/blob/5485b2e029dff8ae267a4cb39c92d0a72cb5b144/mongonaut/forms/forms.py#L35-L45",
+        "path": "mongonaut/forms/forms.py",
+        "name": "MongoModelForm.set_fields",
+        "start": 0,
+        "end": 408
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "jazzband/django-mongonaut",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f72fe632a0284b0b579.txt",
+      "source_id": "csn-f-2c6fa92d117c11f10b5d83d1",
+      "path": "documents/csn-f-2c6fa92d117c11f10b5d83d1.py",
+      "sha256": "c5645b87ce9750eb0e643ccdd7db8f45effa982f0664c2ab92b731301f0d62fd",
+      "function": {
+        "url": "https://github.com/jazzband/django-mongonaut/blob/5485b2e029dff8ae267a4cb39c92d0a72cb5b144/mongonaut/templatetags/mongonaut_tags.py#L15-L35",
+        "path": "mongonaut/templatetags/mongonaut_tags.py",
+        "name": "get_document_value",
+        "start": 0,
+        "end": 665
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "jazzband/django-mongonaut",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f72fe632a0284b0b579.txt",
+      "source_id": "csn-f-fc7e917f5bc093c7465c5569",
+      "path": "documents/csn-f-fc7e917f5bc093c7465c5569.py",
+      "sha256": "8918c86db4e2989df35d45720805f92411c076051ba14c12ab107c9e4633c050",
+      "function": {
+        "url": "https://github.com/jazzband/django-mongonaut/blob/5485b2e029dff8ae267a4cb39c92d0a72cb5b144/mongonaut/mixins.py#L119-L126",
+        "path": "mongonaut/mixins.py",
+        "name": "MongonautViewMixin.set_permissions_in_context",
+        "start": 0,
+        "end": 449
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "jazzband/django-mongonaut",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f72fe632a0284b0b579.txt",
+      "source_id": "csn-f-ccceed14386a6bcbec697860",
+      "path": "documents/csn-f-ccceed14386a6bcbec697860.py",
+      "sha256": "763235512d823bda1ff7253fd4acf1ce4bcb0db4c7833fc9d5138db0928c5d3c",
+      "function": {
+        "url": "https://github.com/jazzband/django-mongonaut/blob/5485b2e029dff8ae267a4cb39c92d0a72cb5b144/mongonaut/views.py#L119-L123",
+        "path": "mongonaut/views.py",
+        "name": "DocumentListView.get_initial",
+        "start": 0,
+        "end": 164
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "mcrute/pydora",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f8ca6f79f28981c59b3.txt",
+      "source_id": "csn-f-bdde6a55b36ae1daf1c5a124",
+      "path": "documents/csn-f-bdde6a55b36ae1daf1c5a124.py",
+      "sha256": "1c5487a85387799b5d1a349bbe5af6be7da58e0daea4c755b8a4c7d64b2028f1",
+      "function": {
+        "url": "https://github.com/mcrute/pydora/blob/d9e353e7f19da741dcf372246b4d5640cb788488/pandora/models/_base.py#L120-L147",
+        "path": "pandora/models/_base.py",
+        "name": "PandoraModel.populate_fields",
+        "start": 0,
+        "end": 875
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "mcrute/pydora",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f8ca6f79f28981c59b3.txt",
+      "source_id": "csn-f-f1f9db1206b17a6273d847f2",
+      "path": "documents/csn-f-f1f9db1206b17a6273d847f2.py",
+      "sha256": "8806a9003c06b848ba6f82d9307e6916ac878bcdc246c3e4e5fab07c0c85f85e",
+      "function": {
+        "url": "https://github.com/mcrute/pydora/blob/d9e353e7f19da741dcf372246b4d5640cb788488/pandora/transport.py#L68-L85",
+        "path": "pandora/transport.py",
+        "name": "delay_exponential",
+        "start": 0,
+        "end": 337
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "mcrute/pydora",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f8ca6f79f28981c59b3.txt",
+      "source_id": "csn-f-54d5852aaf72d1cedd5de7f0",
+      "path": "documents/csn-f-54d5852aaf72d1cedd5de7f0.py",
+      "sha256": "a5f6116a660fd58c0029069c8c6fd5cf5e4ba02360a86e95ad4cf3d01592710f",
+      "function": {
+        "url": "https://github.com/mcrute/pydora/blob/d9e353e7f19da741dcf372246b4d5640cb788488/pydora/audio_backend.py#L157-L185",
+        "path": "pydora/audio_backend.py",
+        "name": "BasePlayer.play",
+        "start": 0,
+        "end": 848
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "mcrute/pydora",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-0f8ca6f79f28981c59b3.txt",
+      "source_id": "csn-f-a391b27ed41434a4fffcbc31",
+      "path": "documents/csn-f-a391b27ed41434a4fffcbc31.py",
+      "sha256": "2de01928f226d911ed309b9eeb47cc88ceacc714325f67c91ad9465888421fe1",
+      "function": {
+        "url": "https://github.com/mcrute/pydora/blob/d9e353e7f19da741dcf372246b4d5640cb788488/pydora/player.py#L115-L127",
+        "path": "pydora/player.py",
+        "name": "PlayerApp.station_selection_menu",
+        "start": 0,
+        "end": 382
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "changhiskhan/poseidon",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-118a56fbc27f753534ba.txt",
+      "source_id": "csn-f-7dc424026649c6a6bd20bc72",
+      "path": "documents/csn-f-7dc424026649c6a6bd20bc72.py",
+      "sha256": "a446839d71f338a0888eae8a2589eaa557ca807e3fc9e3832c3a47326a18ef86",
+      "function": {
+        "url": "https://github.com/changhiskhan/poseidon/blob/6d1cecbe02f1e510dd185fe23f88f7af35eb737f/scripts/snapshot.py#L10-L17",
+        "path": "scripts/snapshot.py",
+        "name": "get_first",
+        "start": 0,
+        "end": 253
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "changhiskhan/poseidon",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-118a56fbc27f753534ba.txt",
+      "source_id": "csn-f-dbd0f120e008c9c11890e2a6",
+      "path": "documents/csn-f-dbd0f120e008c9c11890e2a6.py",
+      "sha256": "77a6709c07ad4c2120e6943e0069ded41e9a78be03b1b3da4214c0594d19be57",
+      "function": {
+        "url": "https://github.com/changhiskhan/poseidon/blob/6d1cecbe02f1e510dd185fe23f88f7af35eb737f/poseidon/api.py#L362-L372",
+        "path": "poseidon/api.py",
+        "name": "Domains.records",
+        "start": 0,
+        "end": 110
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "changhiskhan/poseidon",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-118a56fbc27f753534ba.txt",
+      "source_id": "csn-f-5b36733c8323abd91fce770b",
+      "path": "documents/csn-f-5b36733c8323abd91fce770b.py",
+      "sha256": "c924af2f78f09923fafcfd6d41a3d4cc085c2472b86f0af34bc65c6160928fde",
+      "function": {
+        "url": "https://github.com/changhiskhan/poseidon/blob/6d1cecbe02f1e510dd185fe23f88f7af35eb737f/poseidon/droplet.py#L453-L465",
+        "path": "poseidon/droplet.py",
+        "name": "DropletActions.delete",
+        "start": 0,
+        "end": 142
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "changhiskhan/poseidon",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-118a56fbc27f753534ba.txt",
+      "source_id": "csn-f-eff064c37f84e9839ebf173f",
+      "path": "documents/csn-f-eff064c37f84e9839ebf173f.py",
+      "sha256": "d5ebe5b378b5fcc4b44734dc931260b19b29f9a459a6de03e4efbb56d601aaa6",
+      "function": {
+        "url": "https://github.com/changhiskhan/poseidon/blob/6d1cecbe02f1e510dd185fe23f88f7af35eb737f/poseidon/api.py#L326-L328",
+        "path": "poseidon/api.py",
+        "name": "Keys.update",
+        "start": 0,
+        "end": 92
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "aleju/imgaug",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-1339b663cd8f0806a7cc.txt",
+      "source_id": "csn-f-29f817e1adb10315bf63a73b",
+      "path": "documents/csn-f-29f817e1adb10315bf63a73b.py",
+      "sha256": "0afbb7c8e93cca245b17fd9d7d2d482591454ba6e044e1d1bcda178adf2c9187",
+      "function": {
+        "url": "https://github.com/aleju/imgaug/blob/786be74aa855513840113ea523c5df495dc6a8af/imgaug/augmentables/bbs.py#L773-L800",
+        "path": "imgaug/augmentables/bbs.py",
+        "name": "BoundingBox.deepcopy",
+        "start": 0,
+        "end": 143
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "aleju/imgaug",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-1339b663cd8f0806a7cc.txt",
+      "source_id": "csn-f-3187324c45ccdfe9065ee804",
+      "path": "documents/csn-f-3187324c45ccdfe9065ee804.py",
+      "sha256": "eb7b05a18d3d66da06fe988fbd84acc8339b2fb7aa956b029d6ef1a08ec0f807",
+      "function": {
+        "url": "https://github.com/aleju/imgaug/blob/786be74aa855513840113ea523c5df495dc6a8af/imgaug/multicore.py#L557-L586",
+        "path": "imgaug/multicore.py",
+        "name": "BackgroundAugmenter.get_batch",
+        "start": 0,
+        "end": 607
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "aleju/imgaug",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-1339b663cd8f0806a7cc.txt",
+      "source_id": "csn-f-cb30f2a667c2fb6fa7b894b9",
+      "path": "documents/csn-f-cb30f2a667c2fb6fa7b894b9.py",
+      "sha256": "19e68afff7ece002882b3606ea17a5733f591d6c386e17839aab4d5b186deafe",
+      "function": {
+        "url": "https://github.com/aleju/imgaug/blob/786be74aa855513840113ea523c5df495dc6a8af/imgaug/imgaug.py#L379-L405",
+        "path": "imgaug/imgaug.py",
+        "name": "copy_random_state",
+        "start": 0,
+        "end": 297
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    },
+    {
+      "language": "en",
+      "category": "code",
+      "split": "dev",
+      "repository": "aleju/imgaug",
+      "license": "MIT",
+      "attribution_license": "licenses/csn-1339b663cd8f0806a7cc.txt",
+      "source_id": "csn-f-b8c0b2d36e274610df8ea946",
+      "path": "documents/csn-f-b8c0b2d36e274610df8ea946.py",
+      "sha256": "21588a306e4b918c1d6f6d9e5bd2ed865269b6047ccd0ac82a77b48f8a2c04b7",
+      "function": {
+        "url": "https://github.com/aleju/imgaug/blob/786be74aa855513840113ea523c5df495dc6a8af/imgaug/augmentables/polys.py#L780-L803",
+        "path": "imgaug/augmentables/polys.py",
+        "name": "Polygon.to_line_string",
+        "start": 0,
+        "end": 351
+      },
+      "transformation": "Single original extracted function;ASTdocstrings removed;nojoins"
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "csn-q-7f8cca96879dfb2222fa46ee",
+      "text": "Gets the codec used for prefix the multicodec prefixed data",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-7f8cca96879dfb2222fa46ee",
+          "start": 0,
+          "end": 213,
+          "quote": "def get_codec(bytes_):\n    \n    prefix = extract_prefix(bytes_)\n    try:\n        return CODE_TABLE[prefix]\n    except KeyError:\n        raise ValueError('Prefix {} not present in the lookup table'.format(prefix))\n"
+        }
+      ],
+      "original_documentation_sha256": "a5b4741f90967b37a3eab8c593413e4daa2708dece1eb30a9e4991300f59206a"
+    },
+    {
+      "query_id": "csn-q-a52b1b6a63ac63473a49800c",
+      "text": "Removes prefix from a prefixed data",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-a52b1b6a63ac63473a49800c",
+          "start": 0,
+          "end": 143,
+          "quote": "def remove_prefix(bytes_):\n    \n    prefix_int = extract_prefix(bytes_)\n    prefix = varint.encode(prefix_int)\n    return bytes_[len(prefix):]\n"
+        }
+      ],
+      "original_documentation_sha256": "22531a241e16797cf7fb158e6806296363196d68a5a101f55780fd88b44d7289"
+    },
+    {
+      "query_id": "csn-q-7eb79b4de2655aaecc66f41e",
+      "text": "Adds multicodec prefix to the given bytes input",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-7eb79b4de2655aaecc66f41e",
+          "start": 0,
+          "end": 115,
+          "quote": "def add_prefix(multicodec, bytes_):\n    \n    prefix = get_prefix(multicodec)\n    return b''.join([prefix, bytes_])\n"
+        }
+      ],
+      "original_documentation_sha256": "195a1e9bfd439dc5c3bf06da105efd524f4494a3df5ef0898f2a099602da5d22"
+    },
+    {
+      "query_id": "csn-q-6c7325c1a87d7a27f6acaacc",
+      "text": "Returns prefix for a given multicodec",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-6c7325c1a87d7a27f6acaacc",
+          "start": 0,
+          "end": 215,
+          "quote": "def get_prefix(multicodec):\n    \n    try:\n        prefix = varint.encode(NAME_TABLE[multicodec])\n    except KeyError:\n        raise ValueError('{} multicodec is not supported.'.format(multicodec))\n    return prefix\n"
+        }
+      ],
+      "original_documentation_sha256": "f000f56abb37cc6e01337844d4f98f6f76ec461f9031ba1fc052ce2fd8a16e21"
+    },
+    {
+      "query_id": "csn-q-9eb58a62eaff396ea9344cc4",
+      "text": "Loads state of a backup file to a database.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-9eb58a62eaff396ea9344cc4",
+          "start": 0,
+          "end": 330,
+          "quote": "def restore(self, name, filename):\n        \n        if not self.exists(name):\n            self.create(name)\n        else:\n            log.warn('overwriting contents of database %s' % name)\n        log.info('restoring %s from %s' % (name, filename))\n        self._run_cmd('pg_restore', '--verbose', '--dbname=%s' % name, filename)\n"
+        }
+      ],
+      "original_documentation_sha256": "1b0d3c75e6d68a8fa9524ec2f947ca2682b6e0b9a15eadaa370b4ab045e9a547"
+    },
+    {
+      "query_id": "csn-q-58d989efa61a3876c426e5f1",
+      "text": "Provides a connection string for database as a sqlalchemy compatible URL.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-58d989efa61a3876c426e5f1",
+          "start": 0,
+          "end": 163,
+          "quote": "def connection_url(self, name=None):\n        \n        return 'postgresql://{user}@{host}:{port}/{dbname}'.format(**{k: v for k, v in self._connect_options(name)})\n"
+        }
+      ],
+      "original_documentation_sha256": "1e77a524528a53196d2690b0cdf256056559118d5435ad7967903f27ff54d4f4"
+    },
+    {
+      "query_id": "csn-q-35b0af49c045a356b65807d0",
+      "text": "Returns True if database server is running, False otherwise.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-35b0af49c045a356b65807d0",
+          "start": 0,
+          "end": 329,
+          "quote": "def available(self, timeout=5):\n        \n        host = self._connect_args['host']\n        port = self._connect_args['port']\n        try:\n            sock = socket.create_connection((host, port), timeout=timeout)\n            sock.close()\n            return True\n        except socket.error:\n            pass\n        return False\n"
+        }
+      ],
+      "original_documentation_sha256": "c63f52720dc8037ada4a0510986845e92efbb29dd8ec1b37e00db09e68c409fc"
+    },
+    {
+      "query_id": "csn-q-da699890485771a218b10cf0",
+      "text": "Returns a list of existing connections to the named database.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-da699890485771a218b10cf0",
+          "start": 0,
+          "end": 316,
+          "quote": "def connections(self, name):\n        \n        stmt = \"\"\"\n            select {fields} from pg_stat_activity\n            where datname = {datname!r} and pid <> pg_backend_pid()\n        \"\"\".format(fields=', '.join(CONNECTION_FIELDS), datname=name)\n        return list(Connection(**x) for x in self._iter_results(stmt))\n"
+        }
+      ],
+      "original_documentation_sha256": "6fa71a61ff55c2241eeb9e799830389682ae9557d9a083df6940a5b4678a7aae"
+    },
+    {
+      "query_id": "csn-q-a5f586f701cfb9a3436c021b",
+      "text": "`<https://docs.exchange.coinbase.com/#create-a-new-report>`_",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-a5f586f701cfb9a3436c021b",
+          "start": 0,
+          "end": 537,
+          "quote": "def _new_report(self,\n                  type,\n                  start_date,\n                  end_date,\n                  product_id='BTC-USD',\n                  account_id=None,\n                  format=None,\n                  email=None):\n    \n    data = {\n      'type':type,\n      'start_date':self._format_iso_time(start_date),\n      'end_date':self._format_iso_time(end_date),\n      'product_id':product_id,\n      'account_id':account_id,\n      'format':format,\n      'email':email\n    }\n    return self._post('reports', data=data)\n"
+        }
+      ],
+      "original_documentation_sha256": "c42fee90e8b54732d1b668f2ad28579caeb8306ca45ec062a800d34d88b0af99"
+    },
+    {
+      "query_id": "csn-q-bfad66306debcdc0fafc2145",
+      "text": "Connects and subscribes to the WebSocket Feed.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-bfad66306debcdc0fafc2145",
+          "start": 0,
+          "end": 446,
+          "quote": "def connect(self):\n    \n    if not self.connected():\n      self._ws = create_connection(self.WS_URI)\n      message = {\n        'type':self.WS_TYPE,\n        'product_id':self.WS_PRODUCT_ID\n      }\n      self._ws.send(dumps(message))\n\n      # There will be only one keep alive thread per client instance\n      with self._lock:\n        if not self._thread:\n          thread = Thread(target=self._keep_alive_thread, args=[])\n          thread.start()\n"
+        }
+      ],
+      "original_documentation_sha256": "168c8bb2efeb29fb260728e91b6d2a91c379f17bc89877a50c7aaaa017e87844"
+    },
+    {
+      "query_id": "csn-q-c7db8b45b2285b3cf0d9b970",
+      "text": "Makes sure we have proper ISO 8601 time.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-c7db8b45b2285b3cf0d9b970",
+          "start": 0,
+          "end": 204,
+          "quote": "def _format_iso_time(self, time):\n    \n    if isinstance(time, str):\n      return time\n    elif isinstance(time, datetime):\n      return time.strftime('%Y-%m-%dT%H:%M:%S.%fZ')\n    else:\n      return None\n"
+        }
+      ],
+      "original_documentation_sha256": "9dbecd85f52099e20a0f1959675fd519e67379b42fb65f6446ff2010c434bc8d"
+    },
+    {
+      "query_id": "csn-q-0c6202316bfb13197b899199",
+      "text": "`<https://docs.exchange.coinbase.com/#get-historic-rates>`_",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-0c6202316bfb13197b899199",
+          "start": 0,
+          "end": 291,
+          "quote": "def get_historic_trades(self, start, end, granularity, product_id='BTC-USD'):\n    \n    params = {\n      'start':self._format_iso_time(start),\n      'end':self._format_iso_time(end),\n      'granularity':granularity\n    }\n    return self._get('products', product_id, 'candles', params=params)\n"
+        }
+      ],
+      "original_documentation_sha256": "9739473905cd60cd83ca839065d52c17521a1dd5a8e47f682e9c6b1c76174488"
+    },
+    {
+      "query_id": "csn-q-2357a188e89f9d2e9389a877",
+      "text": "Strip comments from line string.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-2357a188e89f9d2e9389a877",
+          "start": 0,
+          "end": 402,
+          "quote": "def strip_comment_line_with_symbol(line, start):\n    \n    parts = line.split(start)\n    counts = [len(findall(r'(?:^|[^\"\\\\]|(?:\\\\\\\\|\\\\\")+)(\")', part))\n              for part in parts]\n    total = 0\n    for nr, count in enumerate(counts):\n        total += count\n        if total % 2 == 0:\n            return start.join(parts[:nr + 1]).rstrip()\n    else:  # pragma: no cover\n        return line.rstrip()\n"
+        }
+      ],
+      "original_documentation_sha256": "68f45cddc67feb1b0af24e05a4750de72ac25cabe448b0a4468b1c7912fe37bd"
+    },
+    {
+      "query_id": "csn-q-93a8d539570fffa0dd6a2c76",
+      "text": "``set`` dumper.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-93a8d539570fffa0dd6a2c76",
+          "start": 0,
+          "end": 139,
+          "quote": "def dump_set(self, obj, class_name=set_class_name):\n        \n        return {\"$\" + class_name: [self._json_convert(item) for item in obj]}\n"
+        }
+      ],
+      "original_documentation_sha256": "db38558066ecd36da986a94798781af150061c5bfd63a9bd34287e2b2a19b5e3"
+    },
+    {
+      "query_id": "csn-q-75e7836abb3578653e9bbc4e",
+      "text": "Given a timezone-aware datetime in a given timezone, calculates a\n        timezone-aware datetime in a new timezone.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-75e7836abb3578653e9bbc4e",
+          "start": 0,
+          "end": 278,
+          "quote": "def fromutc(self, dt):\n        \n        dt_wall = self._fromutc(dt)\n\n        # Calculate the fold status given the two datetimes.\n        _fold = self._fold_status(dt, dt_wall)\n\n        # Set the default fold value for ambiguous dates\n        return enfold(dt_wall, fold=_fold)\n"
+        }
+      ],
+      "original_documentation_sha256": "ead391638e95e29742b259a3933f1598eeb45693fa640e621f3c44a8c531cae0"
+    },
+    {
+      "query_id": "csn-q-5b07648d92d8fe2f16cc6b3f",
+      "text": "Convert a registry key's values to a dictionary.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-5b07648d92d8fe2f16cc6b3f",
+          "start": 0,
+          "end": 840,
+          "quote": "def valuestodict(key):\n    \n    dout = {}\n    size = winreg.QueryInfoKey(key)[1]\n    tz_res = None\n\n    for i in range(size):\n        key_name, value, dtype = winreg.EnumValue(key, i)\n        if dtype == winreg.REG_DWORD or dtype == winreg.REG_DWORD_LITTLE_ENDIAN:\n            # If it's a DWORD (32-bit integer), it's stored as unsigned - convert\n            # that to a proper signed integer\n            if value & (1 << 31):\n                value = value - (1 << 32)\n        elif dtype == winreg.REG_SZ:\n            # If it's a reference to the tzres DLL, load the actual string\n            if value.startswith('@tzres'):\n                tz_res = tz_res or tzres()\n                value = tz_res.name_from_string(value)\n\n            value = value.rstrip('\\x00')    # Remove trailing nulls\n\n        dout[key_name] = value\n\n    return dout\n"
+        }
+      ],
+      "original_documentation_sha256": "ff027df5cee6c083ecdc7e9bf08913f7af2a8c41a012ccbdecf1b64541d6ffb9"
+    },
+    {
+      "query_id": "csn-q-9408204a8aee60dd2794d1b3",
+      "text": "Extract the oritentation EXIF tag from the image, which should be a PIL Image instance,\n    and if there is an orientation tag that would rotate the image, apply that rotation to\n    the Image instance given to do an in-place rotation.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-9408204a8aee60dd2794d1b3",
+          "start": 0,
+          "end": 594,
+          "quote": "def apply_orientation(im):\n    \n\n    try:\n        kOrientationEXIFTag = 0x0112\n        if hasattr(im, '_getexif'): # only present in JPEGs\n            e = im._getexif()       # returns None if no EXIF data\n            if e is not None:\n                #log.info('EXIF data found: %r', e)\n                orientation = e[kOrientationEXIFTag]\n                f = orientation_funcs[orientation]\n                return f(im)\n    except:\n        # We'd be here with an invalid orientation value or some random error?\n        pass # log.exception(\"Error applying EXIF Orientation tag\")\n    return im\n"
+        }
+      ],
+      "original_documentation_sha256": "85252781117af89bc3f7654f9f59890ff7ccdd6422ea12c21bdfcd48bc7d52f6"
+    },
+    {
+      "query_id": "csn-q-012f5694b97c68c700e3fe5f",
+      "text": "Return a new filename to use as the combined file name for a\n    bunch of files, based on the SHA of their contents.\n    A precondition is that they all have the same file extension",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-012f5694b97c68c700e3fe5f",
+          "start": 0,
+          "end": 1303,
+          "quote": "def combine_filenames(filenames, max_length=40):\n    \n    # Get the SHA for each file, then sha all the shas.\n\n    path = None\n    names = []\n    extension = None\n    timestamps = []\n    shas = []\n    filenames.sort()\n    concat_names = \"_\".join(filenames)\n    if concat_names in COMBINED_FILENAMES_GENERATED:\n        return COMBINED_FILENAMES_GENERATED[concat_names]\n\n    for filename in filenames:\n        name = os.path.basename(filename)\n        if not extension:\n            extension = os.path.splitext(name)[1]\n        elif os.path.splitext(name)[1] != extension:\n            raise ValueError(\"Can't combine multiple file extensions\")\n\n        for base in MEDIA_ROOTS:\n            try:\n                shas.append(md5(os.path.join(base, filename)))\n                break\n            except IOError:\n                pass\n\n\n        if path is None:\n            path = os.path.dirname(filename)\n        else:\n            if len(os.path.dirname(filename)) < len(path):\n                path = os.path.dirname(filename)\n\n    m = hashlib.md5()\n    m.update(\",\".join(shas))\n\n    new_filename = \"%s-inkmd\" % m.hexdigest()\n\n    new_filename = new_filename[:max_length]\n    new_filename += extension\n    COMBINED_FILENAMES_GENERATED[concat_names] = new_filename\n\n    return os.path.join(path, new_filename)\n"
+        }
+      ],
+      "original_documentation_sha256": "93e9f96b4c812d11a1e783cf5f96eeac6a3e1a10b6bbc50c8aabf288a057f896"
+    },
+    {
+      "query_id": "csn-q-e3407288e0b82e6f4ea00f53",
+      "text": "Publish the site",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-e3407288e0b82e6f4ea00f53",
+          "start": 0,
+          "end": 473,
+          "quote": "def publish():\n    \n    try:\n        build_site(dev_mode=False, clean=True)\n        click.echo('Deploying the site...')\n        # call(\"firebase deploy\", shell=True)\n        call(\"rsync -avz -e ssh --progress %s/ %s\" % (BUILD_DIR, CONFIG[\"scp_target\"],), shell=True)\n        if \"cloudflare\" in CONFIG and \"purge\" in CONFIG[\"cloudflare\"] and CONFIG[\"cloudflare\"][\"purge\"]:\n            do_purge()\n    except (KeyboardInterrupt, SystemExit):\n        raise\n        sys.exit(1)\n"
+        }
+      ],
+      "original_documentation_sha256": "bdd3ba6a47f4866b81a20859aecb50e66e4b1c46ae6c2052f4e79357ee30578d"
+    },
+    {
+      "query_id": "csn-q-72e356c9415544b08f098eb6",
+      "text": "Start a new piece",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-72e356c9415544b08f098eb6",
+          "start": 0,
+          "end": 357,
+          "quote": "def write():\n    \n    click.echo(\"Fantastic. Let's get started. \")\n    title = click.prompt(\"What's the title?\")\n\n    # Make sure that title doesn't exist.\n    url = slugify(title)\n    url = click.prompt(\"What's the URL?\", default=url)\n\n    # Make sure that title doesn't exist.\n    click.echo(\"Got it. Creating %s...\" % url)\n    scaffold_piece(title, url)\n"
+        }
+      ],
+      "original_documentation_sha256": "1b8c5df0813e808d09d6ee3770635e53e4ed6ef4693a548efbae6a829bff6fba"
+    },
+    {
+      "query_id": "csn-q-5d5672987a2c7738e3c389fe",
+      "text": "Load a measurement.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-5d5672987a2c7738e3c389fe",
+          "start": 0,
+          "end": 193,
+          "quote": "async def load(self, filename):\n        \n        cmd = \"load %s\" % filename\n        return await asyncio.wait_for(\n            self._protocol.send_command(cmd), timeout=self._timeout\n        )\n"
+        }
+      ],
+      "original_documentation_sha256": "664d4da56b18de8e7c89fc879cff8da1f0e2f4a1879e4bfff23f98f56ed8862b"
+    },
+    {
+      "query_id": "csn-q-423cbd6856bb261694fc01d6",
+      "text": "Main function",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-423cbd6856bb261694fc01d6",
+          "start": 0,
+          "end": 190,
+          "quote": "async def setup():\n    \n    connection = await qtm.connect(\"127.0.0.1\")\n    if connection is None:\n        return\n\n    await connection.stream_frames(components=[\"3d\"], on_packet=on_packet)\n"
+        }
+      ],
+      "original_documentation_sha256": "11ed1bfee320a43544b6bf6ef4f952b4e475df0a0e4df5ccb185e4cf3aad760e"
+    },
+    {
+      "query_id": "csn-q-70d572ccc6f3f340216d5161",
+      "text": "Get the byte order used when communicating\n            (should only ever be little endian using this library).",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-70d572ccc6f3f340216d5161",
+          "start": 0,
+          "end": 162,
+          "quote": "async def byte_order(self):\n        \n        return await asyncio.wait_for(\n            self._protocol.send_command(\"byteorder\"), timeout=self._timeout\n        )\n"
+        }
+      ],
+      "original_documentation_sha256": "7ff4afbb3d98c3b45f1bfbeb8d61df3e1b5c30d7b688724b4066c89352b01a18"
+    },
+    {
+      "query_id": "csn-q-4af77bdc06bc0acfc1ddd664",
+      "text": "Stream measured frames from QTM until :func:`~qtm.QRTConnection.stream_frames_stop`\n           is called.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-4af77bdc06bc0acfc1ddd664",
+          "start": 0,
+          "end": 452,
+          "quote": "async def stream_frames(self, frames=\"allframes\", components=None, on_packet=None):\n        \n\n        if components is None:\n            components = [\"all\"]\n        else:\n            _validate_components(components)\n\n        self._protocol.set_on_packet(on_packet)\n\n        cmd = \"streamframes %s %s\" % (frames, \" \".join(components))\n        return await asyncio.wait_for(\n            self._protocol.send_command(cmd), timeout=self._timeout\n        )\n"
+        }
+      ],
+      "original_documentation_sha256": "1ae41af96a1c0f4f28de6efed1d0014ec0f812024224b9a63fa78d03123e694e"
+    },
+    {
+      "query_id": "csn-q-a828b2873a7a81b3f7e35ecd",
+      "text": "Start serving HTTP requests",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-a828b2873a7a81b3f7e35ecd",
+          "start": 0,
+          "end": 393,
+          "quote": "def serve_forever(self, poll_interval=0.5):\n        \n        logger.info('Starting server on {}:{}...'.format(\n            self.server_name, self.server_port)\n        )\n        while True:\n            try:\n                self.poll_once(poll_interval)\n            except (KeyboardInterrupt, SystemExit):\n                break\n        self.handle_close()\n        logger.info('Server stopped.')\n"
+        }
+      ],
+      "original_documentation_sha256": "c62e21dff42ca14ee22808ebf0c9762c7fefbb5327cdbdaa9076ccd1409ddf83"
+    },
+    {
+      "query_id": "csn-q-c82bc03c774116a5ab7aa037",
+      "text": "Get the best available socket poll function\n    \n    :return: poller function",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-c82bc03c774116a5ab7aa037",
+          "start": 0,
+          "end": 226,
+          "quote": "def get_poll_func():\n    \n    if hasattr(select, 'epoll'):\n        poll_func = epoll_poller\n    elif hasattr(select, 'poll'):\n        poll_func = asyncore.poll2\n    else:\n        poll_func = asyncore.poll\n    return poll_func\n"
+        }
+      ],
+      "original_documentation_sha256": "cfe312ef267b07efc2f8e434b0bffd4ef46e8bb642a617de48261cac40711c2c"
+    },
+    {
+      "query_id": "csn-q-f8a0bc6ce30f12b7e883e1aa",
+      "text": "A poller which uses epoll(), supported on Linux 2.5.44 and newer",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-f8a0bc6ce30f12b7e883e1aa",
+          "start": 0,
+          "end": 928,
+          "quote": "def epoll_poller(timeout=0.0, map=None):\n    \n    if map is None:\n        map = asyncore.socket_map\n    pollster = select.epoll()\n    if map:\n        for fd, obj in iteritems(map):\n            flags = 0\n            if obj.readable():\n                flags |= select.POLLIN | select.POLLPRI\n            if obj.writable():\n                flags |= select.POLLOUT\n            if flags:\n                # Only check for exceptions if object was either readable\n                # or writable.\n                flags |= select.POLLERR | select.POLLHUP | select.POLLNVAL\n                pollster.register(fd, flags)\n        try:\n            r = pollster.poll(timeout)\n        except select.error as err:\n            if err.args[0] != EINTR:\n                raise\n            r = []\n        for fd, flags in r:\n            obj = map.get(fd)\n            if obj is None:\n                continue\n            asyncore.readwrite(obj, flags)\n"
+        }
+      ],
+      "original_documentation_sha256": "1e806b1d8e0093aa61d14b8be81404b92be97da7f750cbfb8e4a86db5da4168b"
+    },
+    {
+      "query_id": "csn-q-f7da82d1195c303c921b7617",
+      "text": "Create server instance with an optional WebSocket handler",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-f7da82d1195c303c921b7617",
+          "start": 0,
+          "end": 412,
+          "quote": "def make_server(host, port, app=None,\n                server_class=AsyncWsgiServer,\n                handler_class=AsyncWsgiHandler,\n                ws_handler_class=None,\n                ws_path='/ws'):\n    \n    handler_class.ws_handler_class = ws_handler_class\n    handler_class.ws_path = ws_path\n    httpd = server_class((host, port), RequestHandlerClass=handler_class)\n    httpd.set_app(app)\n    return httpd\n"
+        }
+      ],
+      "original_documentation_sha256": "9a5a1ed7e054c82f601d42026c192c03df067b3be36b88fe5da6112a766c4b7d"
+    },
+    {
+      "query_id": "csn-q-d3f112fb65c34efe04aaec47",
+      "text": "Like iglob, but recurse directories\r\n\r\n\t>>> any('path.py' in result for result in recursive_glob('.', '*.py'))\r\n\tTrue\r\n\r\n\t>>> all(result.startswith('.') for result in recursive_glob('.', '*.py'))\r\n\tTrue\r\n\r\n\t>>> len(list(recursive_glob('.', '*.foo')))\r\n\t0",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-d3f112fb65c34efe04aaec47",
+          "start": 0,
+          "end": 258,
+          "quote": "def recursive_glob(root, spec):\r\n\t\r\n\tspecs = (\r\n\t\tos.path.join(dirpath, dirname, spec)\r\n\t\tfor dirpath, dirnames, filenames in os.walk(root)\r\n\t\tfor dirname in dirnames\r\n\t)\r\n\r\n\treturn itertools.chain.from_iterable(\r\n\t\tglob.iglob(spec)\r\n\t\tfor spec in specs\r\n\t)\n"
+        }
+      ],
+      "original_documentation_sha256": "550addac75a0ca21b095ef0d91f226dcd78adb1d02657615cec568d90776921b"
+    },
+    {
+      "query_id": "csn-q-f2ae5bbc60e226c0ed6480f7",
+      "text": "Custom version of splitext that doesn't perform splitext on directories",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-f2ae5bbc60e226c0ed6480f7",
+          "start": 0,
+          "end": 130,
+          "quote": "def splitext_files_only(filepath):\r\n\t\r\n\treturn (\r\n\t\t(filepath, '') if os.path.isdir(filepath) else os.path.splitext(filepath)\r\n\t)\n"
+        }
+      ],
+      "original_documentation_sha256": "71fd091da185366ac72a443c8007eb3a78b0fe59fe8b896fd800fbf50e3845e3"
+    },
+    {
+      "query_id": "csn-q-973569c4c76124e2f7cce076",
+      "text": "Encode the name for a suitable name in the given filesystem\r\n\t>>> encode('Test :1')\r\n\t'Test _1'",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-973569c4c76124e2f7cce076",
+          "start": 0,
+          "end": 276,
+          "quote": "def encode(name, system='NTFS'):\r\n\t\r\n\tassert system == 'NTFS', 'unsupported filesystem'\r\n\tspecial_characters = r'<>:\"/\\|?*' + ''.join(map(chr, range(32)))\r\n\tpattern = '|'.join(map(re.escape, special_characters))\r\n\tpattern = re.compile(pattern)\r\n\treturn pattern.sub('_', name)\n"
+        }
+      ],
+      "original_documentation_sha256": "01b3526e0c6a50f2f6a1eb02c0e6e87210ccf18a4038caeddffc45bcca5f09ce"
+    },
+    {
+      "query_id": "csn-q-0575099a424b0459b8e9d092",
+      "text": "Return a pathname possibly with a number appended to it so that it is\r\n\tunique in the directory.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-0575099a424b0459b8e9d092",
+          "start": 0,
+          "end": 321,
+          "quote": "def get_unique_pathname(path, root=''):\r\n\t\r\n\tpath = os.path.join(root, path)\r\n\t# consider the path supplied, then the paths with numbers appended\r\n\tpotentialPaths = itertools.chain((path,), __get_numbered_paths(path))\r\n\tpotentialPaths = six.moves.filterfalse(os.path.exists, potentialPaths)\r\n\treturn next(potentialPaths)\n"
+        }
+      ],
+      "original_documentation_sha256": "7c29c38ce3902c1435b420a2c547dd1045e224ae4d820bbca543d9cff58dbd56"
+    },
+    {
+      "query_id": "csn-q-7366b58ac8b58fb42badce82",
+      "text": "List file on target",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-7366b58ac8b58fb42badce82",
+          "start": 0,
+          "end": 155,
+          "quote": "def operation_list(uploader):\n    \n    files = uploader.file_list()\n    for f in files:\n        log.info(\"{file:30s} {size}\".format(file=f[0], size=f[1]))\n"
+        }
+      ],
+      "original_documentation_sha256": "2515347cd379a532b7447bc98a1bb7a13409fedb27d2e63066d4a0dab5394fed"
+    },
+    {
+      "query_id": "csn-q-d62dc503f01fd791a9f87260",
+      "text": "write lines, one by one, separated by \\n to device",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-d62dc503f01fd791a9f87260",
+          "start": 0,
+          "end": 150,
+          "quote": "def write_lines(self, data):\n        \n        lines = data.replace('\\r', '').split('\\n')\n        for line in lines:\n            self.__exchange(line)\n"
+        }
+      ],
+      "original_documentation_sha256": "02e8cff4868e1b26c1d77699530ae469b8866efd9514f166efb8ef1719182e44"
+    },
+    {
+      "query_id": "csn-q-d4db07481027f0090e5a22d7",
+      "text": "Restarts device",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-d4db07481027f0090e5a22d7",
+          "start": 0,
+          "end": 150,
+          "quote": "def node_restart(self):\n        \n        log.info('Restart')\n        res = self.__exchange('node.restart()')\n        log.info(res)\n        return res\n"
+        }
+      ],
+      "original_documentation_sha256": "35695584973d7fd6b4b8e9eb9f43bb9d35c031ef909b5cb5e7fa48d0004c84d2"
+    },
+    {
+      "query_id": "csn-q-f7a33f644e93dc4bc48183b2",
+      "text": "Set the timeout for the communication with the device.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-f7a33f644e93dc4bc48183b2",
+          "start": 0,
+          "end": 153,
+          "quote": "def set_timeout(self, timeout):\n        \n        timeout = int(timeout) # will raise on Error\n        self._timeout = timeout == 0 and 999999 or timeout\n"
+        }
+      ],
+      "original_documentation_sha256": "d43fcfcac40cb7055845a72bdf34919e59427b1cd4aab3938e96067c977dfd50"
+    },
+    {
+      "query_id": "csn-q-a7e05d2f5fa964f6deadb31f",
+      "text": "ping statistics.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-a7e05d2f5fa964f6deadb31f",
+          "start": 0,
+          "end": 191,
+          "quote": "def as_tuple(self):\n        \n\n        from collections import namedtuple\n\n        ping_result = self.as_dict()\n\n        return namedtuple(\"PingStatsTuple\", ping_result.keys())(**ping_result)\n"
+        }
+      ],
+      "original_documentation_sha256": "4532809c3f47992b90502e1f139f3b8319270e8c66989fb6d7a617cfb7b52031"
+    },
+    {
+      "query_id": "csn-q-00bcb51f19ef0261d2a44ea2",
+      "text": "Parse ping command output.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-00bcb51f19ef0261d2a44ea2",
+          "start": 0,
+          "end": 1244,
+          "quote": "def parse(self, ping_message):\n        \n\n        try:\n            # accept PingResult instance as an input\n            if typepy.is_not_null_string(ping_message.stdout):\n                ping_message = ping_message.stdout\n        except AttributeError:\n            pass\n\n        logger.debug(\"parsing ping result: {}\".format(ping_message))\n\n        self.__parser = NullPingParser()\n\n        if typepy.is_null_string(ping_message):\n            logger.debug(\"ping_message is empty\")\n            self.__stats = PingStats()\n\n            return self.__stats\n\n        ping_lines = _to_unicode(ping_message).splitlines()\n        parser_class_list = (\n            LinuxPingParser,\n            WindowsPingParser,\n            MacOsPingParser,\n            AlpineLinuxPingParser,\n        )\n\n        for parser_class in parser_class_list:\n            self.__parser = parser_class()\n            try:\n                self.__stats = self.__parser.parse(ping_lines)\n                return self.__stats\n            except ParseError as e:\n                if e.reason != ParseErrorReason.HEADER_NOT_FOUND:\n                    raise e\n            except pp.ParseException:\n                pass\n\n        self.__parser = NullPingParser()\n\n        return self.__stats\n"
+        }
+      ],
+      "original_documentation_sha256": "f7875b0773373875f05f5746f6bb7f5cd3d2fbb6c5d646b427a696277ab8b723"
+    },
+    {
+      "query_id": "csn-q-a1b4671a1fca55815b1daf0a",
+      "text": "ping statistics.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-a1b4671a1fca55815b1daf0a",
+          "start": 0,
+          "end": 599,
+          "quote": "def as_dict(self):\n        \n\n        return {\n            \"destination\": self.destination,\n            \"packet_transmit\": self.packet_transmit,\n            \"packet_receive\": self.packet_receive,\n            \"packet_loss_count\": self.packet_loss_count,\n            \"packet_loss_rate\": self.packet_loss_rate,\n            \"rtt_min\": self.rtt_min,\n            \"rtt_avg\": self.rtt_avg,\n            \"rtt_max\": self.rtt_max,\n            \"rtt_mdev\": self.rtt_mdev,\n            \"packet_duplicate_count\": self.packet_duplicate_count,\n            \"packet_duplicate_rate\": self.packet_duplicate_rate,\n        }\n"
+        }
+      ],
+      "original_documentation_sha256": "e6f0c84315d1a3889c873c69bf9597341dd0a163852d564eede38f1fc1bd3a64"
+    },
+    {
+      "query_id": "csn-q-631975acc340f177f2a13790",
+      "text": "Sending ICMP packets.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-631975acc340f177f2a13790",
+          "start": 0,
+          "end": 251,
+          "quote": "def ping(self):\n        \n\n        self.__validate_ping_param()\n\n        ping_proc = subprocrunner.SubprocessRunner(self.__get_ping_command())\n        ping_proc.run()\n\n        return PingResult(ping_proc.stdout, ping_proc.stderr, ping_proc.returncode)\n"
+        }
+      ],
+      "original_documentation_sha256": "d90d794c952ccb02e735db3865da9114e0599c6d502ab90837376e1cabace093"
+    },
+    {
+      "query_id": "csn-q-bab9c861064d1b75849c2e5c",
+      "text": "Query Schema information for existing reliable dictionaries.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-bab9c861064d1b75849c2e5c",
+          "start": 0,
+          "end": 630,
+          "quote": "def get_reliabledictionary_schema(client, application_name, service_name, dictionary_name, output_file=None):\n    \n    cluster = Cluster.from_sfclient(client)\n    dictionary = cluster.get_application(application_name).get_service(service_name).get_dictionary(dictionary_name)\n\n    result = json.dumps(dictionary.get_information(), indent=4)\n\n    if (output_file == None):\n        output_file = \"{}-{}-{}-schema-output.json\".format(application_name, service_name, dictionary_name)\n\n    with open(output_file, \"w\") as output:\n        output.write(result)\n    print('Printed schema information to: ' + output_file)\n    print(result)\n"
+        }
+      ],
+      "original_documentation_sha256": "2213dca68eb7385f682027e3f44cd79411460c8fa577c38534dc278ba54b48d3"
+    },
+    {
+      "query_id": "csn-q-fa141d740fcabd16465026f3",
+      "text": "Create requests session with any required auth headers\n        applied.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-fa141d740fcabd16465026f3",
+          "start": 0,
+          "end": 482,
+          "quote": "def signed_session(self, session=None):\n        \n\n        if session:\n            session = super(ClientCertAuthentication, self).signed_session(session)\n        else:\n            session = super(ClientCertAuthentication, self).signed_session()\n\n        if self.cert is not None:\n            session.cert = self.cert\n        if self.ca_cert is not None:\n            session.verify = self.ca_cert\n        if self.no_verify:\n            session.verify = False\n\n        return session\n"
+        }
+      ],
+      "original_documentation_sha256": "398353e24bdb9a60878b182f12bcc1e4769b608b405c1d8c0c986942856eb119"
+    },
+    {
+      "query_id": "csn-q-caa9e4fb2043509baba79df3",
+      "text": "Set AAD metadata.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-caa9e4fb2043509baba79df3",
+          "start": 0,
+          "end": 183,
+          "quote": "def set_aad_metadata(uri, resource, client):\n    \n    set_config_value('authority_uri', uri)\n    set_config_value('aad_resource', resource)\n    set_config_value('aad_client', client)\n"
+        }
+      ],
+      "original_documentation_sha256": "6a6ad43c05693820ad7d5896590650e7c0147be706f91d1b4e352e98a209c6b5"
+    },
+    {
+      "query_id": "csn-q-da4bde0ba774d2f00120c407",
+      "text": "Create requests session with AAD auth headers",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-da4bde0ba774d2f00120c407",
+          "start": 0,
+          "end": 873,
+          "quote": "def signed_session(self, session=None):\n        \n\n        from sfctl.config import (aad_metadata, aad_cache)\n\n        if session:\n            session = super(AdalAuthentication, self).signed_session(session)\n        else:\n            session = super(AdalAuthentication, self).signed_session()\n\n        if self.no_verify:\n            session.verify = False\n\n        authority_uri, cluster_id, client_id = aad_metadata()\n        existing_token, existing_cache = aad_cache()\n        context = adal.AuthenticationContext(authority_uri,\n                                             cache=existing_cache)\n        new_token = context.acquire_token(cluster_id,\n                                          existing_token['userId'], client_id)\n        header = \"{} {}\".format(\"Bearer\", new_token['accessToken'])\n        session.headers['Authorization'] = header\n        return session\n"
+        }
+      ],
+      "original_documentation_sha256": "9ea60561619f30ad36498b0415f192aceb10a4f77b20a915ee8f432ca4607fb5"
+    },
+    {
+      "query_id": "csn-q-a89ac7206fa15bddcd5b369e",
+      "text": "Calculate how many days the month spans.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-a89ac7206fa15bddcd5b369e",
+          "start": 0,
+          "end": 670,
+          "quote": "def get_days_span(self, month_index):\n        \n        is_first_month = month_index == 0\n        is_last_month = month_index == self.__len__() - 1\n\n        y = int(self.start_date.year + (self.start_date.month + month_index) / 13)\n        m = int((self.start_date.month + month_index) % 12 or 12)\n        total = calendar.monthrange(y, m)[1]\n\n        if is_first_month and is_last_month:\n            return (self.end_date - self.start_date).days + 1\n        else:\n            if is_first_month:\n                return total - self.start_date.day + 1\n            elif is_last_month:\n                return self.end_date.day\n            else:\n                return total\n"
+        }
+      ],
+      "original_documentation_sha256": "049b4dbbdb72326de5638ddddd4dc283ee03c083678dab3e5d5c2fe487080a61"
+    },
+    {
+      "query_id": "csn-q-110eb046b38b2457bc64ef7b",
+      "text": "Return an object described by the accessor by traversing the attributes\r\n        of context.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-110eb046b38b2457bc64ef7b",
+          "start": 0,
+          "end": 1105,
+          "quote": "def resolve(self, context, quiet=True):\r\n        \r\n        try:\r\n            obj = context\r\n            for level in self.levels:\r\n                if isinstance(obj, dict):\r\n                    obj = obj[level]\r\n                elif isinstance(obj, list) or isinstance(obj, tuple):\r\n                    obj = obj[int(level)]\r\n                else:\r\n                    if callable(getattr(obj, level)):\r\n                        try:\r\n                            obj = getattr(obj, level)()\r\n                        except KeyError:\r\n                            obj = getattr(obj, level)\r\n                    else:\r\n                        # for model field that has choice set\r\n                        # use get_xxx_display to access\r\n                        display = 'get_%s_display' % level\r\n                        obj = getattr(obj, display)() if hasattr(obj, display) else getattr(obj, level)\r\n                if not obj:\r\n                    break\r\n            return obj\r\n        except Exception as e:\r\n            if quiet:\r\n                return ''\r\n            else:\r\n                raise e\n"
+        }
+      ],
+      "original_documentation_sha256": "c61adc4aed9e23b77a648bd69740a1a18e787e803c02279a2187c0ee153ce08b"
+    },
+    {
+      "query_id": "csn-q-9b4de8ba60482cf774277714",
+      "text": "Render link as HTML output tag <a>.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-9b4de8ba60482cf774277714",
+          "start": 0,
+          "end": 354,
+          "quote": "def render(self, obj):\n        \n        self.obj = obj\n        attrs = ' '.join([\n            '%s=\"%s\"' % (attr_name, attr.resolve(obj))\n            if isinstance(attr, Accessor)\n            else '%s=\"%s\"' % (attr_name, attr)\n            for attr_name, attr in self.attrs.items()\n        ])\n        return mark_safe(u'<a %s>%s</a>' % (attrs, self.text))\n"
+        }
+      ],
+      "original_documentation_sha256": "a57d37ae7295e5a6a58562608eab6bd9f0bd9218230d15cfa69e77b8014bdc58"
+    },
+    {
+      "query_id": "csn-q-73b29a3dbaf8d3a158a01e9c",
+      "text": "Get context data for datatable server-side response.\n        See http://www.datatables.net/usage/server-side",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-73b29a3dbaf8d3a158a01e9c",
+          "start": 0,
+          "end": 1023,
+          "quote": "def get_context_data(self, **kwargs):\n        \n        sEcho = self.query_data[\"sEcho\"]\n\n        context = super(BaseListView, self).get_context_data(**kwargs)\n        queryset = context[\"object_list\"]\n        if queryset is not None:\n            total_length = self.get_queryset_length(queryset)\n            queryset = self.filter_queryset(queryset)\n            display_length = self.get_queryset_length(queryset)\n\n            queryset = self.sort_queryset(queryset)\n            queryset = self.paging_queryset(queryset)\n            values_list = self.convert_queryset_to_values_list(queryset)\n            context = {\n                \"sEcho\": sEcho,\n                \"iTotalRecords\": total_length,\n                \"iTotalDisplayRecords\": display_length,\n                \"aaData\": values_list,\n            }\n        else:\n            context = {\n                \"sEcho\": sEcho,\n                \"iTotalRecords\": 0,\n                \"iTotalDisplayRecords\": 0,\n                \"aaData\": [],\n            }\n        return context\n"
+        }
+      ],
+      "original_documentation_sha256": "c9cf36835eedc37d463dd685d1ace62ddcb5a4db454b4dce1e2e525c3668e220"
+    },
+    {
+      "query_id": "csn-q-8324f5475f9ffb9df7b73a53",
+      "text": "Sets existing data to form fields.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-8324f5475f9ffb9df7b73a53",
+          "start": 0,
+          "end": 408,
+          "quote": "def set_fields(self):\n        \n\n        # Get dictionary map of current model\n        if self.is_initialized:\n            self.model_map_dict = self.create_document_dictionary(self.model_instance)\n        else:\n            self.model_map_dict = self.create_document_dictionary(self.model)\n\n        form_field_dict = self.get_form_field_dict(self.model_map_dict)\n        self.set_form_fields(form_field_dict)\n"
+        }
+      ],
+      "original_documentation_sha256": "b25eaeaeade9c5ec1e15b66a5863f4f6e59010d1ec73f486b3bf64a534727af0"
+    },
+    {
+      "query_id": "csn-q-2c6fa92d117c11f10b5d83d1",
+      "text": "Returns the display value of a field for a particular MongoDB document.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-2c6fa92d117c11f10b5d83d1",
+          "start": 0,
+          "end": 665,
+          "quote": "def get_document_value(document, key):\n    \n    value = getattr(document, key)\n    if isinstance(value, ObjectId):\n        return value\n\n    if isinstance(document._fields.get(key), URLField):\n        return mark_safe(\"\"\"<a href=\"{0}\">{1}</a>\"\"\".format(value, value))\n\n    if isinstance(value, Document):\n        app_label = value.__module__.replace(\".models\", \"\")\n        document_name = value._class_name\n        url = reverse(\n            \"document_detail\",\n            kwargs={'app_label': app_label, 'document_name': document_name,\n                    'id': value.id})\n        return mark_safe(\"\"\"<a href=\"{0}\">{1}</a>\"\"\".format(url, value))\n\n    return value\n"
+        }
+      ],
+      "original_documentation_sha256": "a1f7509613daeab94f36710bb09e0cb4450a1b5dbe47856a406a6d03e798b214"
+    },
+    {
+      "query_id": "csn-q-fc7e917f5bc093c7465c5569",
+      "text": "Provides permissions for mongoadmin for use in the context",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-fc7e917f5bc093c7465c5569",
+          "start": 0,
+          "end": 449,
+          "quote": "def set_permissions_in_context(self, context={}):\n        \n\n        context['has_view_permission'] = self.mongoadmin.has_view_permission(self.request)\n        context['has_edit_permission'] = self.mongoadmin.has_edit_permission(self.request)\n        context['has_add_permission'] = self.mongoadmin.has_add_permission(self.request)\n        context['has_delete_permission'] = self.mongoadmin.has_delete_permission(self.request)\n        return context\n"
+        }
+      ],
+      "original_documentation_sha256": "91c9b8fd103393cb01b051b06fefd2d5b4da266f1cb7230c4ffdf5380e390d68"
+    },
+    {
+      "query_id": "csn-q-ccceed14386a6bcbec697860",
+      "text": "Used during adding/editing of data.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-ccceed14386a6bcbec697860",
+          "start": 0,
+          "end": 164,
+          "quote": "def get_initial(self):\n        \n        self.query = self.get_queryset()\n        mongo_ids = {'mongo_id': [str(x.id) for x in self.query]}\n        return mongo_ids\n"
+        }
+      ],
+      "original_documentation_sha256": "3b14fdb866b80eb0ecd47fb1b4ed27e98e104fe8c339356ca64b35486c17b196"
+    },
+    {
+      "query_id": "csn-q-bdde6a55b36ae1daf1c5a124",
+      "text": "Populate all fields of a model with data",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-bdde6a55b36ae1daf1c5a124",
+          "start": 0,
+          "end": 875,
+          "quote": "def populate_fields(api_client, instance, data):\n        \n        for key, value in instance.__class__._fields.items():\n            default = getattr(value, \"default\", None)\n            newval = data.get(value.field, default)\n\n            if isinstance(value, SyntheticField):\n                newval = value.formatter(api_client, data, newval)\n                setattr(instance, key, newval)\n                continue\n\n            model_class = getattr(value, \"model\", None)\n            if newval and model_class:\n                if isinstance(newval, list):\n                    newval = model_class.from_json_list(api_client, newval)\n                else:\n                    newval = model_class.from_json(api_client, newval)\n\n            if newval and value.formatter:\n                newval = value.formatter(api_client, newval)\n\n            setattr(instance, key, newval)\n"
+        }
+      ],
+      "original_documentation_sha256": "bbd3f5eeb0002dc69e868153e13c213fe9d4241ba03b28d07c130c0954250564"
+    },
+    {
+      "query_id": "csn-q-f1f9db1206b17a6273d847f2",
+      "text": "Calculate time to sleep based on exponential function.\n    The format is::",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-f1f9db1206b17a6273d847f2",
+          "start": 0,
+          "end": 337,
+          "quote": "def delay_exponential(base, growth_factor, attempts):\n    \n    if base == 'rand':\n        base = random.random()\n    elif base <= 0:\n        raise ValueError(\"The 'base' param must be greater than 0, \"\n                         \"got: {}\".format(base))\n    time_to_sleep = base * (growth_factor ** (attempts - 1))\n    return time_to_sleep\n"
+        }
+      ],
+      "original_documentation_sha256": "f2ccc3637e64ff4fc826ac41932af1c3efdbe18f673c96d768a87a1a467da309"
+    },
+    {
+      "query_id": "csn-q-54d5852aaf72d1cedd5de7f0",
+      "text": "Play a new song from a Pandora model",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-54d5852aaf72d1cedd5de7f0",
+          "start": 0,
+          "end": 848,
+          "quote": "def play(self, song):\n        \n        self._callbacks.play(song)\n        self._load_track(song)\n        time.sleep(2)  # Give the backend time to load the track\n\n        while True:\n            try:\n                self._callbacks.pre_poll()\n                self._ensure_started()\n                self._loop_hook()\n\n                readers, _, _ = select.select(\n                    self._get_select_readers(), [], [], 1)\n\n                for handle in readers:\n                    if handle.fileno() == self._control_fd:\n                        self._callbacks.input(handle.readline().strip(), song)\n                    else:\n                        value = self._read_from_process(handle)\n                        if self._player_stopped(value):\n                            return\n            finally:\n                self._callbacks.post_poll()\n"
+        }
+      ],
+      "original_documentation_sha256": "84416ec7d846853e44b3bfee919408607c9e5f8e419d5f839d3653c6944f7c7d"
+    },
+    {
+      "query_id": "csn-q-a391b27ed41434a4fffcbc31",
+      "text": "Format a station menu and make the user select a station",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-a391b27ed41434a4fffcbc31",
+          "start": 0,
+          "end": 382,
+          "quote": "def station_selection_menu(self, error=None):\n        \n        self.screen.clear()\n\n        if error:\n            self.screen.print_error(\"{}\\n\".format(error))\n\n        for i, station in enumerate(self.stations):\n            i = \"{:>3}\".format(i)\n            print(\"{}: {}\".format(Colors.yellow(i), station.name))\n\n        return self.stations[self.screen.get_integer(\"Station: \")]\n"
+        }
+      ],
+      "original_documentation_sha256": "f926e8098445c1ee3927b8ffeda805910d559744a8ddb2e297a968b24c53e277"
+    },
+    {
+      "query_id": "csn-q-7dc424026649c6a6bd20bc72",
+      "text": "return first droplet",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-7dc424026649c6a6bd20bc72",
+          "start": 0,
+          "end": 253,
+          "quote": "def get_first():\n    \n    client = po.connect() # this depends on the DIGITALOCEAN_API_KEY envvar\n    all_droplets = client.droplets.list()\n    id = all_droplets[0]['id'] # I'm cheating because I only have one droplet\n    return client.droplets.get(id)\n"
+        }
+      ],
+      "original_documentation_sha256": "7e40bf5fe6ab41ccb6e8a12ccd8d0a45727bf57e53ea5e9cf440f522ac6481c5"
+    },
+    {
+      "query_id": "csn-q-dbd0f120e008c9c11890e2a6",
+      "text": "Get a list of all domain records for the given domain name",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-dbd0f120e008c9c11890e2a6",
+          "start": 0,
+          "end": 110,
+          "quote": "def records(self, name):\n        \n        if self.get(name):\n            return DomainRecords(self.api, name)\n"
+        }
+      ],
+      "original_documentation_sha256": "00a3893aca2a60be07de254082d535cc5fe863d0163392f0ce84e614aeef8696"
+    },
+    {
+      "query_id": "csn-q-5b36733c8323abd91fce770b",
+      "text": "Delete this droplet",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-5b36733c8323abd91fce770b",
+          "start": 0,
+          "end": 142,
+          "quote": "def delete(self, wait=True):\n        \n        resp = self.parent.delete(self.id)\n        if wait:\n            self.wait()\n        return resp\n"
+        }
+      ],
+      "original_documentation_sha256": "1fcd3724528c6359c6fa2dbfbc743a8329c247816a6ec96a3f5b9169a4f09e5b"
+    },
+    {
+      "query_id": "csn-q-eff064c37f84e9839ebf173f",
+      "text": "id or fingerprint",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-eff064c37f84e9839ebf173f",
+          "start": 0,
+          "end": 92,
+          "quote": "def update(self, id, name):\n        \n        return super(Keys, self).update(id, name=name)\n"
+        }
+      ],
+      "original_documentation_sha256": "7a60273f189f79e39d9e61e84b9e312bebfa31ff8a803b6598a101cf140820ae"
+    },
+    {
+      "query_id": "csn-q-29f817e1adb10315bf63a73b",
+      "text": "Create a deep copy of the BoundingBox object.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-29f817e1adb10315bf63a73b",
+          "start": 0,
+          "end": 143,
+          "quote": "def deepcopy(self, x1=None, y1=None, x2=None, y2=None, label=None):\n        \n        return self.copy(x1=x1, y1=y1, x2=x2, y2=y2, label=label)\n"
+        }
+      ],
+      "original_documentation_sha256": "f7a4d1d2c6e695842583f426b1468463ff89ce08e1f89fe257275d414dedbb79"
+    },
+    {
+      "query_id": "csn-q-3187324c45ccdfe9065ee804",
+      "text": "Returns a batch from the queue of augmented batches.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-3187324c45ccdfe9065ee804",
+          "start": 0,
+          "end": 607,
+          "quote": "def get_batch(self):\n        \n        if self.all_finished():\n            return None\n\n        batch_str = self.queue_result.get()\n        batch = pickle.loads(batch_str)\n        if batch is not None:\n            return batch\n        else:\n            self.nb_workers_finished += 1\n            if self.nb_workers_finished >= self.nb_workers:\n                try:\n                    self.queue_source.get(timeout=0.001)  # remove the None from the source queue\n                except QueueEmpty:\n                    pass\n                return None\n            else:\n                return self.get_batch()\n"
+        }
+      ],
+      "original_documentation_sha256": "d5cd946950e368447247476103cc3129057cb5d7810bb003dd01062b56df6c7b"
+    },
+    {
+      "query_id": "csn-q-cb30f2a667c2fb6fa7b894b9",
+      "text": "Creates a copy of a random state.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-cb30f2a667c2fb6fa7b894b9",
+          "start": 0,
+          "end": 297,
+          "quote": "def copy_random_state(random_state, force_copy=False):\n    \n    if random_state == np.random and not force_copy:\n        return random_state\n    else:\n        rs_copy = dummy_random_state()\n        orig_state = random_state.get_state()\n        rs_copy.set_state(orig_state)\n        return rs_copy\n"
+        }
+      ],
+      "original_documentation_sha256": "b5e94159549a6e7e1ff83d17ac2a3c6acaf205f6e536c6fbeb54d542bf0eb108"
+    },
+    {
+      "query_id": "csn-q-b8c0b2d36e274610df8ea946",
+      "text": "Convert this polygon's `exterior` to a ``LineString`` instance.",
+      "split": "dev",
+      "evidence": [
+        {
+          "source_id": "csn-f-b8c0b2d36e274610df8ea946",
+          "start": 0,
+          "end": 351,
+          "quote": "def to_line_string(self, closed=True):\n        \n        from imgaug.augmentables.lines import LineString\n        if not closed or len(self.exterior) <= 1:\n            return LineString(self.exterior, label=self.label)\n        return LineString(\n            np.concatenate([self.exterior, self.exterior[0:1, :]], axis=0),\n            label=self.label)\n"
+        }
+      ],
+      "original_documentation_sha256": "502cfd1ea4f3ec846ac54cfafc9cb5053db953dbdd5ce1d7e342910a3d1741df"
+    }
+  ]
+}

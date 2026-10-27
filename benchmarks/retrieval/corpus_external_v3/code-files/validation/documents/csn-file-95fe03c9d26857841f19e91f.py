@@ -1,0 +1,179 @@
+import copy
+
+
+def process_origin(data, template):
+    
+    record = ""
+    if data is not None:
+        record += "$ORIGIN %s" % data
+
+    return template.replace("{$origin}", record)
+
+
+def process_ttl(data, template):
+    
+    record = ""
+    if data is not None:
+        record += "$TTL %s" % data
+
+    return template.replace("{$ttl}", record)
+
+
+def process_soa(data, template):
+    
+    record = template[:]
+
+    if data is not None:
+    
+        assert len(data) == 1, "Only support one SOA RR at this time"
+        data = data[0]
+
+        soadat = []
+        domain_fields = ['mname', 'rname']
+        param_fields = ['serial', 'refresh', 'retry', 'expire', 'minimum']
+
+        for f in domain_fields + param_fields:
+            assert f in data.keys(), "Missing '%s' (%s)" % (f, data)
+
+        data_name = str(data.get('name', '@'))
+        soadat.append(data_name)
+
+        if data.get('ttl') is not None:
+            soadat.append( str(data['ttl']) )
+  
+        soadat.append("IN")
+        soadat.append("SOA")
+
+        for key in domain_fields:
+            value = str(data[key])
+            soadat.append(value)
+
+        soadat.append("(")
+
+        for key in param_fields:
+            value = str(data[key])
+            soadat.append(value)
+
+        soadat.append(")")
+
+        soa_txt = " ".join(soadat)
+        record = record.replace("{soa}", soa_txt)
+
+    else:
+        # clear all SOA fields 
+        record = record.replace("{soa}", "")
+
+    return record
+
+
+def quote_field(data, field):
+    
+    if data is None:
+        return None 
+
+    data_dup = copy.deepcopy(data)
+    for i in xrange(0, len(data_dup)):
+        data_dup[i][field] = '"%s"' % data_dup[i][field]
+        data_dup[i][field] = data_dup[i][field].replace(";", "\;")
+
+    return data_dup
+
+
+def process_rr(data, record_type, record_keys, field, template):
+    
+    if data is None:
+        return template.replace(field, "")
+
+    if type(record_keys) == list:
+        pass
+    elif type(record_keys) == str:
+        record_keys = [record_keys]
+    else:
+        raise ValueError("Invalid record keys")
+
+    assert type(data) == list, "Data must be a list"
+
+    record = ""
+    for i in xrange(0, len(data)):
+
+        for record_key in record_keys:
+            assert record_key in data[i].keys(), "Missing '%s'" % record_key
+
+        record_data = []
+        record_data.append( str(data[i].get('name', '@')) )
+        if data[i].get('ttl') is not None:
+            record_data.append( str(data[i]['ttl']) )
+
+        record_data.append(record_type)
+        record_data += [str(data[i][record_key]) for record_key in record_keys]
+        record += " ".join(record_data) + "\n"
+
+    return template.replace(field, record)
+
+
+def process_ns(data, template):
+    
+    return process_rr(data, "NS", "host", "{ns}", template)
+
+
+def process_a(data, template):
+    
+    return process_rr(data, "A", "ip", "{a}", template)
+
+
+def process_aaaa(data, template):
+    
+    return process_rr(data, "AAAA", "ip", "{aaaa}", template)
+
+
+def process_cname(data, template):
+    
+    return process_rr(data, "CNAME", "alias", "{cname}", template)
+
+
+def process_alias(data, template):
+    
+    return process_rr(data, "ALIAS", "host", "{alias}", template)
+
+
+def process_mx(data, template):
+    
+    return process_rr(data, "MX", ["preference", "host"], "{mx}", template)
+
+
+def process_ptr(data, template):
+    
+    return process_rr(data, "PTR", "host", "{ptr}", template)
+
+
+def process_txt(data, template):
+    
+    if data is None:
+        to_process = None
+    else:
+        # quote txt
+        to_process = copy.deepcopy(data)
+        for datum in to_process:
+            if isinstance(datum["txt"], list):
+                datum["txt"] = " ".join(['"%s"' % entry.replace(";", "\;")
+                                         for entry in datum["txt"]])
+            else:
+                datum["txt"] = '"%s"' % datum["txt"].replace(";", "\;")
+    return process_rr(to_process, "TXT", "txt", "{txt}", template)
+
+
+def process_srv(data, template):
+    
+    return process_rr(data, "SRV", ["priority", "weight", "port", "target"], "{srv}", template)
+
+
+def process_spf(data, template):
+    
+    return process_rr(data, "SPF", "data", "{spf}", template)
+
+
+def process_uri(data, template):
+    
+    # quote target 
+    data_dup = quote_field(data, "target")
+    return process_rr(data_dup, "URI", ["priority", "weight", "target"], "{uri}", template)

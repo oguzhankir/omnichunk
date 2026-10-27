@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "entries": 1422,
+  "written": 1422,
+  "identical_skipped": 0,
+  "restored_source_bytes": 522935456,
+  "archive_root": "/workspace/work/omnichunk-v3/publication-v2/evidence",
+  "output_dir": "/workspace/work/omnichunk-v3/publication-v2/restored-roundtrip",
+  "storage_map_sha256": "dbab767e2d495443c628219019a506995cf8f098ef273e327edfbdac09769bc9"
+}

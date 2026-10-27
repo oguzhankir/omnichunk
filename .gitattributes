@@ -1,2 +1,4 @@
-# Preserve exact fixture bytes and evidence hashes on autocrlf checkouts.
-benchmarks/retrieval/corpus_v1/** -text whitespace=-blank-at-eof
+# Preserve exact corpus and frozen evidence bytes on autocrlf checkouts.
+# Whitespace in source fixtures and recorded artifacts is intentional.
+benchmarks/retrieval/corpus_*/** -text -whitespace
+benchmarks/retrieval/reports/** -text -whitespace

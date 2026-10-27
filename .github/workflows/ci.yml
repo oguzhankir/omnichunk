@@ -8,6 +8,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      NLTK_DATA: ${{ runner.temp }}/omnichunk-nltk-data
     strategy:
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
@@ -31,6 +33,21 @@ jobs:
       - name: Install tested retrieval comparators
         if: matrix.python-version == '3.12'
         run: pip install -r benchmarks/retrieval/requirements.txt
+
+      - name: Prepare private NLTK assets
+        # Recent NLTK refuses shared writable package caches. Download serially
+        # before workers start; older LlamaIndex also expects the punkt package.
+        run: |
+          umask 077
+          install -d -m 700 "$NLTK_DATA"
+          python - <<'PY'
+          import os
+          import nltk
+          for asset in ("punkt", "punkt_tab", "stopwords"):
+              nltk.download(asset, download_dir=os.environ["NLTK_DATA"], quiet=True, raise_on_error=True)
+          for resource in ("tokenizers/punkt", "tokenizers/punkt_tab", "corpora/stopwords"):
+              nltk.data.find(resource)
+          PY
 
       - name: Historical throughput check (explicitly skips absent baseline)
         run: python scripts/check_benchmarks.py --run-regression-gate
