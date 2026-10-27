@@ -38,8 +38,10 @@ def test_builtin_adapters_preserve_unicode_and_obey_actual_counter(tool, unit):
     [
         ("semchunk", "semchunk"),
         ("langchain", "langchain_text_splitters"),
+        ("langchain-code", "langchain_text_splitters"),
         ("semantic-text-splitter", "semantic_text_splitter"),
         ("llamaindex", "llama_index.core.node_parser"),
+        ("llamaindex-sentence", "llama_index.core.node_parser"),
         ("chonkie", "chonkie"),
     ],
 )
@@ -156,6 +158,46 @@ def test_missing_verified_api_is_unavailable(monkeypatch):
 def test_chonkie_count_only_token_comparison_is_explicitly_unavailable():
     with pytest.raises(adapters.AdapterUnavailable, match="encode/decode"):
         adapters.split_document("chonkie", "doc", "d.txt", "abc", 5, len, "tokens")
+
+
+@pytest.mark.parametrize("unit", ["chars", "tokens"])
+def test_chonkie_sentence_uses_shared_counter_without_encoding(unit):
+    pytest.importorskip("chonkie")
+    counter = len if unit == "chars" else lambda text: len(text.encode("utf-8")) + 2
+    text = "資料。\nNext fact.\nFinal fact."
+    chunks = adapters.split_document("chonkie-sentence", "doc", "d.txt", text, 15, counter, unit)
+    assert "".join(chunk.text for chunk in chunks) == text
+    assert all(counter(chunk.text) <= 15 for chunk in chunks)
+
+
+def test_chonkie_sentence_oversized_sentence_is_failure_not_silently_repaired():
+    pytest.importorskip("chonkie")
+    with pytest.raises(ValueError, match="exceeds the shared payload budget"):
+        adapters.split_document(
+            "chonkie-sentence", "doc", "d.txt", "longunbrokensentence", 5, len, "tokens"
+        )
+
+
+def test_language_specific_langchain_uses_upstream_python_recipe():
+    module = pytest.importorskip("langchain_text_splitters")
+    text = "def first():\n    return 1\n\ndef second():\n    return 2\n"
+    expected = module.RecursiveCharacterTextSplitter.from_language(
+        module.Language.PYTHON,
+        chunk_size=30,
+        chunk_overlap=0,
+        length_function=len,
+        strip_whitespace=False,
+    ).split_text(text)
+    chunks = adapters.split_document("langchain-code", "doc", "test.py", text, 30, len, "chars")
+    assert [chunk.text for chunk in chunks] == expected
+
+
+def test_language_specific_langchain_plain_text_uses_generic_recipe():
+    pytest.importorskip("langchain_text_splitters")
+    args = ("doc", "test.txt", "One paragraph.\n\nAnother paragraph.", 20, len, "chars")
+    assert adapters.split_document("langchain-code", *args) == adapters.split_document(
+        "langchain", *args
+    )
 
 
 @pytest.mark.parametrize("capacity", [0, -1, True, 3.5])

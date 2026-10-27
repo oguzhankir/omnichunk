@@ -19,21 +19,29 @@ from omnichunk.sizing.counter import find_fitting_prefix
 
 TOOLS = (
     "omnichunk",
+    "omnichunk-pack",
     "fixed",
     "semchunk",
     "langchain",
+    "langchain-code",
     "semantic-text-splitter",
     "chonkie",
+    "chonkie-sentence",
     "llamaindex",
+    "llamaindex-sentence",
 )
 TOOL_DISTRIBUTIONS = {
     "omnichunk": "omnichunk",
+    "omnichunk-pack": "omnichunk",
     "fixed": None,
     "semchunk": "semchunk",
     "langchain": "langchain-text-splitters",
+    "langchain-code": "langchain-text-splitters",
     "semantic-text-splitter": "semantic-text-splitter",
     "chonkie": "chonkie",
+    "chonkie-sentence": "chonkie",
     "llamaindex": "llama-index-core",
+    "llamaindex-sentence": "llama-index-core",
 }
 
 
@@ -98,10 +106,58 @@ def _split_texts(
         factory = _required_attribute(_optional_module("semchunk"), "chunkerify")
         _requires_parameters(factory, "chunk_size")
         return cast(Iterable[str], factory(counter, chunk_size=capacity)(text, overlap=0))
-    if tool == "langchain":
-        splitter = _required_attribute(
-            _optional_module("langchain_text_splitters"), "RecursiveCharacterTextSplitter"
-        )
+    if tool in {"langchain", "langchain-code"}:
+        module = _optional_module("langchain_text_splitters")
+        splitter = _required_attribute(module, "RecursiveCharacterTextSplitter")
+        if tool == "langchain-code":
+            # Select the upstream separator recipe from the input extension.
+            # Unknown/plain-text extensions use the generic historical recipe.
+            extension_languages = {
+                ".py": "python",
+                ".js": "js",
+                ".jsx": "js",
+                ".ts": "ts",
+                ".tsx": "ts",
+                ".java": "java",
+                ".go": "go",
+                ".rs": "rust",
+                ".c": "c",
+                ".h": "c",
+                ".cpp": "cpp",
+                ".cc": "cpp",
+                ".hpp": "cpp",
+                ".cs": "csharp",
+                ".kt": "kotlin",
+                ".rb": "ruby",
+                ".php": "php",
+                ".swift": "swift",
+                ".scala": "scala",
+                ".lua": "lua",
+                ".hs": "haskell",
+                ".ex": "elixir",
+                ".exs": "elixir",
+                ".md": "markdown",
+                ".markdown": "markdown",
+                ".html": "html",
+                ".tex": "latex",
+                ".rst": "rst",
+            }
+            language = extension_languages.get(Path(path).suffix.lower())
+            if language is not None:
+                factory = _required_attribute(splitter, "from_language")
+                language_type = getattr(module, "Language", None)
+                if language_type is None:
+                    raise AdapterUnavailable("langchain_text_splitters lacks Language")
+                return cast(
+                    Iterable[str],
+                    factory(
+                        language_type(language),
+                        chunk_size=capacity,
+                        chunk_overlap=0,
+                        length_function=counter,
+                        strip_whitespace=False,
+                    ).split_text(text),
+                )
         return cast(
             Iterable[str],
             splitter(
@@ -138,6 +194,23 @@ def _split_texts(
                 tokenizer="character", chunk_size=capacity, min_characters_per_chunk=1
             ).chunk(text)
         )
+    if tool == "chonkie-sentence":
+        splitter = _required_attribute(_optional_module("chonkie"), "SentenceChunker")
+        _requires_parameters(
+            splitter, "tokenizer", "chunk_size", "chunk_overlap", "min_characters_per_sentence"
+        )
+        # SentenceChunker supports count-only tokenizers without encode/decode.
+        # Oversized single sentences remain conformance failures in _normalize;
+        # never silently repair the competitor's output with our own splitter.
+        return (
+            chunk.text
+            for chunk in splitter(
+                tokenizer=counter,
+                chunk_size=capacity,
+                chunk_overlap=0,
+                min_characters_per_sentence=1,
+            ).chunk(text)
+        )
     if tool == "llamaindex":
         splitter = _required_attribute(
             _optional_module("llama_index.core.node_parser"), "TokenTextSplitter"
@@ -152,6 +225,21 @@ def _split_texts(
                 chunk_overlap=0,
                 tokenizer=lambda value: range(counter(value)),
                 keep_whitespaces=True,
+                include_metadata=False,
+                include_prev_next_rel=False,
+            ).split_text(text),
+        )
+    if tool == "llamaindex-sentence":
+        splitter = _required_attribute(
+            _optional_module("llama_index.core.node_parser"), "SentenceSplitter"
+        )
+        _requires_parameters(splitter, "tokenizer", "chunk_overlap", "paragraph_separator")
+        return cast(
+            Iterable[str],
+            splitter(
+                chunk_size=capacity,
+                chunk_overlap=0,
+                tokenizer=lambda value: range(counter(value)),
                 include_metadata=False,
                 include_prev_next_rel=False,
             ).split_text(text),
@@ -222,7 +310,8 @@ def split_document(
     if not source_id:
         raise ValueError("source_id must be nonempty")
     pieces: Iterable[str]
-    if tool == "omnichunk":
+    if tool in {"omnichunk", "omnichunk-pack"}:
+        experimental = {"markdown_paragraph_policy": "pack"} if tool == "omnichunk-pack" else {}
         chunks = Chunker(
             max_chunk_size=capacity,
             min_chunk_size=0,
@@ -233,6 +322,7 @@ def split_document(
             overlap=None,
             overlap_lines=0,
             nws_backend="python",
+            **experimental,
         ).chunk(path, text)
         pieces = [chunk.text for chunk in chunks]
     else:

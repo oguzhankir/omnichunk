@@ -136,6 +136,44 @@ def test_report_preserves_splits_diagnostics_and_evidence(tmp_path: Path) -> Non
 
 
 @pytest.mark.parametrize(
+    "tool", ["omnichunk-pack", "langchain-code", "llamaindex-sentence", "chonkie-sentence"]
+)
+def test_cli_accepts_extended_adapter_names_without_model_inference(
+    tmp_path: Path, monkeypatch, tool: str
+) -> None:
+    from benchmarks.retrieval.adapters import split_document
+
+    # Isolate CLI dispatch from optional dependencies/model preparation while
+    # still running corpus loading, chunk validation, lexical retrieval and reporting.
+    monkeypatch.setattr(
+        runner,
+        "split_document",
+        lambda requested, *args: split_document("fixed", *args),
+    )
+    corpus = _fixture_corpus(tmp_path)
+    output = tmp_path / "report.json"
+    assert (
+        runner.main(
+            [
+                "--corpus",
+                str(corpus),
+                "--tools",
+                tool,
+                "--chunk-sizes",
+                "20",
+                "--repeats",
+                "1",
+                "--output",
+                str(output),
+            ]
+        )
+        == 0
+    )
+    report = json.loads(output.read_text())
+    assert [(row["tool"], row["status"]) for row in report["candidates"]] == [(tool, "ok")]
+
+
+@pytest.mark.parametrize(
     "error,status,exit_code",
     [
         (AdapterUnavailable("missing optional API"), "unavailable", 0),

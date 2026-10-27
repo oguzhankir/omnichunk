@@ -70,7 +70,37 @@ the `retrieval-evaluation` artifact. It validates the experiment rather than
 requiring OmniChunk to beat a competing tool. Named tokenizer assets must be
 available for a token experiment; their download failure is never replaced with
 an approximate counter. Chonkie's count-only token adapter is explicitly
-unavailable because its encode/decode contract cannot be inferred from counts.
+unavailable because its recursive splitter's encode/decode contract cannot be
+inferred from counts.
+
+The separately selectable `chonkie-sentence` adapter uses Chonkie 1.7's
+`SentenceChunker` with the same counting callback, zero overlap and
+`min_characters_per_sentence=1`. Unlike the recursive splitter, it does not need
+encode/decode. Its output still passes the same exact-source and complete-payload
+budget checks. A sentence larger than the budget is an execution/conformance
+failure, not an unavailable dependency and not silently split by OmniChunk.
+Select it explicitly with `--tools chonkie-sentence` to inspect those failures;
+it is not added retroactively to the frozen historical dense experiments.
+
+Additional explicit strategy identifiers leave the historical adapters unchanged:
+
+- `langchain-code` uses `RecursiveCharacterTextSplitter.from_language()` with
+  LangChain's language-specific separator recipe selected by the source extension,
+  the shared counter, zero overlap and `strip_whitespace=False`. Unknown/text
+  extensions use the same generic recipe as `langchain`.
+- `llamaindex-sentence` uses native `SentenceSplitter` with the shared counter,
+  zero overlap, no metadata/relationship enrichment, and upstream default sentence,
+  paragraph and fallback splitting. Cache its NLTK data before an offline run;
+  use the standard `NLTK_DATA` environment variable for a caller-owned cache.
+- `omnichunk-pack` is an experimental OmniChunk setting with
+  `markdown_paragraph_policy="pack"`; it requires a runtime supporting that option.
+  The historical `omnichunk` adapter retains the default policy. Other budget,
+  context, overlap and source settings are identical.
+
+All strategies must pass the same source and budget checks; none receives
+postprocessing that silently repairs its output. Compare explicit strategies and
+select their configurations on development data, rather than claiming a result
+for every strategy offered by the parent library.
 
 ### Independent source data
 
