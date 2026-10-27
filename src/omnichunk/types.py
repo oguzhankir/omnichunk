@@ -335,6 +335,9 @@ class ChunkOptions:
     nws_backend: Literal["auto", "python", "rust"] = "auto"
 
     context_mode: Literal["none", "minimal", "full"] = "full"
+    markdown_paragraph_policy: Literal["preserve", "pack"] = "preserve"
+    prose_boundary_policy: Literal["sentence", "compact"] = "sentence"
+    code_boundary_policy: Literal["structure", "compact"] = "structure"
     sibling_detail: Literal["none", "names", "signatures"] = "signatures"
     max_siblings: int = 3
     include_imports: bool = True

@@ -1,0 +1,21 @@
+{
+  "repository_overlap": 0,
+  "document_sha256_overlap": 0,
+  "normalized_query_overlap": 0,
+  "query_token_preflight": {
+    "development": {
+      "queries": 64,
+      "max_native_tokens": 218,
+      "over128": 6,
+      "summary_max_native_tokens": 218,
+      "summary_over128": 6
+    },
+    "validation": {
+      "queries": 64,
+      "max_native_tokens": 235,
+      "over128": 7,
+      "summary_max_native_tokens": 235,
+      "summary_over128": 7
+    }
+  }
+}\n

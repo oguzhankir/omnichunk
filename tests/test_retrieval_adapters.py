@@ -33,13 +33,69 @@ def test_builtin_adapters_preserve_unicode_and_obey_actual_counter(tool, unit):
     )
 
 
+@pytest.mark.parametrize("unit", ["chars", "tokens"])
+def test_compact_prose_profile_preserves_exact_source_and_native_payload_budget(unit):
+    text = "資料😀. A useful short sentence. Another sentence with additional words. " * 5
+    counter = len if unit == "chars" else lambda value: len(value.encode("utf-8")) + 2
+    chunks = adapters.split_document(
+        "omnichunk-prose-compact", "doc", "test.txt", text, 90, counter, unit
+    )
+    assert "".join(p.text for p in chunks) == text
+    assert all(counter(p.text) <= 90 for p in chunks)
+    raw = text.encode("utf-8")
+    assert all(raw[p.start : p.end].decode("utf-8") == p.text for p in chunks)
+
+
+def test_compact_prose_profile_selects_compact_policy_without_changing_historical_adapter():
+    text = (
+        "A useful short sentence. A second sentence with more words to preserve. "
+        "A final useful sentence. "
+    ) * 4
+    compact = adapters.split_document(
+        "omnichunk-prose-compact", "doc", "test.txt", text, 90, len, "chars"
+    )
+    historical = adapters.split_document("omnichunk", "doc", "test.txt", text, 90, len, "chars")
+    assert len(compact) < len(historical)
+    assert "".join(p.text for p in compact) == "".join(p.text for p in historical) == text
+    assert all(p.text.strip().endswith(".") for p in historical)
+
+
+@pytest.mark.parametrize("unit", ["chars", "tokens"])
+def test_compact_code_profile_preserves_unicode_source_and_actual_payload_budget(unit):
+    text = "def first():\n    label = '資料😀'\n    return label\n\ndef second():\n    return 42\n"
+    counter = len if unit == "chars" else lambda value: len(value.encode("utf-8")) + 2
+    chunks = adapters.split_document(
+        "omnichunk-code-compact", "doc", "test.py", text, 40, counter, unit
+    )
+    assert "".join(p.text for p in chunks) == text
+    assert all(counter(p.text) <= 40 for p in chunks)
+    raw = text.encode("utf-8")
+    assert all(raw[p.start : p.end].decode("utf-8") == p.text for p in chunks)
+
+
+def test_compact_code_profile_selects_compact_policy_without_changing_historical_adapter():
+    text = (
+        "def first(value):\n    first = value + 1\n    second = first * 2\n    return second\n\n\n"
+        "def next_task(item):\n    other = item - 1\n    final = other / 2\n    return final\n"
+    )
+    compact = adapters.split_document(
+        "omnichunk-code-compact", "doc", "test.py", text, 50, len, "chars"
+    )
+    historical = adapters.split_document("omnichunk", "doc", "test.py", text, 50, len, "chars")
+    assert compact != historical
+    assert "".join(p.text for p in compact) == "".join(p.text for p in historical) == text
+
+
 @pytest.mark.parametrize(
     "tool,module",
     [
         ("semchunk", "semchunk"),
         ("langchain", "langchain_text_splitters"),
+        ("langchain-code", "langchain_text_splitters"),
         ("semantic-text-splitter", "semantic_text_splitter"),
+        ("semantic-code", "semantic_text_splitter"),
         ("llamaindex", "llama_index.core.node_parser"),
+        ("llamaindex-sentence", "llama_index.core.node_parser"),
         ("chonkie", "chonkie"),
     ],
 )
@@ -156,6 +212,87 @@ def test_missing_verified_api_is_unavailable(monkeypatch):
 def test_chonkie_count_only_token_comparison_is_explicitly_unavailable():
     with pytest.raises(adapters.AdapterUnavailable, match="encode/decode"):
         adapters.split_document("chonkie", "doc", "d.txt", "abc", 5, len, "tokens")
+
+
+@pytest.mark.parametrize("unit", ["chars", "tokens"])
+def test_chonkie_sentence_uses_shared_counter_without_encoding(unit):
+    pytest.importorskip("chonkie")
+    counter = len if unit == "chars" else lambda text: len(text.encode("utf-8")) + 2
+    text = "資料。\nNext fact.\nFinal fact."
+    chunks = adapters.split_document("chonkie-sentence", "doc", "d.txt", text, 15, counter, unit)
+    assert "".join(chunk.text for chunk in chunks) == text
+    assert all(counter(chunk.text) <= 15 for chunk in chunks)
+
+
+def test_chonkie_sentence_oversized_sentence_is_failure_not_silently_repaired():
+    pytest.importorskip("chonkie")
+    with pytest.raises(ValueError, match="exceeds the shared payload budget"):
+        adapters.split_document(
+            "chonkie-sentence", "doc", "d.txt", "longunbrokensentence", 5, len, "tokens"
+        )
+
+
+def test_language_specific_langchain_uses_upstream_python_recipe():
+    module = pytest.importorskip("langchain_text_splitters")
+    text = "def first():\n    return 1\n\ndef second():\n    return 2\n"
+    expected = module.RecursiveCharacterTextSplitter.from_language(
+        module.Language.PYTHON,
+        chunk_size=30,
+        chunk_overlap=0,
+        length_function=len,
+        strip_whitespace=False,
+    ).split_text(text)
+    chunks = adapters.split_document("langchain-code", "doc", "test.py", text, 30, len, "chars")
+    assert [chunk.text for chunk in chunks] == expected
+
+
+def test_language_specific_langchain_plain_text_uses_generic_recipe():
+    pytest.importorskip("langchain_text_splitters")
+    args = ("doc", "test.txt", "One paragraph.\n\nAnother paragraph.", 20, len, "chars")
+    assert adapters.split_document("langchain-code", *args) == adapters.split_document(
+        "langchain", *args
+    )
+
+
+def test_semantic_code_uses_native_python_ast_callback_and_exact_unicode_slices():
+    module = pytest.importorskip("semantic_text_splitter")
+    grammar = pytest.importorskip("tree_sitter_python")
+    source = (
+        "def first():\n    label = '資料😀'\n    return label\n\ndef second():\n    return 42\n"
+    )
+
+    def counter(value):
+        return len(value.encode("utf-8")) + 2
+
+    expected = module.CodeSplitter.from_callback(
+        grammar.language(), counter, 45, overlap=0, trim=False
+    ).chunks(source)
+    chunks = adapters.split_document("semantic-code", "doc", "d.py", source, 45, counter, "tokens")
+    assert [p.text for p in chunks] == expected
+    assert "".join(p.text for p in chunks) == source
+    assert all(counter(p.text) <= 45 for p in chunks)
+
+
+def test_semantic_code_callback_overflow_is_not_silently_repaired():
+    pytest.importorskip("semantic_text_splitter")
+    pytest.importorskip("tree_sitter_python")
+    source = (
+        "def first():\n    label = '資料😀'\n    return label\n\ndef second():\n    return 42\n"
+    )
+
+    def counter(value):
+        return len(value.encode("utf-8")) + 2
+
+    with pytest.raises(ValueError, match="exceeds the shared payload budget"):
+        adapters.split_document("semantic-code", "doc", "d.py", source, 40, counter, "tokens")
+
+
+def test_semantic_code_plain_text_retains_generic_text_strategy():
+    pytest.importorskip("semantic_text_splitter")
+    args = ("doc", "d.txt", SOURCE, 24, len, "chars")
+    assert adapters.split_document("semantic-code", *args) == adapters.split_document(
+        "semantic-text-splitter", *args
+    )
 
 
 @pytest.mark.parametrize("capacity", [0, -1, True, 3.5])

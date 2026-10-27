@@ -1,0 +1,2 @@
+Current setup process inherits exported NLTK_DATA
+Subsequent process inherits GITHUB_ENV NLTK_DATA; NLTK selects private0700 path

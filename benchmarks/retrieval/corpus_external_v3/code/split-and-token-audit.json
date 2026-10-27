@@ -1,0 +1,22 @@
+{
+  "repository_overlap": 0,
+  "document_sha256_overlap": 0,
+  "normalized_query_overlap": 0,
+  "first_paragraph_policy": "full.split(chr(10)+chr(10))[0].strip()",
+  "amendment_before_valid_scores": true,
+  "development": {
+    "queries": 64,
+    "full_documentation_native_max": 218,
+    "full_documentation_over128": 6,
+    "first_paragraph_native_max": 98,
+    "first_paragraph_over128": 0
+  },
+  "validation": {
+    "queries": 64,
+    "full_documentation_native_max": 235,
+    "full_documentation_over128": 7,
+    "first_paragraph_native_max": 101,
+    "first_paragraph_over128": 0
+  },
+  "preliminary_summary_audit_superseded_reason": "Escaped newline literals did not split docstrings;corrected before scoring"
+}

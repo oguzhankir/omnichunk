@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "namespace": "omnichunk-codesearchnet-real-files-v1-2026-10-27",
+  "selection_before_scores": true,
+  "source_queries": "Exactly the existing final summary-query CodeSearchNet corpus; isolated-function primary remains unchanged and reported",
+  "task": "Correlated same-question real-original-file view, not an independent dataset",
+  "eligibility": "Exact original UTF8sourcefile from functionURL commit/path;originalfile<=30000Unicodecharacters;Python3ASTparse;unique functionname+ASTstart/decoratorstart matches originalURLstartline and complete ASTfunction end within originalURLendline. Failures reported, no score-based selection.",
+  "transformation": "Keep original complete file order and all neighboring code; remove every ASTdocstring statement at exact UTF8bytecolumns. If docstring is the sole body statement replace it with pass to keep syntax valid; otherwise delete its string-expression bytes. No synthetic file joins or query insertion. Require transformed file parses and all ASTdocstrings absent.",
+  "gold": "Original matched ASTfunction range from firstdecorator line or definition line (including indentation) through whole lastbodyline including inlinecomments and newline. Rebase through all docstring edits. Full transformed function is evidence, not dependencycomplete support.",
+  "grouping": "One document per exact repository/commit/filepath;multiple selected functions within one file share source. Selected repository clusters and human summaryqueries retained for every eligible function.",
+  "query_leakage_audit": "Report exact and normalized querysubstring matches after ASTdocstring removal;do not filter queries by these matches or retrieval scores.",
+  "validation": "Built by separate custodian from sealed isolatedfunction manifest, sealed independently,commitment before firstfileviewscore;release only after final source/model/settings freeze",
+  "failures": "Record every fetch/decode/resource/parse/mapping failure and resulting eligiblequery/repository counts;do not hide unavailable sources",
+  "limitations": ["Samequeries as primary functionview,correlated evidence","Docstringqueries are retrieval proxies,not independent userQA","MIT-only Python and maximumfilelength selectionbias","Removing documentation changes original file,sourcecitations refer to canonical transformedtext","OriginalsourceURLs/lineanchors retained for attribution and traceability","Neighbors may increase indexwork and retrievalnoise","Wholefunction evidence is not independent complete-support annotation"]
+}

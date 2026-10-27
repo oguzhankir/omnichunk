@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "released_utc": "2026-10-27T12:50:01.674929+00:00",
+  "freeze_file": "freeze-before-validation-v3.json",
+  "freeze_sha256": "54f2d64ede52854e41f9dffaa4235f0eb991f3bc8df1031916754dbac188a334",
+  "frozen_runtime": "d0bd4b5ea10ff458313a82b3340c8f1a3f49e572",
+  "committed_validation_manifest_sha256": "7e4f9a1916689380289ce437f22df0a4e30677a62a15d3ea83256f84a8706b8f",
+  "released_validation_manifest_sha256": "7e4f9a1916689380289ce437f22df0a4e30677a62a15d3ea83256f84a8706b8f",
+  "sealed_sha256": "de6b48341abed5205276adec18b068b00c283d6d6da1bf3c5eb170324a58a6c5",
+  "commitment_unchanged": true,
+  "documents": 60,
+  "queries": 120,
+  "source_bytes": 33292,
+  "all_source_checksums_and_utf8_quotes_valid": true,
+  "cross_split_normalized_sources_and_queries_overlap": 0,
+  "models_and_harness_fingerprints_verified_before_release": true,
+  "no_source_settings_or_quality_selection_changed": true,
+  "key_disclosed": false,
+  "custody": "same-agent sharedworkspace;not externalcustody"
+}

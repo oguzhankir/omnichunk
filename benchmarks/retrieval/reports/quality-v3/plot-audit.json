@@ -1,0 +1,15 @@
+{
+  "script_sha256": "1bfdd12e911b5961585cac0b10bfbc4baa7fa3dcd346a9fa0add54b58e071319",
+  "rows_primary": 10,
+  "successful_points": 125,
+  "inputs": {
+    "validation/candidate-results-summary.json": "a353e03319cb62f4b500608aa6043eb0289c5bd8b12cebeee59cc777331927c3",
+    "reference-choices-before-validation.json": "ae370368b0a51f3b5d59a4b3a880492269de624e34a3b7d7e7d0fd54824d53eb"
+  },
+  "outputs": {
+    "primary-reference-points.csv": "cfdfde91b478781e917481c5c2719fea1b2bcc3ad34c14d620eb41cf5bb4da39",
+    "primary-reference-forest.svg": "30519482e29b583c73636461287104f6d3830c140999a83c1e20adbc2e6c57e2",
+    "validation-quality-workload.csv": "b3d1d31095257b92a280136659d667495be1cffbd67a0abb293e9983e56d1e44",
+    "validation-quality-workload.svg": "27921676acd3de90303ab5b0dbfb2f6c450878fe898281a7f340e43c9f6fe90c"
+  }
+}

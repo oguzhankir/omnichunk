@@ -1,0 +1,1 @@
+802.11n standardı, hem 2,4 Ghz hem de 5,0 Ghz frekanslarında çalışır. Bu da, baz istasyonunda çift telsiz olması halinde 802.11a, 802.11b ve 802.11g ile geriye dönük olarak uyumlu olmasına izin verecektir. 802.11n'nin hızları, 600Mbit/s maksimum teorik iş hacmi üretimiyle öncekilerden önemli ölçüde daha hızlıdır.

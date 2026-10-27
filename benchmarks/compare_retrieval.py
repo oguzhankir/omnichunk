@@ -201,9 +201,14 @@ def _signature(row: dict[str, Any]) -> tuple[Any, ...]:
     return row["query"], row["language"], row["category"], row["canonical_evidence"]
 
 
-def _clusters(rows: dict[str, dict[str, Any]]) -> dict[str, str]:
-    """Queries sharing any gold source belong to one transitive cluster."""
+def _clusters(
+    rows: dict[str, dict[str, Any]], cluster_map: dict[str, str] | None = None
+) -> dict[str, str]:
+    """Queries sharing any gold source or explicit source group stay together."""
     parents: dict[str, str] = {}
+
+    def group(source: str) -> str:
+        return source if cluster_map is None else cluster_map[source]
 
     def root(source: str) -> str:
         parents.setdefault(source, source)
@@ -213,11 +218,25 @@ def _clusters(rows: dict[str, dict[str, Any]]) -> dict[str, str]:
         return source
 
     for row in rows.values():
-        sources = [span[0] for span in row["canonical_evidence"]]
+        sources = [group(span[0]) for span in row["canonical_evidence"]]
         for source in sources[1:]:
             first, other = root(sources[0]), root(source)
             parents[max(first, other)] = min(first, other)
-    return {identifier: root(row["canonical_evidence"][0][0]) for identifier, row in rows.items()}
+    return {
+        identifier: root(group(row["canonical_evidence"][0][0])) for identifier, row in rows.items()
+    }
+
+
+def _validate_cluster_map(cluster_map: dict[str, str], rows: dict[str, dict[str, Any]]) -> None:
+    if not isinstance(cluster_map, dict):
+        raise ValueError("Cluster map must be a JSON object mapping source IDs to group names")
+    _validate_json(cluster_map)
+    sources = {span[0] for row in rows.values() for span in row["canonical_evidence"]}
+    for source, group in cluster_map.items():
+        _name(source, "Cluster source ID")
+        _name(group, "Cluster group name")
+    if set(cluster_map) != sources:
+        raise ValueError("Cluster map must cover exactly the evaluated gold source IDs")
 
 
 def _percentile(values: list[float], quantile: float) -> float:
@@ -278,6 +297,7 @@ def compare_reports(
     candidate_tool: str = "omnichunk",
     bootstrap_samples: int = 2000,
     seed: int = 0,
+    cluster_map: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     """Fail closed when report provenance, selected coverage or gold labels differ."""
     for report in (baseline, candidate):
@@ -329,7 +349,9 @@ def compare_reports(
         if reference is not None and signatures != reference:
             raise ValueError("Query labels differ between chunk capacities")
         reference = signatures
-        clusters = _clusters(baseline_rows)
+        if cluster_map is not None:
+            _validate_cluster_map(cluster_map, baseline_rows)
+        clusters = _clusters(baseline_rows, cluster_map)
         slices: dict[str, list[str]] = defaultdict(list)
         for identifier, row in sorted(baseline_rows.items()):
             slices["all"].append(identifier)
@@ -346,7 +368,7 @@ def compare_reports(
                 },
             }
         )
-    return {
+    result = {
         "schema_version": 1,
         "corpus_manifest_sha256": digest,
         "baseline_tool": baseline_tool,
@@ -369,6 +391,26 @@ def compare_reports(
         ),
         "comparisons": comparisons,
     }
+    if cluster_map is not None:
+        canonical_map = json.dumps(
+            cluster_map, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False
+        ).encode("utf-8")
+        result["bootstrap"]["unit"] = "connected components of explicitly mapped gold source groups"
+        result["bootstrap"]["cluster_map"] = {
+            "sha256": hashlib.sha256(canonical_map).hexdigest(),
+            "source_ids": len(cluster_map),
+            "groups": len(set(cluster_map.values())),
+        }
+        result["interpretation"] = (
+            "Descriptive paired evidence scores, not a universal ranking. Intervals assume "
+            "independent mapped gold-source components; queries sharing a mapped source group "
+            "stay together transitively. Group membership is caller-supplied and must be "
+            "declared before inspecting results. Small samples and configuration/slice selection "
+            "limit inference; intervals are not adjusted for multiple comparisons. Fewer than "
+            "two connected source groups yields no interval. Wins/ties/losses use an absolute "
+            "delta tolerance of 1e-12."
+        )
+    return result
 
 
 def load_report(path: Path) -> tuple[dict[str, Any], str]:
@@ -387,11 +429,17 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--candidate-tool", default="omnichunk")
     parser.add_argument("--bootstrap-samples", type=int, default=2000)
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument(
+        "--cluster-map",
+        type=Path,
+        help="JSON object mapping exactly the evaluated gold source IDs to independent group names",
+    )
     parser.add_argument("--output", type=Path)
     args = parser.parse_args(argv)
     try:
         baseline, baseline_hash = load_report(args.baseline)
         candidate, candidate_hash = load_report(args.candidate)
+        cluster_map = load_report(args.cluster_map)[0] if args.cluster_map else None
         report = compare_reports(
             baseline,
             candidate,
@@ -399,6 +447,7 @@ def main(argv: list[str] | None = None) -> int:
             candidate_tool=args.candidate_tool,
             bootstrap_samples=args.bootstrap_samples,
             seed=args.seed,
+            cluster_map=cluster_map,
         )
         report["reports"] = {"baseline_sha256": baseline_hash, "candidate_sha256": candidate_hash}
         payload = json.dumps(report, ensure_ascii=False, allow_nan=False, indent=2) + "\n"

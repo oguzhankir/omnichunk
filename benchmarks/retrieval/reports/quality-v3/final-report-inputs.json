@@ -1,0 +1,2288 @@
+{
+  "recorded_utc": "2026-10-27T13:43:20.103602+00:00",
+  "freeze_sha256": "54f2d64ede52854e41f9dffaa4235f0eb991f3bc8df1031916754dbac188a334",
+  "pending_cases": [],
+  "all_source_inputs": {
+    "freeze-before-validation-v3.json": {
+      "sha256": "54f2d64ede52854e41f9dffaa4235f0eb991f3bc8df1031916754dbac188a334",
+      "bytes": 37687
+    },
+    "reference-choices-before-validation.json": {
+      "sha256": "ae370368b0a51f3b5d59a4b3a880492269de624e34a3b7d7e7d0fd54824d53eb",
+      "bytes": 7266
+    },
+    "validation/candidate-results-summary.json": {
+      "sha256": "a353e03319cb62f4b500608aa6043eb0289c5bd8b12cebeee59cc777331927c3",
+      "bytes": 418155
+    },
+    "reference-selection-commitment.json": {
+      "sha256": "1d7d87a30d836e962025cf7fb6e940c2ce58694324cb6d37044a021f13c11de4",
+      "bytes": 542
+    },
+    "review-before-validation-v3.json": {
+      "sha256": "ec1d4066de0955c8bb098e15493d7304e11b67d7ca75697f535f9ae5a1bd4123",
+      "bytes": 692
+    },
+    "validation/turkish/baseline/report.json.gz": {
+      "sha256": "bfea6f57107cc1d655d08af4feea753619cf6e1861505221bea94e17859c3eac",
+      "bytes": 1613292
+    },
+    "validation/turkish/baseline-valid-96/report.json.gz": {
+      "sha256": "4448b145af0f25f0c911a0ef325d6075ef2bf959f05aead1ec44637f00660576",
+      "bytes": 75746
+    },
+    "validation/turkish/failures/chonkie-sentence-64/report.json": {
+      "sha256": "513b26904692f54fc2c5756e042315c1fdda0f1ea513918df7ac10fa1d65ced9",
+      "bytes": 6617
+    },
+    "validation/turkish/candidate-final-d0/report.json.gz": {
+      "sha256": "7d08cbc5df3cf027385dfad2171f8120b03fc55d59e9fb5e09889fb1f2de593b",
+      "bytes": 452910
+    },
+    "validation/turkish/candidate-final-d0/cache-audit.json": {
+      "sha256": "6e362fe5aa07cdae7e0fb0c7412309700663731aa9ea746c23bab268bece8922",
+      "bytes": 2869
+    },
+    "comparisons/validation/turkish/128/omnichunk/vs-chonkie-sentence-96-only.json": {
+      "sha256": "c314d326896b088392e3097b8d10e1614d12a50cfcf10900b5e5d1145df10964",
+      "bytes": 7695
+    },
+    "comparisons/validation/turkish/128/omnichunk/vs-fixed.json": {
+      "sha256": "85e54d12d028c158f30a133cdd039ac5a3974d85abf97b6be6fea1ef20897f54",
+      "bytes": 11792
+    },
+    "comparisons/validation/turkish/128/omnichunk/vs-langchain-code.json": {
+      "sha256": "e2b6ca390769842ac9f692c17078d93634a521023dc618bf98d2274adfaef59a",
+      "bytes": 11720
+    },
+    "comparisons/validation/turkish/128/omnichunk/vs-langchain.json": {
+      "sha256": "94551140ae3de31b964ea1cb7614ac4a387b7cee750f1a5b5667ac37151c9d06",
+      "bytes": 11715
+    },
+    "comparisons/validation/turkish/128/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "9efff7392f21880ab74688b76304d27c16392dda380752b15746399face1cfcc",
+      "bytes": 11800
+    },
+    "comparisons/validation/turkish/128/omnichunk/vs-llamaindex.json": {
+      "sha256": "acaa6fcb98eb392073951bfdd5e49c08506de23ec3e1dea474d2d2c24b625329",
+      "bytes": 11740
+    },
+    "comparisons/validation/turkish/128/omnichunk/vs-omnichunk.json": {
+      "sha256": "d578aa85aaa4f461bf6424883809a92618399e9a6408bcb6e2e76c31b78f3c6e",
+      "bytes": 10857
+    },
+    "comparisons/validation/turkish/128/omnichunk/vs-semantic-code.json": {
+      "sha256": "6adab69000d56c244c293cb6861fb3235242e0ef0f3b598b7784d0424f244cf0",
+      "bytes": 11656
+    },
+    "comparisons/validation/turkish/128/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "83d87ce6ed2573a29955102342a8c4443c6c1bb941017eb81b5aea220883f538",
+      "bytes": 11665
+    },
+    "comparisons/validation/turkish/128/omnichunk/vs-semchunk.json": {
+      "sha256": "9395926e1b87e1fc3edd644552b7b133e3d5eab3437802551afc3a9bcd9451b9",
+      "bytes": 11801
+    },
+    "comparisons/validation/turkish/128/omnichunk-code-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "e02d74784c91bafb4213970a08d478935a97788b8caecda7a267d9505e92a537",
+      "bytes": 7708
+    },
+    "comparisons/validation/turkish/128/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "d38bb2136693b41fe1252b4041c81cf1fcb1bf928694570c472a418bbe767901",
+      "bytes": 11805
+    },
+    "comparisons/validation/turkish/128/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "d9d37ee000b2d01bf1d8af0bc50346aa8d5ad9d04f39601c0463102353891cb0",
+      "bytes": 11733
+    },
+    "comparisons/validation/turkish/128/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "8d7ddcdbc8e3f7aaf73b065f72403c19533797ea117d5cb2a051d0ad6dba3150",
+      "bytes": 11728
+    },
+    "comparisons/validation/turkish/128/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "35959a85777f8d1b379021a426f068bf3b90f09423dfd48054173d00a59ebb2c",
+      "bytes": 11813
+    },
+    "comparisons/validation/turkish/128/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "db246e2a1ac5e89a2be8ceed6bf95ea1d82fa8b401ca3cf4046fd64b33199bd9",
+      "bytes": 11753
+    },
+    "comparisons/validation/turkish/128/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "d87708574ac3bf06a82b6cf24171ce591f98354acbb93a37c1b0b365d6af1a0b",
+      "bytes": 10870
+    },
+    "comparisons/validation/turkish/128/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "5c6710dcf767ff494d44e7f2d426885c82595ddf382b62f23c75eb68604fe4bf",
+      "bytes": 11669
+    },
+    "comparisons/validation/turkish/128/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "adb30a07550f00c06233a26c170ee64f2f66af8133b863f270015fd75bb5b2d8",
+      "bytes": 11678
+    },
+    "comparisons/validation/turkish/128/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "3e69ed7bafd4cc44bb7bbd8cff7523a38d108c8aea82a70f13f7bea2fbe0e2a5",
+      "bytes": 11814
+    },
+    "comparisons/validation/turkish/128/omnichunk-prose-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "9337ec5b1a55ddd46503ad59469c492a14ec950ae8941574b58bf426a500b7c0",
+      "bytes": 7715
+    },
+    "comparisons/validation/turkish/128/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "3d9c51accfeba2c703fffc527937399dba4854bcf327554b6602cae16b5f8329",
+      "bytes": 11827
+    },
+    "comparisons/validation/turkish/128/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "d33376b5e0c97f31c8ef28c338687f813a98982b0f962e7280e51a509ea09098",
+      "bytes": 11731
+    },
+    "comparisons/validation/turkish/128/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "5150397f35fd1353c4b3fae4bdddc1de1a80281a29bd6bcf152eb8fb20b29a7e",
+      "bytes": 11726
+    },
+    "comparisons/validation/turkish/128/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "e4569f611f12acaa3a764f4f36005a6090ca79a7c2118ce4c1107668bd0dc493",
+      "bytes": 11808
+    },
+    "comparisons/validation/turkish/128/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "dd0c581448a61eded39134235351a0d09587b5ea66ad7952461fca6217bd4766",
+      "bytes": 11763
+    },
+    "comparisons/validation/turkish/128/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "9f6b1cc1f7270af6697964cf53863cf0ffc5d95d3e20eef2db730daa93a08a5b",
+      "bytes": 11798
+    },
+    "comparisons/validation/turkish/128/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "c7b0bf0be42919418c5c346a83c67836532a75bc73b9b7afb3d09ba8d02dd90a",
+      "bytes": 11823
+    },
+    "comparisons/validation/turkish/128/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "0fdcdd06ac2bd8094cf77bae72bb0045478ad45269fe741058d846d9e7459443",
+      "bytes": 11832
+    },
+    "comparisons/validation/turkish/128/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "b476336864de8ebaa80ddbc560dee16c0194ff6d3a6cb9fb54a4a55a2f654ed7",
+      "bytes": 11812
+    },
+    "comparisons/validation/turkish/256/omnichunk/vs-chonkie-sentence-96-only.json": {
+      "sha256": "ce213f725274a98181770f9f2a3425dc7c6fc80c4dec72d24fc69aa6454fcbf4",
+      "bytes": 7707
+    },
+    "comparisons/validation/turkish/256/omnichunk/vs-fixed.json": {
+      "sha256": "ffbacc8c182a2f24b2039f326b78c8a15872450df4b90a20306946c2d3c9618d",
+      "bytes": 11807
+    },
+    "comparisons/validation/turkish/256/omnichunk/vs-langchain-code.json": {
+      "sha256": "15cd3c569140765e0788aaa38542b8d9741198f3f30893f429d85d3cffa16dc5",
+      "bytes": 11726
+    },
+    "comparisons/validation/turkish/256/omnichunk/vs-langchain.json": {
+      "sha256": "2421fa615552e992e8ec30149546d7dbe23db3d5e8f79bffffa635b13458309b",
+      "bytes": 11721
+    },
+    "comparisons/validation/turkish/256/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "9deca7e881344d57eaa3889e0c96960e204471bea6ab849d3624f1098d577ad5",
+      "bytes": 11806
+    },
+    "comparisons/validation/turkish/256/omnichunk/vs-llamaindex.json": {
+      "sha256": "a47d8d9e8025b00e274799d0c837e6c4f3a17bcc194e39bf004bbe483b9f1ab1",
+      "bytes": 11743
+    },
+    "comparisons/validation/turkish/256/omnichunk/vs-omnichunk.json": {
+      "sha256": "2340764ac3aa1fe93fbe625bf5c3b91de7f7e4dbea5b3c71b22095f7ef3d86dd",
+      "bytes": 10863
+    },
+    "comparisons/validation/turkish/256/omnichunk/vs-semantic-code.json": {
+      "sha256": "5e5d73d48f0b31492c0ff92c5ab3eb5e2183e322c05c77cb792ce37755291642",
+      "bytes": 11614
+    },
+    "comparisons/validation/turkish/256/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "180f38a3b16df85e316bf94feb79dd66c639243a3b9e905b88af4d200594890a",
+      "bytes": 11623
+    },
+    "comparisons/validation/turkish/256/omnichunk/vs-semchunk.json": {
+      "sha256": "a00b56346650b3ac44c2894f747661b52f9a5f12798db4e5789b4ce0942a98c7",
+      "bytes": 11852
+    },
+    "comparisons/validation/turkish/256/omnichunk-code-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "9b1914b4dd2f13487d998abbc6badaa5561e0e34224f5064d026344615054607",
+      "bytes": 7720
+    },
+    "comparisons/validation/turkish/256/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "2322c3cb643b13cb7fd32544af40690339228fe904bcef88e4c5f13ea3fe6343",
+      "bytes": 11820
+    },
+    "comparisons/validation/turkish/256/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "eed49e7f51f62d64e9c482eaf6cfeea7910221532f25c635d08ddaf8f28bbc44",
+      "bytes": 11739
+    },
+    "comparisons/validation/turkish/256/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "5672262accc53a4782e8519db00508d5de31a55321d2b389a7e09cd49227168e",
+      "bytes": 11734
+    },
+    "comparisons/validation/turkish/256/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "b25ba54134aabfe05f1790a341859c15fb43088424ac9c11b90d0cfa5a49a815",
+      "bytes": 11819
+    },
+    "comparisons/validation/turkish/256/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "79e93be97abc00722676da203578077cd28999a9ffb0003877a85d461e72813c",
+      "bytes": 11756
+    },
+    "comparisons/validation/turkish/256/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "130e64757bb1558a3f2247a3f6afba96d180ab68bb5df7bfb5947b66298789d1",
+      "bytes": 10876
+    },
+    "comparisons/validation/turkish/256/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "64c61e336c5bd173aa2118a45416a31b764513e7d4d48b933d1c49bb324fdce9",
+      "bytes": 11627
+    },
+    "comparisons/validation/turkish/256/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "0fdbff0cbaedcb1b40919e27804aa39892086e2fdcb5e492d4ddf3e3ef87ead4",
+      "bytes": 11636
+    },
+    "comparisons/validation/turkish/256/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "296e91d57b9e2dd8be051ab56263f3e00741159c6f0afd0708f9e92061f997a5",
+      "bytes": 11865
+    },
+    "comparisons/validation/turkish/256/omnichunk-prose-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "e42ff7583d7741074a75bdc8b326a502191983d7a5f6c6ab30d20dcea04dac28",
+      "bytes": 7700
+    },
+    "comparisons/validation/turkish/256/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "c32dee31be0051cf6f8b156c689b33e0e34a5d83988467f7e0f400eb86f3844c",
+      "bytes": 11854
+    },
+    "comparisons/validation/turkish/256/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "0755005acb4893d73d8c607bd5a4f46e7687ff1185e7c49735a6347f1e3eff41",
+      "bytes": 11761
+    },
+    "comparisons/validation/turkish/256/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "fdede36fdc9b532c541358d3a0b4383526b745564a305db5429874e515ca41b8",
+      "bytes": 11756
+    },
+    "comparisons/validation/turkish/256/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "613c59ac8d0055840ae1276e6a87de48a03fccb9d8a01f9cd7299ceff5ca5417",
+      "bytes": 11817
+    },
+    "comparisons/validation/turkish/256/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "014c08bf8d3852e9ef714741a7f58c2fd1fb754c3b022f759505bd86c2ca00f6",
+      "bytes": 11739
+    },
+    "comparisons/validation/turkish/256/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "12b2fd0556671bfff98bd2f365cbf979ebc1b8d6ad87fc8a358fb8def02ca52a",
+      "bytes": 11801
+    },
+    "comparisons/validation/turkish/256/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "6cf735f69e128c9b59c8b8f4d6f8bbc6f18654591a10a17f65db525068bcc150",
+      "bytes": 11805
+    },
+    "comparisons/validation/turkish/256/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "0bedb42bf18a2d68c88bceb942a01ed2c861e4f841d19b746c4beeb4841ad19f",
+      "bytes": 11814
+    },
+    "comparisons/validation/turkish/256/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "87c9724d2e681f947320f4a1c06d6f973576ee46dc421781f5189d2e0e8a79c5",
+      "bytes": 11791
+    },
+    "comparisons/validation/turkish/512/omnichunk/vs-chonkie-sentence-96-only.json": {
+      "sha256": "aea6c68ef269d5b1ac0275b5a0e32c846c005e306590eea607b1144bdde08f83",
+      "bytes": 7731
+    },
+    "comparisons/validation/turkish/512/omnichunk/vs-fixed.json": {
+      "sha256": "a5cc045e61b43653793c046fea8ba2e2ae04dbaa3bc7b0ca7f927fbc7bd10fce",
+      "bytes": 11840
+    },
+    "comparisons/validation/turkish/512/omnichunk/vs-langchain-code.json": {
+      "sha256": "101c09f2f4e93cee1e4f61d04f0ab39f110c0d7d22c93d16a6495375a1ab6cc8",
+      "bytes": 11765
+    },
+    "comparisons/validation/turkish/512/omnichunk/vs-langchain.json": {
+      "sha256": "84d30f9a054bf8fe7ca5fa5ba85e2d1c516e3f5e48c874cef45bf39a8f44b1ba",
+      "bytes": 11760
+    },
+    "comparisons/validation/turkish/512/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "9cf43cf7d4e02632f588548912b623dda8d794ae5f820e0997b76eba02226447",
+      "bytes": 11857
+    },
+    "comparisons/validation/turkish/512/omnichunk/vs-llamaindex.json": {
+      "sha256": "2f43f31ae8a2a2c412bb0abfa17338b30b0d2bdd1becbe1bbee791314c0c89aa",
+      "bytes": 11785
+    },
+    "comparisons/validation/turkish/512/omnichunk/vs-omnichunk.json": {
+      "sha256": "a133fd3ea99ebb8911b9d0f0493e4c0afef73d40fc4354a3cbfd7029dbc7f6f5",
+      "bytes": 10881
+    },
+    "comparisons/validation/turkish/512/omnichunk/vs-semantic-code.json": {
+      "sha256": "cfccf2220a36686de9fd6dc5a1350320a067ca0335be1a3a979d84bca273fc2b",
+      "bytes": 11809
+    },
+    "comparisons/validation/turkish/512/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "9d257c4afa84d0c82c3cc964d147572e5bf0273c4de32cf822136dbe03ae6554",
+      "bytes": 11818
+    },
+    "comparisons/validation/turkish/512/omnichunk/vs-semchunk.json": {
+      "sha256": "3871c2491933792cef7e917d393b632ffc57c4e17e142b477e462ad7635667f8",
+      "bytes": 11873
+    },
+    "comparisons/validation/turkish/512/omnichunk-code-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "2bf3842871ea0d8e1e3683ee7437d83dc4874a8a596f12c21f8d3517a839f429",
+      "bytes": 7744
+    },
+    "comparisons/validation/turkish/512/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "ab0b5004c490b96aa6d701af502061cc77a4447a2c1995c879bcca53b3b55a55",
+      "bytes": 11853
+    },
+    "comparisons/validation/turkish/512/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "89b4c0b5f16f7d271cc5647135374a0d0ace122ca77087fb0c49d02d29eb11f2",
+      "bytes": 11778
+    },
+    "comparisons/validation/turkish/512/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "3e4bdad01c227473ef119949af07e2a2a6136da97cb9639041df9a8c4507274f",
+      "bytes": 11773
+    },
+    "comparisons/validation/turkish/512/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "d364017aea3f7246ad8855e52426113900549aac5568e787e81d676f29f8241f",
+      "bytes": 11870
+    },
+    "comparisons/validation/turkish/512/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "9088616bbd86f0de2e83c4d67f5e3b52d3bffbd491f4a09a488f9c9378da099e",
+      "bytes": 11798
+    },
+    "comparisons/validation/turkish/512/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "49fe9a9d1f0db96512975b90cbd8da0422f61fc606a4154f91385f9f5cc4014c",
+      "bytes": 10894
+    },
+    "comparisons/validation/turkish/512/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "a57dcae411383d127486f3178bad0661dfd5e7b5082f316b0822636fb74030af",
+      "bytes": 11822
+    },
+    "comparisons/validation/turkish/512/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "3d805d5536eae5d84205ff411e8ec716e310397550b39d13582d309853cff1c0",
+      "bytes": 11831
+    },
+    "comparisons/validation/turkish/512/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "88949a861ff3852aa9b1c96f8962646e2e4a2368bd66d98fd3473be2efaec1fb",
+      "bytes": 11886
+    },
+    "comparisons/validation/turkish/512/omnichunk-prose-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "16f182a7ff03329c1ed3bc930958b6768b1e5814c94cc9c482f42e18681604e7",
+      "bytes": 7742
+    },
+    "comparisons/validation/turkish/512/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "adf0b4f0d7d71d88364a37920dfe1adb6ef75092ae87e1842ac2d07fb5bdfd68",
+      "bytes": 11872
+    },
+    "comparisons/validation/turkish/512/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "11c871532bd311a632b9d95853413f1b5b0de16bf78a4f105d51135f7e4c2a68",
+      "bytes": 11770
+    },
+    "comparisons/validation/turkish/512/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "4893863d7f648eb3a6eac50f5366527e10de5409e84c81d2b0b9ac0085f58be7",
+      "bytes": 11765
+    },
+    "comparisons/validation/turkish/512/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "d18d7a3c48adc0704daf43f4d69560a66c16d980811d14c5dda1e3f2acf6cede",
+      "bytes": 11856
+    },
+    "comparisons/validation/turkish/512/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "b31a17b946cee5310df759e037c7151855810c16d5dcaaafbdde867d0160e02f",
+      "bytes": 11793
+    },
+    "comparisons/validation/turkish/512/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "75a131eb17f904e702fc78d65815cbf306dc99604b381e7db294601561c7f23d",
+      "bytes": 11840
+    },
+    "comparisons/validation/turkish/512/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "47aea66bb0778768ff24a42ee2f1f8b747302341f73b3370fed0da7c762adb86",
+      "bytes": 11838
+    },
+    "comparisons/validation/turkish/512/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "edbfb7c9a939863c488a2bc47374133f3faecbcf7527524cf17afc64b05c4174",
+      "bytes": 11847
+    },
+    "comparisons/validation/turkish/512/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "5d9efa1c5e44cd8b51992bfad12cf31d241ccb86ad57c7dca9397f305a0bf41d",
+      "bytes": 11836
+    },
+    "frontier/validation/turkish/baseline/budget-128.report.json": {
+      "sha256": "ed552d1dd868e4fd3a28d38f45c429244fad1aacc62aaa2672a7ed55061d0de2",
+      "bytes": 7932239
+    },
+    "frontier/validation/turkish/baseline/budget-256.report.json": {
+      "sha256": "769dc67102502dd8454afbde950c5204a92276e850b487b0fc6235c907b2806d",
+      "bytes": 8537284
+    },
+    "frontier/validation/turkish/baseline/budget-512.report.json": {
+      "sha256": "60cefd65e6260bfa18dcb974782cae8ded19e5a723f2f7e32ae56ba12072299e",
+      "bytes": 9709079
+    },
+    "frontier/validation/turkish/baseline-valid-96/budget-128.report.json": {
+      "sha256": "ad55f2f114a2467e618591b318778b3efc5b1d604d25e77f151bccfc6dac3cfe",
+      "bytes": 422500
+    },
+    "frontier/validation/turkish/baseline-valid-96/budget-256.report.json": {
+      "sha256": "52342633fbb6f7bf8ee4a0e36e42f55850d85779fce5b2324ff8696b00439fd4",
+      "bytes": 443469
+    },
+    "frontier/validation/turkish/baseline-valid-96/budget-512.report.json": {
+      "sha256": "0c8500eb9fc8e578c57e4aefa63104d277fc255c6453299788965d232e89274f",
+      "bytes": 482636
+    },
+    "frontier/validation/turkish/candidate-final-d0/budget-128.report.json": {
+      "sha256": "6fe5d1128f8d975feb3148744defc7cde56b5c549900f58bdb0503e3e9908949",
+      "bytes": 2511686
+    },
+    "frontier/validation/turkish/candidate-final-d0/budget-256.report.json": {
+      "sha256": "1965db154c4337f994fc4ada54b41845ef2ceefe28dfd516e96f332574ed7050",
+      "bytes": 2655128
+    },
+    "frontier/validation/turkish/candidate-final-d0/budget-512.report.json": {
+      "sha256": "b0b1a0d08742992b428a12d56085ba4c369fc6e9fbdc96b15828043ab5e34a3c",
+      "bytes": 2920748
+    },
+    "validation/code/multilingual/baseline/report.json.gz": {
+      "sha256": "17d7f91001b15fe7b6e4a29146f16aa3236c5d436fdc2dc1ab6ad0cacaf52c27",
+      "bytes": 1411847
+    },
+    "validation/code/multilingual/candidate-final-d0/report.json.gz": {
+      "sha256": "705e010d52d2efbdedaa1a93482ca8ad9dc18d7bfffd9ac3ac85930afb36f1b6",
+      "bytes": 385380
+    },
+    "validation/code/multilingual/candidate-final-d0/cache-audit.json": {
+      "sha256": "afcfff84ab66482cdd8fa4028a00f4f98e7f92a98c9a4282d7cff6943b759753",
+      "bytes": 2999
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk/vs-chonkie-sentence.json": {
+      "sha256": "25f46482327485236d568b82e5e9d1a26f4f7e42e911af92bb5cd641885b7095",
+      "bytes": 12031
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk/vs-fixed.json": {
+      "sha256": "754fb35347769598e339aeb7b8b3f7285b6b27e431ef011af77ca6a50a1507a1",
+      "bytes": 12011
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk/vs-langchain-code.json": {
+      "sha256": "a8e777606c5b16cb475b8825610c751506ad2654007d5f82cd2b99d96423b4f7",
+      "bytes": 12017
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk/vs-langchain.json": {
+      "sha256": "b411b5145bd4d0eaa50b6a2ec789eea372810b5100ceb3741dd54b1acd48deb6",
+      "bytes": 12012
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "31dcbf9b1b4546e58d5c4f1b90188907a052d8cda97131f8b3197b096ef617b5",
+      "bytes": 12049
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk/vs-llamaindex.json": {
+      "sha256": "dff28c83e7af1a783beee66963b3c73263a828df8643e2fa3af6c1c5984ba2fd",
+      "bytes": 12022
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk/vs-omnichunk.json": {
+      "sha256": "32f638a72990693c40919494b2c1e071abd1cdda2a9571d72f6ebc4ed38a0acc",
+      "bytes": 12033
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk/vs-semantic-code.json": {
+      "sha256": "2256420feb6b25b38d8f075e83bc378437842fb049c4052a0b1ea897edd0be18",
+      "bytes": 12049
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "f57019cc46a2b880dd0bbdfb1aa7da89268a096c5ba583f694bb5278b7c97cfa",
+      "bytes": 12052
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk/vs-semchunk.json": {
+      "sha256": "f02f55a8a1a642aa2346d2201e3ba5019e90b6a5d20117f38fd3047979e1c0b1",
+      "bytes": 12023
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-code-compact/vs-chonkie-sentence.json": {
+      "sha256": "0d30df236ce1f9dea5833c65f83443d842efae063ef3e2e2aca229f56d47b006",
+      "bytes": 12026
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "e8cbcb708c566d0b6048b549a232cbbf224a87ff242b90d916b73242f2246dce",
+      "bytes": 11412
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "68917be5bcbc907e9f0034ea6788d34c6bcbedc5a93c2dd1e498e4fa2ba093b8",
+      "bytes": 12009
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "d0470042b503f2077f8c261dd3879449724b0c5fc244273e98b35e4ce4709b25",
+      "bytes": 12004
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "19cc242135ef227c9ded597cf361d3da4b208ce632aba34de81418eafee6b7c8",
+      "bytes": 12041
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "30dcbc69158081d636ad26af1bb6b1a0b4abaa085cad9492322a1433253e5815",
+      "bytes": 12026
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "865417335c23e6283f562d04afd7104b8bfa79c2474bcf50f53b8ad5c8434c02",
+      "bytes": 12043
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "3c78c90984d16cd64472117445f0cf1f1083fa425f15391f0152b09cdc2b968b",
+      "bytes": 12038
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "58e3f4ca996bff60d81c33672f620ed79fd6bb577f9eee96d906df732e50ff45",
+      "bytes": 12026
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "64d26e5be8c3d965129e66dc147f01e6bcc0a23b2361253208f308577efe17e0",
+      "bytes": 12018
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-prose-compact/vs-chonkie-sentence.json": {
+      "sha256": "31071b2a0aabb2686a0dcfa570794653ffeca773130976a1bf7aa6c53a2fef3a",
+      "bytes": 12045
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "9d5933181e3c28158848d7811e5fbc92564c020f280e1290fb3584f9c8bfb4a7",
+      "bytes": 12025
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "9019540d2552a668cbd5323fa5cc99f42819e0307cb7a8a2ede6e951e4a20cc0",
+      "bytes": 12031
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "53700acae66fe43b7ba6480faa0e48ac1ee6de2e3d71f63acc21fc191351bc07",
+      "bytes": 12026
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "1fa79eac7c6b28e4f5ce4c22a3333c5005442e367dc9164ceafaf1cff2a1a489",
+      "bytes": 12063
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "22bb6b7cceaaf98a14de9503d43e3a0253c2846fd6c87961b0a30215743f5efd",
+      "bytes": 12036
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "8f838ad6636cd1b2f511c98ca9a7bccf065d5eb7744f2305a5e06abf724e88f9",
+      "bytes": 12047
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "2a0f37dc91f21574320ad9862cadeca1ebd8e7044c3c6fb1af6f7ed391a74326",
+      "bytes": 12063
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "b8f3d7ae589657aae172d76ea541529fb3b9163f4ed291149eea394a91cf2a36",
+      "bytes": 12066
+    },
+    "comparisons/validation/code/multilingual/128/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "b92515daf8ce789477b9de1f74a1c4b0ea213a1f4c1d52b7aaaf2ac919dbdd9b",
+      "bytes": 12037
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk/vs-chonkie-sentence.json": {
+      "sha256": "394610da068dbd74a87e962d2d5e7375dc783902520312e770199a3e4020ccee",
+      "bytes": 12043
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk/vs-fixed.json": {
+      "sha256": "94539237a4d142a3be93026a8f33c45536ac85203448f21a994a14e170587609",
+      "bytes": 12032
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk/vs-langchain-code.json": {
+      "sha256": "2e39b387d8bd440d75b4c9b7a5fb78e652db594361b37484de0d6dca76a696da",
+      "bytes": 12047
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk/vs-langchain.json": {
+      "sha256": "88fbc91d246559166b8ad96d438c828aa0c32fe8e11984c34b7c10bf7747db3e",
+      "bytes": 12042
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "f16d79b63f5a47df92da409e53abdb298c4d15fd7d8ea1272bfcdc27f72c1863",
+      "bytes": 12043
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk/vs-llamaindex.json": {
+      "sha256": "475feb8d0fd20812b21177c2a2eb84f9716fef26b962fbb4fac5d0170da257cd",
+      "bytes": 11992
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk/vs-omnichunk.json": {
+      "sha256": "fc37ac24c06f199ea42a85e867ddf3335d4c96a9283d6df6b2d6b7f7c31e9f0c",
+      "bytes": 12045
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk/vs-semantic-code.json": {
+      "sha256": "4306c1fc1efcd5444ee4f24635a8bf8588d651eaf781357d72b3e7c7c0a64d78",
+      "bytes": 12022
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "2dd0123c4bafeb6b4d936d85e3c55983eb884b37ebcbe53b810bf4fe6c34d355",
+      "bytes": 12058
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk/vs-semchunk.json": {
+      "sha256": "4d4ffa76963e7c63f207f56e7225c99ad8bfc7c668caa35978e17199c168c77d",
+      "bytes": 12053
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-code-compact/vs-chonkie-sentence.json": {
+      "sha256": "222d43e90d72ea38d49bae8d3c578be22bc95178a338ce0461f6d0cc296f2c1f",
+      "bytes": 12035
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "7d21329caae195819a43531a92df333185530a482e14f94caf59feeb8a5551bb",
+      "bytes": 12006
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "c0d8c2d0d05627503f97e4f2030609399e49d57a44920f35d80208f01deb053b",
+      "bytes": 12030
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "aaea650022564968626b46eec087a9921e2b6d2405c8eaa91dd39f739c01ffdc",
+      "bytes": 12025
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "dac7a4b1f8aec4d0913fc8d592ab53f36f367e67f0c8af73aec481b1a65e2b46",
+      "bytes": 12035
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "b8294cf1c74382a8048d8e7ac970104c19824d942ecf8b6e807fae62f8e6b107",
+      "bytes": 11978
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "0c43a042016ae1af89b9069d50b31556e15d1761443a6776ede61e88fecdbf94",
+      "bytes": 12049
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "0771b9683482909619a25b18366a811e358f16e427a8e40efb6047656f7f5ae4",
+      "bytes": 12014
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "51d8602ea8cfb6a848ad8267513a2a218df6f410dceae247864ba9e81e2d2fe8",
+      "bytes": 12059
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "59fcaebe717d584e85cc7239bc40282f51e9e1e87a3198f1086d2d7103d15ecc",
+      "bytes": 12051
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-prose-compact/vs-chonkie-sentence.json": {
+      "sha256": "6ab3e3af385ab91b117a9a7fb9537175830842e769d2fa150440b9593902194e",
+      "bytes": 12057
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "d190a34f844344384a430c3d9208a03d5b8fc7ef8df2da56e0be10c0d051c4a5",
+      "bytes": 12046
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "a689579850c522f1053775b32cced7cc1cda28bb5f57a8a6a90e6e11fb2acda2",
+      "bytes": 12061
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "62ddee5e8debfeff72246fceb9ac9c0338d9915eb91920c26e8fb2e6fe869467",
+      "bytes": 12056
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "d8118562c145e978965ef17eccd37e3336e88c30f9c91667f709a2c9558f75b6",
+      "bytes": 12057
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "40f54a64f83bf243194b96cdec19611f9ce9508e0d08e3ae7df1a162d3deef63",
+      "bytes": 12006
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "b0d7f3a5ff7c1327052e9de280e628f50259f14b95e5fc818976eb7f3de7da1b",
+      "bytes": 12059
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "3f3b2beaf7c809e5d793342ac441c58f4de6e2686aae7d0db9893e36625ef516",
+      "bytes": 12036
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "ff27f5145a3f344187e1c98e93d153ad44e3fb43a925fa65320670bab0e99c27",
+      "bytes": 12072
+    },
+    "comparisons/validation/code/multilingual/256/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "353588019bcf7b4be57d010731524f92ec4bde38882f2f24b4c412e463c35cdf",
+      "bytes": 12067
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk/vs-chonkie-sentence.json": {
+      "sha256": "a38ea545799b8dfabe4c4dc215d5b78c7dcceb3643e9a23c40aa629f0200dfff",
+      "bytes": 12043
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk/vs-fixed.json": {
+      "sha256": "ceecbfedec3fd86e99b83d889aeb2d30f9727e41c2d6cb1ec3fc34cf1e66e6f6",
+      "bytes": 12032
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk/vs-langchain-code.json": {
+      "sha256": "aee13f831f0c84ff1bcc643e705aa502771c5c9974c4952ee335a3d99cbd7b29",
+      "bytes": 12041
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk/vs-langchain.json": {
+      "sha256": "78d8235ede736da8715ceb88683714d0891ff1a94ca0ff1ae3b8758e184ae1b7",
+      "bytes": 12036
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "62cadb596ecc449d0f73fe508bba7bc85df33d123a3ad46566a44e7a8cb2abe1",
+      "bytes": 12058
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk/vs-llamaindex.json": {
+      "sha256": "f98a93589b4bdab6e510a5009492bdf9d37bea486adf0fcb8111034ac58c9548",
+      "bytes": 11980
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk/vs-omnichunk.json": {
+      "sha256": "a4e5a2fdb10dab84534b0e39efb272f7878a338b38aa6c8a752b5e8a601dea4d",
+      "bytes": 12021
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk/vs-semantic-code.json": {
+      "sha256": "8378a38b9a635e2c0c1202fe2f70f1a4522f97d2b7b5d2737ff1e73539cfc974",
+      "bytes": 12001
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "91bf9b5873a446443ad60828d62fd1da60d0797b6a935282182a935b7fd335f5",
+      "bytes": 12070
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk/vs-semchunk.json": {
+      "sha256": "54e6c27938858be5098cb853f49725f9af2fbf5638a048dd640a9cec22808894",
+      "bytes": 12059
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-code-compact/vs-chonkie-sentence.json": {
+      "sha256": "c6e7607d7c3037823cd3ba100bfa25517e632b2f2b7238a7c5b20761b23c72e4",
+      "bytes": 12041
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "31e87a9d5d5fc3dbd9599163bbdaca132445d95204e42d5ba8c44e2ac77d3b77",
+      "bytes": 11955
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "c0bfb2638e1a1f59ad3042f39009bc2a4e46190bd4012a81599bf2b8ae198820",
+      "bytes": 12045
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "4bf5d3e3e2901dcd718466031e7d2f061a11bcd348a323c145201650af8f6657",
+      "bytes": 12040
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "0947f77d42e3cf3c6f7129fd6261656d9bce2041d3ddeed832b495afdc17a64d",
+      "bytes": 12032
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "d8f6da9ab2b532996acd13e1a05047700627ca98257263c08e0a385aa1ae431d",
+      "bytes": 11996
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "b09ea2109916334ebb9bf2166937e979c03ca19d11a2df0721efd48701b1983c",
+      "bytes": 12028
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "3aa0c8c30b56b863499d0b8637863a46fe2636a6960b5cc8a584f92b9777fa29",
+      "bytes": 12020
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "5650fc3023e7dc0407ea9e7d4f7b8ad656110011c1150ccf9b8a9d5dc5ddff64",
+      "bytes": 12071
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "68bff1675a302a98577399134d068c7bbddaf33920e12f197ea924efed3623ae",
+      "bytes": 12063
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-prose-compact/vs-chonkie-sentence.json": {
+      "sha256": "1b41bfb4282c847684a874c161c0dc0faf3989f4d5dbf139ce15fec4068bde3c",
+      "bytes": 12057
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "12696869461d844b78b1eefce4fd435ccc1dbd93b42eecb0728590c49b423c11",
+      "bytes": 12046
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "e227eb6b8940d6cc6a675029f3cc8da2c64216f43be150cce5f857ba75f83729",
+      "bytes": 12055
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "2dd1634c182b9af2284e97ae6b6b633c2af973b98c1aa9e3543e229149cae450",
+      "bytes": 12050
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "45baa7619a4c3ca739ead11a34c679214863509e0e0aee96d099c28404452055",
+      "bytes": 12072
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "69410b5c7b71a22248cc4a5b67cdd25ae269d2302099d56fe19da64bd3a4c7ea",
+      "bytes": 11994
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "81450d882aac86129b4f11a863c3e25b0ed04a32972d61b7bca56e66cb9b17eb",
+      "bytes": 12035
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "cab556c3adeda8a6e6f185d1583ded08c16eedcacfeded2e0036b65477eb2e43",
+      "bytes": 12015
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "2ab9aae97625a32a00fe85e9d2d84df50f90c9a39c6d24824a536eb9d27b5949",
+      "bytes": 12084
+    },
+    "comparisons/validation/code/multilingual/512/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "229715697927a9444da762c92698c8e558afadb42cd942c9b56deeec95efc0d5",
+      "bytes": 12073
+    },
+    "frontier/validation/code/multilingual/baseline/budget-128.report.json": {
+      "sha256": "4743ce3a33328f1a16f9920a4f24baf297553ff65a70b29ffc2b824fc06ac7aa",
+      "bytes": 6214369
+    },
+    "frontier/validation/code/multilingual/baseline/budget-256.report.json": {
+      "sha256": "d374785e8c7aa013acee9a295ef6fe9cca8e40f2353bfb4b2edf12b1bfdc546e",
+      "bytes": 6513545
+    },
+    "frontier/validation/code/multilingual/baseline/budget-512.report.json": {
+      "sha256": "77a11070a3ce0371ec38b29658060d6b46c74a5505afa849042473be5d96cd4c",
+      "bytes": 7082031
+    },
+    "frontier/validation/code/multilingual/candidate-final-d0/budget-128.report.json": {
+      "sha256": "7c55e3d95218c50a29063a8fc77b16aef9598684e5745b80144fcdcd65221aff",
+      "bytes": 1779319
+    },
+    "frontier/validation/code/multilingual/candidate-final-d0/budget-256.report.json": {
+      "sha256": "97b6ca97bcfdadc5f79b7a3e671943168a5e97709ca4762598fd1b760a992cd8",
+      "bytes": 1852578
+    },
+    "frontier/validation/code/multilingual/candidate-final-d0/budget-512.report.json": {
+      "sha256": "b5ac6dd95e8c49a409e7875a1e3a98a3aa8fbe2437dbc3603595ed3271c89b35",
+      "bytes": 1993734
+    },
+    "validation/code/english/baseline/report.json.gz": {
+      "sha256": "d40ac88f6250b4c3cb6e6929976325fcda5f61304262a4e754b28de69f653714",
+      "bytes": 1257348
+    },
+    "validation/code/english/baseline-valid-96/report.json.gz": {
+      "sha256": "94cddb45dd76c5953a5d85dcc34c4c43156d1f2c8fc762c6fade1dd68dbc2344",
+      "bytes": 62812
+    },
+    "validation/code/english/failures/chonkie-sentence-64/report.json": {
+      "sha256": "7c4c7c689381db37dbc2f3837f1f16857ac209553f8a915e98a09f42c67f5cc0",
+      "bytes": 11477
+    },
+    "validation/code/english/candidate-final-d0/report.json.gz": {
+      "sha256": "c04b4e54d213d242a4c6c536653c3c00817d3d6471a874af77ca38034d08ee91",
+      "bytes": 373710
+    },
+    "validation/code/english/candidate-final-d0/cache-audit.json": {
+      "sha256": "301dfb1dc0103ea7c096a73a64e8e9e57ce2aeef4db641c213e9c7f97f3b4190",
+      "bytes": 2984
+    },
+    "comparisons/validation/code/english/128/omnichunk/vs-chonkie-sentence-96-only.json": {
+      "sha256": "0f0f555c49b479946bc4353c1a82ba23488a067d739e324683aeb9b7dca5a605",
+      "bytes": 7905
+    },
+    "comparisons/validation/code/english/128/omnichunk/vs-fixed.json": {
+      "sha256": "02e135f48a608a01f12a3986c36d92dd61329b73a3c21e87180a996a025fbe9a",
+      "bytes": 12001
+    },
+    "comparisons/validation/code/english/128/omnichunk/vs-langchain-code.json": {
+      "sha256": "c8b46e84acd236b115d8cd01370eeff1ae5a674f089a57db14de4678c365cf17",
+      "bytes": 12001
+    },
+    "comparisons/validation/code/english/128/omnichunk/vs-langchain.json": {
+      "sha256": "5f0f5c0d3833a85d7b86527a34251d150dbc8407145516918616975237fd8115",
+      "bytes": 11996
+    },
+    "comparisons/validation/code/english/128/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "815c6e7626e8bd1f5cc5b033893de10fb53b495da70897b7a47c5fe26d9128ed",
+      "bytes": 12003
+    },
+    "comparisons/validation/code/english/128/omnichunk/vs-llamaindex.json": {
+      "sha256": "ff3e30d57066e0fc04dc7d345b7932ffb82118486de71585d99f47e7328a703b",
+      "bytes": 11961
+    },
+    "comparisons/validation/code/english/128/omnichunk/vs-omnichunk.json": {
+      "sha256": "57ddc8e83ab73f8c6a1add77594dba65cdc01dca4b9bfd774d6c19c1573b685d",
+      "bytes": 11993
+    },
+    "comparisons/validation/code/english/128/omnichunk/vs-semantic-code.json": {
+      "sha256": "7ed916b4590775400c06ef0d76d2c6ca0b446ec6dc7e222270266330292c82f5",
+      "bytes": 11994
+    },
+    "comparisons/validation/code/english/128/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "ea06ab937145d12f3099df110425dc289357e1a4d79c26dbcd5575eb20931e2a",
+      "bytes": 12021
+    },
+    "comparisons/validation/code/english/128/omnichunk/vs-semchunk.json": {
+      "sha256": "98fb423a582f90b5e1a78ddfce818f01c3604eefe9f9db615864b788072fbfc0",
+      "bytes": 11998
+    },
+    "comparisons/validation/code/english/128/omnichunk-code-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "5ca6c35df3f1a9de470b7b8fde414287686d55591311581eac75a850b7e61e30",
+      "bytes": 7888
+    },
+    "comparisons/validation/code/english/128/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "ec3b027bf1269395c67326ab1f5d6816df6004fa4903068ae0be700256a5eb55",
+      "bytes": 11066
+    },
+    "comparisons/validation/code/english/128/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "8d4153eb39bfd4b749405e65b71c768a22974e48f1bacfd4008ba731dac7fa3f",
+      "bytes": 11981
+    },
+    "comparisons/validation/code/english/128/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "56158ba04acb70f5b34c16a0538260da76ebe13f5b7efe8899344d27143e981a",
+      "bytes": 11976
+    },
+    "comparisons/validation/code/english/128/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "924778857cb68b65a95c93d8a6573b81e05df00eece29fabd961df7fd225c18f",
+      "bytes": 11953
+    },
+    "comparisons/validation/code/english/128/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "c9eaf343482e28ecf9646adb3e775d24a13e341dcc0fde3ef003ad43520a905e",
+      "bytes": 11950
+    },
+    "comparisons/validation/code/english/128/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "99c976031e3046887866dd6e57eb1aa0dc367a39e584aa05cb833944b480c67a",
+      "bytes": 11973
+    },
+    "comparisons/validation/code/english/128/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "93ef79890fbd294ed5ca20096f30a06d27db0e08c32599bc5867230208eeb3d1",
+      "bytes": 11959
+    },
+    "comparisons/validation/code/english/128/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "1b1ca80cbd3a66a3a17fa7ba18e5994647811776c5bf3c2a99a97bca8483d1f9",
+      "bytes": 12001
+    },
+    "comparisons/validation/code/english/128/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "b317d4135fcd3455f40c40954b6c44fd0da5e0c4c21cd2468d4d6eefa5a8ee4a",
+      "bytes": 11975
+    },
+    "comparisons/validation/code/english/128/omnichunk-prose-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "09ed49806da9c3faed05c43ae74a0fb367987074205ac998702f47379cd68648",
+      "bytes": 7919
+    },
+    "comparisons/validation/code/english/128/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "eff132f1f115fe922f1fa819c2bbd366b76317bc202ce06e213f82596d43cb05",
+      "bytes": 12015
+    },
+    "comparisons/validation/code/english/128/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "3c35e8dcd5efb1f6bc50e92af930c4236405d0d39509297a87e49df064392b18",
+      "bytes": 12015
+    },
+    "comparisons/validation/code/english/128/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "25cfbac52400a22a54813de84d5b9d4a973dcdeaa0f7a4637f4374e06324a28f",
+      "bytes": 12010
+    },
+    "comparisons/validation/code/english/128/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "d12a649d8f66bcb0d32d06f9c2b8abe57d9c04cf9c8888f6cfc55341b9ebf280",
+      "bytes": 12017
+    },
+    "comparisons/validation/code/english/128/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "caffa9e720aaec3a10573ee54aea5ddb6cdca4fd940ae96e8ab2a901ebf675ab",
+      "bytes": 11975
+    },
+    "comparisons/validation/code/english/128/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "a5846ebb0e6a7fc0fb6d3e162dad90d5ad923452d7a3dd37eee01aa39c824c0a",
+      "bytes": 12007
+    },
+    "comparisons/validation/code/english/128/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "ab68710fd1c2eaa2871210657c566f6854cd96d5a0909c82ae30709a5b721e3f",
+      "bytes": 12008
+    },
+    "comparisons/validation/code/english/128/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "30360258c67e1b7ff4bd8ca290601901327460b7bf445527e42fb599d1eadca0",
+      "bytes": 12035
+    },
+    "comparisons/validation/code/english/128/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "a6b956b71929c7f6afe9846e758291e2f387121f993ce10cfbe18b70653230bf",
+      "bytes": 12012
+    },
+    "comparisons/validation/code/english/256/omnichunk/vs-chonkie-sentence-96-only.json": {
+      "sha256": "0a4b108cc17b12a326d1e3965611d32cb50ad4b9194d0f2cfaab0b6bb29dfb56",
+      "bytes": 7932
+    },
+    "comparisons/validation/code/english/256/omnichunk/vs-fixed.json": {
+      "sha256": "468ab61c9c38ec267b9d5faa4352d8a4087f48aab8d74ebb6d1cd91cb9dd7b04",
+      "bytes": 12010
+    },
+    "comparisons/validation/code/english/256/omnichunk/vs-langchain-code.json": {
+      "sha256": "54961498563dc7f198d7ab6cd03bf4e4e8305f3d681ba9b49bfcb03d38518b98",
+      "bytes": 12013
+    },
+    "comparisons/validation/code/english/256/omnichunk/vs-langchain.json": {
+      "sha256": "224621256c06fe235548730c69b62d3dac0aa611d37c474127f9af2c486579b4",
+      "bytes": 12008
+    },
+    "comparisons/validation/code/english/256/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "47c329b90a6d714ecfa59986be8a7359d374df45f83fb982e8003ba6dd9c14a9",
+      "bytes": 12021
+    },
+    "comparisons/validation/code/english/256/omnichunk/vs-llamaindex.json": {
+      "sha256": "21121e16bb0b7090f33b4332dfeb9890bef5efa63f4c8c88084ed47c38bf02ee",
+      "bytes": 11967
+    },
+    "comparisons/validation/code/english/256/omnichunk/vs-omnichunk.json": {
+      "sha256": "352b65658b5b9643afe7f9dce7930b506103c6483c66b0202f82af99ee883eb5",
+      "bytes": 12011
+    },
+    "comparisons/validation/code/english/256/omnichunk/vs-semantic-code.json": {
+      "sha256": "264e4fea27b50967d0c59d28f8d3a2812c90e2eb35662247f96242e3df1bfa8b",
+      "bytes": 12024
+    },
+    "comparisons/validation/code/english/256/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "8981fc1294b69875f269c13db21f0074f8384380a97f432c42b0503acc712cde",
+      "bytes": 12021
+    },
+    "comparisons/validation/code/english/256/omnichunk/vs-semchunk.json": {
+      "sha256": "918aa8659f32bd9be4db78691ef2e93a2e63b1d0cda71b874859897f2730269a",
+      "bytes": 12028
+    },
+    "comparisons/validation/code/english/256/omnichunk-code-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "32974d6f8aa550db5e710063cd95e6f0bf567b417f0e8bf2cbe7b2625d547c74",
+      "bytes": 7918
+    },
+    "comparisons/validation/code/english/256/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "689387292070b510ff7e104a95f896af46929d80d4cbcedba9be3738b973657e",
+      "bytes": 11375
+    },
+    "comparisons/validation/code/english/256/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "394322f7d46c9ae924b706e0308e4414579d197559832b0fe9a52a0c9e191c56",
+      "bytes": 11978
+    },
+    "comparisons/validation/code/english/256/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "482149ce0d2be52818ba3f66bb66b018890d6461e3628a5d49260b21b8296489",
+      "bytes": 11973
+    },
+    "comparisons/validation/code/english/256/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "fb208178402278fe6f99b281e1c67d211ac67878897e56dc8b809985808fee54",
+      "bytes": 12004
+    },
+    "comparisons/validation/code/english/256/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "f6a83a688a44ea5f71cd22a845f7f0dd5fbf06091997f975f90fbc8650f97229",
+      "bytes": 11962
+    },
+    "comparisons/validation/code/english/256/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "66eefc0443eac754a512ca411a370c69f6f255539183cebeca8b48674349a73c",
+      "bytes": 11997
+    },
+    "comparisons/validation/code/english/256/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "e32a3d794df22db7764a49a76d480773b78dfdb9cefbee57991a08c851dd7a74",
+      "bytes": 11977
+    },
+    "comparisons/validation/code/english/256/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "79c59a1ffcfc02ae289c5eab02e949942e6460309d726a2079683e992f7d7bd1",
+      "bytes": 12025
+    },
+    "comparisons/validation/code/english/256/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "fd7fbe7dbfc3b30a77735ddfba56ff01500f92862a541f8a066713369379d7e5",
+      "bytes": 12014
+    },
+    "comparisons/validation/code/english/256/omnichunk-prose-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "69210c7079f0084bf6fddbb08e98db1e6c56db48d45efd645b13f7d2a6a17582",
+      "bytes": 7946
+    },
+    "comparisons/validation/code/english/256/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "1f26f0b6ce5fc67126c57ae7dfaf3e28f31fd69ee0c898f3d3a54f1def7808e2",
+      "bytes": 12024
+    },
+    "comparisons/validation/code/english/256/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "6a1acbf917ab09aac45c1bc6cc66f74a54b8a13b31860f6db39c778b099aedfe",
+      "bytes": 12027
+    },
+    "comparisons/validation/code/english/256/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "bc7a071f7e2d6fd50b9859f5d4270c61a4c26c95e5bd77b2ea62e336c1146bf5",
+      "bytes": 12022
+    },
+    "comparisons/validation/code/english/256/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "ba8c4f0a0cda6e6b8acda31ab5f5fbd5b69f0ae578df0c73124a21bccc4fa434",
+      "bytes": 12035
+    },
+    "comparisons/validation/code/english/256/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "8635c1f99db68586c60e0d032d862ebdd190609af6d4269062249016b5aef6a4",
+      "bytes": 11981
+    },
+    "comparisons/validation/code/english/256/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "45781e2ed8be38f56352ac47ff8d70c9499f36875792266786d795517013be73",
+      "bytes": 12025
+    },
+    "comparisons/validation/code/english/256/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "ff66990fad8e2ee7a805f347c4333e22c4f76124a4df12d00adbb9c0c2fb5c18",
+      "bytes": 12038
+    },
+    "comparisons/validation/code/english/256/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "e9a53a6ead73527196128fbbcf461d140d8d7f8f2a57696041da29bc81dcc483",
+      "bytes": 12035
+    },
+    "comparisons/validation/code/english/256/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "cef28c18ab4a351229e71e44240f92c0476121dd77bbf56e00a4e58c9ac09461",
+      "bytes": 12042
+    },
+    "comparisons/validation/code/english/512/omnichunk/vs-chonkie-sentence-96-only.json": {
+      "sha256": "483548effdd520cc13c7833e367f53335eeb670f5a15a3d4eff932ce97927796",
+      "bytes": 7911
+    },
+    "comparisons/validation/code/english/512/omnichunk/vs-fixed.json": {
+      "sha256": "c79dbc87c4828608d1fd236f18dbd6939d21484f392888c7118e16f9aa2344a3",
+      "bytes": 12043
+    },
+    "comparisons/validation/code/english/512/omnichunk/vs-langchain-code.json": {
+      "sha256": "a9ce2510ccbbc9288e43a8633bdc72d085b4d0e307ed5a3f80321cfccf0fba6d",
+      "bytes": 12013
+    },
+    "comparisons/validation/code/english/512/omnichunk/vs-langchain.json": {
+      "sha256": "4968e426e9969b2eca127917ffceb2a049979684180ac75e0b3a145131c4176e",
+      "bytes": 12008
+    },
+    "comparisons/validation/code/english/512/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "74996308e8aaecf2409132366c6179349d377957537d72eb8a43ee2890ffe397",
+      "bytes": 12009
+    },
+    "comparisons/validation/code/english/512/omnichunk/vs-llamaindex.json": {
+      "sha256": "d128efe93bc47bd9c17953c76358070435c88b2ada732de32d5c020682ee9321",
+      "bytes": 11955
+    },
+    "comparisons/validation/code/english/512/omnichunk/vs-omnichunk.json": {
+      "sha256": "baecccfe00f61260bdc3c26833d3823658f4b1b5743421ca5b8526cb4f2dc9e2",
+      "bytes": 11999
+    },
+    "comparisons/validation/code/english/512/omnichunk/vs-semantic-code.json": {
+      "sha256": "29263dde68680a9c902c2ee24fe05ceffdf733821729063129ac22a8fc142474",
+      "bytes": 12003
+    },
+    "comparisons/validation/code/english/512/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "767cd26c09fbbcb6f81be57575c49311b8ef1274c4872216f8c4752dc3ff78de",
+      "bytes": 12030
+    },
+    "comparisons/validation/code/english/512/omnichunk/vs-semchunk.json": {
+      "sha256": "5c0f8d6e581f80d6fde05ea319000fda5281fd18a3b0bf9e1db87d01adea818f",
+      "bytes": 12010
+    },
+    "comparisons/validation/code/english/512/omnichunk-code-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "e608d1310f394b911a2ec4ed5628595458e5cf8016ceda37dba43113cd6fcd26",
+      "bytes": 7933
+    },
+    "comparisons/validation/code/english/512/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "6ad8c6bd57b57149e3ea304fd8a640c1928ab7821fe423d8ac3f590c31eb67c5",
+      "bytes": 11555
+    },
+    "comparisons/validation/code/english/512/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "2d7f5f75142a47a71a9d839aa0cf59895683e4d332495e4681bcb9bd4da45441",
+      "bytes": 12011
+    },
+    "comparisons/validation/code/english/512/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "88f5026ce27baf96e09b7f68c6d8e74b5a0c11f8d1b95e339858b3893cb5e33e",
+      "bytes": 12006
+    },
+    "comparisons/validation/code/english/512/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "3a95a9fea7c003784205a483b1e2cbd26e553a45ea914e729eb77ebd1854390f",
+      "bytes": 12010
+    },
+    "comparisons/validation/code/english/512/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "676574e9f003db739d011de67547319b4dc8f504dacc5f4e93aabc1682615368",
+      "bytes": 11962
+    },
+    "comparisons/validation/code/english/512/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "b6dc8dbf1987f8c5c94db73a6381e78de8086c9fc2b10671a377dd1e9a3820fe",
+      "bytes": 11997
+    },
+    "comparisons/validation/code/english/512/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "49eda7c5182b90e24a9d7d5bc3693a77e87bdd8006672906b2ab8b96ea4ff6ff",
+      "bytes": 11992
+    },
+    "comparisons/validation/code/english/512/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "2caa8b54816601d39a749486ea9ba70504a98c11852db0460dc5f926d25fb1c8",
+      "bytes": 12034
+    },
+    "comparisons/validation/code/english/512/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "a16d32ef62cc0c3e02de4e2c238510ba090f8b5b1a1560cf4a884c4038dc2e91",
+      "bytes": 12017
+    },
+    "comparisons/validation/code/english/512/omnichunk-prose-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "ae1837e3a0f99f21e226ac0bbdee40ee7e0fcb501f30f83981cf6d9ad890fb3f",
+      "bytes": 7925
+    },
+    "comparisons/validation/code/english/512/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "54f3705be4509b1a288be0b943479b5ca7eeb2eccc4914912d92df31e33b6c22",
+      "bytes": 12057
+    },
+    "comparisons/validation/code/english/512/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "a25784dd9135df047a2334d70d89dd997c98850ae0f9fa8a40f27bef12494e35",
+      "bytes": 12027
+    },
+    "comparisons/validation/code/english/512/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "22d8f7eb1b847ccde0033525dd37d58f866ea1b743d3ec30917f042b93a83a17",
+      "bytes": 12022
+    },
+    "comparisons/validation/code/english/512/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "c1f5ce6609cdc49c75e156eee3fea1ce4570ffd5e6110640b747fa1c2f0be820",
+      "bytes": 12023
+    },
+    "comparisons/validation/code/english/512/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "79f1c888abbbfa8f19ac7134a4eebada7e90f35de835a44d2f68c6362b161a29",
+      "bytes": 11969
+    },
+    "comparisons/validation/code/english/512/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "0cc8e13a1b5dbd002769bea207f45315594840f454233e3188519e0f40546869",
+      "bytes": 12013
+    },
+    "comparisons/validation/code/english/512/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "84aa31504a9a478f5fa786c22c4289512e054026a90f762d3c8a64afb4bf475d",
+      "bytes": 12017
+    },
+    "comparisons/validation/code/english/512/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "2d64b926c441b170a7df97fdb956fe81a35b50c5532cbd308b56c4abe34d7eb8",
+      "bytes": 12044
+    },
+    "comparisons/validation/code/english/512/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "ff29d1c1c8b4e52c91029ad1a3a6b0a074d16d25ea7cb213ea24140b9dc7af9e",
+      "bytes": 12024
+    },
+    "frontier/validation/code/english/baseline/budget-128.report.json": {
+      "sha256": "7700acf403e32037fd87325aaf67224e32c04514bbb9bc7a903b627748ce3f02",
+      "bytes": 5581936
+    },
+    "frontier/validation/code/english/baseline/budget-256.report.json": {
+      "sha256": "b34dd778a9e46d48a1cc7fad12f011ccebec2d5411272c68457e2f905d1e1ce8",
+      "bytes": 5858413
+    },
+    "frontier/validation/code/english/baseline/budget-512.report.json": {
+      "sha256": "a68a672d7a63af2822f0dffa78b60d0f70b1e8a18dccbfd45b862e1f40d51585",
+      "bytes": 6397768
+    },
+    "frontier/validation/code/english/baseline-valid-96/budget-128.report.json": {
+      "sha256": "ee008a7cbb56e41fe8f39629059a076b323e16238d5ce479c4769ef60cbd2e44",
+      "bytes": 298404
+    },
+    "frontier/validation/code/english/baseline-valid-96/budget-256.report.json": {
+      "sha256": "ed3575f838cb66062e678063155938c446e61e3e989a1e4bbd12c445cbffb0d0",
+      "bytes": 310032
+    },
+    "frontier/validation/code/english/baseline-valid-96/budget-512.report.json": {
+      "sha256": "62018880566468f281bddbd0600c6f8b5415addcfb09d1644fd124bb45824526",
+      "bytes": 330800
+    },
+    "frontier/validation/code/english/candidate-final-d0/budget-128.report.json": {
+      "sha256": "ff8f1ddc990e29048f52c097ca233e7737026f98311b44bfd12e7b4887ce03a7",
+      "bytes": 1764171
+    },
+    "frontier/validation/code/english/candidate-final-d0/budget-256.report.json": {
+      "sha256": "16f420088078ffbd3211480cd3cff46fae694988b9c20094bb883f27bb223f46",
+      "bytes": 1840085
+    },
+    "frontier/validation/code/english/candidate-final-d0/budget-512.report.json": {
+      "sha256": "e69d3ec39792d2f71928dc70c035bb1c791ebe0886ed49f9fb07192f968f7545",
+      "bytes": 1977137
+    },
+    "validation/code-files/multilingual/baseline/report.json.gz": {
+      "sha256": "bd221c17dcfe7c6007798155a390df32bb442aa2a03e0668c95ded55e21568fe",
+      "bytes": 2972192
+    },
+    "validation/code-files/multilingual/baseline-valid-96/report.json.gz": {
+      "sha256": "13160fc177b08f85e5c73342b832dde758f730c2ab1e0bede1d1f48866c2ca73",
+      "bytes": 138785
+    },
+    "validation/code-files/multilingual/failures/chonkie-sentence-64/report.json": {
+      "sha256": "210871e543b5a1987021da063b40f8ddb153d557ea6b20f22d4759e7378d684b",
+      "bytes": 11890
+    },
+    "validation/code-files/multilingual/candidate-final-d0/report.json.gz": {
+      "sha256": "ef934a3055700f20ad2986762b50722cfc7b7963bd324ac2d86d0118d303b272",
+      "bytes": 877458
+    },
+    "validation/code-files/multilingual/candidate-final-d0/cache-audit.json": {
+      "sha256": "c6442d0124346c7ad761463d71b618439a01c617f5b11abada7f6b7414984b59",
+      "bytes": 4072
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk/vs-chonkie-sentence-96-only.json": {
+      "sha256": "9ac6fc41f0b0685ffad8e60ad4fcef99b9c18f7d817ae80082da1181bc4ded69",
+      "bytes": 7939
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk/vs-fixed.json": {
+      "sha256": "89f4e0477dbe5d1e68b6bdabe971ce77c72b378a6d47ed4c4a87654fd81b7d86",
+      "bytes": 12041
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk/vs-langchain-code.json": {
+      "sha256": "fd22325e15d0bad5801781e029767ec96e26f65f112c347b67e427c6cc544107",
+      "bytes": 12059
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk/vs-langchain.json": {
+      "sha256": "1cee91f4504c558377c0d19207ff020aac89fe66f5f93ea1e53195bdccefd627",
+      "bytes": 12048
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "dbbce8117d48ea93193c892107cca9974d2e2d4522810afd5528e2c83683abc4",
+      "bytes": 12049
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk/vs-llamaindex.json": {
+      "sha256": "9093b93e992249760e3527c6095b558babb4165279c85992930e8da14708ed0a",
+      "bytes": 12028
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk/vs-omnichunk.json": {
+      "sha256": "92ff4ed9803ae1b1fe034ceba6fb1672e9e653641ebf4a2c9718f993a29f6ecd",
+      "bytes": 12027
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk/vs-semantic-code.json": {
+      "sha256": "03702a82d77d8f07114160efad2a31d082482eba73c7ad7329a722340d653cc9",
+      "bytes": 12052
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "a09bb5c758b5e7d6a6e35999658a714e6aea70484182e397828e7f019d465916",
+      "bytes": 12055
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk/vs-semchunk.json": {
+      "sha256": "1f2353b10a942152df2f126a244ae814d756ab017f2233c4f7146b4aa9eec287",
+      "bytes": 12035
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-code-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "de928023bdb43373dd5a001841f23e80c5ecbef64ce7ed8155c92de0ed080c49",
+      "bytes": 7961
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "daa95b9b16fa07312c678dffbc651e7d95039844fb8a3b9870e7565c0ad54d4a",
+      "bytes": 12033
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "699ee9886d4c65f416852cf8800a3fcf230c405edb607e9bb35df9b0314e55ad",
+      "bytes": 12063
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "b3dffe2efee265cc5dc31bff152ceb50a947a5783e9a7b9fc7f9aa65b2f17e09",
+      "bytes": 12067
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "3fc1f9a7e93ff4b0da0137c979594dcf8a54faeca6d80114b2b9557ca21c3034",
+      "bytes": 12050
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "a0aa08ee96f0297b5acd20e25659a006e7bed8af6c012ab68c7c2343b1e8abdd",
+      "bytes": 12041
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "86714a8095edc261ab81ee9c982fe1f6ef5ac46348f1060341f40f2f931fb3e4",
+      "bytes": 12052
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "6f5e1483914adfa92133e4b4a2a46f016183f47846e0f9d85866889ad80f4470",
+      "bytes": 12068
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "9c8538dccb38e581628db3f6393f125504d01f9244c1de4dceaf7a7f55ef0e27",
+      "bytes": 12056
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "bbdffa81843a0547643399e2b6d5df77cedab49360ae0704ea7cc2ef218b8a2b",
+      "bytes": 12048
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-prose-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "11894a0f010255fe3c7d696818ae158fcf387897fea5db2ed728d788c00fda3c",
+      "bytes": 7953
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "ca4b58a9d63d0ef7ad25c64f6dac289774637cdf21b770853914b0eb197b3ae7",
+      "bytes": 12055
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "a1b9987c4d80519394a088d22aa322e73bb71d5190e3d07b27e4a8c574e7c55f",
+      "bytes": 12073
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "fc2c2dd363ff8e5cebc2faecc4731971c8670ec918535bd773adf3e4fe4feee4",
+      "bytes": 12062
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "496787d70aac251f0333155bedfb20c74b3a9656ba5b200923b4c8e4d137980e",
+      "bytes": 12063
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "8e033e8ef588bae09b4ea3095829fdf2660acca9dca42ceb95cf09b5cf4cfafc",
+      "bytes": 12042
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "b4dc39b780286b26449ee001cc01d4b905126390e4c9dbf908806d95d0c57dc8",
+      "bytes": 12041
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "f86232adbdc3dc2b45fdfa5744123c56854acad18b44fb0f8e63e95833029ed9",
+      "bytes": 12066
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "88b38c92307debb21fbc734bef53e40fbbd3c53a8b6498bbf439e8e8eba8a6af",
+      "bytes": 12069
+    },
+    "comparisons/validation/code-files/multilingual/128/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "71b3001a9ac23a07760713d64ec3da18dee679aa51490fefd575cf2d1311c1d1",
+      "bytes": 12049
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk/vs-chonkie-sentence-96-only.json": {
+      "sha256": "ac1f9bf3b5385d5d43f0534ceec3fbb41127d2376208a30d01f416b45aaecb7d",
+      "bytes": 7954
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk/vs-fixed.json": {
+      "sha256": "15d5c124f581d3a20a2fe53028126fb64f9e446e5fde06797e881727f2d2e914",
+      "bytes": 12032
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk/vs-langchain-code.json": {
+      "sha256": "79145a35261d709e5000719fdb5a9e23c3ceac84d7ff7f48ed2cfae860e5d53f",
+      "bytes": 12077
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk/vs-langchain.json": {
+      "sha256": "bce5b4fe39271c4fc93f917081685dd6872bd4d739360328533842228bcc4289",
+      "bytes": 12054
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "3c6825bee289563687a5dc35411ee7812ab197aed258dd3e4f8998978e8726a1",
+      "bytes": 12052
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk/vs-llamaindex.json": {
+      "sha256": "04947fcdc810c8f0f06afe2d9950960db873b2daa1c21bd918d70296a33a8b52",
+      "bytes": 12028
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk/vs-omnichunk.json": {
+      "sha256": "b883f2754a4121c97f5d33214507d536976151459c4217cbccfa0fb1457e3b2e",
+      "bytes": 12054
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk/vs-semantic-code.json": {
+      "sha256": "eb9f60f995a376258ff98e6d4be25ff084eb0e55b393e3427385566992c8f5c4",
+      "bytes": 12052
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "79a9ad406b3666a54af84eda0dca15e0040a1ae7e0db54f5e8eb19c5baba6c3c",
+      "bytes": 12070
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk/vs-semchunk.json": {
+      "sha256": "86b8923a019edbc76e141096157b7c9ca7cace71d5822132106b9c6851c43b4d",
+      "bytes": 12053
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-code-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "992827c329d197747333a966e21d29cd6d7466fedc5376d8f551f61daf0b03b1",
+      "bytes": 7967
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "9ed1d6064bcf512663c9ac6b44a5951cb6f9f981225f591e7ee2971ccf956d4a",
+      "bytes": 12048
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "298cdb1c0aef01d8c0120df9ae0fe907ba2ae1f7428c8e513bfb26b34a134f88",
+      "bytes": 12069
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "7ff1d6486bddb91bddfb041e2593f20af4edb60f4c1188458b224dc593628508",
+      "bytes": 12073
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "2e250270d41232e2c5b1f773eb050ccf32d1c34fd6d9574545441f58a71c4bef",
+      "bytes": 12092
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "0ce20513b7bcc21629e473df14a1c57b95731db3b5affb63073e49841f09cd8b",
+      "bytes": 12044
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "14509b6e1501bcabd548de69e3dbaae9d28dfdfd2d80883561b138b6851de496",
+      "bytes": 12064
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "dcc73b02e765a68952bbdbc899ceac86b97e940ebc78209816483f58f492143a",
+      "bytes": 12077
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "feb07c1d1579d723b34670cf1faad8b307e5f44e3bb1967e28418bb730604ba8",
+      "bytes": 12077
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "c86ceac5b43c26ee79d03d88b4ee74843e04c58c4d4bfc50c831d0575b7948ff",
+      "bytes": 12069
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-prose-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "c13fefa8ce5227dccbc4e03576e72ee171cacf286bf51a76fe64d789c52002cf",
+      "bytes": 7968
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "0bd17c6b5dfaed6d2e225b7c45ae323072f49276d714e3eb8fbeedfa71697fa3",
+      "bytes": 12046
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "463a31cfeb1abdea875e2985f46b13a77fbfad5c53710dfbc689508d32cf9f33",
+      "bytes": 12091
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "726746e6b808886cefdee5f2bc5b2ce2b2ffa5d2b7bc46af52c1db7090bf7f2b",
+      "bytes": 12068
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "c5c4b3b8c24f26559de8d6591937d4bed2d8061d9da26957698b86b1faab032d",
+      "bytes": 12066
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "17921d20a42bf3c156fddf982e2bc4eaec0fe6fbeda1d466af65da33938d3f76",
+      "bytes": 12042
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "4a1f5cd6df413bbf43432203caf7d573070a2fefe784219c19d2f16b9a714097",
+      "bytes": 12068
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "f8cadcfb8f610ea4a08422dbb2236c7c0ddc6d3379daa04c42aa25f31eeb2dfa",
+      "bytes": 12066
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "07159f53698b9a0314068e7fae6e193cdecd1b877dff4bfd0511d996e3191912",
+      "bytes": 12084
+    },
+    "comparisons/validation/code-files/multilingual/256/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "01f2b2d859745a64f1e5f8fa9749d0a068c6a7475d0192d6acb700a4b953a8c6",
+      "bytes": 12067
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk/vs-chonkie-sentence-96-only.json": {
+      "sha256": "e6a16c5a5ecd211832edf38eb4ca28981fd765779f688cfdb35f03120ebdf6f8",
+      "bytes": 7945
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk/vs-fixed.json": {
+      "sha256": "52632130924ed3749ee445733f15ad00689ec0689c5e1d8dc983d0fa842e983a",
+      "bytes": 12035
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk/vs-langchain-code.json": {
+      "sha256": "6168fc8e02163ecab8bf665948bb335d6672fffd2de96a89bc6a89f0e8b8f3f3",
+      "bytes": 12056
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk/vs-langchain.json": {
+      "sha256": "290630b4323b8f50b77057a86fb50d66fca95961e43a1b1209984eb6e985e154",
+      "bytes": 12045
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "965d4564f74e76706dd6dfb1682fb3640250ed55180e3ce91f674edc3978861e",
+      "bytes": 12034
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk/vs-llamaindex.json": {
+      "sha256": "b3b9063fded3cf6285d52d1d94eb78ec013edcd28a4419af3f256d1245d9fdae",
+      "bytes": 11980
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk/vs-omnichunk.json": {
+      "sha256": "e31bcf538c05b88aee9e795b115ce61d0da845619da8e73a076c840709033ad6",
+      "bytes": 12057
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk/vs-semantic-code.json": {
+      "sha256": "e748e3cabd17304454b93222d325c762bccdaaecae23c6d2850b939ef173c6e5",
+      "bytes": 12028
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "f0edce59664f62633bfde653bcf59961dbd6113bf449e0d4ad7af34476b4ce5e",
+      "bytes": 12091
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk/vs-semchunk.json": {
+      "sha256": "1af7cbd00e131fa9785b7dacb1474f115be34625a050304b62220e98df8f82c3",
+      "bytes": 12047
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-code-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "936bac04ac1e5a2247549f7ef8460c7ac24dbb78c769c66d29159be4513a0ca5",
+      "bytes": 7967
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "ee6b1092e6ee454e407ad536ca26eba7b8bab0279c153b01c2644050e1bc9d29",
+      "bytes": 12054
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "cff59d0a315c40ff1729935644030c0c0a9054aff58118675842f6af44da606b",
+      "bytes": 12075
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "ab540a1c87b773f45d77782a1b751d0e63b3bfc5055251dd5266194b635e09f7",
+      "bytes": 12064
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "219c25a9e734c70785565deba2c96ed592bf94f10a234189fa928c8c898e5bf7",
+      "bytes": 12071
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "ea9a97b8399404d18464301eacf3d25350db0212c8006892107091a331448280",
+      "bytes": 12029
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "f1f39ed800b98e4ea35eae0b0f30c42ef83d11158dc9aca4ed8fd93c55db1882",
+      "bytes": 12073
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "c0e6728383c93b730a23a39e23112fe8231e5057a97d5b2c99b015327086ffaa",
+      "bytes": 12053
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "3e69b742948ce0f9f0c70b0dbbe336f3c512cc0b60e608320166e7b5a0126450",
+      "bytes": 12101
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "ceb07387f33caa7b289744427a37845a3953ea811505749119c5e331407f354c",
+      "bytes": 12084
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-prose-compact/vs-chonkie-sentence-96-only.json": {
+      "sha256": "5eba317138699f90e5dde54725473ba63c1262ec3bb5d8dcf253515468ee139a",
+      "bytes": 7959
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "bf93c7a0ffdcc224c406a8429f0e21f75688f6d12f76d630e771d74d0a91fd3b",
+      "bytes": 12049
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "c07590f4c09e3bb50b17b10cce3035dc12b52e37e51cc35d9cef50d252c27fe1",
+      "bytes": 12070
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "6169204c2597524f06fa19a84d319efceda6ea2b185f6af234313466ff4bb1e8",
+      "bytes": 12059
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "ef9e0bb5ba2fce0ed86fb7a6416400ef26f205329f7c1fbde74a0209e70f11bc",
+      "bytes": 12048
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "c2131d1f45ede460d08333072842e0b446595617574ba1e4a629f7812802e0c8",
+      "bytes": 11994
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "b084570a1733bdf7783aa0177d283af56e92dcfebd388fec4393b9cfddb7945a",
+      "bytes": 12071
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "6de2dacd444670623e354790b73f490735d6a2d8b730ba995209c6c8e5461d33",
+      "bytes": 12042
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "3d872beaf4aed728447c9b358b28e0d3a4eb656998f1f4ea8531b49f7cadb0a4",
+      "bytes": 12105
+    },
+    "comparisons/validation/code-files/multilingual/512/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "075a57b77a8bec8505564e628b400867dedabee34c807605067d8d0bf3a6bb1b",
+      "bytes": 12061
+    },
+    "frontier/validation/code-files/multilingual/baseline/budget-128.report.json": {
+      "sha256": "db84c7dd71995713ac0226e7386012a230b6e0a33362c9eb45413f90de95bded",
+      "bytes": 12624447
+    },
+    "frontier/validation/code-files/multilingual/baseline/budget-256.report.json": {
+      "sha256": "8f4c9acbfe6471115429961dfb3259f8f7959d6f95a91c617de0e82e6b2a9696",
+      "bytes": 12854274
+    },
+    "frontier/validation/code-files/multilingual/baseline/budget-512.report.json": {
+      "sha256": "92d43b543a6fb4bbde585ba61326b702a952d1105dd192854f3b55a0286b7987",
+      "bytes": 13301104
+    },
+    "frontier/validation/code-files/multilingual/baseline-valid-96/budget-128.report.json": {
+      "sha256": "b6f603509c220e598707717bbc455ec926d5f1e8cb8d6e028cc90339bfc193b2",
+      "bytes": 603275
+    },
+    "frontier/validation/code-files/multilingual/baseline-valid-96/budget-256.report.json": {
+      "sha256": "0cb7191b93fdcc45e876afe79675ff56a8d83fdc4cd616a6f3ba8ce11b6f79ad",
+      "bytes": 612901
+    },
+    "frontier/validation/code-files/multilingual/baseline-valid-96/budget-512.report.json": {
+      "sha256": "afed522bafd8204e89e7da6d1892eb44a21f7f67cad09abb90b600a7983b82fa",
+      "bytes": 629680
+    },
+    "frontier/validation/code-files/multilingual/candidate-final-d0/budget-128.report.json": {
+      "sha256": "050603689a8d28f824f608c560ed118509b80ba91a08a428651f45d3581134c7",
+      "bytes": 3802214
+    },
+    "frontier/validation/code-files/multilingual/candidate-final-d0/budget-256.report.json": {
+      "sha256": "430523bf40825540e2fbe2fdaba2c81c4d160109c052e07786fc15448f03d16d",
+      "bytes": 3863499
+    },
+    "frontier/validation/code-files/multilingual/candidate-final-d0/budget-512.report.json": {
+      "sha256": "eb93729b1d4ef2929d6b37bb53d9af59ecaa0f90d6a5bef8a6556598024217cc",
+      "bytes": 3983953
+    },
+    "validation/code-files/english/baseline/report.json.gz": {
+      "sha256": "d56320c8b837bf90be1cff049c265d72acb8d405746c943a58e2702a2d1c5ccd",
+      "bytes": 2922823
+    },
+    "validation/code-files/english/failures/chonkie-sentence-64/report.json": {
+      "sha256": "538bf93184fa0aba8469799d0e07f4fb1cc1408831134f8b420e37383ccd5614",
+      "bytes": 11903
+    },
+    "validation/code-files/english/failures/chonkie-sentence-96/report.json": {
+      "sha256": "bfba28fed4ad8512a09e9b3c4071345bca109d1c39f6834cb7706dde79fd6cfd",
+      "bytes": 11904
+    },
+    "validation/code-files/english/candidate-final-d0/report.json.gz": {
+      "sha256": "5314ccad875924f94c788297749c6897d92296553d4f5357ea4c6417786f76f7",
+      "bytes": 857036
+    },
+    "validation/code-files/english/candidate-final-d0/cache-audit.json": {
+      "sha256": "d34d18b5b646b005f37139d22215fbd9e174581676102d27a69fcee0db09a5f9",
+      "bytes": 4009
+    },
+    "comparisons/validation/code-files/english/128/omnichunk/vs-fixed.json": {
+      "sha256": "2f8094c1c7bebba6297721e90efed3e67afa484751a775c58dae645d75bcc9f2",
+      "bytes": 11995
+    },
+    "comparisons/validation/code-files/english/128/omnichunk/vs-langchain-code.json": {
+      "sha256": "7c9a86a8e7b9250e6a95829a3060aa445d9084f481575fdd9c531b043d7e7425",
+      "bytes": 12025
+    },
+    "comparisons/validation/code-files/english/128/omnichunk/vs-langchain.json": {
+      "sha256": "476c521d567599414e6d516518493035fabf1969808db9a29d26154798a970f7",
+      "bytes": 11990
+    },
+    "comparisons/validation/code-files/english/128/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "2acfe57676a0a9962a638ef1251443dba8cc7b1f612f2f32f9c757d94136ffc2",
+      "bytes": 12003
+    },
+    "comparisons/validation/code-files/english/128/omnichunk/vs-llamaindex.json": {
+      "sha256": "786c035dbd82c5890f92e304be2f83c73822626429421205ebbbd1245be301e9",
+      "bytes": 11985
+    },
+    "comparisons/validation/code-files/english/128/omnichunk/vs-omnichunk.json": {
+      "sha256": "48779727cf0fc017979ce986edc96240f484e97d0b13359f00abd4db4128f74d",
+      "bytes": 11996
+    },
+    "comparisons/validation/code-files/english/128/omnichunk/vs-semantic-code.json": {
+      "sha256": "8fda5f6bb43db492cdbe54ff9e17677eaedd756555a51a1a75194cb0253c0dff",
+      "bytes": 12009
+    },
+    "comparisons/validation/code-files/english/128/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "ee651522d43de5992b419dd2c70fb6986389068bf2ae9f32b180aaeeaa5cb0cb",
+      "bytes": 12027
+    },
+    "comparisons/validation/code-files/english/128/omnichunk/vs-semchunk.json": {
+      "sha256": "bf32cb0d9e92b9db6c381d46c64042c9530981326cd01512ad758935dadee173",
+      "bytes": 12019
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "46f95e77dad33fc10518e48392c8c332b4857bf1b99e01b0d71bdfa4e5ec394d",
+      "bytes": 12008
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "2edae8a8407ce79da9c827777ec89c1b23b49fa2d5d7b7ba1ca5ee8eb8fbd88c",
+      "bytes": 12038
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "53939f02b48680d5e4836a7d5d0153449cec5a60093b6ee03ee0b85b263e776d",
+      "bytes": 12027
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "eb269a484700e3c9e46cf1f5c038a02739efb10a5e484b2bdea0288d9e02dd80",
+      "bytes": 12025
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "29f1d34f4d19f82bf594ddcd95cf53ac3fcc0dba5455cc0d5a34a8a42a32536e",
+      "bytes": 11986
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "f3418b21671d3f4f8a45c94f95c7ac6eaff791d5b0afd2d01ddc35c4ba8482de",
+      "bytes": 12027
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "4e6abf92828caa827bd59ea47783c2d5ef5bb63de50e123718985deb30b53419",
+      "bytes": 12022
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "aacca2b2d32b5cf25c9dee3d23898405c371859943e3b66d0c8face08d857a89",
+      "bytes": 12055
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "b0b60e418b58c62e18ea3911eba358bacdc3ca4538861cb3f0ec6a24261ac8d8",
+      "bytes": 12029
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "3b4683e94edce0e0f9974f2f6afea37eef5b1ccb51e5eaf874e75f40491fedc3",
+      "bytes": 12009
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "3ad747a23d8f96e80058d8eca32f8d8a7f2c85f1e2dea05997eb1de34a4d9f86",
+      "bytes": 12039
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "04de075bfd4afd9b4aa91fd39457bf15acd23a11b6ff15c2f84f593f20f421c2",
+      "bytes": 12004
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "466c53ff09b95c7430ea43f395c0b900b5848333065f61ee7f4ac6d8e24ef2df",
+      "bytes": 12017
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "5b5a5735310db68f11080684ccaacaaa3f9751ee3453eef32f3525ff42727bd1",
+      "bytes": 11999
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "e911eeda04180f411b65209165916524d9f57d0d6f42c57c20f8a0fe54d05427",
+      "bytes": 12010
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "dbe0c8c80f8fcf1a0294bd3623e486ed0c229707e74705837139b0ab199708ab",
+      "bytes": 12023
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "29f6e792eeb6bc48c000ceceae37ee9d7c7a76aaf59ab4a8a71828d265f96c51",
+      "bytes": 12041
+    },
+    "comparisons/validation/code-files/english/128/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "d0b89da37e016864952c9b7437b954a50c18fbe2d82e55a0fdb1ae6a7e81f6fa",
+      "bytes": 12033
+    },
+    "comparisons/validation/code-files/english/256/omnichunk/vs-fixed.json": {
+      "sha256": "9199773b98063e7b3726c5802664e4581d1e25218e056668433065b1a4f4e8a9",
+      "bytes": 11995
+    },
+    "comparisons/validation/code-files/english/256/omnichunk/vs-langchain-code.json": {
+      "sha256": "4905592a0b41ae639a4fafd0627fc9d7679d51378f355a1bfcc07431ae3ebe81",
+      "bytes": 12031
+    },
+    "comparisons/validation/code-files/english/256/omnichunk/vs-langchain.json": {
+      "sha256": "1f8f147128f8495cb0c8762a63b1cf9354cc21c8bf6aa6e9060d088efa00c72a",
+      "bytes": 12041
+    },
+    "comparisons/validation/code-files/english/256/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "b1c917d1784945aeabc0b734b140631fadada12a80fffa8e0df99aee4494bd9d",
+      "bytes": 12009
+    },
+    "comparisons/validation/code-files/english/256/omnichunk/vs-llamaindex.json": {
+      "sha256": "9551e585f5fe3b9e105b07de7e7749d1900899786401cd9cbdab8c3a2f1a8c92",
+      "bytes": 11973
+    },
+    "comparisons/validation/code-files/english/256/omnichunk/vs-omnichunk.json": {
+      "sha256": "ccc2cc1546e60417a80bbc4a7c859874be9a8130018be64932fe295f6427c169",
+      "bytes": 12017
+    },
+    "comparisons/validation/code-files/english/256/omnichunk/vs-semantic-code.json": {
+      "sha256": "97fbd3663e1a142d0bfb48e4a0eedccdff0fb5f04bd45b01de1ed6581e942efc",
+      "bytes": 12018
+    },
+    "comparisons/validation/code-files/english/256/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "90960dfdd6c17cc1fc9379c1cf8d75191806a5801fc2b672322f6de9d4a4b95f",
+      "bytes": 12036
+    },
+    "comparisons/validation/code-files/english/256/omnichunk/vs-semchunk.json": {
+      "sha256": "49aa487550ad088a834f953c4b4391a2510d8c5fd2e85ba30de383e1cdec1c14",
+      "bytes": 12019
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "664d843188f3e41993b007d02b708cf17a7eb2d684e8ee717e3d6a42b330cc77",
+      "bytes": 12056
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "369a0ca4ed22ca58f77b465e76dc2279772aa089d1165e9b0e1f5b848caae7f6",
+      "bytes": 12053
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "c25fefa9c431822287d8fe2a2317cfa1fbe3d6793f4290d8f9a92f91db21cb0f",
+      "bytes": 12033
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "0bd85df48889d7b83e8b4396523ed318053a10b8fa170970914a3b944326d329",
+      "bytes": 12055
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "29138837b4864428ebe3ff56a84296e67682d850c3b959574345e46c1df5acbf",
+      "bytes": 11995
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "90981063e4a9d5ec93aec5d0afe53b4470f750ce7fde78aef16b593563ba90ab",
+      "bytes": 12048
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "58cfe659fce64516f56843f8a7bcb7a37390bdef338913ad34f7a11b5196a5c0",
+      "bytes": 12040
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "f0739662acdabc57e3df11440dbaa9b2160f7d85eb6841600eefc8437c776370",
+      "bytes": 12049
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "d33a916935ad4e3780ffb5dbb70f20a0ca1d954ea79dfc5f40fadba25b81a7e4",
+      "bytes": 12041
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "5c24a0ea88728eeb5b45ad3431b68bf0a835f025bf886aba155446b4aadd7ea9",
+      "bytes": 12009
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "02c5deda2b74f268372f7ae39c443045a14fd1ac789604899495bcb5f224473e",
+      "bytes": 12045
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "58bfce8a6c023dbfdf3db7161ce0693824a4f8210f3c851fc469a21acffe2a90",
+      "bytes": 12055
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "820a76f439ef5e064c4621ad3e5f6a57125ec59333688099c6e1e8d7cec65d63",
+      "bytes": 12023
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "df101609e2142f7648ee05a78928ef7d8ddc1cf1acb1e2383a2ff215d1e3eba1",
+      "bytes": 11987
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "5687fb134f570d90b7552794c4ffff6a6f9657faf70cb0de6a54f5e22ab59a28",
+      "bytes": 12031
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "9aeec4d2ae38635bc093b6de3844fdcca05f4bb5b0e3e4881ff2fd05e874c0e9",
+      "bytes": 12032
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "2c621cabbff5d4c791fd37f7691748af4c1c40494f002d4522d8ceaad889fafc",
+      "bytes": 12050
+    },
+    "comparisons/validation/code-files/english/256/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "935780c7e67b2892cfbee83790ec733ecf94956c4ab4aa3cefaf71a3b963e59d",
+      "bytes": 12033
+    },
+    "comparisons/validation/code-files/english/512/omnichunk/vs-fixed.json": {
+      "sha256": "40521de28d1d452eab65f26317dd159aeac2acdc221aedafaf1d0af9010b3e3e",
+      "bytes": 12016
+    },
+    "comparisons/validation/code-files/english/512/omnichunk/vs-langchain-code.json": {
+      "sha256": "8f2f8dcf86a1cc60b79f7aadb655033efa81ac3abbfb65f6255d0af8c7b41e2c",
+      "bytes": 12019
+    },
+    "comparisons/validation/code-files/english/512/omnichunk/vs-langchain.json": {
+      "sha256": "a29fcef1032703799bae0ee70fd8a23729676b42f72a9cba17541909ffe38659",
+      "bytes": 12014
+    },
+    "comparisons/validation/code-files/english/512/omnichunk/vs-llamaindex-sentence.json": {
+      "sha256": "9b0e0423ff5126645a033fc803bb7c37cf5576c7c540f5d7229e60591d92f6c8",
+      "bytes": 12009
+    },
+    "comparisons/validation/code-files/english/512/omnichunk/vs-llamaindex.json": {
+      "sha256": "991d93a2ad14c8869a26342954d4c5abb65e0237a05af6bdc0fac365f7660fc9",
+      "bytes": 11970
+    },
+    "comparisons/validation/code-files/english/512/omnichunk/vs-omnichunk.json": {
+      "sha256": "6c6f5c1384a2a07dcb589e867ca75d8122897cca493befaacd61f3d21b73b7f5",
+      "bytes": 12032
+    },
+    "comparisons/validation/code-files/english/512/omnichunk/vs-semantic-code.json": {
+      "sha256": "1575b0bbd1de11aa7bd9eaec854e2f66ebf0029fca223a57d492fe22c98dc901",
+      "bytes": 12030
+    },
+    "comparisons/validation/code-files/english/512/omnichunk/vs-semantic-text-splitter.json": {
+      "sha256": "b9515f3e05e39b75f021aae951a044edfaa4505a936233d879779ad4c2b675ce",
+      "bytes": 12054
+    },
+    "comparisons/validation/code-files/english/512/omnichunk/vs-semchunk.json": {
+      "sha256": "90bc8c02e798505a696614def568dc2389cafff7610105def82b32f51eb353a6",
+      "bytes": 12043
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-code-compact/vs-fixed.json": {
+      "sha256": "534cceb41008a69b65444bee789e1cfe65138fcd18b841f00630708514874e5d",
+      "bytes": 12050
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-code-compact/vs-langchain-code.json": {
+      "sha256": "42ebbd9ab8e6bcbeea63a19a44c112afa228029e47e7bb1939e467f30d33426d",
+      "bytes": 12032
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-code-compact/vs-langchain.json": {
+      "sha256": "2dc9734e1c41a4e9e29a03de763f52f5ec028077b5d42429cf48f2b24a58e041",
+      "bytes": 12036
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-code-compact/vs-llamaindex-sentence.json": {
+      "sha256": "e706dfa11e20447a959fa303bdea7cc0d6bc560a41193f5c7e569c38fd0d3e3f",
+      "bytes": 12037
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-code-compact/vs-llamaindex.json": {
+      "sha256": "5d4701d6da9b66eb5cb76352b28a08a9f6fbf95e9c1f53220e8401df25844ee3",
+      "bytes": 11983
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-code-compact/vs-omnichunk.json": {
+      "sha256": "c6ebe6b6beeb72f2fcebd2bd8b33743264a202a632a43e7a06244df8ef7835b7",
+      "bytes": 12030
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-code-compact/vs-semantic-code.json": {
+      "sha256": "e693279c9d1d57232ddf440f13c98bbc4cefb7887ad4dc698664fb99c178feb4",
+      "bytes": 12028
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-code-compact/vs-semantic-text-splitter.json": {
+      "sha256": "f335385a2fe51116c8ceec61eb0fed3c30becc9c079790e1d5cfd86c2d8568a2",
+      "bytes": 12061
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-code-compact/vs-semchunk.json": {
+      "sha256": "1539a5d342b81dc638ea347507fcbd53a552bce50bcca67edbca43bdd83021ac",
+      "bytes": 12050
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-prose-compact/vs-fixed.json": {
+      "sha256": "ab97c7194c48d3326750b425508788206119747bf58e194ab32a57b72a5fd261",
+      "bytes": 12030
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-prose-compact/vs-langchain-code.json": {
+      "sha256": "108c91ada418ee5b70581bb8681b7ffa0a86dc6e06c1795632109da35e2a3b43",
+      "bytes": 12033
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-prose-compact/vs-langchain.json": {
+      "sha256": "77598842ed65a1d27c1ded5365545e82cf5ba1c58060ef95e0126b789b1422ca",
+      "bytes": 12028
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-prose-compact/vs-llamaindex-sentence.json": {
+      "sha256": "7e1a67e45cca88d0d9aa49dc41e95e488c3c1ea100218bd297edd1488a5647b5",
+      "bytes": 12023
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-prose-compact/vs-llamaindex.json": {
+      "sha256": "fd609afc7b86b6be969cfb40efeed9e9074f5981f5e872eed1236a9b21af5fd1",
+      "bytes": 11984
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-prose-compact/vs-omnichunk.json": {
+      "sha256": "4160e9cceb7384101b83e35ebceffd1bc4d1ad734d24ee0fc40c977460c1a404",
+      "bytes": 12046
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-prose-compact/vs-semantic-code.json": {
+      "sha256": "03688230225e6d11e987898075db232d07ef344e6ac49107404920ffc3995b0a",
+      "bytes": 12044
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-prose-compact/vs-semantic-text-splitter.json": {
+      "sha256": "e005bfdf017020f351c602158011eb3eb4ff98573827cc711db8e44911256561",
+      "bytes": 12068
+    },
+    "comparisons/validation/code-files/english/512/omnichunk-prose-compact/vs-semchunk.json": {
+      "sha256": "94c3de79c94ed155e2b25f306e34fbd5c54a9dc9c1e26824821b3139b7a1dc92",
+      "bytes": 12057
+    },
+    "frontier/validation/code-files/english/baseline/budget-128.report.json": {
+      "sha256": "27cd4cce3a8e8e68ac0205867c12dcb84cf99b7c38e19bf57ec69a3a19bbc393",
+      "bytes": 12424078
+    },
+    "frontier/validation/code-files/english/baseline/budget-256.report.json": {
+      "sha256": "088adbcc0b7e435e84a5e3d76010ee1412a79a19dd5f47a5890a4f893045650b",
+      "bytes": 12657992
+    },
+    "frontier/validation/code-files/english/baseline/budget-512.report.json": {
+      "sha256": "60fa45f559aecdc57e486d5ab3012a121e66ad898d7081fd8b4d1c11ed923f47",
+      "bytes": 13098902
+    },
+    "frontier/validation/code-files/english/candidate-final-d0/budget-128.report.json": {
+      "sha256": "01168c7f63af0f804fb8cd897427d7c324253a955e2ef0532606f0ccd02e479e",
+      "bytes": 3729421
+    },
+    "frontier/validation/code-files/english/candidate-final-d0/budget-256.report.json": {
+      "sha256": "616ec98691a1b849a853a4611d0970a680a99b88a01fa9dd0a22e6330cd0c8db",
+      "bytes": 3786956
+    },
+    "frontier/validation/code-files/english/candidate-final-d0/budget-512.report.json": {
+      "sha256": "4b7e02787746ec87d00f0938ee2091c8c4a0a5a0d18dcfd098537a83a8999658",
+      "bytes": 3903609
+    },
+    "drafts/README.md": {
+      "sha256": "885cfcaab670e5a0717e07557a0821bc3169b130e403566c0346f322429d69dc",
+      "bytes": 23938
+    },
+    "parent-retrieval/candidate-final-c1/combined-summary.json": {
+      "sha256": "82476572e42a35a6f0a12589e772d0b6194e4c1b6f85b98e0f10a93c27f8385e",
+      "bytes": 82006
+    },
+    "parent-retrieval/validation/combined-summary.json": {
+      "sha256": "79a8e8a82c826c70dbfefdbb2e71380eb39650656a54399c4cce5c8932380588",
+      "bytes": 88091
+    },
+    "parent-retrieval/candidate-final-c1/paired.json": {
+      "sha256": "262378e5f5ffb481a450f55783bed294d74706e7af1af26ffa2e405a6a4a751c",
+      "bytes": 166965
+    },
+    "parent-retrieval/validation/paired.json": {
+      "sha256": "c52df4f9227b2a18f87ed5275188a3f5fea2c183abd526d2df22deaca7b0f02b",
+      "bytes": 167724
+    },
+    "context-dense-development/summary.json": {
+      "sha256": "4ab660015ec86aa510d1f63091725c59a431fa7e598caddbcf37a0559dd7a01c",
+      "bytes": 18449
+    },
+    "parent-retrieval/validation/artifact-audit.json": {
+      "sha256": "d1040ff4ced539a21a0b44c1a8568621e77ab400a74d3300f89c978e4f9dc2f5",
+      "bytes": 1779
+    },
+    "parent-retrieval/validation/manifest.json": {
+      "sha256": "49a58baf9c05c075b6c98736ef5a41e90a02663013b4da49e9fa0f07c3b19440",
+      "bytes": 4882
+    },
+    "parent-retrieval/validation/identity-cache-audit.json": {
+      "sha256": "bef4d94105238e824edb58741ae1bc94105a0cfb45c26f7e63c968c1baabb4fa",
+      "bytes": 1172563
+    },
+    "dataset-readme-reproduction-audit.json": {
+      "sha256": "5f9c624b92d6e7f7a3816cc0fa87f991797874db933fb9062c6873f9a5109425",
+      "bytes": 1790
+    }
+  },
+  "primary_rows": [
+    {
+      "domain": "turkish",
+      "model": "multilingual",
+      "capacity": 64,
+      "profile": "omnichunk-prose-compact",
+      "recall": 0.8802310763654179,
+      "reference": "semantic-code",
+      "paired_recall": {
+        "baseline_mean": 0.872692542452796,
+        "candidate_mean": 0.8802310763654178,
+        "mean_delta": 0.007538533912621852,
+        "wins": 24,
+        "ties": 73,
+        "losses": 23,
+        "bootstrap_delta_ci_95": [
+          -0.024507935556152417,
+          0.03868089305061382
+        ]
+      }
+    },
+    {
+      "domain": "turkish",
+      "model": "multilingual",
+      "capacity": 96,
+      "profile": "omnichunk-prose-compact",
+      "recall": 0.9093650391134943,
+      "reference": "semantic-code",
+      "paired_recall": {
+        "baseline_mean": 0.8884835979063593,
+        "candidate_mean": 0.9093650391134943,
+        "mean_delta": 0.02088144120713502,
+        "wins": 22,
+        "ties": 86,
+        "losses": 12,
+        "bootstrap_delta_ci_95": [
+          -0.0017578182797860383,
+          0.047289982242235816
+        ]
+      }
+    },
+    {
+      "domain": "code",
+      "model": "multilingual",
+      "capacity": 64,
+      "profile": "omnichunk-code-compact",
+      "recall": 0.6099558680455849,
+      "reference": "chonkie-sentence",
+      "paired_recall": {
+        "baseline_mean": 0.6054380041723434,
+        "candidate_mean": 0.6099558680455849,
+        "mean_delta": 0.004517863873241459,
+        "wins": 26,
+        "ties": 15,
+        "losses": 23,
+        "bootstrap_delta_ci_95": [
+          -0.05043377629405809,
+          0.06000175690126512
+        ]
+      }
+    },
+    {
+      "domain": "code",
+      "model": "multilingual",
+      "capacity": 96,
+      "profile": "omnichunk-code-compact",
+      "recall": 0.696168932327573,
+      "reference": "chonkie-sentence",
+      "paired_recall": {
+        "baseline_mean": 0.6744662740716245,
+        "candidate_mean": 0.696168932327573,
+        "mean_delta": 0.021702658255948516,
+        "wins": 25,
+        "ties": 29,
+        "losses": 10,
+        "bootstrap_delta_ci_95": [
+          -0.05301815472425917,
+          0.09284042391925708
+        ]
+      }
+    },
+    {
+      "domain": "code",
+      "model": "english",
+      "capacity": 64,
+      "profile": "omnichunk-code-compact",
+      "recall": 0.8083513182267973,
+      "reference": "llamaindex-sentence",
+      "paired_recall": {
+        "baseline_mean": 0.7723609828648189,
+        "candidate_mean": 0.8083513182267973,
+        "mean_delta": 0.035990335361978466,
+        "wins": 47,
+        "ties": 1,
+        "losses": 16,
+        "bootstrap_delta_ci_95": [
+          0.0008108207868057377,
+          0.07279155120254206
+        ]
+      }
+    },
+    {
+      "domain": "code",
+      "model": "english",
+      "capacity": 96,
+      "profile": "omnichunk-code-compact",
+      "recall": 0.8533807492047655,
+      "reference": "semantic-text-splitter",
+      "paired_recall": {
+        "baseline_mean": 0.8341182650368759,
+        "candidate_mean": 0.8533807492047655,
+        "mean_delta": 0.0192624841678895,
+        "wins": 11,
+        "ties": 42,
+        "losses": 11,
+        "bootstrap_delta_ci_95": [
+          -0.011360575527383713,
+          0.052400518190690276
+        ]
+      }
+    },
+    {
+      "domain": "code-files",
+      "model": "multilingual",
+      "capacity": 64,
+      "profile": "omnichunk-code-compact",
+      "recall": 0.39910763645985814,
+      "reference": "semantic-text-splitter",
+      "paired_recall": {
+        "baseline_mean": 0.4193003837116399,
+        "candidate_mean": 0.39910763645985814,
+        "mean_delta": -0.020192747251781763,
+        "wins": 18,
+        "ties": 19,
+        "losses": 19,
+        "bootstrap_delta_ci_95": [
+          -0.09353580107314641,
+          0.05277271707001475
+        ]
+      }
+    },
+    {
+      "domain": "code-files",
+      "model": "multilingual",
+      "capacity": 96,
+      "profile": "omnichunk-code-compact",
+      "recall": 0.3705233728179771,
+      "reference": "semchunk",
+      "paired_recall": {
+        "baseline_mean": 0.4356571440281107,
+        "candidate_mean": 0.37052337281797704,
+        "mean_delta": -0.0651337712101336,
+        "wins": 15,
+        "ties": 20,
+        "losses": 21,
+        "bootstrap_delta_ci_95": [
+          -0.12987698968059597,
+          0.010540800588093334
+        ]
+      }
+    },
+    {
+      "domain": "code-files",
+      "model": "english",
+      "capacity": 64,
+      "profile": "omnichunk-code-compact",
+      "recall": 0.5230904573118285,
+      "reference": "semantic-text-splitter",
+      "paired_recall": {
+        "baseline_mean": 0.6005244366208284,
+        "candidate_mean": 0.5230904573118285,
+        "mean_delta": -0.07743397930899998,
+        "wins": 18,
+        "ties": 14,
+        "losses": 24,
+        "bootstrap_delta_ci_95": [
+          -0.14836042821399784,
+          -0.01366745820422924
+        ]
+      }
+    },
+    {
+      "domain": "code-files",
+      "model": "english",
+      "capacity": 96,
+      "profile": "omnichunk-code-compact",
+      "recall": 0.5457644677653427,
+      "reference": "langchain",
+      "paired_recall": {
+        "baseline_mean": 0.6111481397704204,
+        "candidate_mean": 0.5457644677653427,
+        "mean_delta": -0.06538367200507764,
+        "wins": 17,
+        "ties": 12,
+        "losses": 27,
+        "bootstrap_delta_ci_95": [
+          -0.16117439278496767,
+          0.009540360566957685
+        ]
+      }
+    }
+  ],
+  "candidate_primary_rows": 30,
+  "validation_csv_rows": 380,
+  "validation_csv_sha256": "7c8f11b6b121113a3b0d4ac1744b8bea5e21e67c5f6e83d04b92f2989aa1dec5",
+  "report_sha256": "8034f9175b0d945c733182d75dc348d7039d7f08b7bc294bcb635202ff401bf6",
+  "no_inference_or_tuning": true,
+  "number_validation_manifest_sha256": "faf9a718fa6508cef7d39f97c5ff92c0765bca4636dbb565e86aaf18f3642a0b",
+  "independent_semantic_table_audit_sha256": "046d9b6f15fd6a9a45269b72deb325c3cf0bce2efb4e92f124371b423ed7a3aa"
+}

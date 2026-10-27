@@ -1,0 +1,130 @@
+[
+  {
+    "repository": "multiformats/py-multicodec",
+    "mit_verified": true
+  },
+  {
+    "repository": "rabitt/pysox",
+    "mit_verified": false
+  },
+  {
+    "repository": "drkjam/pydba",
+    "mit_verified": true
+  },
+  {
+    "repository": "rainwoodman/sharedmem",
+    "mit_verified": false
+  },
+  {
+    "repository": "agsimeonov/cbexchange",
+    "mit_verified": true
+  },
+  {
+    "repository": "MacHu-GWU/superjson-project",
+    "mit_verified": true
+  },
+  {
+    "repository": "skoczen/inkblock",
+    "mit_verified": true
+  },
+  {
+    "repository": "clab/dynet",
+    "mit_verified": false
+  },
+  {
+    "repository": "ponty/pyscreenshot",
+    "mit_verified": false
+  },
+  {
+    "repository": "pip-services/pip-services-commons-python",
+    "mit_verified": false
+  },
+  {
+    "repository": "qualisys/qualisys_python_sdk",
+    "mit_verified": true
+  },
+  {
+    "repository": "romanvm/asyncore-wsgi",
+    "mit_verified": true
+  },
+  {
+    "repository": "jaraco/jaraco.path",
+    "mit_verified": true
+  },
+  {
+    "repository": "peterjc/flake8-rst-docstrings",
+    "mit_verified": false
+  },
+  {
+    "repository": "kmpm/nodemcu-uploader",
+    "mit_verified": true
+  },
+  {
+    "repository": "zhihu/redis-shard",
+    "mit_verified": false
+  },
+  {
+    "repository": "thombashi/pingparsing",
+    "mit_verified": true
+  },
+  {
+    "repository": "hotdogee/gff3-py",
+    "mit_verified": false
+  },
+  {
+    "repository": "zhelev/python-afsapi",
+    "mit_verified": false
+  },
+  {
+    "repository": "shalabhms/reliable-collections-cli",
+    "mit_verified": true
+  },
+  {
+    "repository": "nilp0inter/trelloapi",
+    "mit_verified": false
+  },
+  {
+    "repository": "edx/edx-enterprise",
+    "mit_verified": false
+  },
+  {
+    "repository": "metagriffin/fso",
+    "mit_verified": false
+  },
+  {
+    "repository": "jayclassless/tidypy",
+    "mit_verified": false
+  },
+  {
+    "repository": "shymonk/django-datatable",
+    "mit_verified": true
+  },
+  {
+    "repository": "jazzband/django-mongonaut",
+    "mit_verified": true
+  },
+  {
+    "repository": "mcrute/pydora",
+    "mit_verified": true
+  },
+  {
+    "repository": "zerotk/easyfs",
+    "mit_verified": false
+  },
+  {
+    "repository": "changhiskhan/poseidon",
+    "mit_verified": true
+  },
+  {
+    "repository": "MyJoiT/eggit",
+    "mit_verified": false
+  },
+  {
+    "repository": "freelancer/freelancer-sdk-python",
+    "mit_verified": false
+  },
+  {
+    "repository": "aleju/imgaug",
+    "mit_verified": true
+  }
+]

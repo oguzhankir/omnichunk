@@ -12,6 +12,7 @@ from omnichunk.context.range_index import EntityRangeSweep
 from omnichunk.context.scope import build_scope_tree, find_scope_chain
 from omnichunk.context.siblings import SiblingIndex, build_sibling_index, detect_siblings_for_chunk
 from omnichunk.parser.tree_sitter import parse_code
+from omnichunk.semantic.sentences import split_sentences
 from omnichunk.sizing.counter import make_size_counter, make_token_counter
 from omnichunk.sizing.nws import get_nws_count, preprocess_nws_cumsum
 from omnichunk.types import (
@@ -21,10 +22,12 @@ from omnichunk.types import (
     ChunkOptions,
     ContentType,
     EntityInfo,
+    EntityType,
     LineRange,
 )
 from omnichunk.util.detect import detect_language
 from omnichunk.util.text_index import TextIndex
+from omnichunk.windowing.compact import compact_code_ranges
 from omnichunk.windowing.greedy import (
     RangeNode,
     assign_windows_for_nodes,
@@ -102,7 +105,12 @@ class CodeEngine:
 
         ast_nodes = _collect_ast_root_nodes(parse_result.tree)
         if ast_nodes:
-            ast_nodes = _bind_leading_comments(ast_nodes, budget, options.max_chunk_size)
+            ast_nodes = _bind_leading_comments(
+                ast_nodes,
+                budget,
+                options.max_chunk_size,
+                options.overflow_policy == "split",
+            )
             windows = assign_windows_for_nodes(
                 ast_nodes,
                 cumsum=cumsum,
@@ -134,6 +142,29 @@ class CodeEngine:
 
         chunk_ranges = _windows_to_contiguous_ranges(merged_windows, len(raw_bytes))
         chunk_ranges = _merge_whitespace_only_ranges(chunk_ranges, raw_bytes)
+        if options.code_boundary_policy == "compact" and options.overflow_policy == "split":
+            protected = []
+            for position, node in enumerate(ast_nodes):
+                start = int(getattr(node, "start_byte", getattr(node, "start", 0)))
+                if position + 1 < len(ast_nodes):
+                    following = ast_nodes[position + 1]
+                    end = int(getattr(following, "start_byte", getattr(following, "start", 0)))
+                else:
+                    end = len(raw_bytes)
+                start = start if position else 0
+                if budget.count(start, end) <= options.max_chunk_size:
+                    protected.append((start, end))
+            protected.extend(
+                (entity.byte_range.start, entity.byte_range.end)
+                for entity in entities
+                if entity.type in {EntityType.FUNCTION, EntityType.METHOD, EntityType.CLASS}
+                and entity.byte_range is not None
+                and budget.count(entity.byte_range.start, entity.byte_range.end)
+                <= options.max_chunk_size
+            )
+            chunk_ranges = compact_code_ranges(
+                chunk_ranges, budget=budget, max_size=options.max_chunk_size, protected=protected
+            )
         token_counter = make_token_counter(options.tokenizer, chunk_size=options.max_chunk_size)
 
         previous_text = ""
@@ -355,7 +386,9 @@ def _isolate_comment_groups(
     return isolated
 
 
-def _bind_leading_comments(nodes: list[Any], budget: SourceBudget, max_size: int) -> list[Any]:
+def _bind_leading_comments(
+    nodes: list[Any], budget: SourceBudget, max_size: int, split_comments: bool = True
+) -> list[Any]:
     """Keep an adjacent leading comment block with its fitting root statement.
 
     Source trivia belongs to the preceding sibling in measured windowing, so the
@@ -424,6 +457,54 @@ def _bind_leading_comments(nodes: list[Any], budget: SourceBudget, max_size: int
                 pending = []
                 index = following
                 continue
+            if split_comments:
+                comment_start = int(pending[0].start_byte)
+                comment_end = int(pending[-1].end_byte)
+                comment_text = raw[comment_start:comment_end].decode("utf-8")
+                # Preserve the final explanatory sentence with the documented
+                # statement when the whole unit is too large. Both resulting
+                # source payloads must independently fit the actual counter.
+                cut = comment_start
+                cuts: list[int] = []
+                for sentence, _, _ in split_sentences(comment_text)[:-1]:
+                    cut += len(sentence.encode("utf-8"))
+                    if owned_start < cut < comment_end:
+                        cuts.append(cut)
+                # Rebalancing is optional: inspect logarithmically many sentence
+                # cuts instead of recounting every growing prefix. Nonmonotonic
+                # counters can fall back to ordinary structural splitting; only
+                # independently verified two-way fits may become a group.
+                lo, hi = 0, len(cuts) - 1
+                selected: int | None = None
+                while lo <= hi:
+                    middle = (lo + hi) // 2
+                    candidate = cuts[middle]
+                    if budget.count(owned_start, candidate) > max_size:
+                        hi = middle - 1
+                    elif budget.count(candidate, owned_end) > max_size:
+                        lo = middle + 1
+                    else:
+                        selected = candidate
+                        hi = middle - 1
+                if selected is not None:
+                    cut = selected
+                    if (
+                        budget.count(owned_start, cut) <= max_size
+                        and budget.count(cut, owned_end) <= max_size
+                    ):
+                        output.append(RangeNode(comment_start, cut))
+                        tail = RangeNode(cut, comment_end)
+                        output.append(
+                            _CommentGroup(
+                                start=cut,
+                                end=int(group[-1].end_byte),
+                                children=(tail, *group[len(pending) :]),
+                            )
+                        )
+                        pending = []
+                        index = following
+                if not pending:
+                    continue
             output.extend(pending)
             pending = []
         elif pending:

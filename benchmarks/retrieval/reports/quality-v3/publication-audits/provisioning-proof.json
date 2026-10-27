@@ -1,0 +1,35 @@
+{
+  "nltk_version": "3.10.4",
+  "llamaindex_version": "0.14.25",
+  "root": "/workspace/work/omnichunk-v3/ci-nltk-provisioning-proof/nltk-data",
+  "root_mode": "0o700",
+  "verified_entries": 181,
+  "unsafe_entries": [],
+  "assets": [
+    "punkt",
+    "punkt_tab",
+    "stopwords"
+  ],
+  "sent_tokenize": "pass",
+  "llamaindex_globals_helper": "pass",
+  "local_download_note": "NLTK_ALLOW_PROXIED_URLOPEN=1 was supplied only for local asset download through this managed environment trusted egress proxy; workflow does not alter NLTK trust policy.",
+  "base_git_sha": "d0bd4b5ea10ff458313a82b3340c8f1a3f49e572",
+  "changed_files": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/dense-evaluation.yml",
+    ".github/workflows/integrations.yml",
+    ".github/workflows/release.yml"
+  ],
+  "runtime_tests_harness_unchanged": true,
+  "yaml_parse_and_identical_setup_check": "pass",
+  "wheel_smoke_unchanged": true,
+  "targeted_tests": {
+    "command": "pytest -n 2 -q tests/test_retrieval_adapters.py tests/test_framework_adapters.py",
+    "passed": 77,
+    "elapsed_seconds": 4.8
+  },
+  "patch_path": "/workspace/work/omnichunk-v3/ci-nltk-private-assets.patch",
+  "patch_sha256": "a1f3703276783a28b854e6fee7c886fb05f841b0d10c88a1af4daa40ccadebfa",
+  "committed": false,
+  "documentation_note": "CI-only provisioning changes no user installation/configuration/runtime contract; rationale is inline workflow comments."
+}

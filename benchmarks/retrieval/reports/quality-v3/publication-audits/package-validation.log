@@ -1,0 +1,8 @@
+Checking /workspace/work/omnichunk-v3/package/omnichunk-2.2.0-py3-none-any.whl: PASSED
+Checking /workspace/work/omnichunk-v3/package/omnichunk-2.2.0.tar.gz: PASSED
+WARNING: The directory '/home/agent/.cache/pip' or its parent directory is not owned or is not writable by the current user. The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+Processing /workspace/work/omnichunk-v3/package/omnichunk-2.2.0-py3-none-any.whl
+Installing collected packages: omnichunk
+Successfully installed omnichunk-2.2.0
+{"version": "2.2.0", "chunks": 4, "minimal_install": true}
+{"version": "2.2.0", "tag": null, "artifact_checks": "passed"}

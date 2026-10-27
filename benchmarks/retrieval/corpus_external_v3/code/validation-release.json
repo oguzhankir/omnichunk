@@ -1,0 +1,15 @@
+{
+  "released_utc": "2026-10-27T12:51:41.271949+00:00",
+  "freeze_sha256": "54f2d64ede52854e41f9dffaa4235f0eb991f3bc8df1031916754dbac188a334",
+  "runtime_commit": "d0bd4b5ea10ff458313a82b3340c8f1a3f49e572",
+  "source_harness_hashes_verified": true,
+  "review_gate_sha256": "ec1d4066de0955c8bb098e15493d7304e11b67d7ca75697f535f9ae5a1bd4123",
+  "all_gates_passed": true,
+  "manifest_sha256": "ddbe1ee7172576c20339ed6e261bc066bb4269612b2f04232cd89a07498be46f",
+  "documents": 64,
+  "queries": 64,
+  "repository_clusters": 16,
+  "cluster_map_sha256": "86a5e4b0ab4a80b05defaecb42f14d8c2289e28401ea6eea84bc585045c678cd",
+  "loader_and_evidence_bytes_verified": true,
+  "custody_recovery": "In-memory AESkey unavailable after agent reactivation. Deterministic reimport from pinned upstream/repository license selection exactly recovered committed manifest. Ciphertext retained as historical commitment;no key disclosed,no settings/source changes or quality tuning."
+}

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from omnichunk import Chunker
 from omnichunk.sizing.nws import preprocess_nws_cumsum
 from omnichunk.windowing.models import ASTNodeWindowItem
@@ -49,19 +51,44 @@ def test_split_oversized_leaf_reconstruction_and_determinism() -> None:
     assert joined == text_b[start:end]
 
 
-def test_no_chunk_ends_inside_quoted_region_when_newlines_outside() -> None:
-    """Triple-quoted block: no chunk boundary may fall inside the literal."""
-    filler = "word " * 30
+@pytest.mark.parametrize("word", ["word ", "sözcük😀 "])
+def test_oversized_assigned_literal_uses_code_route_and_exact_budgeted_source(word) -> None:
+    """An oversized data literal must split without losing source or its code route."""
+    from omnichunk import ContentType
+
+    filler = word * 30
     code = f'def outer():\n    s = """\n{filler}\n{filler}\n    """\n    return s\n'
-    chunker = Chunker(max_chunk_size=80, min_chunk_size=5, size_unit="chars")
+    chunker = Chunker(
+        max_chunk_size=80, min_chunk_size=5, size_unit="chars", coverage_policy="lossless"
+    )
     chunks = chunker.chunk("m.py", code)
     assert "".join(c.text for c in chunks) == code
-    q_open = code.index('"""')
-    q_close = code.index('"""', q_open + 3) + 3
+    raw = code.encode("utf-8")
+    q_open = raw.index(b'"""')
+    q_close = raw.index(b'"""', q_open + 3) + 3
+    assert len(code[code.index('"""') : code.index('"""', code.index('"""') + 3) + 3]) > 80
+    assert any(q_open < c.byte_range.end < q_close for c in chunks)
     for c in chunks:
         br = c.byte_range
-        if br.start < q_open < br.end:
-            assert br.end <= q_open or br.start >= q_close
+        assert raw[br.start : br.end].decode("utf-8") == c.text
+        assert c.context.content_type == ContentType.CODE
+        assert len(c.contextualized_text) <= 80
+
+
+def test_fitting_assigned_literal_keeps_its_boundaries_in_an_oversized_function() -> None:
+    filler = "word " * 5
+    code = f'def outer():\n    s = """\n{filler}\n{filler}\n    """\n    return s\n'
+    raw = code.encode("utf-8")
+    q_open = raw.index(b'"""')
+    q_close = raw.index(b'"""', q_open + 3) + 3
+    assert q_close - q_open <= 80 < len(code)
+    chunks = Chunker(
+        max_chunk_size=80, min_chunk_size=5, size_unit="chars", coverage_policy="lossless"
+    ).chunk("m.py", code)
+    assert "".join(c.text for c in chunks) == code
+    assert any(c.byte_range.start <= q_open and c.byte_range.end >= q_close for c in chunks)
+    assert all(not (q_open < c.byte_range.end < q_close) for c in chunks)
+    assert all(len(c.contextualized_text) <= 80 for c in chunks)
 
 
 def test_nested_class_methods_small_max_reconstruction() -> None:

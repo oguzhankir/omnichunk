@@ -22,7 +22,12 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 import omnichunk  # noqa: E402
-from benchmarks.retrieval.adapters import AdapterUnavailable, Passage, split_document  # noqa: E402
+from benchmarks.retrieval.adapters import (  # noqa: E402
+    TOOLS,
+    AdapterUnavailable,
+    Passage,
+    split_document,
+)
 from benchmarks.retrieval.corpus import Corpus, load_corpus  # noqa: E402
 from benchmarks.retrieval.dense import FrozenDenseRetriever  # noqa: E402
 from benchmarks.retrieval.ranking import (  # noqa: E402
@@ -35,15 +40,6 @@ from omnichunk import __version__  # noqa: E402
 from omnichunk.retrieval_eval import EvidenceSpan, score_evidence, score_ranking  # noqa: E402
 
 DEFAULT_CORPUS = ROOT / "benchmarks" / "retrieval" / "corpus_v1"
-TOOLS = (
-    "omnichunk",
-    "fixed",
-    "semchunk",
-    "langchain",
-    "semantic-text-splitter",
-    "chonkie",
-    "llamaindex",
-)
 
 
 def _sha256(path: Path) -> str:

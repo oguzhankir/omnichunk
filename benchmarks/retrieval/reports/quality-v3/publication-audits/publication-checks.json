@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "recorded_utc": "2026-10-27T14:06:09.631821+00:00",
+  "frozen_runtime_and_harness": "d0bd4b5ea10ff458313a82b3340c8f1a3f49e572",
+  "runtime_tests_harness_unchanged": true,
+  "published_report_sha256": "b1887aa531cb0037f2335d32b9eb3ed88078267083a7955c59891ba61bbfaabf",
+  "broken_readme_links": [],
+  "independent_report_and_plot_checks": 6876,
+  "archive_original_raw_stored_hash_size_checks": 8532,
+  "archive_original_artifacts": 1422,
+  "restorer_tests": 12,
+  "ci_private_asset_targeted_tests": 77,
+  "package_wheel_sdist_and_dependency_free_install": "passed",
+  "strict_mkdocs": "passed",
+  "ruff_check_and_format": "passed",
+  "packages": [
+    {
+      "file": "omnichunk-2.2.0-py3-none-any.whl",
+      "size_bytes": 190984,
+      "sha256": "aa8f15b266ac28893d6a4bb5a9c53f5d957c9456b8f5f81eee7a547884483145",
+      "members": 100,
+      "frozen_reports_excluded": true
+    },
+    {
+      "file": "omnichunk-2.2.0.tar.gz",
+      "size_bytes": 1126202,
+      "sha256": "ca75b1a54b0a991cdb84dc653c900f1d78a620322d27bbddb45f9d0564409b4d",
+      "members": 875,
+      "frozen_reports_excluded": true
+    }
+  ],
+  "independent_audit_files": {
+    "README.md": "51d742de2a84fbcba263eb06827ffbb4995ad3b00ce2913a07327efea0705b6d",
+    "audit_final_publication_graphs.py": "c7cc4b8d1971d42eaab48e27c963d4e576b31d2a0c43c782b8ab9c2e2aac8b10",
+    "audit_final_publication_quality_engine.py": "77dd582b003e89626a0e9383fbcafe13a67386d603183c4af52dfba4fb4aefc2",
+    "ci-nltk-private-assets.patch": "a1f3703276783a28b854e6fee7c886fb05f841b0d10c88a1af4daa40ccadebfa",
+    "dataset-readme-reproduction-audit.json": "5f9c624b92d6e7f7a3816cc0fa87f991797874db933fb9062c6873f9a5109425",
+    "final-publication-graph-audit.json": "e4e57b117c09bd20355945175cd324ddab0592fe7b4553e45a9e2d139f0d80e1",
+    "final-publication-quality-engine-audit.json": "35ed88980d795a700a413bb39327a1a31a1c39fb8bbb022b7ec9ca8495d3d124",
+    "package-build.log": "94e1e6e2c6b613079e9612b7d738bbb8960509322d678d4fed1c6ff50fd6bf63",
+    "package-validation.log": "adf49160e7c31676284db7041a0947de2ce838d56620c7309c92a77694a665e5",
+    "primary-reference-forest-preview.png": "6b57b7db6d8c1412f25ae7bbb1bddeff71a1119fbb8b4cb09719f3420add7b19",
+    "provisioning-proof.json": "2ccc1115421869f6ddb9edae57d7164e72ea792cae4f16e77b24a05c9fe04b5c",
+    "publication-format.log": "89cf5f3f28b95095537dc83953fa31dc1b8021697b62c017e54605432c0c84ef",
+    "publication-mkdocs.log": "255981b45280e3ad745355302692a3f8041aa6357e1bf4539505e910d8ffe2af",
+    "publication-restorer-tests.log": "84d8772355e571485804666521d02c4d9d3dc524b3389ba7950c37dc4c70d799",
+    "publication-ruff.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "restoration-audit.json": "238916cb736d5b62dd7139b0dc0c7681bcd14f53830687885b1bc392fe26103e",
+    "restore-identical-skip.json": "6af267d8d8cd3e2ad3fcd337de50478072274e8a5cd837fe3274b8f5fb878500",
+    "restore-roundtrip.json": "558b1bd779d790a1ebc395856547a4364cd9e20da318de21ade83d64c2294131",
+    "test_restore_evidence.py": "2e7771124fa5465e18b3f960d2f473bad8642a7be7e7cbc6418913854d4e63e5",
+    "validation-quality-workload-preview.png": "e73fff4769690aafc16ed8415e6ed8b78c039200e7e9a5939f84147d5142c350"
+  },
+  "storage_map_sha256": "dbab767e2d495443c628219019a506995cf8f098ef273e327edfbdac09769bc9",
+  "manifest_sha256": "5f9cd092dfd3471a9f721620737947b18819320e53d9bd3002ad2f24349efbe3",
+  "scope": "Publication/data/docs/packaging and CI-only asset provisioning. No model/profile/settings/runtime change or tuning after validation release. Hosted CI/reviews are recorded on PR39 for the final publication head."
+}

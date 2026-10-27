@@ -1,0 +1,14 @@
+{
+  "released_utc": "2026-10-27T12:52:19.314379+00:00",
+  "freeze_sha256": "54f2d64ede52854e41f9dffaa4235f0eb991f3bc8df1031916754dbac188a334",
+  "runtime_commit": "d0bd4b5ea10ff458313a82b3340c8f1a3f49e572",
+  "original_commitment_sha256": "73810df6f2025c4c54eb06e3be04e503e82bec61169ec11b3aeb2b2a5a702210",
+  "manifest_sha256": "dcfb7769bffade3c0bf9e3b6cc3f4d77822ce15595e668d430d606fa7c0e24b7",
+  "documents": 35,
+  "queries": 56,
+  "repository_clusters": 16,
+  "cluster_map_sha256": "354158a3559785a6ccff5a568e3b0a1039c2f4aaaf17188b34aed1aab5759fc9",
+  "loader_and_evidence_bytes_verified": true,
+  "builder_and_protocol_hashes_match_commitment": true,
+  "custody_recovery": "AESkey absent from in-memory store after agent reactivation. Pinned original files refetched and frozen importer rerun;exact committed manifest recovered. No score-based changes or postrelease tuning. Encrypted historical commitment retained."
+}

@@ -19,6 +19,11 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from benchmarks.retrieval.adapters import TOOLS as AVAILABLE_TOOLS  # noqa: E402
+
 MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 TOOLS = ("omnichunk", "fixed", "semchunk", "langchain", "semantic-text-splitter", "llamaindex")
 
@@ -50,24 +55,39 @@ def _compress(path: Path) -> Path:
 def run(args: argparse.Namespace) -> dict[str, Any]:
     if not re.fullmatch(r"[0-9a-f]{40}", args.model_revision):
         raise ValueError("--model-revision must be the frozen 40-character model commit")
+    tools = getattr(args, "tools", ",".join(TOOLS)).split(",")
+    if not tools or any(tool not in AVAILABLE_TOOLS for tool in tools):
+        raise ValueError(f"--tools must be comma-separated names from {', '.join(AVAILABLE_TOOLS)}")
+    if len(set(tools)) != len(tools):
+        raise ValueError("--tools must not contain duplicate strategy names")
+    anchor = "omnichunk" if "omnichunk" in tools else tools[0]
     snapshot = args.model_dir.resolve()
     if not snapshot.is_dir():
         raise ValueError("--model-dir must identify an existing local snapshot")
     baseline = args.baseline_dir.resolve()
     if not (baseline / "src/omnichunk/__init__.py").is_file():
         raise ValueError("--baseline-dir must contain a separate OmniChunk source checkout")
+    candidate = Path(getattr(args, "candidate_dir", ROOT)).resolve()
+    if not (candidate / "src/omnichunk/__init__.py").is_file():
+        raise ValueError("--candidate-dir must contain an OmniChunk source checkout")
+    corpus = (
+        ROOT / "benchmarks/retrieval" / args.corpus
+        if args.corpus in {"corpus_v1", "corpus_squad_v1"}
+        else Path(args.corpus).expanduser().resolve()
+    )
+    if not (corpus.is_file() or (corpus / "manifest.json").is_file()):
+        raise ValueError("--corpus must identify a corpus directory or manifest file")
     output = args.output_dir.resolve()
     if output.exists() and any(output.iterdir()):
         raise ValueError("--output-dir must be empty; preserve prior experiment evidence")
     output.mkdir(parents=True, exist_ok=True)
-    corpus = ROOT / "benchmarks/retrieval" / args.corpus
     common = [
         "--corpus",
         str(corpus),
         "--split",
         args.split,
         "--tools",
-        ",".join(TOOLS),
+        ",".join(tools),
         "--chunk-sizes",
         "64",
         "96",
@@ -85,7 +105,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "PYTHONHASHSEED": "0",
     }
     reports = {}
-    for label, checkout in (("baseline", baseline), ("candidate", ROOT)):
+    for label, checkout in (("baseline", baseline), ("candidate", candidate)):
         selected = {**environment, "PYTHONPATH": str(checkout / "src")}
         vectors = output / f"{label}.vectors.json"
         report = output / f"{label}.report.json"
@@ -140,27 +160,33 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             str(reports["baseline"]),
             "--candidate",
             str(reports["candidate"]),
+            "--baseline-tool",
+            anchor,
+            "--candidate-tool",
+            anchor,
             "--output",
             str(output / "paired.json"),
         ],
         environment,
         output / "paired.log",
     )
-    for rival in TOOLS[1:]:
+    for rival in (tool for tool in tools if tool != anchor):
         _command(
             [
                 "benchmarks/compare_retrieval.py",
                 "--baseline",
                 str(reports["candidate"]),
+                "--baseline-tool",
+                anchor,
                 "--candidate",
                 str(reports["candidate"]),
                 "--candidate-tool",
                 rival,
                 "--output",
-                str(output / f"omnichunk-vs-{rival}.json"),
+                str(output / f"{anchor}-vs-{rival}.json"),
             ],
             environment,
-            output / f"omnichunk-vs-{rival}.log",
+            output / f"{anchor}-vs-{rival}.log",
         )
     for report in reports.values():
         _compress(report)
@@ -170,7 +196,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "model_revision": args.model_revision,
         "corpus": args.corpus,
         "split": args.split,
-        "tools": list(TOOLS),
+        "tools": tools,
+        "comparison_anchor_tool": anchor,
+        "corpus_path": str(corpus),
         "chunk_token_capacities": [64, 96],
         "retrieved_context_tokens": 512,
         "top_k": 5,
@@ -179,8 +207,12 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "tokenizer": "snapshot native tokenizer, including special tokens",
         "include_special_tokens": True,
         "baseline_source": str(baseline),
-        "candidate_source": str(ROOT),
-        "excluded": {"chonkie": "count-only token callback cannot supply encode/decode semantics"},
+        "candidate_source": str(candidate),
+        "excluded": (
+            {"chonkie": "count-only token callback cannot supply encode/decode semantics"}
+            if "chonkie" not in tools
+            else {}
+        ),
         "interpretation": "Fixed experiment; no universal quality or end-to-end latency claim.",
     }
     (output / "experiment.json").write_text(
@@ -195,7 +227,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--model-id", default=MODEL)
     parser.add_argument("--model-revision", required=True)
     parser.add_argument("--baseline-dir", type=Path, required=True)
-    parser.add_argument("--corpus", choices=["corpus_v1", "corpus_squad_v1"], required=True)
+    parser.add_argument("--candidate-dir", type=Path, default=ROOT)
+    parser.add_argument(
+        "--corpus", required=True, help="Corpus path or historical bundled corpus name"
+    )
+    parser.add_argument("--tools", default=",".join(TOOLS))
     parser.add_argument("--split", choices=["dev", "test"], default="dev")
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args(argv)

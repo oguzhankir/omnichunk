@@ -1,0 +1,21 @@
+{
+  "development_byte_equivalence_checks": 200,
+  "all_passed": true,
+  "turkish_importer_rebuild_manifest_sha256": "23daa703e1180b52a22df04cdd716914d6a638b57d71e7ad9e2d1ba879b3adad",
+  "code_importer_rebuild_manifest_sha256": "f9430856e48270caf25c78eeaa8da3fc98d932055f6c02bd8a99c4abef43aaa3",
+  "research_dependency": "pyarrow==23.0.1 isolated outside scoring environment",
+  "checks": [
+    "Refactored development-only Turkish CLI matches exact original manifest",
+    "Development-only code importer with exact-commit network licenses matches final summary-query manifest",
+    "No ciphertext/key/model/parquet in public staging"
+  ],
+  "limitations": [
+    "Code-source AST parsing emitted source SyntaxWarnings; code was parsed as data and never executed"
+  ],
+  "real_file_development_manifest_sha256": "2adcc8b1f230ccf1ee9ec07bb0bba4d9d01585a58226bf15f97bddb9c6f823df",
+  "real_file_builder_sha256": "9c084fb9b959f849a4fc034acc8eb3f0d6aa9d3ef55967378f452065d6372150",
+  "real_file_protocol_sha256": "53453d2a83cc0fdd191a71b92b0ed7550e5d3b5e19d92fc475f584ca483917ac",
+  "real_file_manifest_native_loader_passed": true,
+  "validation_reconstructed_by_public_reproduction_checks": false,
+  "validation_released": false
+}

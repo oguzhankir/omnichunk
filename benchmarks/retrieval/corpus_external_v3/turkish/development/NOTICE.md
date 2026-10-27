@@ -1,0 +1,1 @@
+Belebele Turkish subset, CC-BY-SA 4.0. Bandarkar et al. (2023), The Belebele Benchmark: a Parallel Reading Comprehension Dataset in 122 Language Variants. Original source links and contributors are attributed per document. https://huggingface.co/datasets/facebook/belebele

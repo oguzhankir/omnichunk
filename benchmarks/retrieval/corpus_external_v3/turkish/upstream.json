@@ -1,0 +1,25 @@
+{
+  "dataset": "facebook/belebele",
+  "revision": "7899cdfa4e1e0d733fd77c848e2c273cb1d32be2",
+  "license": "CC-BY-SA-4.0",
+  "files": [
+    {
+      "path": "belebele-data-tur_Latn.jsonl",
+      "url": "https://huggingface.co/datasets/facebook/belebele/resolve/7899cdfa4e1e0d733fd77c848e2c273cb1d32be2/data/tur_Latn.jsonl",
+      "sha256": "0a592307498d7999eb7be60b7ac3a037545b6ce400f85c61bdb1b88b790e4567",
+      "bytes": 1108518
+    },
+    {
+      "path": "belebele-data-eng_Latn.jsonl",
+      "url": "https://huggingface.co/datasets/facebook/belebele/resolve/7899cdfa4e1e0d733fd77c848e2c273cb1d32be2/data/eng_Latn.jsonl",
+      "sha256": "15af884c2b5994fdc71199e79d553a1864b08ce1b31894aa87f6be925a064a31",
+      "bytes": 836071
+    },
+    {
+      "path": "belebele-README.md",
+      "url": "https://huggingface.co/datasets/facebook/belebele/resolve/7899cdfa4e1e0d733fd77c848e2c273cb1d32be2/README.md",
+      "sha256": "311c1a2dc30595eb6c7788c0c20548ea00169eef93dc5b0436c7ccdacaf84231",
+      "bytes": 25535
+    }
+  ]
+}

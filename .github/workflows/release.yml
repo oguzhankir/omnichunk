@@ -22,6 +22,21 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install validation dependencies
         run: pip install -e ".[dev,docs,langchain,llamaindex,qdrant,pgvector]"
+      - name: Prepare private NLTK assets
+        # Keep optional LlamaIndex data out of shared writable package caches.
+        run: |
+          export NLTK_DATA="$RUNNER_TEMP/omnichunk-nltk-data"
+          printf 'NLTK_DATA=%s\n' "$NLTK_DATA" >> "$GITHUB_ENV"
+          umask 077
+          install -d -m 700 "$NLTK_DATA"
+          python - <<'PY'
+          import os
+          import nltk
+          for asset in ("punkt", "punkt_tab", "stopwords"):
+              nltk.download(asset, download_dir=os.environ["NLTK_DATA"], quiet=True, raise_on_error=True)
+          for resource in ("tokenizers/punkt", "tokenizers/punkt_tab", "corpora/stopwords"):
+              nltk.data.find(resource)
+          PY
       - name: Verify source, behavior and documentation
         run: |
           ruff check src tests

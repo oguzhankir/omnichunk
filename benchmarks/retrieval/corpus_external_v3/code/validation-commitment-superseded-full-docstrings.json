@@ -1,0 +1,10 @@
+{
+  "ciphertext_sha256": "23d7426660a6f1ec2452ebdd5438cfa19c3624644da7d3b865305c7ae22eb52c",
+  "plaintext_archive_sha256": "1f836958da6250c87a481cd2839be2eee36c63174fbd4735856b0ecca1c6787f",
+  "validation_manifest_sha256": "27ccb06de23a12923d6376decf8b24753ee4228ed41162d45a0ccaad0d933c44",
+  "documents": 64,
+  "queries": 64,
+  "repository_clusters": 16,
+  "cipher": "FernetAES128CBC-HMACSHA256",
+  "custody": "Key retained only in code_dataset agent toolstore until root sourcefreeze;not external custody"
+}

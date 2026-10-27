@@ -83,6 +83,80 @@ def test_paired_bootstrap_preserves_transitively_connected_gold_sources():
     assert result == comparison.compare_reports(before, after)
 
 
+def test_repository_groups_merge_independent_functions_without_changing_point_scores():
+    before, after = report(), report((1.0, 1.0, 1.0, 0.0))
+    separate = comparison.compare_reports(before, after)
+    grouped = comparison.compare_reports(
+        before, after, cluster_map={"a": "repo-one", "b": "repo-two", "c": "repo-one"}
+    )
+    # The a+b query joins the two repositories transitively; source c is in
+    # repo-one too. Treating functions as independent would fabricate an interval.
+    overall = grouped["comparisons"][0]["slices"]["all"]
+    assert overall["gold_source_clusters"] == 1
+    for metric in ("precision", "recall", "iou"):
+        assert overall["metrics"][metric]["bootstrap_delta_ci_95"] is None
+        assert (
+            overall["metrics"][metric]["mean_delta"]
+            == (separate["comparisons"][0]["slices"]["all"]["metrics"][metric]["mean_delta"])
+        )
+    assert grouped["bootstrap"]["cluster_map"]["groups"] == 2
+    assert grouped["bootstrap"]["cluster_map"]["source_ids"] == 3
+
+
+def test_identity_group_map_preserves_historical_resampling_and_records_stable_digest():
+    before, after = report(), report((1.0, 0.5, 0.25, 0.0))
+    historical = comparison.compare_reports(before, after)
+    grouped = comparison.compare_reports(before, after, cluster_map={"a": "a", "b": "b", "c": "c"})
+    reordered = comparison.compare_reports(
+        before, after, cluster_map={"c": "c", "a": "a", "b": "b"}
+    )
+    assert grouped["comparisons"] == historical["comparisons"]
+    assert grouped == reordered
+    assert "cluster_map" not in historical["bootstrap"]
+
+
+@pytest.mark.parametrize(
+    "mapping",
+    [
+        [],
+        {},
+        {"a": "repo", "b": "repo"},
+        {"a": "repo", "b": "repo", "c": "repo", "test-source": "test-repo"},
+        {"a": "repo", "b": "repo", "c": ""},
+        {"a": "repo", "b": "repo", "c": 2},
+    ],
+)
+def test_cluster_map_rejects_missing_extra_or_invalid_source_groups(mapping):
+    with pytest.raises(ValueError, match="Cluster"):
+        comparison.compare_reports(report(), report(), cluster_map=mapping)
+
+
+def test_cli_accepts_cluster_map_and_records_effective_bootstrap_groups(tmp_path):
+    baseline = tmp_path / "report.json"
+    baseline.write_text(json.dumps(report()))
+    mapping = tmp_path / "groups.json"
+    mapping.write_text(json.dumps({"a": "one-repo", "b": "one-repo", "c": "one-repo"}))
+    output = tmp_path / "comparison.json"
+    assert (
+        comparison.main(
+            [
+                "--baseline",
+                str(baseline),
+                "--candidate",
+                str(baseline),
+                "--cluster-map",
+                str(mapping),
+                "--output",
+                str(output),
+            ]
+        )
+        == 0
+    )
+    result = json.loads(output.read_text())
+    assert result["comparisons"][0]["slices"]["all"]["gold_source_clusters"] == 1
+    assert len(result["bootstrap"]["cluster_map"]["sha256"]) == 64
+
+
 def test_artifact_hash_and_input_counts_can_change_with_candidate_boundaries():
     before, after = report(dense=True), report(dense=True)
     metadata = after["configuration"]["dense_embeddings"]

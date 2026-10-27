@@ -1,0 +1,26 @@
+[
+  {
+    "path": "benchmarks/retrieval/corpus_squad_v1/manifest.json",
+    "sha256": "40c7a1e77c7e43d6560c496e860c306dc706cd5c5b83e5404f6d2bcb5b794135"
+  },
+  {
+    "path": "benchmarks/retrieval/corpus_v1/manifest.json",
+    "sha256": "983ed940ce78d679bc651cae9a94d2805c8cdda006d898d0e281ce763b5acd9c"
+  },
+  {
+    "path": "benchmarks/retrieval/corpus_squad_v2/development/article-markdown/manifest.json",
+    "sha256": "ac1e1c98e33c298e8c9d11ae797edf53d55a0b7ce21ca2469b3bb94896d6a851"
+  },
+  {
+    "path": "benchmarks/retrieval/corpus_squad_v2/development/article-text/manifest.json",
+    "sha256": "ac76294c50f45e54ab83500f2a4b5bf76e3bf9849fb80089d36e800476370302"
+  },
+  {
+    "path": "benchmarks/retrieval/corpus_squad_v2/validation/article-markdown/manifest.json",
+    "sha256": "6c6e61c872922bf9fb13d7d574b4bd529e7930a332881fe89eb5e2429572dc9b"
+  },
+  {
+    "path": "benchmarks/retrieval/corpus_squad_v2/validation/article-text/manifest.json",
+    "sha256": "7bb53b365ea6d53dbd8cf69179114c5ffd418ca71fdaf62a2f47c63e6f4d141d"
+  }
+]

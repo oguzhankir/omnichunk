@@ -1,0 +1,328 @@
+
+
+import codecs
+import socket
+from time import sleep
+from nad_receiver.nad_commands import CMDS
+import serial  # pylint: disable=import-error
+import threading
+import time
+import telnetlib
+
+DEFAULT_TIMEOUT = 1
+
+
+class NADReceiver(object):
+    
+
+    def __init__(self, serial_port):
+        
+        self.ser = serial.Serial(serial_port, baudrate=115200)
+        self.lock = threading.Lock()
+
+    def exec_command(self, domain, function, operator, value=None):
+        
+        if operator in CMDS[domain][function]['supported_operators']:
+            if operator is '=' and value is None:
+                raise ValueError('No value provided')
+
+            if value is None:
+                cmd = ''.join([CMDS[domain][function]['cmd'], operator])
+            else:
+                cmd = ''.join(
+                    [CMDS[domain][function]['cmd'], operator, str(value)])
+        else:
+            raise ValueError('Invalid operator provided %s' % operator)
+
+        if not self.ser.is_open:
+            self.ser.open()
+
+        try:
+            self.lock.acquire()
+
+            self.ser.write(''.join(['\r', cmd, '\r']).encode('utf-8'))
+            time.sleep(0.1)
+            # not sure why, but otherwise it is not ready yet to do the read.
+
+            msg = self.ser.read(self.ser.in_waiting)
+            
+            try:
+                msg = msg.decode()[1:-1]
+                msg = msg.split('=')[1]
+                return msg
+            except IndexError:
+                pass
+
+        finally:
+            self.lock.release()
+
+    def main_dimmer(self, operator, value=None):
+        
+        return self.exec_command('main', 'dimmer', operator, value)
+
+    def main_mute(self, operator, value=None):
+        
+        return self.exec_command('main', 'mute', operator, value)
+
+    def main_power(self, operator, value=None):
+        
+        return self.exec_command('main', 'power', operator, value)
+
+    def main_volume(self, operator, value=None):
+        
+        try:
+            res = int(self.exec_command('main', 'volume', operator, value))
+            return res
+
+        except (ValueError, TypeError):
+            pass
+
+        return None
+
+    def main_ir(self, operator, value=None):
+        
+        return self.exec_command('main', 'ir', operator, value)
+
+    def main_listeningmode(self, operator, value=None):
+        
+        return self.exec_command('main', 'listeningmode', operator, value)
+
+    def main_sleep(self, operator, value=None):
+        
+        return self.exec_command('main', 'sleep', operator, value)
+
+    def main_source(self, operator, value=None):
+        
+        try:
+            source = int(self.exec_command('main', 'source', operator, value))
+            return source
+        except (ValueError, TypeError):
+            pass
+
+        return None
+
+    def main_version(self, operator, value=None):
+        
+        return self.exec_command('main', 'version', operator, value)
+
+    def tuner_am_frequency(self, operator, value=None):
+        
+        return self.exec_command('tuner', 'am_frequency', operator, value)
+
+    def tuner_am_preset(self, operator, value=None):
+        
+        return self.exec_command('tuner', 'am_preset', operator, value)
+
+    def tuner_band(self, operator, value=None):
+        
+        return self.exec_command('tuner', 'band', operator, value)
+
+    def tuner_fm_frequency(self, operator, value=None):
+        
+        return self.exec_command('tuner', 'fm_frequency', operator, value)
+
+    def tuner_fm_mute(self, operator, value=None):
+        
+        return self.exec_command('tuner', 'fm_mute', operator, value)
+
+    def tuner_fm_preset(self, operator, value=None):
+        
+        return self.exec_command('tuner', 'fm_preset', operator, value)
+
+
+class NADReceiverTCP(object):
+    
+
+    POLL_VOLUME = "0001020204"
+    POLL_POWER = "0001020209"
+    POLL_MUTED = "000102020a"
+    POLL_SOURCE = "0001020203"
+
+    CMD_POWERSAVE = "00010207000001020207"
+    CMD_OFF = "0001020900"
+    CMD_ON = "0001020901"
+    CMD_VOLUME = "00010204"
+    CMD_MUTE = "0001020a01"
+    CMD_UNMUTE = "0001020a00"
+    CMD_SOURCE = "00010203"
+
+    SOURCES = {'Coaxial 1': '00', 'Coaxial 2': '01', 'Optical 1': '02',
+               'Optical 2': '03', 'Computer': '04', 'Airplay': '05',
+               'Dock': '06', 'Bluetooth': '07'}
+    SOURCES_REVERSED = {value: key for key, value in
+                        SOURCES.items()}
+
+    PORT = 50001
+    BUFFERSIZE = 1024
+
+    def __init__(self, host):
+        
+        self._host = host
+
+    def _send(self, message, read_reply=False):
+        
+        sock = None
+        for tries in range(0, 3):
+            try:
+                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                sock.connect((self._host, self.PORT))
+                break
+            except (ConnectionError, BrokenPipeError):
+                if tries == 3:
+                    print("socket connect failed.")
+                    return
+                sleep(0.1)
+        sock.send(codecs.decode(message, 'hex_codec'))
+        if read_reply:
+            sleep(0.1)
+            reply = ''
+            tries = 0
+            max_tries = 20
+            while len(reply) < len(message) and tries < max_tries:
+                try:
+                    reply += codecs.encode(sock.recv(self.BUFFERSIZE), 'hex')\
+                        .decode("utf-8")
+                except (ConnectionError, BrokenPipeError):
+                    pass
+                tries += 1
+            sock.close()
+            if tries >= max_tries:
+                return
+            return reply
+        sock.close()
+
+    def status(self):
+        
+        nad_reply = self._send(self.POLL_VOLUME +
+                               self.POLL_POWER +
+                               self.POLL_MUTED +
+                               self.POLL_SOURCE, read_reply=True)
+        if nad_reply is None:
+            return
+
+        # split reply into parts of 10 characters
+        num_chars = 10
+        nad_status = [nad_reply[i:i + num_chars]
+                      for i in range(0, len(nad_reply), num_chars)]
+
+        return {'volume': int(nad_status[0][-2:], 16),
+                'power': nad_status[1][-2:] == '01',
+                'muted': nad_status[2][-2:] == '01',
+                'source': self.SOURCES_REVERSED[nad_status[3][-2:]]}
+
+    def power_off(self):
+        
+        status = self.status()
+        if status['power']:  # Setting power off when it is already off can cause hangs
+            self._send(self.CMD_POWERSAVE + self.CMD_OFF)
+
+    def power_on(self):
+        
+        status = self.status()
+        if not status['power']:
+            self._send(self.CMD_ON, read_reply=True)
+            sleep(0.5)  # Give NAD7050 some time before next command
+
+    def set_volume(self, volume):
+        
+        if 0 <= volume <= 200:
+            volume = format(volume, "02x")  # Convert to hex
+            self._send(self.CMD_VOLUME + volume)
+
+    def mute(self):
+        
+        self._send(self.CMD_MUTE, read_reply=True)
+
+    def unmute(self):
+        
+        self._send(self.CMD_UNMUTE)
+
+    def select_source(self, source):
+        
+        status = self.status()
+        if status['power']:  # Changing source when off may hang NAD7050
+            if status['source'] != source:  # Setting the source to the current source will hang the NAD7050
+                if source in self.SOURCES:
+                    self._send(self.CMD_SOURCE + self.SOURCES[source], read_reply=True)
+
+    def available_sources(self):
+        
+        return list(self.SOURCES.keys())
+
+
+class NADReceiverTelnet(NADReceiver):
+    
+    def _open_connection(self):
+        if not self.telnet:
+            try:
+                self.telnet = telnetlib.Telnet(self.host, self.port, 3)
+                # Some versions of the firmware report Main.Model=T787.
+                # some versions do not, we want to clear that line
+                self.telnet.read_until('\n'.encode(), self.timeout)
+                # Could raise eg. EOFError, UnicodeError
+            except:
+                return False
+
+        return True
+
+    def _close_connection(self):
+        
+        if self.telnet:
+            self.telnet.close()
+
+    def __init__(self, host, port=23, timeout=DEFAULT_TIMEOUT):
+        
+        self.telnet = None
+        self.host = host
+        self.port = port
+        self.timeout = timeout
+        # __init__ must never raise
+
+    def __del__(self):
+        
+        self._close_connection()
+
+    def exec_command(self, domain, function, operator, value=None):
+        
+        if operator in CMDS[domain][function]['supported_operators']:
+            if operator is '=' and value is None:
+                raise ValueError('No value provided')
+
+            if value is None:
+                cmd = ''.join([CMDS[domain][function]['cmd'], operator])
+            else:
+                cmd = ''.join(
+                    [CMDS[domain][function]['cmd'], operator, str(value)])
+        else:
+            raise ValueError('Invalid operator provided %s' % operator)
+
+        if self._open_connection():
+            # For telnet the first \r / \n is recommended only
+            self.telnet.write((''.join(['\r', cmd, '\n']).encode()))
+            # Could raise eg. socket.error, UnicodeError, let the client handle it
+
+            # Test 3 x buffer is completely empty
+            # With the default timeout that means a delay at
+            # about 3+ seconds
+            loop = 3
+            while loop:
+                msg = self.telnet.read_until('\n'.encode(), self.timeout)
+                # Could raise eg. EOFError, UnicodeError, let the client handle it
+
+                if msg == "":
+                    # Nothing in buffer
+                    loop -= 1
+                    continue
+
+                msg = msg.decode().strip('\r\n')
+                # Could raise eg. UnicodeError, let the client handle it
+
+                #print("NAD reponded with '%s'" % msg)
+                # Wait for the response that equals the requested domain.function
+                if msg.strip().split('=')[0].lower() == '.'.join([domain, function]).lower():
+                    # b'Main.Volume=-12\r will return -12
+                    return msg.strip().split('=')[1]
+
+            raise RuntimeError('Failed to read response')
+
+        raise RuntimeError('Failed to open connection')

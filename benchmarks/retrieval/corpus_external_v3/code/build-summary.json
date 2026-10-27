@@ -1,0 +1,18 @@
+{
+  "dev": {
+    "documents": 64,
+    "queries": 64,
+    "repository_clusters": 16,
+    "manifest_sha256": "f9430856e48270caf25c78eeaa8da3fc98d932055f6c02bd8a99c4abef43aaa3",
+    "source_bytes": 25965,
+    "native_query_max": 98
+  },
+  "test": {
+    "documents": 64,
+    "queries": 64,
+    "repository_clusters": 16,
+    "manifest_sha256": "ddbe1ee7172576c20339ed6e261bc066bb4269612b2f04232cd89a07498be46f",
+    "source_bytes": 46689,
+    "native_query_max": 101
+  }
+}

@@ -6,14 +6,38 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 ## [Unreleased]
 
 ### Added
+- Independent opt-in Markdown paragraph packing, compact prose and compact code
+  boundary policies, with documented values, constraints and migration guidance.
+- Native code/sentence comparator strategies, external corpus/candidate paths and
+  explicit repository-clustered retrieval comparisons.
+- Licensed Turkish and code retrieval corpora with a frozen real-model quality/cost
+  report, paired uncertainty, source provenance, failures and negative trials.
 - Manual baseline/candidate dense experiment orchestration with a frozen native
   tokenizer and paired source-evidence comparisons using document-cluster intervals.
 - Separate encoder preparation timings, role/token workloads, CPU/RSS metadata
   and runtime checkout provenance for reproducible baseline measurements.
 
 ### Fixed
+- Compact code grows token-prefix probes instead of repeatedly tokenizing the
+  remaining file, while retaining measured budgets and nonadditive recovery.
+- Oversized comment rebalancing bounds sentence-cut probes instead of recounting
+  every growing prefix; resulting payload budgets remain independently checked.
+- Mixed Markdown blocks retain paragraph/table/list ownership, including tight
+  list continuations, indented paragraphs in loose lists, and continuations
+  after nested code fences.
+- Oversized documented statements can retain a useful comment sentence with their
+  statement; AST declaration headers share their own body budget without crossing
+  into the next declaration. Complete source and payload limits remain enforced.
+- Python routing distinguishes actual AST docstrings from triple-quoted data/SQL.
 - Short recursive prose tails can join the following complete sentence when the
   complete payload fits, preserving exact bytes and nonadditive token budgets.
+
+### Compatibility
+- Structural corrections can change default chunk payloads; explicit compact
+  policies can also change boundaries and reduce retrieval quality. Synchronize
+  affected indexes and invalidate embeddings under the documented identity rules.
+- Frozen retrieval evidence remains in Git and is excluded from source
+  distributions. Core installation still has no mandatory dependencies.
 
 ## [2.2.0] - 2026-10-25
 

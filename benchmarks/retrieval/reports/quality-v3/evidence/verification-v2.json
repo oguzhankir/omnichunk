@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "version": 2,
+  "checks": 14143,
+  "artifact_files": 1422,
+  "new_artifact_files": 14,
+  "stored_bytes": 140151752,
+  "raw_bytes": 699343153,
+  "restored_original_gzip_containers": 56,
+  "existing_gzip_artifacts": 94,
+  "json_artifacts_scanned_for_vectors": 1094,
+  "storage_map": "storage-map-v2.json",
+  "storage_map_sha256": "dbab767e2d495443c628219019a506995cf8f098ef273e327edfbdac09769bc9",
+  "manifest": "manifest-v2.json",
+  "manifest_sha256": "5f9cd092dfd3471a9f721620737947b18819320e53d9bd3002ad2f24349efbe3",
+  "max_stored_file_bytes": 3408430,
+  "scope": "All stored/source-container/raw hashes and lengths; gzip roundtrips; numeric-vector and private-key/type bans; v1 archive integrity rechecked."
+}

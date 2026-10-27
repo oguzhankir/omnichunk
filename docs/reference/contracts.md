@@ -61,6 +61,35 @@ comments as one unit. Independent documented statements keep separate boundaries
 oversized groups use the normal recursive fallback. A complete code file that
 fits the maximum retains its existing single-chunk behavior.
 
+Inside an oversized declaration, complete body statements can use the remaining
+budget beside their declaration header. Pending source from a different
+declaration is flushed before descending into that declaration, preserving its
+own scope and sibling context.
+
+`code_boundary_policy="compact"` optionally compares AST, measured-prefix,
+line-preferred and balanced-size layouts for oversized code. It selects fewer
+fragments first, then fuller earlier measured payloads. Alternative layouts do not
+divide fitting definitions or documented root groups, but may divide statements
+or expressions inside oversized declarations. This trades finer source structure
+for fewer vectors and more surrounding code in each payload; evaluate both
+retrieval quality and index cost. Source slices and final payload budgets remain
+checked. The default is `"structure"`; `error` and `preserve` overflow policies
+retain their existing behavior.
+
+Compact layout selection is a bounded comparison of measured candidates, not an
+exhaustive search over all possible cuts. When no inspected candidate satisfies
+the budget without dividing a protected definition, it raises `ChunkingError`
+instead of silently discarding that protection. This can occur with nonadditive
+custom counters. Use `code_boundary_policy="structure"`, increase the budget, or
+review the counter's model-token accounting.
+
+With `overflow_policy="split"`, an oversized comment-and-statement group can
+split at a comment sentence boundary when both complete resulting source slices
+fit. This keeps the remaining comment text beside its statement and includes
+same-line trailing comment chains in the check. Chunk text is a source slice;
+a slice beginning within a comment is not necessarily independently executable.
+The `error` and `preserve` policies do not apply this rebalance.
+
 Prose and Markdown split oversized content in structural order: paragraphs,
 lines (including table rows), sentences, semicolon clauses, whitespace, then
 smaller separators and measured character prefixes. Prose sentence fallback
@@ -70,12 +99,30 @@ boundary; oversized units descend to the next level. Source whitespace
 participates in the measured budget.
 
 Markdown keeps blank-line-separated body paragraphs distinct and associates
-headings with their following content. Even a small Markdown file that fits the
+headings with their following content by default. Set
+`markdown_paragraph_policy="pack"` to combine adjacent fitting prose paragraphs
+under the same heading. This can reduce vector count while adding less relevant
+context to a chunk; evaluate the quality/cost tradeoff for your retriever.
+Pipe-delimited table blocks and list
+blocks retain their own section identities instead of classifying surrounding
+prose as part of a table or list. Blank-separated list items and sufficiently
+indented continuation paragraphs keep their list ownership. Without an
+intervening blank line, an ordinary paragraph line can continue the list lazily
+without indentation; a blank-separated dedented paragraph starts a separate
+block. This applies in both paragraph policies, so
+list continuations are not eligible for prose packing. After a code fence nested
+inside a list item, indented continuation paragraphs retain the owning list;
+dedented fences and independent headings end that ownership. Even a small Markdown file that fits the
 maximum can therefore produce multiple chunks. `min_chunk_size` is a preference:
 it does not merge these paragraph identities back together, and a short heading
 or tail can remain below the minimum. This can increase vector/index work and
 reduce adjacent context; it is not a universal cost or quality improvement.
 Table headers are not repeated as derived context by this policy.
+
+Oversized leading code comments can be rebalanced at sentence boundaries when
+both resulting payloads independently fit. This optional search inspects a bounded
+number of candidates. Nonmonotonic custom counters can cause it to retain ordinary
+structural splitting instead of finding every possible sentence rebalance.
 
 The default sentence heuristic recognizes Unicode uppercase/uncased starters and
 Japanese/Chinese `。！？` without intervening spaces. Closing quotes and whitespace
@@ -193,6 +240,14 @@ outputs are reproducible under the declared identity.
 
 ## Parsers, plugins and tool serving
 
+For Python, documentation-heavy automatic routing counts only real module, class,
+function and async-function docstrings identified by the standard-library AST.
+Their original literal source must occupy more than 40% of the file's UTF-8 bytes
+to select hybrid processing. Assigned/returned SQL, templates and other string
+data do not contribute. A parse failure leaves this heuristic on the code route,
+where parser diagnostics and fallbacks remain available. Explicit content-type
+overrides and notebook/cell markers select their routes independently.
+
 `language_capabilities()` lists detected code languages, extensions, grammar
 registration/loading, parser availability, bundled query availability and effective
 extraction (`ast`, `regex` or `none`). Query availability is not proof of complete
@@ -211,3 +266,18 @@ Origin, request sizes and read timeouts. Non-loopback binding requires a bearer
 token; `--token-env` names its environment variable. It uses stdlib `HTTPServer`,
 without TLS or hard cancellation of an executing parser. A real MCP adapter
 remains future work.
+
+
+### Compact prose fallback
+
+`prose_boundary_policy="sentence"` is the default and keeps fitting sentence units
+intact during oversized prose splitting. For a denser index, explicitly choose
+`prose_boundary_policy="compact"`. This also tries clause/word fallback and selects
+it when the resulting partition has equal or fewer fragments. A sentence that
+would fit on its own may be divided. Existing paragraph, fence and heading
+boundaries remain governed by their own policies; fitting paragraphs are not
+changed. Complete source slices and measured payload budgets remain enforced.
+Evaluate retrieval and vector counts for the selected mode; compact output does
+not imply universally better retrieval or a minimum fill ratio. The option is
+part of the configuration fingerprint, so rebuild persisted index generations
+when adopting it.

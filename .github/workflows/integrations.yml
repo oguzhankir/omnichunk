@@ -40,6 +40,21 @@ jobs:
       - name: Install current compatible integrations
         if: matrix.dependencies == 'current'
         run: python -m pip install --upgrade -e '.[langchain,llamaindex,qdrant,pgvector]' pytest
+      - name: Prepare private NLTK assets
+        # Provision both minimum/current LlamaIndex assets before its first import.
+        run: |
+          export NLTK_DATA="$RUNNER_TEMP/omnichunk-nltk-data"
+          printf 'NLTK_DATA=%s\n' "$NLTK_DATA" >> "$GITHUB_ENV"
+          umask 077
+          install -d -m 700 "$NLTK_DATA"
+          python - <<'PY'
+          import os
+          import nltk
+          for asset in ("punkt", "punkt_tab", "stopwords"):
+              nltk.download(asset, download_dir=os.environ["NLTK_DATA"], quiet=True, raise_on_error=True)
+          for resource in ("tokenizers/punkt", "tokenizers/punkt_tab", "corpora/stopwords"):
+              nltk.data.find(resource)
+          PY
       - name: Verify required imports before optional tests
         run: >-
           python -c "import langchain_text_splitters, llama_index.core, qdrant_client, psycopg;

@@ -140,6 +140,44 @@ coarse. Choose a level for retrieval; embedding every level increases index size
 and can retrieve overlapping content. Hierarchy accepts canonical text; load
 structured documents before passing their extracted text with a text filepath.
 
+## Choose a boundary policy
+
+Start with the default structural and sentence boundaries. For a smaller index,
+evaluate the optional policies on representative retrieval questions:
+
+```python
+from omnichunk import Chunker
+
+compact_prose = Chunker(max_chunk_size=120, context_mode="none",
+                        prose_boundary_policy="compact")
+compact_code = Chunker(max_chunk_size=120, context_mode="none",
+                       code_boundary_policy="compact")
+packed_markdown = Chunker(max_chunk_size=120, context_mode="none",
+                          markdown_paragraph_policy="pack")
+
+chunks = compact_prose.chunk("notes.txt", "A useful explanation. " * 30)
+assert all(len(part.contextualized_text) <= 120 for part in chunks)
+```
+
+Compact prose can split otherwise fitting sentences while filling oversized
+paragraphs. Compact code compares source layouts and can divide expressions in
+oversized declarations; it retains fitting protected definitions when a valid
+layout is available, otherwise raising an actionable error. Markdown packing
+combines adjacent prose paragraphs within a heading while keeping table, list and
+fence boundaries. These are independent settings, not automatic quality tuning.
+They can reduce index work and also lower retrieval quality. Compare recall,
+precision and embedding/index size before switching. The
+[options reference](reference/options.md) lists defaults and constraints.
+
+Compact code grows measured prefix probes before searching for a fitting cut,
+avoiding repeated tokenization of the remaining file. Counters may be nonadditive
+or nonmonotonic: every selected payload is still checked, but the search does not
+guarantee the globally longest fitting prefix or the smallest possible index for
+an arbitrary custom counter. If no prefix fits in the initial search range, a
+full-range recovery preserves token-completion cases; that exceptional recovery
+can still require substantial work. Recheck payload boundaries and synchronize
+your index when changing the tokenizer or compact implementation.
+
 ## Compare document revisions
 
 ```python

@@ -1,5 +1,13 @@
 # Benchmarks
 
+Frozen retrieval reports are retained in Git and excluded from the source
+distribution. Use a repository checkout to inspect or reproduce those records.
+Corpus sources and recorded evidence have Git attributes that preserve their
+exact bytes on systems using automatic line-ending conversion; do not format
+frozen data or rewrite its whitespace. See
+[`corpus_external_v3`](retrieval/corpus_external_v3/README.md) for licensed code
+and Turkish passage data, reproduction requirements and evaluation limitations.
+
 These scripts measure declared workloads and configurations. Record the commit,
 dependency versions, corpus hash/license, platform and optional acceleration with
 results. Structural checks and throughput do not establish retrieval quality.
@@ -70,7 +78,54 @@ the `retrieval-evaluation` artifact. It validates the experiment rather than
 requiring OmniChunk to beat a competing tool. Named tokenizer assets must be
 available for a token experiment; their download failure is never replaced with
 an approximate counter. Chonkie's count-only token adapter is explicitly
-unavailable because its encode/decode contract cannot be inferred from counts.
+unavailable because its recursive splitter's encode/decode contract cannot be
+inferred from counts.
+
+The separately selectable `chonkie-sentence` adapter uses Chonkie 1.7's
+`SentenceChunker` with the same counting callback, zero overlap and
+`min_characters_per_sentence=1`. Unlike the recursive splitter, it does not need
+encode/decode. Its output still passes the same exact-source and complete-payload
+budget checks. A sentence larger than the budget is an execution/conformance
+failure, not an unavailable dependency and not silently split by OmniChunk.
+Select it explicitly with `--tools chonkie-sentence` to inspect those failures;
+it is not added retroactively to the frozen historical dense experiments.
+
+Additional explicit strategy identifiers leave the historical adapters unchanged:
+
+- `semantic-code` uses semantic-text-splitter's native `CodeSplitter` for Python
+  `.py`/`.pyi` files, the installed `tree-sitter-python` grammar and the shared
+  counting callback, with zero overlap and `trim=False`. Other extensions retain
+  the historical `TextSplitter`/`MarkdownSplitter` selection. This identifier
+  establishes a Python AST baseline, not grammar support for every language.
+
+- `langchain-code` uses `RecursiveCharacterTextSplitter.from_language()` with
+  LangChain's language-specific separator recipe selected by the source extension,
+  the shared counter, zero overlap and `strip_whitespace=False`. Unknown/text
+  extensions use the same generic recipe as `langchain`.
+- `llamaindex-sentence` uses native `SentenceSplitter` with the shared counter,
+  zero overlap, no metadata/relationship enrichment, and upstream default sentence,
+  paragraph and fallback splitting. Cache its NLTK data before an offline run;
+  use the standard `NLTK_DATA` environment variable for a caller-owned cache.
+- `omnichunk-pack` is an experimental OmniChunk setting with
+  `markdown_paragraph_policy="pack"`; it requires a runtime supporting that option.
+  The historical `omnichunk` adapter retains the default policy. Other budget,
+  context, overlap and source settings are identical.
+- `omnichunk-prose-compact` separately selects `prose_boundary_policy="compact"`
+  with default Markdown paragraph preservation. It uses the same exact-source,
+  no-context, zero-overlap contract and final shared payload budget; it does not
+  combine the Markdown packing experiment with prose compaction. A runtime with
+  the public prose boundary option is required. The historical `omnichunk`
+  strategy retains its default sentence boundaries.
+- `omnichunk-code-compact` separately selects `code_boundary_policy="compact"`
+  while retaining the default prose and Markdown policies. This source-only
+  profile requires the corresponding public runtime option and still validates
+  complete payload budgets and exact UTF-8 ranges. The historical `omnichunk`
+  strategy retains its default structural code boundaries.
+
+All strategies must pass the same source and budget checks; none receives
+postprocessing that silently repairs its output. Compare explicit strategies and
+select their configurations on development data, rather than claiming a result
+for every strategy offered by the parent library.
 
 ### Independent source data
 
@@ -137,6 +192,35 @@ comparisons and provenance for each model and source view. Unit-test vectors and
 random local models remain plumbing checks. Independent review of selected
 evidence labels and production design-partner evaluation remain M1 requirements.
 
+The [real-source quality/cost v3 report](retrieval/reports/quality-v3/README.md)
+freezes runtime/harness `d0bd4b5ea10ff458313a82b3340c8f1a3f49e572` against
+prior main `e63c7f097a8ccec39262c8fb00fb2375a3e5283d`. It adds the
+[licensed external corpus](retrieval/corpus_external_v3/README.md): Turkish
+Belebele question stems with whole-passage gold and CodeSearchNet documentation
+summaries with whole-function gold, including a correlated original-file view.
+The proxy queries/gold do not measure answer accuracy or complete dependency
+support; omitted choices can underspecify Turkish questions. Repository/source
+splits, fixed model/settings/profile choices and named references precede release.
+
+The report preserves 95 successful baseline cells and five conformance failures,
+all 30 final profile cells, predeclared context sensitivities and descriptive
+cluster-paired intervals. English isolated-code compact at 64 tokens improves
+over the strongest observed conforming named strategy while exactly tying fixed
+recall. Multilingual and real-file results include losses, with substantial
+compact 96-token regressions and a default English real-file 96-token decline.
+The preselected comparator, ex-post observed best and fixed control remain
+distinct. Neither global/Pareto superiority nor M1 completion is claimed.
+
+The independent options `markdown_paragraph_policy`, `prose_boundary_policy`
+and `code_boundary_policy` default to `"preserve"`, `"sentence"` and `"structure"`.
+Their packing/compact values are opt-in cost/quality tradeoffs, not automatic
+quality upgrades. The v3 record retains every rejected development trial, negative
+context study and the parent/window development gain that did not replicate on
+validation. Shared encoder/cache/new-work scopes are separate from frozen search
+timings. Corpus release records disclose procedural custody, transient code-key
+loss and exact pinned-source reconstruction. Validation is now observed data;
+independent support-label and production design-partner review remain open.
+
 ### Baseline/candidate dense experiments
 
 `run_dense_experiment.py` orchestrates the current evaluation harness against an
@@ -151,6 +235,30 @@ python benchmarks/run_dense_experiment.py \
   --baseline-dir /tmp/omnichunk-baseline --corpus corpus_v1 --split dev \
   --output-dir reports/dense-synthetic-dev
 ```
+
+The orchestrator also accepts an explicit corpus directory or manifest path,
+an independent candidate checkout, and a comma-separated strategy selection:
+
+```bash
+python benchmarks/run_dense_experiment.py \
+  --model-dir /path/to/frozen/snapshot --model-revision MODEL_COMMIT_SHA \
+  --baseline-dir /path/to/baseline --candidate-dir /path/to/candidate \
+  --corpus /path/to/external/development \
+  --tools omnichunk,langchain-code,llamaindex-sentence,chonkie-sentence \
+  --output-dir reports/dense-external-dev
+```
+
+Bare `corpus_v1` and `corpus_squad_v1` retain their bundled-directory resolution;
+other relative paths resolve from the working directory. The default candidate
+is this harness's checkout, and omitting `--tools` retains the historical six
+strategies. Both runtime checkouts must support every selected strategy/option;
+for example, `omnichunk-pack` requires a runtime with paragraph-policy support.
+Unknown, empty and duplicate strategy names fail before inference. Comparisons
+use `omnichunk` as their anchor when selected, otherwise the first selected tool.
+The manifest records resolved corpus/candidate paths and selected strategies.
+This helper retains the historical 64/96 chunk capacities and 512 context budget;
+use the preparation/evaluation CLIs directly for other predeclared settings, and
+the paired comparer with `--cluster-map` for repository-clustered intervals.
 
 The default encoder for this helper and the historical v1 run is
 `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` at
@@ -194,6 +302,24 @@ than two components yields no interval. Articles can still correlate across
 paragraphs; these descriptive intervals do not correct selection or establish
 production leadership.
 
+For several source documents from one repository, article or other correlated
+origin, predeclare an explicit grouping file before inspecting scores:
+
+```json
+{"function-source-1": "owner/repository", "function-source-2": "owner/repository"}
+```
+
+Pass `--cluster-map source-groups.json` to `compare_retrieval.py`. The JSON object
+must map exactly the evaluated gold source IDs to nonempty group names; missing
+IDs, unrelated split IDs and duplicate JSON keys fail validation. Queries sharing
+any mapped group stay together transitively, including multi-source questions.
+The paired means and wins/losses are unchanged; intervals resample the connected
+groups. The report records a canonical map SHA-256, source count and group count.
+Its existing `gold_source_clusters` field then counts the connected mapped groups.
+Without this option, historical source-level grouping and output are unchanged.
+Group identity is supplied by the evaluator; this validation cannot prove that
+the chosen groups are statistically independent.
+
 Encoder preparation records global per-role batches, native token counts, timings,
 CPU thread settings, producer hashes and process-lifetime RSS. Shared preparation
 deduplicates across candidates: its cost is not attributable to one chunker.
@@ -224,8 +350,9 @@ nonadditive full-input budgets remain enforced.
 Markdown paragraph isolation also applies to small documents whose complete text
 would fit one chunk: a heading and three plain paragraphs can now produce three
 chunks at a 256-character capacity. The minimum size remains soft and does not
-recombine these body paragraphs. No compact-profile flag is introduced. These
-rules can increase chunks, stored vectors and embedding/index work, and can
+recombine these body paragraphs. That historical v2 change introduced no
+compaction option; v3 now offers the independent opt-in policies documented above.
+These rules can increase chunks, stored vectors and embedding/index work, and can
 reduce adjacent context in a retrieved passage. Assess these costs with the
 reported evidence gains and losses; the change makes no universal speed, memory,
 embedding-cost or superiority claim.
