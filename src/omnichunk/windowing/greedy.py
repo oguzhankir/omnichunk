@@ -150,6 +150,13 @@ def _measured_windows(
             window.append(wrapped)
             cursor = end
             continue
+        children = tuple(_node_children(node))
+        if size > max_size and split_oversized and children and len(frames) > 1:
+            # A declaration header should share its remaining budget with the
+            # first fitting statement of an oversized body. Descending does not
+            # itself require flushing the pending source prefix.
+            frames.append(iter(_nodes_with_ends(children, end)))
+            continue
         if window:
             yield window
             window = []
@@ -157,7 +164,6 @@ def _measured_windows(
             window = [wrapped]
             cursor = end
             continue
-        children = tuple(_node_children(node))
         if children:
             frames.append(iter(_nodes_with_ends(children, end)))
         else:
