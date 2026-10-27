@@ -58,3 +58,29 @@ def test_nonadditive_counter_rejects_overflowing_rebalanced_tail():
     assert "".join(c.text for c in chunks) == source
     assert all(count(c.text) <= 55 for c in chunks)
     assert not any(c.text.startswith("This") and "ENABLED" in c.text for c in chunks)
+
+
+@pytest.mark.parametrize(
+    ("path", "leading", "tail", "statement"),
+    [
+        (
+            "settings.js",
+            "// Background information. ",
+            "This explains the setting.\n",
+            "const enabled = false;\n",
+        ),
+        (
+            "settings.c",
+            "/* Background information. ",
+            "This explains the setting. */\n",
+            "int enabled = 0;\n",
+        ),
+    ],
+)
+def test_comment_sentence_rebalance_in_other_ast_languages(path, leading, tail, statement):
+    source = leading + tail + statement
+    limit = len(tail + statement) + 1
+    chunks = Chunker(
+        max_chunk_size=limit, min_chunk_size=0, context_mode="none", coverage_policy="lossless"
+    ).chunk(path, source)
+    assert [c.text for c in chunks] == [leading, tail + statement]

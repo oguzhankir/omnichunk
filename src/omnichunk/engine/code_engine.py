@@ -439,8 +439,9 @@ def _bind_leading_comments(
                 # Preserve the final explanatory sentence with the documented
                 # statement when the whole unit is too large. Both resulting
                 # source payloads must independently fit the actual counter.
-                for _, _, char_end in split_sentences(comment_text)[:-1]:
-                    cut = comment_start + len(comment_text[:char_end].encode("utf-8"))
+                cut = comment_start
+                for sentence, _, _ in split_sentences(comment_text)[:-1]:
+                    cut += len(sentence.encode("utf-8"))
                     if (
                         owned_start < cut < comment_end
                         and budget.count(owned_start, cut) <= max_size
