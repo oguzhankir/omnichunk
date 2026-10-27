@@ -71,7 +71,7 @@ class Section:
 _FENCE_RE = re.compile(r"(?m)^[ \t]{0,3}(`{3,}|~{3,})([^\r\n]*)(?:\r?\n|$)")
 _HEADING_RE = re.compile(r"(?m)^(#{1,6})\s+(.+?)\s*$")
 _TABLE_RE = re.compile(r"(?m)^\|.+\|\s*$")
-_LIST_RE = re.compile(r"(?m)^\s*[-*+]\s+.+$")
+_LIST_RE = re.compile(r"^[ \t]*(?:[-*+]|\d+[.)])[ \t]+\S")
 _FRONTMATTER_RE = re.compile(r"\A---\n([\s\S]*?)\n---\n", re.MULTILINE)
 
 
@@ -158,30 +158,66 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
             continue
 
         hierarchy = _heading_hierarchy_at_pos(sections, left)
-        kind = EntityType.PARAGRAPH
-        if _TABLE_RE.search(segment):
-            kind = EntityType.TABLE
-        elif _LIST_RE.search(segment):
-            kind = EntityType.LIST
-
-        metadata: dict[str, Any] = {}
-        callout_kind = _detect_callout_kind(segment)
-        if callout_kind is not None:
-            metadata["callout"] = callout_kind
-
-        nodes.append(
-            ProseNode(
-                kind=kind,
-                text=segment,
-                byte_range=ByteRange(left, right),
-                line_range=_line_range(content, left, right),
-                heading_hierarchy=hierarchy,
-                metadata=metadata,
-            )
-        )
+        nodes.extend(_body_nodes(content, left, right, hierarchy))
 
     nodes.sort(key=lambda n: n.byte_range.start)
     return sections, nodes
+
+
+def _body_nodes(content: str, start: int, end: int, hierarchy: list[str]) -> list[ProseNode]:
+    """Keep tables and lists separate from the prose surrounding them.
+
+    Classifying a complete section from one matching line would label unrelated
+    paragraphs as tables/lists and bypass their structural boundaries. Keep
+    source trivia attached to its preceding block so ranges remain contiguous.
+    """
+    out: list[ProseNode] = []
+    block_start = start
+    cursor = start
+    kind: EntityType | None = None
+
+    def emit(block_end: int) -> None:
+        nonlocal block_start, kind
+        text = content[block_start:block_end]
+        if text.strip():
+            metadata: dict[str, Any] = {}
+            callout = _detect_callout_kind(text)
+            if callout is not None:
+                metadata["callout"] = callout
+            out.append(
+                ProseNode(
+                    kind=kind or EntityType.PARAGRAPH,
+                    text=text,
+                    byte_range=ByteRange(block_start, block_end),
+                    line_range=_line_range(content, block_start, block_end),
+                    heading_hierarchy=list(hierarchy),
+                    metadata=metadata,
+                )
+            )
+            block_start = block_end
+            kind = None
+
+    for line in content[start:end].splitlines(keepends=True):
+        line_end = cursor + len(line)
+        if not line.strip():
+            emit(line_end)
+            cursor = line_end
+            continue
+        if _TABLE_RE.fullmatch(line.rstrip("\r\n")):
+            line_kind = EntityType.TABLE
+        elif _LIST_RE.match(line):
+            line_kind = EntityType.LIST
+        elif kind == EntityType.LIST and line.startswith((" ", "\t")):
+            # Indented continuation lines belong to the current list item.
+            line_kind = EntityType.LIST
+        else:
+            line_kind = EntityType.PARAGRAPH
+        if kind is not None and line_kind != kind:
+            emit(cursor)
+        kind = line_kind
+        cursor = line_end
+    emit(end)
+    return out
 
 
 def _collect_fences(content: str) -> list[tuple[int, int, str]]:

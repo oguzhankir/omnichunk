@@ -70,7 +70,9 @@ boundary; oversized units descend to the next level. Source whitespace
 participates in the measured budget.
 
 Markdown keeps blank-line-separated body paragraphs distinct and associates
-headings with their following content. Even a small Markdown file that fits the
+headings with their following content. Pipe-delimited table blocks and list
+blocks retain their own section identities instead of classifying surrounding
+prose as part of a table or list. Even a small Markdown file that fits the
 maximum can therefore produce multiple chunks. `min_chunk_size` is a preference:
 it does not merge these paragraph identities back together, and a short heading
 or tail can remain below the minimum. This can increase vector/index work and
