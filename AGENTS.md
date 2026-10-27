@@ -2,6 +2,12 @@
 
 This is a pure Python library with no external service dependencies. All state is in-process or file-based (SQLite via stdlib).
 
+### Documentation requirements
+
+- When a change affects documented behavior or how users install, configure, or use the library, update the relevant documentation in the same change. This includes public classes, functions, parameters, defaults, accepted values, return types, CLI commands, integrations, and compatibility or migration guidance.
+- Keep API references, usage examples, and configuration guidance consistent with the implementation. Add documentation for new public functionality and revise or remove stale guidance when behavior changes.
+- Run `mkdocs build --strict` for documentation changes and verify affected examples where practical.
+
 ### Key commands
 
 | Task | Command |
