@@ -228,6 +228,14 @@ outputs are reproducible under the declared identity.
 
 ## Parsers, plugins and tool serving
 
+For Python, documentation-heavy automatic routing counts only real module, class,
+function and async-function docstrings identified by the standard-library AST.
+Their original literal source must occupy more than 40% of the file's UTF-8 bytes
+to select hybrid processing. Assigned/returned SQL, templates and other string
+data do not contribute. A parse failure leaves this heuristic on the code route,
+where parser diagnostics and fallbacks remain available. Explicit content-type
+overrides and notebook/cell markers select their routes independently.
+
 `language_capabilities()` lists detected code languages, extensions, grammar
 registration/loading, parser availability, bundled query availability and effective
 extraction (`ast`, `regex` or `none`). Query availability is not proof of complete

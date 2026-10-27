@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import re
 from pathlib import Path
 
@@ -186,8 +187,37 @@ def _looks_like_markup(content: str) -> bool:
 
 
 def _looks_hybrid_python(content: str) -> bool:
+    """Detect documentation-heavy valid Python without treating data as prose.
+
+    Python defines docstrings only as the first string expression in a module,
+    class, function or async function body. Source lengths include the original
+    literal syntax and use AST UTF-8 byte columns, not decoded string lengths.
+    """
     if not content:
         return False
-    docstrings = re.findall(r'"""[\s\S]*?"""|\'\'\'[\s\S]*?\'\'\'', content)
-    doc_chars = sum(len(ds) for ds in docstrings)
-    return doc_chars > 0 and doc_chars / max(len(content), 1) > 0.4
+    try:
+        tree = ast.parse(content)
+        raw = content.encode("utf-8")
+    except (SyntaxError, ValueError, RecursionError, UnicodeError):
+        # Partial or malformed source still belongs to the code engine, whose
+        # parser diagnostics/fallbacks can describe the input to the caller.
+        return False
+    line_starts = [0, *(match.end() for match in re.finditer(rb"\r\n?|\n", raw))]
+    doc_bytes = 0
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Module | ast.ClassDef | ast.FunctionDef | ast.AsyncFunctionDef):
+            continue
+        if not node.body or not isinstance(node.body[0], ast.Expr):
+            continue
+        value = node.body[0].value
+        if (
+            not isinstance(value, ast.Constant)
+            or not isinstance(value.value, str)
+            or value.end_lineno is None
+            or value.end_col_offset is None
+        ):
+            continue
+        start = line_starts[value.lineno - 1] + value.col_offset
+        end = line_starts[value.end_lineno - 1] + value.end_col_offset
+        doc_bytes += end - start
+    return doc_bytes > 0 and doc_bytes / len(raw) > 0.4
