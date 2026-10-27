@@ -144,7 +144,12 @@ class ProseEngine:
             size_counter=size_counter,
             content=content,
             preserve_code_blocks=(language == "markdown"),
-            preserve_paragraphs=(language == "markdown"),
+            preserve_paragraphs=(
+                language == "markdown" and options.markdown_paragraph_policy == "preserve"
+            ),
+            pack_paragraphs=(
+                language == "markdown" and options.markdown_paragraph_policy == "pack"
+            ),
             split_oversized=options.overflow_policy == "split",
         )
 
@@ -493,6 +498,7 @@ def _build_node_windows(
     content: str,
     preserve_code_blocks: bool = False,
     preserve_paragraphs: bool = False,
+    pack_paragraphs: bool = False,
     split_oversized: bool = True,
 ) -> list[list[tuple[int, int, list[str], str]]]:
     windows: list[list[tuple[int, int, list[str], str]]] = []
@@ -521,6 +527,24 @@ def _build_node_windows(
                 current = []
             windows.append([node_payload])
             continue
+
+        if (
+            pack_paragraphs
+            and current
+            and any(item[3] != EntityType.HEADING.value for item in current)
+            and (
+                node.kind != EntityType.PARAGRAPH
+                or any(
+                    item[3] not in {EntityType.HEADING.value, EntityType.PARAGRAPH.value}
+                    for item in current
+                )
+                or current[-1][2] != node.heading_hierarchy
+            )
+        ):
+            # Compact only adjacent prose under the same owning heading. Tables,
+            # lists and heading transitions retain their own retrieval identity.
+            windows.append(current)
+            current = []
 
         if (
             preserve_paragraphs
@@ -597,7 +621,7 @@ def _build_node_windows(
     if current:
         windows.append(current)
 
-    if len(windows) <= 1 or preserve_paragraphs:
+    if len(windows) <= 1 or preserve_paragraphs or pack_paragraphs:
         # A minimum-size preference must not undo explicit paragraph boundaries.
         return windows
 

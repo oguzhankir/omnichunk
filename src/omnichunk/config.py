@@ -46,6 +46,7 @@ def validate_options(options: ChunkOptions) -> None:
         "size_unit": ("chars", "tokens", "nws"),
         "nws_backend": ("auto", "python", "rust"),
         "context_mode": ("none", "minimal", "full"),
+        "markdown_paragraph_policy": ("preserve", "pack"),
         "sibling_detail": ("none", "names", "signatures"),
         "coverage_policy": ("lossless", "retrieval"),
         "overflow_policy": ("split", "error", "preserve"),

@@ -51,6 +51,7 @@ chunks = token_chunker.chunk("guide.txt", "A short guide to chunking.")
 | Option | Default | Accepted values and behavior |
 | --- | --- | --- |
 | `context_mode` | `"full"` | `"full"` includes detailed structural context; `"minimal"` uses reduced context; `"none"` disables rendered context. Available fields vary by content and parser. |
+| `markdown_paragraph_policy` | `"preserve"` | `"preserve"` keeps Markdown body paragraphs as separate chunks. `"pack"` combines adjacent fitting prose paragraphs under the same heading to reduce vector count, while keeping tables, lists, fences and heading changes separate. This trades paragraph-level retrieval precision for more adjacent context and can change retrieval quality; evaluate on your data. It does not affect plaintext. |
 | `sibling_detail` | `"signatures"` | `"none"`, `"names"`, or `"signatures"`. Controls nearby code sibling information in full context. |
 | `max_siblings` | `3` | Integer ≥ 0. Maximum number of nearby code siblings included when sibling details are enabled. |
 | `include_imports` | `True` | Boolean. Include detected code imports in context when available. |
