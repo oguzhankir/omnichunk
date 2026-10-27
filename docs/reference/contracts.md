@@ -105,7 +105,10 @@ under the same heading. This can reduce vector count while adding less relevant
 context to a chunk; evaluate the quality/cost tradeoff for your retriever.
 Pipe-delimited table blocks and list
 blocks retain their own section identities instead of classifying surrounding
-prose as part of a table or list. Even a small Markdown file that fits the
+prose as part of a table or list. Blank-separated list items and sufficiently
+indented continuation paragraphs keep their list ownership; dedented following
+prose starts a separate paragraph. This applies in both paragraph policies, so
+list continuations are not eligible for prose packing. Even a small Markdown file that fits the
 maximum can therefore produce multiple chunks. `min_chunk_size` is a preference:
 it does not merge these paragraph identities back together, and a short heading
 or tail can remain below the minimum. This can increase vector/index work and

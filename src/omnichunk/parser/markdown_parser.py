@@ -71,7 +71,7 @@ class Section:
 _FENCE_RE = re.compile(r"(?m)^[ \t]{0,3}(`{3,}|~{3,})([^\r\n]*)(?:\r?\n|$)")
 _HEADING_RE = re.compile(r"(?m)^(#{1,6})\s+(.+?)\s*$")
 _TABLE_RE = re.compile(r"(?m)^\|.+\|\s*$")
-_LIST_RE = re.compile(r"^[ \t]*(?:[-*+]|\d+[.)])[ \t]+\S")
+_LIST_RE = re.compile(r"^(?P<indent>[ \t]*)(?:[-*+]|\d+[.)])[ \t]+(?=\S)")
 _FRONTMATTER_RE = re.compile(r"\A---\n([\s\S]*?)\n---\n", re.MULTILINE)
 
 
@@ -79,6 +79,9 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
     if not content:
         return [], []
 
+    # Parser ranges use character offsets. Reuse one LF index across every
+    # section and block rather than repeatedly scanning growing source prefixes.
+    line_starts = [0, *(match.end() for match in re.finditer("\n", content))]
     nodes: list[ProseNode] = []
     fence_ranges = _collect_fences(content)
     fence_starts = [start for start, _, _ in fence_ranges]
@@ -88,7 +91,7 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
         if fence_index >= 0 and match.start() < fence_ranges[fence_index][1]:
             continue
         heading_matches.append(match)
-    sections = _build_section_tree(content, heading_matches)
+    sections = _build_section_tree(content, heading_matches, line_starts=line_starts)
 
     front = _FRONTMATTER_RE.match(content)
     if front:
@@ -101,7 +104,7 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
                 kind=EntityType.FRONTMATTER,
                 text=content[start:end],
                 byte_range=ByteRange(start, end),
-                line_range=_line_range(content, start, end),
+                line_range=_line_range(content, start, end, line_starts=line_starts),
                 metadata={"front_matter": parsed},
             )
         )
@@ -135,7 +138,7 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
                     kind=kind,
                     text=segment,
                     byte_range=ByteRange(left, right),
-                    line_range=_line_range(content, left, right),
+                    line_range=_line_range(content, left, right, line_starts=line_starts),
                     heading_hierarchy=hierarchy,
                     metadata={"language": fence[2]},
                 )
@@ -150,7 +153,7 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
                     kind=EntityType.HEADING,
                     text=segment,
                     byte_range=ByteRange(left, right),
-                    line_range=_line_range(content, left, right),
+                    line_range=_line_range(content, left, right, line_starts=line_starts),
                     heading_hierarchy=hierarchy,
                     metadata={"level": str(level)},
                 )
@@ -158,13 +161,15 @@ def parse_markdown(content: str) -> tuple[list[Section], list[ProseNode]]:
             continue
 
         hierarchy = _heading_hierarchy_at_pos(sections, left)
-        nodes.extend(_body_nodes(content, left, right, hierarchy))
+        nodes.extend(_body_nodes(content, left, right, hierarchy, line_starts=line_starts))
 
     nodes.sort(key=lambda n: n.byte_range.start)
     return sections, nodes
 
 
-def _body_nodes(content: str, start: int, end: int, hierarchy: list[str]) -> list[ProseNode]:
+def _body_nodes(
+    content: str, start: int, end: int, hierarchy: list[str], *, line_starts: list[int]
+) -> list[ProseNode]:
     """Keep tables and lists separate from the prose surrounding them.
 
     Classifying a complete section from one matching line would label unrelated
@@ -175,6 +180,7 @@ def _body_nodes(content: str, start: int, end: int, hierarchy: list[str]) -> lis
     block_start = start
     cursor = start
     kind: EntityType | None = None
+    list_indent = list_content_indent = 0
 
     def emit(block_end: int) -> None:
         nonlocal block_start, kind
@@ -189,7 +195,9 @@ def _body_nodes(content: str, start: int, end: int, hierarchy: list[str]) -> lis
                     kind=kind or EntityType.PARAGRAPH,
                     text=text,
                     byte_range=ByteRange(block_start, block_end),
-                    line_range=_line_range(content, block_start, block_end),
+                    line_range=_line_range(
+                        content, block_start, block_end, line_starts=line_starts
+                    ),
                     heading_hierarchy=list(hierarchy),
                     metadata=metadata,
                 )
@@ -200,16 +208,26 @@ def _body_nodes(content: str, start: int, end: int, hierarchy: list[str]) -> lis
     for line in content[start:end].splitlines(keepends=True):
         line_end = cursor + len(line)
         if not line.strip():
-            emit(line_end)
+            # A blank line can separate paragraphs in the same list item or
+            # separate loose-list items. Defer ownership to the next content.
+            if kind != EntityType.LIST:
+                emit(line_end)
             cursor = line_end
             continue
-        if _TABLE_RE.fullmatch(line.rstrip("\r\n")):
+        marker = _LIST_RE.match(line)
+        indentation = len(line[: len(line) - len(line.lstrip(" \t"))].expandtabs(4))
+        if marker is not None:
+            marker_indent = len(marker.group("indent").expandtabs(4))
+            if kind != EntityType.LIST or marker_indent <= list_indent:
+                list_indent = marker_indent
+                list_content_indent = len(line[: marker.end()].expandtabs(4))
+            line_kind = EntityType.LIST
+        elif kind == EntityType.LIST and indentation >= list_content_indent:
+            # Keep continuation paragraphs under their owning list. Requiring
+            # the content column avoids consuming dedented following prose.
+            line_kind = EntityType.LIST
+        elif _TABLE_RE.fullmatch(line.rstrip("\r\n")):
             line_kind = EntityType.TABLE
-        elif _LIST_RE.match(line):
-            line_kind = EntityType.LIST
-        elif kind == EntityType.LIST and line.startswith((" ", "\t")):
-            # Indented continuation lines belong to the current list item.
-            line_kind = EntityType.LIST
         else:
             line_kind = EntityType.PARAGRAPH
         if kind is not None and line_kind != kind:
@@ -258,7 +276,14 @@ def _match_range(
     return None
 
 
-def _build_section_tree(content: str, headings: list[re.Match[str]] | None = None) -> list[Section]:
+def _build_section_tree(
+    content: str,
+    headings: list[re.Match[str]] | None = None,
+    *,
+    line_starts: list[int] | None = None,
+) -> list[Section]:
+    if line_starts is None:
+        line_starts = [0, *(match.end() for match in re.finditer("\n", content))]
     if headings is None:
         headings = list(_HEADING_RE.finditer(content))
     if not headings:
@@ -277,7 +302,7 @@ def _build_section_tree(content: str, headings: list[re.Match[str]] | None = Non
             level=level,
             content=content[start:end],
             byte_range=ByteRange(start, end),
-            line_range=_line_range(content, start, end),
+            line_range=_line_range(content, start, end, line_starts=line_starts),
         )
 
         while stack and stack[-1].level >= level:
@@ -312,7 +337,11 @@ def _heading_hierarchy_at_pos(sections: list[Section], pos: int) -> list[str]:
     return path
 
 
-def _line_range(content: str, start: int, end: int) -> LineRange:
-    line_start = content.count("\n", 0, start)
-    line_end = content.count("\n", 0, max(start, end))
+def _line_range(
+    content: str, start: int, end: int, *, line_starts: list[int] | None = None
+) -> LineRange:
+    if line_starts is None:
+        line_starts = [0, *(match.end() for match in re.finditer("\n", content))]
+    line_start = bisect_right(line_starts, start) - 1
+    line_end = bisect_right(line_starts, max(start, end)) - 1
     return LineRange(start=line_start, end=max(line_start, line_end))
