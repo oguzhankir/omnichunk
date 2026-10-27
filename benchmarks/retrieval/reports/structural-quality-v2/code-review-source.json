@@ -1,0 +1,19 @@
+{
+  "pr": 36,
+  "comment_id": 6424313389,
+  "updated_at": "2026-10-26T18:52:52Z",
+  "state": {
+    "code_review": {
+      "commit_sha": "386b5ce99d4508a62725d6b36883dfa999715e8c",
+      "has_any_findings": false,
+      "has_unresolved_findings": false,
+      "status": "completed"
+    },
+    "security_review": {
+      "commit_sha": null,
+      "has_any_findings": null,
+      "has_unresolved_findings": null,
+      "status": null
+    }
+  }
+}

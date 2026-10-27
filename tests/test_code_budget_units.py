@@ -92,6 +92,115 @@ def test_code_grouping_measures_inter_statement_whitespace():
     assert any("bravo = 2" in chunk.text for chunk in chunks)
 
 
+@pytest.mark.parametrize("newline", ["\n", "\r\n"])
+def test_fitting_leading_comment_stays_with_following_statement(newline):
+    previous = 'previous = "' + "x" * 28 + '"' + newline * 2
+    policy = "# Return cached records only after access checks." + newline
+    policy += "ALLOW_CACHE = False" + newline * 2
+    following = 'next_value = "' + "y" * 28 + '"' + newline
+    source = previous + policy + following
+    chunker = Chunker(
+        max_chunk_size=90,
+        min_chunk_size=0,
+        size_unit="chars",
+        context_mode="none",
+        coverage_policy="lossless",
+    )
+    chunks = chunker.chunk("policy.py", source)
+
+    _assert_source(chunks, source, 90, len)
+    assert any(policy in chunk.text for chunk in chunks)
+    assert [chunk.text for chunk in chunker.stream("policy.py", source)] == [
+        chunk.text for chunk in chunks
+    ]
+
+
+def test_comment_binding_counts_unicode_source_and_special_token_overhead():
+    prefix = 'before = "' + "x" * 24 + '"\n\n'
+    block = "# İzin 確認 😀\n# Keep the approval reason.\nAPPROVED = False\n\n"
+    source = prefix + block + 'after = "' + "y" * 24 + '"\n'
+
+    def count(text: str) -> int:
+        return len(text.encode("utf-8")) + 2
+
+    chunks = Chunker(
+        max_chunk_size=90,
+        min_chunk_size=0,
+        size_unit="tokens",
+        tokenizer=count,
+        context_mode="none",
+        coverage_policy="lossless",
+    ).chunk("policy.py", source)
+
+    _assert_source(chunks, source, 90, count)
+    assert any(block in chunk.text for chunk in chunks)
+
+
+@pytest.mark.parametrize(
+    ("source", "capacity", "first"),
+    [
+        (
+            "previous = 1  # previous note\nfollowing = 2\n",
+            40,
+            "previous = 1  # previous note\n",
+        ),
+        (
+            'previous = "xxxxxxxx"\n# separate note\n\nfollowing = 2\n',
+            45,
+            'previous = "xxxxxxxx"\n# separate note\n\n',
+        ),
+    ],
+)
+def test_comment_binding_respects_inline_ownership_and_blank_lines(source, capacity, first):
+    chunks = Chunker(
+        max_chunk_size=capacity,
+        min_chunk_size=0,
+        size_unit="chars",
+        context_mode="none",
+        coverage_policy="lossless",
+    ).chunk("policy.py", source)
+
+    _assert_source(chunks, source, capacity, len)
+    assert chunks[0].text == first
+
+
+def test_comment_binding_rechecks_nonadditive_complete_payload_budget():
+    source = 'previous = "xxxxxxxx"\n# a policy comment\nVALUE = 2\n'
+
+    def count(text: str) -> int:
+        return len(text) + (100 if "# a policy" in text and "VALUE" in text else 0)
+
+    chunks = Chunker(
+        max_chunk_size=48,
+        min_chunk_size=0,
+        size_unit="tokens",
+        tokenizer=count,
+        context_mode="none",
+        coverage_policy="lossless",
+    ).chunk("policy.py", source)
+
+    _assert_source(chunks, source, 48, count)
+    assert not any("# a policy" in chunk.text and "VALUE" in chunk.text for chunk in chunks)
+
+
+def test_oversized_comment_does_not_hide_explicit_overflow_policies():
+    source = "# " + "policy " * 15 + "\nVALUE = 2\n"
+    arguments = dict(
+        max_chunk_size=40,
+        min_chunk_size=0,
+        size_unit="chars",
+        context_mode="none",
+        coverage_policy="lossless",
+    )
+    chunks = Chunker(**arguments).chunk("policy.py", source)
+    _assert_source(chunks, source, 40, len)
+    with pytest.raises(ChunkingError):
+        Chunker(**arguments, overflow_policy="error").chunk("policy.py", source)
+    preserved = Chunker(**arguments, overflow_policy="preserve").chunk("policy.py", source)
+    assert "".join(chunk.text for chunk in preserved) == source
+    assert max(len(chunk.text) for chunk in preserved) > 40
+
+
 def test_code_grouping_measures_nonadditive_combined_token_cost():
     def count(text: str) -> int:
         return len(text) + (20 if "alpha" in text and "bravo" in text else 0)

@@ -262,11 +262,13 @@ def _heading_hierarchy_at_pos(sections: list[Section], pos: int) -> list[str]:
 
     def walk(nodes: list[Section], chain: list[str]) -> bool:
         for node in nodes:
+            next_chain = chain + [node.heading]
+            # Section spans describe their direct body up to the next heading;
+            # descendants have their own disjoint spans within the tree.
+            if walk(node.children, next_chain):
+                return True
             if node.byte_range.start <= pos < node.byte_range.end:
-                next_chain = chain + [node.heading]
                 path[:] = next_chain
-                if walk(node.children, next_chain):
-                    return True
                 return True
         return False
 

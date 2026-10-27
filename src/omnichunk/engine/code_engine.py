@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from bisect import bisect_right
 from collections.abc import Iterator
-from dataclasses import replace
+from dataclasses import dataclass, replace
 from typing import Any
 
 from omnichunk.context.entities import enrich_parent_links, extract_entities
@@ -24,10 +25,19 @@ from omnichunk.types import (
 )
 from omnichunk.util.detect import detect_language
 from omnichunk.util.text_index import TextIndex
-from omnichunk.windowing.greedy import assign_windows_for_nodes, assign_windows_for_ranges
+from omnichunk.windowing.greedy import (
+    RangeNode,
+    assign_windows_for_nodes,
+    assign_windows_for_ranges,
+)
 from omnichunk.windowing.merge import merge_adjacent_windows
-from omnichunk.windowing.models import SourceBudget
+from omnichunk.windowing.models import ASTNodeWindowItem, SourceBudget
 from omnichunk.windowing.overlap import apply_token_overlap, build_line_overlap_text
+
+
+@dataclass(frozen=True)
+class _CommentGroup(RangeNode):
+    """A fitting leading comment block and the statement it describes."""
 
 
 class CodeEngine:
@@ -92,6 +102,7 @@ class CodeEngine:
 
         ast_nodes = _collect_ast_root_nodes(parse_result.tree)
         if ast_nodes:
+            ast_nodes = _bind_leading_comments(ast_nodes, budget, options.max_chunk_size)
             windows = assign_windows_for_nodes(
                 ast_nodes,
                 cumsum=cumsum,
@@ -119,6 +130,7 @@ class CodeEngine:
             min_size=options.min_chunk_size,
             budget=budget,
         )
+        merged_windows = _isolate_comment_groups(merged_windows, budget, options.max_chunk_size)
 
         chunk_ranges = _windows_to_contiguous_ranges(merged_windows, len(raw_bytes))
         chunk_ranges = _merge_whitespace_only_ranges(chunk_ranges, raw_bytes)
@@ -308,6 +320,119 @@ def _collect_candidate_ranges(
             merged[-1] = (merged[-1][0], max(merged[-1][1], end))
 
     return merged
+
+
+def _isolate_comment_groups(
+    windows: list[list[ASTNodeWindowItem]], budget: SourceBudget, max_size: int
+) -> list[list[ASTNodeWindowItem]]:
+    """Keep fitting documented statements distinct in an oversized source.
+
+    The whole-source fast path has no group markers and remains a single chunk.
+    A tokenizer can make a subrange larger than its containing payload; retain
+    the original valid window if any proposed structural piece would overflow.
+    """
+    isolated: list[list[ASTNodeWindowItem]] = []
+    for window in windows:
+        if not any(isinstance(item.node, _CommentGroup) for item in window):
+            isolated.append(window)
+            continue
+        pieces: list[list[ASTNodeWindowItem]] = []
+        pending: list[ASTNodeWindowItem] = []
+        for item in window:
+            if isinstance(item.node, _CommentGroup):
+                if pending:
+                    pieces.append(pending)
+                    pending = []
+                pieces.append([item])
+            else:
+                pending.append(item)
+        if pending:
+            pieces.append(pending)
+        if all(budget.count(piece[0].start, piece[-1].end) <= max_size for piece in pieces):
+            isolated.extend(pieces)
+        else:
+            isolated.append(window)
+    return isolated
+
+
+def _bind_leading_comments(nodes: list[Any], budget: SourceBudget, max_size: int) -> list[Any]:
+    """Keep an adjacent leading comment block with its fitting root statement.
+
+    Source trivia belongs to the preceding sibling in measured windowing, so the
+    fit check includes same-line trailing comments and the statement's trailing
+    trivia. Original children remain available if a later full-source budget
+    check still requires descent.
+    """
+    raw = budget.index.raw_bytes
+    # Root offsets are queried repeatedly; scanning each entire source prefix
+    # for a missing CR would otherwise make LF-only files quadratic.
+    line_breaks = "\r\n\u2028\u2029"
+    line_starts = [
+        0,
+        *(
+            budget.index.byte_offset_for_char(offset + 1)
+            for offset, char in enumerate(budget.text)
+            if char in line_breaks
+        ),
+    ]
+    output: list[Any] = []
+    pending: list[Any] = []
+
+    def adjacent(left: Any, right: Any) -> bool:
+        gap = raw[int(left.end_byte) : int(right.start_byte)].decode("utf-8")
+        newlines = sum(char in line_breaks for char in gap.replace("\r\n", "\n"))
+        return not gap.strip() and newlines <= 1
+
+    index = 0
+    while index < len(nodes):
+        node = nodes[index]
+        start = int(node.start_byte)
+        line_start = line_starts[bisect_right(line_starts, start) - 1]
+        is_comment = "comment" in str(getattr(node, "type", "")).lower()
+        leading_comment = is_comment and not raw[line_start:start].decode("utf-8").strip()
+        if pending and not adjacent(pending[-1], node):
+            output.extend(pending)
+            pending = []
+        if leading_comment:
+            pending.append(node)
+            index += 1
+            continue
+        if pending and not is_comment:
+            group = [*pending, node]
+            following = index + 1
+            while following < len(nodes):
+                trailing = nodes[following]
+                gap = raw[int(group[-1].end_byte) : int(trailing.start_byte)].decode("utf-8")
+                if (
+                    "comment" not in str(getattr(trailing, "type", "")).lower()
+                    or gap.strip()
+                    or any(char in line_breaks for char in gap)
+                ):
+                    break
+                group.append(trailing)
+                following += 1
+            owned_start = int(pending[0].start_byte) if output else 0
+            owned_end = int(nodes[following].start_byte) if following < len(nodes) else len(raw)
+            if budget.count(owned_start, owned_end) <= max_size:
+                output.append(
+                    _CommentGroup(
+                        start=int(pending[0].start_byte),
+                        end=int(group[-1].end_byte),
+                        children=tuple(group),
+                    )
+                )
+                pending = []
+                index = following
+                continue
+            output.extend(pending)
+            pending = []
+        elif pending:
+            output.extend(pending)
+            pending = []
+        output.append(node)
+        index += 1
+    output.extend(pending)
+    return output
 
 
 def _collect_ast_root_nodes(tree: Any | None) -> list[Any]:

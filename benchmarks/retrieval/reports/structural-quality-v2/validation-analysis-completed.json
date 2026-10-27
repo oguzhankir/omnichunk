@@ -1,0 +1,343 @@
+{
+  "schema_version": 1,
+  "comparisons": [
+    {
+      "path": "comparisons/validation/multilingual/article-text/128/vs-current.json",
+      "sha256": "ab0ac7805a5e7de47c8c1a59164e43a0a96264eb02acc4bb90620c24032e016b"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/128/vs-release.json",
+      "sha256": "509abc00369ba65539e34d2d65da501e98109118b24a725f10b681cd42a84109"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/128/vs-fixed.json",
+      "sha256": "064237255ca53af4cdd52cb8667f58cb53538cc39c540e45929d053da6a1c21d"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/128/vs-semchunk.json",
+      "sha256": "997ee96f65706b56d5a07fda594f60f03009452ccaf54148745e3defc9f0f52c"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/128/vs-langchain.json",
+      "sha256": "d0b04fc0b7e979c62b26c0b34942522005105f77a07b2084edbc6ecbfb778df6"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/128/vs-semantic-text-splitter.json",
+      "sha256": "7d65a7a5dbc7c4fd677180c2b68f777f3735ffefeb4391315058dbff948849a9"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/128/vs-llamaindex.json",
+      "sha256": "9333e64459260970b7f52f85bc98c4f007cc8fcb7ff04f444fae9ffaddfba432"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/256/vs-current.json",
+      "sha256": "eaf65238833613345f903ef247a429f35179b20b8d55a2df58baa39895d9d343"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/256/vs-release.json",
+      "sha256": "4f52ad75d8066f6ea718dac0f4afcafad9afd1db61a85e3e87a22538661b3ae9"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/256/vs-fixed.json",
+      "sha256": "d68f838f297b39a77973786cf5fcfc5ad61e3ff6df2434125894af11f6b4b845"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/256/vs-semchunk.json",
+      "sha256": "53f9c26f22a959350e68c26dc5fc634f369c8c7604ba4cc6f59487558ada7534"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/256/vs-langchain.json",
+      "sha256": "3b6d6a53f7b92bdd97d4d81ea55519bf65ad550efdaa0c34fe072d4dec01a3ce"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/256/vs-semantic-text-splitter.json",
+      "sha256": "922637453d7cb9c407e76e5550c9cfdc1faee7bc70ce702622ed421261e8c664"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/256/vs-llamaindex.json",
+      "sha256": "9144b41e259e2a49cf5e588532add1f47841b4f8760162a53e9fde2805418c75"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/512/vs-current.json",
+      "sha256": "20885626e0a1cdbeb8d7ed58dafc34482e8a7d7edc5e5333ecab6ed1638e369e"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/512/vs-release.json",
+      "sha256": "01a9662fffa864355024d93a25c14f55a2270d78bc16fd492bda9db99fb80ebd"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/512/vs-fixed.json",
+      "sha256": "fcf2151c2759db460c3185ef0adad8925100549cc7ed495395cbd888630c5f7e"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/512/vs-semchunk.json",
+      "sha256": "bb9b5e6d6a61172a31ab81b90fb17cdf25114beab20c77e5788e9091db964158"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/512/vs-langchain.json",
+      "sha256": "da8cd76964a1f24419b3b0ef87760e4196876142695dfff4e3e52b25c68fb18b"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/512/vs-semantic-text-splitter.json",
+      "sha256": "e738429cd320d70998277015aac08c309e87443e02739a1892e9990fc3237885"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-text/512/vs-llamaindex.json",
+      "sha256": "3d88799e0866492aebd4dcb5aee82429d9d434d5356ea0bb15de4082a12e90e9"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/128/vs-current.json",
+      "sha256": "045202166e0f8e19c62a7e26dad3f3f3e0aafe462edd25f85d10ee2c6e6edaa0"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/128/vs-release.json",
+      "sha256": "1bb3ee8536ed3334d36153f15b415f1e245ceb0f463cfa1fe7453ee8068e835f"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/128/vs-fixed.json",
+      "sha256": "f363760b61368ca8fbc2ebc3a094db6a24613daa910702f1507f32ceac689379"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/128/vs-semchunk.json",
+      "sha256": "e902c6e9c63591ab16691c05804280ceb585412096ff8f352856d0dcd34b9b9c"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/128/vs-langchain.json",
+      "sha256": "7995981af706b95fe6f6af4aa1afd1784d731ece835d292a7385ed7cc182da6e"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/128/vs-semantic-text-splitter.json",
+      "sha256": "1a38d26e283364ee48b53f5b7f94ede19e89b22f4b90e85a34e5efd39e53a554"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/128/vs-llamaindex.json",
+      "sha256": "864a39dac5940d63f16e82e18fe88911baf2d7585c4c09c620cfb87713a94d71"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/256/vs-current.json",
+      "sha256": "20c3d9e16b030213d4271897960bc3a2c4a8661954ff8f14e9178d93ef2575c8"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/256/vs-release.json",
+      "sha256": "2369fb94ca4c28291468f6974601c579c1a01a1fcef20befbf7a4b2c54ce85b2"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/256/vs-fixed.json",
+      "sha256": "53a28372d3c2c1b4432a5defd57f98e034874eb14066a4134d263e14d6dbc286"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/256/vs-semchunk.json",
+      "sha256": "0af5dc4ee3b21e45a57b5080ab0de41cbdbdd107e52949b625fa67cb3c4e12e2"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/256/vs-langchain.json",
+      "sha256": "a728702ca57a85222ed201de937da621930bf52131354586a118def6eb4743af"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/256/vs-semantic-text-splitter.json",
+      "sha256": "ee8cd42e43a2b1c3c2819f70aa116e000712889d7d9039e16a959f502553b4c4"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/256/vs-llamaindex.json",
+      "sha256": "8f41295b2b80b5ac185042f565f1067b4cb840c95f2dfd7181103f4607f6a2a7"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/512/vs-current.json",
+      "sha256": "e086041e02e0137915297a8aa7a40f2e68db2fdc5be3f7464bba6ba01358faea"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/512/vs-release.json",
+      "sha256": "12b55e9707198a797c33f464fcf0b7842129a0221b49e4569b086a429e149fd4"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/512/vs-fixed.json",
+      "sha256": "c64b33647072991c7bc1b06c22bdb8615660b5761f743edd4fb144bc42c10f9e"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/512/vs-semchunk.json",
+      "sha256": "51886f777b118f82de2d0f1358def7a3b269b146d74fb037c9ab5ccdeae8843d"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/512/vs-langchain.json",
+      "sha256": "f5436216b36f3f0a360a0062355f8732a509ca24f2b63bf6b38051628f9cc2cd"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/512/vs-semantic-text-splitter.json",
+      "sha256": "23c159ec4e49afac954edac59298650f0c154fb42eaa44d563e00fed3ad61262"
+    },
+    {
+      "path": "comparisons/validation/multilingual/article-markdown/512/vs-llamaindex.json",
+      "sha256": "0dce114ed6d0b1397e6aeca3b2a75a455f4e86b783522547d43f82a272a8a1d1"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/128/vs-current.json",
+      "sha256": "4c34cff0631dc68d05fb8722bd67b856fd8cbe8228689c5f57ef2e6442edb934"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/128/vs-release.json",
+      "sha256": "b7e60db822527d689ad6b69a017e8ed35196028505b14676ee9271aae92819f1"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/128/vs-fixed.json",
+      "sha256": "74123f2ad023a059b0d713b442bd5e12d99f368ebcf81bc239d27a7aa4204362"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/128/vs-semchunk.json",
+      "sha256": "f62b1948c36dce30eab21f6068efb40f103784853587bd95cd0917c61b297730"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/128/vs-langchain.json",
+      "sha256": "15d97d0eca4bb28c86208dc8299d75348a7a15547a4ff42f8fb100ce8788d80b"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/128/vs-semantic-text-splitter.json",
+      "sha256": "97cdf8c130c6330118ad546730937df715e22f8e78a6d43b86ad9abc0f169d9b"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/128/vs-llamaindex.json",
+      "sha256": "29ad68fa7d5e2b6da4247d3131c0d17d2edae47ea61809b8c3d4e2fdd9204d1c"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/256/vs-current.json",
+      "sha256": "395bce0071acaae66287e641b7016c1ea61c096b33403e553b7fed4c22af0939"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/256/vs-release.json",
+      "sha256": "99cd47aed3ae1f5fc14ec16c261196c92edc9ff32f36af390a3dd4c318c29ad9"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/256/vs-fixed.json",
+      "sha256": "ddf11d96912f90257d3a936bde8a46abc0eb3ae2c0b12f945654a78614f261a4"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/256/vs-semchunk.json",
+      "sha256": "14e93ca7f4fc60ee01a31e6f4598280d0596765eb1608e20fcf4a004e1f24d02"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/256/vs-langchain.json",
+      "sha256": "a6fe17b136535cde68c54f8c0ff736896b0c5db7b0ec3269a2358c63121b247c"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/256/vs-semantic-text-splitter.json",
+      "sha256": "7095af00c9d91a6fbe52bf81f24eefee6833f95dbda45fa9362f61e4944d0f31"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/256/vs-llamaindex.json",
+      "sha256": "19fc8f2025908a796794ea6a46e45abe32f223fe9443a537151b5b5f35a6ce86"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/512/vs-current.json",
+      "sha256": "837c5a1123f84695ab539c3be7b4a7ad9adf0af955204a9edc9f3765ac5a2690"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/512/vs-release.json",
+      "sha256": "3e573176f9c09fb5e1cd77159c655d50169f9e43958c615667c501b3a0918357"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/512/vs-fixed.json",
+      "sha256": "421ebc5730289dfaced80e965b65443c7e200471a666e07649454b2a11e1896e"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/512/vs-semchunk.json",
+      "sha256": "301c423bbea96cf07124836bee1b58f59ce8a684e5f79dfb965f26e8a82eb4de"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/512/vs-langchain.json",
+      "sha256": "342cb95628c005bc8e5bc2cd0e5881124ea464e365851cc59ca27b2e9ee9fcb1"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/512/vs-semantic-text-splitter.json",
+      "sha256": "5c0efa300a27afa1301ed5f33c0a8d136019b4566bef4e64fef681f9b6c7a048"
+    },
+    {
+      "path": "comparisons/validation/english/article-text/512/vs-llamaindex.json",
+      "sha256": "5c61b0adfd704cf6ad3630b91680beb4633af7301e6e236287fdd06af72eb8fa"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/128/vs-current.json",
+      "sha256": "374c834c5cc3a14379a584f0b6906558b8c88e94c2ddc8c8664fad2cc65a6380"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/128/vs-release.json",
+      "sha256": "26bc25ab4e02d2dc97226e6d561fead43747f0c011f80dfc234b51f1ae06c5ae"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/128/vs-fixed.json",
+      "sha256": "4d48e63f264289c6eca0b11b860832595a79c079579a08a8dbec153a00ae92b5"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/128/vs-semchunk.json",
+      "sha256": "802fcf364ded61b091f7e3402f41524b91889ffe7bd535c2e98809ad38d8a030"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/128/vs-langchain.json",
+      "sha256": "a0d36c8a6dc75839ddfe14c89a1d911bf449f27d0c2f186d728ebe41f11d055c"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/128/vs-semantic-text-splitter.json",
+      "sha256": "53385af05a82cad1a262dc09738a6d48fd88b63dd7ac5d49a48fc1e0119c58b8"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/128/vs-llamaindex.json",
+      "sha256": "345e97bb0ba589d37141200dfa730632894f89416a95f3bf356fb7ec845a5ac4"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/256/vs-current.json",
+      "sha256": "8c9680e69569b366addc4b0f668e8585fdb457f7f9e30abd82c9c135a8bf9cdd"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/256/vs-release.json",
+      "sha256": "8d69f2446424f02ac3839203c64f111f4c1395923b84f69e9ead73b12fcc95f9"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/256/vs-fixed.json",
+      "sha256": "19f80d5a87e492b45444eb228e3253798c6a00f38f0f0aaa22290d93f6ee6efb"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/256/vs-semchunk.json",
+      "sha256": "3932490b969d495103b6a97279e6f9462e22056fc5cd041000f4a7e358dfe112"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/256/vs-langchain.json",
+      "sha256": "6509017dd1c67290a6d7fe6b6a8367e1d8600794f90ecf6ab1688c37401088f3"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/256/vs-semantic-text-splitter.json",
+      "sha256": "8beac2b864e27d5273c7f4a98ab767df661ed5efaaaa1fffb08bcff12f23a2ca"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/256/vs-llamaindex.json",
+      "sha256": "c3c703f564db84cc7e2b223190485841094a535f91ef061cce7e8fb4a535d48f"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/512/vs-current.json",
+      "sha256": "342363f32003512c48e6e8f89f1efafed7fc9e112bafed734506cf9d67f5c2b2"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/512/vs-release.json",
+      "sha256": "2546b69d857cb870d6a86a664853cf9a0560daebbce6044dd5e43c1c38cb0a2c"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/512/vs-fixed.json",
+      "sha256": "c9cd7dd3032b5df2bb6ec62bcfce06db5759e540d47267df66b53de18c87cf04"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/512/vs-semchunk.json",
+      "sha256": "67d16f9685b03f27b30ddef516748a06b2173da1949233155cbe4830a54c0bce"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/512/vs-langchain.json",
+      "sha256": "dfd6e8006fc06cfebc442a7886a7849a3c6e1b39d54e728942338628575bf6b8"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/512/vs-semantic-text-splitter.json",
+      "sha256": "913b6d12f3824a15602a6a4a720edb29d94be84153324bc010f0da8c13eb98bd"
+    },
+    {
+      "path": "comparisons/validation/english/article-markdown/512/vs-llamaindex.json",
+      "sha256": "434657556a1824789f435812b306e7e0a1a9eb0d6e8ef4acbce0c252b62734e1"
+    }
+  ],
+  "model_inference_calls": 0,
+  "policy": "Frozen-vector replay only; exact512anchor assertions; no source/model/settings selection."
+}

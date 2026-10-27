@@ -1,0 +1,38 @@
+{
+  "created_utc": "2026-10-26T17:51:45.322097+00:00",
+  "base_revision": "ce356a251b156ed3a5b8607793224c3a4dc47ee1",
+  "development": [
+    "corpus_v1/dev",
+    "corpus_squad_v1/dev",
+    "new article-disjoint external development split"
+  ],
+  "excluded_for_selection": [
+    "all previously observed test reports",
+    "new sealed validation split"
+  ],
+  "screening_variants": [
+    "Markdown paragraph isolation",
+    "root comment+statement association",
+    "combination if component evidence supports it"
+  ],
+  "primary_settings": {
+    "chunk_tokens": [
+      64,
+      96
+    ],
+    "retrieved_context_tokens": 512,
+    "special_tokens": true,
+    "top_k": 5,
+    "overlap": 0,
+    "context": "none",
+    "cpu_pools": 2,
+    "chunking_repeats": 3
+  },
+  "secondary_budget_frontier": [
+    128,
+    256
+  ],
+  "selection": "Report every variant. Prefer paired recall gains with no >0.005 recall decline in any dev corpus/capacity. Assess precision/IoU, per-language losses and embedding token overhead; do not claim precision advantage solely from leaving more budget unused. Choose using development only; no per-query/language/dataset identifiers in source.",
+  "validation": "Freeze one source and two pretrained model revisions before opening new validation. Evaluate baseline,current,chosen candidate and all declared rivals once per encoder, all capacities/budgets predeclared. Report full frontier and all losses; no repeated validation tuning.",
+  "claims": "Scope any advantage to measured workloads/models/budgets, disclose selection and bootstrap/article correlation, do not promise universal superiority."
+}

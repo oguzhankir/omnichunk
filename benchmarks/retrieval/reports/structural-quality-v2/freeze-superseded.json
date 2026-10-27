@@ -1,0 +1,9 @@
+{
+  "recorded_utc": "2026-10-26T18:40:52.379581+00:00",
+  "superseded_freeze": "freeze-before-validation.json",
+  "freeze_sha256": "aeeba66527e41583aec91e5688ce20ae58d3a47ea60a31bca177d0cb6136cb22",
+  "reason": "CodebotP2 discovered missing trailing inlinecomment ownership in isolated code groups before validation release. Correctness fix, not score-based tuning.",
+  "finding_url": "https://github.com/oguzhankir/omnichunk/pull/36#discussion_r4381082183",
+  "validation_unreleased": true,
+  "next": "Freeze-v2 only after fix/testing/payload-equivalence; keep original record immutable."
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "released": true,
+  "freeze_record_sha256": "3081dda90382a24e93cf3087e173d0ef7a8e8a36db4daa09ae34f8a92d3af59f",
+  "protocol_sha256": "d17570dbcca6ff1be0326392749098e90db9e1172eac6ca288a876ff3ee46453",
+  "sealed_plaintext_zip_sha256": "c0a7f0d05463698dcfdbea9e8fb17398dc825d171c3b10e1ea7ecae7ecb7c1cc",
+  "validation_commitments_verified": {
+    "article-text": {
+      "documents": 16,
+      "queries": 144,
+      "article_components": 16,
+      "manifest_sha256": "7bb53b365ea6d53dbd8cf69179114c5ffd418ca71fdaf62a2f47c63e6f4d141d",
+      "source_bytes": 38563
+    },
+    "article-markdown": {
+      "documents": 16,
+      "queries": 144,
+      "article_components": 16,
+      "manifest_sha256": "6c6e61c872922bf9fb13d7d574b4bd529e7930a332881fe89eb5e2429572dc9b",
+      "source_bytes": 38829
+    }
+  },
+  "model_or_retrieval_calls": 0,
+  "policy": "Validation released after source/model/config freeze; evaluate declared matrix once and do not tune from it."
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "development_articles_compared": 16,
+  "development_queries_compared": 144,
+  "article_view_content_prefix_exact": true,
+  "questions_and_answer_quotes_identical": true,
+  "all_answer_byte_offsets_exactly_rebased": true,
+  "validation_data_inspected": false,
+  "model_or_retrieval_calls": 0
+}

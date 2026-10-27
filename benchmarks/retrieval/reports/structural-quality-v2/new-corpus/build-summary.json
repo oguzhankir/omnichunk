@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "protocol_sha256": "d17570dbcca6ff1be0326392749098e90db9e1172eac6ca288a876ff3ee46453",
+  "builder_sha256": "1aa91787a0843e0f6fcb732cb61a5b3f8c7ac169c08e4709b670b321af78ec29",
+  "upstream_sha256": "95aa6a52d5d6a735563366753ca50492a658031da74f301ac5238b03966972c9",
+  "upstream_articles": 48,
+  "excluded_previously_observed_articles": 16,
+  "available_unobserved_articles_before_eligibility": 32,
+  "selected_design": {
+    "new_articles": 32,
+    "paragraphs_per_article": 3,
+    "questions_per_paragraph": 3,
+    "reason": "Pinned upstream may not have64unobserved articles after excluding all16previously observed articles"
+  },
+  "primary_design_unavailable_reason": "Pinned48article source minus16previously observed articles leaves32;64unavailable before eligibility",
+  "selected_articles_total": 32,
+  "previous_article_overlap": 0,
+  "cross_split_article_overlap": 0,
+  "cross_split_normalized_question_overlap": 0,
+  "previous_normalized_context_or_question_overlap": 0,
+  "view_commitments": {
+    "article-text": {
+      "development": {
+        "documents": 16,
+        "queries": 144,
+        "article_components": 16,
+        "manifest_sha256": "ac76294c50f45e54ab83500f2a4b5bf76e3bf9849fb80089d36e800476370302",
+        "source_bytes": 40553
+      },
+      "validation": {
+        "documents": 16,
+        "queries": 144,
+        "article_components": 16,
+        "manifest_sha256": "7bb53b365ea6d53dbd8cf69179114c5ffd418ca71fdaf62a2f47c63e6f4d141d",
+        "source_bytes": 38563
+      }
+    },
+    "article-markdown": {
+      "development": {
+        "documents": 16,
+        "queries": 144,
+        "article_components": 16,
+        "manifest_sha256": "ac1e1c98e33c298e8c9d11ae797edf53d55a0b7ce21ca2469b3bb94896d6a851",
+        "source_bytes": 40860
+      },
+      "validation": {
+        "documents": 16,
+        "queries": 144,
+        "article_components": 16,
+        "manifest_sha256": "6c6e61c872922bf9fb13d7d574b4bd529e7930a332881fe89eb5e2429572dc9b",
+        "source_bytes": 38829
+      }
+    }
+  },
+  "validation_seal": {
+    "algorithm": "AES-256-GCM",
+    "ciphertext_sha256": "8d5700de69adc42ff76dc4a86a1e4c7d77979f02b1b1cb4db0858f564fe07a53",
+    "ciphertext_bytes": 84108,
+    "plaintext_zip_sha256": "c0a7f0d05463698dcfdbea9e8fb17398dc825d171c3b10e1ea7ecae7ecb7c1cc",
+    "associated_data": "ASCII protocol_sha256",
+    "custody": "Generatedkey retained only in supervising agent session store; same workspace agent custody is not independent external custody",
+    "released": false
+  },
+  "model_or_retrieval_calls": 0,
+  "loader_validation": "Existing load_corpus passed full dev+test corpus and each separated split for both views, including UTF8 evidence/hashes/duplicates/path/split checks"
+}

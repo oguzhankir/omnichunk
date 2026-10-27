@@ -1,0 +1,210 @@
+{
+  "development_only": true,
+  "view": "article-text; same gap query IDs in markdown",
+  "cases": [
+    {
+      "capacity": 64,
+      "query_id": "new-squad-57268f2bf1498d1400e8e3c6",
+      "tools": {
+        "omnichunk": {
+          "prefix_count": 12,
+          "tokens_used": 475,
+          "gold_passages": [
+            {
+              "start": 197,
+              "end": 403,
+              "rank": 14,
+              "score": 0.3308504704406136,
+              "selected": false,
+              "text": "However, as a result of the referendum in France and the referendum in the Netherlands, the 2004 Treaty establishing a Constitution for Europe never came into force. Instead, the Lisbon Treaty was enacted. ",
+              "tokens": 45
+            }
+          ]
+        },
+        "semchunk": {
+          "prefix_count": 14,
+          "tokens_used": 469,
+          "gold_passages": [
+            {
+              "start": 197,
+              "end": 402,
+              "rank": 14,
+              "score": 0.3308504704406136,
+              "selected": true,
+              "text": "However, as a result of the referendum in France and the referendum in the Netherlands, the 2004 Treaty establishing a Constitution for Europe never came into force. Instead, the Lisbon Treaty was enacted.",
+              "tokens": 45
+            }
+          ]
+        }
+      },
+      "same_gold_text_ignoring_whitespace": true,
+      "same_gold_token_ids": true
+    },
+    {
+      "capacity": 64,
+      "query_id": "new-squad-5726f7715951b619008f838f",
+      "tools": {
+        "omnichunk": {
+          "prefix_count": 11,
+          "tokens_used": 480,
+          "gold_passages": [
+            {
+              "start": 3128,
+              "end": 3255,
+              "rank": 33,
+              "score": 0.22328157664118378,
+              "selected": false,
+              "text": "This system reflects much similarity to the checks and balances system of the U.S. and many other governments.[citation needed]",
+              "tokens": 34
+            }
+          ]
+        },
+        "semchunk": {
+          "prefix_count": 13,
+          "tokens_used": 487,
+          "gold_passages": [
+            {
+              "start": 2948,
+              "end": 3210,
+              "rank": 2,
+              "score": 0.5615899288268746,
+              "selected": true,
+              "text": "Such self-interest directly conflicts with the patient's interest in obtaining cost-effective medication and avoiding the unnecessary use of medication that may have side-effects. This system reflects much similarity to the checks and balances system of the U.S.",
+              "tokens": 64
+            },
+            {
+              "start": 3211,
+              "end": 3255,
+              "rank": 61,
+              "score": 0.1650455300970275,
+              "selected": false,
+              "text": "and many other governments.[citation needed]",
+              "tokens": 13
+            }
+          ]
+        }
+      }
+    },
+    {
+      "capacity": 64,
+      "query_id": "new-squad-5728facd4b864d1900165173",
+      "tools": {
+        "omnichunk": {
+          "prefix_count": 9,
+          "tokens_used": 492,
+          "gold_passages": [
+            {
+              "start": 1447,
+              "end": 1566,
+              "rank": 10,
+              "score": 0.3430979341449012,
+              "selected": false,
+              "text": "During the Vietnam War era, the Chicago Eight used a political defense, while Benjamin Spock used a technical defense. ",
+              "tokens": 26
+            }
+          ]
+        },
+        "semchunk": {
+          "prefix_count": 12,
+          "tokens_used": 491,
+          "gold_passages": [
+            {
+              "start": 1447,
+              "end": 1565,
+              "rank": 11,
+              "score": 0.3430979341449012,
+              "selected": true,
+              "text": "During the Vietnam War era, the Chicago Eight used a political defense, while Benjamin Spock used a technical defense.",
+              "tokens": 26
+            }
+          ]
+        }
+      },
+      "same_gold_text_ignoring_whitespace": true,
+      "same_gold_token_ids": true
+    },
+    {
+      "capacity": 96,
+      "query_id": "new-squad-5728fc9e1d04691400778f15",
+      "tools": {
+        "omnichunk": {
+          "prefix_count": 6,
+          "tokens_used": 478,
+          "gold_passages": [
+            {
+              "start": 3146,
+              "end": 3504,
+              "rank": 1,
+              "score": 0.6957661834201185,
+              "selected": true,
+              "text": "Fully Informed Jury Association activists have sometimes handed out educational leaflets inside courthouses despite admonitions not to; according to FIJA, many of them have escaped prosecution because \"prosecutors have reasoned (correctly) that if they arrest fully informed jury leafleters, the leaflets will have to be given to the leafleter's own jury as ",
+              "tokens": 95
+            },
+            {
+              "start": 3504,
+              "end": 3514,
+              "rank": 12,
+              "score": 0.3263389632472116,
+              "selected": false,
+              "text": "evidence.\"",
+              "tokens": 4
+            }
+          ]
+        },
+        "semchunk": {
+          "prefix_count": 8,
+          "tokens_used": 494,
+          "gold_passages": [
+            {
+              "start": 3282,
+              "end": 3514,
+              "rank": 2,
+              "score": 0.6419207096703756,
+              "selected": true,
+              "text": "according to FIJA, many of them have escaped prosecution because \"prosecutors have reasoned (correctly) that if they arrest fully informed jury leafleters, the leaflets will have to be given to the leafleter's own jury as evidence.\"",
+              "tokens": 66
+            }
+          ]
+        }
+      }
+    },
+    {
+      "capacity": 96,
+      "query_id": "new-squad-5729f4273f37b319004785fe",
+      "tools": {
+        "omnichunk": {
+          "prefix_count": 6,
+          "tokens_used": 484,
+          "gold_passages": [
+            {
+              "start": 412,
+              "end": 758,
+              "rank": 8,
+              "score": 0.31142638501771974,
+              "selected": false,
+              "text": "Over time, wealth condensation can significantly contribute to the persistence of inequality within society. Thomas Piketty in his book Capital in the Twenty-First Century argues that the fundamental force for divergence is the usually greater return of capital (r) than economic growth (g), and that larger fortunes generate higher returns [pp. ",
+              "tokens": 77
+            }
+          ]
+        },
+        "semchunk": {
+          "prefix_count": 6,
+          "tokens_used": 503,
+          "gold_passages": [
+            {
+              "start": 412,
+              "end": 808,
+              "rank": 4,
+              "score": 0.323842197725968,
+              "selected": true,
+              "text": "Over time, wealth condensation can significantly contribute to the persistence of inequality within society. Thomas Piketty in his book Capital in the Twenty-First Century argues that the fundamental force for divergence is the usually greater return of capital (r) than economic growth (g), and that larger fortunes generate higher returns [pp. 384 Table 12.2, U.S. university endowment size vs.",
+              "tokens": 94
+            }
+          ]
+        }
+      },
+      "same_gold_text_ignoring_whitespace": false,
+      "same_gold_token_ids": false
+    }
+  ]
+}

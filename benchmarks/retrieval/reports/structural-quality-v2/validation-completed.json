@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "freeze_sha256": "3081dda90382a24e93cf3087e173d0ef7a8e8a36db4daa09ae34f8a92d3af59f",
+  "matrix_jobs": [
+    {
+      "encoder": "multilingual",
+      "view": "article-text",
+      "role": "current",
+      "output": "/workspace/work/omnichunk-quality/matrix/validation/multilingual/current-article-text",
+      "report_sha256": "0dded0f7d5bcbb2e03ba9a912884755a35d6940a06f08f77ab511f2436db2454"
+    },
+    {
+      "encoder": "multilingual",
+      "view": "article-text",
+      "role": "release",
+      "output": "/workspace/work/omnichunk-quality/matrix/validation/multilingual/release-article-text",
+      "report_sha256": "027f5681d89011e1793b1f628c824d2cea4542d5c91f0d0a9bfe7f7275251d54"
+    },
+    {
+      "encoder": "multilingual",
+      "view": "article-text",
+      "role": "candidate",
+      "output": "/workspace/work/omnichunk-quality/matrix/validation/multilingual/candidate-article-text",
+      "report_sha256": "0794706cb0f3c0c56e2f8b6b19e01777f4579d3d65aeed721de5c355ce7c7b8b"
+    },
+    {
+      "encoder": "multilingual",
+      "view": "article-markdown",
+      "role": "current",
+      "output": "/workspace/work/omnichunk-quality/matrix/validation/multilingual/current-article-markdown",
+      "report_sha256": "500183c4e35d956ee1db34f854f6e7ff42b6b5e5b2b5c1bb9fe15218bdbed7b1"
+    },
+    {
+      "encoder": "multilingual",
+      "view": "article-markdown",
+      "role": "release",
+      "output": "/workspace/work/omnichunk-quality/matrix/validation/multilingual/release-article-markdown",
+      "report_sha256": "cb56d46df46e2d0e0a9c7e450f72966d3d34e1d926d6eabf756d180f7682b285"
+    },
+    {
+      "encoder": "multilingual",
+      "view": "article-markdown",
+      "role": "candidate",
+      "output": "/workspace/work/omnichunk-quality/matrix/validation/multilingual/candidate-article-markdown",
+      "report_sha256": "cd1e2c668d16696d47f7e7cde031a8849fcb6ed7069356bdff4c9ee1cb8dc283"
+    },
+    {
+      "encoder": "english",
+      "view": "article-text",
+      "role": "current",
+      "output": "/workspace/work/omnichunk-quality/matrix/validation/english/current-article-text",
+      "report_sha256": "d64287f0d127544d25d13c837ce90d2e4843ee4f697fef4c41a788d12ac0fc56"
+    },
+    {
+      "encoder": "english",
+      "view": "article-text",
+      "role": "release",
+      "output": "/workspace/work/omnichunk-quality/matrix/validation/english/release-article-text",
+      "report_sha256": "4367f9454ea44cf45bf03a99949b8294d499450e1bbbaba410d9c7c36716cec7"
+    },
+    {
+      "encoder": "english",
+      "view": "article-text",
+      "role": "candidate",
+      "output": "/workspace/work/omnichunk-quality/matrix/validation/english/candidate-article-text",
+      "report_sha256": "6593a8a8532c3502606328393f7db0ba989453561442422278b1639a6f64d3bb"
+    },
+    {
+      "encoder": "english",
+      "view": "article-markdown",
+      "role": "current",
+      "output": "/workspace/work/omnichunk-quality/matrix/validation/english/current-article-markdown",
+      "report_sha256": "3c91d3f13667cebe444072256b119347eff23f4f426599dea6c565e5203f4541"
+    },
+    {
+      "encoder": "english",
+      "view": "article-markdown",
+      "role": "release",
+      "output": "/workspace/work/omnichunk-quality/matrix/validation/english/release-article-markdown",
+      "report_sha256": "493803cfeaefb78b6cc54a7e573019918253aaf72651a24aacdfe0bf12e41703"
+    },
+    {
+      "encoder": "english",
+      "view": "article-markdown",
+      "role": "candidate",
+      "output": "/workspace/work/omnichunk-quality/matrix/validation/english/candidate-article-markdown",
+      "report_sha256": "7dc02f883b25085a4d3e0eddb743374de3b4d03573df361de89579171e947444"
+    }
+  ],
+  "reruns": 0,
+  "model_settings_changed": false
+}

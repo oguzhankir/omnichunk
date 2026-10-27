@@ -1,0 +1,2741 @@
+{
+  "schema_version": 1,
+  "corpus_id": "squad-1.1-unobserved-articles-v2-article-text",
+  "license": "CC-BY-SA-4.0",
+  "source": "https://rajpurkar.github.io/SQuAD-explorer/",
+  "provenance": {
+    "upstream_url": "https://raw.githubusercontent.com/rajpurkar/SQuAD-explorer/master/dataset/dev-v1.1.json",
+    "upstream_sha256": "95aa6a52d5d6a735563366753ca50492a658031da74f301ac5238b03966972c9",
+    "upstream_version": "1.1",
+    "authors": [
+      "Pranav Rajpurkar",
+      "Jian Zhang",
+      "Konstantin Lopyrev",
+      "Percy Liang"
+    ],
+    "protocol_sha256": "d17570dbcca6ff1be0326392749098e90db9e1172eac6ca288a876ff3ee46453",
+    "selection_namespace": "omnichunk-independent-squad-v2|2026-10-26",
+    "selected_design": {
+      "new_articles": 32,
+      "paragraphs_per_article": 3,
+      "questions_per_paragraph": 3,
+      "reason": "Pinned upstream may not have64unobserved articles after excluding all16previously observed articles"
+    },
+    "previous_corpora": [
+      {
+        "corpus": "corpus_v1",
+        "manifest_sha256": "983ed940ce78d679bc651cae9a94d2805c8cdda006d898d0e281ce763b5acd9c"
+      },
+      {
+        "corpus": "corpus_squad_v1",
+        "manifest_sha256": "40c7a1e77c7e43d6560c496e860c306dc706cd5c5b83e5404f6d2bcb5b794135"
+      }
+    ],
+    "excluded_previously_observed_article_count": 16,
+    "selection": "Predeclared namespace-SHA256 order; no model/tokenizer/score used",
+    "split_policy": "Alternate selected article hash order into development(dev) and sealed validation(test); all source paragraphs/questions for an article stay together. Never select or change split by retrieval result.",
+    "article_component_policy": "Exactly1source document per article per view; gold-source bootstrap units are full articles",
+    "transformation": "One.txtsource document per article:3selected unmodified source paragraphs in original upstream order, joined by2newlines; no title prefix. Under64article primary use2paragraphs instead.",
+    "answer_policy": "Sort by SHA256(namespace + upstream question ID), ID tiebreaker; select first3eligible normalized unique question texts. Use first nonempty answer annotation with exact matching character offset; convert to UTF8source bytes after article rendering.",
+    "selected_articles": [
+      "European_Union_law",
+      "Doctor_Who",
+      "Kenya",
+      "Apollo_program",
+      "Huguenot",
+      "Force",
+      "Intergovernmental_Panel_on_Climate_Change",
+      "Steam_engine",
+      "United_Methodist_Church",
+      "Oxygen",
+      "Computational_complexity_theory",
+      "Pharmacy",
+      "Super_Bowl_50",
+      "Civil_disobedience",
+      "Economic_inequality",
+      "Construction"
+    ],
+    "limitations": [
+      "SQuAD/Wikipedia may overlap model pretraining; procedural tuning blindness does not imply pretraining novelty",
+      "Question annotations are independently authored, exact short answers are not independently audited complete supporting-evidence sets",
+      "Synthetic article rendering introduces headings/joins and transformation bias; text view is paired control",
+      "32article fallback yields16articleclustersper split; descriptive intervals and no universal leadership claim"
+    ]
+  },
+  "documents": [
+    {
+      "source_id": "new-squad-89c62c7639ac82bee2eedb25e2dcfd9b66c2447de742c557a1a7c43a6e19b42c-txt",
+      "path": "documents/new-squad-89c62c7639ac82bee2eedb25e2dcfd9b66c2447de742c557a1a7c43a6e19b42c-txt.txt",
+      "sha256": "96397b532a59506dbc47c01b5943543f5286972f3181da61aad89a119d937a8e",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "European_Union_law",
+      "article_component": "article-e3988183fe82ff55b61ad2c5a4d2de3f9eabcff56d3ff486405e1f96aed884b0",
+      "source": "https://en.wikipedia.org/wiki/European_Union_law",
+      "attribution": "Wikipedia contributors: European_Union_law; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 5,
+          "start": 0,
+          "end": 614,
+          "upstream_context_sha256": "1a10ced916ac064f05f770ad0914687cbcf2870959d1012753e81b033904bc15"
+        },
+        {
+          "upstream_paragraph_index": 9,
+          "start": 616,
+          "end": 2089,
+          "upstream_context_sha256": "dd04072038d1a3ede59bf62dd3dc9ade4227b046627d4885431216fa66204dee"
+        },
+        {
+          "upstream_paragraph_index": 12,
+          "start": 2091,
+          "end": 4911,
+          "upstream_context_sha256": "d96efa04967dc1620b0ea8b56914b0773d312093fa35a36584e9e9423e6f42d1"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-739b26ad09d151a6fa1b71841ff185b937b09bbb647d87a352dfb8f2ec9d3373-txt",
+      "path": "documents/new-squad-739b26ad09d151a6fa1b71841ff185b937b09bbb647d87a352dfb8f2ec9d3373-txt.txt",
+      "sha256": "2c732a7b01002ee1822d33f2fa66e2fb4498c50a609dfa91dceadfd256f882e0",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Doctor_Who",
+      "article_component": "article-9b339e0d80f166959faab30eb5cbda7474c0e1d466e4e5299bbedf98f9b2810e",
+      "source": "https://en.wikipedia.org/wiki/Doctor_Who",
+      "attribution": "Wikipedia contributors: Doctor_Who; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 15,
+          "start": 0,
+          "end": 660,
+          "upstream_context_sha256": "62e87089430045b3efd524213e1c785193a5826bd5e2482b0be68ff2b859a6c3"
+        },
+        {
+          "upstream_paragraph_index": 19,
+          "start": 662,
+          "end": 1331,
+          "upstream_context_sha256": "e4ca4b6e567f071eabb02303d4bfa4acb8fe9a9c7cb467306a02ce651088be4f"
+        },
+        {
+          "upstream_paragraph_index": 56,
+          "start": 1333,
+          "end": 2050,
+          "upstream_context_sha256": "98e256ad70d1e8cf8a438526d32da0493c1c0d619d91982b7c48ae2714eaa8e5"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-d265bf237c684532342f1a5aa328af20a3da712ab056e65d8aec8bf6e3c07b9e-txt",
+      "path": "documents/new-squad-d265bf237c684532342f1a5aa328af20a3da712ab056e65d8aec8bf6e3c07b9e-txt.txt",
+      "sha256": "10b9dcfc50df660cb454746a34e8609ffcdb0f8c2bf27e1aa32135a0fed183e6",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Kenya",
+      "article_component": "article-74e1891dc615b22fac103c74ab7133742dd1d95a604f6d4edb1a9403b7156506",
+      "source": "https://en.wikipedia.org/wiki/Kenya",
+      "attribution": "Wikipedia contributors: Kenya; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 17,
+          "start": 0,
+          "end": 519,
+          "upstream_context_sha256": "2ae1b5ffe9822c4cae5ab14cb4af7a69cd6d94644e90b97c70e34e392f3080a4"
+        },
+        {
+          "upstream_paragraph_index": 30,
+          "start": 521,
+          "end": 1522,
+          "upstream_context_sha256": "90ac00d8d1309fb7a4dd3c0ab3173dedced68cd8ee6e0db8d21d6ef1392bf3cb"
+        },
+        {
+          "upstream_paragraph_index": 38,
+          "start": 1524,
+          "end": 2466,
+          "upstream_context_sha256": "68b0737397a815b733f6df273f041c2be366a445a8965f2e22a7a61109bc2f4c"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-6cce0bfafa95d515181b6ff61ce40f99718ab58428fa8fe1fc04c4d764d8bffd-txt",
+      "path": "documents/new-squad-6cce0bfafa95d515181b6ff61ce40f99718ab58428fa8fe1fc04c4d764d8bffd-txt.txt",
+      "sha256": "f5d4714466cc11272749cc7b2bd9ae93cedca19d125f4eba6e69d6009da9fd60",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Apollo_program",
+      "article_component": "article-76caddc020acf9ec9672eee9b150f605489ef33821b3bbfa7f570ff983fb1629",
+      "source": "https://en.wikipedia.org/wiki/Apollo_program",
+      "attribution": "Wikipedia contributors: Apollo_program; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 3,
+          "start": 0,
+          "end": 797,
+          "upstream_context_sha256": "22457c95e4568f15987c2f7eaff5c6b4df05941a95de0f4bdbad20b959fee7c7"
+        },
+        {
+          "upstream_paragraph_index": 33,
+          "start": 799,
+          "end": 1318,
+          "upstream_context_sha256": "4a365b7f3aade3b38d2529a159d0a9ae1f8fdee2e32620fb94d0c76663a43a29"
+        },
+        {
+          "upstream_paragraph_index": 38,
+          "start": 1320,
+          "end": 2038,
+          "upstream_context_sha256": "a2eaf4d99bb280d6b95d2b1dff13d04d03de75b276be4106893be7342b8f7400"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-da1813866392dbdfa76cfa25e557d945ea379c9d8604e4678857acbdc7f80f38-txt",
+      "path": "documents/new-squad-da1813866392dbdfa76cfa25e557d945ea379c9d8604e4678857acbdc7f80f38-txt.txt",
+      "sha256": "bc8f1e9bead4005ec5d890a5456e9a5216ca25d46b365fde57302fe037f8218e",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Huguenot",
+      "article_component": "article-af0c01d88958e12e2611065d10855bc8ed353385d202753224e5b2d368650d7e",
+      "source": "https://en.wikipedia.org/wiki/Huguenot",
+      "attribution": "Wikipedia contributors: Huguenot; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 20,
+          "start": 0,
+          "end": 1034,
+          "upstream_context_sha256": "0b80ec4b4d01cc5efd889368e776efe6eb305942873d06582992445d85649487"
+        },
+        {
+          "upstream_paragraph_index": 24,
+          "start": 1036,
+          "end": 1597,
+          "upstream_context_sha256": "465f3a788653969dc5843bdf05150f974f547770065e89d57e06c202b8273776"
+        },
+        {
+          "upstream_paragraph_index": 40,
+          "start": 1599,
+          "end": 2365,
+          "upstream_context_sha256": "52e533d595a501764514b440ac2ec0f7cebfaac473204708efa685c5a348d032"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-5774c9ad90f4e009e5329a915846102d6d18e2b926501d59aa210d441b9741a5-txt",
+      "path": "documents/new-squad-5774c9ad90f4e009e5329a915846102d6d18e2b926501d59aa210d441b9741a5-txt.txt",
+      "sha256": "9e03c995a9080bc02cca5d4548a9f39ee67d763cd23e76b2b8929a7cf05766a2",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Force",
+      "article_component": "article-cfda1755ffb11565e5b6b5081f92f40749fedd31fa578e8af78b89937f89a6a3",
+      "source": "https://en.wikipedia.org/wiki/Force",
+      "attribution": "Wikipedia contributors: Force; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 2,
+          "start": 0,
+          "end": 1302,
+          "upstream_context_sha256": "c49d89872cec88c8052a5a2ee0f541f718244647ba1148ede8c4a2a4bfb0282c"
+        },
+        {
+          "upstream_paragraph_index": 3,
+          "start": 1304,
+          "end": 1902,
+          "upstream_context_sha256": "223421a455a8533ec3d82673a2643075bb99a003336eb360498d4d764f30a174"
+        },
+        {
+          "upstream_paragraph_index": 37,
+          "start": 1904,
+          "end": 2424,
+          "upstream_context_sha256": "74e88ac6d67515920292029909b403269481a3690e4aeb4db4704db9b3c42403"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-3dec461611bf8ad5d097df4c01a61e5d7c981ab2e4c23a2e2dbb9836f53ad95d-txt",
+      "path": "documents/new-squad-3dec461611bf8ad5d097df4c01a61e5d7c981ab2e4c23a2e2dbb9836f53ad95d-txt.txt",
+      "sha256": "86330c817155d09546364a2e6e803b64f2a7849a78d2864e834e934c1a00c09f",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Intergovernmental_Panel_on_Climate_Change",
+      "article_component": "article-edc75a2f685d9eeee677c9053340430d919587f66822bf54c052a9bb9b59ce33",
+      "source": "https://en.wikipedia.org/wiki/Intergovernmental_Panel_on_Climate_Change",
+      "attribution": "Wikipedia contributors: Intergovernmental_Panel_on_Climate_Change; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 6,
+          "start": 0,
+          "end": 873,
+          "upstream_context_sha256": "a13fb4c358557dc227b4cf451a8338fd695777c87f1452f906d1b60e6dc5cd61"
+        },
+        {
+          "upstream_paragraph_index": 8,
+          "start": 875,
+          "end": 1454,
+          "upstream_context_sha256": "dea705fdf75f529664435816398522b553e31b0965a1287f3375c31a630e304e"
+        },
+        {
+          "upstream_paragraph_index": 9,
+          "start": 1456,
+          "end": 1995,
+          "upstream_context_sha256": "7c74fc3f547a3dd5535ba498d466d980e22cbb4bd99161de9aa21fe70cf743c7"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-db30d8026238cdf6646b457399831f2b0b628ef8a1dad823d8bdcb32ca33e544-txt",
+      "path": "documents/new-squad-db30d8026238cdf6646b457399831f2b0b628ef8a1dad823d8bdcb32ca33e544-txt.txt",
+      "sha256": "7800470726daed3b0341efc3df7827530bd878d865381fc7f4c9171850912848",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Steam_engine",
+      "article_component": "article-a7b91965e8e5cc19290291386777d531c88616674351417f06d8c78b53505e2e",
+      "source": "https://en.wikipedia.org/wiki/Steam_engine",
+      "attribution": "Wikipedia contributors: Steam_engine; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 13,
+          "start": 0,
+          "end": 731,
+          "upstream_context_sha256": "24273c4214c280027ec913fc28585ee484edcd0c57967f4677741d4c2c520bdd"
+        },
+        {
+          "upstream_paragraph_index": 22,
+          "start": 733,
+          "end": 1728,
+          "upstream_context_sha256": "e2525668eb13ddf3ceee10a8c808caa5ae4a525801b9141bcca4c921cf8a4cfa"
+        },
+        {
+          "upstream_paragraph_index": 26,
+          "start": 1730,
+          "end": 2606,
+          "upstream_context_sha256": "68cc7e443dab62acd50ead8d7c118537cf11388e2cd488044cf040b21f06c60c"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-4254e2279ee1bb6c399fc989efd3a0d3e72dcfec40b8b6c598c44f38035680f7-txt",
+      "path": "documents/new-squad-4254e2279ee1bb6c399fc989efd3a0d3e72dcfec40b8b6c598c44f38035680f7-txt.txt",
+      "sha256": "ecccb83d08923a61243f6b335cbc665ce3aeaa62e7b237e1461111ad0847557d",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "United_Methodist_Church",
+      "article_component": "article-932ea34adb4696df9efb5a7bea0f49d3b370913f95d69ff8e3eea84285182663",
+      "source": "https://en.wikipedia.org/wiki/United_Methodist_Church",
+      "attribution": "Wikipedia contributors: United_Methodist_Church; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 1,
+          "start": 0,
+          "end": 814,
+          "upstream_context_sha256": "712c708c17482b746ae46fd4fde49eace91a3546ec4e5eeaea3d92fc4d92d599"
+        },
+        {
+          "upstream_paragraph_index": 27,
+          "start": 816,
+          "end": 1431,
+          "upstream_context_sha256": "a34ccf6d5ab7e38f851cbdaea7013f8ddb44a2f67c28e3784f3e0060153bf18a"
+        },
+        {
+          "upstream_paragraph_index": 40,
+          "start": 1433,
+          "end": 2063,
+          "upstream_context_sha256": "65435b5dbd994ecc2120117819c985abb5f7dbefc3fcc28e7f1afaff084c0857"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-62622119e770012b2380c8615bca67b531711a5a317293a4dd47df02ea2f99bf-txt",
+      "path": "documents/new-squad-62622119e770012b2380c8615bca67b531711a5a317293a4dd47df02ea2f99bf-txt.txt",
+      "sha256": "289a69432d74a1c84afbad945e9cdaba79d0535c49a31cb798fcfcb6196d653e",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Oxygen",
+      "article_component": "article-943077f0507ddf71e79a6b07cdc9a1f452bab07502be36ba125a6f5250038012",
+      "source": "https://en.wikipedia.org/wiki/Oxygen",
+      "attribution": "Wikipedia contributors: Oxygen; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 1,
+          "start": 0,
+          "end": 986,
+          "upstream_context_sha256": "6b5baac861c36b5fd13e7a181e848be90fe9291892c24fcaa534999aeb639149"
+        },
+        {
+          "upstream_paragraph_index": 6,
+          "start": 988,
+          "end": 1552,
+          "upstream_context_sha256": "d58b1a4d6bf601f6d89c2d7d1e8973e368c0b2c976fc6c565cb1649d3183c7f8"
+        },
+        {
+          "upstream_paragraph_index": 29,
+          "start": 1554,
+          "end": 2177,
+          "upstream_context_sha256": "dd790b7fdd62790386db0c2a1e657cb576e6313042d6722d73c517fa827ed359"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-72852851357ab098e98242896856d71ddd61b9f33b88ede483a74c3c91951ef9-txt",
+      "path": "documents/new-squad-72852851357ab098e98242896856d71ddd61b9f33b88ede483a74c3c91951ef9-txt.txt",
+      "sha256": "6cb04f413c48a8af9898e2ef57903e666cd07275284dadfa884c61831bb29520",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Computational_complexity_theory",
+      "article_component": "article-c2d47d9f95109ab90d88ac97a1f87fd6398ad326fd9c801bc4e399e695e9fd58",
+      "source": "https://en.wikipedia.org/wiki/Computational_complexity_theory",
+      "attribution": "Wikipedia contributors: Computational_complexity_theory; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 10,
+          "start": 0,
+          "end": 787,
+          "upstream_context_sha256": "7da2d7e1a3f7c747e12d14023544c6bd21aa39f41732fff415fa7d8aa83c57fe"
+        },
+        {
+          "upstream_paragraph_index": 14,
+          "start": 789,
+          "end": 1194,
+          "upstream_context_sha256": "94a07cc8780eb4400c56a348d92177f5013c97e5647728b384a3a14f2662cc5f"
+        },
+        {
+          "upstream_paragraph_index": 27,
+          "start": 1196,
+          "end": 2052,
+          "upstream_context_sha256": "697fc195c9b97bc8be1791335b67318ae68f44c890d45b0503189769ebc68eba"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-bde7d2abcb5519b9c0e6a488c41a527379b9b84f10034fcdb3ca36b71c0cabc9-txt",
+      "path": "documents/new-squad-bde7d2abcb5519b9c0e6a488c41a527379b9b84f10034fcdb3ca36b71c0cabc9-txt.txt",
+      "sha256": "aa363dd97a68207b530eae6f267ddc0314b125288a7c398050fcc0721dd60fe2",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Pharmacy",
+      "article_component": "article-98f3d29f6ca4a904ae5e2adca6c24ba840fa3a39b4fa3dd7beeb0e9094df3654",
+      "source": "https://en.wikipedia.org/wiki/Pharmacy",
+      "attribution": "Wikipedia contributors: Pharmacy; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 1,
+          "start": 0,
+          "end": 526,
+          "upstream_context_sha256": "a310999bb352084aaea2b5f616253f626dcd988d9dbb861b7e065dfe2b33c1a8"
+        },
+        {
+          "upstream_paragraph_index": 5,
+          "start": 528,
+          "end": 2622,
+          "upstream_context_sha256": "d0c3193100a2c9cefa5efa046ca711a3a7943ddbb731e1aa29b247fe5eb27c7c"
+        },
+        {
+          "upstream_paragraph_index": 22,
+          "start": 2624,
+          "end": 3255,
+          "upstream_context_sha256": "312a70e3db7cba7ab2f059baf65d323e5e949b04b9c08a807456e9366dcd38b4"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-6ab85d8e00b949b12edda1bcb0fbeab2da5b386f85f340fb012ae960197cddb7-txt",
+      "path": "documents/new-squad-6ab85d8e00b949b12edda1bcb0fbeab2da5b386f85f340fb012ae960197cddb7-txt.txt",
+      "sha256": "8b89316e6b2a11d474945c7f934e1b30cfb29168dc18e56752a269c0b7ec5e4e",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Super_Bowl_50",
+      "article_component": "article-91626ef19cfe0faafc5afefaa7d57eb9c77d30769906e99a23cdff8f413b5ead",
+      "source": "https://en.wikipedia.org/wiki/Super_Bowl_50",
+      "attribution": "Wikipedia contributors: Super_Bowl_50; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 39,
+          "start": 0,
+          "end": 264,
+          "upstream_context_sha256": "cae68c5174b892e542b44e5ccfcee0242f2039cfe8adc807d3632cb884f7c79e"
+        },
+        {
+          "upstream_paragraph_index": 44,
+          "start": 266,
+          "end": 798,
+          "upstream_context_sha256": "b82d067e95815d6e4ba3d7b2b9fa41debd09f5621e29fc17268659cbd394b16e"
+        },
+        {
+          "upstream_paragraph_index": 53,
+          "start": 800,
+          "end": 2153,
+          "upstream_context_sha256": "30a92259456d4c547ebb859022c34787b1a05975e52eaaf715dc18fac9a054d1"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-0469bdae02249ad4d9db3653f24e3d7fd3b571aa14eab52884c8ce04787d6565-txt",
+      "path": "documents/new-squad-0469bdae02249ad4d9db3653f24e3d7fd3b571aa14eab52884c8ce04787d6565-txt.txt",
+      "sha256": "1901a94dc30c5f56fd749b51ea93e966b7aea2805f818bf4e33df568fb4a5a71",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Civil_disobedience",
+      "article_component": "article-8bb9e19c6a3531585b230663b83949a7ae0fd69db75d8788dd87e05905702ab3",
+      "source": "https://en.wikipedia.org/wiki/Civil_disobedience",
+      "attribution": "Wikipedia contributors: Civil_disobedience; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 11,
+          "start": 0,
+          "end": 970,
+          "upstream_context_sha256": "0078a3aad6d29993d7ba7194bf27bfeb0bcf19d6c79a165e45c45cfd1c239758"
+        },
+        {
+          "upstream_paragraph_index": 22,
+          "start": 972,
+          "end": 2059,
+          "upstream_context_sha256": "0452693c2cb8fba37e58cad0335aea50d57c51818ce0841b4e804640f45086ac"
+        },
+        {
+          "upstream_paragraph_index": 24,
+          "start": 2061,
+          "end": 3514,
+          "upstream_context_sha256": "95b444dec0e61a10aa63651ec48055a76133f591af32f80988a975441431932c"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-468e55d479623fcd4d8ef7c84a0d3e287ae136023f28f04fd667712d3d1c89f9-txt",
+      "path": "documents/new-squad-468e55d479623fcd4d8ef7c84a0d3e287ae136023f28f04fd667712d3d1c89f9-txt.txt",
+      "sha256": "a98d1d1ff3bf15e1f33790404e5b29a2303e42c8ba1cab32b45dbd1385fca5dd",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Economic_inequality",
+      "article_component": "article-6ac84eda6c124da20c2bbfa90ed62c662d933246e56afc1f582daa791efa82b6",
+      "source": "https://en.wikipedia.org/wiki/Economic_inequality",
+      "attribution": "Wikipedia contributors: Economic_inequality; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 17,
+          "start": 0,
+          "end": 836,
+          "upstream_context_sha256": "efc06264ba4fcacbf675ac527c22a4897aff1ea1b3ec40b820bf5849e5da9749"
+        },
+        {
+          "upstream_paragraph_index": 27,
+          "start": 838,
+          "end": 1532,
+          "upstream_context_sha256": "c1901061039c2bb1ad545a817f00d92dd5d20ffb490cfbe72629441af32a7e7b"
+        },
+        {
+          "upstream_paragraph_index": 28,
+          "start": 1534,
+          "end": 2310,
+          "upstream_context_sha256": "4b184251045ff68cd470a8330d18c3848a5524d5ac96c1ad4b4b92ae5d9d5694"
+        }
+      ]
+    },
+    {
+      "source_id": "new-squad-c8372687010e07ccdcd5fc9057bfea06ba09f2f62e927f3e59172f09d68b34f0-txt",
+      "path": "documents/new-squad-c8372687010e07ccdcd5fc9057bfea06ba09f2f62e927f3e59172f09d68b34f0-txt.txt",
+      "sha256": "d38347c4ca22a786c67ea06d40f1c246848ee7cce5c90a8a554b6a7e45358d5c",
+      "language": "en",
+      "category": "prose",
+      "split": "dev",
+      "article_title": "Construction",
+      "article_component": "article-9dc7e90e56b2f2635e18b04c731ea09762e1acd223b106df46e0013851b532b1",
+      "source": "https://en.wikipedia.org/wiki/Construction",
+      "attribution": "Wikipedia contributors: Construction; SQuAD1.1annotations by Rajpurkar,Zhang,Lopyrev,Liang",
+      "paragraph_ranges": [
+        {
+          "upstream_paragraph_index": 1,
+          "start": 0,
+          "end": 716,
+          "upstream_context_sha256": "712be0c0b0e3181f3d317747b1a87774a0db59c4052b4f405e2bcd641dc30c59"
+        },
+        {
+          "upstream_paragraph_index": 9,
+          "start": 718,
+          "end": 1566,
+          "upstream_context_sha256": "2c447bf3a7af6862d1b0dab5ad502d1e7ff2c612d835aa5688290327662cc657"
+        },
+        {
+          "upstream_paragraph_index": 15,
+          "start": 1568,
+          "end": 2174,
+          "upstream_context_sha256": "1cf4f15a6611259d8a4188f0b6866ab76852a0cd5f09291751b0ad4f7f3248ba"
+        }
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "query_id": "new-squad-57268f2bf1498d1400e8e3c4",
+      "text": "What reform was attempted following the Nice Treaty?",
+      "split": "dev",
+      "article_component": "article-e3988183fe82ff55b61ad2c5a4d2de3f9eabcff56d3ff486405e1f96aed884b0",
+      "upstream_question_id": "57268f2bf1498d1400e8e3c4",
+      "evidence": [
+        {
+          "source_id": "new-squad-89c62c7639ac82bee2eedb25e2dcfd9b66c2447de742c557a1a7c43a6e19b42c-txt",
+          "start": 27,
+          "end": 131,
+          "quote": "there was an attempt to reform the constitutional law of the European Union and make it more transparent"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57268f2bf1498d1400e8e3c6",
+      "text": "Which caused the reform to never come into force?",
+      "split": "dev",
+      "article_component": "article-e3988183fe82ff55b61ad2c5a4d2de3f9eabcff56d3ff486405e1f96aed884b0",
+      "upstream_question_id": "57268f2bf1498d1400e8e3c6",
+      "evidence": [
+        {
+          "source_id": "new-squad-89c62c7639ac82bee2eedb25e2dcfd9b66c2447de742c557a1a7c43a6e19b42c-txt",
+          "start": 221,
+          "end": 283,
+          "quote": "the referendum in France and the referendum in the Netherlands"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57268f2bf1498d1400e8e3c7",
+      "text": "What treaty took the place of constitutional treaty? ",
+      "split": "dev",
+      "article_component": "article-e3988183fe82ff55b61ad2c5a4d2de3f9eabcff56d3ff486405e1f96aed884b0",
+      "upstream_question_id": "57268f2bf1498d1400e8e3c7",
+      "evidence": [
+        {
+          "source_id": "new-squad-89c62c7639ac82bee2eedb25e2dcfd9b66c2447de742c557a1a7c43a6e19b42c-txt",
+          "start": 372,
+          "end": 389,
+          "quote": "the Lisbon Treaty"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726545f708984140094c2a7",
+      "text": "How are the votes weighted to ensure that smaller states aren't dominated by larger ones?",
+      "split": "dev",
+      "article_component": "article-e3988183fe82ff55b61ad2c5a4d2de3f9eabcff56d3ff486405e1f96aed884b0",
+      "upstream_question_id": "5726545f708984140094c2a7",
+      "evidence": [
+        {
+          "source_id": "new-squad-89c62c7639ac82bee2eedb25e2dcfd9b66c2447de742c557a1a7c43a6e19b42c-txt",
+          "start": 1596,
+          "end": 1605,
+          "quote": "inversely"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57269424dd62a815002e8a1e",
+      "text": "Which entity is the secondary legislative body?",
+      "split": "dev",
+      "article_component": "article-e3988183fe82ff55b61ad2c5a4d2de3f9eabcff56d3ff486405e1f96aed884b0",
+      "upstream_question_id": "57269424dd62a815002e8a1e",
+      "evidence": [
+        {
+          "source_id": "new-squad-89c62c7639ac82bee2eedb25e2dcfd9b66c2447de742c557a1a7c43a6e19b42c-txt",
+          "start": 652,
+          "end": 663,
+          "quote": "the Council"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57269424dd62a815002e8a1f",
+      "text": "How often does the European Council meet?",
+      "split": "dev",
+      "article_component": "article-e3988183fe82ff55b61ad2c5a4d2de3f9eabcff56d3ff486405e1f96aed884b0",
+      "upstream_question_id": "57269424dd62a815002e8a1f",
+      "evidence": [
+        {
+          "source_id": "new-squad-89c62c7639ac82bee2eedb25e2dcfd9b66c2447de742c557a1a7c43a6e19b42c-txt",
+          "start": 985,
+          "end": 1000,
+          "quote": "each six months"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57265e455951b619008f70bc",
+      "text": "What was the reason the Italian Constitutional court gave that resulted in Mr. Costa losing his his claim against ENEL?",
+      "split": "dev",
+      "article_component": "article-e3988183fe82ff55b61ad2c5a4d2de3f9eabcff56d3ff486405e1f96aed884b0",
+      "upstream_question_id": "57265e455951b619008f70bc",
+      "evidence": [
+        {
+          "source_id": "new-squad-89c62c7639ac82bee2eedb25e2dcfd9b66c2447de742c557a1a7c43a6e19b42c-txt",
+          "start": 3027,
+          "end": 3099,
+          "quote": "nationalisation law was from 1962, and the treaty was in force from 1958"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726975c708984140094cb21",
+      "text": "Which court argued that the Treaty of Rome did not prevent energy nationalism?",
+      "split": "dev",
+      "article_component": "article-e3988183fe82ff55b61ad2c5a4d2de3f9eabcff56d3ff486405e1f96aed884b0",
+      "upstream_question_id": "5726975c708984140094cb21",
+      "evidence": [
+        {
+          "source_id": "new-squad-89c62c7639ac82bee2eedb25e2dcfd9b66c2447de742c557a1a7c43a6e19b42c-txt",
+          "start": 3134,
+          "end": 3154,
+          "quote": "the Court of Justice"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57265e455951b619008f70bd",
+      "text": "What were the years two Regulations that conflicted with an Italian law originate in the Simmenthal SpA case? ",
+      "split": "dev",
+      "article_component": "article-e3988183fe82ff55b61ad2c5a4d2de3f9eabcff56d3ff486405e1f96aed884b0",
+      "upstream_question_id": "57265e455951b619008f70bd",
+      "evidence": [
+        {
+          "source_id": "new-squad-89c62c7639ac82bee2eedb25e2dcfd9b66c2447de742c557a1a7c43a6e19b42c-txt",
+          "start": 4305,
+          "end": 4318,
+          "quote": "1964 and 1968"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572801823acd2414000df1fe",
+      "text": "Which episode in 2008 was over an hour long?",
+      "split": "dev",
+      "article_component": "article-9b339e0d80f166959faab30eb5cbda7474c0e1d466e4e5299bbedf98f9b2810e",
+      "upstream_question_id": "572801823acd2414000df1fe",
+      "evidence": [
+        {
+          "source_id": "new-squad-739b26ad09d151a6fa1b71841ff185b937b09bbb647d87a352dfb8f2ec9d3373-txt",
+          "start": 574,
+          "end": 587,
+          "quote": "Journey's End"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572801823acd2414000df1fd",
+      "text": "When was an extended episode of Doctor Who shown?",
+      "split": "dev",
+      "article_component": "article-9b339e0d80f166959faab30eb5cbda7474c0e1d466e4e5299bbedf98f9b2810e",
+      "upstream_question_id": "572801823acd2414000df1fd",
+      "evidence": [
+        {
+          "source_id": "new-squad-739b26ad09d151a6fa1b71841ff185b937b09bbb647d87a352dfb8f2ec9d3373-txt",
+          "start": 222,
+          "end": 235,
+          "quote": "Christmas Day"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572801823acd2414000df1fb",
+      "text": "In what year did the serial format change for the Doctor Who series?",
+      "split": "dev",
+      "article_component": "article-9b339e0d80f166959faab30eb5cbda7474c0e1d466e4e5299bbedf98f9b2810e",
+      "upstream_question_id": "572801823acd2414000df1fb",
+      "evidence": [
+        {
+          "source_id": "new-squad-739b26ad09d151a6fa1b71841ff185b937b09bbb647d87a352dfb8f2ec9d3373-txt",
+          "start": 34,
+          "end": 38,
+          "quote": "2005"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572805363acd2414000df26f",
+      "text": "What year was The Invasion originally shown?",
+      "split": "dev",
+      "article_component": "article-9b339e0d80f166959faab30eb5cbda7474c0e1d466e4e5299bbedf98f9b2810e",
+      "upstream_question_id": "572805363acd2414000df26f",
+      "evidence": [
+        {
+          "source_id": "new-squad-739b26ad09d151a6fa1b71841ff185b937b09bbb647d87a352dfb8f2ec9d3373-txt",
+          "start": 900,
+          "end": 904,
+          "quote": "1968"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572805363acd2414000df26e",
+      "text": "Who did the BBC work with to reconstruct some of The Invasion episodes?",
+      "split": "dev",
+      "article_component": "article-9b339e0d80f166959faab30eb5cbda7474c0e1d466e4e5299bbedf98f9b2810e",
+      "upstream_question_id": "572805363acd2414000df26e",
+      "evidence": [
+        {
+          "source_id": "new-squad-739b26ad09d151a6fa1b71841ff185b937b09bbb647d87a352dfb8f2ec9d3373-txt",
+          "start": 825,
+          "end": 838,
+          "quote": "Cosgrove Hall"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572805363acd2414000df270",
+      "text": "What animation company worked on some of The Reign of Terror episodes?",
+      "split": "dev",
+      "article_component": "article-9b339e0d80f166959faab30eb5cbda7474c0e1d466e4e5299bbedf98f9b2810e",
+      "upstream_question_id": "572805363acd2414000df270",
+      "evidence": [
+        {
+          "source_id": "new-squad-739b26ad09d151a6fa1b71841ff185b937b09bbb647d87a352dfb8f2ec9d3373-txt",
+          "start": 1123,
+          "end": 1134,
+          "quote": "Theta-Sigma"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572836732ca10214002da0dd",
+      "text": "When were the earliest Doctor Who books available?",
+      "split": "dev",
+      "article_component": "article-9b339e0d80f166959faab30eb5cbda7474c0e1d466e4e5299bbedf98f9b2810e",
+      "upstream_question_id": "572836732ca10214002da0dd",
+      "evidence": [
+        {
+          "source_id": "new-squad-739b26ad09d151a6fa1b71841ff185b937b09bbb647d87a352dfb8f2ec9d3373-txt",
+          "start": 1375,
+          "end": 1390,
+          "quote": "the mid-sixties"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572836732ca10214002da0e0",
+      "text": "Who began publishing Doctor Who novels in 2005?",
+      "split": "dev",
+      "article_component": "article-9b339e0d80f166959faab30eb5cbda7474c0e1d466e4e5299bbedf98f9b2810e",
+      "upstream_question_id": "572836732ca10214002da0e0",
+      "evidence": [
+        {
+          "source_id": "new-squad-739b26ad09d151a6fa1b71841ff185b937b09bbb647d87a352dfb8f2ec9d3373-txt",
+          "start": 1734,
+          "end": 1743,
+          "quote": "BBC Books"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572836732ca10214002da0dc",
+      "text": "In what year did original fiction featuring Doctor Who appear?",
+      "split": "dev",
+      "article_component": "article-9b339e0d80f166959faab30eb5cbda7474c0e1d466e4e5299bbedf98f9b2810e",
+      "upstream_question_id": "572836732ca10214002da0dc",
+      "evidence": [
+        {
+          "source_id": "new-squad-739b26ad09d151a6fa1b71841ff185b937b09bbb647d87a352dfb8f2ec9d3373-txt",
+          "start": 1530,
+          "end": 1534,
+          "quote": "1991"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57290e153f37b31900477fdb",
+      "text": "What group started peace meetings?",
+      "split": "dev",
+      "article_component": "article-74e1891dc615b22fac103c74ab7133742dd1d95a604f6d4edb1a9403b7156506",
+      "upstream_question_id": "57290e153f37b31900477fdb",
+      "evidence": [
+        {
+          "source_id": "new-squad-d265bf237c684532342f1a5aa328af20a3da712ab056e65d8aec8bf6e3c07b9e-txt",
+          "start": 388,
+          "end": 415,
+          "quote": "Evangelical Lutheran Church"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57290e153f37b31900477fd9",
+      "text": "What did the government and civil society organisations start after the riots?",
+      "split": "dev",
+      "article_component": "article-74e1891dc615b22fac103c74ab7133742dd1d95a604f6d4edb1a9403b7156506",
+      "upstream_question_id": "57290e153f37b31900477fd9",
+      "evidence": [
+        {
+          "source_id": "new-squad-d265bf237c684532342f1a5aa328af20a3da712ab056e65d8aec8bf6e3c07b9e-txt",
+          "start": 81,
+          "end": 132,
+          "quote": "programmes to avoid similar disasters in the future"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57290e153f37b31900477fda",
+      "text": "What group initiated the community dialogues?",
+      "split": "dev",
+      "article_component": "article-74e1891dc615b22fac103c74ab7133742dd1d95a604f6d4edb1a9403b7156506",
+      "upstream_question_id": "57290e153f37b31900477fda",
+      "evidence": [
+        {
+          "source_id": "new-squad-d265bf237c684532342f1a5aa328af20a3da712ab056e65d8aec8bf6e3c07b9e-txt",
+          "start": 308,
+          "end": 352,
+          "quote": "Truth, Justice and Reconciliation Commission"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57291b461d0469140077904b",
+      "text": "Where does the livestock of the country normally dominate?",
+      "split": "dev",
+      "article_component": "article-74e1891dc615b22fac103c74ab7133742dd1d95a604f6d4edb1a9403b7156506",
+      "upstream_question_id": "57291b461d0469140077904b",
+      "evidence": [
+        {
+          "source_id": "new-squad-d265bf237c684532342f1a5aa328af20a3da712ab056e65d8aec8bf6e3c07b9e-txt",
+          "start": 700,
+          "end": 743,
+          "quote": "the semi-arid savanna to the north and east"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57291b461d0469140077904a",
+      "text": "What is grown in the fertile highlands?",
+      "split": "dev",
+      "article_component": "article-74e1891dc615b22fac103c74ab7133742dd1d95a604f6d4edb1a9403b7156506",
+      "upstream_question_id": "57291b461d0469140077904a",
+      "evidence": [
+        {
+          "source_id": "new-squad-d265bf237c684532342f1a5aa328af20a3da712ab056e65d8aec8bf6e3c07b9e-txt",
+          "start": 521,
+          "end": 567,
+          "quote": "Tea, coffee, sisal, pyrethrum, corn, and wheat"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57291b461d0469140077904c",
+      "text": "What percent live below the povertly line?",
+      "split": "dev",
+      "article_component": "article-74e1891dc615b22fac103c74ab7133742dd1d95a604f6d4edb1a9403b7156506",
+      "upstream_question_id": "57291b461d0469140077904c",
+      "evidence": [
+        {
+          "source_id": "new-squad-d265bf237c684532342f1a5aa328af20a3da712ab056e65d8aec8bf6e3c07b9e-txt",
+          "start": 1018,
+          "end": 1039,
+          "quote": "53% of the population"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572921646aef051400154a79",
+      "text": "What are the two official languages?",
+      "split": "dev",
+      "article_component": "article-74e1891dc615b22fac103c74ab7133742dd1d95a604f6d4edb1a9403b7156506",
+      "upstream_question_id": "572921646aef051400154a79",
+      "evidence": [
+        {
+          "source_id": "new-squad-d265bf237c684532342f1a5aa328af20a3da712ab056e65d8aec8bf6e3c07b9e-txt",
+          "start": 1649,
+          "end": 1668,
+          "quote": "English and Swahili"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572921646aef051400154a7a",
+      "text": "Where is English spoken the most?",
+      "split": "dev",
+      "article_component": "article-74e1891dc615b22fac103c74ab7133742dd1d95a604f6d4edb1a9403b7156506",
+      "upstream_question_id": "572921646aef051400154a7a",
+      "evidence": [
+        {
+          "source_id": "new-squad-d265bf237c684532342f1a5aa328af20a3da712ab056e65d8aec8bf6e3c07b9e-txt",
+          "start": 1776,
+          "end": 1813,
+          "quote": "in commerce, schooling and government"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572921646aef051400154a7b",
+      "text": "Where is British English usually used?",
+      "split": "dev",
+      "article_component": "article-74e1891dc615b22fac103c74ab7133742dd1d95a604f6d4edb1a9403b7156506",
+      "upstream_question_id": "572921646aef051400154a7b",
+      "evidence": [
+        {
+          "source_id": "new-squad-d265bf237c684532342f1a5aa328af20a3da712ab056e65d8aec8bf6e3c07b9e-txt",
+          "start": 1965,
+          "end": 1979,
+          "quote": "in the country"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5725b77889a1e219009abd57",
+      "text": "What other areas did the Apollo missions help spur advancements in?",
+      "split": "dev",
+      "article_component": "article-76caddc020acf9ec9672eee9b150f605489ef33821b3bbfa7f570ff983fb1629",
+      "upstream_question_id": "5725b77889a1e219009abd57",
+      "evidence": [
+        {
+          "source_id": "new-squad-6cce0bfafa95d515181b6ff61ce40f99718ab58428fa8fe1fc04c4d764d8bffd-txt",
+          "start": 753,
+          "end": 796,
+          "quote": "avionics, telecommunications, and computers"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5725b77889a1e219009abd54",
+      "text": "What was the first spacecraft to orbit another celestial body?",
+      "split": "dev",
+      "article_component": "article-76caddc020acf9ec9672eee9b150f605489ef33821b3bbfa7f570ff983fb1629",
+      "upstream_question_id": "5725b77889a1e219009abd54",
+      "evidence": [
+        {
+          "source_id": "new-squad-6cce0bfafa95d515181b6ff61ce40f99718ab58428fa8fe1fc04c4d764d8bffd-txt",
+          "start": 122,
+          "end": 130,
+          "quote": "Apollo 8"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5725b77889a1e219009abd55",
+      "text": "What Apollo mission was the sixth moon landing?",
+      "split": "dev",
+      "article_component": "article-76caddc020acf9ec9672eee9b150f605489ef33821b3bbfa7f570ff983fb1629",
+      "upstream_question_id": "5725b77889a1e219009abd55",
+      "evidence": [
+        {
+          "source_id": "new-squad-6cce0bfafa95d515181b6ff61ce40f99718ab58428fa8fe1fc04c4d764d8bffd-txt",
+          "start": 212,
+          "end": 221,
+          "quote": "Apollo 17"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5725d94bec44d21400f3d69b",
+      "text": "What happened to the AS-205 mission originally?",
+      "split": "dev",
+      "article_component": "article-76caddc020acf9ec9672eee9b150f605489ef33821b3bbfa7f570ff983fb1629",
+      "upstream_question_id": "5725d94bec44d21400f3d69b",
+      "evidence": [
+        {
+          "source_id": "new-squad-6cce0bfafa95d515181b6ff61ce40f99718ab58428fa8fe1fc04c4d764d8bffd-txt",
+          "start": 840,
+          "end": 848,
+          "quote": "canceled"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5725d94bec44d21400f3d69c",
+      "text": "In what month and year was the AS-258 scheduled to launch?",
+      "split": "dev",
+      "article_component": "article-76caddc020acf9ec9672eee9b150f605489ef33821b3bbfa7f570ff983fb1629",
+      "upstream_question_id": "5725d94bec44d21400f3d69c",
+      "evidence": [
+        {
+          "source_id": "new-squad-6cce0bfafa95d515181b6ff61ce40f99718ab58428fa8fe1fc04c4d764d8bffd-txt",
+          "start": 1154,
+          "end": 1165,
+          "quote": "August 1967"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5725d94bec44d21400f3d69d",
+      "text": "What was the dual mission AS-258 a combination of?",
+      "split": "dev",
+      "article_component": "article-76caddc020acf9ec9672eee9b150f605489ef33821b3bbfa7f570ff983fb1629",
+      "upstream_question_id": "5725d94bec44d21400f3d69d",
+      "evidence": [
+        {
+          "source_id": "new-squad-6cce0bfafa95d515181b6ff61ce40f99718ab58428fa8fe1fc04c4d764d8bffd-txt",
+          "start": 1120,
+          "end": 1130,
+          "quote": "AS-205/208"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5725de30ec44d21400f3d6ee",
+      "text": "What type of materials inside the cabin were removed to help prevent more fire hazards in the future?",
+      "split": "dev",
+      "article_component": "article-76caddc020acf9ec9672eee9b150f605489ef33821b3bbfa7f570ff983fb1629",
+      "upstream_question_id": "5725de30ec44d21400f3d6ee",
+      "evidence": [
+        {
+          "source_id": "new-squad-6cce0bfafa95d515181b6ff61ce40f99718ab58428fa8fe1fc04c4d764d8bffd-txt",
+          "start": 1557,
+          "end": 1597,
+          "quote": "flammable cabin and space suit materials"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5725de30ec44d21400f3d6f1",
+      "text": "Crew members were required to wear what type of space suit during testing after the incident?",
+      "split": "dev",
+      "article_component": "article-76caddc020acf9ec9672eee9b150f605489ef33821b3bbfa7f570ff983fb1629",
+      "upstream_question_id": "5725de30ec44d21400f3d6f1",
+      "evidence": [
+        {
+          "source_id": "new-squad-6cce0bfafa95d515181b6ff61ce40f99718ab58428fa8fe1fc04c4d764d8bffd-txt",
+          "start": 1893,
+          "end": 1916,
+          "quote": "fire-resistant Block II"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5725de30ec44d21400f3d6f0",
+      "text": "What eventually happened to the Block I program after the incident?",
+      "split": "dev",
+      "article_component": "article-76caddc020acf9ec9672eee9b150f605489ef33821b3bbfa7f570ff983fb1629",
+      "upstream_question_id": "5725de30ec44d21400f3d6f0",
+      "evidence": [
+        {
+          "source_id": "new-squad-6cce0bfafa95d515181b6ff61ce40f99718ab58428fa8fe1fc04c4d764d8bffd-txt",
+          "start": 1736,
+          "end": 1748,
+          "quote": "discontinued"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571095a8a58dae1900cd6a78",
+      "text": "What was the Brazilian French colony called?",
+      "split": "dev",
+      "article_component": "article-af0c01d88958e12e2611065d10855bc8ed353385d202753224e5b2d368650d7e",
+      "upstream_question_id": "571095a8a58dae1900cd6a78",
+      "evidence": [
+        {
+          "source_id": "new-squad-da1813866392dbdfa76cfa25e557d945ea379c9d8604e4678857acbdc7f80f38-txt",
+          "start": 215,
+          "end": 233,
+          "quote": "France Antarctique"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571095a8a58dae1900cd6a7a",
+      "text": "By what document did the Huguenots confess their faith to the Portuguese in Brazil?",
+      "split": "dev",
+      "article_component": "article-af0c01d88958e12e2611065d10855bc8ed353385d202753224e5b2d368650d7e",
+      "upstream_question_id": "571095a8a58dae1900cd6a7a",
+      "evidence": [
+        {
+          "source_id": "new-squad-da1813866392dbdfa76cfa25e557d945ea379c9d8604e4678857acbdc7f80f38-txt",
+          "start": 905,
+          "end": 938,
+          "quote": "the Guanabara Confession of Faith"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571095a8a58dae1900cd6a76",
+      "text": "What were the first two destinations of Huguenot emigres?",
+      "split": "dev",
+      "article_component": "article-af0c01d88958e12e2611065d10855bc8ed353385d202753224e5b2d368650d7e",
+      "upstream_question_id": "571095a8a58dae1900cd6a76",
+      "evidence": [
+        {
+          "source_id": "new-squad-da1813866392dbdfa76cfa25e557d945ea379c9d8604e4678857acbdc7f80f38-txt",
+          "start": 71,
+          "end": 102,
+          "quote": "Switzerland and the Netherlands"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571099b2b654c5140001f9b4",
+      "text": "What portion of Berlin's population spoke French by 1700?",
+      "split": "dev",
+      "article_component": "article-af0c01d88958e12e2611065d10855bc8ed353385d202753224e5b2d368650d7e",
+      "upstream_question_id": "571099b2b654c5140001f9b4",
+      "evidence": [
+        {
+          "source_id": "new-squad-da1813866392dbdfa76cfa25e557d945ea379c9d8604e4678857acbdc7f80f38-txt",
+          "start": 1137,
+          "end": 1146,
+          "quote": "one-fifth"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571099b2b654c5140001f9b5",
+      "text": "Why did Berlin Huguenots switch to German from French in their services?",
+      "split": "dev",
+      "article_component": "article-af0c01d88958e12e2611065d10855bc8ed353385d202753224e5b2d368650d7e",
+      "upstream_question_id": "571099b2b654c5140001f9b5",
+      "evidence": [
+        {
+          "source_id": "new-squad-da1813866392dbdfa76cfa25e557d945ea379c9d8604e4678857acbdc7f80f38-txt",
+          "start": 1335,
+          "end": 1391,
+          "quote": "in protest against the occupation of Prussia by Napoleon"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571099b2b654c5140001f9b3",
+      "text": "What were the two Huguenot neighborhoods created in Berlin?",
+      "split": "dev",
+      "article_component": "article-af0c01d88958e12e2611065d10855bc8ed353385d202753224e5b2d368650d7e",
+      "upstream_question_id": "571099b2b654c5140001f9b3",
+      "evidence": [
+        {
+          "source_id": "new-squad-da1813866392dbdfa76cfa25e557d945ea379c9d8604e4678857acbdc7f80f38-txt",
+          "start": 1093,
+          "end": 1126,
+          "quote": "Dorotheenstadt and Friedrichstadt"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571117d4a58dae1900cd6c0d",
+      "text": "These books became a foundational text for what library?",
+      "split": "dev",
+      "article_component": "article-af0c01d88958e12e2611065d10855bc8ed353385d202753224e5b2d368650d7e",
+      "upstream_question_id": "571117d4a58dae1900cd6c0d",
+      "evidence": [
+        {
+          "source_id": "new-squad-da1813866392dbdfa76cfa25e557d945ea379c9d8604e4678857acbdc7f80f38-txt",
+          "start": 1872,
+          "end": 1894,
+          "quote": "US Library of Congress"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571117d4a58dae1900cd6c0c",
+      "text": "What books did Bayle publish?",
+      "split": "dev",
+      "article_component": "article-af0c01d88958e12e2611065d10855bc8ed353385d202753224e5b2d368650d7e",
+      "upstream_question_id": "571117d4a58dae1900cd6c0c",
+      "evidence": [
+        {
+          "source_id": "new-squad-da1813866392dbdfa76cfa25e557d945ea379c9d8604e4678857acbdc7f80f38-txt",
+          "start": 1785,
+          "end": 1819,
+          "quote": "Historical and Critical Dictionary"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571117d4a58dae1900cd6c0a",
+      "text": "Who was a prominent Huguenot in Holland?",
+      "split": "dev",
+      "article_component": "article-af0c01d88958e12e2611065d10855bc8ed353385d202753224e5b2d368650d7e",
+      "upstream_question_id": "571117d4a58dae1900cd6c0a",
+      "evidence": [
+        {
+          "source_id": "new-squad-da1813866392dbdfa76cfa25e557d945ea379c9d8604e4678857acbdc7f80f38-txt",
+          "start": 1666,
+          "end": 1678,
+          "quote": "Pierre Bayle"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57373d0cc3c5551400e51e89",
+      "text": "What did Aristotle refer to forced motion as?",
+      "split": "dev",
+      "article_component": "article-cfda1755ffb11565e5b6b5081f92f40749fedd31fa578e8af78b89937f89a6a3",
+      "upstream_question_id": "57373d0cc3c5551400e51e89",
+      "evidence": [
+        {
+          "source_id": "new-squad-5774c9ad90f4e009e5329a915846102d6d18e2b926501d59aa210d441b9741a5-txt",
+          "start": 598,
+          "end": 607,
+          "quote": "unnatural"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57373d0cc3c5551400e51e85",
+      "text": "Who provided a philosophical discussion of force?",
+      "split": "dev",
+      "article_component": "article-cfda1755ffb11565e5b6b5081f92f40749fedd31fa578e8af78b89937f89a6a3",
+      "upstream_question_id": "57373d0cc3c5551400e51e85",
+      "evidence": [
+        {
+          "source_id": "new-squad-5774c9ad90f4e009e5329a915846102d6d18e2b926501d59aa210d441b9741a5-txt",
+          "start": 0,
+          "end": 9,
+          "quote": "Aristotle"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57373d0cc3c5551400e51e86",
+      "text": "What was the concept of force an integral part of?",
+      "split": "dev",
+      "article_component": "article-cfda1755ffb11565e5b6b5081f92f40749fedd31fa578e8af78b89937f89a6a3",
+      "upstream_question_id": "57373d0cc3c5551400e51e86",
+      "evidence": [
+        {
+          "source_id": "new-squad-5774c9ad90f4e009e5329a915846102d6d18e2b926501d59aa210d441b9741a5-txt",
+          "start": 95,
+          "end": 117,
+          "quote": "Aristotelian cosmology"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57373f80c3c5551400e51e90",
+      "text": "Whose work  corrected Aristotle's physics in the seventeenth century?",
+      "split": "dev",
+      "article_component": "article-cfda1755ffb11565e5b6b5081f92f40749fedd31fa578e8af78b89937f89a6a3",
+      "upstream_question_id": "57373f80c3c5551400e51e90",
+      "evidence": [
+        {
+          "source_id": "new-squad-5774c9ad90f4e009e5329a915846102d6d18e2b926501d59aa210d441b9741a5-txt",
+          "start": 1405,
+          "end": 1420,
+          "quote": "Galileo Galilei"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57373f80c3c5551400e51e8f",
+      "text": "When were the shortcomings of Aristotle's physics overcome?",
+      "split": "dev",
+      "article_component": "article-cfda1755ffb11565e5b6b5081f92f40749fedd31fa578e8af78b89937f89a6a3",
+      "upstream_question_id": "57373f80c3c5551400e51e8f",
+      "evidence": [
+        {
+          "source_id": "new-squad-5774c9ad90f4e009e5329a915846102d6d18e2b926501d59aa210d441b9741a5-txt",
+          "start": 1384,
+          "end": 1396,
+          "quote": "17th century"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57373f80c3c5551400e51e93",
+      "text": "What force acted on bodies to retard their velocity?",
+      "split": "dev",
+      "article_component": "article-cfda1755ffb11565e5b6b5081f92f40749fedd31fa578e8af78b89937f89a6a3",
+      "upstream_question_id": "57373f80c3c5551400e51e93",
+      "evidence": [
+        {
+          "source_id": "new-squad-5774c9ad90f4e009e5329a915846102d6d18e2b926501d59aa210d441b9741a5-txt",
+          "start": 1893,
+          "end": 1901,
+          "quote": "friction"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5737a25ac3c5551400e51f53",
+      "text": "What are associated with normal forces?",
+      "split": "dev",
+      "article_component": "article-cfda1755ffb11565e5b6b5081f92f40749fedd31fa578e8af78b89937f89a6a3",
+      "upstream_question_id": "5737a25ac3c5551400e51f53",
+      "evidence": [
+        {
+          "source_id": "new-squad-5774c9ad90f4e009e5329a915846102d6d18e2b926501d59aa210d441b9741a5-txt",
+          "start": 2036,
+          "end": 2050,
+          "quote": "pressure terms"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5737a25ac3c5551400e51f54",
+      "text": "What includes pressure terms when calculating area in volume?",
+      "split": "dev",
+      "article_component": "article-cfda1755ffb11565e5b6b5081f92f40749fedd31fa578e8af78b89937f89a6a3",
+      "upstream_question_id": "5737a25ac3c5551400e51f54",
+      "evidence": [
+        {
+          "source_id": "new-squad-5774c9ad90f4e009e5329a915846102d6d18e2b926501d59aa210d441b9741a5-txt",
+          "start": 2017,
+          "end": 2026,
+          "quote": "formalism"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5737a25ac3c5551400e51f52",
+      "text": "What is used to calculate cross section area in the volume of an object?",
+      "split": "dev",
+      "article_component": "article-cfda1755ffb11565e5b6b5081f92f40749fedd31fa578e8af78b89937f89a6a3",
+      "upstream_question_id": "5737a25ac3c5551400e51f52",
+      "evidence": [
+        {
+          "source_id": "new-squad-5774c9ad90f4e009e5329a915846102d6d18e2b926501d59aa210d441b9741a5-txt",
+          "start": 2036,
+          "end": 2050,
+          "quote": "pressure terms"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57293e221d046914007791d6",
+      "text": "What do increased greenhouse gases cause?",
+      "split": "dev",
+      "article_component": "article-edc75a2f685d9eeee677c9053340430d919587f66822bf54c052a9bb9b59ce33",
+      "upstream_question_id": "57293e221d046914007791d6",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dec461611bf8ad5d097df4c01a61e5d7c981ab2e4c23a2e2dbb9836f53ad95d-txt",
+          "start": 247,
+          "end": 288,
+          "quote": "additional warming of the Earth's surface"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57293e221d046914007791d8",
+      "text": "What is the scenario called in which we don't change our greenhouse gas creation practices?",
+      "split": "dev",
+      "article_component": "article-edc75a2f685d9eeee677c9053340430d919587f66822bf54c052a9bb9b59ce33",
+      "upstream_question_id": "57293e221d046914007791d8",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dec461611bf8ad5d097df4c01a61e5d7c981ab2e4c23a2e2dbb9836f53ad95d-txt",
+          "start": 423,
+          "end": 448,
+          "quote": "\"business as usual\" (BAU)"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57293e221d046914007791d7",
+      "text": "How much of the greenhouse effect is due to carbon dioxide?",
+      "split": "dev",
+      "article_component": "article-edc75a2f685d9eeee677c9053340430d919587f66822bf54c052a9bb9b59ce33",
+      "upstream_question_id": "57293e221d046914007791d7",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dec461611bf8ad5d097df4c01a61e5d7c981ab2e4c23a2e2dbb9836f53ad95d-txt",
+          "start": 355,
+          "end": 364,
+          "quote": "over half"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57293f353f37b3190047819d",
+      "text": "Who responded to Lindzen's criticisms?",
+      "split": "dev",
+      "article_component": "article-edc75a2f685d9eeee677c9053340430d919587f66822bf54c052a9bb9b59ce33",
+      "upstream_question_id": "57293f353f37b3190047819d",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dec461611bf8ad5d097df4c01a61e5d7c981ab2e4c23a2e2dbb9836f53ad95d-txt",
+          "start": 1184,
+          "end": 1197,
+          "quote": "John Houghton"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57293f353f37b3190047819e",
+      "text": "What was Houghton's role?",
+      "split": "dev",
+      "article_component": "article-edc75a2f685d9eeee677c9053340430d919587f66822bf54c052a9bb9b59ce33",
+      "upstream_question_id": "57293f353f37b3190047819e",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dec461611bf8ad5d097df4c01a61e5d7c981ab2e4c23a2e2dbb9836f53ad95d-txt",
+          "start": 1207,
+          "end": 1228,
+          "quote": "a co-chair of TAR WGI"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57293f353f37b3190047819b",
+      "text": "Which IPCC author criticized the TAR?",
+      "split": "dev",
+      "article_component": "article-edc75a2f685d9eeee677c9053340430d919587f66822bf54c052a9bb9b59ce33",
+      "upstream_question_id": "57293f353f37b3190047819b",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dec461611bf8ad5d097df4c01a61e5d7c981ab2e4c23a2e2dbb9836f53ad95d-txt",
+          "start": 887,
+          "end": 902,
+          "quote": "Richard Lindzen"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57293f8a6aef051400154bdf",
+      "text": "When was the Special Report on Renewable Energy Sources and Climate Change Mitigation (SRREN) issued?",
+      "split": "dev",
+      "article_component": "article-edc75a2f685d9eeee677c9053340430d919587f66822bf54c052a9bb9b59ce33",
+      "upstream_question_id": "57293f8a6aef051400154bdf",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dec461611bf8ad5d097df4c01a61e5d7c981ab2e4c23a2e2dbb9836f53ad95d-txt",
+          "start": 1696,
+          "end": 1700,
+          "quote": "2011"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57293f8a6aef051400154bde",
+      "text": "How does the IPCC prepare Special Reports?",
+      "split": "dev",
+      "article_component": "article-edc75a2f685d9eeee677c9053340430d919587f66822bf54c052a9bb9b59ce33",
+      "upstream_question_id": "57293f8a6aef051400154bde",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dec461611bf8ad5d097df4c01a61e5d7c981ab2e4c23a2e2dbb9836f53ad95d-txt",
+          "start": 1632,
+          "end": 1682,
+          "quote": "the same procedures as for IPCC Assessment Reports"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57293f8a6aef051400154be1",
+      "text": "Why were the 2011 Special Reports issued?",
+      "split": "dev",
+      "article_component": "article-edc75a2f685d9eeee677c9053340430d919587f66822bf54c052a9bb9b59ce33",
+      "upstream_question_id": "57293f8a6aef051400154be1",
+      "evidence": [
+        {
+          "source_id": "new-squad-3dec461611bf8ad5d097df4c01a61e5d7c981ab2e4c23a2e2dbb9836f53ad95d-txt",
+          "start": 1970,
+          "end": 1994,
+          "quote": "requested by governments"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5711475ca58dae1900cd6d8b",
+      "text": "In a 4-cylinder compound engine, what degree were the individual pistons balanced at?",
+      "split": "dev",
+      "article_component": "article-a7b91965e8e5cc19290291386777d531c88616674351417f06d8c78b53505e2e",
+      "upstream_question_id": "5711475ca58dae1900cd6d8b",
+      "evidence": [
+        {
+          "source_id": "new-squad-db30d8026238cdf6646b457399831f2b0b628ef8a1dad823d8bdcb32ca33e544-txt",
+          "start": 314,
+          "end": 317,
+          "quote": "180"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5711475ca58dae1900cd6d8a",
+      "text": "At what degree are the pistons of a two-cylinder compound connected to the cranks?",
+      "split": "dev",
+      "article_component": "article-a7b91965e8e5cc19290291386777d531c88616674351417f06d8c78b53505e2e",
+      "upstream_question_id": "5711475ca58dae1900cd6d8a",
+      "evidence": [
+        {
+          "source_id": "new-squad-db30d8026238cdf6646b457399831f2b0b628ef8a1dad823d8bdcb32ca33e544-txt",
+          "start": 123,
+          "end": 125,
+          "quote": "90"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5711475ca58dae1900cd6d8c",
+      "text": "At what angle were the groups of pistons set in relation to one another in a 4-cylinder compound?",
+      "split": "dev",
+      "article_component": "article-a7b91965e8e5cc19290291386777d531c88616674351417f06d8c78b53505e2e",
+      "upstream_question_id": "5711475ca58dae1900cd6d8c",
+      "evidence": [
+        {
+          "source_id": "new-squad-db30d8026238cdf6646b457399831f2b0b628ef8a1dad823d8bdcb32ca33e544-txt",
+          "start": 345,
+          "end": 347,
+          "quote": "90"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571154c72419e31400955589",
+      "text": "Along with diesel engines, what engines have overtaken steam engines for marine propulsion?",
+      "split": "dev",
+      "article_component": "article-a7b91965e8e5cc19290291386777d531c88616674351417f06d8c78b53505e2e",
+      "upstream_question_id": "571154c72419e31400955589",
+      "evidence": [
+        {
+          "source_id": "new-squad-db30d8026238cdf6646b457399831f2b0b628ef8a1dad823d8bdcb32ca33e544-txt",
+          "start": 1641,
+          "end": 1653,
+          "quote": "gas turbines"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571154c72419e31400955588",
+      "text": "What marine engines were less efficient than steam turbines?",
+      "split": "dev",
+      "article_component": "article-a7b91965e8e5cc19290291386777d531c88616674351417f06d8c78b53505e2e",
+      "upstream_question_id": "571154c72419e31400955588",
+      "evidence": [
+        {
+          "source_id": "new-squad-db30d8026238cdf6646b457399831f2b0b628ef8a1dad823d8bdcb32ca33e544-txt",
+          "start": 1559,
+          "end": 1586,
+          "quote": "reciprocating steam engines"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571154c72419e3140095558a",
+      "text": "What engines were used throughout most of the 20th century to propel ships?",
+      "split": "dev",
+      "article_component": "article-a7b91965e8e5cc19290291386777d531c88616674351417f06d8c78b53505e2e",
+      "upstream_question_id": "571154c72419e3140095558a",
+      "evidence": [
+        {
+          "source_id": "new-squad-db30d8026238cdf6646b457399831f2b0b628ef8a1dad823d8bdcb32ca33e544-txt",
+          "start": 1308,
+          "end": 1322,
+          "quote": "steam turbines"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57115b2850c2381900b54a7f",
+      "text": "Who developed the first commercial steam powered device?",
+      "split": "dev",
+      "article_component": "article-a7b91965e8e5cc19290291386777d531c88616674351417f06d8c78b53505e2e",
+      "upstream_question_id": "57115b2850c2381900b54a7f",
+      "evidence": [
+        {
+          "source_id": "new-squad-db30d8026238cdf6646b457399831f2b0b628ef8a1dad823d8bdcb32ca33e544-txt",
+          "start": 1811,
+          "end": 1824,
+          "quote": "Thomas Savery"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57115b2850c2381900b54a83",
+      "text": "Who wrote of the Savery water pump in 1751's Philosophical Transactions?",
+      "split": "dev",
+      "article_component": "article-a7b91965e8e5cc19290291386777d531c88616674351417f06d8c78b53505e2e",
+      "upstream_question_id": "57115b2850c2381900b54a83",
+      "evidence": [
+        {
+          "source_id": "new-squad-db30d8026238cdf6646b457399831f2b0b628ef8a1dad823d8bdcb32ca33e544-txt",
+          "start": 2428,
+          "end": 2440,
+          "quote": "John Smeaton"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57115b2850c2381900b54a80",
+      "text": "What was the first steam powered device used commercially?",
+      "split": "dev",
+      "article_component": "article-a7b91965e8e5cc19290291386777d531c88616674351417f06d8c78b53505e2e",
+      "upstream_question_id": "57115b2850c2381900b54a80",
+      "evidence": [
+        {
+          "source_id": "new-squad-db30d8026238cdf6646b457399831f2b0b628ef8a1dad823d8bdcb32ca33e544-txt",
+          "start": 1778,
+          "end": 1788,
+          "quote": "water pump"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-573098c12461fd1900a9cee5",
+      "text": "What is the largest denomination within the wider Methodist movement?",
+      "split": "dev",
+      "article_component": "article-932ea34adb4696df9efb5a7bea0f49d3b370913f95d69ff8e3eea84285182663",
+      "upstream_question_id": "573098c12461fd1900a9cee5",
+      "evidence": [
+        {
+          "source_id": "new-squad-4254e2279ee1bb6c399fc989efd3a0d3e72dcfec40b8b6c598c44f38035680f7-txt",
+          "start": 4,
+          "end": 27,
+          "quote": "United Methodist Church"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-573098c12461fd1900a9cee7",
+      "text": "In the United States the UMC ranks as the largest what?",
+      "split": "dev",
+      "article_component": "article-932ea34adb4696df9efb5a7bea0f49d3b370913f95d69ff8e3eea84285182663",
+      "upstream_question_id": "573098c12461fd1900a9cee7",
+      "evidence": [
+        {
+          "source_id": "new-squad-4254e2279ee1bb6c399fc989efd3a0d3e72dcfec40b8b6c598c44f38035680f7-txt",
+          "start": 207,
+          "end": 239,
+          "quote": "mainline Protestant denomination"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-573098c12461fd1900a9cee8",
+      "text": "What percentage of the U.S. population self-identify with UMC?",
+      "split": "dev",
+      "article_component": "article-932ea34adb4696df9efb5a7bea0f49d3b370913f95d69ff8e3eea84285182663",
+      "upstream_question_id": "573098c12461fd1900a9cee8",
+      "evidence": [
+        {
+          "source_id": "new-squad-4254e2279ee1bb6c399fc989efd3a0d3e72dcfec40b8b6c598c44f38035680f7-txt",
+          "start": 638,
+          "end": 642,
+          "quote": "3.6%"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5730bf03069b5314008322ec",
+      "text": "The UMC stands in oppopsition to the creation of embroys for the sake of what?",
+      "split": "dev",
+      "article_component": "article-932ea34adb4696df9efb5a7bea0f49d3b370913f95d69ff8e3eea84285182663",
+      "upstream_question_id": "5730bf03069b5314008322ec",
+      "evidence": [
+        {
+          "source_id": "new-squad-4254e2279ee1bb6c399fc989efd3a0d3e72dcfec40b8b6c598c44f38035680f7-txt",
+          "start": 1193,
+          "end": 1201,
+          "quote": "research"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5730bf03069b5314008322eb",
+      "text": "The UMC supports federal funding for research on embryos created for what purpose?",
+      "split": "dev",
+      "article_component": "article-932ea34adb4696df9efb5a7bea0f49d3b370913f95d69ff8e3eea84285182663",
+      "upstream_question_id": "5730bf03069b5314008322eb",
+      "evidence": [
+        {
+          "source_id": "new-squad-4254e2279ee1bb6c399fc989efd3a0d3e72dcfec40b8b6c598c44f38035680f7-txt",
+          "start": 885,
+          "end": 888,
+          "quote": "IVF"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5730bf03069b5314008322ed",
+      "text": "The UMC supports research on what cells retrieved from umbilical cords?",
+      "split": "dev",
+      "article_component": "article-932ea34adb4696df9efb5a7bea0f49d3b370913f95d69ff8e3eea84285182663",
+      "upstream_question_id": "5730bf03069b5314008322ed",
+      "evidence": [
+        {
+          "source_id": "new-squad-4254e2279ee1bb6c399fc989efd3a0d3e72dcfec40b8b6c598c44f38035680f7-txt",
+          "start": 1301,
+          "end": 1311,
+          "quote": "stem cells"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5730d473b7151e1900c0155c",
+      "text": "How many years do Elders serve as provisional Elders prior to their ordination?",
+      "split": "dev",
+      "article_component": "article-932ea34adb4696df9efb5a7bea0f49d3b370913f95d69ff8e3eea84285182663",
+      "upstream_question_id": "5730d473b7151e1900c0155c",
+      "evidence": [
+        {
+          "source_id": "new-squad-4254e2279ee1bb6c399fc989efd3a0d3e72dcfec40b8b6c598c44f38035680f7-txt",
+          "start": 2003,
+          "end": 2014,
+          "quote": "2–3 years"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5730d473b7151e1900c0155d",
+      "text": "Who may assign Elders?",
+      "split": "dev",
+      "article_component": "article-932ea34adb4696df9efb5a7bea0f49d3b370913f95d69ff8e3eea84285182663",
+      "upstream_question_id": "5730d473b7151e1900c0155d",
+      "evidence": [
+        {
+          "source_id": "new-squad-4254e2279ee1bb6c399fc989efd3a0d3e72dcfec40b8b6c598c44f38035680f7-txt",
+          "start": 1900,
+          "end": 1924,
+          "quote": "District Superintendents"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5730d473b7151e1900c0155a",
+      "text": "Who is called by God, affirmed by the church and ordained by a bishop?",
+      "split": "dev",
+      "article_component": "article-932ea34adb4696df9efb5a7bea0f49d3b370913f95d69ff8e3eea84285182663",
+      "upstream_question_id": "5730d473b7151e1900c0155a",
+      "evidence": [
+        {
+          "source_id": "new-squad-4254e2279ee1bb6c399fc989efd3a0d3e72dcfec40b8b6c598c44f38035680f7-txt",
+          "start": 1433,
+          "end": 1439,
+          "quote": "Elders"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571c3c47dd7acb1400e4c09c",
+      "text": "What element is found in most organic organisms?",
+      "split": "dev",
+      "article_component": "article-943077f0507ddf71e79a6b07cdc9a1f452bab07502be36ba125a6f5250038012",
+      "upstream_question_id": "571c3c47dd7acb1400e4c09c",
+      "evidence": [
+        {
+          "source_id": "new-squad-62622119e770012b2380c8615bca67b531711a5a317293a4dd47df02ea2f99bf-txt",
+          "start": 127,
+          "end": 133,
+          "quote": "oxygen"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571a49de4faf5e1900b8a94a",
+      "text": "Oxygen is released in cellular respiration by?",
+      "split": "dev",
+      "article_component": "article-943077f0507ddf71e79a6b07cdc9a1f452bab07502be36ba125a6f5250038012",
+      "upstream_question_id": "571a49de4faf5e1900b8a94a",
+      "evidence": [
+        {
+          "source_id": "new-squad-62622119e770012b2380c8615bca67b531711a5a317293a4dd47df02ea2f99bf-txt",
+          "start": 392,
+          "end": 406,
+          "quote": "photosynthesis"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571c3c47dd7acb1400e4c0a0",
+      "text": "What form of oxygen is composed of three oxygen atoms?",
+      "split": "dev",
+      "article_component": "article-943077f0507ddf71e79a6b07cdc9a1f452bab07502be36ba125a6f5250038012",
+      "upstream_question_id": "571c3c47dd7acb1400e4c0a0",
+      "evidence": [
+        {
+          "source_id": "new-squad-62622119e770012b2380c8615bca67b531711a5a317293a4dd47df02ea2f99bf-txt",
+          "start": 738,
+          "end": 743,
+          "quote": "ozone"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571ce9bddd7acb1400e4c1a4",
+      "text": "Who did a pressurized oxygen cabin fire kill?",
+      "split": "dev",
+      "article_component": "article-943077f0507ddf71e79a6b07cdc9a1f452bab07502be36ba125a6f5250038012",
+      "upstream_question_id": "571ce9bddd7acb1400e4c1a4",
+      "evidence": [
+        {
+          "source_id": "new-squad-62622119e770012b2380c8615bca67b531711a5a317293a4dd47df02ea2f99bf-txt",
+          "start": 1329,
+          "end": 1342,
+          "quote": "Apollo 1 crew"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571ce9bddd7acb1400e4c1a2",
+      "text": "What does the transport and storage demand for safety in dealing with oxygen?",
+      "split": "dev",
+      "article_component": "article-943077f0507ddf71e79a6b07cdc9a1f452bab07502be36ba125a6f5250038012",
+      "upstream_question_id": "571ce9bddd7acb1400e4c1a2",
+      "evidence": [
+        {
+          "source_id": "new-squad-62622119e770012b2380c8615bca67b531711a5a317293a4dd47df02ea2f99bf-txt",
+          "start": 1240,
+          "end": 1256,
+          "quote": "special training"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571a52cb4faf5e1900b8a969",
+      "text": "______ In both liquid and gas form can fastly result in an exlposion.",
+      "split": "dev",
+      "article_component": "article-943077f0507ddf71e79a6b07cdc9a1f452bab07502be36ba125a6f5250038012",
+      "upstream_question_id": "571a52cb4faf5e1900b8a969",
+      "evidence": [
+        {
+          "source_id": "new-squad-62622119e770012b2380c8615bca67b531711a5a317293a4dd47df02ea2f99bf-txt",
+          "start": 1148,
+          "end": 1154,
+          "quote": "oxygen"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571ccc00dd7acb1400e4c15e",
+      "text": "What does photosynthesis release into the Earth's atmosphere?",
+      "split": "dev",
+      "article_component": "article-943077f0507ddf71e79a6b07cdc9a1f452bab07502be36ba125a6f5250038012",
+      "upstream_question_id": "571ccc00dd7acb1400e4c15e",
+      "evidence": [
+        {
+          "source_id": "new-squad-62622119e770012b2380c8615bca67b531711a5a317293a4dd47df02ea2f99bf-txt",
+          "start": 1950,
+          "end": 1956,
+          "quote": "oxygen"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571ccc00dd7acb1400e4c15c",
+      "text": "In how many places is oxygen stored in its cycle?",
+      "split": "dev",
+      "article_component": "article-943077f0507ddf71e79a6b07cdc9a1f452bab07502be36ba125a6f5250038012",
+      "upstream_question_id": "571ccc00dd7acb1400e4c15c",
+      "evidence": [
+        {
+          "source_id": "new-squad-62622119e770012b2380c8615bca67b531711a5a317293a4dd47df02ea2f99bf-txt",
+          "start": 1727,
+          "end": 1732,
+          "quote": "three"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-571ccc00dd7acb1400e4c15a",
+      "text": "What produces the high levels of oxygen on Earth?",
+      "split": "dev",
+      "article_component": "article-943077f0507ddf71e79a6b07cdc9a1f452bab07502be36ba125a6f5250038012",
+      "upstream_question_id": "571ccc00dd7acb1400e4c15a",
+      "evidence": [
+        {
+          "source_id": "new-squad-62622119e770012b2380c8615bca67b531711a5a317293a4dd47df02ea2f99bf-txt",
+          "start": 1631,
+          "end": 1643,
+          "quote": "oxygen cycle"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e1a38de3433e1400423060",
+      "text": "Complexity theory seeks to define the relationship between the scale of algorithms with respect to what other variable?",
+      "split": "dev",
+      "article_component": "article-c2d47d9f95109ab90d88ac97a1f87fd6398ad326fd9c801bc4e399e695e9fd58",
+      "upstream_question_id": "56e1a38de3433e1400423060",
+      "evidence": [
+        {
+          "source_id": "new-squad-72852851357ab098e98242896856d71ddd61b9f33b88ede483a74c3c91951ef9-txt",
+          "start": 551,
+          "end": 580,
+          "quote": "an increase in the input size"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e1a38de3433e140042305c",
+      "text": "What is a commonly used measurement used to determine the complexity of a computational problem?",
+      "split": "dev",
+      "article_component": "article-c2d47d9f95109ab90d88ac97a1f87fd6398ad326fd9c801bc4e399e695e9fd58",
+      "upstream_question_id": "56e1a38de3433e140042305c",
+      "evidence": [
+        {
+          "source_id": "new-squad-72852851357ab098e98242896856d71ddd61b9f33b88ede483a74c3c91951ef9-txt",
+          "start": 82,
+          "end": 144,
+          "quote": "how much time the best algorithm requires to solve the problem"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e1a38de3433e140042305d",
+      "text": "What is one variable on which the running time may be contingent?",
+      "split": "dev",
+      "article_component": "article-c2d47d9f95109ab90d88ac97a1f87fd6398ad326fd9c801bc4e399e695e9fd58",
+      "upstream_question_id": "56e1a38de3433e140042305d",
+      "evidence": [
+        {
+          "source_id": "new-squad-72852851357ab098e98242896856d71ddd61b9f33b88ede483a74c3c91951ef9-txt",
+          "start": 199,
+          "end": 211,
+          "quote": "the instance"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e1b00ce3433e140042309e",
+      "text": "Turing machines are commonly employed to define what? ",
+      "split": "dev",
+      "article_component": "article-c2d47d9f95109ab90d88ac97a1f87fd6398ad326fd9c801bc4e399e695e9fd58",
+      "upstream_question_id": "56e1b00ce3433e140042309e",
+      "evidence": [
+        {
+          "source_id": "new-squad-72852851357ab098e98242896856d71ddd61b9f33b88ede483a74c3c91951ef9-txt",
+          "start": 838,
+          "end": 856,
+          "quote": "complexity classes"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e1b00ce3433e14004230a1",
+      "text": "In the determination of complexity classes, what are two examples of types of Turing machines?",
+      "split": "dev",
+      "article_component": "article-c2d47d9f95109ab90d88ac97a1f87fd6398ad326fd9c801bc4e399e695e9fd58",
+      "upstream_question_id": "56e1b00ce3433e14004230a1",
+      "evidence": [
+        {
+          "source_id": "new-squad-72852851357ab098e98242896856d71ddd61b9f33b88ede483a74c3c91951ef9-txt",
+          "start": 897,
+          "end": 961,
+          "quote": "probabilistic Turing machines, non-deterministic Turing machines"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e1b00ce3433e140042309f",
+      "text": "What are two factors that directly effect how powerful a Turing machine may or may not be?",
+      "split": "dev",
+      "article_component": "article-c2d47d9f95109ab90d88ac97a1f87fd6398ad326fd9c801bc4e399e695e9fd58",
+      "upstream_question_id": "56e1b00ce3433e140042309f",
+      "evidence": [
+        {
+          "source_id": "new-squad-72852851357ab098e98242896856d71ddd61b9f33b88ede483a74c3c91951ef9-txt",
+          "start": 1119,
+          "end": 1132,
+          "quote": "time or space"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e1c720e3433e140042316e",
+      "text": "What kind of statement is made in the effort of establishing the time and space requirements needed to enhance the ultimate number of problems solved?",
+      "split": "dev",
+      "article_component": "article-c2d47d9f95109ab90d88ac97a1f87fd6398ad326fd9c801bc4e399e695e9fd58",
+      "upstream_question_id": "56e1c720e3433e140042316e",
+      "evidence": [
+        {
+          "source_id": "new-squad-72852851357ab098e98242896856d71ddd61b9f33b88ede483a74c3c91951ef9-txt",
+          "start": 1910,
+          "end": 1933,
+          "quote": "quantitative statements"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e1c720e3433e140042316c",
+      "text": "What theorems are responsible for determining questions of time and space requirements?",
+      "split": "dev",
+      "article_component": "article-c2d47d9f95109ab90d88ac97a1f87fd6398ad326fd9c801bc4e399e695e9fd58",
+      "upstream_question_id": "56e1c720e3433e140042316c",
+      "evidence": [
+        {
+          "source_id": "new-squad-72852851357ab098e98242896856d71ddd61b9f33b88ede483a74c3c91951ef9-txt",
+          "start": 1565,
+          "end": 1598,
+          "quote": "time and space hierarchy theorems"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56e1c720e3433e140042316a",
+      "text": "What is an example of a measurement within a complexity class that would create a bigger set of problems if the bounds were relaxed?",
+      "split": "dev",
+      "article_component": "article-c2d47d9f95109ab90d88ac97a1f87fd6398ad326fd9c801bc4e399e695e9fd58",
+      "upstream_question_id": "56e1c720e3433e140042316a",
+      "evidence": [
+        {
+          "source_id": "new-squad-72852851357ab098e98242896856d71ddd61b9f33b88ede483a74c3c91951ef9-txt",
+          "start": 1309,
+          "end": 1325,
+          "quote": "computation time"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726d9935951b619008f7fed",
+      "text": "What type of professionals are pharmacists?",
+      "split": "dev",
+      "article_component": "article-98f3d29f6ca4a904ae5e2adca6c24ba840fa3a39b4fa3dd7beeb0e9094df3654",
+      "upstream_question_id": "5726d9935951b619008f7fed",
+      "evidence": [
+        {
+          "source_id": "new-squad-bde7d2abcb5519b9c0e6a488c41a527379b9b84f10034fcdb3ca36b71c0cabc9-txt",
+          "start": 16,
+          "end": 40,
+          "quote": "healthcare professionals"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726d9935951b619008f7ff1",
+      "text": "What types of preparation do pharmacists have?",
+      "split": "dev",
+      "article_component": "article-98f3d29f6ca4a904ae5e2adca6c24ba840fa3a39b4fa3dd7beeb0e9094df3654",
+      "upstream_question_id": "5726d9935951b619008f7ff1",
+      "evidence": [
+        {
+          "source_id": "new-squad-bde7d2abcb5519b9c0e6a488c41a527379b9b84f10034fcdb3ca36b71c0cabc9-txt",
+          "start": 46,
+          "end": 80,
+          "quote": "specialised education and training"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726d9935951b619008f7fef",
+      "text": "What type of treatment are pharmacists important for?",
+      "split": "dev",
+      "article_component": "article-98f3d29f6ca4a904ae5e2adca6c24ba840fa3a39b4fa3dd7beeb0e9094df3654",
+      "upstream_question_id": "5726d9935951b619008f7fef",
+      "evidence": [
+        {
+          "source_id": "new-squad-bde7d2abcb5519b9c0e6a488c41a527379b9b84f10034fcdb3ca36b71c0cabc9-txt",
+          "start": 475,
+          "end": 525,
+          "quote": "optimisation of a drug treatment for an individual"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726ddf6f1498d1400e8ee04",
+      "text": "Developments in which scientists influenced the creation of pharmacology in medieval Islam?",
+      "split": "dev",
+      "article_component": "article-98f3d29f6ca4a904ae5e2adca6c24ba840fa3a39b4fa3dd7beeb0e9094df3654",
+      "upstream_question_id": "5726ddf6f1498d1400e8ee04",
+      "evidence": [
+        {
+          "source_id": "new-squad-bde7d2abcb5519b9c0e6a488c41a527379b9b84f10034fcdb3ca36b71c0cabc9-txt",
+          "start": 568,
+          "end": 588,
+          "quote": "botany and chemistry"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726ddf6f1498d1400e8ee08",
+      "text": "Who wrote about the distillation of drinking water from sea water?",
+      "split": "dev",
+      "article_component": "article-98f3d29f6ca4a904ae5e2adca6c24ba840fa3a39b4fa3dd7beeb0e9094df3654",
+      "upstream_question_id": "5726ddf6f1498d1400e8ee08",
+      "evidence": [
+        {
+          "source_id": "new-squad-bde7d2abcb5519b9c0e6a488c41a527379b9b84f10034fcdb3ca36b71c0cabc9-txt",
+          "start": 2112,
+          "end": 2123,
+          "quote": "Al-Muwaffaq"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726ddf6f1498d1400e8ee05",
+      "text": "Who was influential in promoting the use of chemical compounds as medicines?",
+      "split": "dev",
+      "article_component": "article-98f3d29f6ca4a904ae5e2adca6c24ba840fa3a39b4fa3dd7beeb0e9094df3654",
+      "upstream_question_id": "5726ddf6f1498d1400e8ee05",
+      "evidence": [
+        {
+          "source_id": "new-squad-bde7d2abcb5519b9c0e6a488c41a527379b9b84f10034fcdb3ca36b71c0cabc9-txt",
+          "start": 659,
+          "end": 687,
+          "quote": "Muhammad ibn Zakarīya Rāzi"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726f7715951b619008f8390",
+      "text": "Where might the doctor's self-interest be at odds with the patient's self-interest?",
+      "split": "dev",
+      "article_component": "article-98f3d29f6ca4a904ae5e2adca6c24ba840fa3a39b4fa3dd7beeb0e9094df3654",
+      "upstream_question_id": "5726f7715951b619008f8390",
+      "evidence": [
+        {
+          "source_id": "new-squad-bde7d2abcb5519b9c0e6a488c41a527379b9b84f10034fcdb3ca36b71c0cabc9-txt",
+          "start": 3014,
+          "end": 3126,
+          "quote": "in obtaining cost-effective medication and avoiding the unnecessary use of medication that may have side-effects"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726f7715951b619008f838e",
+      "text": "Why might a physician diagnose a large number of conditions?",
+      "split": "dev",
+      "article_component": "article-98f3d29f6ca4a904ae5e2adca6c24ba840fa3a39b4fa3dd7beeb0e9094df3654",
+      "upstream_question_id": "5726f7715951b619008f838e",
+      "evidence": [
+        {
+          "source_id": "new-squad-bde7d2abcb5519b9c0e6a488c41a527379b9b84f10034fcdb3ca36b71c0cabc9-txt",
+          "start": 2883,
+          "end": 2946,
+          "quote": "because he or she can then sell more medications to the patient"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5726f7715951b619008f838f",
+      "text": "What do rules about conflict of interest involving doctors diagnosing patients resemble?",
+      "split": "dev",
+      "article_component": "article-98f3d29f6ca4a904ae5e2adca6c24ba840fa3a39b4fa3dd7beeb0e9094df3654",
+      "upstream_question_id": "5726f7715951b619008f838f",
+      "evidence": [
+        {
+          "source_id": "new-squad-bde7d2abcb5519b9c0e6a488c41a527379b9b84f10034fcdb3ca36b71c0cabc9-txt",
+          "start": 3168,
+          "end": 3238,
+          "quote": "the checks and balances system of the U.S. and many other governments."
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56bf738b3aeaaa14008c9656",
+      "text": "Who announced the game play-by-play for Super Bowl 50?",
+      "split": "dev",
+      "article_component": "article-91626ef19cfe0faafc5afefaa7d57eb9c77d30769906e99a23cdff8f413b5ead",
+      "upstream_question_id": "56bf738b3aeaaa14008c9656",
+      "evidence": [
+        {
+          "source_id": "new-squad-6ab85d8e00b949b12edda1bcb0fbeab2da5b386f85f340fb012ae960197cddb7-txt",
+          "start": 64,
+          "end": 76,
+          "quote": "Kevin Harlan"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56d9c049dc89441400fdb78f",
+      "text": "Who were the Westwood one color analysts?",
+      "split": "dev",
+      "article_component": "article-91626ef19cfe0faafc5afefaa7d57eb9c77d30769906e99a23cdff8f413b5ead",
+      "upstream_question_id": "56d9c049dc89441400fdb78f",
+      "evidence": [
+        {
+          "source_id": "new-squad-6ab85d8e00b949b12edda1bcb0fbeab2da5b386f85f340fb012ae960197cddb7-txt",
+          "start": 104,
+          "end": 132,
+          "quote": "Boomer Esiason and Dan Fouts"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56bec4a33aeaaa14008c93b4",
+      "text": "Along with Dan Fouts, who served as a color analyst for the radio broadcast?",
+      "split": "dev",
+      "article_component": "article-91626ef19cfe0faafc5afefaa7d57eb9c77d30769906e99a23cdff8f413b5ead",
+      "upstream_question_id": "56bec4a33aeaaa14008c93b4",
+      "evidence": [
+        {
+          "source_id": "new-squad-6ab85d8e00b949b12edda1bcb0fbeab2da5b386f85f340fb012ae960197cddb7-txt",
+          "start": 104,
+          "end": 118,
+          "quote": "Boomer Esiason"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56d725790d65d214001983d8",
+      "text": "Who lead the halftime show of Super Bowl 50?",
+      "split": "dev",
+      "article_component": "article-91626ef19cfe0faafc5afefaa7d57eb9c77d30769906e99a23cdff8f413b5ead",
+      "upstream_question_id": "56d725790d65d214001983d8",
+      "evidence": [
+        {
+          "source_id": "new-squad-6ab85d8e00b949b12edda1bcb0fbeab2da5b386f85f340fb012ae960197cddb7-txt",
+          "start": 470,
+          "end": 479,
+          "quote": "Coldplay."
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56bec7353aeaaa14008c9411",
+      "text": "What previous Super Bowl halftime show did Bruno Mars headline?",
+      "split": "dev",
+      "article_component": "article-91626ef19cfe0faafc5afefaa7d57eb9c77d30769906e99a23cdff8f413b5ead",
+      "upstream_question_id": "56bec7353aeaaa14008c9411",
+      "evidence": [
+        {
+          "source_id": "new-squad-6ab85d8e00b949b12edda1bcb0fbeab2da5b386f85f340fb012ae960197cddb7-txt",
+          "start": 734,
+          "end": 751,
+          "quote": "Super Bowl XLVIII"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56bec7353aeaaa14008c940f",
+      "text": "At what Super Bowl did Beyoncé headline the halftime show?",
+      "split": "dev",
+      "article_component": "article-91626ef19cfe0faafc5afefaa7d57eb9c77d30769906e99a23cdff8f413b5ead",
+      "upstream_question_id": "56bec7353aeaaa14008c940f",
+      "evidence": [
+        {
+          "source_id": "new-squad-6ab85d8e00b949b12edda1bcb0fbeab2da5b386f85f340fb012ae960197cddb7-txt",
+          "start": 573,
+          "end": 589,
+          "quote": "Super Bowl XLVII"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56d9cd9adc89441400fdb84d",
+      "text": "How many first downs did the Broncos have in Super Bowl 50?",
+      "split": "dev",
+      "article_component": "article-91626ef19cfe0faafc5afefaa7d57eb9c77d30769906e99a23cdff8f413b5ead",
+      "upstream_question_id": "56d9cd9adc89441400fdb84d",
+      "evidence": [
+        {
+          "source_id": "new-squad-6ab85d8e00b949b12edda1bcb0fbeab2da5b386f85f340fb012ae960197cddb7-txt",
+          "start": 964,
+          "end": 966,
+          "quote": "11"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56d7277c0d65d214001983ff",
+      "text": "How many first downs did Denver have for Super Bowl 50?",
+      "split": "dev",
+      "article_component": "article-91626ef19cfe0faafc5afefaa7d57eb9c77d30769906e99a23cdff8f413b5ead",
+      "upstream_question_id": "56d7277c0d65d214001983ff",
+      "evidence": [
+        {
+          "source_id": "new-squad-6ab85d8e00b949b12edda1bcb0fbeab2da5b386f85f340fb012ae960197cddb7-txt",
+          "start": 964,
+          "end": 966,
+          "quote": "11"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-56d9cd9adc89441400fdb84c",
+      "text": "How many first downs did the Panthers have in Super Bowl 50?",
+      "split": "dev",
+      "article_component": "article-91626ef19cfe0faafc5afefaa7d57eb9c77d30769906e99a23cdff8f413b5ead",
+      "upstream_question_id": "56d9cd9adc89441400fdb84c",
+      "evidence": [
+        {
+          "source_id": "new-squad-6ab85d8e00b949b12edda1bcb0fbeab2da5b386f85f340fb012ae960197cddb7-txt",
+          "start": 958,
+          "end": 960,
+          "quote": "21"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572822233acd2414000df556",
+      "text": "What did the Jewish people do so pagan items wouldn't be in the temple of Jerusalem?",
+      "split": "dev",
+      "article_component": "article-8bb9e19c6a3531585b230663b83949a7ae0fd69db75d8788dd87e05905702ab3",
+      "upstream_question_id": "572822233acd2414000df556",
+      "evidence": [
+        {
+          "source_id": "new-squad-0469bdae02249ad4d9db3653f24e3d7fd3b571aa14eab52884c8ce04787d6565-txt",
+          "start": 131,
+          "end": 154,
+          "quote": "gathered in the streets"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728e3c33acd2414000e0131",
+      "text": "When is the oldest recorded incident of civil disobedience?",
+      "split": "dev",
+      "article_component": "article-8bb9e19c6a3531585b230663b83949a7ae0fd69db75d8788dd87e05905702ab3",
+      "upstream_question_id": "5728e3c33acd2414000e0131",
+      "evidence": [
+        {
+          "source_id": "new-squad-0469bdae02249ad4d9db3653f24e3d7fd3b571aa14eab52884c8ce04787d6565-txt",
+          "start": 76,
+          "end": 99,
+          "quote": "during the Roman Empire"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728e3c33acd2414000e0135",
+      "text": "How long did it take for Thoreau's disobedience to be known?",
+      "split": "dev",
+      "article_component": "article-8bb9e19c6a3531585b230663b83949a7ae0fd69db75d8788dd87e05905702ab3",
+      "upstream_question_id": "5728e3c33acd2414000e0135",
+      "evidence": [
+        {
+          "source_id": "new-squad-0469bdae02249ad4d9db3653f24e3d7fd3b571aa14eab52884c8ce04787d6565-txt",
+          "start": 931,
+          "end": 969,
+          "quote": "until after the end of the Mexican War"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728facd4b864d1900165170",
+      "text": "What is the primary goal of pleading not guilty when arrested for Civil Disobedience?",
+      "split": "dev",
+      "article_component": "article-8bb9e19c6a3531585b230663b83949a7ae0fd69db75d8788dd87e05905702ab3",
+      "upstream_question_id": "5728facd4b864d1900165170",
+      "evidence": [
+        {
+          "source_id": "new-squad-0469bdae02249ad4d9db3653f24e3d7fd3b571aa14eab52884c8ce04787d6565-txt",
+          "start": 1093,
+          "end": 1125,
+          "quote": "acquittal and avoid imprisonment"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728facd4b864d1900165173",
+      "text": "What US war has a large amount of Civil Disobedients?",
+      "split": "dev",
+      "article_component": "article-8bb9e19c6a3531585b230663b83949a7ae0fd69db75d8788dd87e05905702ab3",
+      "upstream_question_id": "5728facd4b864d1900165173",
+      "evidence": [
+        {
+          "source_id": "new-squad-0469bdae02249ad4d9db3653f24e3d7fd3b571aa14eab52884c8ce04787d6565-txt",
+          "start": 1458,
+          "end": 1469,
+          "quote": "Vietnam War"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728facd4b864d1900165174",
+      "text": "What can sympathetic Jurors in cases with civil disobedients?",
+      "split": "dev",
+      "article_component": "article-8bb9e19c6a3531585b230663b83949a7ae0fd69db75d8788dd87e05905702ab3",
+      "upstream_question_id": "5728facd4b864d1900165174",
+      "evidence": [
+        {
+          "source_id": "new-squad-0469bdae02249ad4d9db3653f24e3d7fd3b571aa14eab52884c8ce04787d6565-txt",
+          "start": 2040,
+          "end": 2058,
+          "quote": "jury nullification"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728fc9e1d04691400778f11",
+      "text": "What is violating a law which is not the goal of the protest called?",
+      "split": "dev",
+      "article_component": "article-8bb9e19c6a3531585b230663b83949a7ae0fd69db75d8788dd87e05905702ab3",
+      "upstream_question_id": "5728fc9e1d04691400778f11",
+      "evidence": [
+        {
+          "source_id": "new-squad-0469bdae02249ad4d9db3653f24e3d7fd3b571aa14eab52884c8ce04787d6565-txt",
+          "start": 2129,
+          "end": 2156,
+          "quote": "Indirect civil disobedience"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728fc9e1d04691400778f15",
+      "text": "Why are people who distribute leaflets inside courthouses not been arrested?",
+      "split": "dev",
+      "article_component": "article-8bb9e19c6a3531585b230663b83949a7ae0fd69db75d8788dd87e05905702ab3",
+      "upstream_question_id": "5728fc9e1d04691400778f15",
+      "evidence": [
+        {
+          "source_id": "new-squad-0469bdae02249ad4d9db3653f24e3d7fd3b571aa14eab52884c8ce04787d6565-txt",
+          "start": 3438,
+          "end": 3512,
+          "quote": "the leaflets will have to be given to the leafleter's own jury as evidence"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5728fc9e1d04691400778f12",
+      "text": "When the law is a direct target of the protest, what is this called?",
+      "split": "dev",
+      "article_component": "article-8bb9e19c6a3531585b230663b83949a7ae0fd69db75d8788dd87e05905702ab3",
+      "upstream_question_id": "5728fc9e1d04691400778f12",
+      "evidence": [
+        {
+          "source_id": "new-squad-0469bdae02249ad4d9db3653f24e3d7fd3b571aa14eab52884c8ce04787d6565-txt",
+          "start": 2235,
+          "end": 2260,
+          "quote": "direct civil disobedience"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5729f4273f37b319004785ff",
+      "text": "What do larger fortunes generate?",
+      "split": "dev",
+      "article_component": "article-6ac84eda6c124da20c2bbfa90ed62c662d933246e56afc1f582daa791efa82b6",
+      "upstream_question_id": "5729f4273f37b319004785ff",
+      "evidence": [
+        {
+          "source_id": "new-squad-468e55d479623fcd4d8ef7c84a0d3e287ae136023f28f04fd667712d3d1c89f9-txt",
+          "start": 738,
+          "end": 752,
+          "quote": "higher returns"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5729f4273f37b319004785fe",
+      "text": "Who wrote the book \"Capital in the Twenty-First Century\"?",
+      "split": "dev",
+      "article_component": "article-6ac84eda6c124da20c2bbfa90ed62c662d933246e56afc1f582daa791efa82b6",
+      "upstream_question_id": "5729f4273f37b319004785fe",
+      "evidence": [
+        {
+          "source_id": "new-squad-468e55d479623fcd4d8ef7c84a0d3e287ae136023f28f04fd667712d3d1c89f9-txt",
+          "start": 521,
+          "end": 535,
+          "quote": "Thomas Piketty"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5729f4273f37b319004785fc",
+      "text": "Who is best able to leverage the accumulation of wealth?",
+      "split": "dev",
+      "article_component": "article-6ac84eda6c124da20c2bbfa90ed62c662d933246e56afc1f582daa791efa82b6",
+      "upstream_question_id": "5729f4273f37b319004785fc",
+      "evidence": [
+        {
+          "source_id": "new-squad-468e55d479623fcd4d8ef7c84a0d3e287ae136023f28f04fd667712d3d1c89f9-txt",
+          "start": 224,
+          "end": 253,
+          "quote": "those who already hold wealth"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572a0d21af94a219006aa786",
+      "text": "What does political pressure push to extend to compensate for stagnating purchasing power?",
+      "split": "dev",
+      "article_component": "article-6ac84eda6c124da20c2bbfa90ed62c662d933246e56afc1f582daa791efa82b6",
+      "upstream_question_id": "572a0d21af94a219006aa786",
+      "evidence": [
+        {
+          "source_id": "new-squad-468e55d479623fcd4d8ef7c84a0d3e287ae136023f28f04fd667712d3d1c89f9-txt",
+          "start": 1262,
+          "end": 1275,
+          "quote": "easier credit"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572a0d21af94a219006aa784",
+      "text": "What does Rajan feel has created deep financial fault lines?",
+      "split": "dev",
+      "article_component": "article-6ac84eda6c124da20c2bbfa90ed62c662d933246e56afc1f582daa791efa82b6",
+      "upstream_question_id": "572a0d21af94a219006aa784",
+      "evidence": [
+        {
+          "source_id": "new-squad-468e55d479623fcd4d8ef7c84a0d3e287ae136023f28f04fd667712d3d1c89f9-txt",
+          "start": 892,
+          "end": 924,
+          "quote": "systematic economic inequalities"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572a0d21af94a219006aa783",
+      "text": "What is Raghuram Rajan's career?",
+      "split": "dev",
+      "article_component": "article-6ac84eda6c124da20c2bbfa90ed62c662d933246e56afc1f582daa791efa82b6",
+      "upstream_question_id": "572a0d21af94a219006aa783",
+      "evidence": [
+        {
+          "source_id": "new-squad-468e55d479623fcd4d8ef7c84a0d3e287ae136023f28f04fd667712d3d1c89f9-txt",
+          "start": 854,
+          "end": 863,
+          "quote": "economist"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572a0e0e1d04691400779707",
+      "text": "What is negatively correlated to the duration of economic growth?",
+      "split": "dev",
+      "article_component": "article-6ac84eda6c124da20c2bbfa90ed62c662d933246e56afc1f582daa791efa82b6",
+      "upstream_question_id": "572a0e0e1d04691400779707",
+      "evidence": [
+        {
+          "source_id": "new-squad-468e55d479623fcd4d8ef7c84a0d3e287ae136023f28f04fd667712d3d1c89f9-txt",
+          "start": 1587,
+          "end": 1618,
+          "quote": "inequality in wealth and income"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572a0e0e1d04691400779708",
+      "text": "What do high levels of inequality  prevent beyond economic prosperity?",
+      "split": "dev",
+      "article_component": "article-6ac84eda6c124da20c2bbfa90ed62c662d933246e56afc1f582daa791efa82b6",
+      "upstream_question_id": "572a0e0e1d04691400779708",
+      "evidence": [
+        {
+          "source_id": "new-squad-468e55d479623fcd4d8ef7c84a0d3e287ae136023f28f04fd667712d3d1c89f9-txt",
+          "start": 1791,
+          "end": 1826,
+          "quote": "quality of a country's institutions"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-572a0e0e1d0469140077970b",
+      "text": "Who matters the most for economic growth?",
+      "split": "dev",
+      "article_component": "article-6ac84eda6c124da20c2bbfa90ed62c662d933246e56afc1f582daa791efa82b6",
+      "upstream_question_id": "572a0e0e1d0469140077970b",
+      "evidence": [
+        {
+          "source_id": "new-squad-468e55d479623fcd4d8ef7c84a0d3e287ae136023f28f04fd667712d3d1c89f9-txt",
+          "start": 2182,
+          "end": 2211,
+          "quote": "The poor and the middle class"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57273cca708984140094db35",
+      "text": "What is essential for the successful execution of a project?",
+      "split": "dev",
+      "article_component": "article-9dc7e90e56b2f2635e18b04c731ea09762e1acd223b106df46e0013851b532b1",
+      "upstream_question_id": "57273cca708984140094db35",
+      "evidence": [
+        {
+          "source_id": "new-squad-c8372687010e07ccdcd5fc9057bfea06ba09f2f62e927f3e59172f09d68b34f0-txt",
+          "start": 260,
+          "end": 278,
+          "quote": "effective planning"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57273cca708984140094db34",
+      "text": "Who normally supervises a construction job?",
+      "split": "dev",
+      "article_component": "article-9dc7e90e56b2f2635e18b04c731ea09762e1acd223b106df46e0013851b532b1",
+      "upstream_question_id": "57273cca708984140094db34",
+      "evidence": [
+        {
+          "source_id": "new-squad-c8372687010e07ccdcd5fc9057bfea06ba09f2f62e927f3e59172f09d68b34f0-txt",
+          "start": 120,
+          "end": 201,
+          "quote": "a construction manager, design engineer, construction engineer or project manager"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57273cca708984140094db37",
+      "text": "Zoning requirements, environmental impact, budgeting, and logistics are things who should consider?",
+      "split": "dev",
+      "article_component": "article-9dc7e90e56b2f2635e18b04c731ea09762e1acd223b106df46e0013851b532b1",
+      "upstream_question_id": "57273cca708984140094db37",
+      "evidence": [
+        {
+          "source_id": "new-squad-c8372687010e07ccdcd5fc9057bfea06ba09f2f62e927f3e59172f09d68b34f0-txt",
+          "start": 293,
+          "end": 359,
+          "quote": "Those involved with the design and execution of the infrastructure"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57274e0d708984140094dbe5",
+      "text": "The modern trend in design is toward integration of what?",
+      "split": "dev",
+      "article_component": "article-9dc7e90e56b2f2635e18b04c731ea09762e1acd223b106df46e0013851b532b1",
+      "upstream_question_id": "57274e0d708984140094dbe5",
+      "evidence": [
+        {
+          "source_id": "new-squad-c8372687010e07ccdcd5fc9057bfea06ba09f2f62e927f3e59172f09d68b34f0-txt",
+          "start": 770,
+          "end": 802,
+          "quote": "previously separated specialties"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57274e0d708984140094dbe7",
+      "text": "In modern times, firms may offer themselves as what for a construction project?",
+      "split": "dev",
+      "article_component": "article-9dc7e90e56b2f2635e18b04c731ea09762e1acd223b106df46e0013851b532b1",
+      "upstream_question_id": "57274e0d708984140094dbe7",
+      "evidence": [
+        {
+          "source_id": "new-squad-c8372687010e07ccdcd5fc9057bfea06ba09f2f62e927f3e59172f09d68b34f0-txt",
+          "start": 1280,
+          "end": 1299,
+          "quote": "\"one-stop shopping\""
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-57274e0d708984140094dbe6",
+      "text": "Even in large firms, architects, interior designers, engineers, developers, construction managers, and general contractors were more likely to be what?",
+      "split": "dev",
+      "article_component": "article-9dc7e90e56b2f2635e18b04c731ea09762e1acd223b106df46e0013851b532b1",
+      "upstream_question_id": "57274e0d708984140094dbe6",
+      "evidence": [
+        {
+          "source_id": "new-squad-c8372687010e07ccdcd5fc9057bfea06ba09f2f62e927f3e59172f09d68b34f0-txt",
+          "start": 972,
+          "end": 999,
+          "quote": "entirely separate companies"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5727526cdd62a815002e9b0e",
+      "text": "A growing number of new forms of procurement involves what?",
+      "split": "dev",
+      "article_component": "article-9dc7e90e56b2f2635e18b04c731ea09762e1acd223b106df46e0013851b532b1",
+      "upstream_question_id": "5727526cdd62a815002e9b0e",
+      "evidence": [
+        {
+          "source_id": "new-squad-c8372687010e07ccdcd5fc9057bfea06ba09f2f62e927f3e59172f09d68b34f0-txt",
+          "start": 1640,
+          "end": 1717,
+          "quote": "relationship contracting where the emphasis is on a co-operative relationship"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5727526cdd62a815002e9b10",
+      "text": "What is a PPP also known as?",
+      "split": "dev",
+      "article_component": "article-9dc7e90e56b2f2635e18b04c731ea09762e1acd223b106df46e0013851b532b1",
+      "upstream_question_id": "5727526cdd62a815002e9b10",
+      "evidence": [
+        {
+          "source_id": "new-squad-c8372687010e07ccdcd5fc9057bfea06ba09f2f62e927f3e59172f09d68b34f0-txt",
+          "start": 1883,
+          "end": 1917,
+          "quote": "private finance initiatives (PFIs)"
+        }
+      ]
+    },
+    {
+      "query_id": "new-squad-5727526cdd62a815002e9b0f",
+      "text": "What is PPP?",
+      "split": "dev",
+      "article_component": "article-9dc7e90e56b2f2635e18b04c731ea09762e1acd223b106df46e0013851b532b1",
+      "upstream_question_id": "5727526cdd62a815002e9b0f",
+      "evidence": [
+        {
+          "source_id": "new-squad-c8372687010e07ccdcd5fc9057bfea06ba09f2f62e927f3e59172f09d68b34f0-txt",
+          "start": 1846,
+          "end": 1871,
+          "quote": "Public-Private Partnering"
+        }
+      ]
+    }
+  ]
+}

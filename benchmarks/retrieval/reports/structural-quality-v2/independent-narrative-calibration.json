@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "paired_comparison_files": 84,
+  "frontier_metadata_cells": 12,
+  "fixed_encoder_view_capacity_budget_settings": 24,
+  "primary_all_eight_recall_querywise_ties": true,
+  "mean_directions": {
+    "recall": {
+      "positive": 5,
+      "tie": 19
+    },
+    "precision": {
+      "positive": 7,
+      "tie": 15,
+      "negative": 2
+    },
+    "iou": {
+      "positive": 7,
+      "tie": 15,
+      "negative": 2
+    }
+  },
+  "query_setting_instances": {
+    "recall": {
+      "ties": 3451,
+      "wins": 5
+    },
+    "precision": {
+      "ties": 3413,
+      "wins": 26,
+      "losses": 17
+    },
+    "iou": {
+      "ties": 3413,
+      "wins": 26,
+      "losses": 17
+    }
+  },
+  "positive_recall_cells": [
+    {
+      "cell": "multilingual/article-text/64/128",
+      "winning_query_ids": [
+        "new-squad-57060eaf75f01819005e7911"
+      ],
+      "recall_delta": 0.0013020833333333333,
+      "interval": [
+        0.0,
+        0.00390625
+      ],
+      "interval_touches_zero": true
+    },
+    {
+      "cell": "multilingual/article-text/64/256",
+      "winning_query_ids": [
+        "new-squad-57060eaf75f01819005e7911"
+      ],
+      "recall_delta": 0.0013020833333333333,
+      "interval": [
+        0.0,
+        0.00390625
+      ],
+      "interval_touches_zero": true
+    },
+    {
+      "cell": "multilingual/article-markdown/64/128",
+      "winning_query_ids": [
+        "new-squad-57060eaf75f01819005e7911"
+      ],
+      "recall_delta": 0.0013020833333333333,
+      "interval": [
+        0.0,
+        0.00390625
+      ],
+      "interval_touches_zero": true
+    },
+    {
+      "cell": "multilingual/article-markdown/64/256",
+      "winning_query_ids": [
+        "new-squad-57060eaf75f01819005e7911"
+      ],
+      "recall_delta": 0.0013020833333333333,
+      "interval": [
+        0.0,
+        0.00390625
+      ],
+      "interval_touches_zero": true
+    },
+    {
+      "cell": "english/article-markdown/96/128",
+      "winning_query_ids": [
+        "new-squad-5705fec152bb89140068977d"
+      ],
+      "recall_delta": 0.006944444444444444,
+      "interval": [
+        0.0,
+        0.020833333333333332
+      ],
+      "interval_touches_zero": true
+    }
+  ],
+  "distinct_winning_recall_query_ids": [
+    "new-squad-5705fec152bb89140068977d",
+    "new-squad-57060eaf75f01819005e7911"
+  ],
+  "distinct_winning_recall_question_count": 2,
+  "all_positive_recall_intervals_touch_zero": true,
+  "original_synthetic96_cost_ratios": {
+    "vectors": 1.546218487394958,
+    "vector_percent_increase": 54.6218487394958,
+    "native_input_tokens": 1.014989046466044,
+    "native_input_token_percent_increase": 1.4989046466044043
+  },
+  "draft_sha256": "414e5f676f527b0fb5ef42c6b093b2b22bdf16367d358e7ec48a8d396a505859",
+  "raw_question_text_printed": false
+}

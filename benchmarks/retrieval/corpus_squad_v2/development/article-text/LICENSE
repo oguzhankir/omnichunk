@@ -1,0 +1,15 @@
+SQuAD 1.1 selected retrieval corpus — CC BY-SA 4.0
+
+Dataset: Stanford Question Answering Dataset (SQuAD), by Pranav Rajpurkar,
+Jian Zhang, Konstantin Lopyrev and Percy Liang.
+https://rajpurkar.github.io/SQuAD-explorer/
+Source paragraphs: Wikipedia contributors; per-article attribution links are
+recorded in manifest.json. Questions and answer annotations are from SQuAD 1.1.
+License: Creative Commons Attribution-ShareAlike 4.0 International
+https://creativecommons.org/licenses/by-sa/4.0/
+
+Changes: a deterministic subset was selected; document and query IDs, exact UTF-8
+byte evidence ranges, checksums and article-disjoint evaluation splits were added.
+The paragraph and question text is unmodified. This corpus is licensed separately
+from the OmniChunk software. Redistributed adaptations must retain attribution
+and comply with the linked ShareAlike license.

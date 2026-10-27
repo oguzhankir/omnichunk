@@ -32,8 +32,9 @@ _SPLIT_HIERARCHY: list[re.Pattern[str] | None] = [
     re.compile(r"(?:\r?\n[ \t]*){2,}"),
     re.compile(r"\r?\n"),
     None,  # Unicode sentence boundaries, before word-level fallbacks.
+    re.compile(r"[;；]+"),  # Strong clause boundaries before splitting into words.
     re.compile(r"\s+"),
-    re.compile(r"[;,，；、\(\)\[\]\"'`]+"),
+    re.compile(r"[,，、\(\)\[\]\"'`]+"),
     re.compile(r"[:：—…]+"),
     re.compile(r"[/\\–&-]+"),
 ]
@@ -132,6 +133,7 @@ class ProseEngine:
 
         if language == "markdown":
             _, nodes = parse_markdown(content)
+            nodes = _markdown_paragraph_nodes(nodes, text_index)
         else:
             nodes = _plaintext_nodes(content, text_index)
 
@@ -142,6 +144,7 @@ class ProseEngine:
             size_counter=size_counter,
             content=content,
             preserve_code_blocks=(language == "markdown"),
+            preserve_paragraphs=(language == "markdown"),
             split_oversized=options.overflow_policy == "split",
         )
 
@@ -445,6 +448,42 @@ def _plaintext_nodes(content: str, text_index: TextIndex | None = None) -> list[
     return nodes
 
 
+def _markdown_paragraph_nodes(nodes: list[ProseNode], text_index: TextIndex) -> list[ProseNode]:
+    """Retain blank-line paragraph identities inside plain Markdown body nodes."""
+    out: list[ProseNode] = []
+    pattern = _SPLIT_HIERARCHY[0]
+    assert pattern is not None
+    for node in nodes:
+        if node.kind != EntityType.PARAGRAPH:
+            out.append(node)
+            continue
+        first_content = len(node.text) - len(node.text.lstrip())
+        last_content = len(node.text.rstrip())
+        ends = [
+            match.end()
+            for match in pattern.finditer(node.text)
+            if first_content < match.end() < last_content
+        ]
+        ends.append(len(node.text))
+        cursor = 0
+        for end in ends:
+            start_char = node.byte_range.start + cursor
+            end_char = node.byte_range.start + end
+            out.append(
+                replace(
+                    node,
+                    text=node.text[cursor:end],
+                    byte_range=ByteRange(start_char, end_char),
+                    line_range=LineRange(
+                        text_index.line_for_char(start_char),
+                        text_index.line_for_char(max(start_char, end_char - 1)),
+                    ),
+                )
+            )
+            cursor = end
+    return out
+
+
 def _build_node_windows(
     nodes: list[ProseNode],
     *,
@@ -453,6 +492,7 @@ def _build_node_windows(
     size_counter: Callable[[str], int],
     content: str,
     preserve_code_blocks: bool = False,
+    preserve_paragraphs: bool = False,
     split_oversized: bool = True,
 ) -> list[list[tuple[int, int, list[str], str]]]:
     windows: list[list[tuple[int, int, list[str], str]]] = []
@@ -481,6 +521,16 @@ def _build_node_windows(
                 current = []
             windows.append([node_payload])
             continue
+
+        if (
+            preserve_paragraphs
+            and current
+            and any(item[3] != EntityType.HEADING.value for item in current)
+        ):
+            # A heading belongs to its following body. Distinct body paragraphs
+            # keep separate retrieval identities even when spare capacity exists.
+            windows.append(current)
+            current = []
 
         combined_start = current[0][0] if current else start
         if size_counter(content[combined_start:end]) <= max_size:
@@ -547,7 +597,8 @@ def _build_node_windows(
     if current:
         windows.append(current)
 
-    if len(windows) <= 1:
+    if len(windows) <= 1 or preserve_paragraphs:
+        # A minimum-size preference must not undo explicit paragraph boundaries.
         return windows
 
     idx = 0
@@ -600,6 +651,47 @@ def _window_has_section_type(
     return any(item[3] == section_type for item in window)
 
 
+def _prose_sentence_ends(text: str) -> list[int]:
+    """Ignore fallback sentence boundaries inside matched square brackets.
+
+    Match each unescaped pair independently, so a missing outer closer does not
+    hide later sentences or invalidate an otherwise balanced inner expression.
+    This source-structure guard does not change the semantic sentence splitter.
+    """
+    ends = [end for _, _, end in split_sentences(text)]
+    if len(ends) < 2 or "[" not in text or "]" not in text:
+        return ends
+    stack: list[int] = []
+    opening: set[int] = set()
+    closing: set[int] = set()
+    escaped = False
+    for offset, char in enumerate(text):
+        if escaped:
+            escaped = False
+        elif char == "\\":
+            escaped = True
+        elif char == "[":
+            stack.append(offset)
+        elif char == "]" and stack:
+            opening.add(stack.pop() + 1)
+            closing.add(offset + 1)
+    if not opening:
+        return ends
+    filtered: list[int] = []
+    depth = 0
+    candidate = 0
+    for offset in range(len(text) + 1):
+        if offset in closing:
+            depth -= 1
+        if offset in opening:
+            depth += 1
+        if candidate < len(ends) and ends[candidate] == offset:
+            if depth == 0:
+                filtered.append(offset)
+            candidate += 1
+    return filtered
+
+
 def _split_oversized_text(
     text: str,
     *,
@@ -619,7 +711,7 @@ def _split_oversized_text(
     if _level < len(_SPLIT_HIERARCHY):
         pattern = _SPLIT_HIERARCHY[_level]
         points = (
-            [end for _, _, end in split_sentences(text)]
+            _prose_sentence_ends(text)
             if pattern is None
             else [match.end() for match in pattern.finditer(text)]
         )
@@ -685,7 +777,7 @@ def _windows_to_contiguous_ranges(
 
     for window in windows:
         window_end = max(item[1] for item in window)
-        hierarchy = next((item[2] for item in window if item[2]), [])
+        hierarchy = next((item[2] for item in reversed(window) if item[2]), [])
         section_type = window[0][3] if window else "section"
         start = cursor
         end = max(window_end, start)
