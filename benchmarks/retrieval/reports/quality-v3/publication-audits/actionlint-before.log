@@ -1,0 +1,16 @@
+../work/omnichunk-v3/ci-actionlint/before/ci.yml:12:22: context "runner" is not allowed here. available contexts are "github", "inputs", "matrix", "needs", "secrets", "strategy", "vars". see https://docs.github.com/en/actions/learn-github-actions/contexts#context-availability for more details [expression]
+   |
+12 |       NLTK_DATA: ${{ runner.temp }}/omnichunk-nltk-data
+   |                      ^~~~~~~~~~~
+../work/omnichunk-v3/ci-actionlint/before/dense-evaluation.yml:74:22: context "runner" is not allowed here. available contexts are "github", "inputs", "matrix", "needs", "secrets", "strategy", "vars". see https://docs.github.com/en/actions/learn-github-actions/contexts#context-availability for more details [expression]
+   |
+74 |       NLTK_DATA: ${{ runner.temp }}/omnichunk-nltk-data
+   |                      ^~~~~~~~~~~
+../work/omnichunk-v3/ci-actionlint/before/integrations.yml:29:22: context "runner" is not allowed here. available contexts are "github", "inputs", "matrix", "needs", "secrets", "strategy", "vars". see https://docs.github.com/en/actions/learn-github-actions/contexts#context-availability for more details [expression]
+   |
+29 |       NLTK_DATA: ${{ runner.temp }}/omnichunk-nltk-data
+   |                      ^~~~~~~~~~~
+../work/omnichunk-v3/ci-actionlint/before/release.yml:16:22: context "runner" is not allowed here. available contexts are "github", "inputs", "matrix", "needs", "secrets", "strategy", "vars". see https://docs.github.com/en/actions/learn-github-actions/contexts#context-availability for more details [expression]
+   |
+16 |       NLTK_DATA: ${{ runner.temp }}/omnichunk-nltk-data
+   |                      ^~~~~~~~~~~

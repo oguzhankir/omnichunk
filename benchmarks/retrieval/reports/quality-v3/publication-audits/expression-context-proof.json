@@ -1,0 +1,72 @@
+{
+  "scope": "CI workflow expression/context correction only; no source/tests/harness/release changes",
+  "supersedes": "Earlier provisioning-proof.json yaml_parse_and_identical_setup_check checked YAML syntax only and did not validate GitHub Actions expression context. That earlier context validity claim is superseded by this actual actionlint proof.",
+  "actionlint": {
+    "version": "1.7.7",
+    "download_archive_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+    "download_archive_verified_against_official_checksums": true,
+    "official_checksums_url": "https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_checksums.txt",
+    "binary_sha256": "9f7dedb4e23f89f2922073d1a6720405b7b520d4f5832ebb96f0d55a2958886c",
+    "version_record": {
+      "command": [
+        "/workspace/work/omnichunk-v3/ci-actionlint/bin/actionlint",
+        "-version"
+      ],
+      "exit_code": 0,
+      "output_path": "/workspace/work/omnichunk-v3/ci-actionlint/proof/actionlint-version.log",
+      "output_sha256": "f6d2718d09c84c4d0237eb0e6f16775b0a4374a8b67976ef0541b850d3d224ed"
+    },
+    "before": {
+      "command": [
+        "/workspace/work/omnichunk-v3/ci-actionlint/bin/actionlint",
+        "-shellcheck=",
+        "-pyflakes=",
+        "/workspace/work/omnichunk-v3/ci-actionlint/before/ci.yml",
+        "/workspace/work/omnichunk-v3/ci-actionlint/before/dense-evaluation.yml",
+        "/workspace/work/omnichunk-v3/ci-actionlint/before/integrations.yml",
+        "/workspace/work/omnichunk-v3/ci-actionlint/before/release.yml"
+      ],
+      "exit_code": 1,
+      "output_path": "/workspace/work/omnichunk-v3/ci-actionlint/proof/actionlint-before.log",
+      "output_sha256": "068194b301455db96c45ca220461fb376d5094e918bc17c37bbdcd9c17c87504"
+    },
+    "after": {
+      "command": [
+        "/workspace/work/omnichunk-v3/ci-actionlint/bin/actionlint",
+        "-shellcheck=",
+        "-pyflakes=",
+        "/workspace/omnichunk/.github/workflows/ci.yml",
+        "/workspace/omnichunk/.github/workflows/dense-evaluation.yml",
+        "/workspace/omnichunk/.github/workflows/docs-pages.yml",
+        "/workspace/omnichunk/.github/workflows/integrations.yml",
+        "/workspace/omnichunk/.github/workflows/release.yml",
+        "/workspace/omnichunk/.github/workflows/rust-wheel-smoke.yml"
+      ],
+      "exit_code": 0,
+      "output_path": "/workspace/work/omnichunk-v3/ci-actionlint/proof/actionlint-after.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "original_invalid_job_env_contexts": 4,
+    "after_all_workflows_checked": 6,
+    "optional_external_shellcheck_pyflakes": "disabled; actionlint expression/schema validation active"
+  },
+  "fix": "Setup shell explicitly exports NLTK_DATA from RUNNER_TEMP and appends to GITHUB_ENV before Python; subsequent steps/workers inherit the private cache path.",
+  "inheritance_smoke": {
+    "passed": true,
+    "actual_setup_header_executed": "export NLTK_DATA=\"$RUNNER_TEMP/omnichunk-nltk-data\"\nprintf 'NLTK_DATA=%s\\n' \"$NLTK_DATA\" >> \"$GITHUB_ENV\"\numask 077\ninstall -d -m 700 \"$NLTK_DATA\"\n",
+    "current_process_export": true,
+    "github_env_lines": [
+      "NLTK_DATA=/workspace/work/omnichunk-v3/ci-actionlint/proof/runner-temp/omnichunk-nltk-data"
+    ],
+    "subsequent_process_nltk_data_path": true,
+    "cache_mode": "0o700",
+    "output_path": "/workspace/work/omnichunk-v3/ci-actionlint/proof/inheritance-smoke.log",
+    "output_sha256": "dcc2662e8cbfe802ff067cd55543f649e1780e242ba96e865dff5177af83db11"
+  },
+  "unchanged_asset_block_sha256": "fdc843625eb32f9213ed1296b46b430604420a3f5772563beb134aee7521420e",
+  "prior_asset_proof": "/workspace/work/omnichunk-v3/ci-nltk-provisioning-proof/provisioning-proof.json",
+  "asset_test_repetition": "Not repeated: asset block exactly unchanged; prior77 adapter/framework tests passed.",
+  "patch_path": "/workspace/work/omnichunk-v3/ci-nltk-expression-context-fix.patch",
+  "patch_sha256": "d954135738f53e3d589bbb63d526cfafa64a15cd2dc140b1d563b5efa4e8e8a1",
+  "committed_by_agent": false
+}
