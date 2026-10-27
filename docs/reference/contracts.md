@@ -71,6 +71,13 @@ retrieval quality and index cost. Source slices and final payload budgets remain
 checked. The default is `"structure"`; `error` and `preserve` overflow policies
 retain their existing behavior.
 
+Compact layout selection is a bounded comparison of measured candidates, not an
+exhaustive search over all possible cuts. When no inspected candidate satisfies
+the budget without dividing a protected definition, it raises `ChunkingError`
+instead of silently discarding that protection. This can occur with nonadditive
+custom counters. Use `code_boundary_policy="structure"`, increase the budget, or
+review the counter's model-token accounting.
+
 With `overflow_policy="split"`, an oversized comment-and-statement group can
 split at a comment sentence boundary when both complete resulting source slices
 fit. This keeps the remaining comment text beside its statement and includes

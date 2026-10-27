@@ -142,6 +142,30 @@ def test_compact_ties_prefer_filling_the_earlier_payload():
     assert "".join(chunk.text for chunk in chunks) == SOURCE
 
 
+def test_compact_rejects_unsafe_fallback_when_nonadditive_counter_prevents_atomic_layout():
+    from omnichunk import ChunkingError
+    from omnichunk.util.text_index import TextIndex
+    from omnichunk.windowing.compact import compact_code_ranges
+    from omnichunk.windowing.models import SourceBudget
+
+    source = "0123456789ABCDEFGHIJ"
+
+    def count(text):
+        if text == "01234":
+            return 11
+        if text == "3456789ABCDE":
+            return 10
+        return len(text)
+
+    with pytest.raises(ChunkingError, match="code_boundary_policy='structure'"):
+        compact_code_ranges(
+            [(0, 10), (10, 20)],
+            budget=SourceBudget(source, TextIndex(source), count, size_unit="tokens"),
+            max_size=10,
+            protected=[(5, 15)],
+        )
+
+
 @pytest.mark.parametrize("newline", ["\n", "\r\n"])
 @pytest.mark.parametrize("blank_lines", [0, 1])
 def test_fitting_definitions_stay_whole_when_trailing_trivia_needs_its_own_chunk(

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from bisect import bisect_right
 
+from omnichunk.types import ChunkingError
+
 from .models import SourceBudget
 
 
@@ -98,4 +100,12 @@ def compact_code_ranges(
         sizes = [budget.count(start, end) for start, end in ranges]
         return len(ranges), tuple(-size for size in sizes)
 
-    return min(candidates, key=key) if candidates else structural
+    if candidates:
+        return min(candidates, key=key)
+    if any(containing(end) is not None for _, end in structural):
+        raise ChunkingError(
+            "No measured compact code layout satisfies the protected definition budget; "
+            "use code_boundary_policy='structure', increase max_chunk_size, or review "
+            "the tokenizer/counter"
+        )
+    return structural
