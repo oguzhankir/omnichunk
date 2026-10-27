@@ -52,6 +52,9 @@ lossless reconstruction, overflow and token accuracy.
 
 | You need | Start with |
 | --- | --- |
+| Practical chunking, files, streaming, hierarchy and diffs | [Chunking recipes](usage.md) |
+| Every chunk setting, accepted values and defaults | [Chunk options](reference/options.md) |
+| Types, classes, methods and function signatures | [Python API reference](reference/chunker.md) |
 | A local retrieval pipeline with updates, deletions and citations | [Index, retrieve and synchronize](indexing.md) |
 | AST boundaries and code entities | Install `omnichunk[code]`; inspect `language_capabilities()` for actual parser support. |
 | PDF, DOCX or notebooks | [Install format extras](install.md), use `chunk_file()`, and retain canonical extracted text for citations. |
