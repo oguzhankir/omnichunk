@@ -130,6 +130,18 @@ def test_structural_layout_cannot_win_by_dividing_a_fitting_protected_definition
     assert result == [(0, 5), (5, 15), (15, 20)]
 
 
+def test_compact_ties_prefer_filling_the_earlier_payload():
+    chunks = Chunker(
+        max_chunk_size=70,
+        min_chunk_size=0,
+        context_mode="none",
+        code_boundary_policy="compact",
+        coverage_policy="lossless",
+    ).chunk("collect.py", SOURCE)
+    assert [len(chunk.text) for chunk in chunks] == [70, 50]
+    assert "".join(chunk.text for chunk in chunks) == SOURCE
+
+
 @pytest.mark.parametrize("newline", ["\n", "\r\n"])
 @pytest.mark.parametrize("blank_lines", [0, 1])
 def test_fitting_definitions_stay_whole_when_trailing_trivia_needs_its_own_chunk(

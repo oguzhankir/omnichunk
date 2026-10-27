@@ -14,7 +14,7 @@ def compact_code_ranges(
     max_size: int,
     protected: list[tuple[int, int]],
 ) -> list[tuple[int, int]]:
-    """Prefer fewer fragments, then more balanced measured payloads.
+    """Prefer fewer fragments, then fuller earlier measured payloads.
 
     Alternative layouts may divide expressions in oversized declarations, but
     never divide a fitting protected definition or documented root group.
@@ -94,10 +94,8 @@ def compact_code_ranges(
         if candidate is not None:
             candidates.append(candidate)
 
-    def key(ranges: list[tuple[int, int]]) -> tuple[int, int]:
+    def key(ranges: list[tuple[int, int]]) -> tuple[int, tuple[int, ...]]:
         sizes = [budget.count(start, end) for start, end in ranges]
-        total_size = sum(sizes)
-        balance = sum((size * len(sizes) - total_size) ** 2 for size in sizes)
-        return len(ranges), balance
+        return len(ranges), tuple(-size for size in sizes)
 
     return min(candidates, key=key) if candidates else structural

@@ -63,7 +63,7 @@ fits the maximum retains its existing single-chunk behavior.
 
 `code_boundary_policy="compact"` optionally compares AST, measured-prefix,
 line-preferred and balanced-size layouts for oversized code. It selects fewer
-fragments first, then more balanced measured payloads. Alternative layouts do not
+fragments first, then fuller earlier measured payloads. Alternative layouts do not
 divide fitting definitions or documented root groups, but may divide statements
 or expressions inside oversized declarations. This trades finer source structure
 for fewer vectors and more surrounding code in each payload; evaluate both
