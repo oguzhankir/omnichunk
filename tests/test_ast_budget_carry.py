@@ -62,3 +62,22 @@ def test_carry_uses_complete_nonadditive_utf8_counter():
     for chunk in chunks:
         assert raw[chunk.byte_range.start : chunk.byte_range.end].decode("utf-8") == chunk.text
         assert count(chunk.contextualized_text) <= 75
+
+
+def test_fitting_body_can_pack_complete_statements_with_its_header():
+    source = (
+        "def collect(items):\n"
+        "    first = normalize(items)\n"
+        "    second = apply(first)\n"
+        "    third = produce(second)\n"
+        "    return third\n"
+    )
+    chunks = Chunker(
+        max_chunk_size=100, min_chunk_size=0, context_mode="none", coverage_policy="lossless"
+    ).chunk("collect.py", source)
+    assert len(chunks) == 2
+    assert "first = normalize(items)" in chunks[0].text
+    assert "second = apply(first)" in chunks[0].text
+    assert "third = produce(second)" in chunks[1].text
+    assert "".join(chunk.text for chunk in chunks) == source
+    assert all(len(chunk.contextualized_text) <= 100 for chunk in chunks)

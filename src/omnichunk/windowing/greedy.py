@@ -151,7 +151,14 @@ def _measured_windows(
             cursor = end
             continue
         children = tuple(_node_children(node))
-        if size > max_size and split_oversized and children and len(frames) > 1:
+        body_block = str(getattr(node, "type", "")) in {
+            "block",
+            "statement_block",
+            "compound_statement",
+            "class_body",
+            "declaration_list",
+        }
+        if split_oversized and children and len(frames) > 1 and (size > max_size or body_block):
             # A declaration header should share its remaining budget with the
             # first fitting statement of an oversized body. Descending does not
             # itself require flushing the pending source prefix.
