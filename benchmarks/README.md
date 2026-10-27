@@ -224,6 +224,24 @@ than two components yields no interval. Articles can still correlate across
 paragraphs; these descriptive intervals do not correct selection or establish
 production leadership.
 
+For several source documents from one repository, article or other correlated
+origin, predeclare an explicit grouping file before inspecting scores:
+
+```json
+{"function-source-1": "owner/repository", "function-source-2": "owner/repository"}
+```
+
+Pass `--cluster-map source-groups.json` to `compare_retrieval.py`. The JSON object
+must map exactly the evaluated gold source IDs to nonempty group names; missing
+IDs, unrelated split IDs and duplicate JSON keys fail validation. Queries sharing
+any mapped group stay together transitively, including multi-source questions.
+The paired means and wins/losses are unchanged; intervals resample the connected
+groups. The report records a canonical map SHA-256, source count and group count.
+Its existing `gold_source_clusters` field then counts the connected mapped groups.
+Without this option, historical source-level grouping and output are unchanged.
+Group identity is supplied by the evaluator; this validation cannot prove that
+the chosen groups are statistically independent.
+
 Encoder preparation records global per-role batches, native token counts, timings,
 CPU thread settings, producer hashes and process-lifetime RSS. Shared preparation
 deduplicates across candidates: its cost is not attributable to one chunker.
