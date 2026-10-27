@@ -38,17 +38,25 @@ def compact_code_ranges(
             # Crossing, non-nested protections are not a valid alternative layout.
             return structural
         units.append((start, end))
+    unit_starts = [left for left, _ in units]
+
+    def containing(end: int) -> tuple[int, int] | None:
+        position = bisect_right(unit_starts, end) - 1
+        if position >= 0:
+            left, right = units[position]
+            if left < end < right:
+                return left, right
+        return None
 
     def permitted_cut(start: int, end: int) -> int | None:
-        for left, right in units:
-            if left >= end:
-                break
-            if left < end < right:
-                if start <= left and budget.count(start, right) <= max_size:
-                    return right
-                if start < left and budget.count(start, left) <= max_size:
-                    return left
-                return None
+        unit = containing(end)
+        if unit is not None:
+            left, right = unit
+            if start <= left and budget.count(start, right) <= max_size:
+                return right
+            if start < left and budget.count(start, left) <= max_size:
+                return left
+            return None
         return end
 
     def layout(target: int, prefer_lines: bool) -> list[tuple[int, int]] | None:
@@ -65,14 +73,10 @@ def compact_code_ranges(
                     measured = budget.count(cursor, candidate)
                     if measured < 0.75 * target:
                         break
-                    if measured <= max_size and not any(
-                        left < candidate < right for left, right in units
-                    ):
+                    if measured <= max_size and containing(candidate) is None:
                         end = candidate
                         break
                     position -= 1
-            if not raw[cursor:end].decode("utf-8").strip():
-                return None
             ranges.append((cursor, end))
             cursor = end
         return ranges
@@ -80,8 +84,7 @@ def compact_code_ranges(
     candidates = (
         [structural]
         if all(
-            budget.count(start, end) <= max_size
-            and not any(left < end < right for left, right in units)
+            budget.count(start, end) <= max_size and containing(end) is None
             for start, end in structural
         )
         else []

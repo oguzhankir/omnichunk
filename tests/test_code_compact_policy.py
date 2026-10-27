@@ -128,3 +128,25 @@ def test_structural_layout_cannot_win_by_dividing_a_fitting_protected_definition
         protected=[(5, 15)],
     )
     assert result == [(0, 5), (5, 15), (15, 20)]
+
+
+@pytest.mark.parametrize("newline", ["\n", "\r\n"])
+@pytest.mark.parametrize("blank_lines", [0, 1])
+def test_fitting_definitions_stay_whole_when_trailing_trivia_needs_its_own_chunk(
+    newline, blank_lines
+):
+    first = newline.join(["def first():", "    return 1"])
+    second = newline.join(["def second():", "    return 2"])
+    source = first + newline * (blank_lines + 1) + second + newline
+    limit = max(len(first), len(second))
+    chunks = Chunker(
+        max_chunk_size=limit,
+        min_chunk_size=0,
+        context_mode="none",
+        coverage_policy="lossless",
+        code_boundary_policy="compact",
+    ).chunk("functions.py", source)
+    assert any(first in chunk.text for chunk in chunks)
+    assert any(second in chunk.text for chunk in chunks)
+    assert "".join(chunk.text for chunk in chunks) == source
+    assert all(len(chunk.contextualized_text) <= limit for chunk in chunks)
