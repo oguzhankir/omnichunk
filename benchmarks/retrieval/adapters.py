@@ -27,6 +27,7 @@ TOOLS = (
     "langchain",
     "langchain-code",
     "semantic-text-splitter",
+    "semantic-code",
     "chonkie",
     "chonkie-sentence",
     "llamaindex",
@@ -42,6 +43,7 @@ TOOL_DISTRIBUTIONS = {
     "langchain": "langchain-text-splitters",
     "langchain-code": "langchain-text-splitters",
     "semantic-text-splitter": "semantic-text-splitter",
+    "semantic-code": "semantic-text-splitter",
     "chonkie": "chonkie",
     "chonkie-sentence": "chonkie",
     "llamaindex": "llama-index-core",
@@ -172,8 +174,16 @@ def _split_texts(
                 strip_whitespace=False,
             ).split_text(text),
         )
-    if tool == "semantic-text-splitter":
+    if tool in {"semantic-text-splitter", "semantic-code"}:
         module = _optional_module("semantic_text_splitter")
+        if tool == "semantic-code" and Path(path).suffix.lower() in {".py", ".pyi"}:
+            splitter_type = _required_attribute(module, "CodeSplitter")
+            factory = _required_attribute(splitter_type, "from_callback")
+            grammar = _required_attribute(_optional_module("tree_sitter_python"), "language")()
+            return cast(
+                Iterable[str],
+                factory(grammar, counter, capacity, overlap=0, trim=False).chunks(text),
+            )
         name = (
             "MarkdownSplitter"
             if Path(path).suffix.lower() in {".md", ".markdown"}

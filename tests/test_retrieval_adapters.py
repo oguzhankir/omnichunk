@@ -93,6 +93,7 @@ def test_compact_code_profile_selects_compact_policy_without_changing_historical
         ("langchain", "langchain_text_splitters"),
         ("langchain-code", "langchain_text_splitters"),
         ("semantic-text-splitter", "semantic_text_splitter"),
+        ("semantic-code", "semantic_text_splitter"),
         ("llamaindex", "llama_index.core.node_parser"),
         ("llamaindex-sentence", "llama_index.core.node_parser"),
         ("chonkie", "chonkie"),
@@ -250,6 +251,47 @@ def test_language_specific_langchain_plain_text_uses_generic_recipe():
     args = ("doc", "test.txt", "One paragraph.\n\nAnother paragraph.", 20, len, "chars")
     assert adapters.split_document("langchain-code", *args) == adapters.split_document(
         "langchain", *args
+    )
+
+
+def test_semantic_code_uses_native_python_ast_callback_and_exact_unicode_slices():
+    module = pytest.importorskip("semantic_text_splitter")
+    grammar = pytest.importorskip("tree_sitter_python")
+    source = (
+        "def first():\n    label = '資料😀'\n    return label\n\ndef second():\n    return 42\n"
+    )
+
+    def counter(value):
+        return len(value.encode("utf-8")) + 2
+
+    expected = module.CodeSplitter.from_callback(
+        grammar.language(), counter, 45, overlap=0, trim=False
+    ).chunks(source)
+    chunks = adapters.split_document("semantic-code", "doc", "d.py", source, 45, counter, "tokens")
+    assert [p.text for p in chunks] == expected
+    assert "".join(p.text for p in chunks) == source
+    assert all(counter(p.text) <= 45 for p in chunks)
+
+
+def test_semantic_code_callback_overflow_is_not_silently_repaired():
+    pytest.importorskip("semantic_text_splitter")
+    pytest.importorskip("tree_sitter_python")
+    source = (
+        "def first():\n    label = '資料😀'\n    return label\n\ndef second():\n    return 42\n"
+    )
+
+    def counter(value):
+        return len(value.encode("utf-8")) + 2
+
+    with pytest.raises(ValueError, match="exceeds the shared payload budget"):
+        adapters.split_document("semantic-code", "doc", "d.py", source, 40, counter, "tokens")
+
+
+def test_semantic_code_plain_text_retains_generic_text_strategy():
+    pytest.importorskip("semantic_text_splitter")
+    args = ("doc", "d.txt", SOURCE, 24, len, "chars")
+    assert adapters.split_document("semantic-code", *args) == adapters.split_document(
+        "semantic-text-splitter", *args
     )
 
 

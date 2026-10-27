@@ -84,6 +84,12 @@ it is not added retroactively to the frozen historical dense experiments.
 
 Additional explicit strategy identifiers leave the historical adapters unchanged:
 
+- `semantic-code` uses semantic-text-splitter's native `CodeSplitter` for Python
+  `.py`/`.pyi` files, the installed `tree-sitter-python` grammar and the shared
+  counting callback, with zero overlap and `trim=False`. Other extensions retain
+  the historical `TextSplitter`/`MarkdownSplitter` selection. This identifier
+  establishes a Python AST baseline, not grammar support for every language.
+
 - `langchain-code` uses `RecursiveCharacterTextSplitter.from_language()` with
   LangChain's language-specific separator recipe selected by the source extension,
   the shared counter, zero overlap and `strip_whitespace=False`. Unknown/text
