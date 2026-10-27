@@ -169,6 +169,15 @@ They can reduce index work and also lower retrieval quality. Compare recall,
 precision and embedding/index size before switching. The
 [options reference](reference/options.md) lists defaults and constraints.
 
+Compact code grows measured prefix probes before searching for a fitting cut,
+avoiding repeated tokenization of the remaining file. Counters may be nonadditive
+or nonmonotonic: every selected payload is still checked, but the search does not
+guarantee the globally longest fitting prefix or the smallest possible index for
+an arbitrary custom counter. If no prefix fits in the initial search range, a
+full-range recovery preserves token-completion cases; that exceptional recovery
+can still require substantial work. Recheck payload boundaries and synchronize
+your index when changing the tokenizer or compact implementation.
+
 ## Compare document revisions
 
 ```python

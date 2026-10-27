@@ -142,6 +142,101 @@ def test_compact_ties_prefer_filling_the_earlier_payload():
     assert "".join(chunk.text for chunk in chunks) == SOURCE
 
 
+def test_compact_token_probe_work_grows_with_source_not_remaining_suffixes():
+    from omnichunk.util.text_index import TextIndex
+    from omnichunk.windowing.compact import compact_code_ranges
+    from omnichunk.windowing.models import SourceBudget
+
+    capacity = 64
+
+    def measured_work(length):
+        source = "x" * length
+        probes = []
+
+        def count(text):
+            probes.append(len(text))
+            return len(text) + 2  # Complete inputs include special-token overhead.
+
+        structural = [
+            (start, min(start + capacity - 2, length)) for start in range(0, length, capacity - 2)
+        ]
+        budget = SourceBudget(source, TextIndex(source), count)
+        ranges = compact_code_ranges(structural, budget=budget, max_size=capacity, protected=[])
+        assert "".join(source[start:end] for start, end in ranges) == source
+        assert all(count(source[start:end]) <= capacity for start, end in ranges)
+        # One whole-source measurement estimates the candidate fragment count.
+        # Subsequent probes stay near the budget, independent of file length.
+        assert probes[0] == length
+        assert max(probes[1:]) <= 2 * capacity
+        return sum(probes)
+
+    small = measured_work(8192)
+    large = measured_work(16384)
+    assert large <= 2.2 * small
+
+
+def test_incremental_token_probe_recovers_a_later_nonadditive_completion():
+    from omnichunk.util.text_index import TextIndex
+    from omnichunk.windowing.models import SourceBudget
+
+    token = "界😀complete"
+    source = token + "x" * 100
+
+    def count(text):
+        return 1 if text == token else len(text) + 2
+
+    budget = SourceBudget(source, TextIndex(source), count)
+    end = budget.fitting_end(0, len(source.encode("utf-8")), 1, incremental=True)
+    assert end == len(token.encode("utf-8"))
+    assert budget.count(0, end) == 1
+
+
+def test_incremental_token_probe_keeps_a_protected_unit_beyond_its_first_bracket():
+    from omnichunk.util.text_index import TextIndex
+    from omnichunk.windowing.compact import compact_code_ranges
+    from omnichunk.windowing.models import SourceBudget
+
+    prefix = "abc"
+    unit = "BEGIN" + "界😀" * 80 + "END"
+    source = prefix + unit + "z" * 200
+    index = TextIndex(source)
+
+    def count(text):
+        return len(text.replace(unit, "")) + (5 if unit in text else 0) + 2
+
+    structural = [
+        (
+            index.byte_offset_for_char(start),
+            index.byte_offset_for_char(min(start + 62, len(source))),
+        )
+        for start in range(0, len(source), 62)
+    ]
+    left = len(prefix.encode("utf-8"))
+    right = len((prefix + unit).encode("utf-8"))
+    budget = SourceBudget(source, index, count)
+    ranges = compact_code_ranges(structural, budget=budget, max_size=64, protected=[(left, right)])
+    assert ranges[0][1] >= right
+    assert all(not left < end < right for _, end in ranges)
+    raw = source.encode("utf-8")
+    assert b"".join(raw[start:end] for start, end in ranges) == raw
+    assert all(budget.count(start, end) <= 64 for start, end in ranges)
+
+
+def test_incremental_token_probe_with_no_fitting_character_keeps_overflow_explicit():
+    from omnichunk import ChunkingError
+
+    with pytest.raises(ChunkingError):
+        Chunker(
+            max_chunk_size=1,
+            min_chunk_size=0,
+            size_unit="tokens",
+            tokenizer=lambda text: len(text) + 2,
+            context_mode="none",
+            coverage_policy="lossless",
+            code_boundary_policy="compact",
+        ).chunk("tiny.py", "value = 1\n")
+
+
 def test_compact_rejects_unsafe_fallback_when_nonadditive_counter_prevents_atomic_layout():
     from omnichunk import ChunkingError
     from omnichunk.util.text_index import TextIndex

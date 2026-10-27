@@ -65,7 +65,7 @@ def compact_code_ranges(
         ranges: list[tuple[int, int]] = []
         cursor = 0
         while cursor < total:
-            end = permitted_cut(cursor, budget.fitting_end(cursor, total, target))
+            end = permitted_cut(cursor, budget.fitting_end(cursor, total, target, incremental=True))
             if end is None or end <= cursor or budget.count(cursor, end) > max_size:
                 return None
             if prefer_lines and end < total:

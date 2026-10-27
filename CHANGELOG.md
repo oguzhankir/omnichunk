@@ -18,6 +18,8 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
   and runtime checkout provenance for reproducible baseline measurements.
 
 ### Fixed
+- Compact code grows token-prefix probes instead of repeatedly tokenizing the
+  remaining file, while retaining measured budgets and nonadditive recovery.
 - Mixed Markdown blocks retain paragraph/table/list ownership, including tight
   list continuations and indented paragraphs in loose lists.
 - Oversized documented statements can retain a useful comment sentence with their

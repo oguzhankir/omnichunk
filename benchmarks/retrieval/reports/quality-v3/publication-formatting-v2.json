@@ -1,0 +1,7 @@
+{
+  "previous_publication_commit": "a891ce5c2293ba6026e1136e85b81f96a410eaa5",
+  "previous_readme_sha256": "b1887aa531cb0037f2335d32b9eb3ed88078267083a7955c59891ba61bbfaabf",
+  "readme_sha256": "c6c25c012e0b1b64e7ad547550ceff6919aed0aaadbb9ad5c40cfd1a520be292",
+  "numeric_table_rows_unchanged": true,
+  "reason": "Disclose a code-review performance repair after validation release; original numeric audit and frozen results refer to the prior report/runtime, not retuned results."
+}

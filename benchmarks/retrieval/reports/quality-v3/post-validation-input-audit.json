@@ -1,0 +1,210 @@
+{
+  "scope": "Post-validation performance repair input comparison only; no embeddings, rankings or quality-based selection. All original quality tables continue to evaluate frozen d0.",
+  "evaluated_frozen_commit": "d0bd4b5ea10ff458313a82b3340c8f1a3f49e572",
+  "source_files_after": {
+    "windowing/compact.py": "621266e89518261033c5d8448f1fd09f600b8e22f29f76180cca3e22ab2c76e8",
+    "windowing/models.py": "4cc47062e0a13ef5660c38708ad57d09aaae53f97aa800541ec818d26ee4f276"
+  },
+  "compared_profile_model_capacity_cells": 108,
+  "identical_cells": 92,
+  "changed_cells": [
+    {
+      "domain": "code",
+      "split": "development",
+      "model": "multilingual",
+      "profile": "omnichunk-code-compact",
+      "capacity": 64,
+      "before_sha256": "a9b63ad839943d9d56c9b6efac6da19a8267f8da149bc639e9daba9e3ce8ca6e",
+      "after_sha256": "b485edd83d7065429604933cc67221e6c75f7313a845df268d6e597db74fa893",
+      "passage_count_before": 155,
+      "passage_count_after": 155
+    },
+    {
+      "domain": "code",
+      "split": "development",
+      "model": "multilingual",
+      "profile": "omnichunk-code-compact",
+      "capacity": 96,
+      "before_sha256": "64d8157437c263f6e740afcaa990d9a190cc3e2e009a873f832ee21fc0829a52",
+      "after_sha256": "0daad3dee4c240d0368c2ba3c44270511378e91b54e86c6ce589d842d2326307",
+      "passage_count_before": 116,
+      "passage_count_after": 116
+    },
+    {
+      "domain": "code",
+      "split": "development",
+      "model": "english",
+      "profile": "omnichunk-code-compact",
+      "capacity": 64,
+      "before_sha256": "41c6e2b100f5b1da7394d115bf3c0b5d2e5eae95d87240003571ee4f3221f2a2",
+      "after_sha256": "3e7b20f1230819baecea4e7c4b1fc013aa81e43f0112c9fa139865acef86398f",
+      "passage_count_before": 147,
+      "passage_count_after": 146
+    },
+    {
+      "domain": "code",
+      "split": "development",
+      "model": "english",
+      "profile": "omnichunk-code-compact",
+      "capacity": 96,
+      "before_sha256": "4ce632b91e1824a4ee7ae6ea6da147fc65cabcd8e54a105cee9d792621204b80",
+      "after_sha256": "f5d6ad34e023842b0d6dbfe592e6986bba840c3b8655e0eb26b960b2702c446b",
+      "passage_count_before": 109,
+      "passage_count_after": 109
+    },
+    {
+      "domain": "code",
+      "split": "validation",
+      "model": "multilingual",
+      "profile": "omnichunk-code-compact",
+      "capacity": 64,
+      "before_sha256": "7fa06ebe2298c82830282b7a5b5db7c2524f5d60ba30f35c8f0a18e191919373",
+      "after_sha256": "27bb050e67c5c6c57d1b16eb6dd310509247630eaf0ad108a5a04ff7af788a7b",
+      "passage_count_before": 248,
+      "passage_count_after": 248
+    },
+    {
+      "domain": "code",
+      "split": "validation",
+      "model": "multilingual",
+      "profile": "omnichunk-code-compact",
+      "capacity": 96,
+      "before_sha256": "9717cdfc0cc817362c1219359977092aff1aa0e82273401d0a83f1470acc50c3",
+      "after_sha256": "370e21e0ba9a3cb84216a93b9e57f3a4d6cc0fce1174c37134a275935572fd45",
+      "passage_count_before": 171,
+      "passage_count_after": 171
+    },
+    {
+      "domain": "code",
+      "split": "validation",
+      "model": "english",
+      "profile": "omnichunk-code-compact",
+      "capacity": 64,
+      "before_sha256": "24b439d73c5c24548cfb4221058970777dfec7b108dd5fd593f759666dde7e71",
+      "after_sha256": "23a30836a06f3ccd53ee0405a14ef305f22e16e27f74615c79d12d6173c248a6",
+      "passage_count_before": 234,
+      "passage_count_after": 234
+    },
+    {
+      "domain": "code",
+      "split": "validation",
+      "model": "english",
+      "profile": "omnichunk-code-compact",
+      "capacity": 96,
+      "before_sha256": "de1ab04eb5cac570b65251728cbc133aaa32fb47ba63bc3c79531a907d73ddbb",
+      "after_sha256": "d1532fa9179b92e35cfcb64087e14022838ea72ee209bd646ce6a71cf1219f28",
+      "passage_count_before": 166,
+      "passage_count_after": 166
+    },
+    {
+      "domain": "code-files",
+      "split": "development",
+      "model": "multilingual",
+      "profile": "omnichunk-code-compact",
+      "capacity": 64,
+      "before_sha256": "f4fb83541f238c33661d7dfec3f4b9cbfb993e87dee8815e44e17193b45fe9bd",
+      "after_sha256": "20093f29d5ef41a690cfe676e918212b896b7ba490bc5de6472c79d3d8478fbd",
+      "passage_count_before": 1151,
+      "passage_count_after": 1151
+    },
+    {
+      "domain": "code-files",
+      "split": "development",
+      "model": "multilingual",
+      "profile": "omnichunk-code-compact",
+      "capacity": 96,
+      "before_sha256": "7a0d6b5fd553cca97b6f6130b516043039dd6283dda4d2991bb0735a5b43d426",
+      "after_sha256": "df4c6cffba39bef2e81b2d630e8b39f4e9b7f44a9ce1daa689ed60e96af28d59",
+      "passage_count_before": 794,
+      "passage_count_after": 794
+    },
+    {
+      "domain": "code-files",
+      "split": "development",
+      "model": "english",
+      "profile": "omnichunk-code-compact",
+      "capacity": 64,
+      "before_sha256": "2b65de8e1f5f2aa6ac72c5f1c4cbd1bb46c86a1054d2b8c55d483a1e772532e9",
+      "after_sha256": "8d2b93bd6e5e3e728b130bc7b892950b13f8d0cf1de856230ed132bf90a85296",
+      "passage_count_before": 1117,
+      "passage_count_after": 1117
+    },
+    {
+      "domain": "code-files",
+      "split": "development",
+      "model": "english",
+      "profile": "omnichunk-code-compact",
+      "capacity": 96,
+      "before_sha256": "5a90d1e51c426d4c92881d4144a6b40518bcd81116ba678cd502aec8b0921eb3",
+      "after_sha256": "2c6dc69cd6f976b846097dfd416be12527fca0b79d6089cc7e74d633f0d207d5",
+      "passage_count_before": 767,
+      "passage_count_after": 767
+    },
+    {
+      "domain": "code-files",
+      "split": "validation",
+      "model": "multilingual",
+      "profile": "omnichunk-code-compact",
+      "capacity": 64,
+      "before_sha256": "91cfbd8664d41aa959d40ecd508392af5e707da48561d6fc9245f1fd2e42283d",
+      "after_sha256": "d52bd9b580150321745f5960e415a0e6d00f665bd540cafa3658833b5c5582f9",
+      "passage_count_before": 1059,
+      "passage_count_after": 1059
+    },
+    {
+      "domain": "code-files",
+      "split": "validation",
+      "model": "multilingual",
+      "profile": "omnichunk-code-compact",
+      "capacity": 96,
+      "before_sha256": "26932836ea7b1b595ce00154e38eac5aedec13ccafd4daf720d89fe9124c207e",
+      "after_sha256": "29aa398b1a6924e2c4b28a740f9372af5ae12da18de21322a853e1d81cd35109",
+      "passage_count_before": 716,
+      "passage_count_after": 716
+    },
+    {
+      "domain": "code-files",
+      "split": "validation",
+      "model": "english",
+      "profile": "omnichunk-code-compact",
+      "capacity": 64,
+      "before_sha256": "e71bf1b2fc4a0207ae30fd31dba870f3dc669505e684d860724d5a53bd8939bb",
+      "after_sha256": "69d8af2a835fcb13a3c57cdfd2c4b67a8788f526dee2812a4aba12f412d00fc7",
+      "passage_count_before": 1012,
+      "passage_count_after": 1011
+    },
+    {
+      "domain": "code-files",
+      "split": "validation",
+      "model": "english",
+      "profile": "omnichunk-code-compact",
+      "capacity": 96,
+      "before_sha256": "41dbe33814df7fed54bc73a90c1e77796e7c81df4cec03a01851dd51d9608b3a",
+      "after_sha256": "5a3789c6597df2f8b757aa8e6d2ecb612386a654e06a0b2191116936e44212d7",
+      "passage_count_before": 679,
+      "passage_count_after": 679
+    }
+  ],
+  "source_range_budget_protection_checks_before": 153490,
+  "source_range_budget_protection_checks_after": 153478,
+  "queries_and_corpus_commitments_unchanged": true,
+  "input_artifact_sha256": {
+    "d0-inputs.json.gz": "0cdb2c93e0b4cb4d42ba0211e33ae554490a4ba119001ce51bf36ab17cd948a4",
+    "fixed-inputs.json.gz": "3a3cff5266f9a620b3f371bfc0e67502b1d773ff0030f063c16cbb6a0c0df043"
+  },
+  "local_verification": {
+    "all_passed": true,
+    "tests_passed": 1659,
+    "optional_skipped": 36,
+    "combined_line_branch_coverage": 90.81222850586018,
+    "source_tree_sha256": "641ecb11aec32ea684c8ccf125aa6af874c465e348419f58685b4ae3345c96e2",
+    "other_gates": [
+      "ruff",
+      "format",
+      "strict_mypy",
+      "strict_mkdocs",
+      "structural_quality",
+      "wheel_sdist_metadata_and_dependency_free_install"
+    ]
+  }
+}
