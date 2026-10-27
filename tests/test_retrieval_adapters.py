@@ -33,6 +33,33 @@ def test_builtin_adapters_preserve_unicode_and_obey_actual_counter(tool, unit):
     )
 
 
+@pytest.mark.parametrize("unit", ["chars", "tokens"])
+def test_compact_prose_profile_preserves_exact_source_and_native_payload_budget(unit):
+    text = "資料😀. A useful short sentence. Another sentence with additional words. " * 5
+    counter = len if unit == "chars" else lambda value: len(value.encode("utf-8")) + 2
+    chunks = adapters.split_document(
+        "omnichunk-prose-compact", "doc", "test.txt", text, 90, counter, unit
+    )
+    assert "".join(p.text for p in chunks) == text
+    assert all(counter(p.text) <= 90 for p in chunks)
+    raw = text.encode("utf-8")
+    assert all(raw[p.start : p.end].decode("utf-8") == p.text for p in chunks)
+
+
+def test_compact_prose_profile_selects_compact_policy_without_changing_historical_adapter():
+    text = (
+        "A useful short sentence. A second sentence with more words to preserve. "
+        "A final useful sentence. "
+    ) * 4
+    compact = adapters.split_document(
+        "omnichunk-prose-compact", "doc", "test.txt", text, 90, len, "chars"
+    )
+    historical = adapters.split_document("omnichunk", "doc", "test.txt", text, 90, len, "chars")
+    assert len(compact) < len(historical)
+    assert "".join(p.text for p in compact) == "".join(p.text for p in historical) == text
+    assert all(p.text.strip().endswith(".") for p in historical)
+
+
 @pytest.mark.parametrize(
     "tool,module",
     [

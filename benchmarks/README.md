@@ -96,6 +96,12 @@ Additional explicit strategy identifiers leave the historical adapters unchanged
   `markdown_paragraph_policy="pack"`; it requires a runtime supporting that option.
   The historical `omnichunk` adapter retains the default policy. Other budget,
   context, overlap and source settings are identical.
+- `omnichunk-prose-compact` separately selects `prose_boundary_policy="compact"`
+  with default Markdown paragraph preservation. It uses the same exact-source,
+  no-context, zero-overlap contract and final shared payload budget; it does not
+  combine the Markdown packing experiment with prose compaction. A runtime with
+  the public prose boundary option is required. The historical `omnichunk`
+  strategy retains its default sentence boundaries.
 
 All strategies must pass the same source and budget checks; none receives
 postprocessing that silently repairs its output. Compare explicit strategies and

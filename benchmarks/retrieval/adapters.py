@@ -20,6 +20,7 @@ from omnichunk.sizing.counter import find_fitting_prefix
 TOOLS = (
     "omnichunk",
     "omnichunk-pack",
+    "omnichunk-prose-compact",
     "fixed",
     "semchunk",
     "langchain",
@@ -33,6 +34,7 @@ TOOLS = (
 TOOL_DISTRIBUTIONS = {
     "omnichunk": "omnichunk",
     "omnichunk-pack": "omnichunk",
+    "omnichunk-prose-compact": "omnichunk",
     "fixed": None,
     "semchunk": "semchunk",
     "langchain": "langchain-text-splitters",
@@ -310,8 +312,12 @@ def split_document(
     if not source_id:
         raise ValueError("source_id must be nonempty")
     pieces: Iterable[str]
-    if tool in {"omnichunk", "omnichunk-pack"}:
-        experimental = {"markdown_paragraph_policy": "pack"} if tool == "omnichunk-pack" else {}
+    profiles = {
+        "omnichunk": {},
+        "omnichunk-pack": {"markdown_paragraph_policy": "pack"},
+        "omnichunk-prose-compact": {"prose_boundary_policy": "compact"},
+    }
+    if tool in profiles:
         chunks = Chunker(
             max_chunk_size=capacity,
             min_chunk_size=0,
@@ -322,7 +328,7 @@ def split_document(
             overlap=None,
             overlap_lines=0,
             nws_backend="python",
-            **experimental,
+            **profiles[tool],
         ).chunk(path, text)
         pieces = [chunk.text for chunk in chunks]
     else:
