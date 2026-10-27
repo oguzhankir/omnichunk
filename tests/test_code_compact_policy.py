@@ -113,3 +113,18 @@ def test_compact_fragment_entities_remain_marked_partial_when_context_enabled():
     assert "".join(chunk.text for chunk in chunks) == SOURCE
     assert all(any(entity.is_partial for entity in chunk.context.entities) for chunk in chunks)
     assert all(len(chunk.contextualized_text) <= 60 for chunk in chunks)
+
+
+def test_structural_layout_cannot_win_by_dividing_a_fitting_protected_definition():
+    from omnichunk.util.text_index import TextIndex
+    from omnichunk.windowing.compact import compact_code_ranges
+    from omnichunk.windowing.models import SourceBudget
+
+    source = "abcdefghijklmnopqrst"
+    result = compact_code_ranges(
+        [(0, 10), (10, 20)],
+        budget=SourceBudget(source, TextIndex(source), len, size_unit="chars"),
+        max_size=10,
+        protected=[(5, 15)],
+    )
+    assert result == [(0, 5), (5, 15), (15, 20)]

@@ -79,7 +79,11 @@ def compact_code_ranges(
 
     candidates = (
         [structural]
-        if all(budget.count(start, end) <= max_size for start, end in structural)
+        if all(
+            budget.count(start, end) <= max_size
+            and not any(left < end < right for left, right in units)
+            for start, end in structural
+        )
         else []
     )
     for target, prefer_lines in [(max_size, False), (max_size, True), (balanced_target, False)]:
