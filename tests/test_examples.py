@@ -11,9 +11,9 @@ import pytest
 EXAMPLES = Path(__file__).resolve().parents[1] / "examples"
 
 
-@pytest.mark.parametrize("script", sorted(EXAMPLES.glob("[0-9][0-9]_*.py")), ids=lambda p: p.stem)
+@pytest.mark.parametrize("script", sorted(EXAMPLES.glob("*.py")), ids=lambda p: p.stem)
 def test_offline_example(script: Path, tmp_path: Path) -> None:
-    if script.name.startswith("09_"):
+    if script.name == "semantic_chunking.py":
         pytest.importorskip("numpy")
     result = subprocess.run(
         [sys.executable, str(script)],

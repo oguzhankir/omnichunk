@@ -6,7 +6,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-SCRIPT = Path(__file__).resolve().parents[1] / "examples" / "15_search_local_project.py"
+SCRIPT = Path(__file__).resolve().parents[1] / "examples" / "search_local_project.py"
 
 
 def test_skipped_directories_are_not_traversed(tmp_path: Path, monkeypatch) -> None:
