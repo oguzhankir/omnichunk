@@ -5,7 +5,10 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-10-28
+
 ### Added
+- A local project search example with source citations and optional answer generation.
 - Independent opt-in Markdown paragraph packing, compact prose and compact code
   boundary policies, with documented values, constraints and migration guidance.
 - Native code/sentence comparator strategies, external corpus/candidate paths and
@@ -36,8 +39,8 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 - Structural corrections can change default chunk payloads; explicit compact
   policies can also change boundaries and reduce retrieval quality. Synchronize
   affected indexes and invalidate embeddings under the documented identity rules.
-- Frozen retrieval evidence remains in Git and is excluded from source
-  distributions. Core installation still has no mandatory dependencies.
+- Frozen v3 evidence is available from a pinned Git snapshot and is excluded
+  from source distributions and the current checkout. Core installation still has no mandatory dependencies.
 
 ## [2.2.0] - 2026-10-25
 

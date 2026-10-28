@@ -78,7 +78,20 @@ class CodeEngine:
         language = options.language or detect_language(filepath=filepath, content=content)
         parse_result = parse_code(content, language, filepath=filepath)
 
-        entities = enrich_parent_links(extract_entities(content, language, parse_result.tree))
+        ast_nodes = _collect_ast_root_nodes(parse_result.tree)
+        # Structural AST windows do not consume entities. When context is
+        # disabled, avoid building docstrings and scope metadata that are discarded.
+        # Fallback ranges and compact definition protection still need entities.
+        needs_entities = (
+            options.context_mode != "none"
+            or options.code_boundary_policy == "compact"
+            or not ast_nodes
+        )
+        entities = (
+            enrich_parent_links(extract_entities(content, language, parse_result.tree))
+            if needs_entities
+            else []
+        )
         entity_sweep = EntityRangeSweep(entities)
         scope_tree = build_scope_tree(entities)
         import_infos = build_import_infos(entities)
@@ -103,7 +116,6 @@ class CodeEngine:
             size_unit=options.size_unit,
         )
 
-        ast_nodes = _collect_ast_root_nodes(parse_result.tree)
         if ast_nodes:
             ast_nodes = _bind_leading_comments(
                 ast_nodes,
