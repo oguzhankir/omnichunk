@@ -96,3 +96,24 @@ def test_sql_data_routes_through_code_engine_with_exact_citations():
 def test_unicode_line_separators_inside_docstrings_do_not_shift_ast_lines():
     source = 'value = "before"\nclass Entry:\n    """' + ("İ😀\u2028" * 20) + '"""\n    pass\n'
     assert _looks_hybrid_python(source)
+
+
+@pytest.mark.parametrize(
+    "wrapper",
+    [
+        "if True:\n{definition}",
+        "try:\n    pass\nexcept Exception:\n{definition}",
+        "match 1:\n    case 1:\n{definition}",
+        "def outer():\n{definition}",
+    ],
+)
+def test_nested_definition_docstrings_in_statement_suites(wrapper):
+    definition = (
+        '        def inner():\n            """'
+        + "Real documentation. " * 25
+        + '"""\n            pass\n'
+    )
+    # if and outer have one less enclosing indentation level than match/except.
+    if wrapper.startswith(("if", "def")):
+        definition = "\n".join(line[4:] for line in definition.split("\n"))
+    assert _looks_hybrid_python(wrapper.format(definition=definition))
