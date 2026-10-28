@@ -204,20 +204,31 @@ def _looks_hybrid_python(content: str) -> bool:
         return False
     line_starts = [0, *(match.end() for match in re.finditer(rb"\r\n?|\n", raw))]
     doc_bytes = 0
-    for node in ast.walk(tree):
-        if not isinstance(node, ast.Module | ast.ClassDef | ast.FunctionDef | ast.AsyncFunctionDef):
-            continue
-        if not node.body or not isinstance(node.body[0], ast.Expr):
-            continue
-        value = node.body[0].value
+    # Definitions can be nested in statement suites, including handlers and
+    # match cases, but never inside expressions. Avoid visiting expression trees.
+    pending: list[ast.AST] = [tree]
+    while pending:
+        node = pending.pop()
         if (
-            not isinstance(value, ast.Constant)
-            or not isinstance(value.value, str)
-            or value.end_lineno is None
-            or value.end_col_offset is None
+            isinstance(node, ast.Module | ast.ClassDef | ast.FunctionDef | ast.AsyncFunctionDef)
+            and node.body
+            and isinstance(node.body[0], ast.Expr)
         ):
-            continue
-        start = line_starts[value.lineno - 1] + value.col_offset
-        end = line_starts[value.end_lineno - 1] + value.end_col_offset
-        doc_bytes += end - start
+            value = node.body[0].value
+            if (
+                isinstance(value, ast.Constant)
+                and isinstance(value.value, str)
+                and value.end_lineno is not None
+                and value.end_col_offset is not None
+            ):
+                start = line_starts[value.lineno - 1] + value.col_offset
+                end = line_starts[value.end_lineno - 1] + value.end_col_offset
+                doc_bytes += end - start
+        for _, field in ast.iter_fields(node):
+            if isinstance(field, list):
+                pending.extend(
+                    child
+                    for child in field
+                    if isinstance(child, ast.stmt | ast.ExceptHandler | ast.match_case)
+                )
     return doc_bytes > 0 and doc_bytes / len(raw) > 0.4

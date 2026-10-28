@@ -223,7 +223,7 @@ def finalize_chunks(
                 total_chunks=-1,
                 char_count=len(text),
                 token_count=tokens(text),
-                nws_count=sum(not ch.isspace() for ch in text),
+                nws_count=len(text) - sum(map(str.isspace, text)),
                 source=source,
                 config_fingerprint=fingerprint,
                 occurrence=occurrence,
