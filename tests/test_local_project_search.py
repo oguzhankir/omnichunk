@@ -9,6 +9,35 @@ from pathlib import Path
 SCRIPT = Path(__file__).resolve().parents[1] / "examples" / "15_search_local_project.py"
 
 
+def test_skipped_directories_are_not_traversed(tmp_path: Path, monkeypatch) -> None:
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("project_scan", SCRIPT)
+    assert spec is not None and spec.loader is not None
+    demo = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(demo)
+    for folder in (".cache", "venv", "env", "node_modules", "build", "dist", "__pycache__", "src"):
+        (tmp_path / folder).mkdir()
+        (tmp_path / folder / "content.py").write_text("backup", encoding="utf-8")
+    (tmp_path / ".hidden.py").write_text("backup", encoding="utf-8")
+    try:
+        (tmp_path / "src" / "link.py").symlink_to(tmp_path / "src" / "content.py")
+        (tmp_path / "linked-dir").symlink_to(tmp_path / "src", target_is_directory=True)
+    except OSError:
+        pass  # Symlink creation may require elevated privileges on Windows.
+    visited = []
+    original_walk = os.walk
+
+    def observe_walk(*args, **kwargs):
+        for directory, dirs, files in original_walk(*args, **kwargs):
+            visited.append(Path(directory).relative_to(tmp_path))
+            yield directory, dirs, files
+
+    monkeypatch.setattr(demo.os, "walk", observe_walk)
+    assert demo.load_sources(tmp_path) == {"src/content.py": "backup"}
+    assert set(visited) == {Path("."), Path("src")}
+
+
 def test_searches_project_and_cites_utf8_crlf_bytes(tmp_path: Path) -> None:
     raw = "## Bilgi\r\n\r\nYedekler 30 gün saklanır.\r\n".encode()
     (tmp_path / "notice.md").write_bytes(raw)
