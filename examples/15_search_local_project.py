@@ -28,6 +28,7 @@ SAMPLE = {
     ),
 }
 SUFFIXES = {".py", ".md", ".txt"}
+SKIP_DIRS = {"__pycache__", "venv", "env", "node_modules", "build", "dist"}
 STOP_WORDS = {"a", "an", "and", "are", "do", "for", "how", "is", "of", "the", "to", "what", "when"}
 
 
@@ -39,17 +40,24 @@ def load_sources(root: Path) -> dict[str, str]:
     if not root.is_dir():
         raise ValueError(f"Not a directory: {root}")
     sources = {}
-    for path in sorted(root.rglob("*")):
-        if not path.is_file() or path.is_symlink() or path.suffix.lower() not in SUFFIXES:
-            continue
-        # Hidden directories commonly contain caches, environments or VCS internals.
-        relative = path.relative_to(root)
-        if any(part.startswith(".") for part in relative.parts):
-            continue
-        try:
-            sources[relative.as_posix()] = path.read_bytes().decode("utf-8")
-        except UnicodeDecodeError:
-            print(f"Skipping non-UTF-8 file: {relative}")
+    for directory, dirs, files in os.walk(root, followlinks=False):
+        parent = Path(directory)
+        dirs[:] = sorted(
+            name
+            for name in dirs
+            if not name.startswith(".")
+            and name not in SKIP_DIRS
+            and not (parent / name).is_symlink()
+        )
+        for name in sorted(files):
+            path = parent / name
+            if name.startswith(".") or path.is_symlink() or path.suffix.lower() not in SUFFIXES:
+                continue
+            relative = path.relative_to(root)
+            try:
+                sources[relative.as_posix()] = path.read_bytes().decode("utf-8")
+            except UnicodeDecodeError:
+                print(f"Skipping non-UTF-8 file: {relative}")
     return sources
 
 

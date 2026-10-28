@@ -80,8 +80,11 @@ To search your own files instead, run:
 python examples/15_search_local_project.py --path /path/to/project --question "How are backups retained?"
 ```
 
-The example scans `.py`, `.md` and `.txt` files, excluding hidden directories,
-and displays matching source excerpts with line numbers and UTF-8 byte ranges.
+The example scans `.py`, `.md` and `.txt` files and displays matching source
+excerpts with line numbers and UTF-8 byte ranges. It skips hidden files and
+directories, symlinks, and directories named `__pycache__`, `venv`, `env`,
+`node_modules`, `build` or `dist`. Point `--path` directly at a directory if it
+is intentionally named one of these.
 It uses a simple in-memory lexical index; it does not call a language model or
 generate an answer. Replace the retriever with an evaluated one for a production application; the
 optional model step below uses these excerpts as context for an answer. Use a focused directory for large projects.
