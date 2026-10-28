@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="880" viewBox="0 0 600 880" role="img" aria-labelledby="title desc">
+
+
+  <title id="title">From a document to traceable chunks</title>
+  <desc id="desc">Actual output for the quick start: chunk 1 contains the Retention heading and first paragraph at bytes [0, 40). Chunk 2 contains the second paragraph at bytes [40, 63). Both retain Retention as heading metadata.</desc>
+
+
+  <rect x="0" y="0" width="600" height="880" rx="24" fill="#0d101a" stroke="none"/>
+  <text x="28" y="48" font-family="DejaVu Sans, sans-serif" font-size="26" fill="#f5f4ff" font-weight="600">One source. Useful boundaries.</text>
+  <text x="28" y="80" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#a6afc5" font-weight="400">Real output · 48-character budget</text>
+  <rect x="24" y="104" width="552" height="342" rx="16" fill="#121725" stroke="#2a3043"/>
+  <text x="50" y="142" font-family="DejaVu Sans, sans-serif" font-size="14" fill="#9d91cc" font-weight="600" letter-spacing="2">SOURCE</text>
+  <text x="50" y="180" font-family="DejaVu Sans, sans-serif" font-size="24" fill="#f0edff" font-weight="600">policy.md</text>
+  <text x="50" y="231" font-family="DejaVu Sans Mono, monospace" font-size="16" fill="#657087" font-weight="400"> 1</text>
+  <text x="92" y="231" font-family="DejaVu Sans Mono, monospace" font-size="24" fill="#b9aaff" font-weight="400"># Retention</text>
+  <text x="50" y="267" font-family="DejaVu Sans Mono, monospace" font-size="16" fill="#657087" font-weight="400"> 2</text>
+  <text x="92" y="267" font-family="DejaVu Sans Mono, monospace" font-size="24" fill="#dce0ef" font-weight="400"/>
+  <text x="50" y="303" font-family="DejaVu Sans Mono, monospace" font-size="16" fill="#657087" font-weight="400"> 3</text>
+  <text x="92" y="303" font-family="DejaVu Sans Mono, monospace" font-size="24" fill="#dce0ef" font-weight="400">Keep backups for 30 days.</text>
+  <text x="50" y="339" font-family="DejaVu Sans Mono, monospace" font-size="16" fill="#657087" font-weight="400"> 4</text>
+  <text x="92" y="339" font-family="DejaVu Sans Mono, monospace" font-size="24" fill="#dce0ef" font-weight="400"/>
+  <text x="50" y="375" font-family="DejaVu Sans Mono, monospace" font-size="16" fill="#657087" font-weight="400"> 5</text>
+  <text x="92" y="375" font-family="DejaVu Sans Mono, monospace" font-size="24" fill="#dce0ef" font-weight="400">Delete expired copies.</text>
+  <text x="50" y="419" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#9aa4bd" font-weight="400">63 characters · canonical UTF-8 source</text>
+  <path d="M300 462v30m-10-10 10 10 10-10" fill="none" stroke="#a492f4" stroke-width="2.5"/>
+  <rect x="24" y="510" width="552" height="176" rx="14" fill="#17172a" stroke="#494065"/>
+  <rect x="24" y="528" width="3" height="140" rx="1" fill="#a492f4" stroke="none"/>
+  <text x="48" y="543" font-family="DejaVu Sans, sans-serif" font-size="13" fill="#b6a8ff" font-weight="600" letter-spacing="1.5">CHUNK 01</text>
+  <text x="48" y="581" font-family="DejaVu Sans Mono, monospace" font-size="24" fill="#eeeafd" font-weight="400"># Retention</text>
+  <text x="48" y="610" font-family="DejaVu Sans Mono, monospace" font-size="24" fill="#eeeafd" font-weight="400">Keep backups for 30 days.</text>
+  <text x="48" y="664" font-family="DejaVu Sans Mono, monospace" font-size="18" fill="#b7accf" font-weight="400">[0, 40)  ·  heading: Retention</text>
+  <rect x="24" y="704" width="552" height="148" rx="14" fill="#17172a" stroke="#494065"/>
+  <rect x="24" y="722" width="3" height="112" rx="1" fill="#a492f4" stroke="none"/>
+  <text x="48" y="737" font-family="DejaVu Sans, sans-serif" font-size="13" fill="#b6a8ff" font-weight="600" letter-spacing="1.5">CHUNK 02</text>
+  <text x="48" y="775" font-family="DejaVu Sans Mono, monospace" font-size="24" fill="#eeeafd" font-weight="400">Delete expired copies.</text>
+  <text x="48" y="830" font-family="DejaVu Sans Mono, monospace" font-size="18" fill="#b7accf" font-weight="400">[40, 63)  ·  heading: Retention</text>
+
+
+</svg>
