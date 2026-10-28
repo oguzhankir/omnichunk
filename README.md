@@ -132,7 +132,7 @@ omnichunk ./src --glob "**/*.py" --max-size 512 --size-unit chars --format jsonl
 ```
 
 Use `chunk_file()` for individual files and structured loaders. See
-[files, directories and CLI recipes](docs/usage.md) for more examples.
+[files, directories and CLI recipes](docs/usage.md) for more examples. Try the [local project search and RAG example](examples/README.md#search-your-own-project) to retrieve cited code and documentation.
 
 ## Measured, with the tradeoffs visible
 

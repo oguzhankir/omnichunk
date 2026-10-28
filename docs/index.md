@@ -58,6 +58,7 @@ lossless reconstruction, overflow and token accuracy.
 | A local retrieval pipeline with updates, deletions and citations | [Index, retrieve and synchronize](indexing.md) |
 | AST boundaries and code entities | Install `omnichunk[code]`; inspect `language_capabilities()` for actual parser support. |
 | PDF, DOCX or notebooks | [Install format extras](install.md), use `chunk_file()`, and retain canonical extracted text for citations. |
+| Search a local code and docs project | [Runnable retrieval and RAG example](https://github.com/oguzhankir/omnichunk/blob/main/examples/README.md#search-your-own-project) |
 | Semantic boundaries | Supply an embedding callback; see the [runnable examples](https://github.com/oguzhankir/omnichunk/tree/main/examples). |
 | Parent context, diffs, framework conversion or vector export | [Python API](reference/chunker.md) and [examples](https://github.com/oguzhankir/omnichunk/tree/main/examples) |
 | Reproducible evaluation | [Performance methodology](performance/sla.md) |

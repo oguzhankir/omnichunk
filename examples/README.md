@@ -1,7 +1,8 @@
 # Omnichunk examples
 
 Numbered workflows use local sample data and need no API key or external service.
-Start with the local RAG lifecycle for citations and updates, then the recoverable
+Start with the local project search for a small code and documentation example,
+then the local RAG lifecycle for citations and updates and the recoverable
 indexing example for durable delivery. Optional vendor recipes in `integrations/`
 document their client/server requirements separately.
 
@@ -10,6 +11,9 @@ document their client/server requirements separately.
 From this checkout, use the package installed in your current environment:
 
 ```bash
+pip install -e .
+python examples/15_search_local_project.py
+# Install optional extras for all remaining examples:
 pip install -e ".[code,semantic]"
 python examples/13_local_rag_lifecycle.py
 python examples/14_recoverable_indexing.py
@@ -23,6 +27,7 @@ checkout for the installed package.
 
 | File | What it demonstrates |
 | --- | --- |
+| [15_search_local_project.py](15_search_local_project.py) | Offline lexical search over Python, Markdown and text files with line and byte citations |
 | [13_local_rag_lifecycle.py](13_local_rag_lifecycle.py) | SQLite indexing, lexical retrieval, exact citations, edit/delete sync, repeat skips and reopen |
 | [14_recoverable_indexing.py](14_recoverable_indexing.py) | Durable plans, failed delivery, replay, embedding reuse, deletion and application ACL filtering |
 | [01_quickstart.py](01_quickstart.py) | `chunk()`, `Chunker`, fields, files and batches |
@@ -65,3 +70,45 @@ See the [indexing guide](../docs/indexing.md) and
 The scripts assert source, hierarchy and lifecycle properties instead of fixed
 chunk counts that vary by installed parser. CI executes the numbered scripts via
 `pytest tests/test_examples.py` so API changes cannot silently stale the examples.
+
+## Search your own project
+
+The first command above searches a tiny built-in Python and Markdown project.
+To search your own files instead, run:
+
+```bash
+python examples/15_search_local_project.py --path /path/to/project --question "How are backups retained?"
+```
+
+The example scans `.py`, `.md` and `.txt` files, excluding hidden directories,
+and displays matching source excerpts with line numbers and UTF-8 byte ranges.
+It uses a simple in-memory lexical index; it does not call a language model or
+generate an answer. Replace the retriever with an evaluated one for a production application; the
+optional model step below uses these excerpts as context for an answer. Use a focused directory for large projects.
+
+For a small, reproducible comparison of OmniChunk and fixed-size chunks, run
+this existing benchmark from the repository root:
+
+```bash
+python benchmarks/run_retrieval.py --split dev --tools omnichunk,fixed --chunk-sizes 128 --unit chars --retrieval-budget 1024 --top-k 5 --repeats 1 --output /tmp/retrieval.json
+```
+
+This uses a separate synthetic development corpus and lexical retrieval, not the
+project-search demo above. Its results do not establish production retrieval or
+generated-answer quality. See the [benchmark guide](../benchmarks/README.md) for
+the methodology, dependencies, and interpretation.
+
+To generate an answer from the retrieved excerpts, opt in to the OpenAI API:
+
+```bash
+export OPENAI_API_KEY="your-key"
+python examples/15_search_local_project.py --generate
+# Or add --path and --question to use your own project and question.
+```
+
+This sends the question and retrieved excerpts (including source paths) to
+OpenAI over the network using `gpt-4o-mini`; API usage may incur charges. Check
+that you are allowed to send the selected source material before enabling it.
+The key stays in your environment. Model-generated citations are not checked by
+the example: compare them with the printed source excerpts before relying on an
+answer. The offline default needs neither a key nor a network connection.
