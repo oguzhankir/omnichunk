@@ -1,6 +1,6 @@
 """Search a local code/docs project and print exact, cited source excerpts.
 
-Run ``python examples/15_search_local_project.py`` for the bundled mini project,
+Run ``python examples/search_local_project.py`` for the bundled mini project,
 then try ``--path . --question 'how are chunks indexed?'`` on your own project.
 The lexical retriever is intentionally small and offline. It returns source
 excerpts, not a generated answer or a production-quality semantic search model.
