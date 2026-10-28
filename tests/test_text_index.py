@@ -36,3 +36,14 @@ def test_text_index_char_to_byte_matches_encode_reference(text: str) -> None:
     idx = TextIndex(text)
     assert idx._char_to_byte == ref_cb
     assert idx._line_starts == ref_lines
+
+
+@pytest.mark.parametrize("text", ["", "abc", "\n", "a\r\nb\r\nc\n", "\0\n\n", "é\r\n🚀\n"])
+def test_line_and_byte_queries_match_original_text(text: str) -> None:
+    idx = TextIndex(text)
+    raw = text.encode("utf-8")
+    for position in range(len(text) + 1):
+        assert idx.byte_offset_for_char(position) == len(text[:position].encode("utf-8"))
+        assert idx.line_for_char(position) == text[:position].count("\n")
+    for position in range(len(raw) + 1):
+        assert idx.line_for_byte(position) == raw[:position].count(b"\n")

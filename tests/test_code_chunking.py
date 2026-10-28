@@ -481,3 +481,65 @@ def test_java_static_initializer_preserved_in_class(fixtures_dir: Path) -> None:
     circle_chunk = next(c for c in chunks if "class Circle" in c.text)
     assert "static {" in circle_chunk.text
     assert 'System.out.println("Circle loaded")' in circle_chunk.text
+
+
+def test_contextless_ast_windows_do_not_build_unused_entities(monkeypatch) -> None:
+    import pytest
+
+    from omnichunk.engine import code_engine
+    from omnichunk.parser.tree_sitter import parse_code
+
+    source = (
+        "# Keep the declaration together.\ndef greeting():\n"
+        '    """Say hello."""\n    return "héllo"\n'
+    )
+    if parse_code(source, "python").tree is None:
+        pytest.skip("requires the optional Python parser")
+
+    def unnecessary_extraction(*args, **kwargs):
+        raise AssertionError("contextless AST windows must not build entity metadata")
+
+    monkeypatch.setattr(code_engine, "extract_entities", unnecessary_extraction)
+    chunks = Chunker(max_chunk_size=70, min_chunk_size=0, context_mode="none").chunk(
+        "greeting.py", source
+    )
+    assert "".join(chunk.text for chunk in chunks) == source
+    assert all(not chunk.context.entities for chunk in chunks)
+    assert all(chunk.contextualized_text == chunk.text for chunk in chunks)
+    assert all(len(chunk.text) <= 70 for chunk in chunks)
+
+
+def test_contextless_fallback_and_compact_still_extract_entities(monkeypatch) -> None:
+    import pytest
+
+    from omnichunk.engine import code_engine
+    from omnichunk.parser.tree_sitter import ParseResult, parse_code
+
+    source = "def first():\n    return 1\n\ndef second():\n    return 2\n"
+    if parse_code(source, "python").tree is None:
+        pytest.skip("requires the optional Python parser")
+    original = code_engine.extract_entities
+    calls = []
+
+    def extraction(*args, **kwargs):
+        entities = original(*args, **kwargs)
+        calls.append(entities)
+        return entities
+
+    monkeypatch.setattr(code_engine, "extract_entities", extraction)
+    compact = Chunker(
+        max_chunk_size=30, min_chunk_size=0, context_mode="none", code_boundary_policy="compact"
+    ).chunk("definitions.py", source)
+    assert calls and calls[-1]
+    assert "".join(chunk.text for chunk in compact) == source
+
+    calls.clear()
+    monkeypatch.setattr(
+        code_engine, "parse_code", lambda *args, **kwargs: ParseResult(None, backend="regex")
+    )
+    fallback = Chunker(max_chunk_size=30, min_chunk_size=0, context_mode="none").chunk(
+        "definitions.py", source
+    )
+    assert calls and calls[-1]
+    assert "".join(chunk.text for chunk in fallback) == source
+    assert all(chunk.context.format_metadata["parser_backend"] == "regex" for chunk in fallback)

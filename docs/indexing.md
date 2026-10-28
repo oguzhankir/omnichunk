@@ -1,12 +1,12 @@
 # Index, retrieve and synchronize
 
-The [local RAG lifecycle example](https://github.com/oguzhankir/omnichunk/blob/main/examples/13_local_rag_lifecycle.py)
+The [local RAG lifecycle example](https://github.com/oguzhankir/omnichunk/blob/main/examples/local_rag_lifecycle.py)
 demonstrates the complete path from source files to cited retrieval context. It
 runs without a service, API key or model download:
 
 ```bash
 pip install -e .
-python examples/13_local_rag_lifecycle.py
+python examples/local_rag_lifecycle.py
 ```
 
 It creates a temporary policy corpus, indexes it into SQLite, retrieves the backup
@@ -68,7 +68,7 @@ The legacy row helper retains its old shape for compatibility. Weaviate Python v
 uses `uuid=row["id"]`, `properties=row["properties"]`, and
 `vector=row["vector"]`. Use `weaviate_object_id(chunk_id)` to translate removed
 chunk IDs into the same deterministic UUIDs used during export. See
-[example 11](https://github.com/oguzhankir/omnichunk/blob/main/examples/11_vector_db_export.py).
+[the vector export example](https://github.com/oguzhankir/omnichunk/blob/main/examples/vector_db_export.py).
 
 The example applies diffs to an in-memory dictionary in one process. SQLite sync
 and a remote vector write are **not one transaction**: if the process fails after
@@ -109,14 +109,14 @@ better answers. See [performance methodology](performance/sla.md) and the
 
 ## 5. Persist delivery work before touching the retrieval backend
 
-The [recoverable indexing example](https://github.com/oguzhankir/omnichunk/blob/main/examples/14_recoverable_indexing.py)
+The [recoverable indexing example](https://github.com/oguzhankir/omnichunk/blob/main/examples/recoverable_indexing.py)
 uses two SQLite files to demonstrate a journal and an independent retrieval
 backend. It deliberately loses a receipt after a remote commit, closes the
 journal, then resumes delivery without recomputing the embedding. It also shows
 metadata-only ACL updates, authorized retrieval and source deletion:
 
 ```bash
-python examples/14_recoverable_indexing.py
+python examples/recoverable_indexing.py
 ```
 
 `IndexJournal` stores serializable plans, prepared vectors and acknowledgment

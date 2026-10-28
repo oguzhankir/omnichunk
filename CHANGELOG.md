@@ -5,7 +5,7 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 
 ## [Unreleased]
 
-## [2.3.0] - Pending release
+## [2.3.0] - 2026-10-28
 
 ### Added
 - A local project search example with source citations and optional answer generation.
