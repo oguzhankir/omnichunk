@@ -1,7 +1,0 @@
-# Comparator versions exercised together on Python 3.12. Runtime versions and
-# source fingerprints are preserved in each report; install the checkout first.
-chonkie==1.7.0
-langchain-text-splitters==1.1.3
-llama-index-core==0.14.25
-semchunk==4.1.1
-semantic-text-splitter==0.33.0
