@@ -226,3 +226,5 @@ site/
 
 # Temporary backup files
 *.bak
+# Historical v3 benchmark evidence, restored on demand
+/benchmarks/retrieval/reports/quality-v3/evidence/

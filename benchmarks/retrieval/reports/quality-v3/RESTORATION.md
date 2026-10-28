@@ -1,5 +1,16 @@
 Restore original evidence files with Python 3.10+ and its standard library:
 
+From this directory, first download the pinned snapshot and verify its evidence files:
+
+```bash
+python download_evidence.py
+```
+
+The restored `evidence/` directory is ignored by Git. For an offline restore, pass
+`--archive /path/to/snapshot.tar.gz` using the pinned GitHub source archive.
+
+Then restore the original files:
+
 ```bash
 python restore_evidence.py --archive-root ./evidence --output-dir ./restored
 ```
