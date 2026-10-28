@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from bisect import bisect_right
 from typing import Any
 
@@ -30,11 +31,15 @@ class TextIndex:
         self._text = text
         self._raw_bytes = text.encode("utf-8")
 
+        self._newline_bytes = [m.start() for m in re.finditer(b"\n", self._raw_bytes)]
         rust = _get_rust_mod()
         if rust is not None:
             char_to_byte, line_starts = rust.build_char_to_byte_index(self._raw_bytes)
             self._char_to_byte: list[int] = list(char_to_byte)
             self._line_starts: list[int] = list(line_starts)
+        elif text.isascii():
+            self._char_to_byte = list(range(len(text) + 1))
+            self._line_starts = [0, *(offset + 1 for offset in self._newline_bytes)]
         else:
             self._char_to_byte = [0] * (len(text) + 1)
             self._line_starts = [0]
@@ -53,8 +58,6 @@ class TextIndex:
                 if ch == "\n":
                     self._line_starts.append(idx + 1)
             self._char_to_byte[len(text)] = byte_cursor
-
-        self._newline_bytes = [idx for idx, b in enumerate(self._raw_bytes) if b == 10]
 
     @classmethod
     def from_parent_slice(cls, parent: TextIndex, char_start: int, char_end: int) -> TextIndex:
