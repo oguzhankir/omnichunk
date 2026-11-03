@@ -402,22 +402,30 @@ def chunks_to_llamaindex_docs(
     chunks: Sequence[Chunk],
     *,
     use_contextualized_text: bool = True,
+    include_metadata_in_content: bool = True,
 ) -> list[Any]:
-    """Convert chunks to LlamaIndex Document objects."""
+    """Convert chunks to LlamaIndex Document objects.
+
+    Set ``include_metadata_in_content=False`` to keep EMBED/LLM rendering equal
+    to the budgeted raw/contextualized payload. The default retains the existing
+    framework metadata rendering behavior; the snapshot itself is always excluded.
+    """
     document_cls = _import_llamaindex_document_class()
     docs: list[Any] = []
 
     for chunk in chunks:
         content = chunk.contextualized_text if use_contextualized_text else chunk.text
+        metadata = _chunk_metadata(chunk)
+        excluded = ["omnichunk"] if include_metadata_in_content else list(metadata)
         docs.append(
             document_cls(
                 id_=stable_chunk_id(chunk),
                 text=content,
-                metadata=_chunk_metadata(chunk),
+                metadata=metadata,
                 # The full provenance snapshot also contains raw/rendered text.
                 # Keep it accessible without duplicating that text in prompts.
-                excluded_embed_metadata_keys=["omnichunk"],
-                excluded_llm_metadata_keys=["omnichunk"],
+                excluded_embed_metadata_keys=excluded,
+                excluded_llm_metadata_keys=excluded,
             )
         )
 

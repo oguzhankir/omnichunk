@@ -50,5 +50,10 @@ def format_contextualized_text(text: str, context: ChunkContext, overlap_text: s
         parts.append(overlap_text)
         parts.append("# ---")
 
+    table_context = context.format_metadata.get("table_context")
+    if isinstance(table_context, dict) and table_context.get("text"):
+        parts.append("# Table headers (derived)")
+        parts.append(table_context["text"])
+
     parts.append(text)
     return "\n".join(parts)

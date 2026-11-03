@@ -12,7 +12,9 @@ module-specific path from that module, for example
 
 ## Structured document formats
 
-Loaders return `LoadedDocument(text, segments, format_name, warnings)`. Its `text`
+Loaders return `LoadedDocument(text, segments, format_name, warnings, source_id, metadata, elements)`.
+The final three fields are optional and default to `None`, `{}` and `()`.
+Its `text`
 is the canonical source for subsequent chunks. `FormatSegment.char_start` and
 `char_end` are half-open **character** offsets into that string; finalized
 `Chunk.byte_range` values are half-open **UTF-8 byte** offsets. PDF, DOCX and
@@ -30,6 +32,7 @@ An empty result with loader warnings raises `ChunkingError` when chunked.
 | `load_ipynb` | Notebook JSON string; `include_outputs=False` excludes outputs. Enabling it includes textual stream, error and plain-text display output, not binary images. Invalid JSON/cells produce loader warnings. |
 | `load_pdf_bytes` | PDF bytes; requires `omnichunk[pdf]`. Extracts page text with page metadata; it does not perform OCR. |
 | `load_docx_bytes` | DOCX bytes; requires `omnichunk[docx]`. Extracts paragraphs and tables in document order. |
+| `load_docling_document` | Already-extracted DoclingDocument or exported dictionary; requires `omnichunk[docling]`. Retains element/page/geometry and row/cell provenance. See [the Docling guide](../structured-documents.md) for the supported schema and context/budget policies. |
 | `load_latex` | LaTeX source string; retains source syntax and identifies prose, code environments and supported math regions. It does not compile TeX. |
 | `load_rst` | reStructuredText source string; identifies prose and code directives without `docutils`. It does not resolve external `literalinclude` files. |
 
@@ -46,6 +49,12 @@ chunks = chunk_loaded_document(
 ```
 
 ::: omnichunk.formats.FormatSegment
+
+Segments use `prose`/`code`, or `table` with `metadata["row_ranges"]` containing
+ordered, contiguous canonical UTF-8 `{start, end}` row ranges. `DocumentElement`
+records use canonical UTF-8 byte ranges; segment offsets remain characters.
+`LoadedDocument.elements` supplies the references projected onto final chunks.
+Existing loaders leave the new fields at their defaults.
 
 ::: omnichunk.formats.LoadedDocument
 
@@ -333,6 +342,10 @@ Framework converters require the corresponding LangChain or LlamaIndex extra.
 `use_contextualized_text=True` selects rendered content; choose `False` for raw
 source text. Both retain a complete serialized chunk snapshot in document
 metadata. For native pipeline adapters, see the [indexing API](indexing-api.md).
+For extracted documents, convert the chunks directly to preserve element lineage.
+LlamaIndex's `include_metadata_in_content=False` excludes all metadata from
+EMBED/LLM rendering while retaining it for citations and filters. Its default
+`True` preserves existing metadata rendering, excluding only the chunk snapshot.
 
 Vector payload converters return dictionaries without writing to a service or
 computing embeddings. Supply one nonempty vector per chunk in the same order,

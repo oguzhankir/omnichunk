@@ -123,6 +123,8 @@ rust = ["maturin>=1.7.0"]
 pdf = ["pypdf>=3.0"]
 docx = ["python-docx>=1.0"]
 formats = ["pypdf>=3.0", "python-docx>=1.0"]
+# Already-extracted DoclingDocument only; no converter, OCR or model dependencies.
+docling = ["docling-core==2.105.0"]
 # Reserved for future typed MCP SDK bridges; core server uses stdlib only.
 mcp = []
 otel = ["opentelemetry-api>=1.21.0"]

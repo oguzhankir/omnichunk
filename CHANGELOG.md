@@ -5,6 +5,26 @@ This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semant
 
 ## [Unreleased]
 
+### Added
+- An opt-in Docling adapter for already-extracted `DoclingDocument` schema 1.10.0,
+  pinned to `docling-core==2.105.0`. It preserves canonical UTF-8 source ranges,
+  extraction revision, original element/page references and supplied geometry.
+- Row-aware table proposals, merged/sparse/empty cell references and header
+  associations, with repeated headers as separately budgeted derived context.
+  Oversized rows use the existing split/error/preserve policies without truncation.
+- Optional `LoadedDocument` source identity, metadata and `DocumentElement` records,
+  projected onto final chunks after splitting and overlap. Existing loaders/defaults
+  are unchanged; the core still has no mandatory dependencies.
+- An opt-in `include_metadata_in_content=False` for LlamaIndex document conversion
+  to render exactly the budgeted payload, plus an executable offline Docling →
+  chunks → JSON/frameworks → original element/page resolution example and fixtures.
+
+### Scope
+- This is the first bounded M3 structured-document slice, not completion of M3 or
+  M1. Conformance checks do not establish improved retrieval quality or production
+  readiness. Conversion/OCR, rich table cells and non-text/table elements are outside
+  this adapter's supported scope and fail explicitly.
+
 ## [2.3.0] - 2026-10-28
 
 ### Added

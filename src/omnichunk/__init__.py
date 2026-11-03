@@ -9,9 +9,11 @@ from .dedup import dedup_chunks
 from .diff import chunk_diff
 from .eval import ChunkEvalScores, EvalReport, eval_report_to_dict, evaluate_chunks
 from .formats import (
+    DocumentElement,
     FormatSegment,
     LoadedDocument,
     chunk_loaded_document,
+    load_docling_document,
     load_docx_bytes,
     load_ipynb,
     load_latex,
@@ -154,6 +156,7 @@ __all__ = [
     "score_evidence",
     "score_ranking",
     "FormatSegment",
+    "DocumentElement",
     "LoadedDocument",
     "EntityInfo",
     "EntityNode",
@@ -188,6 +191,7 @@ __all__ = [
     "detect_topic_shifts",
     "hierarchical_chunk",
     "load_docx_bytes",
+    "load_docling_document",
     "load_ipynb",
     "load_latex",
     "load_pdf_bytes",

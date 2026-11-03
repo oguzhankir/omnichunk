@@ -411,11 +411,13 @@ class Chunker:
         chunks: Sequence[Chunk],
         *,
         use_contextualized_text: bool = True,
+        include_metadata_in_content: bool = True,
     ) -> list[Any]:
         """Convert chunks to LlamaIndex Document objects."""
         return chunks_to_llamaindex_docs(
             chunks,
             use_contextualized_text=use_contextualized_text,
+            include_metadata_in_content=include_metadata_in_content,
         )
 
     def to_pinecone_vectors(
