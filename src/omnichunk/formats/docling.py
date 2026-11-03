@@ -220,13 +220,26 @@ def _table(original: dict[str, Any], start: int) -> tuple[str, dict[str, Any]]:
                 "text": cell["text"],
             }
         )
+    starting_by_row: dict[int, dict[int, Any]] = {}
+    spanning_by_row: dict[int, list[Any]] = {}
+    column_headers: dict[int, list[Any]] = {}
+    row_headers: dict[int, list[Any]] = {}
+    order = {cell["cell_ref"]: i for i, cell in enumerate(cells)}
+    for cell in cells:
+        starting_by_row.setdefault(cell["row_start"], {})[cell["col_start"]] = cell
+        for row_index in range(cell["row_start"], cell["row_end"]):
+            spanning_by_row.setdefault(row_index, []).append(cell)
+            if cell["row_header"]:
+                row_headers.setdefault(row_index, []).append(cell)
+        if cell["column_header"]:
+            for col_index in range(cell["col_start"], cell["col_end"]):
+                column_headers.setdefault(col_index, []).append(cell)
     parts = []
     rows = []
     cursor = start
     for row_index in range(nrows):
         row_start = cursor
-        starting = {cell["col_start"]: cell for cell in cells if cell["row_start"] == row_index}
-        row_cells = []
+        starting = starting_by_row.get(row_index, {})
         for col_index in range(ncols):
             cell = starting.get(col_index)
             if cell is not None:
@@ -234,7 +247,6 @@ def _table(original: dict[str, Any], start: int) -> tuple[str, dict[str, Any]]:
                 cell["byte_range"] = _range(cursor, cursor + len(text.encode("utf-8")))
                 parts.append(text)
                 cursor += len(text.encode("utf-8"))
-                row_cells.append(cell)
             separator = "\n" if col_index == ncols - 1 else "\t"
             parts.append(separator)
             cursor += 1
@@ -242,31 +254,30 @@ def _table(original: dict[str, Any], start: int) -> tuple[str, dict[str, Any]]:
             parts.append("\n")
             cursor += 1
         rows.append(
-            {"row_index": row_index, "byte_range": _range(row_start, cursor), "cells": row_cells}
+            {
+                "row_index": row_index,
+                "byte_range": _range(row_start, cursor),
+                "cells": spanning_by_row.get(row_index, []),
+            }
         )
     for cell in cells:
-        cell["header_cell_refs"] = [
-            header["cell_ref"]
-            for header in cells
-            if header is not cell
-            and (
-                (
-                    header["column_header"]
-                    and header["row_start"] < cell["row_start"]
-                    and header["col_start"] < cell["col_end"]
-                    and header["col_end"] > cell["col_start"]
-                )
-                or (
-                    header["row_header"]
-                    and header["row_start"] <= cell["row_start"] < header["row_end"]
-                    and header["col_start"] < cell["col_start"]
-                )
-            )
-        ]
-    for row in rows:
-        row["cells"] = [
-            cell for cell in cells if cell["row_start"] <= row["row_index"] < cell["row_end"]
-        ]
+        candidates = {
+            header["cell_ref"]: header
+            for col_index in range(cell["col_start"], cell["col_end"])
+            for header in column_headers.get(col_index, [])
+            if header["row_start"] < cell["row_start"]
+        }
+        candidates.update(
+            {
+                header["cell_ref"]: header
+                for header in row_headers.get(cell["row_start"], [])
+                if header["col_start"] < cell["col_start"]
+            }
+        )
+        candidates.pop(cell["cell_ref"], None)
+        # A merged header can match several columns. Deduplicate while retaining
+        # the original table_cells order used by existing provenance records.
+        cell["header_cell_refs"] = sorted(candidates, key=order.__getitem__)
     return "".join(parts), {
         "num_rows": nrows,
         "num_cols": ncols,

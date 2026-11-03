@@ -504,3 +504,37 @@ def test_overlap_retains_first_elements_heading_context():
     assert crossed
     assert crossed[0].context.heading_hierarchy == []
     assert references(crossed[0])[1]["metadata"]["heading_hierarchy"] == ["Heading"]
+
+
+def test_large_table_header_associations_and_row_buckets_use_real_schema():
+    schema = pytest.importorskip("docling_core.types.doc")
+    document = schema.DoclingDocument(name="Large ordinary table")
+    document.add_table(
+        data=schema.TableData(
+            num_rows=4000,
+            num_cols=3,
+            table_cells=[
+                schema.TableCell(
+                    text=f"{row}:{col}",
+                    start_row_offset_idx=row,
+                    end_row_offset_idx=row + 1,
+                    start_col_offset_idx=col,
+                    end_col_offset_idx=col + 1,
+                    column_header=row == 0,
+                    row_header=col == 0 and row > 0,
+                )
+                for row in range(4000)
+                for col in range(3)
+            ],
+        )
+    )
+    loaded = load_docling_document(document)
+    rows = loaded.elements[0].metadata["table"]["rows"]
+    assert len(rows) == 4000
+    assert loaded.text.count("3999:2") == 1
+    for row_index in (1, 1999, 3999):
+        assert len(rows[row_index]["cells"]) == 3
+        assert rows[row_index]["cells"][2]["header_cell_refs"] == [
+            "#/tables/0/data/table_cells/2",
+            f"#/tables/0/data/table_cells/{row_index * 3}",
+        ]
