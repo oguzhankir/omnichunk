@@ -29,6 +29,7 @@ pip install "omnichunk[all-languages,formats]"
 | `sentence-transformers` | Optional local embedding-model helper. |
 | `scipy` | Sparse TF-IDF support. |
 | `pdf`, `docx`, `formats` | PDF reader, DOCX reader, or both. |
+| `docling` | Already-extracted DoclingDocument adapter; pins `docling-core==2.105.0` (schema `1.10.0`), without converter/OCR/model extras. See [structured documents](structured-documents.md). |
 | `langchain`, `llamaindex` | Native splitter/node-parser adapters and document conversion. |
 | `qdrant` | Qdrant client for acknowledged local/server vector delivery. |
 | `pgvector` | Psycopg PostgreSQL client; the server needs the pgvector extension. |
@@ -40,6 +41,7 @@ pip install "omnichunk[all-languages,formats]"
 `all` combines code/extended grammars, NumPy, formats, tiktoken, tracing, framework
 conversions and profiling. It excludes the heavier Transformers,
 sentence-transformers and SciPy extras, Rust tooling, and docs/dev tools.
+The Docling adapter is also a separate opt-in; `all` and `formats` retain their existing dependencies.
 
 `graph`, `pinecone`, `weaviate`, `supabase`, `vectordb` and `mcp` are empty marker
 extras. Vector exports return dictionaries without vendor clients. The `mcp`

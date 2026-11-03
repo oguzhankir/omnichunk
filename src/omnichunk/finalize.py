@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import hashlib
 from bisect import bisect_left
-from collections.abc import Iterable, Iterator
+from collections.abc import Callable, Iterable, Iterator
 from dataclasses import replace
 from typing import Any
 
@@ -81,6 +81,7 @@ def finalize_chunks(
     index: TextIndex | None = None,
     source: SourceDescriptor | None = None,
     fingerprint: str | None = None,
+    context_for_range: Callable[[ChunkContext, ByteRange], ChunkContext] | None = None,
 ) -> Iterator[Chunk]:
     index = index or TextIndex(content)
     source = source or source_descriptor(filepath, index, options)
@@ -173,6 +174,8 @@ def finalize_chunks(
             context = replace(
                 candidate.context, entities=_entities(candidate.context.entities, begin_b, end_b)
             )
+            if context_for_range is not None:
+                context = context_for_range(context, ByteRange(begin_b, end_b))
             overlap_text = (
                 build_line_overlap_text(previous.text, options.overlap_lines) if previous else ""
             )

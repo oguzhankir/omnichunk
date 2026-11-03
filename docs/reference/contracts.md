@@ -174,6 +174,11 @@ and budget checks to an explicitly loaded document.
 Notebook, PDF and DOCX chunk offsets refer to that extracted text, not JSON or
 binary bytes. Preserve page/cell/element metadata for citations. See the notebook
 reconstruction example in the [migration guide](../migrations/v2.md).
+The optional [Docling adapter](../structured-documents.md) retains original
+element/page/geometry records and table rows/cells in `context.format_metadata`.
+Repeated headers are derived context and participate in complete rendered-payload
+accounting. Missing provenance is explicit; canonical revisions/ranges remain
+separate from extraction revisions and original binary-container metadata.
 Malformed notebooks raise `ChunkingError` when chunked. Nonfatal loader warnings
 reach `context.parse_errors` and the source descriptor's warning metadata.
 

@@ -41,6 +41,7 @@ nav:
   - User guide:
       - Installation: install.md
       - Chunking recipes: usage.md
+      - Extracted Docling documents: structured-documents.md
       - Index, retrieve and synchronize: indexing.md
       - Source and budget contracts: reference/contracts.md
       - API stability: api-stability.md

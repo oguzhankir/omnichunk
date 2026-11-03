@@ -14,14 +14,15 @@ From this checkout, use the package installed in your current environment:
 pip install -e .
 python examples/search_local_project.py
 # Install optional extras for all remaining examples:
-pip install -e ".[code,semantic]"
+pip install -e ".[code,semantic,docling,langchain,llamaindex]"
 python examples/local_rag_lifecycle.py
 python examples/recoverable_indexing.py
 python examples/quickstart.py
+python examples/docling_provenance.py
 ```
 
 The base install (`pip install -e .`) runs every script except the NumPy semantic
-example. The `code` extra enables AST parsing; without it, code examples use the
+example and the Docling/framework example. The `code` extra enables AST parsing; without it, code examples use the
 library's diagnosed fallbacks. Examples do not modify `sys.path` to substitute a
 checkout for the installed package.
 
@@ -40,6 +41,7 @@ checkout for the installed package.
 | --- | --- |
 | [code_chunking.py](code_chunking.py) | Python/TypeScript, overlap, context and source reconstruction |
 | [prose_and_markdown.py](prose_and_markdown.py) | Markdown structure and character or estimated-token sizes |
+| [docling_provenance.py](docling_provenance.py) | Extracted elements/tables, canonical ranges, JSON and real LangChain/LlamaIndex conversion, then resolution back to elements/pages; requires `docling,langchain,llamaindex` |
 | [markup_chunking.py](markup_chunking.py) | JSON, YAML, TOML and HTML breadcrumbs |
 | [semantic_chunking.py](semantic_chunking.py) | Semantic boundaries with a deterministic teaching encoder |
 | [hierarchical_chunking.py](hierarchical_chunking.py) | Parent/child spans and retrieval granularities |

@@ -12,7 +12,7 @@ This is a pure Python library with no external service dependencies. All state i
 
 | Task | Command |
 |------|---------|
-| Install dev deps | `pip install -e ".[dev,docs,langchain,llamaindex]"` |
+| Install dev deps | `pip install -e ".[dev,docs,docling,langchain,llamaindex]"` |
 | Lint | `ruff check src tests` |
 | Format check | `ruff format --check src tests` |
 | Type check (Python 3.12 environment) | `mypy --python-version 3.12 src/omnichunk` |

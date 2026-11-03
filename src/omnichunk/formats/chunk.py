@@ -7,6 +7,7 @@ from typing import cast
 from omnichunk.context.rebase import rebase_chunk
 from omnichunk.engine.code_engine import CodeEngine
 from omnichunk.engine.prose_engine import ProseEngine
+from omnichunk.formats.structured import element_context, table_chunks
 from omnichunk.formats.types import LoadedDocument
 from omnichunk.sizing.nws import preprocess_nws_cumsum, slice_nws_cumsum
 from omnichunk.types import Chunk, ChunkingError, ChunkOptions, ContentType, Language
@@ -26,18 +27,32 @@ def chunk_loaded_document(
     from omnichunk.finalize import finalize_chunks, source_descriptor
 
     validate_options(options)
+    source_options = replace(options, source_id=options.source_id or loaded.source_id)
+    validate_options(source_options)
     index = TextIndex(loaded.text)
     source = source_descriptor(
         filepath,
         index,
-        options,
+        source_options,
         format_name=loaded.format_name,
-        metadata={"warnings": list(loaded.warnings)},
+        metadata={**loaded.metadata, "warnings": list(loaded.warnings)},
     )
     engine_options = replace(options, overlap=None, overlap_lines=0)
     candidates = _iter_loaded_chunks(filepath, loaded, engine_options)
     chunks = list(
-        finalize_chunks(filepath, loaded.text, candidates, options, index=index, source=source)
+        finalize_chunks(
+            filepath,
+            loaded.text,
+            candidates,
+            options,
+            index=index,
+            source=source,
+            context_for_range=(
+                lambda context, span: element_context(context, span, loaded, index.raw_bytes)
+            )
+            if loaded.elements
+            else None,
+        )
     )
     return _finalize_chunk_indexes(chunks)
 
@@ -62,6 +77,9 @@ def _iter_loaded_chunks(
     chunk_index = 0
 
     for segment in loaded.segments:
+        if segment.kind == "table":
+            yield from table_chunks(filepath, segment, loaded, options)
+            continue
         seg_text = content[segment.char_start : segment.char_end]
         if not seg_text.strip():
             continue

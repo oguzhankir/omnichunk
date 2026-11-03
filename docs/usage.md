@@ -68,6 +68,9 @@ print(result.source.revision, result.diagnostics)
 assumes no numeric overlap: with overlap, use the union of ranges instead.
 Container formats need to be loaded first; their coordinates refer to canonical
 extracted text, not the original PDF, DOCX, or notebook container bytes.
+For an already-extracted Docling document, use the
+[structured-document workflow](structured-documents.md) to retain element/page
+references, table headers and available geometry through JSON and framework conversion.
 
 ## Read files and directories
 

@@ -15,6 +15,10 @@ EXAMPLES = Path(__file__).resolve().parents[1] / "examples"
 def test_offline_example(script: Path, tmp_path: Path) -> None:
     if script.name == "semantic_chunking.py":
         pytest.importorskip("numpy")
+    if script.name == "docling_provenance.py":
+        pytest.importorskip("docling_core")
+        pytest.importorskip("langchain_core")
+        pytest.importorskip("llama_index.core")
     result = subprocess.run(
         [sys.executable, str(script)],
         cwd=tmp_path,
